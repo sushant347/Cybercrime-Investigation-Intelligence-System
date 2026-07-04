@@ -70,3 +70,112 @@ def load_correlation_graph(path: str) -> dict:
         return graph
 
 
+# Timestamp resolution
+
+def _parse_upload_time(upload_time_str: str):
+    if not upload_time_str:
+        return None
+    try:
+        return datetime.fromisoformat(upload_time_str.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+
+
+def _try_chat_style_timestamp(raw_text: str, reference_dt: datetime):
+    if not raw_text or not reference_dt:
+        return None
+
+    match = CHAT_TIMESTAMP_RE.search(raw_text)
+    if not match:
+        return None
+
+    try:
+        month = int(match.group("month"))
+        day = int(match.group("day"))
+        hour = int(match.group("hour"))
+        minute = int(match.group("minute"))
+
+        if not (1 <= month <= 12 and 1 <= day <= 31 and 0 <= hour <= 23 and 0 <= minute <= 59):
+            return None
+
+        candidate = reference_dt.replace(
+            month=month, day=day, hour=hour, minute=minute,
+            second=0, microsecond=0,
+        )
+        if candidate > reference_dt:
+            candidate = candidate.replace(year=candidate.year - 1)
+
+        return candidate
+    except (ValueError, TypeError):
+        return None
+
+
+def _try_entity_datetime(entities: dict, reference_dt: datetime):
+    dates = [d.get("normalized") or d.get("value") for d in entities.get("dates", [])]
+    times = [t.get("normalized") or t.get("value") for t in entities.get("times", [])]
+
+    dates = [d for d in dates if d]
+    times = [t for t in times if t]
+
+    if dates:
+        combined = f"{dates[0]} {times[0]}" if times else dates[0]
+        try:
+            return dateutil_parser.parse(combined, fuzzy=True, default=reference_dt), "content_date_time"
+        except (ValueError, OverflowError):
+            pass
+
+    if times and reference_dt:
+        try:
+            parsed_time = dateutil_parser.parse(times[0], fuzzy=True, default=reference_dt)
+            combined_dt = reference_dt.replace(
+                hour=parsed_time.hour, minute=parsed_time.minute,
+                second=parsed_time.second, microsecond=0,
+            )
+            return combined_dt, "content_time_only"
+        except (ValueError, OverflowError):
+            pass
+
+    return None, None
+
+
+def resolve_evidence_timestamp(evidence: dict) -> dict:
+    upload_dt = _parse_upload_time(evidence.get("upload_time"))
+    cleaning = evidence.get("cleaning", {})
+    entities = cleaning.get("entities", {})
+    raw_text = evidence.get("raw_text") or cleaning.get("cleaned_text") or ""
+
+    dt, source = _try_entity_datetime(entities, upload_dt)
+    if dt:
+        confidence = "high" if source == "content_date_time" else "medium"
+        return {
+            "resolved_time": dt,
+            "resolved_time_iso": dt.isoformat(),
+            "source": source,
+            "confidence": confidence,
+        }
+
+    chat_dt = _try_chat_style_timestamp(raw_text, upload_dt)
+    if chat_dt:
+        return {
+            "resolved_time": chat_dt,
+            "resolved_time_iso": chat_dt.isoformat(),
+            "source": "content_chat_timestamp",
+            "confidence": "medium",
+        }
+
+    if upload_dt:
+        return {
+            "resolved_time": upload_dt,
+            "resolved_time_iso": upload_dt.isoformat(),
+            "source": "upload_time_fallback",
+            "confidence": "low",
+        }
+
+    return {
+        "resolved_time": None,
+        "resolved_time_iso": None,
+        "source": "unresolved",
+        "confidence": "none",
+    }
+
+
