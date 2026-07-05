@@ -179,3 +179,18 @@ def resolve_evidence_timestamp(evidence: dict) -> dict:
     }
 
 
+# Correlation context lookup
+
+def build_correlation_lookup(graph: dict) -> dict:
+    lookup = {}
+    for edge in graph.get("edges", []):
+        for a, b in [(edge["source"], edge["target"]), (edge["target"], edge["source"])]:
+            lookup.setdefault(a, []).append({
+                "linked_to": b,
+                "type": edge["type"],
+                "shared_entities": edge.get("shared_entities", []),
+                "weight": edge.get("weight", 0),
+            })
+    return lookup
+
+
