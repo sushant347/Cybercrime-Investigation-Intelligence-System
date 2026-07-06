@@ -194,3 +194,47 @@ def build_correlation_lookup(graph: dict) -> dict:
     return lookup
 
 
+# Timeline building
+
+def build_timeline(cases: list, correlation_graph: dict = None) -> dict:
+    correlation_graph = correlation_graph or {"nodes": [], "edges": []}
+    correlation_lookup = build_correlation_lookup(correlation_graph)
+
+    events = []
+    for case in cases:
+        case_id = case.get("case_id", "UNKNOWN_CASE")
+        for evidence in case.get("evidence", []):
+            evidence_id = evidence.get("evidence_id", "UNKNOWN_EVID")
+            resolution = resolve_evidence_timestamp(evidence)
+
+            events.append({
+                "evidence_id": evidence_id,
+                "case_id": case_id,
+                "file_name": evidence.get("file_name"),
+                "resolved_time": resolution["resolved_time_iso"],
+                "time_source": resolution["source"],
+                "confidence": resolution["confidence"],
+                "text_preview": (evidence.get("raw_text") or "")[:120],
+                "risk_signals": evidence.get("cleaning", {}).get("risk_signals", {}),
+                "correlated_with": correlation_lookup.get(evidence_id, []),
+                "_sort_key": resolution["resolved_time"],
+            })
+
+    resolved = [e for e in events if e["_sort_key"] is not None]
+    unresolved = [e for e in events if e["_sort_key"] is None]
+
+    resolved.sort(key=lambda e: e["_sort_key"])
+
+    for e in resolved + unresolved:
+        del e["_sort_key"]
+
+    ordered = resolved + unresolved
+
+    return {
+        "total_events": len(ordered),
+        "resolved_count": len(resolved),
+        "unresolved_count": len(unresolved),
+        "timeline": ordered,
+    }
+
+
