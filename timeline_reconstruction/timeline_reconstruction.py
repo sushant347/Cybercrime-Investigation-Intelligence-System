@@ -238,3 +238,23 @@ def build_timeline(cases: list, correlation_graph: dict = None) -> dict:
     }
 
 
+def generate_narrative(timeline: dict) -> list:
+    lines = []
+    for event in timeline["timeline"]:
+        time_str = event["resolved_time"] or "UNKNOWN TIME"
+        confidence_note = f" (confidence: {event['confidence']})" if event["confidence"] != "high" else ""
+        line = f"[{time_str}] {event['file_name']} (evidence {event['evidence_id']}){confidence_note}"
+
+        if event["correlated_with"]:
+            linked_ids = ", ".join(c["linked_to"] for c in event["correlated_with"])
+            line += f" -- correlated with: {linked_ids}"
+
+        risk = event.get("risk_signals", {})
+        active_risks = [k for k, v in risk.items() if v]
+        if active_risks:
+            line += f" -- risk signals: {', '.join(active_risks)}"
+
+        lines.append(line)
+    return lines
+
+
