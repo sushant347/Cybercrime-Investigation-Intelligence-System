@@ -1,0 +1,31 @@
+# Digital Evidence Acquisition and OCR Engine (CIIS Module 2)
+# Python 3.12
+
+# OCR: PaddleOCR 3.x pinned to the PP-OCRv5 pipeline (do NOT use Tesseract).
+# PP-OCRv5 is the only generation with a Devanagari recogniser, so it is the
+# best fit for this Nepali-first forensic engine. paddlepaddle 3.2.x is the
+# recommended CPU build (3.3.x has a known oneDNN/PIR CPU-inference regression).
+paddleocr>=3.0.0
+paddlepaddle==3.2.0
+
+# Imaging / preprocessing
+opencv-python>=4.9
+pillow>=10.0
+numpy>=1.26
+
+# PDF page rendering
+pymupdf>=1.24
+
+# Data contracts
+pydantic>=2.6
+
+# Optional: DOCX evidence support
+python-docx>=1.1
+
+# Development / testing
+pytest>=8.0
+
+# Optional: Semantic Correction Engine (XLM-R inference only).
+# The engine runs offline via a heuristic fallback if these are absent.
+# transformers>=4.40
+# torch>=2.0
