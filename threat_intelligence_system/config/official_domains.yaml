@@ -1,0 +1,219 @@
+# Official Domains Registry mapping brand keywords to their legitimate registered domains
+facebook:
+  - facebook.com
+  - fb.com
+  - instagram.com
+  - whatsapp.com
+
+google:
+  - google.com
+  - gmail.com
+  - youtube.com
+  - android.com
+  - blogger.com
+  - blogspot.com
+
+github:
+  - github.com
+  - github.io
+  - githubusercontent.com
+
+paypal:
+  - paypal.com
+  - paypal.me
+
+amazon:
+  - amazon.com
+  - amazon.co.uk
+  - amazon.ca
+  - amazon.de
+  - amazon.co.jp
+  - aws.amazon.com
+  - media-amazon.com
+
+apple:
+  - apple.com
+  - icloud.com
+  - itunes.com
+
+microsoft:
+  - microsoft.com
+  - office.com
+  - outlook.com
+  - live.com
+  - windows.com
+  - xbox.com
+  - azure.com
+
+linkedin:
+  - linkedin.com
+  - lnkd.in
+
+discord:
+  - discord.com
+  - discord.gg
+
+cloudflare:
+  - cloudflare.com
+
+# --- Streaming & media -------------------------------------------------------
+netflix:
+  - netflix.com
+
+spotify:
+  - spotify.com
+
+twitter:
+  - twitter.com
+  - x.com
+  - t.co
+
+# --- Banking & finance -------------------------------------------------------
+chase:
+  - chase.com
+
+wellsfargo:
+  - wellsfargo.com
+
+bankofamerica:
+  - bankofamerica.com
+
+citibank:
+  - citibank.com
+  - citi.com
+
+capitalone:
+  - capitalone.com
+
+americanexpress:
+  - americanexpress.com
+  - amex.com
+
+hsbc:
+  - hsbc.com
+  - hsbc.co.uk
+
+barclays:
+  - barclays.com
+  - barclays.co.uk
+
+santander:
+  - santander.com
+  - santander.co.uk
+
+# --- Payments & crypto -------------------------------------------------------
+stripe:
+  - stripe.com
+
+venmo:
+  - venmo.com
+
+cashapp:
+  - cash.app
+
+zelle:
+  - zellepay.com
+
+coinbase:
+  - coinbase.com
+
+binance:
+  - binance.com
+
+kraken:
+  - kraken.com
+
+metamask:
+  - metamask.io
+
+# --- Email & productivity ----------------------------------------------------
+yahoo:
+  - yahoo.com
+  - ymail.com
+
+adobe:
+  - adobe.com
+
+dropbox:
+  - dropbox.com
+
+zoom:
+  - zoom.us
+  - zoom.com
+
+slack:
+  - slack.com
+
+telegram:
+  - telegram.org
+  - t.me
+
+# --- E-commerce & retail -----------------------------------------------------
+ebay:
+  - ebay.com
+  - ebay.co.uk
+
+walmart:
+  - walmart.com
+
+target:
+  - target.com
+
+costco:
+  - costco.com
+
+bestbuy:
+  - bestbuy.com
+
+# --- Shipping & logistics ----------------------------------------------------
+dhl:
+  - dhl.com
+  - dhl.de
+
+fedex:
+  - fedex.com
+
+ups:
+  - ups.com
+
+usps:
+  - usps.com
+
+royalmail:
+  - royalmail.com
+
+# --- Travel & transport ------------------------------------------------------
+uber:
+  - uber.com
+
+airbnb:
+  - airbnb.com
+
+# --- Gaming ------------------------------------------------------------------
+steam:
+  - steampowered.com
+  - steamcommunity.com
+
+epicgames:
+  - epicgames.com
+
+playstation:
+  - playstation.com
+
+nintendo:
+  - nintendo.com
+
+# --- Developer platforms -----------------------------------------------------
+gitlab:
+  - gitlab.com
+
+bitbucket:
+  - bitbucket.org
+
+stackoverflow:
+  - stackoverflow.com
+
+# --- Reference / high-traffic sites ------------------------------------------
+wikipedia:
+  - wikipedia.org
+  - wikimedia.org

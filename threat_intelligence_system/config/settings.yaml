@@ -1,0 +1,202 @@
+# Phishing URL Detection Engine Configuration Settings
+
+# ==============================================================================
+# Decision Weights (Tuned for Hybrid Decision Engine)
+# ==============================================================================
+decision_weights:
+  ml_probability: 0.35
+  rule_engine: 0.30
+  threat_intelligence: 0.20
+  domain_trust_signals: 0.15
+
+# ==============================================================================
+# Ensemble Prediction Weights (Phase 3-B)
+# Signals: XGBoost prob, transformer prob, rule score, threat intel, trust
+# Weights of unavailable signals (e.g. transformer) are redistributed.
+# ==============================================================================
+ensemble_weights:
+  xgboost: 0.35
+  transformer: 0.20
+  rules: 0.20
+  threat_intelligence: 0.15
+  trust: 0.10
+
+# ==============================================================================
+# 3-Class Prediction Thresholds (Composite Risk Score)
+# ==============================================================================
+classification_thresholds:
+  legitimate_max: 30
+  suspicious_max: 60
+  phishing_max: 100
+
+# ==============================================================================
+# Threat Reference Databases & Thresholds
+# ==============================================================================
+threat_lists:
+  # Known TLDs frequently abused by malicious sites
+  suspicious_tlds:
+    - xyz
+    - top
+    - club
+    - online
+    - site
+    - website
+    - space
+    - fun
+    - icu
+    - buzz
+    - cf
+    - gq
+    - ml
+    - ga
+    - tk
+    - work
+    - click
+    - link
+    - info
+    - biz
+    - pw
+    - cc
+    - loan
+    - racing
+    - win
+    - bid
+    - stream
+    - download
+    - review
+    - accountant
+    - cricket
+    - science
+    - party
+    - date
+    - faith
+    - trade
+    - men
+    - gdn
+    - kim
+    - wang
+    - rest
+    - surf
+    - bar
+    - cam
+    - monster
+    - hair
+    - sbs
+    - cfd
+    - quest
+    - boats
+    - beauty
+    - makeup
+    - onl
+
+  # Known URL shortener hostnames
+  url_shorteners:
+    - bit.ly
+    - tinyurl.com
+    - goo.gl
+    - t.co
+    - is.gd
+    - buff.ly
+    - ow.ly
+    - rebrand.ly
+    - cutt.ly
+    - shorturl.at
+    - tiny.cc
+    - lnkd.in
+    - youtu.be
+    - amzn.to
+    - rb.gy
+    - bl.ink
+    - short.io
+    - clck.ru
+    - v.gd
+    - qr.ae
+    - u.to
+    - t.ly
+    - surl.li
+    - s.id
+    - shrtco.de
+    - mcaf.ee
+    - dlvr.it
+    - snip.ly
+    - smarturl.it
+
+  # Phishing-associated keywords
+  suspicious_keywords:
+    - login
+    - signin
+    - sign-in
+    - log-in
+    - verify
+    - verification
+    - account
+    - update
+    - secure
+    - security
+    - confirm
+    - confirmation
+    - suspend
+    - suspended
+    - restrict
+    - restricted
+    - unlock
+    - password
+    - credential
+    - authenticate
+    - authentication
+    - banking
+    - payment
+    - wallet
+    - billing
+    - invoice
+    - alert
+    - warning
+    - urgent
+    - immediately
+    - expire
+    - validate
+    - recover
+    - recovery
+    - reset
+    - restore
+    - unusual
+    - activity
+    - unauthorized
+    - compromised
+    - support
+    - helpdesk
+    - service
+    - customer
+    - webscr
+    - cmd
+    - dispatch
+    - redirect
+    - free
+    - prize
+    - winner
+    - congratulation
+    - reward
+    - offer
+    - bonus
+    - gift
+    - promo
+    - promotion
+
+  # Unicode Homograph character lookup mappings (Cyrillic/Armenian/Latin equivalents)
+  homograph_map:
+    "\u0430": "a"  # Cyrillic а
+    "\u0435": "e"  # Cyrillic е
+    "\u043e": "o"  # Cyrillic о
+    "\u0440": "p"  # Cyrillic р
+    "\u0441": "c"  # Cyrillic с
+    "\u0443": "y"  # Cyrillic у
+    "\u0445": "x"  # Cyrillic х
+    "\u0456": "i"  # Cyrillic і
+    "\u0501": "d"  # Cyrillic ԁ
+    "\u0261": "g"  # Latin ɡ
+    "\u04bb": "h"  # Cyrillic һ
+    "\u0458": "j"  # Cyrillic ј
+    "\u04c0": "l"  # Cyrillic Ӏ
+    "\u04bd": "s"  # Cyrillic ҽ
+    "\u051b": "q"  # Cyrillic ԛ
+    "\u0575": "h"  # Armenian յ
