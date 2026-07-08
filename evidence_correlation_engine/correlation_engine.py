@@ -3,21 +3,37 @@ Module 4 - Evidence Correlation Engine
 ========================================
 Cybercrime Investigation Intelligence System (CIIS)
 
-Consumes case JSON files produced by the OCR/evidence engine (Module 2),
-and links evidence items together based on shared entities and temporal
-proximity. Outputs a correlation graph and a summary, ready to feed
+Consumes case JSON files produced by the OCR/evidence engine (Module 2) and
+the threat intelligence scores (Module 3), and links evidence items together
+based on:
+
+  1. Shared entities (URLs, domains, phone numbers, emails, wallet IDs,
+     eSewa/Khalti/IMEPay IDs, bank accounts, social media handles, etc.)
+     -- pulled directly from the OCR engine's existing `entities` block,
+        no re-extraction needed.
+  2. Lightweight name/organization detection for text not already covered
+     by the regex-based entity extractor (optional, pluggable NER hook).
+  3. Temporal proximity (evidence items close in time are more likely
+     related).
+
+Output: a correlation graph (nodes = evidence + entities, edges = shared
+entity / temporal links) plus a per-case correlation summary, ready to feed
 Module 5 (Timeline Reconstruction) and Module 6 (Report Generator).
 
 Usage:
     python correlation_engine.py case1.json case2.json ...
+    (or import `correlate_cases` directly in a notebook)
 """
 
 import json
 import os
 import sys
-from datetime import datetime
+import re
+from datetime import datetime, timedelta
 from itertools import combinations
 from collections import defaultdict
+
+# Config
 
 CORRELATABLE_ENTITY_TYPES = [
     "urls", "emails", "domains", "ipv4", "ipv6", "mac_addresses",
@@ -28,8 +44,11 @@ CORRELATABLE_ENTITY_TYPES = [
 ]
 
 TEMPORAL_PROXIMITY_HOURS = 24
+
 OUTPUT_DIR = "output"
 
+
+# Loading
 
 def load_case(path: str) -> dict:
     with open(path, "r", encoding="utf-8") as f:
@@ -37,6 +56,10 @@ def load_case(path: str) -> dict:
 
 
 def extract_entity_index(case: dict) -> dict:
+    """
+    Build {entity_value: [(evidence_id, entity_type), ...]} for a single
+    case, pulled from each evidence item's cleaning.entities block.
+    """
     index = defaultdict(list)
     case_id = case.get("case_id", "UNKNOWN_CASE")
 
@@ -60,7 +83,39 @@ def extract_entity_index(case: dict) -> dict:
     return index
 
 
+def extract_upload_time(case: dict, evidence_id: str):
+    for evidence in case.get("evidence", []):
+        if evidence.get("evidence_id") == evidence_id:
+            ts = evidence.get("upload_time")
+            if ts:
+                try:
+                    return datetime.fromisoformat(ts.replace("Z", "+00:00"))
+                except ValueError:
+                    return None
+    return None
+
+
+# Correlation
+
 def correlate_cases(cases: list) -> dict:
+    """
+    Build a correlation graph across one or more loaded case dicts.
+
+    Returns:
+        {
+            "nodes": [{"id": evidence_id, "case_id": ..., "file_name": ...}],
+            "edges": [
+                {
+                    "source": evidence_id_a,
+                    "target": evidence_id_b,
+                    "type": "shared_entity" | "temporal_proximity",
+                    "shared_entities": [{"value": ..., "type": ...}],
+                    "weight": float,
+                }
+            ],
+            "entity_index": {value: [{"case_id", "evidence_id", "entity_type"}]},
+        }
+    """
     combined_index = defaultdict(list)
     all_evidence_meta = {}
 
@@ -80,6 +135,7 @@ def correlate_cases(cases: list) -> dict:
             combined_index[value].extend(occurrences)
 
     edge_map = {}
+
     for value, occurrences in combined_index.items():
         if len(occurrences) < 2:
             continue
@@ -168,6 +224,8 @@ def summarize_correlation(graph: dict) -> dict:
     }
 
 
+# CLI entry point
+
 def main():
     if len(sys.argv) < 2:
         print("Usage: python correlation_engine.py <case1.json> [case2.json] ...")
@@ -193,6 +251,12 @@ def main():
           f"{summary['temporal_only_links']} temporal-only links")
     print(f"Saved -> {graph_path}")
     print(f"Saved -> {summary_path}")
+
+    if summary["top_connecting_entities"]:
+        print("\nTop connecting entities:")
+        for e in summary["top_connecting_entities"]:
+            print(f"  {e['value']} ({e['entity_type']}) "
+                  f"-> links {e['connects_evidence_count']} evidence items")
 
 
 if __name__ == "__main__":
