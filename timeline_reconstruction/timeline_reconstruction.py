@@ -258,3 +258,41 @@ def generate_narrative(timeline: dict) -> list:
     return lines
 
 
+# CLI entry point
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("cases", nargs="+", help="Case JSON file(s)")
+    parser.add_argument("--correlation", default=None,
+                         help="Path to correlation_graph.json from Module 4")
+    args = parser.parse_args()
+
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+    cases = [load_case(p) for p in args.cases]
+    correlation_graph = load_correlation_graph(args.correlation)
+
+    timeline = build_timeline(cases, correlation_graph)
+    narrative = generate_narrative(timeline)
+
+    timeline_path = os.path.join(OUTPUT_DIR, "timeline.json")
+    narrative_path = os.path.join(OUTPUT_DIR, "timeline_narrative.txt")
+
+    with open(timeline_path, "w", encoding="utf-8") as f:
+        json.dump(timeline, f, indent=2, ensure_ascii=False)
+
+    with open(narrative_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(narrative))
+
+    print(f"Built timeline: {timeline['total_events']} event(s), "
+          f"{timeline['resolved_count']} resolved, "
+          f"{timeline['unresolved_count']} unresolved")
+    print(f"Saved -> {timeline_path}")
+    print(f"Saved -> {narrative_path}")
+    print("\nNarrative preview:")
+    for line in narrative:
+        print(f"  {line}")
+
+
+if __name__ == "__main__":
+    main()
