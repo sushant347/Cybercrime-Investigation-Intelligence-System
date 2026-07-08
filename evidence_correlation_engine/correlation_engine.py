@@ -4,12 +4,12 @@ Module 4 - Evidence Correlation Engine
 Cybercrime Investigation Intelligence System (CIIS)
 
 Consumes case JSON files produced by the OCR/evidence engine (Module 2),
-and links evidence items together based on:
+and links evidence items together based on shared entities and temporal
+proximity. Outputs a correlation graph and a summary, ready to feed
+Module 5 (Timeline Reconstruction) and Module 6 (Report Generator).
 
-  1. Shared entities (URLs, domains, phone numbers, emails, wallet IDs,
-     eSewa/Khalti/IMEPay IDs, bank accounts, social media handles, etc.)
-  2. Temporal proximity (evidence items close in time are more likely
-     related), used only as a fallback when no shared-entity link exists.
+Usage:
+    python correlation_engine.py case1.json case2.json ...
 """
 
 import json
@@ -104,7 +104,6 @@ def correlate_cases(cases: list) -> dict:
             })
             edge_map[key]["weight"] += 1.0
 
-    # Temporal proximity fallback -- only where no shared-entity edge exists
     evidence_ids = list(all_evidence_meta.keys())
     for id_a, id_b in combinations(evidence_ids, 2):
         key = tuple(sorted([id_a, id_b]))
@@ -142,15 +141,58 @@ def correlate_cases(cases: list) -> dict:
     }
 
 
+def summarize_correlation(graph: dict) -> dict:
+    """Human-readable summary of the correlation graph for quick review."""
+    shared_entity_edges = [e for e in graph["edges"] if e["type"] == "shared_entity"]
+    temporal_edges = [e for e in graph["edges"] if e["type"] == "temporal_proximity"]
+
+    entity_ranking = sorted(
+        graph["entity_index"].items(),
+        key=lambda kv: len(kv[1]),
+        reverse=True,
+    )
+
+    return {
+        "total_evidence_items": len(graph["nodes"]),
+        "total_correlation_links": len(graph["edges"]),
+        "shared_entity_links": len(shared_entity_edges),
+        "temporal_only_links": len(temporal_edges),
+        "top_connecting_entities": [
+            {
+                "value": value,
+                "connects_evidence_count": len(occs),
+                "entity_type": occs[0]["entity_type"] if occs else None,
+            }
+            for value, occs in entity_ranking[:10]
+        ],
+    }
+
+
 def main():
     if len(sys.argv) < 2:
         print("Usage: python correlation_engine.py <case1.json> [case2.json] ...")
         sys.exit(1)
 
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+
     cases = [load_case(p) for p in sys.argv[1:]]
     graph = correlate_cases(cases)
+    summary = summarize_correlation(graph)
+
+    graph_path = os.path.join(OUTPUT_DIR, "correlation_graph.json")
+    summary_path = os.path.join(OUTPUT_DIR, "correlation_summary.json")
+
+    with open(graph_path, "w", encoding="utf-8") as f:
+        json.dump(graph, f, indent=2, ensure_ascii=False)
+
+    with open(summary_path, "w", encoding="utf-8") as f:
+        json.dump(summary, f, indent=2, ensure_ascii=False)
+
     print(f"Loaded {len(cases)} case(s), {len(graph['nodes'])} evidence item(s)")
-    print(f"Found {len(graph['edges'])} correlation link(s)")
+    print(f"Found {summary['shared_entity_links']} shared-entity links, "
+          f"{summary['temporal_only_links']} temporal-only links")
+    print(f"Saved -> {graph_path}")
+    print(f"Saved -> {summary_path}")
 
 
 if __name__ == "__main__":
