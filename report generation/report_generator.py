@@ -225,3 +225,32 @@ def build_overview_pdf(timeline: dict, stats: dict, generated_at: str, styles,
     return flow
 
 
+def build_risk_highlights_pdf(stats: dict, styles) -> list:
+    flow = [Paragraph("Risk Signal Highlights", styles["Heading2"])]
+
+    if not stats["flagged_events"]:
+        flow.append(Paragraph(
+            "No risk signals were flagged on any evidence item.",
+            styles["ReportBody"],
+        ))
+        flow.append(Spacer(1, 8))
+        return flow
+
+    tally_line = ", ".join(f"{signal} ({count})" for signal, count in
+                           stats["risk_tally"].most_common())
+    flow.append(Paragraph(f"<b>Signal frequency:</b> {_escape(tally_line)}",
+                           styles["ReportBody"]))
+
+    rows = []
+    for event, active in stats["flagged_events"]:
+        time_str = event["resolved_time"] or "unknown time"
+        text = (f"<b>{_escape(event['evidence_id'])}</b> "
+                f"({_escape(event['file_name'])}) at {_escape(time_str)} "
+                f"&mdash; flags: {_escape(', '.join(active))}")
+        rows.append(ListItem(Paragraph(text, styles["ReportBody"])))
+
+    flow.append(ListFlowable(rows, bulletType="bullet"))
+    flow.append(Spacer(1, 8))
+    return flow
+
+
