@@ -148,3 +148,80 @@ def _escape(text: str) -> str:
 
 
 # ----------------------------------------------------------------------
+# PDF styles
+# ----------------------------------------------------------------------
+
+def _build_styles():
+    styles = getSampleStyleSheet()
+    styles.add(ParagraphStyle(
+        name="ReportBody", parent=styles["Normal"],
+        fontSize=10, leading=14, spaceAfter=6, alignment=TA_LEFT,
+    ))
+    styles.add(ParagraphStyle(
+        name="Meta", parent=styles["Normal"],
+        fontSize=9, textColor=colors.grey, spaceAfter=2,
+    ))
+    styles.add(ParagraphStyle(
+        name="EventLine", parent=styles["ReportBody"],
+        spaceBefore=4, spaceAfter=2,
+    ))
+    styles.add(ParagraphStyle(
+        name="EventSub", parent=styles["ReportBody"],
+        fontSize=9, leftIndent=14, textColor=colors.black,
+        spaceAfter=2,
+    ))
+    styles.add(ParagraphStyle(
+        name="EventQuote", parent=styles["EventSub"],
+        fontName="Helvetica-Oblique", textColor=colors.HexColor("#444444"),
+    ))
+    styles.add(ParagraphStyle(
+        name="RiskWarning", parent=styles["EventSub"],
+        textColor=colors.HexColor("#B03A2E"),
+    ))
+    return styles
+
+
+# ----------------------------------------------------------------------
+# PDF section builders (each returns a list of flowables)
+# ----------------------------------------------------------------------
+
+def build_overview_pdf(timeline: dict, stats: dict, generated_at: str, styles,
+                        report_id: str, investigator: str,
+                        source_path: str, source_hash: str) -> list:
+    flow = [Paragraph("Investigation Report", styles["Title"])]
+
+    meta_items = [
+        f"Report ID: {_escape(report_id)}",
+        f"Generated: {_escape(generated_at)}",
+        f"Investigator: {_escape(investigator)}",
+        f"Source file: {_escape(os.path.basename(source_path))}",
+        f"Source SHA-256: {source_hash}",
+    ]
+    for item in meta_items:
+        flow.append(Paragraph(item, styles["Meta"]))
+    flow.append(Spacer(1, 4))
+
+    flow.append(Paragraph("Overview", styles["Heading2"]))
+
+    items = [
+        f"Total evidence items: {timeline['total_events']}",
+        f"Resolved timestamps: {timeline['resolved_count']}",
+        f"Unresolved timestamps: {timeline['unresolved_count']}",
+    ]
+    if len(stats["case_counts"]) > 1:
+        case_list = ", ".join(f"{cid} ({n})" for cid, n in stats["case_counts"].items())
+        items.append(f"Cases covered: {_escape(case_list)}")
+
+    conf = stats["confidence_counts"]
+    conf_line = ", ".join(f"{level}: {conf.get(level, 0)}" for level in
+                          ("high", "medium", "low", "none") if conf.get(level))
+    items.append(f"Timestamp confidence breakdown: {conf_line}")
+
+    flow.append(ListFlowable(
+        [ListItem(Paragraph(i, styles["ReportBody"])) for i in items],
+        bulletType="bullet",
+    ))
+    flow.append(Spacer(1, 8))
+    return flow
+
+
