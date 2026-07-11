@@ -108,3 +108,43 @@ def load_timeline(path: str) -> dict:
 
 
 # ----------------------------------------------------------------------
+# Stats (shared by both output formats)
+# ----------------------------------------------------------------------
+
+def compute_stats(events: list) -> dict:
+    confidence_counts = Counter(e["confidence"] for e in events)
+    source_counts = Counter(e["time_source"] for e in events)
+    case_counts = Counter(e["case_id"] for e in events)
+
+    risk_tally = Counter()
+    flagged_events = []
+    for e in events:
+        active = [k for k, v in (e.get("risk_signals") or {}).items() if v]
+        if active:
+            flagged_events.append((e, active))
+            risk_tally.update(active)
+
+    correlated_events = [e for e in events if e.get("correlated_with")]
+
+    return {
+        "confidence_counts": confidence_counts,
+        "source_counts": source_counts,
+        "case_counts": case_counts,
+        "risk_tally": risk_tally,
+        "flagged_events": flagged_events,
+        "correlated_events": correlated_events,
+    }
+
+
+def _escape(text: str) -> str:
+    """Escape text that will be embedded in a reportlab Paragraph (which
+    parses a small XML-like markup), so raw evidence text can't break
+    rendering or be mistaken for markup."""
+    if not text:
+        return ""
+    return (text.replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;"))
+
+
+# ----------------------------------------------------------------------
