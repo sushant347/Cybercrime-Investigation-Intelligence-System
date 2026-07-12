@@ -324,3 +324,43 @@ def build_timeline_narrative_pdf(events: list, styles) -> list:
     return flow
 
 
+def build_caveats_pdf(stats: dict, styles) -> list:
+    flow = [Paragraph("Confidence &amp; Caveats", styles["Heading2"])]
+    flow.append(Paragraph(
+        "Timestamps in this report are resolved with varying confidence. "
+        "Readers should weigh conclusions accordingly:",
+        styles["ReportBody"],
+    ))
+
+    items = [
+        "<b>high</b> &mdash; an explicit date and time were found in the "
+        "evidence content itself (most forensically reliable).",
+        "<b>medium</b> &mdash; either a chat-style inline timestamp or a "
+        "time-only value combined with the upload date as a best guess; "
+        "the date portion may be inexact.",
+        "<b>low</b> &mdash; no usable timestamp was found in the content; "
+        "the system fell back to the file's processing/upload time, which "
+        "may not reflect when the underlying event occurred.",
+        "<b>none</b> &mdash; no timestamp could be resolved at all; this "
+        "item is listed at the end of the timeline, unordered relative to "
+        "other unresolved items.",
+    ]
+    flow.append(ListFlowable(
+        [ListItem(Paragraph(i, styles["ReportBody"])) for i in items],
+        bulletType="bullet",
+    ))
+
+    low_or_worse = (stats["confidence_counts"].get("low", 0)
+                    + stats["confidence_counts"].get("none", 0))
+    if low_or_worse:
+        total = sum(stats["confidence_counts"].values())
+        flow.append(Paragraph(
+            f"<b>{low_or_worse} of {total} evidence item(s) have low or "
+            "unresolved timestamp confidence</b> and should not be treated "
+            "as precisely dated without further corroboration.",
+            styles["ReportBody"],
+        ))
+    return flow
+
+
+# ----------------------------------------------------------------------
