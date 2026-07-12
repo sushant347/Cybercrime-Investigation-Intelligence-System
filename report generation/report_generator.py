@@ -283,3 +283,44 @@ def build_correlation_highlights_pdf(stats: dict, styles) -> list:
     return flow
 
 
+def build_timeline_narrative_pdf(events: list, styles) -> list:
+    flow = [Paragraph("Chronological Narrative", styles["Heading2"])]
+
+    by_case = defaultdict(list)
+    for e in events:
+        by_case[e["case_id"]].append(e)
+
+    for case_id, case_events in by_case.items():
+        if len(by_case) > 1:
+            flow.append(Paragraph(f"Case: {_escape(case_id)}", styles["Heading3"]))
+
+        for e in case_events:
+            time_str = e["resolved_time"] or "UNKNOWN TIME"
+            conf_note = (
+                f" <i>(confidence: {e['confidence']}, source: {e['time_source']})</i>"
+                if e["confidence"] != "high" else ""
+            )
+            header = (f"<b>[{_escape(time_str)}]</b> {_escape(e['file_name'])} "
+                      f"({_escape(e['evidence_id'])}){conf_note}")
+            flow.append(Paragraph(header, styles["EventLine"]))
+
+            preview = (e.get("text_preview") or "").strip()
+            if preview:
+                flow.append(Paragraph(f"&ldquo;{_escape(preview)}&rdquo;",
+                                       styles["EventQuote"]))
+
+            if e.get("correlated_with"):
+                linked_ids = ", ".join(c["linked_to"] for c in e["correlated_with"])
+                flow.append(Paragraph(f"correlated with: {_escape(linked_ids)}",
+                                       styles["EventSub"]))
+
+            active_risks = [k for k, v in (e.get("risk_signals") or {}).items() if v]
+            if active_risks:
+                flow.append(Paragraph(f"risk signals: {_escape(', '.join(active_risks))}",
+                                       styles["RiskWarning"]))
+
+        flow.append(Spacer(1, 6))
+
+    return flow
+
+
