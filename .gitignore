@@ -1,0 +1,59 @@
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+build/
+dist/
+
+# ===== Virtual environments (NEVER commit) =====
+.venv/
+venv/
+env/
+ENV/
+
+# ===== Secrets / local config =====
+.env
+*.env
+!.env.example
+
+# ===== OCR engine runtime outputs (regenerated per run) =====
+evidence_ocr_engine/storage/
+evidence_ocr_engine/logs/
+evidence_ocr_engine/test_paddle.py
+
+# ===== Threat system training artefacts / heavy binaries =====
+threat_intelligence_system/.venv/
+threat_intelligence_system/catboost_info/
+threat_intelligence_system/checkpoints/
+threat_intelligence_system/results/
+threat_intelligence_system/data/processed/
+threat_intelligence_system/scratch/
+threat_intelligence_system/*.pkl
+threat_intelligence_system/*.ubj
+
+# ===== Model caches (downloaded, not source) =====
+.paddlex/
+.cache/
+
+# ===== OS / editor =====
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# ===== Local-only helper / internal docs (do NOT publish) =====
+git_commit_and_push.sh
+PROJECT.md
+PROJECT_AUDIT.md
+
+# ===== Raw training datasets (too large for git) =====
+sample/

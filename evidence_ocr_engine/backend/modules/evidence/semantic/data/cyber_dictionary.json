@@ -1,0 +1,37 @@
+{
+  "_meta": {
+    "name": "Cybercrime canonical vocabulary",
+    "description": "Canonical spellings of brands, platforms, payment systems, institutions and cybersecurity/phishing terminology relevant to Nepali and global cybercrime evidence. Used as high-precision candidate targets and as a validation vocabulary. Extend freely - data only, no code change.",
+    "version": "1.0.0"
+  },
+  "categories": {
+    "browsers": ["Chrome", "Firefox", "Safari", "Edge", "Opera", "Brave"],
+    "operating_systems": ["Windows", "Android", "iOS", "macOS", "Linux", "Ubuntu"],
+    "major_social_media": ["Google", "Facebook", "Instagram", "Telegram",
+      "WhatsApp", "Messenger", "YouTube", "Twitter", "TikTok", "Snapchat",
+      "LinkedIn", "Viber", "Signal"],
+    "tech_companies": ["Microsoft", "Apple", "Amazon", "Meta", "Netflix", "Yahoo"],
+    "payment_systems": ["eSewa", "Khalti", "IME Pay", "Fonepay", "ConnectIPS",
+      "PrabhuPay", "Visa", "Mastercard", "PayPal"],
+    "financial_institutions": ["Nabil Bank", "NIC Asia", "Global IME Bank",
+      "Himalayan Bank", "Everest Bank", "Kumari Bank", "Laxmi Sunrise Bank",
+      "Siddhartha Bank", "Machhapuchhre Bank", "Sanima Bank", "Prabhu Bank",
+      "Citizens Bank", "NMB Bank", "Mega Bank", "Nepal Bank", "Rastriya Banijya Bank",
+      "Agricultural Development Bank", "Standard Chartered", "Nepal Rastra Bank"],
+    "government_organizations": ["Nepal Police", "Cyber Bureau",
+      "Nepal Telecommunications Authority", "Department of Passport",
+      "Inland Revenue Department", "Election Commission", "Supreme Court",
+      "Ministry of Home Affairs", "Ministry of Finance"],
+    "credential_terms": ["OTP", "Password", "Username", "Login", "Logout",
+      "PIN", "CVV", "Verification", "Verify", "Authentication", "KYC",
+      "Passcode", "Passphrase", "Credential"],
+    "security_terms": ["Security", "Encryption", "Firewall", "Antivirus",
+      "Malware", "Ransomware", "Spyware", "Trojan", "Phishing", "Spoofing",
+      "Vulnerability", "Exploit", "Breach", "Botnet", "VPN", "Proxy",
+      "Two-Factor", "Blacklist", "Whitelist"],
+    "phishing_terms": ["Suspended", "Locked", "Expired", "Urgent", "Winner",
+      "Prize", "Lottery", "Reward", "Refund", "Claim", "Confirm", "Update",
+      "Reactivate", "Unlock", "Congratulations", "Selected", "Bonus", "Cashback",
+      "Alert", "Notice", "Warning"]
+  }
+}
