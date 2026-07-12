@@ -1,0 +1,223 @@
+{
+  "nodes": [
+    {
+      "id": "EVID_00101",
+      "case_id": "CASE_0042",
+      "file_name": "victim1_messenger_chat.jpg",
+      "upload_time": "2026-07-08T20:15:00.000Z"
+    },
+    {
+      "id": "EVID_00102",
+      "case_id": "CASE_0042",
+      "file_name": "victim1_esewa_screenshot.jpg",
+      "upload_time": "2026-07-08T21:05:00.000Z"
+    },
+    {
+      "id": "EVID_00103",
+      "case_id": "CASE_0042",
+      "file_name": "victim1_telegram_followup.jpg",
+      "upload_time": "2026-07-09T09:40:00.000Z"
+    },
+    {
+      "id": "EVID_00104",
+      "case_id": "CASE_0042",
+      "file_name": "victim2_whatsapp_chat.jpg",
+      "upload_time": "2026-07-09T14:20:00.000Z"
+    },
+    {
+      "id": "EVID_00105",
+      "case_id": "CASE_0042",
+      "file_name": "victim2_bank_transfer.jpg",
+      "upload_time": "2026-07-09T15:00:00.000Z"
+    },
+    {
+      "id": "EVID_00106",
+      "case_id": "CASE_0042",
+      "file_name": "unrelated_family_group_chat.jpg",
+      "upload_time": "2026-07-06T11:00:00.000Z"
+    },
+    {
+      "id": "EVID_00107",
+      "case_id": "CASE_0042",
+      "file_name": "unrelated_meeting_reminder.jpg",
+      "upload_time": "2026-07-06T14:30:00.000Z"
+    }
+  ],
+  "edges": [
+    {
+      "source": "EVID_00101",
+      "target": "EVID_00104",
+      "type": "shared_entity",
+      "shared_entities": [
+        {
+          "value": "esewa-bonus-verify.xyz/claim",
+          "type": "urls"
+        },
+        {
+          "value": "esewa-bonus-verify.xyz",
+          "type": "domains"
+        }
+      ],
+      "weight": 2.0
+    },
+    {
+      "source": "EVID_00101",
+      "target": "EVID_00102",
+      "type": "shared_entity",
+      "shared_entities": [
+        {
+          "value": "9807766554",
+          "type": "phones"
+        },
+        {
+          "value": "suraj.offers22",
+          "type": "esewa_ids"
+        }
+      ],
+      "weight": 2.0
+    },
+    {
+      "source": "EVID_00101",
+      "target": "EVID_00103",
+      "type": "shared_entity",
+      "shared_entities": [
+        {
+          "value": "9807766554",
+          "type": "phones"
+        }
+      ],
+      "weight": 1.0
+    },
+    {
+      "source": "EVID_00102",
+      "target": "EVID_00103",
+      "type": "shared_entity",
+      "shared_entities": [
+        {
+          "value": "9807766554",
+          "type": "phones"
+        }
+      ],
+      "weight": 1.0
+    },
+    {
+      "source": "EVID_00101",
+      "target": "EVID_00105",
+      "type": "shared_entity",
+      "shared_entities": [
+        {
+          "value": "suraj.offers22",
+          "type": "esewa_ids"
+        }
+      ],
+      "weight": 1.0
+    },
+    {
+      "source": "EVID_00102",
+      "target": "EVID_00105",
+      "type": "shared_entity",
+      "shared_entities": [
+        {
+          "value": "suraj.offers22",
+          "type": "esewa_ids"
+        }
+      ],
+      "weight": 1.0
+    },
+    {
+      "source": "EVID_00102",
+      "target": "EVID_00104",
+      "type": "temporal_proximity",
+      "shared_entities": [],
+      "weight": 0.28125
+    },
+    {
+      "source": "EVID_00103",
+      "target": "EVID_00104",
+      "type": "temporal_proximity",
+      "shared_entities": [],
+      "weight": 0.8055555555555556
+    },
+    {
+      "source": "EVID_00103",
+      "target": "EVID_00105",
+      "type": "temporal_proximity",
+      "shared_entities": [],
+      "weight": 0.7777777777777778
+    },
+    {
+      "source": "EVID_00104",
+      "target": "EVID_00105",
+      "type": "temporal_proximity",
+      "shared_entities": [],
+      "weight": 0.9722222222222222
+    },
+    {
+      "source": "EVID_00106",
+      "target": "EVID_00107",
+      "type": "temporal_proximity",
+      "shared_entities": [],
+      "weight": 0.8541666666666666
+    }
+  ],
+  "entity_index": {
+    "esewa-bonus-verify.xyz/claim": [
+      {
+        "case_id": "CASE_0042",
+        "evidence_id": "EVID_00101",
+        "entity_type": "urls"
+      },
+      {
+        "case_id": "CASE_0042",
+        "evidence_id": "EVID_00104",
+        "entity_type": "urls"
+      }
+    ],
+    "esewa-bonus-verify.xyz": [
+      {
+        "case_id": "CASE_0042",
+        "evidence_id": "EVID_00101",
+        "entity_type": "domains"
+      },
+      {
+        "case_id": "CASE_0042",
+        "evidence_id": "EVID_00104",
+        "entity_type": "domains"
+      }
+    ],
+    "9807766554": [
+      {
+        "case_id": "CASE_0042",
+        "evidence_id": "EVID_00101",
+        "entity_type": "phones"
+      },
+      {
+        "case_id": "CASE_0042",
+        "evidence_id": "EVID_00102",
+        "entity_type": "phones"
+      },
+      {
+        "case_id": "CASE_0042",
+        "evidence_id": "EVID_00103",
+        "entity_type": "phones"
+      }
+    ],
+    "suraj.offers22": [
+      {
+        "case_id": "CASE_0042",
+        "evidence_id": "EVID_00101",
+        "entity_type": "esewa_ids"
+      },
+      {
+        "case_id": "CASE_0042",
+        "evidence_id": "EVID_00102",
+        "entity_type": "esewa_ids"
+      },
+      {
+        "case_id": "CASE_0042",
+        "evidence_id": "EVID_00105",
+        "entity_type": "esewa_ids"
+      }
+    ]
+  }
+}
