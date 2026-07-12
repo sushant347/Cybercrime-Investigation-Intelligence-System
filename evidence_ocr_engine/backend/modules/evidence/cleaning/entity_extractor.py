@@ -1,0 +1,268 @@
+"""Structured forensic entity extraction from cleaned text.
+
+Runs on ``cleaned_text`` (after entity restoration) and produces validated,
+de-duplicated, normalised entities grouped by type. Extraction never alters
+the text - values are copied out, with a separate ``normalized`` form where
+normalisation is meaningful (URLs, emails, phone numbers).
+"""
+
+from __future__ import annotations
+
+import ipaddress
+import re
+from dataclasses import dataclass
+from typing import Callable, Dict, List, Optional, Set
+
+from . import regex_patterns as rx
+
+_TRAILING_PUNCT = ".,;:!?)]}'\"।"
+
+
+@dataclass(frozen=True)
+class ExtractedEntity:
+    """One validated entity occurrence."""
+
+    entity_type: str
+    value: str        # exactly as present in the text
+    normalized: str   # canonical form used for de-duplication / correlation
+
+
+class EntityExtractor:
+    """Regex-driven extractor with per-type validation and normalisation."""
+
+    def extract(self, text: str) -> Dict[str, List[ExtractedEntity]]:
+        """Extract every supported entity type from ``text``.
+
+        Returns:
+            Mapping of entity-type name to de-duplicated entity list. Types
+            with no matches are present with empty lists (stable schema).
+        """
+        results: Dict[str, List[ExtractedEntity]] = {}
+
+        urls = self._collect(text, rx.URL, "urls", normalize=self._normalize_url)
+        emails = self._collect(text, rx.EMAIL, "emails", normalize=str.lower)
+        results["urls"] = urls
+        results["emails"] = emails
+        results["domains"] = self._domains(text, urls, emails)
+
+        results["ipv4"] = self._collect(text, rx.IPV4, "ipv4")
+        results["ipv6"] = self._collect(
+            text, rx.IPV6, "ipv6", validate=self._valid_ipv6
+        )
+        results["mac_addresses"] = self._collect(
+            text, rx.MAC_ADDRESS, "mac_addresses", normalize=self._normalize_mac
+        )
+        results["ports"] = self._group_matches(text, rx.PORT, "ports",
+                                               validate=self._valid_port)
+        results["cve_ids"] = self._collect(text, rx.CVE, "cve_ids",
+                                           normalize=str.upper)
+
+        results["phones"] = self._collect(
+            text, rx.PHONE, "phones", normalize=self._normalize_phone
+        )
+        results["dates"] = self._collect(text, rx.DATE, "dates")
+        results["times"] = self._collect(text, rx.TIME, "times")
+
+        results["money"] = self._collect(text, rx.MONEY, "money")
+        results["otp"] = self._group_matches(text, rx.OTP, "otp")
+        results["bank_accounts"] = self._group_matches(
+            text, rx.BANK_ACCOUNT, "bank_accounts",
+            normalize=lambda v: re.sub(r"[\s-]", "", v),
+        )
+        results["esewa_ids"] = self._group_matches(
+            text, rx.ESEWA_ID, "esewa_ids", normalize=self._normalize_phone
+        )
+        results["khalti_ids"] = self._group_matches(
+            text, rx.KHALTI_ID, "khalti_ids", normalize=self._normalize_phone
+        )
+        results["imepay_ids"] = self._group_matches(
+            text, rx.IMEPAY_ID, "imepay_ids", normalize=self._normalize_phone
+        )
+
+        results["hashes_sha512"] = self._collect(text, rx.SHA512, "hashes_sha512",
+                                                 normalize=str.lower)
+        sha512_values = {e.normalized for e in results["hashes_sha512"]}
+        results["hashes_sha256"] = [
+            e for e in self._collect(text, rx.SHA256, "hashes_sha256", normalize=str.lower)
+            if not any(e.normalized in v for v in sha512_values)
+        ]
+        longer = sha512_values | {e.normalized for e in results["hashes_sha256"]}
+        results["hashes_sha1"] = [
+            e for e in self._collect(text, rx.SHA1, "hashes_sha1", normalize=str.lower)
+            if not any(e.normalized in v for v in longer)
+        ]
+        longer |= {e.normalized for e in results["hashes_sha1"]}
+        results["hashes_md5"] = [
+            e for e in self._collect(text, rx.MD5, "hashes_md5", normalize=str.lower)
+            if not any(e.normalized in v for v in longer)
+        ]
+
+        eth = self._collect(text, rx.ETH_WALLET, "eth_wallets", normalize=str.lower)
+        results["eth_wallets"] = eth
+        eth_values = {e.value for e in eth}
+        results["btc_wallets"] = [
+            e for e in self._collect(text, rx.BTC_WALLET, "btc_wallets")
+            if e.value not in eth_values
+        ]
+
+        results["social_media_urls"] = self._collect(
+            text, rx.SOCIAL_MEDIA_URL, "social_media_urls",
+            normalize=self._normalize_url,
+        )
+        results["telegram_usernames"] = self._group_matches(
+            text, rx.TELEGRAM_USERNAME, "telegram_usernames", normalize=str.lower
+        )
+        results["whatsapp_numbers"] = self._group_matches(
+            text, rx.WHATSAPP_NUMBER, "whatsapp_numbers",
+            normalize=self._normalize_phone,
+        )
+        results["facebook_usernames"] = self._group_matches(
+            text, rx.FACEBOOK_USERNAME, "facebook_usernames", normalize=str.lower
+        )
+        results["instagram_usernames"] = self._group_matches(
+            text, rx.INSTAGRAM_USERNAME, "instagram_usernames", normalize=str.lower
+        )
+        return results
+
+    @staticmethod
+    def total_count(entities: Dict[str, List[ExtractedEntity]]) -> int:
+        return sum(len(items) for items in entities.values())
+
+    # -------------------------------------------------------------- collection
+
+    def _collect(
+        self,
+        text: str,
+        pattern: re.Pattern[str],
+        entity_type: str,
+        normalize: Optional[Callable[[str], str]] = None,
+        validate: Optional[Callable[[str], bool]] = None,
+    ) -> List[ExtractedEntity]:
+        """Full-match collection with trim, validation and de-duplication."""
+        seen: Set[str] = set()
+        entities: List[ExtractedEntity] = []
+        for match in pattern.finditer(text):
+            value = match.group(0).rstrip(_TRAILING_PUNCT)
+            if not value or (validate and not validate(value)):
+                continue
+            normalized = normalize(value) if normalize else value
+            if normalized in seen:
+                continue
+            seen.add(normalized)
+            entities.append(ExtractedEntity(entity_type, value, normalized))
+        return entities
+
+    def _group_matches(
+        self,
+        text: str,
+        pattern: re.Pattern[str],
+        entity_type: str,
+        normalize: Optional[Callable[[str], str]] = None,
+        validate: Optional[Callable[[str], bool]] = None,
+    ) -> List[ExtractedEntity]:
+        """Collection for context patterns whose value is a capture group."""
+        seen: Set[str] = set()
+        entities: List[ExtractedEntity] = []
+        for match in pattern.finditer(text):
+            value = next((g for g in match.groups() if g), None)
+            if value is None:
+                continue
+            value = value.strip().rstrip(_TRAILING_PUNCT)
+            if not value or (validate and not validate(value)):
+                continue
+            normalized = normalize(value) if normalize else value
+            if normalized in seen:
+                continue
+            seen.add(normalized)
+            entities.append(ExtractedEntity(entity_type, value, normalized))
+        return entities
+
+    # ------------------------------------------------------------- validation
+
+    @staticmethod
+    def _valid_ipv6(value: str) -> bool:
+        if ":" not in value or value.count(":") < 2:
+            return False
+        try:
+            ipaddress.IPv6Address(value)
+            return True
+        except ValueError:
+            return False
+
+    @staticmethod
+    def _valid_port(value: str) -> bool:
+        return value.isdigit() and 1 <= int(value) <= 65535
+
+    # ---------------------------------------------------------- normalisation
+
+    @staticmethod
+    def _normalize_url(value: str) -> str:
+        """Lowercase scheme+host; preserve path/query case (may be case-
+        sensitive on the server). Adds no scheme - the value is evidence."""
+        url = value.strip()
+        match = re.match(r"^(https?://)?([^/]+)(.*)$", url, re.IGNORECASE)
+        if not match:
+            return url.lower()
+        scheme = (match.group(1) or "").lower()
+        host = match.group(2).lower()
+        return f"{scheme}{host}{match.group(3)}"
+
+    @staticmethod
+    def _normalize_phone(value: str) -> str:
+        """Digits-only canonical form; Nepali mobiles get the +977 prefix."""
+        digits = re.sub(r"[^\d+]", "", value)
+        digits = "+" + digits.lstrip("+") if value.strip().startswith("+") else digits
+        bare = digits.lstrip("+")
+        if re.fullmatch(r"9[678]\d{8}", bare):
+            return f"+977{bare}"
+        if bare.startswith("977") and len(bare) == 13:
+            return f"+{bare}"
+        return digits
+
+    @staticmethod
+    def _normalize_mac(value: str) -> str:
+        return value.lower().replace("-", ":")
+
+    # ----------------------------------------------------------------- domains
+
+    def _domains(
+        self,
+        text: str,
+        urls: List[ExtractedEntity],
+        emails: List[ExtractedEntity],
+    ) -> List[ExtractedEntity]:
+        """Bare domains + hosts harvested from URLs and email addresses."""
+        seen: Set[str] = set()
+        domains: List[ExtractedEntity] = []
+
+        def _add(raw: str) -> None:
+            domain = raw.lower().strip().rstrip(_TRAILING_PUNCT)
+            tld = domain.rsplit(".", 1)[-1]
+            if (
+                domain in seen
+                or "." not in domain
+                or re.fullmatch(rx.IPV4.pattern, domain)
+                or (tld not in rx.COMMON_TLDS and len(tld) < 2)
+            ):
+                return
+            seen.add(domain)
+            domains.append(ExtractedEntity("domains", raw, domain))
+
+        for url in urls:
+            host = re.sub(r"^https?://", "", url.normalized, flags=re.IGNORECASE)
+            host = host.split("/")[0].split(":")[0]
+            _add(host)
+        for email in emails:
+            _add(email.normalized.split("@", 1)[1])
+        for match in rx.DOMAIN.finditer(text):
+            value = match.group(0)
+            # Skip matches that are part of an email or URL (already covered)
+            # or that lack a plausible TLD.
+            tld = value.rsplit(".", 1)[-1].lower()
+            if tld not in rx.COMMON_TLDS:
+                continue
+            start = match.start()
+            if start > 0 and text[start - 1] in "@/.":
+                continue
+            _add(value)
+        return domains

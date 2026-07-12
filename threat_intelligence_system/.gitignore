@@ -1,0 +1,51 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual Environment
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment
+.env
+
+# Model Checkpoints (large files)
+checkpoints/*.pkl
+checkpoints/*.pt
+checkpoints/*.bin
+checkpoints/*.safetensors
+
+# Processed Data
+data/processed/
+*.csv
+!requirements.txt
+
+# Results (regenerable)
+results/*.json
+results/*.png
+results/*.html
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs
+*.log
+logs/

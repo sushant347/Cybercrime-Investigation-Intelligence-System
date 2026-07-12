@@ -1,0 +1,212 @@
+# Phishing URL Detection Engine Configuration Settings
+
+# ==============================================================================
+# Training Dataset Location
+# ------------------------------------------------------------------------------
+# Directory scanned by the automatic dataset discovery engine
+# (src/datasets/discovery.py). Relative paths are resolved against the
+# project root. Can be overridden with the DATASET_PATH environment
+# variable (.env). Changing datasets never requires touching Python code.
+# ==============================================================================
+dataset_path: ../sample
+
+# ==============================================================================
+# Decision Weights (Tuned for Hybrid Decision Engine)
+# ==============================================================================
+decision_weights:
+  ml_probability: 0.35
+  rule_engine: 0.30
+  threat_intelligence: 0.20
+  domain_trust_signals: 0.15
+
+# ==============================================================================
+# Ensemble Prediction Weights (Phase 3-B)
+# Signals: XGBoost prob, transformer prob, rule score, threat intel, trust
+# Weights of unavailable signals (e.g. transformer) are redistributed.
+# ==============================================================================
+ensemble_weights:
+  xgboost: 0.35
+  transformer: 0.20
+  rules: 0.20
+  threat_intelligence: 0.15
+  trust: 0.10
+
+# ==============================================================================
+# 3-Class Prediction Thresholds (Composite Risk Score)
+# ==============================================================================
+classification_thresholds:
+  legitimate_max: 30
+  suspicious_max: 60
+  phishing_max: 100
+
+# ==============================================================================
+# Threat Reference Databases & Thresholds
+# ==============================================================================
+threat_lists:
+  # Known TLDs frequently abused by malicious sites
+  suspicious_tlds:
+    - xyz
+    - top
+    - club
+    - online
+    - site
+    - website
+    - space
+    - fun
+    - icu
+    - buzz
+    - cf
+    - gq
+    - ml
+    - ga
+    - tk
+    - work
+    - click
+    - link
+    - info
+    - biz
+    - pw
+    - cc
+    - loan
+    - racing
+    - win
+    - bid
+    - stream
+    - download
+    - review
+    - accountant
+    - cricket
+    - science
+    - party
+    - date
+    - faith
+    - trade
+    - men
+    - gdn
+    - kim
+    - wang
+    - rest
+    - surf
+    - bar
+    - cam
+    - monster
+    - hair
+    - sbs
+    - cfd
+    - quest
+    - boats
+    - beauty
+    - makeup
+    - onl
+
+  # Known URL shortener hostnames
+  url_shorteners:
+    - bit.ly
+    - tinyurl.com
+    - goo.gl
+    - t.co
+    - is.gd
+    - buff.ly
+    - ow.ly
+    - rebrand.ly
+    - cutt.ly
+    - shorturl.at
+    - tiny.cc
+    - lnkd.in
+    - youtu.be
+    - amzn.to
+    - rb.gy
+    - bl.ink
+    - short.io
+    - clck.ru
+    - v.gd
+    - qr.ae
+    - u.to
+    - t.ly
+    - surl.li
+    - s.id
+    - shrtco.de
+    - mcaf.ee
+    - dlvr.it
+    - snip.ly
+    - smarturl.it
+
+  # Phishing-associated keywords
+  suspicious_keywords:
+    - login
+    - signin
+    - sign-in
+    - log-in
+    - verify
+    - verification
+    - account
+    - update
+    - secure
+    - security
+    - confirm
+    - confirmation
+    - suspend
+    - suspended
+    - restrict
+    - restricted
+    - unlock
+    - password
+    - credential
+    - authenticate
+    - authentication
+    - banking
+    - payment
+    - wallet
+    - billing
+    - invoice
+    - alert
+    - warning
+    - urgent
+    - immediately
+    - expire
+    - validate
+    - recover
+    - recovery
+    - reset
+    - restore
+    - unusual
+    - activity
+    - unauthorized
+    - compromised
+    - support
+    - helpdesk
+    - service
+    - customer
+    - webscr
+    - cmd
+    - dispatch
+    - redirect
+    - free
+    - prize
+    - winner
+    - congratulation
+    - reward
+    - offer
+    - bonus
+    - gift
+    - promo
+    - promotion
+
+  # Unicode Homograph character lookup mappings (Cyrillic/Armenian/Latin equivalents)
+  homograph_map:
+    "а": "a"  # Cyrillic а
+    "е": "e"  # Cyrillic е
+    "о": "o"  # Cyrillic о
+    "р": "p"  # Cyrillic р
+    "с": "c"  # Cyrillic с
+    "у": "y"  # Cyrillic у
+    "х": "x"  # Cyrillic х
+    "і": "i"  # Cyrillic і
+    "ԁ": "d"  # Cyrillic ԁ
+    "ɡ": "g"  # Latin ɡ
+    "һ": "h"  # Cyrillic һ
+    "ј": "j"  # Cyrillic ј
+    "Ӏ": "l"  # Cyrillic Ӏ
+    "ҽ": "s"  # Cyrillic ҽ
+    "ԛ": "q"  # Cyrillic ԛ
+    "յ": "h"  # Armenian յ
