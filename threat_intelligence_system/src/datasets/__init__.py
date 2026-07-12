@@ -5,6 +5,7 @@ from src.datasets.cleaner import DatasetCleaner
 from src.datasets.validator import DatasetValidator
 from src.datasets.merger import DatasetMerger
 from src.datasets.statistics import DatasetStatistics
+from src.datasets.discovery import DatasetDiscovery, DatasetProfile
 
 __all__ = [
     "DatasetLoader",
@@ -12,4 +13,6 @@ __all__ = [
     "DatasetValidator",
     "DatasetMerger",
     "DatasetStatistics",
+    "DatasetDiscovery",
+    "DatasetProfile",
 ]
