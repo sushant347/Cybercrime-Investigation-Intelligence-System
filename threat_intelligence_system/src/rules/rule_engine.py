@@ -146,9 +146,18 @@ class RuleEngine:
     # Minimum number of suspicious keywords before the keyword rule fires.
     _MIN_SUSPICIOUS_KEYWORDS: int = 2
 
-    def __init__(self) -> None:
-        """Initialise the rule engine and cache reference data from settings."""
+    def __init__(self, brand_engine: Any | None = None) -> None:
+        """Initialise the rule engine and cache reference data from settings.
+
+        Args:
+            brand_engine: Optional injected ``BrandIntelligenceEngine``.
+                When *None* a default instance is created lazily on first
+                use; when construction fails the brand-intelligence rules
+                degrade gracefully to no-ops.
+        """
         settings = get_settings()
+        self._brand_engine: Any | None = brand_engine
+        self._brand_engine_failed: bool = False
         self._known_brands: list[str] = [
             b.lower() for b in settings.threat.known_brands
         ]
@@ -202,6 +211,7 @@ class RuleEngine:
         self._rule_double_slash_in_path(findings, parsed_url, features)
         self._rule_at_symbol(findings, parsed_url, features)
         self._rule_data_or_js_uri(findings, parsed_url, features)
+        self._rule_brand_intelligence(findings, parsed_url, features)
 
         # Derive aggregate score (capped at 1.0)
         raw_score: float = sum(f.score_contribution for f in findings)
@@ -599,3 +609,107 @@ class RuleEngine:
                     score_contribution=1.0,
                 )
             )
+
+    # ------------------------------------------------------------------
+    # Brand Intelligence rules (additive - Phase 5)
+    # ------------------------------------------------------------------
+
+    def _get_brand_engine(self) -> Any | None:
+        """Lazily create the injected/default BrandIntelligenceEngine."""
+        if self._brand_engine is None and not self._brand_engine_failed:
+            try:
+                from src.intelligence.brand_intelligence import (
+                    BrandIntelligenceEngine,
+                )
+                self._brand_engine = BrandIntelligenceEngine()
+            except Exception as exc:  # noqa: BLE001 -- rules must degrade
+                logger.warning(
+                    "BrandIntelligenceEngine unavailable - brand rules "
+                    "disabled: %s", exc,
+                )
+                self._brand_engine_failed = True
+        return self._brand_engine
+
+    def _rule_brand_intelligence(
+        self,
+        findings: list[RuleFinding],
+        parsed_url: ParsedURL,
+        features: dict[str, Any],
+    ) -> None:
+        """Rules: brand impersonation findings from the Brand Intelligence
+        Engine (official-domain mismatch, typosquatting, Unicode spoofing,
+        fake login infrastructure and cloud-hosted impersonation).
+
+        Official domains produce no findings; cloud providers are never
+        flagged on their own. All findings are additive and explainable.
+        """
+        engine = self._get_brand_engine()
+        if engine is None:
+            return
+        try:
+            analysis = engine.analyze(parsed_url)
+        except Exception as exc:  # noqa: BLE001 -- rules must never break
+            logger.warning("Brand intelligence analysis failed: %s", exc)
+            return
+        # Skip only when the domain is official AND clean. Official domains
+        # may still raise Brand Conflict findings (a trusted domain that
+        # references a DIFFERENT protected brand), which must be reported.
+        if not analysis.findings:
+            return
+
+        emitted: set[str] = set()
+        for bf in analysis.findings:
+            rule_id, severity, contribution = {
+                "official_domain_mismatch": (
+                    "bi_official_domain_mismatch", "high", 0.60),
+                "typosquatting": (
+                    "bi_typosquatting", bf.severity, 0.85),
+                "homoglyph": (
+                    "bi_unicode_spoofing", "critical", 0.90),
+                "misleading_affix": (
+                    "bi_brand_impersonation", "high", 0.45),
+                "cloud_hosted_impersonation": (
+                    "bi_cloud_hosted_impersonation", "high", 0.50),
+                "brand_conflict": (
+                    "bi_brand_conflict", "high", 0.45),
+            }.get(bf.finding_type, (None, None, 0.0))
+            if rule_id is None or rule_id in emitted:
+                continue
+            emitted.add(rule_id)
+            findings.append(RuleFinding(
+                rule_id=rule_id,
+                description=bf.detail,
+                severity=severity,
+                score_contribution=contribution,
+            ))
+
+        # Fake login infrastructure: brand mismatch + credential signals in
+        # the URL itself (independent of cloud hosting).
+        has_mismatch = any(
+            f.finding_type in (
+                "official_domain_mismatch", "typosquatting", "homoglyph")
+            for f in analysis.findings
+        )
+        text = f"{parsed_url.subdomain} {parsed_url.path} {parsed_url.query}".lower()
+        login_signals = [
+            kw for kw in ("login", "signin", "sign-in", "log-in", "password",
+                          "verify", "auth", "credential", "webscr", "otp")
+            if kw in text
+        ]
+        if (has_mismatch and login_signals
+                and "bi_fake_login_infrastructure" not in emitted):
+            brand_name = (
+                engine.display_name(analysis.brands_detected[0])
+                if analysis.brands_detected else "a protected brand"
+            )
+            findings.append(RuleFinding(
+                rule_id="bi_fake_login_infrastructure",
+                description=(
+                    f"URL imitates {brand_name} and contains "
+                    f"credential-collection signals "
+                    f"({', '.join(login_signals[:3])}) - consistent with a "
+                    f"fake login page."
+                ),
+                severity="high",
+                score_contribution=0.55,
+            ))
