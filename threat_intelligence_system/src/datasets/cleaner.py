@@ -104,6 +104,11 @@ class DatasetCleaner:
         # Step 2: Strip whitespace
         df["url"] = df["url"].str.strip()
 
+        # Step 2b: Drop URLs containing control characters or raw quotes.
+        # RFC 3986 requires these to be percent-encoded; raw occurrences
+        # indicate malformed data and break CSV round-tripping.
+        df = df[~df["url"].str.contains(r'[\x00-\x1f"\\]', regex=True, na=False)]
+
         # Step 3: Normalise URLs
         df = self._normalise_urls(df)
 
