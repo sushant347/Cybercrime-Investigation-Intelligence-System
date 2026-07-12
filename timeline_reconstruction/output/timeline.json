@@ -1,0 +1,334 @@
+{
+  "total_events": 7,
+  "resolved_count": 7,
+  "unresolved_count": 0,
+  "timeline": [
+    {
+      "evidence_id": "EVID_00106",
+      "case_id": "CASE_0042",
+      "file_name": "unrelated_family_group_chat.jpg",
+      "resolved_time": "2026-07-06T11:00:00+00:00",
+      "time_source": "upload_time_fallback",
+      "confidence": "low",
+      "text_preview": "Bibek Karki\ndashain ma ghar aaune ho?\nma pani aauxu dai",
+      "risk_signals": {
+        "urgency": 0,
+        "financial": 0,
+        "credential": 0,
+        "threat": 0
+      },
+      "correlated_with": [
+        {
+          "linked_to": "EVID_00107",
+          "type": "temporal_proximity",
+          "shared_entities": [],
+          "weight": 0.8541666666666666
+        }
+      ]
+    },
+    {
+      "evidence_id": "EVID_00107",
+      "case_id": "CASE_0042",
+      "file_name": "unrelated_meeting_reminder.jpg",
+      "resolved_time": "2026-07-06T14:30:00+00:00",
+      "time_source": "upload_time_fallback",
+      "confidence": "low",
+      "text_preview": "Office Group\nmeeting is at 3pm tomorrow, please be on time",
+      "risk_signals": {
+        "urgency": 0,
+        "financial": 0,
+        "credential": 0,
+        "threat": 0
+      },
+      "correlated_with": [
+        {
+          "linked_to": "EVID_00106",
+          "type": "temporal_proximity",
+          "shared_entities": [],
+          "weight": 0.8541666666666666
+        }
+      ]
+    },
+    {
+      "evidence_id": "EVID_00101",
+      "case_id": "CASE_0042",
+      "file_name": "victim1_messenger_chat.jpg",
+      "resolved_time": "2026-07-08T20:15:00+00:00",
+      "time_source": "upload_time_fallback",
+      "confidence": "low",
+      "text_preview": "Suraj Bhandari\nनमस्ते dai, tapaiko account ma bonus paisa aayeko xa\nesewa id: suraj.offers22\nphone: 9807766554\nyo link m",
+      "risk_signals": {
+        "urgency": 1,
+        "financial": 1,
+        "credential": 1,
+        "threat": 0
+      },
+      "correlated_with": [
+        {
+          "linked_to": "EVID_00104",
+          "type": "shared_entity",
+          "shared_entities": [
+            {
+              "value": "esewa-bonus-verify.xyz/claim",
+              "type": "urls"
+            },
+            {
+              "value": "esewa-bonus-verify.xyz",
+              "type": "domains"
+            }
+          ],
+          "weight": 2.0
+        },
+        {
+          "linked_to": "EVID_00102",
+          "type": "shared_entity",
+          "shared_entities": [
+            {
+              "value": "9807766554",
+              "type": "phones"
+            },
+            {
+              "value": "suraj.offers22",
+              "type": "esewa_ids"
+            }
+          ],
+          "weight": 2.0
+        },
+        {
+          "linked_to": "EVID_00103",
+          "type": "shared_entity",
+          "shared_entities": [
+            {
+              "value": "9807766554",
+              "type": "phones"
+            }
+          ],
+          "weight": 1.0
+        },
+        {
+          "linked_to": "EVID_00105",
+          "type": "shared_entity",
+          "shared_entities": [
+            {
+              "value": "suraj.offers22",
+              "type": "esewa_ids"
+            }
+          ],
+          "weight": 1.0
+        }
+      ]
+    },
+    {
+      "evidence_id": "EVID_00102",
+      "case_id": "CASE_0042",
+      "file_name": "victim1_esewa_screenshot.jpg",
+      "resolved_time": "2026-07-08T20:58:00+00:00",
+      "time_source": "content_chat_timestamp",
+      "confidence": "medium",
+      "text_preview": "eSewa\nPayment To: suraj.offers22\nAmount: Rs. 25,000\n07-08, 20:58:np 120\nStatus: Completed\nFrom: 9807766554",
+      "risk_signals": {
+        "urgency": 0,
+        "financial": 1,
+        "credential": 0,
+        "threat": 0
+      },
+      "correlated_with": [
+        {
+          "linked_to": "EVID_00101",
+          "type": "shared_entity",
+          "shared_entities": [
+            {
+              "value": "9807766554",
+              "type": "phones"
+            },
+            {
+              "value": "suraj.offers22",
+              "type": "esewa_ids"
+            }
+          ],
+          "weight": 2.0
+        },
+        {
+          "linked_to": "EVID_00103",
+          "type": "shared_entity",
+          "shared_entities": [
+            {
+              "value": "9807766554",
+              "type": "phones"
+            }
+          ],
+          "weight": 1.0
+        },
+        {
+          "linked_to": "EVID_00105",
+          "type": "shared_entity",
+          "shared_entities": [
+            {
+              "value": "suraj.offers22",
+              "type": "esewa_ids"
+            }
+          ],
+          "weight": 1.0
+        },
+        {
+          "linked_to": "EVID_00104",
+          "type": "temporal_proximity",
+          "shared_entities": [],
+          "weight": 0.28125
+        }
+      ]
+    },
+    {
+      "evidence_id": "EVID_00103",
+      "case_id": "CASE_0042",
+      "file_name": "victim1_telegram_followup.jpg",
+      "resolved_time": "2026-07-09T09:40:00+00:00",
+      "time_source": "upload_time_fallback",
+      "confidence": "low",
+      "text_preview": "Suraj Offers\npaisa aaena bhane hamiley tapaiko photo ra details sabai lai pathaidine chau\nfarkera call garnus 9807766554",
+      "risk_signals": {
+        "urgency": 1,
+        "financial": 0,
+        "credential": 0,
+        "threat": 1
+      },
+      "correlated_with": [
+        {
+          "linked_to": "EVID_00101",
+          "type": "shared_entity",
+          "shared_entities": [
+            {
+              "value": "9807766554",
+              "type": "phones"
+            }
+          ],
+          "weight": 1.0
+        },
+        {
+          "linked_to": "EVID_00102",
+          "type": "shared_entity",
+          "shared_entities": [
+            {
+              "value": "9807766554",
+              "type": "phones"
+            }
+          ],
+          "weight": 1.0
+        },
+        {
+          "linked_to": "EVID_00104",
+          "type": "temporal_proximity",
+          "shared_entities": [],
+          "weight": 0.8055555555555556
+        },
+        {
+          "linked_to": "EVID_00105",
+          "type": "temporal_proximity",
+          "shared_entities": [],
+          "weight": 0.7777777777777778
+        }
+      ]
+    },
+    {
+      "evidence_id": "EVID_00104",
+      "case_id": "CASE_0042",
+      "file_name": "victim2_whatsapp_chat.jpg",
+      "resolved_time": "2026-07-09T14:15:00+00:00",
+      "time_source": "content_time_only",
+      "confidence": "medium",
+      "text_preview": "Unknown\nतपाईंको eSewa account ma cashback आएको छ\nClick here to claim: hxxp://esewa-bonus-verify.xyz/claim\nlimited time o",
+      "risk_signals": {
+        "urgency": 1,
+        "financial": 1,
+        "credential": 0,
+        "threat": 0
+      },
+      "correlated_with": [
+        {
+          "linked_to": "EVID_00101",
+          "type": "shared_entity",
+          "shared_entities": [
+            {
+              "value": "esewa-bonus-verify.xyz/claim",
+              "type": "urls"
+            },
+            {
+              "value": "esewa-bonus-verify.xyz",
+              "type": "domains"
+            }
+          ],
+          "weight": 2.0
+        },
+        {
+          "linked_to": "EVID_00102",
+          "type": "temporal_proximity",
+          "shared_entities": [],
+          "weight": 0.28125
+        },
+        {
+          "linked_to": "EVID_00103",
+          "type": "temporal_proximity",
+          "shared_entities": [],
+          "weight": 0.8055555555555556
+        },
+        {
+          "linked_to": "EVID_00105",
+          "type": "temporal_proximity",
+          "shared_entities": [],
+          "weight": 0.9722222222222222
+        }
+      ]
+    },
+    {
+      "evidence_id": "EVID_00105",
+      "case_id": "CASE_0042",
+      "file_name": "victim2_bank_transfer.jpg",
+      "resolved_time": "2026-07-09T14:55:00+00:00",
+      "time_source": "content_date_time",
+      "confidence": "high",
+      "text_preview": "Nepal Bank Transfer Confirmation\nDate: 2026-07-09 14:55:00\nTo Account: 0198765432109\nAmount: NPR 40,000\nBeneficiary: Sur",
+      "risk_signals": {
+        "urgency": 0,
+        "financial": 1,
+        "credential": 0,
+        "threat": 0
+      },
+      "correlated_with": [
+        {
+          "linked_to": "EVID_00101",
+          "type": "shared_entity",
+          "shared_entities": [
+            {
+              "value": "suraj.offers22",
+              "type": "esewa_ids"
+            }
+          ],
+          "weight": 1.0
+        },
+        {
+          "linked_to": "EVID_00102",
+          "type": "shared_entity",
+          "shared_entities": [
+            {
+              "value": "suraj.offers22",
+              "type": "esewa_ids"
+            }
+          ],
+          "weight": 1.0
+        },
+        {
+          "linked_to": "EVID_00103",
+          "type": "temporal_proximity",
+          "shared_entities": [],
+          "weight": 0.7777777777777778
+        },
+        {
+          "linked_to": "EVID_00104",
+          "type": "temporal_proximity",
+          "shared_entities": [],
+          "weight": 0.9722222222222222
+        }
+      ]
+    }
+  ]
+}
