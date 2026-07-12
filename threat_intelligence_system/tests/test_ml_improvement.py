@@ -120,7 +120,9 @@ class TestExpandedSHAP:
 class TestModelVersioningMetadata:
     def test_production_model_has_full_metadata(self, production_model) -> None:
         md = production_model.metadata
-        assert md.model_version == "3.0.0"
+        # v4.0.0: retrained on the replaced dataset from the configurable
+        # dataset directory (DATASET_PATH), 2026-07-12.
+        assert md.model_version == "4.0.0"
         assert md.dataset_version.startswith("ds-")
         assert md.feature_version != ""
         assert md.calibration_version.startswith("cal-")
