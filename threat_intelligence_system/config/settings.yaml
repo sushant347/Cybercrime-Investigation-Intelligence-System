@@ -1,6 +1,16 @@
 # Phishing URL Detection Engine Configuration Settings
 
 # ==============================================================================
+# Training Dataset Location
+# ------------------------------------------------------------------------------
+# Directory scanned by the automatic dataset discovery engine
+# (src/datasets/discovery.py). Relative paths are resolved against the
+# project root. Can be overridden with the DATASET_PATH environment
+# variable (.env). Changing datasets never requires touching Python code.
+# ==============================================================================
+dataset_path: ../sample
+
+# ==============================================================================
 # Decision Weights (Tuned for Hybrid Decision Engine)
 # ==============================================================================
 decision_weights:
@@ -184,19 +194,19 @@ threat_lists:
 
   # Unicode Homograph character lookup mappings (Cyrillic/Armenian/Latin equivalents)
   homograph_map:
-    "\u0430": "a"  # Cyrillic а
-    "\u0435": "e"  # Cyrillic е
-    "\u043e": "o"  # Cyrillic о
-    "\u0440": "p"  # Cyrillic р
-    "\u0441": "c"  # Cyrillic с
-    "\u0443": "y"  # Cyrillic у
-    "\u0445": "x"  # Cyrillic х
-    "\u0456": "i"  # Cyrillic і
-    "\u0501": "d"  # Cyrillic ԁ
-    "\u0261": "g"  # Latin ɡ
-    "\u04bb": "h"  # Cyrillic һ
-    "\u0458": "j"  # Cyrillic ј
-    "\u04c0": "l"  # Cyrillic Ӏ
-    "\u04bd": "s"  # Cyrillic ҽ
-    "\u051b": "q"  # Cyrillic ԛ
-    "\u0575": "h"  # Armenian յ
+    "а": "a"  # Cyrillic а
+    "е": "e"  # Cyrillic е
+    "о": "o"  # Cyrillic о
+    "р": "p"  # Cyrillic р
+    "с": "c"  # Cyrillic с
+    "у": "y"  # Cyrillic у
+    "х": "x"  # Cyrillic х
+    "і": "i"  # Cyrillic і
+    "ԁ": "d"  # Cyrillic ԁ
+    "ɡ": "g"  # Latin ɡ
+    "һ": "h"  # Cyrillic һ
+    "ј": "j"  # Cyrillic ј
+    "Ӏ": "l"  # Cyrillic Ӏ
+    "ҽ": "s"  # Cyrillic ҽ
+    "ԛ": "q"  # Cyrillic ԛ
+    "յ": "h"  # Armenian յ

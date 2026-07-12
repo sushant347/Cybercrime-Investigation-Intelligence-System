@@ -37,11 +37,30 @@ _SETTINGS_YAML = _load_yaml_config(_CONFIG_DIR / "settings.yaml")
 _OFFICIAL_DOMAINS_YAML = _load_yaml_config(_CONFIG_DIR / "official_domains.yaml")
 
 
+def _resolve_dataset_dir() -> Path:
+    """Resolve the configurable training-dataset directory.
+
+    Resolution order:
+        1. ``DATASET_PATH`` environment variable (``.env`` supported).
+        2. ``dataset_path`` key in ``config/settings.yaml``.
+        3. Default: ``../sample`` relative to the project root.
+
+    Relative paths are resolved against the project root so the setting
+    behaves identically regardless of the current working directory.
+    """
+    raw_value = os.getenv("DATASET_PATH") or _SETTINGS_YAML.get("dataset_path") or "../sample"
+    path = Path(raw_value)
+    if not path.is_absolute():
+        path = (_PROJECT_ROOT / path).resolve()
+    return path
+
+
 @dataclass(frozen=True)
 class PathSettings:
     """File system path configuration."""
 
     project_root: Path = _PROJECT_ROOT
+    dataset_dir: Path = field(default_factory=_resolve_dataset_dir)
     raw_data_dir: Path = field(default_factory=lambda: Path(
         os.getenv("RAW_DATA_DIR", str(_PROJECT_ROOT.parent / "threat-intelligent-system" / "raw"))
     ))
@@ -74,6 +93,15 @@ class DatasetSettings:
     )
     random_seed: int = field(
         default_factory=lambda: int(os.getenv("RANDOM_SEED", "42"))
+    )
+    # Class-balance guard for merged training data: when the majority /
+    # minority ratio exceeds this value the majority class is downsampled.
+    balance_max_ratio: float = field(
+        default_factory=lambda: float(os.getenv("BALANCE_MAX_RATIO", "1.5"))
+    )
+    # Optional cap on total rows used for training (0 = use everything).
+    max_training_rows: int = field(
+        default_factory=lambda: int(os.getenv("MAX_TRAINING_ROWS", "0"))
     )
 
     # Dataset file names
@@ -116,6 +144,36 @@ class TransformerSettings:
         "mbert": "bert-base-multilingual-cased",
         "xlm-roberta": "xlm-roberta-base",
     })
+
+
+@dataclass(frozen=True)
+class TrainingSettings:
+    """ML training pipeline configuration (cross-validation, tuning, extraction)."""
+
+    # Stratified K-Fold cross-validation
+    cv_folds: int = field(
+        default_factory=lambda: int(os.getenv("CV_FOLDS", "5"))
+    )
+    # Stratified row cap for the CV stage only (0 = full training split)
+    cv_sample_size: int = field(
+        default_factory=lambda: int(os.getenv("CV_SAMPLE_SIZE", "0"))
+    )
+    # Optuna hyperparameter optimization
+    tuning_trials: int = field(
+        default_factory=lambda: int(os.getenv("OPTUNA_TRIALS", "25"))
+    )
+    # Stratified row cap for tuning trials only (0 = full training split)
+    tuning_sample_size: int = field(
+        default_factory=lambda: int(os.getenv("TUNING_SAMPLE_SIZE", "0"))
+    )
+    # Early-stopping patience for gradient-boosting trials
+    early_stopping_rounds: int = field(
+        default_factory=lambda: int(os.getenv("EARLY_STOPPING_ROUNDS", "30"))
+    )
+    # URLs per feature-extraction chunk (memory bound for huge datasets)
+    extraction_chunk_size: int = field(
+        default_factory=lambda: int(os.getenv("EXTRACTION_CHUNK_SIZE", "50000"))
+    )
 
 
 @dataclass(frozen=True)
@@ -261,22 +319,22 @@ class ThreatSettings:
     # Homograph character mapping (Unicode lookalikes)
     homograph_map: dict[str, str] = field(default_factory=lambda: dict(
         _SETTINGS_YAML.get("threat_lists", {}).get("homograph_map", {
-            "\u0430": "a",  # Cyrillic а
-            "\u0435": "e",  # Cyrillic е
-            "\u043e": "o",  # Cyrillic о
-            "\u0440": "p",  # Cyrillic р
-            "\u0441": "c",  # Cyrillic с
-            "\u0443": "y",  # Cyrillic у
-            "\u0445": "x",  # Cyrillic х
-            "\u0456": "i",  # Cyrillic і
-            "\u0501": "d",  # Cyrillic ԁ
-            "\u0261": "g",  # Latin ɡ
-            "\u04bb": "h",  # Cyrillic һ
-            "\u0458": "j",  # Cyrillic ј
-            "\u04c0": "l",  # Cyrillic Ӏ
-            "\u04bd": "s",  # Cyrillic ҽ
-            "\u051b": "q",  # Cyrillic ԛ
-            "\u0575": "h",  # Armenian յ
+            "а": "a",  # Cyrillic а
+            "е": "e",  # Cyrillic е
+            "о": "o",  # Cyrillic о
+            "р": "p",  # Cyrillic р
+            "с": "c",  # Cyrillic с
+            "у": "y",  # Cyrillic у
+            "х": "x",  # Cyrillic х
+            "і": "i",  # Cyrillic і
+            "ԁ": "d",  # Cyrillic ԁ
+            "ɡ": "g",  # Latin ɡ
+            "һ": "h",  # Cyrillic һ
+            "ј": "j",  # Cyrillic ј
+            "Ӏ": "l",  # Cyrillic Ӏ
+            "ҽ": "s",  # Cyrillic ҽ
+            "ԛ": "q",  # Cyrillic ԛ
+            "յ": "h",  # Armenian յ
         })
     ))
 
@@ -311,6 +369,7 @@ class Settings:
 
     paths: PathSettings = field(default_factory=PathSettings)
     dataset: DatasetSettings = field(default_factory=DatasetSettings)
+    training: TrainingSettings = field(default_factory=TrainingSettings)
     transformer: TransformerSettings = field(default_factory=TransformerSettings)
     api: APISettings = field(default_factory=APISettings)
     threat: ThreatSettings = field(default_factory=ThreatSettings)
