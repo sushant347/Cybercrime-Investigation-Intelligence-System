@@ -254,3 +254,32 @@ def build_risk_highlights_pdf(stats: dict, styles) -> list:
     return flow
 
 
+def build_correlation_highlights_pdf(stats: dict, styles) -> list:
+    flow = [Paragraph("Correlation Highlights", styles["Heading2"])]
+
+    if not stats["correlated_events"]:
+        flow.append(Paragraph(
+            "No correlations were found between evidence items (or "
+            "Module 4's correlation graph was not available when the "
+            "timeline was built).",
+            styles["ReportBody"],
+        ))
+        flow.append(Spacer(1, 8))
+        return flow
+
+    rows = []
+    for event in stats["correlated_events"]:
+        links = event["correlated_with"]
+        link_desc = "; ".join(
+            f"{_escape(c['linked_to'])} ({_escape(c['type'])}, weight {c.get('weight', 0)})"
+            for c in links
+        )
+        text = (f"<b>{_escape(event['evidence_id'])}</b> "
+                f"({_escape(event['file_name'])}) &mdash; linked to: {link_desc}")
+        rows.append(ListItem(Paragraph(text, styles["ReportBody"])))
+
+    flow.append(ListFlowable(rows, bulletType="bullet"))
+    flow.append(Spacer(1, 8))
+    return flow
+
+
