@@ -25,7 +25,7 @@ from src.prediction.predictor import PhishingPredictor
 # 1. PUT YOUR URLS HERE (used when no URLs are given on the command line)
 # ============================================================================
 URLS_TO_TEST = [
-    "https://ahoradavirada.s3.us-east-005.backblazeb2.c...",
+    "https://www.telegrammessage.com/",
 ]
 # ============================================================================
 
