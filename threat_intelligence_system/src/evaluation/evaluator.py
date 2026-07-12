@@ -14,6 +14,7 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import (
     accuracy_score,
+    average_precision_score,
     classification_report,
     confusion_matrix,
     f1_score,
@@ -68,6 +69,8 @@ class EvaluationResult:
     false_negative_rate: float = 0.0
     brier_score: float = 0.0
     expected_calibration_error: float = 0.0
+    # PR-AUC (average precision) -- additive field, requires probabilities.
+    pr_auc: float = 0.0
 
     def to_dict(self) -> dict[str, Any]:
         """Convert evaluation result to dictionary."""
@@ -87,6 +90,7 @@ class EvaluationResult:
             "false_negative_rate": self.false_negative_rate,
             "brier_score": self.brier_score,
             "expected_calibration_error": self.expected_calibration_error,
+            "pr_auc": self.pr_auc,
         }
 
 
@@ -172,6 +176,12 @@ class ModelEvaluator:
             except ValueError:
                 result.auc_roc = 0.0
                 logger.warning("Could not compute AUC-ROC for %s", model_name)
+
+            try:
+                result.pr_auc = float(average_precision_score(y_true, y_proba))
+            except ValueError:
+                result.pr_auc = 0.0
+                logger.warning("Could not compute PR-AUC for %s", model_name)
 
             try:
                 # Clip probabilities to avoid log(0)
@@ -369,4 +379,3 @@ class ModelEvaluator:
         """Clear all stored evaluation results."""
         self._results.clear()
         logger.info("All evaluation results cleared")
-logger.info("All evaluation results cleared")
