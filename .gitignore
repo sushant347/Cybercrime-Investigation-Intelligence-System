@@ -54,3 +54,6 @@ Thumbs.db
 git_commit_and_push.sh
 PROJECT.md
 PROJECT_AUDIT.md
+
+# ===== Raw training datasets (too large for git) =====
+sample/
