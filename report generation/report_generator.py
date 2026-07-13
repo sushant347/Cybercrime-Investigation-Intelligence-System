@@ -497,3 +497,81 @@ def render_caveats_md(stats: dict) -> str:
 
 
 # ----------------------------------------------------------------------
+# Report assembly
+# ----------------------------------------------------------------------
+
+def _scope_to_case(timeline: dict, case_filter: str) -> dict:
+    events = [e for e in timeline["timeline"] if e["case_id"] == case_filter]
+    if not events:
+        raise ValueError(f"No evidence found for case_id '{case_filter}'")
+    return {
+        "total_events": len(events),
+        "resolved_count": sum(1 for e in events if e["resolved_time"]),
+        "unresolved_count": sum(1 for e in events if not e["resolved_time"]),
+        "timeline": events,
+    }
+
+
+def generate_report_pdf(timeline: dict, output_path: str, source_path: str,
+                         case_filter: str = None, investigator: str = "Unspecified",
+                         report_id: str = None):
+    if case_filter:
+        timeline = _scope_to_case(timeline, case_filter)
+
+    report_id = report_id or new_report_id()
+    source_hash = hash_file(source_path)
+
+    events = timeline["timeline"]
+    stats = compute_stats(events)
+    generated_at = datetime.now().isoformat(timespec="seconds")
+    styles = _build_styles()
+
+    story = []
+    story += build_overview_pdf(timeline, stats, generated_at, styles,
+                                 report_id, investigator, source_path, source_hash)
+    story.append(HRFlowable(width="100%", color=colors.HexColor("#CCCCCC")))
+    story += build_risk_highlights_pdf(stats, styles)
+    story += build_correlation_highlights_pdf(stats, styles)
+    story += build_timeline_narrative_pdf(events, styles)
+    story.append(HRFlowable(width="100%", color=colors.HexColor("#CCCCCC")))
+    story += build_caveats_pdf(stats, styles)
+
+    footer_left = f"{report_id}  |  Generated {generated_at}"
+
+    def _make_canvas(*args, **kwargs):
+        return _FootedCanvas(*args, footer_left=footer_left, **kwargs)
+
+    doc = SimpleDocTemplate(
+        output_path, pagesize=letter,
+        topMargin=54, bottomMargin=64, leftMargin=54, rightMargin=54,
+        title="Investigation Report", author=investigator,
+        subject=f"CIIS Investigation Report {report_id}",
+    )
+    doc.build(story, canvasmaker=_make_canvas)
+    return report_id, source_hash
+
+
+def generate_report_md(timeline: dict, source_path: str, case_filter: str = None,
+                        investigator: str = "Unspecified", report_id: str = None) -> tuple:
+    if case_filter:
+        timeline = _scope_to_case(timeline, case_filter)
+
+    report_id = report_id or new_report_id()
+    source_hash = hash_file(source_path)
+
+    events = timeline["timeline"]
+    stats = compute_stats(events)
+    generated_at = datetime.now().isoformat(timespec="seconds")
+
+    sections = [
+        render_overview_md(timeline, stats, generated_at, report_id,
+                            investigator, source_path, source_hash),
+        render_risk_highlights_md(stats),
+        render_correlation_highlights_md(stats),
+        render_timeline_narrative_md(events),
+        render_caveats_md(stats),
+    ]
+    return "\n".join(sections), report_id, source_hash
+
+
+# ----------------------------------------------------------------------
