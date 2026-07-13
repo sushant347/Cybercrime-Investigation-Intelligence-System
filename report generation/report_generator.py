@@ -364,3 +364,136 @@ def build_caveats_pdf(stats: dict, styles) -> list:
 
 
 # ----------------------------------------------------------------------
+# Markdown section builders (kept as an alternate output format)
+# ----------------------------------------------------------------------
+
+def render_overview_md(timeline: dict, stats: dict, generated_at: str,
+                        report_id: str, investigator: str,
+                        source_path: str, source_hash: str) -> str:
+    lines = ["# Investigation Report", ""]
+    lines.append(f"- **Report ID:** {report_id}")
+    lines.append(f"- **Generated:** {generated_at}")
+    lines.append(f"- **Investigator:** {investigator}")
+    lines.append(f"- **Source file:** {os.path.basename(source_path)}")
+    lines.append(f"- **Source SHA-256:** {source_hash}")
+    lines.append("")
+    lines.append("## Overview")
+    lines.append("")
+    lines.append(f"- **Total evidence items:** {timeline['total_events']}")
+    lines.append(f"- **Resolved timestamps:** {timeline['resolved_count']}")
+    lines.append(f"- **Unresolved timestamps:** {timeline['unresolved_count']}")
+    if len(stats["case_counts"]) > 1:
+        case_list = ", ".join(f"{cid} ({n})" for cid, n in stats["case_counts"].items())
+        lines.append(f"- **Cases covered:** {case_list}")
+    conf = stats["confidence_counts"]
+    conf_line = ", ".join(f"{level}: {conf.get(level, 0)}" for level in
+                          ("high", "medium", "low", "none") if conf.get(level))
+    lines.append(f"- **Timestamp confidence breakdown:** {conf_line}")
+    lines.append("")
+    return "\n".join(lines)
+
+
+def render_risk_highlights_md(stats: dict) -> str:
+    lines = ["## Risk Signal Highlights", ""]
+    if not stats["flagged_events"]:
+        lines.append("No risk signals were flagged on any evidence item.")
+        lines.append("")
+        return "\n".join(lines)
+    tally_line = ", ".join(f"{signal} ({count})" for signal, count in
+                           stats["risk_tally"].most_common())
+    lines.append(f"**Signal frequency:** {tally_line}")
+    lines.append("")
+    for event, active in stats["flagged_events"]:
+        time_str = event["resolved_time"] or "unknown time"
+        lines.append(
+            f"- `{event['evidence_id']}` ({event['file_name']}) at {time_str} "
+            f"— flags: {', '.join(active)}"
+        )
+    lines.append("")
+    return "\n".join(lines)
+
+
+def render_correlation_highlights_md(stats: dict) -> str:
+    lines = ["## Correlation Highlights", ""]
+    if not stats["correlated_events"]:
+        lines.append(
+            "No correlations were found between evidence items "
+            "(or Module 4's correlation graph was not available when the "
+            "timeline was built)."
+        )
+        lines.append("")
+        return "\n".join(lines)
+    for event in stats["correlated_events"]:
+        links = event["correlated_with"]
+        link_desc = "; ".join(
+            f"{c['linked_to']} ({c['type']}, weight {c.get('weight', 0)})"
+            for c in links
+        )
+        lines.append(f"- `{event['evidence_id']}` ({event['file_name']}) — linked to: {link_desc}")
+    lines.append("")
+    return "\n".join(lines)
+
+
+def render_timeline_narrative_md(events: list) -> str:
+    lines = ["## Chronological Narrative", ""]
+    by_case = defaultdict(list)
+    for e in events:
+        by_case[e["case_id"]].append(e)
+    for case_id, case_events in by_case.items():
+        if len(by_case) > 1:
+            lines.append(f"### Case: {case_id}")
+            lines.append("")
+        for e in case_events:
+            time_str = e["resolved_time"] or "UNKNOWN TIME"
+            conf_note = (
+                f" _(confidence: {e['confidence']}, source: {e['time_source']})_"
+                if e["confidence"] != "high" else ""
+            )
+            line = f"- **[{time_str}]** {e['file_name']} (`{e['evidence_id']}`){conf_note}"
+            preview = (e.get("text_preview") or "").strip()
+            if preview:
+                line += f"\n  > {preview}"
+            if e.get("correlated_with"):
+                linked_ids = ", ".join(c["linked_to"] for c in e["correlated_with"])
+                line += f"\n  — correlated with: {linked_ids}"
+            active_risks = [k for k, v in (e.get("risk_signals") or {}).items() if v]
+            if active_risks:
+                line += f"\n  — ⚠ risk signals: {', '.join(active_risks)}"
+            lines.append(line)
+        lines.append("")
+    return "\n".join(lines)
+
+
+def render_caveats_md(stats: dict) -> str:
+    lines = ["## Confidence & Caveats", ""]
+    lines.append(
+        "Timestamps in this report are resolved with varying confidence. "
+        "Readers should weigh conclusions accordingly:"
+    )
+    lines.append("")
+    lines.append("- **high** — an explicit date and time were found in the evidence "
+                  "content itself (most forensically reliable).")
+    lines.append("- **medium** — either a chat-style inline timestamp or a time-only "
+                  "value combined with the upload date as a best guess; the date "
+                  "portion may be inexact.")
+    lines.append("- **low** — no usable timestamp was found in the content; the "
+                  "system fell back to the file's processing/upload time, which may "
+                  "not reflect when the underlying event occurred.")
+    lines.append("- **none** — no timestamp could be resolved at all; this item is "
+                  "listed at the end of the timeline, unordered relative to other "
+                  "unresolved items.")
+    low_or_worse = (stats["confidence_counts"].get("low", 0)
+                    + stats["confidence_counts"].get("none", 0))
+    if low_or_worse:
+        lines.append("")
+        lines.append(
+            f"**{low_or_worse} of {sum(stats['confidence_counts'].values())} "
+            "evidence item(s) have low or unresolved timestamp confidence** "
+            "and should not be treated as precisely dated without further "
+            "corroboration."
+        )
+    lines.append("")
+    return "\n".join(lines)
+
+
+# ----------------------------------------------------------------------
