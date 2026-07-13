@@ -575,3 +575,46 @@ def generate_report_md(timeline: dict, source_path: str, case_filter: str = None
 
 
 # ----------------------------------------------------------------------
+# CLI entry point
+# ----------------------------------------------------------------------
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("timeline", help="Path to timeline.json from Module 5")
+    parser.add_argument("--case", default=None,
+                         help="Restrict the report to a single case_id")
+    parser.add_argument("--format", choices=["pdf", "md"], default="pdf",
+                         help="Output format (default: pdf)")
+    parser.add_argument("--output", default=None,
+                         help="Output path (default: output/report.<format>)")
+    parser.add_argument("--investigator", default="Unspecified",
+                         help="Name/ID recorded on the report as the investigator")
+    parser.add_argument("--report-id", default=None,
+                         help="Custom report ID (default: auto-generated, e.g. RPT-XXXXXXXXXX)")
+    args = parser.parse_args()
+
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+    timeline = load_timeline(args.timeline)
+    output_path = args.output or os.path.join(OUTPUT_DIR, f"report.{args.format}")
+
+    if args.format == "pdf":
+        report_id, source_hash = generate_report_pdf(
+            timeline, output_path, args.timeline, case_filter=args.case,
+            investigator=args.investigator, report_id=args.report_id,
+        )
+    else:
+        report, report_id, source_hash = generate_report_md(
+            timeline, args.timeline, case_filter=args.case,
+            investigator=args.investigator, report_id=args.report_id,
+        )
+        with open(output_path, "w", encoding="utf-8") as f:
+            f.write(report)
+
+    print(f"Generated report -> {output_path}")
+    print(f"Report ID: {report_id}")
+    print(f"Source SHA-256: {source_hash}")
+
+
+if __name__ == "__main__":
+    main()
