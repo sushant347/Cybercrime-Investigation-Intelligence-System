@@ -1,0 +1,456 @@
+"""Module 7 - Advanced Report Generation.
+
+Produces a professional forensic investigation report (Markdown + a JSON
+twin) assembled *exclusively* from stored/computed findings passed in by the
+pipeline. Every sentence is templated over concrete values (evidence ids,
+scores, entity values, timestamps) - the generator has no free-text
+capability, so it cannot hallucinate. Missing inputs produce an explicit
+"not available" statement instead of invented content.
+
+The legacy ``report generation`` module is untouched; this report is stored
+independently as ``investigation_report.md`` / ``investigation_report.json``.
+"""
+
+from __future__ import annotations
+
+import time
+from typing import Any, Dict, List, Optional, Sequence
+
+from ...evidence.logger import get_logger
+from ...evidence.utils import utc_now_iso
+from ..audit import InvestigationAuditTrail
+from ..campaigns.models import CampaignAnalysis
+from ..config import InvestigationConfig
+from ..correlation.models import CorrelationAnalysis
+from ..analytics.models import CaseAnalytics
+from ..data_access import CaseDataRepository, EvidenceContext
+from ..repository import InvestigationReportRepository
+from ..suspects.models import SuspectAssessment
+from ..timeline.models import TimelineAnalysis
+
+MODULE = "reporting"
+
+
+class InvestigationReportService:
+    """Finding-referenced professional investigation report."""
+
+    def __init__(
+        self,
+        config: InvestigationConfig,
+        data: CaseDataRepository,
+        repository: InvestigationReportRepository,
+        audit: InvestigationAuditTrail,
+    ) -> None:
+        self._cfg = config
+        self._data = data
+        self._repo = repository
+        self._audit = audit
+        self._log = get_logger("investigation.reporting")
+
+    # ------------------------------------------------------------------ public
+
+    def generate(
+        self,
+        case_id: str,
+        *,
+        evidence: Optional[Sequence[EvidenceContext]] = None,
+        correlation: Optional[CorrelationAnalysis] = None,
+        campaigns: Optional[CampaignAnalysis] = None,
+        suspects: Optional[SuspectAssessment] = None,
+        timeline: Optional[TimelineAnalysis] = None,
+        analytics: Optional[CaseAnalytics] = None,
+        priority: Optional[Dict[str, Any]] = None,
+        persist: bool = True,
+    ) -> Dict[str, Any]:
+        """Build the report; returns ``{"markdown": ..., "sections": ...}``."""
+        started = time.perf_counter()
+        items = list(evidence) if evidence is not None \
+            else self._data.load_case_evidence(case_id)
+
+        sections: Dict[str, Any] = {
+            "executive_summary": self._executive_summary(
+                case_id, items, correlation, campaigns, suspects, timeline),
+            "case_overview": self._case_overview(case_id, items),
+            "evidence_summary": self._evidence_summary(items),
+            "correlation_analysis": self._correlation_section(correlation),
+            "campaign_analysis": self._campaign_section(campaigns),
+            "timeline_analysis": self._timeline_section(timeline),
+            "suspect_assessment": self._suspect_section(suspects),
+            "threat_intelligence_summary": self._threat_section(analytics),
+            "evidence_quality_summary": self._quality_section(analytics, items),
+            "metadata_summary": self._metadata_section(items),
+            "investigation_statistics": self._statistics_section(analytics),
+            "confidence_analysis": self._confidence_section(items),
+            "investigation_conclusion": self._conclusion(
+                items, correlation, campaigns, suspects, timeline),
+            "recommendations": self._recommendations(
+                campaigns, suspects, timeline, priority),
+            "appendix": self._appendix(items),
+        }
+        markdown = self._render_markdown(case_id, sections)
+        duration = round((time.perf_counter() - started) * 1000.0, 1)
+
+        if persist:
+            self._repo.save(case_id, self._cfg.investigation_report_name, {
+                "sections": sections,
+                "generated_from": {
+                    "correlation": correlation is not None,
+                    "campaigns": campaigns is not None,
+                    "suspects": suspects is not None,
+                    "timeline": timeline is not None,
+                    "analytics": analytics is not None,
+                    "priority": priority is not None,
+                },
+            })
+            self._repo.save_text(case_id, self._cfg.investigation_report_name,
+                                 markdown, ".md")
+            self._audit.record(case_id, MODULE, "generated",
+                               f"{len(sections)} sections", duration_ms=duration)
+        return {"markdown": markdown, "sections": sections}
+
+    # ---------------------------------------------------------------- sections
+
+    @staticmethod
+    def _executive_summary(case_id, items, correlation, campaigns,
+                           suspects, timeline) -> List[str]:
+        lines = [
+            f"Case {case_id} contains {len(items)} evidence item(s), each "
+            "acquired under SHA-256 chain-of-custody verification."
+        ]
+        if correlation is not None:
+            lines.append(
+                f"The weighted correlation engine found "
+                f"{correlation.related_pair_count} related evidence pair(s) "
+                f"out of {correlation.pair_count} analysed [correlation_analysis.json]."
+            )
+        if campaigns is not None and campaigns.campaign_count:
+            largest = max(campaigns.campaigns, key=lambda c: len(c.members))
+            lines.append(
+                f"{campaigns.campaign_count} coordinated campaign(s) were "
+                f"identified; the largest ({largest.campaign_id}) groups "
+                f"{len(largest.members)} item(s) [campaign_analysis.json]."
+            )
+        if suspects is not None and suspects.suspect_count:
+            top = suspects.suspects[0]
+            lines.append(
+                f"The strongest suspect anchor is '{top.identity_value}' "
+                f"({top.identity_type}) with confidence "
+                f"{top.confidence_score:.0f}/100 [suspect_assessment.json]."
+            )
+        if timeline is not None and timeline.stage_progression:
+            lines.append(
+                "Observed attack progression: "
+                + " -> ".join(timeline.stage_progression)
+                + " [timeline_analysis.json]."
+            )
+        return lines
+
+    @staticmethod
+    def _case_overview(case_id, items) -> Dict[str, Any]:
+        times = sorted(t for t in (c.upload_time for c in items) if t)
+        return {
+            "case_id": case_id,
+            "evidence_count": len(items),
+            "first_evidence": times[0] if times else "not available",
+            "last_evidence": times[-1] if times else "not available",
+            "file_types": sorted({c.file_name.rsplit('.', 1)[-1].lower()
+                                  for c in items if '.' in c.file_name}),
+        }
+
+    @staticmethod
+    def _evidence_summary(items) -> List[Dict[str, Any]]:
+        summary = []
+        for c in items:
+            confidence = c.forensics.get("evidence_confidence") or {}
+            summary.append({
+                "evidence_id": c.evidence_id,
+                "file_name": c.file_name,
+                "upload_time": c.upload_time,
+                "sha256": c.sha256,
+                "hash_verified": c.hash_verified,
+                "ocr_confidence": c.ocr_confidence,
+                "evidence_confidence_score": confidence.get("confidence_score",
+                                                            "not available"),
+                "entity_count": len(c.entities),
+            })
+        return summary
+
+    @staticmethod
+    def _correlation_section(correlation) -> Any:
+        if correlation is None:
+            return "Correlation analysis not available for this case."
+        return {
+            "pair_count": correlation.pair_count,
+            "related_pair_count": correlation.related_pair_count,
+            "strength_distribution": correlation.strength_distribution,
+            "top_relationships": [
+                {
+                    "pair": f"{p.evidence_a} <-> {p.evidence_b}",
+                    "strength": p.relationship_strength,
+                    "confidence": p.correlation_confidence,
+                    "explanation": p.explanation,
+                }
+                for p in correlation.pairs[:5]
+                if p.relationship_strength != "NO_RELATIONSHIP"
+            ],
+        }
+
+    @staticmethod
+    def _campaign_section(campaigns) -> Any:
+        if campaigns is None:
+            return "Campaign analysis not available for this case."
+        return {
+            "campaign_count": campaigns.campaign_count,
+            "unclustered_evidence": campaigns.unclustered_evidence,
+            "campaigns": [
+                {
+                    "campaign_id": c.campaign_id,
+                    "members": c.members,
+                    "confidence": c.campaign_confidence,
+                    "signature": c.signature,
+                    "summary": c.summary,
+                }
+                for c in campaigns.campaigns
+            ],
+        }
+
+    @staticmethod
+    def _timeline_section(timeline) -> Any:
+        if timeline is None:
+            return "Timeline analysis not available for this case."
+        return {
+            "summary": timeline.summary,
+            "stage_progression": timeline.stage_progression,
+            "progression_consistent": timeline.progression_consistent,
+            "milestones": [
+                {"timestamp": m.timestamp, "description": m.description}
+                for m in timeline.milestones
+            ],
+            "critical_events": [
+                {"timestamp": e.timestamp, "evidence_id": e.evidence_id,
+                 "reasons": e.critical_reasons}
+                for e in timeline.critical_events
+            ],
+        }
+
+    @staticmethod
+    def _suspect_section(suspects) -> Any:
+        if suspects is None or not suspects.suspect_count:
+            return "No suspect anchors were derived from the evidence."
+        return [
+            {
+                "suspect_id": s.suspect_id,
+                "identity": f"{s.identity_type}:{s.identity_value}",
+                "confidence_score": s.confidence_score,
+                "confidence_level": s.confidence_level,
+                "risk_level": s.risk_level,
+                "evidence_ids": s.evidence_ids,
+                "explanation": s.explanation,
+            }
+            for s in suspects.suspects[:10]
+        ]
+
+    @staticmethod
+    def _threat_section(analytics) -> Any:
+        if analytics is None:
+            return "Threat statistics not available."
+        stats = analytics.threat_statistics
+        if not stats.get("intel_available"):
+            return ("No threat-intelligence indicator file was provided; "
+                    "threat corroboration was skipped (not an absence of threat).")
+        return stats
+
+    @staticmethod
+    def _quality_section(analytics, items) -> Any:
+        if analytics is not None and analytics.evidence_quality_statistics:
+            return analytics.evidence_quality_statistics
+        return {"hash_verified_count":
+                sum(1 for c in items if c.hash_verified is True)}
+
+    @staticmethod
+    def _metadata_section(items) -> List[Dict[str, Any]]:
+        rows = []
+        for c in items:
+            metadata = c.forensics.get("metadata_report")
+            if not metadata:
+                continue
+            image = metadata.get("image") or {}
+            rows.append({
+                "evidence_id": c.evidence_id,
+                "has_exif": image.get("has_exif", False),
+                "device": image.get("device", ""),
+                "software": image.get("software", ""),
+                "consistency_notes": metadata.get("consistency_notes", []),
+            })
+        return rows or [{"note": "No Phase-1 metadata reports stored for this case."}]
+
+    @staticmethod
+    def _statistics_section(analytics) -> Any:
+        if analytics is None:
+            return "Analytics not available."
+        return {
+            "entity_statistics": analytics.entity_statistics,
+            "campaign_statistics": analytics.campaign_statistics,
+            "timeline_statistics": analytics.timeline_statistics,
+            "correlation_statistics": analytics.correlation_statistics,
+        }
+
+    @staticmethod
+    def _confidence_section(items) -> List[Dict[str, Any]]:
+        rows = []
+        for c in items:
+            confidence = c.forensics.get("evidence_confidence")
+            if confidence:
+                rows.append({
+                    "evidence_id": c.evidence_id,
+                    "score": confidence.get("confidence_score"),
+                    "level": confidence.get("confidence_level"),
+                    "explanation": confidence.get("explanation", ""),
+                })
+        return rows or [{"note": "No Phase-1 confidence scores stored for this case."}]
+
+    @staticmethod
+    def _conclusion(items, correlation, campaigns, suspects, timeline) -> List[str]:
+        lines: List[str] = []
+        verified = sum(1 for c in items if c.hash_verified is True)
+        lines.append(
+            f"{verified}/{len(items)} evidence item(s) passed SHA-256 "
+            "chain-of-custody verification."
+        )
+        if correlation is not None and correlation.related_pair_count:
+            lines.append(
+                "The evidence set is internally connected "
+                f"({correlation.related_pair_count} weighted relationship(s)), "
+                "consistent with related activity rather than isolated incidents."
+            )
+        if campaigns is not None and campaigns.campaign_count:
+            lines.append(
+                f"{campaigns.campaign_count} campaign cluster(s) indicate "
+                "coordinated operation."
+            )
+        if suspects is not None and suspects.suspect_count:
+            top = suspects.suspects[0]
+            lines.append(
+                f"Investigation should focus on anchor '{top.identity_value}' "
+                f"({top.confidence_score:.0f}/100 confidence)."
+            )
+        if timeline is not None and not timeline.progression_consistent:
+            lines.append(
+                "Observed stage order deviates from the canonical scam "
+                "sequence; evidence acquisition order should be reviewed."
+            )
+        return lines
+
+    @staticmethod
+    def _recommendations(campaigns, suspects, timeline, priority) -> List[str]:
+        recommendations: List[str] = []
+        if suspects is not None:
+            for s in suspects.suspects[:3]:
+                if s.threat_flagged or s.confidence_score >= 60:
+                    recommendations.append(
+                        f"Pursue subscriber/KYC records for "
+                        f"{s.identity_type[:-1] if s.identity_type.endswith('s') else s.identity_type} "
+                        f"'{s.identity_value}' (suspect confidence "
+                        f"{s.confidence_score:.0f}/100)."
+                    )
+        if campaigns is not None:
+            for c in campaigns.campaigns:
+                if c.shared_domains:
+                    recommendations.append(
+                        f"Request takedown/registrar data for campaign "
+                        f"{c.campaign_id} domain(s): "
+                        + ", ".join(c.shared_domains) + "."
+                    )
+        if timeline is not None and timeline.critical_events:
+            recommendations.append(
+                f"Prioritise the {len(timeline.critical_events)} critical "
+                "event(s) involving OTP/financial entities for victim-impact "
+                "assessment."
+            )
+        if priority is not None:
+            recommendations.append(
+                f"Case priority: {priority.get('priority_level', 'N/A')} "
+                f"({priority.get('priority_score', 'N/A')}/100) - "
+                f"{priority.get('investigation_recommendation', '')}"
+            )
+        return recommendations or [
+            "No specific action items derived; continue standard processing."
+        ]
+
+    @staticmethod
+    def _appendix(items) -> Dict[str, Any]:
+        return {
+            "chain_of_custody": [
+                {"evidence_id": c.evidence_id, "sha256": c.sha256,
+                 "upload_time": c.upload_time, "status": c.status}
+                for c in items
+            ],
+            "stored_artifacts_root": "storage/investigation/<CASE_ID>/",
+            "phase1_artifacts_root": "storage/forensics/<EVIDENCE_ID>/",
+        }
+
+    # ---------------------------------------------------------------- renderer
+
+    @staticmethod
+    def _render_markdown(case_id: str, sections: Dict[str, Any]) -> str:
+        titles = {
+            "executive_summary": "Executive Summary",
+            "case_overview": "Case Overview",
+            "evidence_summary": "Evidence Summary",
+            "correlation_analysis": "Correlation Analysis",
+            "campaign_analysis": "Campaign Analysis",
+            "timeline_analysis": "Timeline Analysis",
+            "suspect_assessment": "Suspect Assessment",
+            "threat_intelligence_summary": "Threat Intelligence Summary",
+            "evidence_quality_summary": "Evidence Quality Summary",
+            "metadata_summary": "Metadata Summary",
+            "investigation_statistics": "Investigation Statistics",
+            "confidence_analysis": "Confidence Analysis",
+            "investigation_conclusion": "Investigation Conclusion",
+            "recommendations": "Recommendations",
+            "appendix": "Appendix",
+        }
+        out: List[str] = [
+            f"# Forensic Investigation Report - {case_id}",
+            "",
+            f"Generated: {utc_now_iso()}  ",
+            "System: Cybercrime Investigation Intelligence System (CIIS), Phase 2  ",
+            "Basis: every statement below references stored forensic findings; "
+            "no content is generated outside computed results.",
+            "",
+        ]
+        for key, title in titles.items():
+            out.append(f"## {title}")
+            out.append("")
+            out.extend(_to_markdown(sections.get(key)))
+            out.append("")
+        return "\n".join(out)
+
+
+def _to_markdown(value: Any, indent: int = 0) -> List[str]:
+    pad = "  " * indent
+    if value is None:
+        return [f"{pad}- not available"]
+    if isinstance(value, str):
+        return [f"{pad}{value}" if indent == 0 else f"{pad}- {value}"]
+    if isinstance(value, (int, float, bool)):
+        return [f"{pad}- {value}"]
+    if isinstance(value, list):
+        lines: List[str] = []
+        for item in value:
+            if isinstance(item, (dict, list)):
+                lines.extend(_to_markdown(item, indent))
+            else:
+                lines.append(f"{pad}- {item}")
+        return lines or [f"{pad}- none"]
+    if isinstance(value, dict):
+        lines = []
+        for key, item in value.items():
+            label = str(key).replace("_", " ")
+            if isinstance(item, (dict, list)):
+                lines.append(f"{pad}- **{label}**:")
+                lines.extend(_to_markdown(item, indent + 1))
+            else:
+                lines.append(f"{pad}- **{label}**: {item}")
+        return lines
+    return [f"{pad}- {value}"]
