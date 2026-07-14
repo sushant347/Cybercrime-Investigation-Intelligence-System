@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "comment": "HSV ranges use OpenCV scale (H 0-179, S 0-255, V 0-255). Add or tune brands here - no code change required.",
+  "brands": {
+    "esewa": {
+      "display_name": "eSewa",
+      "keywords": ["esewa", "e-sewa", "esewa money transfer", "esewa id"],
+      "hsv_ranges": [[[38, 100, 80], [62, 255, 235]]]
+    },
+    "khalti": {
+      "display_name": "Khalti",
+      "keywords": ["khalti", "khalti id", "khalti wallet"],
+      "hsv_ranges": [[[130, 100, 80], [155, 255, 220]]]
+    },
+    "imepay": {
+      "display_name": "IME Pay",
+      "keywords": ["ime pay", "imepay", "ime-pay"],
+      "hsv_ranges": [[[0, 150, 120], [8, 255, 255]], [[172, 150, 120], [179, 255, 255]]]
+    },
+    "facebook": {
+      "display_name": "Facebook",
+      "keywords": ["facebook", "fb.com", "facebook.com"],
+      "hsv_ranges": [[[105, 150, 130], [118, 255, 255]]]
+    },
+    "messenger": {
+      "display_name": "Messenger",
+      "keywords": ["messenger", "m.me/"],
+      "hsv_ranges": [[[100, 140, 150], [130, 255, 255]]]
+    },
+    "whatsapp": {
+      "display_name": "WhatsApp",
+      "keywords": ["whatsapp", "wa.me/", "whatsapp business"],
+      "hsv_ranges": [[[60, 120, 100], [80, 255, 230]]]
+    },
+    "telegram": {
+      "display_name": "Telegram",
+      "keywords": ["telegram", "t.me/"],
+      "hsv_ranges": [[[95, 120, 140], [110, 255, 255]]]
+    },
+    "gmail": {
+      "display_name": "Gmail",
+      "keywords": ["gmail", "gmail.com", "@gmail"],
+      "hsv_ranges": [[[0, 140, 150], [6, 255, 255]], [[174, 140, 150], [179, 255, 255]]]
+    },
+    "outlook": {
+      "display_name": "Outlook",
+      "keywords": ["outlook", "outlook.com", "@outlook", "hotmail"],
+      "hsv_ranges": [[[100, 130, 120], [112, 255, 240]]]
+    },
+    "google": {
+      "display_name": "Google",
+      "keywords": ["google", "google.com", "google account", "google pay"],
+      "hsv_ranges": [[[104, 130, 150], [125, 255, 255]]]
+    },
+    "microsoft": {
+      "display_name": "Microsoft",
+      "keywords": ["microsoft", "microsoft account", "office 365", "microsoft.com"],
+      "hsv_ranges": [[[0, 0, 0], [0, 0, 0]]]
+    }
+  }
+}
