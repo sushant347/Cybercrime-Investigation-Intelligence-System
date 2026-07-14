@@ -1,0 +1,17 @@
+# CIIS Phase 1 - Forensic Evidence Processing Enhancements
+# Additive requirements file: the original requirements.txt is unchanged.
+#
+# Core Phase-1 dependencies (already satisfied by requirements.txt):
+#   opencv-python, pillow, numpy, pydantic, pymupdf
+#
+# Optional OCR engines for the Multi-OCR Fusion Engine (Module 3).
+# The fusion engine degrades gracefully: engines that are not installed are
+# reported as unavailable and simply skipped - PaddleOCR remains primary.
+
+# EasyOCR (pulls in torch; large download)
+easyocr>=1.7
+
+# Tesseract python bindings. Requires the tesseract binary on PATH:
+#   Windows: https://github.com/UB-Mannheim/tesseract/wiki  (add eng+nep packs)
+#   Debian/Ubuntu: apt install tesseract-ocr tesseract-ocr-eng tesseract-ocr-nep
+pytesseract>=0.3.10
