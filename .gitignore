@@ -64,3 +64,4 @@ ciis_frontend/dist/
 
 # ===== Raw training datasets (too large for git) =====
 sample/
+*.sqlite3-journal
