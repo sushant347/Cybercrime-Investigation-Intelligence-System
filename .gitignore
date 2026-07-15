@@ -54,6 +54,13 @@ Thumbs.db
 git_commit_and_push.sh
 PROJECT.md
 PROJECT_AUDIT.md
+Project_all.md
+
+# ===== Phase 3 platform runtime artifacts =====
+ciis_api/ciis_platform.sqlite3
+ciis_api/*.sqlite3
+ciis_frontend/node_modules/
+ciis_frontend/dist/
 
 # ===== Raw training datasets (too large for git) =====
 sample/
