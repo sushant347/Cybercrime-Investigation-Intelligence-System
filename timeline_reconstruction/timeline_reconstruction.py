@@ -30,11 +30,10 @@ Usage:
 
 import json
 import os
-import sys
 import re
 import argparse
-from datetime import datetime, timedelta
-from dateutil import parser as dateutil_parser
+from datetime import datetime, timezone
+from typing import Iterable, Optional
 
 OUTPUT_DIR = "output"
 
@@ -76,8 +75,11 @@ def _parse_upload_time(upload_time_str: str):
     if not upload_time_str:
         return None
     try:
-        return datetime.fromisoformat(upload_time_str.replace("Z", "+00:00"))
-    except ValueError:
+        parsed = datetime.fromisoformat(upload_time_str.replace("Z", "+00:00"))
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+        return parsed.astimezone(timezone.utc)
+    except (ValueError, TypeError):
         return None
 
 
@@ -110,30 +112,80 @@ def _try_chat_style_timestamp(raw_text: str, reference_dt: datetime):
         return None
 
 
-def _try_entity_datetime(entities: dict, reference_dt: datetime):
-    dates = [d.get("normalized") or d.get("value") for d in entities.get("dates", [])]
-    times = [t.get("normalized") or t.get("value") for t in entities.get("times", [])]
+def _entity_values(entities: dict, entity_type: str) -> list[str]:
+    values = []
+    for item in entities.get(entity_type, []):
+        value = (item.get("normalized") or item.get("value")) \
+            if isinstance(item, dict) else item
+        if value:
+            values.append(str(value).strip())
+    return values
+
+
+def _parse_date(value: str, reference_dt: Optional[datetime]) -> Optional[datetime]:
+    """Parse common normalized/visible forensic date representations."""
+    text = value.strip().replace("/", "-")
+    for fmt in ("%Y-%m-%d", "%d-%m-%Y", "%m-%d-%Y", "%Y-%m-%d %H:%M:%S",
+                "%Y-%m-%d %H:%M"):
+        try:
+            parsed = datetime.strptime(text, fmt).replace(tzinfo=timezone.utc)
+            return parsed
+        except ValueError:
+            continue
+    # Partial month-day dates use the upload year, rolling back if needed.
+    for fmt in ("%m-%d", "%d-%m"):
+        if reference_dt is None:
+            continue
+        try:
+            partial = datetime.strptime(text, fmt)
+            parsed = reference_dt.replace(
+                month=partial.month, day=partial.day,
+                hour=0, minute=0, second=0, microsecond=0,
+            )
+            if parsed > reference_dt:
+                parsed = parsed.replace(year=parsed.year - 1)
+            return parsed
+        except ValueError:
+            continue
+    return None
+
+
+def _parse_time(value: str) -> Optional[tuple[int, int, int]]:
+    text = value.strip().lower().replace(".", ":")
+    for fmt in ("%H:%M:%S", "%H:%M", "%I:%M %p", "%I:%M:%S %p"):
+        try:
+            parsed = datetime.strptime(text, fmt)
+            return parsed.hour, parsed.minute, parsed.second
+        except ValueError:
+            continue
+    return None
+
+
+def _try_entity_datetime(entities: dict, reference_dt: Optional[datetime]):
+    dates = _entity_values(entities, "dates")
+    times = _entity_values(entities, "times")
 
     dates = [d for d in dates if d]
     times = [t for t in times if t]
 
     if dates:
-        combined = f"{dates[0]} {times[0]}" if times else dates[0]
-        try:
-            return dateutil_parser.parse(combined, fuzzy=True, default=reference_dt), "content_date_time"
-        except (ValueError, OverflowError):
-            pass
+        parsed_date = _parse_date(dates[0], reference_dt)
+        if parsed_date is not None:
+            parsed_time = _parse_time(times[0]) if times else None
+            if parsed_time is not None:
+                return parsed_date.replace(
+                    hour=parsed_time[0], minute=parsed_time[1], second=parsed_time[2]
+                ), "content_date_time"
+            return parsed_date, "content_date_only"
 
     if times and reference_dt:
-        try:
-            parsed_time = dateutil_parser.parse(times[0], fuzzy=True, default=reference_dt)
+        parsed_time = _parse_time(times[0])
+        if parsed_time is not None:
             combined_dt = reference_dt.replace(
-                hour=parsed_time.hour, minute=parsed_time.minute,
-                second=parsed_time.second, microsecond=0,
+                hour=parsed_time[0], minute=parsed_time[1],
+                second=parsed_time[2], microsecond=0,
             )
             return combined_dt, "content_time_only"
-        except (ValueError, OverflowError):
-            pass
 
     return None, None
 
@@ -183,39 +235,171 @@ def resolve_evidence_timestamp(evidence: dict) -> dict:
 
 def build_correlation_lookup(graph: dict) -> dict:
     lookup = {}
+    seen = set()
     for edge in graph.get("edges", []):
-        for a, b in [(edge["source"], edge["target"]), (edge["target"], edge["source"])]:
+        source = str(edge.get("source", "")).removeprefix("evidence:")
+        target = str(edge.get("target", "")).removeprefix("evidence:")
+        if not source or not target:
+            continue
+        for a, b in ((source, target), (target, source)):
+            key = (a, b, edge.get("type") or edge.get("edge_type", "relationship"))
+            if key in seen:
+                continue
+            seen.add(key)
             lookup.setdefault(a, []).append({
                 "linked_to": b,
-                "type": edge["type"],
+                "type": edge.get("type") or edge.get("edge_type", "relationship"),
                 "shared_entities": edge.get("shared_entities", []),
                 "weight": edge.get("weight", 0),
+                "confidence": edge.get("confidence", edge.get("weight", 0)),
             })
     return lookup
 
 
 # Timeline building
 
-def build_timeline(cases: list, correlation_graph: dict = None) -> dict:
+def _classify_stages(text: str, stage_order: Iterable[str],
+                     stage_keywords: dict) -> tuple[list[str], dict[str, list[str]]]:
+    lowered = (text or "").lower()
+    stages, matched = [], {}
+    for stage in stage_order:
+        hits = sorted({keyword.strip() for keyword in stage_keywords.get(stage, ())
+                       if keyword and keyword.lower() in lowered})
+        if hits:
+            stages.append(stage)
+            matched[stage] = hits
+    return stages, matched
+
+
+def _critical_reasons(entities: dict, entity_types: Iterable[str]) -> list[str]:
+    reasons = []
+    for entity_type in entity_types:
+        values = sorted(set(_entity_values(entities, entity_type)))
+        if values:
+            reasons.append(
+                f"contains {entity_type} entity/entities: " + ", ".join(values[:3])
+            )
+    return reasons
+
+
+def _attack_stages(events: list[dict], stage_order: Iterable[str],
+                   stage_hits: dict[str, dict[str, list[str]]]) -> list[dict]:
+    by_id = {event["evidence_id"]: event for event in events}
+    result = []
+    for stage in stage_order:
+        hits = stage_hits.get(stage, {})
+        if not hits:
+            continue
+        evidence_ids = sorted(
+            hits,
+            key=lambda eid: (
+                not bool(by_id[eid]["timestamp"]), by_id[eid]["timestamp"], eid
+            ),
+        )
+        keywords = sorted({keyword for values in hits.values() for keyword in values})
+        timestamps = [by_id[eid]["timestamp"] for eid in evidence_ids
+                      if by_id[eid]["timestamp"]]
+        result.append({
+            "stage": stage,
+            "evidence_ids": evidence_ids,
+            "first_seen": timestamps[0] if timestamps else "",
+            "last_seen": timestamps[-1] if timestamps else "",
+            "matched_keywords": keywords,
+            "explanation": (
+                f"Stage '{stage}' is evidenced by keyword matches "
+                f"({', '.join(keywords[:5])}) in " + ", ".join(evidence_ids) + "."
+            ),
+        })
+    return result
+
+
+def _milestones(events: list[dict]) -> list[dict]:
+    if not events:
+        return []
+    milestones = [{
+        **events[0], "event_type": "milestone", "stages": [],
+        "critical": False, "critical_reasons": [],
+        "description": "Investigation start - first reconstructed evidence event",
+    }]
+    seen = set()
+    for event in events:
+        for stage in event["stages"]:
+            if stage in seen:
+                continue
+            seen.add(stage)
+            milestones.append({
+                **event, "event_type": "milestone", "stages": [stage],
+                "critical": False, "critical_reasons": [],
+                "description": f"First observation of stage '{stage}' ({event['evidence_id']})",
+            })
+    return milestones
+
+
+def build_timeline(
+    cases: list,
+    correlation_graph: Optional[dict] = None,
+    *,
+    stage_keywords: Optional[dict] = None,
+    stage_order: Iterable[str] = (),
+    critical_entity_types: Iterable[str] = (),
+) -> dict:
+    """Build the canonical, framework-independent investigation timeline."""
     correlation_graph = correlation_graph or {"nodes": [], "edges": []}
     correlation_lookup = build_correlation_lookup(correlation_graph)
+    stage_keywords = stage_keywords or {}
+    stage_order = tuple(stage_order)
 
     events = []
+    seen_events = set()
+    stage_hits: dict[str, dict[str, list[str]]] = {}
     for case in cases:
         case_id = case.get("case_id", "UNKNOWN_CASE")
         for evidence in case.get("evidence", []):
             evidence_id = evidence.get("evidence_id", "UNKNOWN_EVID")
             resolution = resolve_evidence_timestamp(evidence)
+            event_key = (case_id, evidence_id)
+            if event_key in seen_events:
+                continue
+            seen_events.add(event_key)
+            cleaning = evidence.get("cleaning", {}) or {}
+            entities = cleaning.get("entities", {}) or {}
+            text = (
+                evidence.get("semantic_text")
+                or (evidence.get("semantic_correction", {}) or {}).get("semantic_text")
+                or (evidence.get("enhancement", {}) or {}).get("enhanced_text")
+                or cleaning.get("cleaned_text")
+                or evidence.get("raw_text")
+                or ""
+            )
+            stages, matched = _classify_stages(text, stage_order, stage_keywords)
+            for stage, keywords in matched.items():
+                stage_hits.setdefault(stage, {})[evidence_id] = keywords
+            critical_reasons = _critical_reasons(entities, critical_entity_types)
+            timestamp_inferred = resolution["source"] in {
+                "content_date_only", "content_time_only", "content_chat_timestamp",
+                "upload_time_fallback",
+            }
 
             events.append({
                 "evidence_id": evidence_id,
                 "case_id": case_id,
-                "file_name": evidence.get("file_name"),
+                "file_name": evidence.get("file_name") or "",
                 "resolved_time": resolution["resolved_time_iso"],
+                "timestamp": resolution["resolved_time_iso"] or "",
                 "time_source": resolution["source"],
                 "confidence": resolution["confidence"],
-                "text_preview": (evidence.get("raw_text") or "")[:120],
-                "risk_signals": evidence.get("cleaning", {}).get("risk_signals", {}),
+                "timestamp_inferred": timestamp_inferred,
+                "event_type": "evidence_event",
+                "description": (
+                    f"Evidence {evidence_id} ({evidence.get('file_name') or 'unknown file'})"
+                    + (f"; stages: {', '.join(stages)}" if stages else "")
+                ),
+                "stages": stages,
+                "critical": bool(critical_reasons),
+                "critical_reasons": critical_reasons,
+                "source_evidence_ids": [evidence_id],
+                "text_preview": text[:120],
+                "risk_signals": cleaning.get("risk_signals", {}),
                 "correlated_with": correlation_lookup.get(evidence_id, []),
                 "_sort_key": resolution["resolved_time"],
             })
@@ -223,18 +407,60 @@ def build_timeline(cases: list, correlation_graph: dict = None) -> dict:
     resolved = [e for e in events if e["_sort_key"] is not None]
     unresolved = [e for e in events if e["_sort_key"] is None]
 
-    resolved.sort(key=lambda e: e["_sort_key"])
+    resolved.sort(key=lambda event: (event["_sort_key"], event["evidence_id"]))
+    unresolved.sort(key=lambda event: (event["case_id"], event["evidence_id"]))
 
     for e in resolved + unresolved:
         del e["_sort_key"]
 
     ordered = resolved + unresolved
 
+    attack_stages = _attack_stages(ordered, stage_order, stage_hits)
+    progression = []
+    for event in ordered:
+        for stage in event["stages"]:
+            if stage not in progression:
+                progression.append(stage)
+    order_index = {stage: index for index, stage in enumerate(stage_order)}
+    observed = [order_index[stage] for stage in progression if stage in order_index]
+    timestamps = [datetime.fromisoformat(event["timestamp"])
+                  for event in ordered if event["timestamp"]]
+    span_hours = ((max(timestamps) - min(timestamps)).total_seconds() / 3600.0
+                  if len(timestamps) > 1 else 0.0)
+    milestones = _milestones(ordered)
+    critical_events = [event for event in ordered if event["critical"]]
+    summary = (
+        f"{len(ordered)} event(s) spanning {span_hours:.1f} hour(s); "
+        f"{len(unresolved)} timestamp(s) unresolved."
+    )
+    if progression:
+        summary += " Observed scam progression: " + " -> ".join(progression) + "."
+
     return {
+        "case_id": cases[0].get("case_id", "UNKNOWN_CASE")
+        if len(cases) == 1 else "MULTI_CASE",
         "total_events": len(ordered),
         "resolved_count": len(resolved),
         "unresolved_count": len(unresolved),
         "timeline": ordered,
+        "events": ordered,
+        "attack_stages": attack_stages,
+        "stage_progression": progression,
+        "progression_consistent": observed == sorted(observed),
+        "milestones": milestones,
+        "critical_events": critical_events,
+        "summary": summary,
+        "statistics": {
+            "event_count": float(len(ordered)),
+            "resolved_event_count": float(len(resolved)),
+            "unresolved_event_count": float(len(unresolved)),
+            "inferred_event_count": float(sum(
+                1 for event in ordered if event["timestamp_inferred"]
+            )),
+            "stage_count": float(len(attack_stages)),
+            "critical_event_count": float(len(critical_events)),
+            "timeline_span_hours": round(span_hours, 2),
+        },
     }
 
 
