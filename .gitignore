@@ -25,9 +25,13 @@ ciis_api/media/
 .venv/
 .venv-platform/
 .venv-threat/
+myvenv/
 venv/
 env/
 ENV/
+
+# ===== Local test dependency cache =====
+.ciis_testdeps/
 
 # ===== Secrets / local config =====
 .env
