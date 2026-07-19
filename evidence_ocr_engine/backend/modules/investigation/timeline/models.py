@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Dict, List
+from typing import Any, Dict, List
 
 from pydantic import BaseModel, Field
 
@@ -10,10 +10,19 @@ from pydantic import BaseModel, Field
 class TimelineEvent(BaseModel):
     """One chronologically ordered investigation event."""
 
-    timestamp: str = Field(description="ISO-8601 UTC")
+    timestamp: str = Field(default="", description="ISO-8601 UTC; empty when unresolved")
     event_type: str = Field(description="evidence_acquired | stage_marker | milestone")
     evidence_id: str = ""
+    case_id: str = ""
+    file_name: str = ""
     description: str = ""
+    time_source: str = "unresolved"
+    confidence: str = "low"
+    timestamp_inferred: bool = False
+    source_evidence_ids: List[str] = Field(default_factory=list)
+    correlated_with: List[Dict[str, Any]] = Field(default_factory=list)
+    text_preview: str = ""
+    risk_signals: Dict[str, Any] = Field(default_factory=dict)
     stages: List[str] = Field(
         default_factory=list, description="Attack stages detected in this event"
     )
