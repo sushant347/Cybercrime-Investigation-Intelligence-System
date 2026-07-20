@@ -25,6 +25,11 @@ class GraphEdge(BaseModel):
     target: str
     edge_type: str
     weight: float = Field(default=1.0, ge=0.0)
+    confidence: float = Field(default=1.0, ge=0.0, le=1.0)
+    source_evidence_ids: List[str] = Field(default_factory=list)
+    timestamp: str = ""
+    timestamp_source: str = "unresolved"
+    timestamp_inferred: bool = False
     explanation: str = ""
 
 
