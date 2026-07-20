@@ -1,37 +1,53 @@
-"""Module 5 - Timeline Intelligence Engine.
+"""Integrated adapter for the standalone timeline reconstruction engine.
 
-Extends the timeline from a plain chronological listing into an intelligent
-view of the attack:
-
-* events         - every evidence acquisition, chronologically ordered
-* attack stages  - initial contact, social engineering, credential theft,
-                   financial transaction, post-attack (config-driven keyword
-                   rules over the verbatim OCR text; fully explainable)
-* milestones     - first observation of each stage
-* critical events - evidence containing OTPs, money amounts, wallets or
-                    bank accounts (configurable entity types)
-* progression check - whether the observed stage order follows the canonical
-                      scam sequence (chronological integrity is preserved:
-                      events are only ever sorted by timestamp, never edited)
+The standalone package owns timestamp resolution, ordering, de-duplication and
+event classification.  This service only translates investigation models,
+persists the frontend-compatible artifact, and records the audit entry.
 """
 
 from __future__ import annotations
 
+import importlib.util
 import time
-from typing import Dict, List, Optional, Sequence
+from functools import lru_cache
+from pathlib import Path
+from types import ModuleType
+from typing import Optional, Sequence
 
 from ...evidence.logger import get_logger
 from ..audit import InvestigationAuditTrail
 from ..config import InvestigationConfig
+from ..correlation.models import CorrelationAnalysis
 from ..data_access import CaseDataRepository, EvidenceContext
 from ..repository import InvestigationReportRepository
-from .models import AttackStage, TimelineAnalysis, TimelineEvent
+from .models import TimelineAnalysis
 
 MODULE = "timeline"
 
 
+@lru_cache(maxsize=1)
+def _standalone_engine() -> ModuleType:
+    """Load the framework-independent engine without relying on cwd/sys.path."""
+    current = Path(__file__).resolve()
+    candidates = [
+        parent / "timeline_reconstruction" / "timeline_reconstruction.py"
+        for parent in current.parents
+    ]
+    engine_path = next((path for path in candidates if path.is_file()), None)
+    if engine_path is None:
+        raise RuntimeError("standalone timeline_reconstruction engine not found")
+    spec = importlib.util.spec_from_file_location(
+        "ciis_standalone_timeline_reconstruction", engine_path
+    )
+    if spec is None or spec.loader is None:
+        raise RuntimeError(f"cannot load standalone timeline engine: {engine_path}")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 class TimelineService:
-    """Attack-stage aware timeline intelligence for one case."""
+    """Translate integrated evidence into the canonical standalone timeline."""
 
     def __init__(
         self,
@@ -46,187 +62,80 @@ class TimelineService:
         self._audit = audit
         self._log = get_logger("investigation.timeline")
 
-    # ------------------------------------------------------------------ public
-
     def analyze(
         self,
         case_id: str,
         evidence: Optional[Sequence[EvidenceContext]] = None,
+        correlation: Optional[CorrelationAnalysis] = None,
         *,
         persist: bool = True,
     ) -> TimelineAnalysis:
         started = time.perf_counter()
         items = list(evidence) if evidence is not None \
             else self._data.load_case_evidence(case_id)
-        items = sorted(items, key=lambda c: c.upload_time or "")
-
-        stage_hits: Dict[str, Dict[str, List[str]]] = {}
-        events: List[TimelineEvent] = []
-        for context in items:
-            stages, keywords = self._classify(context)
-            critical, reasons = self._critical(context)
-            events.append(TimelineEvent(
-                timestamp=context.upload_time,
-                event_type="evidence_acquired",
-                evidence_id=context.evidence_id,
-                description=(
-                    f"Evidence {context.evidence_id} ({context.file_name}) acquired"
-                    + (f"; stages: {', '.join(stages)}" if stages else "")
-                ),
-                stages=stages,
-                critical=critical,
-                critical_reasons=reasons,
-            ))
-            for stage in stages:
-                bucket = stage_hits.setdefault(stage, {})
-                bucket[context.evidence_id] = keywords.get(stage, [])
-
-        attack_stages = self._attack_stages(stage_hits, items)
-        progression = self._progression(events)
-        milestones = self._milestones(events)
-        critical_events = [e for e in events if e.critical]
-
-        analysis = TimelineAnalysis(
-            case_id=case_id,
-            events=events,
-            attack_stages=attack_stages,
-            stage_progression=progression,
-            progression_consistent=self._is_consistent(progression),
-            milestones=milestones,
-            critical_events=critical_events,
-            statistics=self._statistics(events, attack_stages, items),
-            analysis_time_ms=round((time.perf_counter() - started) * 1000.0, 1),
+        cases = [{
+            "case_id": case_id,
+            "evidence": [self._evidence_payload(item) for item in items],
+        }]
+        result = _standalone_engine().build_timeline(
+            cases,
+            self._correlation_payload(correlation),
+            stage_keywords=self._cfg.timeline_stage_keywords,
+            stage_order=self._cfg.timeline_stage_order,
+            critical_entity_types=self._cfg.timeline_critical_entity_types,
         )
-        analysis.summary = self._summary(analysis)
+        result["analysis_time_ms"] = round(
+            (time.perf_counter() - started) * 1000.0, 1
+        )
+        analysis = TimelineAnalysis.model_validate(result)
         if persist:
-            self._repo.save(case_id, self._cfg.timeline_report_name,
-                            analysis.model_dump())
+            self._repo.save(
+                case_id, self._cfg.timeline_report_name, analysis.model_dump()
+            )
             self._audit.record(
-                case_id, MODULE, "analyzed",
-                f"{len(events)} event(s), stages={progression or 'none'}, "
-                f"{len(critical_events)} critical",
+                case_id,
+                MODULE,
+                "analyzed",
+                f"{len(analysis.events)} event(s), "
+                f"resolved={int(analysis.statistics.get('resolved_event_count', 0))}, "
+                f"inferred={int(analysis.statistics.get('inferred_event_count', 0))}",
                 duration_ms=analysis.analysis_time_ms,
             )
         return analysis
 
-    # ---------------------------------------------------------------- internal
-
-    def _classify(self, context: EvidenceContext) -> tuple:
-        """Stages present in one evidence item + the exact matched keywords."""
-        text = (context.raw_text or "").lower()
-        stages: List[str] = []
-        matched: Dict[str, List[str]] = {}
-        for stage in self._cfg.timeline_stage_order:
-            keywords = self._cfg.timeline_stage_keywords.get(stage, ())
-            hits = sorted({k.strip() for k in keywords if k in text})
-            if hits:
-                stages.append(stage)
-                matched[stage] = hits
-        return stages, matched
-
-    def _critical(self, context: EvidenceContext) -> tuple:
-        reasons: List[str] = []
-        for entity_type in self._cfg.timeline_critical_entity_types:
-            values = context.entity_values(entity_type)
-            if values:
-                reasons.append(
-                    f"contains {entity_type} entity/entities: "
-                    + ", ".join(sorted(set(values))[:3])
-                )
-        return bool(reasons), reasons
-
-    def _attack_stages(self, stage_hits: Dict[str, Dict[str, List[str]]],
-                       items: Sequence[EvidenceContext]) -> List[AttackStage]:
-        upload = {c.evidence_id: c.upload_time for c in items}
-        stages: List[AttackStage] = []
-        for stage in self._cfg.timeline_stage_order:
-            hits = stage_hits.get(stage)
-            if not hits:
-                continue
-            evidence_ids = sorted(hits, key=lambda e: upload.get(e, ""))
-            keywords = sorted({k for ks in hits.values() for k in ks})
-            stages.append(AttackStage(
-                stage=stage,
-                evidence_ids=evidence_ids,
-                first_seen=upload.get(evidence_ids[0], ""),
-                last_seen=upload.get(evidence_ids[-1], ""),
-                matched_keywords=keywords,
-                explanation=(
-                    f"Stage '{stage}' is evidenced by keyword matches "
-                    f"({', '.join(keywords[:5])}) in the verbatim OCR text of "
-                    + ", ".join(evidence_ids) + "."
-                ),
-            ))
-        return stages
-
     @staticmethod
-    def _progression(events: List[TimelineEvent]) -> List[str]:
-        seen: List[str] = []
-        for event in events:  # events are already chronological
-            for stage in event.stages:
-                if stage not in seen:
-                    seen.append(stage)
-        return seen
-
-    def _is_consistent(self, progression: List[str]) -> bool:
-        order = {s: i for i, s in enumerate(self._cfg.timeline_stage_order)}
-        indices = [order[s] for s in progression if s in order]
-        return indices == sorted(indices)
-
-    def _milestones(self, events: List[TimelineEvent]) -> List[TimelineEvent]:
-        milestones: List[TimelineEvent] = []
-        seen_stages: set = set()
-        if events:
-            first = events[0]
-            milestones.append(TimelineEvent(
-                timestamp=first.timestamp, event_type="milestone",
-                evidence_id=first.evidence_id,
-                description="Investigation start - first evidence acquired",
-            ))
-        for event in events:
-            for stage in event.stages:
-                if stage in seen_stages:
-                    continue
-                seen_stages.add(stage)
-                milestones.append(TimelineEvent(
-                    timestamp=event.timestamp, event_type="milestone",
-                    evidence_id=event.evidence_id, stages=[stage],
-                    description=f"First observation of stage "
-                                f"'{stage}' ({event.evidence_id})",
-                ))
-        return milestones
-
-    @staticmethod
-    def _statistics(events, attack_stages, items) -> Dict[str, float]:
-        dts = sorted(d for d in (c.upload_datetime for c in items) if d)
-        span_hours = ((dts[-1] - dts[0]).total_seconds() / 3600.0
-                      if len(dts) >= 2 else 0.0)
+    def _evidence_payload(context: EvidenceContext) -> dict:
+        grouped: dict[str, list[dict[str, str]]] = {}
+        for entity in context.entities:
+            grouped.setdefault(entity.entity_type, []).append({
+                "value": entity.value,
+                "normalized": entity.normalized,
+            })
         return {
-            "event_count": float(len(events)),
-            "stage_count": float(len(attack_stages)),
-            "critical_event_count": float(sum(1 for e in events if e.critical)),
-            "timeline_span_hours": round(span_hours, 2),
+            "evidence_id": context.evidence_id,
+            "file_name": context.file_name,
+            "upload_time": context.upload_time,
+            "raw_text": context.raw_text,
+            "cleaning": {"entities": grouped},
         }
 
-    def _summary(self, analysis: TimelineAnalysis) -> str:
-        parts = [
-            f"{int(analysis.statistics.get('event_count', 0))} event(s) spanning "
-            f"{analysis.statistics.get('timeline_span_hours', 0.0):.1f} hour(s)."
-        ]
-        if analysis.stage_progression:
-            parts.append(
-                "Observed scam progression: "
-                + " -> ".join(analysis.stage_progression) + "."
-            )
-            parts.append(
-                "The progression "
-                + ("follows" if analysis.progression_consistent else
-                   "deviates from")
-                + " the canonical scam sequence."
-            )
-        if analysis.critical_events:
-            parts.append(
-                f"{len(analysis.critical_events)} critical event(s) involve "
-                "OTP/financial entities."
-            )
-        return " ".join(parts)
+    @staticmethod
+    def _correlation_payload(
+        correlation: Optional[CorrelationAnalysis],
+    ) -> dict:
+        if correlation is None:
+            return {"nodes": [], "edges": []}
+        return {
+            "nodes": [],
+            "edges": [
+                {
+                    "source": pair.evidence_a,
+                    "target": pair.evidence_b,
+                    "type": "behavioral_relationship",
+                    "weight": pair.correlation_confidence,
+                    "confidence": pair.correlation_confidence,
+                }
+                for pair in correlation.pairs
+                if pair.relationship_strength != "NO_RELATIONSHIP"
+            ],
+        }
