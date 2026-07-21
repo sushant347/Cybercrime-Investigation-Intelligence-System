@@ -4,10 +4,10 @@ Dependency order::
 
     load evidence (read-only)
       -> M1 correlation
-           -> M2 graph          (uses correlation for behavioural edges)
+      -> M5 timeline            (canonical standalone reconstruction)
+           -> M2 graph          (uses correlation + reconstructed events)
            -> M3 campaigns      (clusters over strong correlations)
            -> M4 suspects       (uses correlation for relationship strength)
-      -> M5 timeline
       -> M6 analytics           (uses correlation, campaigns, timeline)
       -> M8 priority            (uses analytics, correlation, campaigns, timeline)
       -> M7 report              (references every stored finding, incl. priority)
@@ -107,9 +107,20 @@ class InvestigationPipeline:
         results["cross_case"] = safe(
             "cross_case",
             lambda: self._run_cross_case(case_id, evidence))
+        results["timeline"] = safe(
+            "timeline",
+            lambda: self._timeline.analyze(
+                case_id, evidence, results["correlation"]
+            ))
         results["graph"] = safe(
             "graph",
-            lambda: self._graph.build(case_id, results["correlation"], evidence))
+            lambda: self._graph.build(
+                case_id,
+                results["correlation"],
+                evidence,
+                timeline=results["timeline"],
+                cross_case=results["cross_case"],
+            ))
         if results["correlation"] is not None:
             results["campaigns"] = safe(
                 "campaigns",
@@ -120,8 +131,6 @@ class InvestigationPipeline:
         results["suspects"] = safe(
             "suspects",
             lambda: self._suspects.assess(case_id, results["correlation"], evidence))
-        results["timeline"] = safe(
-            "timeline", lambda: self._timeline.analyze(case_id, evidence))
         results["analytics"] = safe(
             "analytics",
             lambda: self._analytics.generate(
@@ -164,6 +173,41 @@ class InvestigationPipeline:
         )
         results["failures"] = failures
         return results
+
+    def refresh_timeline_graph(self, case_id: str) -> Dict[str, Any]:
+        """Refresh only entity relationships, timeline and graph artifacts.
+
+        This focused path is used immediately after evidence enrichment.  It
+        deliberately does not invoke campaigns, suspects, analytics, priority,
+        report generation, or cross-case report propagation.
+        """
+        if not self._data.case_exists(case_id):
+            raise EvidenceError(f"Unknown case '{case_id}'")
+        evidence = self._data.load_case_evidence(case_id)
+        self._correlation.index_case_entities(case_id, evidence)
+        correlation = self._correlation.analyze_case(case_id, evidence)
+        cross_case = self._run_cross_case(case_id, evidence)
+        timeline = self._timeline.analyze(case_id, evidence, correlation)
+        graph = self._graph.build(
+            case_id,
+            correlation,
+            evidence,
+            timeline=timeline,
+            cross_case=cross_case,
+        )
+        self._audit.record(
+            case_id,
+            MODULE,
+            "timeline_graph_refreshed",
+            f"{len(evidence)} evidence item(s), {len(timeline.events)} event(s), "
+            f"{len(graph.nodes)} graph node(s)",
+        )
+        return {
+            "correlation": correlation,
+            "cross_case": cross_case,
+            "timeline": timeline,
+            "graph": graph,
+        }
 
     # ------------------------------------------------------------ cross-case
 
