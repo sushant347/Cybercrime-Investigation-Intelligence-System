@@ -17,14 +17,16 @@ future dashboard phase. Pure-Python graph algorithms (no networkx needed).
 from __future__ import annotations
 
 import time
+from datetime import datetime
 from typing import Dict, List, Optional, Sequence, Set
 
 from ...evidence.logger import get_logger
 from ..audit import InvestigationAuditTrail
 from ..config import InvestigationConfig
-from ..correlation.models import CorrelationAnalysis
+from ..correlation.models import CorrelationAnalysis, CrossCaseCorrelation
 from ..data_access import CaseDataRepository, EvidenceContext
 from ..repository import InvestigationReportRepository
+from ..timeline.models import TimelineAnalysis
 from .models import (
     GraphEdge,
     GraphNode,
@@ -60,6 +62,8 @@ class GraphService:
         correlation: Optional[CorrelationAnalysis] = None,
         evidence: Optional[Sequence[EvidenceContext]] = None,
         *,
+        timeline: Optional[TimelineAnalysis] = None,
+        cross_case: Optional[CrossCaseCorrelation] = None,
         persist: bool = True,
     ) -> RelationshipGraph:
         started = time.perf_counter()
@@ -84,11 +88,14 @@ class GraphService:
             self._brand_edges(nodes, edges, context, evidence_node)
             self._device_edges(nodes, edges, context, evidence_node)
 
-        self._temporal_edges(edges, items)
+        self._timeline_event_edges(nodes, edges, timeline)
+        self._cross_case_edges(nodes, edges, case_id, cross_case)
+        self._temporal_edges(edges, items, timeline)
         self._metadata_edges(edges, items)
         if correlation is not None:
             self._behavioral_edges(edges, correlation)
 
+        edges = self._finalize_edges(edges, timeline)
         graph = RelationshipGraph(case_id=case_id, nodes=list(nodes.values()),
                                   edges=edges)
         statistics = self._statistics(graph)
@@ -113,7 +120,11 @@ class GraphService:
     def _entity_edges(self, nodes: Dict[str, GraphNode], edges: List[GraphEdge],
                       context: EvidenceContext, evidence_node: str) -> None:
         intel = self._data.threat_intel
-        for entity_type, node_type in self._cfg.graph_entity_node_types.items():
+        entity_types = sorted({entity.entity_type for entity in context.entities})
+        for entity_type in entity_types:
+            node_type = self._cfg.graph_entity_node_types.get(
+                entity_type, self._fallback_node_type(entity_type)
+            )
             for value in sorted(set(context.entity_values(entity_type))):
                 node_id = f"{node_type}:{value.lower()}"
                 self._add_node(nodes, node_id, node_type, value)
@@ -163,12 +174,108 @@ class GraphService:
                         f"'{device}'",
         ))
 
+    def _timeline_event_edges(
+        self,
+        nodes: Dict[str, GraphNode],
+        edges: List[GraphEdge],
+        timeline: Optional[TimelineAnalysis],
+    ) -> None:
+        if timeline is None:
+            return
+        for event in timeline.events:
+            event_node = f"timeline_event:{event.case_id or timeline.case_id}:{event.evidence_id}"
+            self._add_node(
+                nodes,
+                event_node,
+                "timeline_event",
+                event.description or event.evidence_id,
+                {
+                    "timestamp": event.timestamp,
+                    "time_source": event.time_source,
+                    "timestamp_inferred": str(event.timestamp_inferred).lower(),
+                },
+            )
+            edges.append(GraphEdge(
+                source=f"evidence:{event.evidence_id}",
+                target=event_node,
+                edge_type="timeline_event",
+                confidence=self._confidence_number(event.confidence),
+                source_evidence_ids=event.source_evidence_ids or [event.evidence_id],
+                timestamp=event.timestamp,
+                timestamp_source=event.time_source,
+                timestamp_inferred=event.timestamp_inferred,
+                explanation=f"Reconstructed event for {event.evidence_id}",
+            ))
+
+    def _cross_case_edges(
+        self,
+        nodes: Dict[str, GraphNode],
+        edges: List[GraphEdge],
+        case_id: str,
+        cross_case: Optional[CrossCaseCorrelation],
+    ) -> None:
+        if cross_case is None:
+            return
+        for link in cross_case.links:
+            other_case_node = f"case:{link.other_case_id}"
+            self._add_node(nodes, other_case_node, "case", link.other_case_id)
+            edges.append(GraphEdge(
+                source=f"case:{case_id}", target=other_case_node,
+                edge_type="cross_case_relationship",
+                confidence=link.match_confidence,
+                source_evidence_ids=sorted(set(
+                    link.this_evidence_ids + link.other_evidence_ids
+                )),
+                explanation=link.match_reason,
+            ))
+            for match in link.matched_entities:
+                node_type = self._cfg.graph_entity_node_types.get(
+                    match.entity_type, self._fallback_node_type(match.entity_type)
+                )
+                entity_node = f"{node_type}:{match.value.lower()}"
+                self._add_node(nodes, entity_node, node_type, match.value)
+                for other_evidence_id in match.other_evidence_ids:
+                    other_evidence_node = f"evidence:{other_evidence_id}"
+                    self._add_node(
+                        nodes, other_evidence_node, "evidence", other_evidence_id,
+                        {"case_id": link.other_case_id},
+                    )
+                    edges.append(GraphEdge(
+                        source=other_case_node,
+                        target=other_evidence_node,
+                        edge_type="contains",
+                        confidence=link.match_confidence,
+                        source_evidence_ids=[other_evidence_id],
+                        explanation=(
+                            f"{other_evidence_id} belongs to {link.other_case_id}"
+                        ),
+                    ))
+                    edges.append(GraphEdge(
+                        source=other_evidence_node,
+                        target=entity_node,
+                        edge_type="cross_case_entity_match",
+                        confidence=link.match_confidence,
+                        source_evidence_ids=sorted(set(
+                            match.this_evidence_ids + match.other_evidence_ids
+                        )),
+                        explanation=(
+                            f"{match.entity_type} '{match.value}' matches evidence "
+                            f"across {case_id} and {link.other_case_id}"
+                        ),
+                    ))
+
     def _temporal_edges(self, edges: List[GraphEdge],
-                        items: Sequence[EvidenceContext]) -> None:
+                        items: Sequence[EvidenceContext],
+                        timeline: Optional[TimelineAnalysis] = None) -> None:
         window = self._cfg.timeline_proximity_hours
+        reconstructed = {
+            event.evidence_id: self._parse_timestamp(event.timestamp)
+            for event in (timeline.events if timeline is not None else [])
+        }
         for i, a in enumerate(items):
             for b in items[i + 1:]:
-                ta, tb = a.upload_datetime, b.upload_datetime
+                ta = reconstructed.get(a.evidence_id) or a.upload_datetime
+                tb = reconstructed.get(b.evidence_id) or b.upload_datetime
                 if ta is None or tb is None:
                     continue
                 hours = abs((ta - tb).total_seconds()) / 3600.0
@@ -178,6 +285,8 @@ class GraphService:
                         target=f"evidence:{b.evidence_id}",
                         edge_type="temporal_relationship",
                         weight=round(1.0 - hours / max(window, 1e-6), 4),
+                        confidence=round(1.0 - hours / max(window, 1e-6), 4),
+                        source_evidence_ids=[a.evidence_id, b.evidence_id],
                         explanation=f"Acquired {hours:.1f}h apart "
                                     f"(window {window:.0f}h)",
                     ))
@@ -212,12 +321,67 @@ class GraphService:
                 target=f"evidence:{pair.evidence_b}",
                 edge_type="behavioral_relationship",
                 weight=round(pair.correlation_confidence, 4),
+                confidence=round(pair.correlation_confidence, 4),
+                source_evidence_ids=[pair.evidence_a, pair.evidence_b],
                 explanation=(
                     f"Module-1 correlation: {pair.relationship_strength} "
                     f"(confidence {pair.correlation_confidence:.2f}) - "
                     + "; ".join(pair.correlation_reasons[:2])
                 ),
             ))
+
+    def _finalize_edges(
+        self,
+        edges: List[GraphEdge],
+        timeline: Optional[TimelineAnalysis],
+    ) -> List[GraphEdge]:
+        """Fill provenance/timestamp fields and prevent duplicate edges."""
+        event_by_evidence = {
+            event.evidence_id: event
+            for event in (timeline.events if timeline is not None else [])
+        }
+        unique: Dict[tuple[str, str, str], GraphEdge] = {}
+        for edge in edges:
+            evidence_ids = list(edge.source_evidence_ids)
+            for endpoint in (edge.source, edge.target):
+                if endpoint.startswith("evidence:"):
+                    evidence_ids.append(endpoint.split(":", 1)[1])
+            evidence_ids = sorted(set(filter(None, evidence_ids)))
+            event = next(
+                (event_by_evidence[eid] for eid in evidence_ids
+                 if eid in event_by_evidence and event_by_evidence[eid].timestamp),
+                None,
+            )
+            if not edge.timestamp and event is not None:
+                edge.timestamp = event.timestamp
+                edge.timestamp_source = event.time_source
+                edge.timestamp_inferred = event.timestamp_inferred
+            edge.source_evidence_ids = evidence_ids
+            edge.confidence = min(1.0, max(0.0, edge.confidence))
+            key = (edge.source, edge.target, edge.edge_type)
+            existing = unique.get(key)
+            if existing is None or edge.confidence > existing.confidence:
+                unique[key] = edge
+        return list(unique.values())
+
+    @staticmethod
+    def _fallback_node_type(entity_type: str) -> str:
+        aliases = {"people": "person", "amounts": "amount", "dates": "date",
+                   "times": "time", "otps": "otp"}
+        return aliases.get(entity_type, entity_type[:-1] if entity_type.endswith("s") else entity_type)
+
+    @staticmethod
+    def _confidence_number(confidence: str) -> float:
+        return {"high": 1.0, "medium": 0.7, "low": 0.4}.get(confidence, 0.4)
+
+    @staticmethod
+    def _parse_timestamp(value: str):
+        if not value:
+            return None
+        try:
+            return datetime.fromisoformat(value.replace("Z", "+00:00"))
+        except (ValueError, TypeError):
+            return None
 
     # ------------------------------------------------------------- statistics
 
