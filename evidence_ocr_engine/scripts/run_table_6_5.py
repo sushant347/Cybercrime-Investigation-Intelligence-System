@@ -1,7 +1,7 @@
 """Table 6.5 (Timeline) — score the LIVE timeline service vs. gold.
 
-Runs ``backend/modules/investigation/timeline/service.py`` (NOT the deprecated
-``timeline_reconstruction/``) and reports order accuracy + the new timestamp
+Runs ``backend/modules/investigation/timeline/service.py``, the production
+adapter for ``timeline_reconstruction/``, and reports order accuracy + timestamp
 accuracy + unresolved rate against human gold, plus the naive upload-time-order
 baseline. Numbers only when real gold exists.
 
