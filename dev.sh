@@ -2,8 +2,8 @@
 # CIIS local development launcher.
 #
 #   ./dev.sh setup      recreate both venvs + frontend deps from scratch
-#   ./dev.sh api        Django REST API on :8000
-#   ./dev.sh web        Vite dev server on :5173 (proxies /api -> :8000)
+#   ./dev.sh api        Django REST API on :8001  (override: CIIS_API_PORT)
+#   ./dev.sh web        Vite dev server on :5173 (proxies /api -> :8001)
 #   ./dev.sh up         api + web together (Ctrl-C stops both)
 #   ./dev.sh reset-db   wipe the platform DB and re-seed demo users
 #
@@ -16,6 +16,10 @@ cd "$(dirname "${BASH_SOURCE[0]}")"
 PY=/opt/homebrew/bin/python3.12   # engines require >=3.12; macOS system python is 3.9
 PLATFORM_VENV=.venv-platform
 THREAT_VENV=.venv-threat
+
+# 8000 is left alone on purpose: other local projects commonly bind it, and the
+# Vite proxy would then silently forward /api to the wrong application.
+export CIIS_API_PORT="${CIIS_API_PORT:-8001}"
 
 setup() {
   "$PY" -m venv "$PLATFORM_VENV"
@@ -40,7 +44,7 @@ reset_db() {
     && ../"$PLATFORM_VENV"/bin/python manage.py seed_demo)
 }
 
-api() { cd ciis_api && exec ../"$PLATFORM_VENV"/bin/python manage.py runserver 8000; }
+api() { cd ciis_api && exec ../"$PLATFORM_VENV"/bin/python manage.py runserver "$CIIS_API_PORT"; }
 web() { cd ciis_frontend && exec npm run dev; }
 
 up() {

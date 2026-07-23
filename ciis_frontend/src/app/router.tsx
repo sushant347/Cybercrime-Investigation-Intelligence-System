@@ -3,9 +3,8 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import { DetailSkeleton } from "@/components/common/LoadingSkeleton";
 import { AppLayout } from "@/components/layout/AppLayout";
-import { RequireAuth } from "@/features/auth/RequireAuth";
 
-const LoginPage = lazy(() => import("@/features/auth/LoginPage"));
+const IntakePage = lazy(() => import("@/features/intake/IntakePage"));
 const DashboardPage = lazy(() => import("@/features/dashboard/DashboardPage"));
 const CasesPage = lazy(() => import("@/features/cases/CasesPage"));
 const CaseDetailPage = lazy(() => import("@/features/cases/CaseDetailPage"));
@@ -13,42 +12,27 @@ const EvidenceDetailPage = lazy(() => import("@/features/evidence/EvidenceDetail
 const AuditPage = lazy(() => import("@/features/audit/AuditPage"));
 const SettingsPage = lazy(() => import("@/features/settings/SettingsPage"));
 const NotificationsPage = lazy(() => import("@/features/notifications/NotificationsPage"));
-const UsersPage = lazy(() => import("@/features/users/UsersPage"));
 
-const wrap = (node: ReactNode, permission?: string) => (
-  <RequireAuth permission={permission}>
-    <Suspense fallback={<DetailSkeleton />}>{node}</Suspense>
-  </RequireAuth>
-);
+// No authentication and no route guards: this is a case-centric engine, not a
+// multi-user system. A case is reached by its reference, not by an identity.
+const wrap = (node: ReactNode) => <Suspense fallback={<DetailSkeleton />}>{node}</Suspense>;
 
 export const router = createBrowserRouter([
   {
-    path: "/login",
-    element: (
-      <Suspense fallback={null}>
-        <LoginPage />
-      </Suspense>
-    ),
-  },
-  {
-    element: (
-      <RequireAuth>
-        <AppLayout />
-      </RequireAuth>
-    ),
+    element: <AppLayout />,
     children: [
-      { path: "/", element: wrap(<DashboardPage />, "case.view") },
-      { path: "/cases", element: wrap(<CasesPage />, "case.view") },
-      { path: "/cases/:caseId", element: wrap(<CaseDetailPage />, "case.view") },
-      { path: "/cases/:caseId/:tab", element: wrap(<CaseDetailPage />, "case.view") },
+      { path: "/", element: wrap(<IntakePage />) },
+      { path: "/dashboard", element: wrap(<DashboardPage />) },
+      { path: "/cases", element: wrap(<CasesPage />) },
+      { path: "/cases/:caseId", element: wrap(<CaseDetailPage />) },
+      { path: "/cases/:caseId/:tab", element: wrap(<CaseDetailPage />) },
       {
         path: "/cases/:caseId/evidence/:evidenceId",
-        element: wrap(<EvidenceDetailPage />, "evidence.view"),
+        element: wrap(<EvidenceDetailPage />),
       },
-      { path: "/audit", element: wrap(<AuditPage />, "audit.view") },
-      { path: "/settings", element: wrap(<SettingsPage />, "settings.view") },
+      { path: "/audit", element: wrap(<AuditPage />) },
+      { path: "/settings", element: wrap(<SettingsPage />) },
       { path: "/notifications", element: wrap(<NotificationsPage />) },
-      { path: "/admin/users", element: wrap(<UsersPage />, "user.manage") },
       { path: "*", element: <Navigate to="/" replace /> },
     ],
   },

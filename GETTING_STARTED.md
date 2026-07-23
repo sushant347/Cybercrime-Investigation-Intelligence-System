@@ -19,24 +19,35 @@ Both venvs are built from Homebrew's `/opt/homebrew/bin/python3.12`.
 ## Everyday use
 
 ```bash
-./dev.sh up          # API :8000 + frontend :5173 together
+./dev.sh up          # API :8001 + frontend :5173 together
 ./dev.sh api         # just the Django API
 ./dev.sh web         # just the Vite dev server
-./dev.sh reset-db    # wipe platform DB, re-seed demo users
+./dev.sh reset-db    # wipe platform DB (jobs/notifications/audit only)
 ./dev.sh setup       # rebuild everything from scratch
 ```
 
-Open **http://localhost:5173** and sign in. Seeded accounts all use password
-`Ciis@Demo2026`:
+Open **http://localhost:5173**. **There is no login** — this is an engine, not
+a multi-user system. You land on Evidence Intake.
 
-| User | Role |
-|---|---|
-| `admin` | administrator (full access) |
-| `investigator` | create cases, upload evidence, run analysis |
-| `analyst` | read + analyze |
-| `viewer` | read-only |
+> **Port note:** the API runs on **8001**, not 8000. Another local project on
+> this machine (`tracker/api`) occupies 8000, and the Vite proxy would
+> otherwise forward `/api` to the wrong application — which is what made the
+> app appear broken/unloggable. Override with `CIIS_API_PORT=xxxx ./dev.sh up`.
 
-Start with `admin`, then log in as `viewer` to see RBAC hide the write actions.
+## How you find your case again (no accounts)
+
+You identify a case by a **case reference** you make up, e.g.
+`nabil-bank-phishing-2026`. The engine hashes it into a stable id:
+
+```
+"Nabil Bank Phishing 2026"  ->  CASE_7F3A9C2E11
+```
+
+Typing the same reference later reopens the **same** case with its evidence and
+reports — the reference is your handle instead of a login. Matching ignores
+capitalisation and extra spaces. The mapping lives in
+`evidence_ocr_engine/storage/case_registry.csv`; there is no database for case
+data.
 
 ## The production pipeline (what runs where)
 
@@ -56,10 +67,11 @@ bridge between the platform and the forensic engines:
 
 ## Walkthrough — the web platform
 
-1. **Dashboard** — counters are zero on a fresh DB. That's expected; the platform
-   DB and the engine's own storage are separate.
-2. **Cases → New Case** — create one.
-3. **Evidence tab → Upload** — use anything from `evidence_ocr_engine/samples/`
+1. **Evidence Intake** (the landing page) — type a case reference, e.g.
+   `esewa-lottery-scam-2026`, and press **Open case**. New references create a
+   case; known ones reopen it. Registered cases are listed below the form.
+2. You land on the case's **Evidence** tab.
+3. **Upload** — use anything from `evidence_ocr_engine/samples/`
    (`scam_sms_screenshot.png` and `phishing_email_screenshot.png` are the clearest
    demos). Upload runs OCR in a background worker; the UI polls the job.
 4. **Investigation tab → Run Analysis** — builds correlation, graph, timeline,
@@ -124,3 +136,18 @@ cd ../threat_intelligence_system
   (as above) or those connectors just return nothing.
 - **Engine settings are read-only in the UI** by design — the engine owns its
   config via `EVIDENCE_*` / `INVESTIGATION_*` env vars.
+- **SQLite is still used for plumbing.** Case data is CSV, but background jobs,
+  notifications, and the activity audit still live in `ciis_platform.sqlite3`.
+  Removing them is the next step (see `PROGRESS.md`).
+- **Leftover account machinery.** The `accounts/` app and `/api/auth/*` endpoints
+  still exist but nothing uses them; `seed_demo` is no longer needed.
+
+## Going back
+
+| Command | Result |
+|---|---|
+| `git checkout main` | The state **before** engine mode: login, DB-backed cases, visual report |
+| `git checkout engine-refactor` | Current work: no login, CSV case registry |
+
+`main` is tagged `checkpoint-visual-reports`. `AUDIT.md` records exactly what
+changed and why; `PROGRESS.md` tracks overall project state and what's next.
