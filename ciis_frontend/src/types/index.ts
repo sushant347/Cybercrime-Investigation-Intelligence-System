@@ -223,6 +223,11 @@ export interface GraphEdge {
   target: string;
   edge_type: string;
   weight: number;
+  confidence?: number;
+  source_evidence_ids?: string[];
+  timestamp?: string;
+  timestamp_source?: string;
+  timestamp_inferred?: boolean;
   explanation: string;
 }
 
@@ -324,7 +329,22 @@ export interface TimelineEvent {
   timestamp: string;
   event_type: string;
   evidence_id: string;
+  case_id?: string;
+  file_name?: string;
   description: string;
+  time_source?: string;
+  confidence?: string;
+  timestamp_inferred?: boolean;
+  source_evidence_ids?: string[];
+  correlated_with?: Array<{
+    linked_to: string;
+    type: string;
+    shared_entities: string[];
+    weight: number;
+    confidence: number;
+  }>;
+  text_preview?: string;
+  risk_signals?: Record<string, unknown>;
   stages: string[];
   critical: boolean;
   critical_reasons: string[];
