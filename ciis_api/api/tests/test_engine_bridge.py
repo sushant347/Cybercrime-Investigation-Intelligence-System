@@ -68,3 +68,21 @@ def test_entity_count_helper():
     summary = {"semantic_results": [Res({"urls": [1, 2], "emails": [3]})]}
     assert engine._entity_count(summary) == 3
     assert engine._entity_count(None) is None
+
+
+def test_live_timeline_graph_refresh_uses_focused_pipeline(monkeypatch, api):
+    from backend.modules.investigation import pipeline as pipeline_module
+    from api import engine
+
+    called = []
+
+    class Pipeline:
+        def refresh_timeline_graph(self, case_id):
+            called.append(case_id)
+            return {"timeline": object(), "graph": object()}
+
+    monkeypatch.setattr(pipeline_module, "build_default_pipeline", lambda **_kw: Pipeline())
+    monkeypatch.setattr(engine, "_threat_intel_provider", lambda: None)
+    result = engine._refresh_timeline_graph("CASE_0001")
+    assert result is not None
+    assert called == ["CASE_0001"]
