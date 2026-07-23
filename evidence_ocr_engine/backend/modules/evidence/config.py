@@ -34,6 +34,8 @@ class EvidenceConfig:
     evidence_csv: Path = _MODULE_ROOT / "storage" / "evidence.csv"
     ocr_results_csv: Path = _MODULE_ROOT / "storage" / "ocr_results.csv"
     processing_log_csv: Path = _MODULE_ROOT / "storage" / "processing_log.csv"
+    #: Maps the investigator-supplied case reference to its hashed case id.
+    case_registry_csv: Path = _MODULE_ROOT / "storage" / "case_registry.csv"
 
     # ------------------------------------------------------------- acquisition
     supported_extensions: frozenset[str] = frozenset(
@@ -103,6 +105,7 @@ class EvidenceConfig:
             evidence_csv=storage / "evidence.csv",
             ocr_results_csv=storage / "ocr_results.csv",
             processing_log_csv=storage / "processing_log.csv",
+            case_registry_csv=storage / "case_registry.csv",
             ocr_lang=os.environ.get("EVIDENCE_OCR_LANG", "ne"),
             ocr_version=os.environ.get("EVIDENCE_OCR_VERSION") or "PP-OCRv5",
             max_file_size_bytes=int(float(os.environ.get("EVIDENCE_MAX_FILE_MB", "50")) * 1024 * 1024),

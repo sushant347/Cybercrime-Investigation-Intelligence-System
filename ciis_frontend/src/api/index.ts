@@ -24,6 +24,7 @@ import type {
   InvestigationReport,
   LoginResponse,
   Paginated,
+  RegisteredCase,
   RelationshipGraph,
   ReportFile,
   SuspectAssessment,
@@ -168,6 +169,28 @@ export const investigationApi = {
       .then((r) => r.data),
   runAnalysis: (caseId: string) =>
     apiClient.post<BackgroundJob>(`/cases/${caseId}/analyze/`).then((r) => r.data),
+};
+
+// ----------------------------------------------------------------- intake
+export const intakeApi = {
+  /** Registered cases, most recently opened first. */
+  list: () =>
+    apiClient
+      .get<{ cases: RegisteredCase[] }>("/intake/")
+      .then((r) => r.data),
+  /** Open a case by reference, creating it on first use. */
+  open: (reference: string, title = "") =>
+    apiClient
+      .post<RegisteredCase>("/intake/", { reference, title })
+      .then((r) => r.data),
+  /** Check whether a reference already maps to a case (creates nothing). */
+  resolve: (reference: string) =>
+    apiClient
+      .get<{ case_id: string; exists: boolean; case: RegisteredCase | null }>(
+        "/intake/resolve/",
+        { params: { reference } },
+      )
+      .then((r) => r.data),
 };
 
 // ---------------------------------------------------------------- reports

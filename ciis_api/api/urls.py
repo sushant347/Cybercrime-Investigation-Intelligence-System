@@ -1,9 +1,22 @@
 from django.urls import path
 
-from .views import audit, cases, dashboard, evidence, investigation, notifications, reports, system
+from .views import (
+    audit,
+    cases,
+    dashboard,
+    evidence,
+    intake,
+    investigation,
+    notifications,
+    reports,
+    system,
+)
 
 urlpatterns = [
     path("dashboard/", dashboard.DashboardView.as_view()),
+    # Intake (no auth: case reference -> hashed case id)
+    path("intake/", intake.IntakeView.as_view()),
+    path("intake/resolve/", intake.IntakeResolveView.as_view()),
     # Cases
     path("cases/", cases.CaseListCreateView.as_view()),
     path("cases/<str:case_id>/", cases.CaseDetailView.as_view()),
