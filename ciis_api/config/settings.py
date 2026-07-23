@@ -85,7 +85,8 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
-    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
+    # No accounts: the engine is open access (see accounts/permissions.py).
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.AllowAny",),
     "DEFAULT_PAGINATION_CLASS": "api.pagination.DefaultPagination",
     "PAGE_SIZE": 25,
     "DEFAULT_FILTER_BACKENDS": (

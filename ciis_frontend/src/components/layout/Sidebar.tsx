@@ -1,11 +1,10 @@
-import AssessmentIcon from "@mui/icons-material/Assessment";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
 import FolderSpecialIcon from "@mui/icons-material/FolderSpecial";
 import GppGoodIcon from "@mui/icons-material/GppGood";
-import GroupIcon from "@mui/icons-material/Group";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import SettingsIcon from "@mui/icons-material/Settings";
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
+import UploadFileIcon from "@mui/icons-material/UploadFile";
 import {
   Box,
   Divider,
@@ -19,22 +18,15 @@ import {
 } from "@mui/material";
 import { NavLink } from "react-router-dom";
 
-import { useAuth } from "@/features/auth/AuthContext";
-
 export const SIDEBAR_WIDTH = 248;
 
 const NAV_ITEMS = [
-  { to: "/", label: "Dashboard", icon: <SpaceDashboardIcon />, permission: "case.view" },
-  { to: "/cases", label: "Cases", icon: <FolderSpecialIcon />, permission: "case.view" },
-  { to: "/audit", label: "Audit Log", icon: <FactCheckIcon />, permission: "audit.view" },
-  {
-    to: "/notifications",
-    label: "Notifications",
-    icon: <NotificationsIcon />,
-    permission: null,
-  },
-  { to: "/settings", label: "Settings", icon: <SettingsIcon />, permission: "settings.view" },
-  { to: "/admin/users", label: "User Management", icon: <GroupIcon />, permission: "user.manage" },
+  { to: "/", label: "Evidence Intake", icon: <UploadFileIcon /> },
+  { to: "/cases", label: "Cases", icon: <FolderSpecialIcon /> },
+  { to: "/dashboard", label: "Dashboard", icon: <SpaceDashboardIcon /> },
+  { to: "/audit", label: "Audit Log", icon: <FactCheckIcon /> },
+  { to: "/notifications", label: "Notifications", icon: <NotificationsIcon /> },
+  { to: "/settings", label: "Settings", icon: <SettingsIcon /> },
 ] as const;
 
 export function Sidebar({
@@ -44,8 +36,6 @@ export function Sidebar({
   mobileOpen: boolean;
   onClose: () => void;
 }) {
-  const { user, hasPermission } = useAuth();
-
   const content = (
     <Stack sx={{ height: "100%" }}>
       <Stack direction="row" spacing={1.5} alignItems="center" sx={{ p: 2.5 }}>
@@ -61,7 +51,7 @@ export function Sidebar({
       </Stack>
       <Divider />
       <List sx={{ px: 1.5, py: 2, flex: 1 }}>
-        {NAV_ITEMS.filter((i) => !i.permission || hasPermission(i.permission)).map(
+        {NAV_ITEMS.map(
           (item) => (
             <ListItemButton
               key={item.to}
@@ -90,11 +80,9 @@ export function Sidebar({
       </List>
       <Divider />
       <Stack sx={{ p: 2 }} spacing={0.25}>
-        <Typography variant="subtitle2">{user?.username}</Typography>
-        <Typography variant="caption" color="text.secondary" sx={{ textTransform: "capitalize" }}>
-          <AssessmentIcon sx={{ fontSize: 12, mr: 0.5, verticalAlign: "middle" }} />
-          {user?.role}
-          {user?.department ? ` · ${user.department}` : ""}
+        <Typography variant="subtitle2">Case-centric engine</Typography>
+        <Typography variant="caption" color="text.secondary">
+          CSV storage · no accounts
         </Typography>
       </Stack>
     </Stack>

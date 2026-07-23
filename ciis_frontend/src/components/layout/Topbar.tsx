@@ -1,38 +1,26 @@
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
-import LogoutIcon from "@mui/icons-material/Logout";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import {
   AppBar,
-  Avatar,
   Badge,
-  Divider,
   IconButton,
-  ListItemIcon,
-  Menu,
-  MenuItem,
-  Stack,
   Toolbar,
   Tooltip,
   Typography,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { notificationsApi } from "@/api";
-import { useAuth } from "@/features/auth/AuthContext";
 import { NotificationsPopover } from "@/features/notifications/NotificationsPopover";
 import { useColorMode } from "@/theme/ColorModeProvider";
 
 import { SIDEBAR_WIDTH } from "./Sidebar";
 
 export function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
-  const { user, logout } = useAuth();
   const { mode, toggle } = useColorMode();
-  const navigate = useNavigate();
-  const [userMenuEl, setUserMenuEl] = useState<HTMLElement | null>(null);
   const [notifEl, setNotifEl] = useState<HTMLElement | null>(null);
 
   const { data: unread } = useQuery({
@@ -40,12 +28,6 @@ export function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
     queryFn: () => notificationsApi.list({ unread: 1, page_size: 1 }),
     refetchInterval: 30_000,
   });
-
-  const handleLogout = async () => {
-    setUserMenuEl(null);
-    await logout();
-    navigate("/login");
-  };
 
   return (
     <AppBar
@@ -90,39 +72,6 @@ export function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
           </IconButton>
         </Tooltip>
         <NotificationsPopover anchorEl={notifEl} onClose={() => setNotifEl(null)} />
-
-        <Tooltip title="Account">
-          <IconButton onClick={(e) => setUserMenuEl(e.currentTarget)} sx={{ ml: 0.5 }}>
-            <Avatar sx={{ width: 32, height: 32, bgcolor: "primary.main", fontSize: 14 }}>
-              {(user?.first_name?.[0] ?? user?.username?.[0] ?? "?").toUpperCase()}
-            </Avatar>
-          </IconButton>
-        </Tooltip>
-        <Menu
-          anchorEl={userMenuEl}
-          open={!!userMenuEl}
-          onClose={() => setUserMenuEl(null)}
-        >
-          <Stack sx={{ px: 2, py: 1 }}>
-            <Typography variant="subtitle2">
-              {user?.first_name} {user?.last_name}
-            </Typography>
-            <Typography
-              variant="caption"
-              color="text.secondary"
-              sx={{ textTransform: "capitalize" }}
-            >
-              {user?.role}
-            </Typography>
-          </Stack>
-          <Divider />
-          <MenuItem onClick={handleLogout}>
-            <ListItemIcon>
-              <LogoutIcon fontSize="small" />
-            </ListItemIcon>
-            Sign out
-          </MenuItem>
-        </Menu>
       </Toolbar>
     </AppBar>
   );

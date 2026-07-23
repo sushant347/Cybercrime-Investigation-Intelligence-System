@@ -367,6 +367,20 @@ export interface CasePriority {
   computed_at: string;
 }
 
+// -------------------------------------------------------------- intake
+/** A case as recorded in the CSV case registry (no accounts, no database). */
+export interface RegisteredCase {
+  case_id: string;
+  case_reference: string;
+  title: string;
+  created_at: string;
+  last_opened_at: string;
+  /** Only set by the intake POST response: was the case created just now? */
+  created?: boolean;
+  /** Only present in the registry listing. */
+  evidence_count?: number;
+}
+
 // ------------------------------------------------------------- reports
 export interface ReportFile {
   file_name: string;
