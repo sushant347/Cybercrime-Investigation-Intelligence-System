@@ -309,6 +309,19 @@ def _entity_count(summary: Optional[dict[str, Any]]) -> Optional[int]:
     return total
 
 
+def _refresh_timeline_graph(case_id: str) -> Optional[dict[str, Any]]:
+    """Regenerate live artifacts after OCR/entity enrichment, failure-isolated."""
+    try:
+        from backend.modules.investigation.pipeline import build_default_pipeline
+
+        return build_default_pipeline(
+            threat_intel=_threat_intel_provider()
+        ).refresh_timeline_graph(case_id)
+    except Exception:  # noqa: BLE001 - evidence processing remains recoverable
+        log.exception("Live timeline/graph refresh failed for %s", case_id)
+        return None
+
+
 def submit_evidence_job(job_id: int, tmp_path: str, case_id: str,
                         notes: str, username: str) -> None:
     """Queue Phase-1 processing of an uploaded file (runs in a worker)."""
@@ -329,6 +342,9 @@ def submit_evidence_job(job_id: int, tmp_path: str, case_id: str,
                 # stages append to shared CSVs (entities.csv, keyword_*.csv).
                 # Best-effort: a failure here does not discard the OCR result.
                 summary = _enrich_evidence(case_id)
+                # Entities are now durable, so regenerate only the timeline and
+                # relationship graph.  Other Phase-2/report modules are not run.
+                live_artifacts = _refresh_timeline_graph(case_id)
             job.status = "completed"
             job.evidence_id = result.evidence_id
             entities = _entity_count(summary)
@@ -341,6 +357,10 @@ def submit_evidence_job(job_id: int, tmp_path: str, case_id: str,
                     f"Processed as {result.evidence_id}; "
                     f"{entities} entities extracted"
                 )
+            if live_artifacts is not None:
+                job.detail += "; timeline and graph refreshed"
+            else:
+                job.detail += "; timeline/graph refresh pending"
             Notification.broadcast(
                 type=NotificationType.PROCESSING_COMPLETE,
                 title=f"Evidence {result.evidence_id} processed",
