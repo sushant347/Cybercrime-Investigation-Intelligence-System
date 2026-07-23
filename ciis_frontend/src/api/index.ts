@@ -21,6 +21,7 @@ import type {
   EvidenceRow,
   GraphStatistics,
   GraphSummary,
+  InvestigationReport,
   LoginResponse,
   Paginated,
   RelationshipGraph,
@@ -177,7 +178,7 @@ export const reportsApi = {
       .then((r) => r.data),
   latest: (caseId: string) =>
     apiClient
-      .get<ArtifactDocument<Record<string, unknown>>>(`/cases/${caseId}/reports/latest/`)
+      .get<ArtifactDocument<InvestigationReport>>(`/cases/${caseId}/reports/latest/`)
       .then((r) => r.data),
   previewMarkdown: (caseId: string, fileName: string) =>
     apiClient
