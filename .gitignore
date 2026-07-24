@@ -8,10 +8,18 @@ __pycache__/
 .mypy_cache/
 .ruff_cache/
 .coverage
+.coverage.*
 htmlcov/
 *.egg-info/
 build/
 dist/
+
+# Office temporary lock files (e.g. ~$Report.docx)
+~$*
+
+# Django collected static / uploaded media (production hardening, F7)
+ciis_api/staticfiles/
+ciis_api/media/
 
 # ===== Virtual environments (NEVER commit) =====
 .venv/
