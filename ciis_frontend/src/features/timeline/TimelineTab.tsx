@@ -217,7 +217,7 @@ export function TimelineTab({ caseId }: { caseId: string }) {
                     </Stack>
                     <Box sx={{ minWidth: 0, flex: 1 }}>
                       <Typography variant="caption" color="text.secondary">
-                        {formatDateTime(event.timestamp)} · {titleCase(event.event_type)}
+                        {event.timestamp ? formatDateTime(event.timestamp) : "Timestamp unresolved"} · {titleCase(event.event_type)}
                         {event.evidence_id ? ` · ${event.evidence_id}` : ""}
                       </Typography>
                       <Typography variant="body2">{event.description}</Typography>
@@ -227,6 +227,12 @@ export function TimelineTab({ caseId }: { caseId: string }) {
                             <Chip size="small" label="CRITICAL" sx={{ bgcolor: `${BRAND.critical}22`, color: BRAND.critical, fontWeight: 700 }} />
                           </Tooltip>
                         )}
+                        <Chip
+                          size="small"
+                          label={`${titleCase(event.time_source ?? "legacy upload time")} · ${event.confidence ?? "unknown"}`}
+                          color={event.timestamp_inferred ? "warning" : "default"}
+                          variant="outlined"
+                        />
                         {isMilestone && <Chip size="small" label="Milestone" variant="outlined" />}
                         {event.stages.map((stage) => (
                           <Chip key={stage} size="small" label={titleCase(stage)} variant="outlined" />
@@ -256,7 +262,11 @@ export function TimelineTab({ caseId }: { caseId: string }) {
               <Stack spacing={1}>
                 <Typography variant="subtitle2">{titleCase(selected.event_type)}</Typography>
                 <Typography variant="caption" color="text.secondary">
-                  {formatDateTime(selected.timestamp)}
+                  {selected.timestamp ? formatDateTime(selected.timestamp) : "Timestamp unresolved"}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {titleCase(selected.time_source ?? "legacy upload time")} · {selected.confidence ?? "unknown"} confidence
+                  {selected.timestamp_inferred ? " · inferred" : ""}
                 </Typography>
                 <Typography variant="body2">{selected.description}</Typography>
                 {selected.evidence_id && (
@@ -275,6 +285,11 @@ export function TimelineTab({ caseId }: { caseId: string }) {
                       </Typography>
                     ))}
                   </>
+                )}
+                {(selected.correlated_with?.length ?? 0) > 0 && (
+                  <Typography variant="body2">
+                    Related evidence: {selected.correlated_with?.map((item) => item.linked_to).join(", ")}
+                  </Typography>
                 )}
               </Stack>
             )}
