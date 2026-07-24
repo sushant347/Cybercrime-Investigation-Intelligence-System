@@ -1,0 +1,11 @@
+{
+  "EVID_EXAMPLE_1": {
+    "urls": ["http://nabil-verify.scam.top/login?id=99"],
+    "emails": ["support@fake-bank.com"],
+    "phones": ["+9779812345678"]
+  },
+  "EVID_EXAMPLE_2": {
+    "urls": ["http://esewa-reward.example"],
+    "otp": ["4521"]
+  }
+}
