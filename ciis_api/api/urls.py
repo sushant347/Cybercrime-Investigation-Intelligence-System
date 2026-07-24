@@ -1,11 +1,22 @@
 from django.urls import path
 
-from .views import audit, cases, dashboard, evidence, investigation, notifications, reports, system
+from .views import (
+    cases,
+    evidence,
+    intake,
+    investigation,
+    reports,
+    system,
+)
 
 urlpatterns = [
-    path("dashboard/", dashboard.DashboardView.as_view()),
-    # Cases
-    path("cases/", cases.CaseListCreateView.as_view()),
+    # Intake (no auth: case reference -> hashed case id)
+    path("intake/", intake.IntakeView.as_view()),
+    path("intake/resolve/", intake.IntakeResolveView.as_view()),
+    # Cases.
+    # NOTE: the case *list* and *dashboard* endpoints are intentionally absent.
+    # Cases are private to whoever knows the reference, so nothing enumerates
+    # them; every route below addresses one already-known case id.
     path("cases/<str:case_id>/", cases.CaseDetailView.as_view()),
     path("cases/<str:case_id>/archive/", cases.CaseArchiveView.as_view()),
     path("cases/<str:case_id>/history/", cases.CaseHistoryView.as_view()),
@@ -30,9 +41,6 @@ urlpatterns = [
         "cases/<str:case_id>/reports/<str:file_name>/download/",
         reports.ReportDownloadView.as_view(),
     ),
-    # Audit, notifications, settings
-    path("audit/", audit.AuditLogView.as_view()),
-    path("notifications/", notifications.NotificationListView.as_view()),
-    path("notifications/mark-read/", notifications.NotificationMarkReadView.as_view()),
+    # Engine configuration (read-only)
     path("settings/", system.SystemSettingsView.as_view()),
 ]

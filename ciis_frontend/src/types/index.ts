@@ -77,6 +77,8 @@ export interface CaseSummary {
 
 export interface CaseDetail extends CaseSummary {
   evidence: EvidenceRow[];
+  /** The reference this case was opened with (from the CSV case registry). */
+  case_reference: string;
 }
 
 export interface CaseHistoryEntry {
@@ -367,6 +369,20 @@ export interface CasePriority {
   computed_at: string;
 }
 
+// -------------------------------------------------------------- intake
+/** A case as recorded in the CSV case registry (no accounts, no database). */
+export interface RegisteredCase {
+  case_id: string;
+  case_reference: string;
+  title: string;
+  created_at: string;
+  last_opened_at: string;
+  /** Only set by the intake POST response: was the case created just now? */
+  created?: boolean;
+  /** Only present in the registry listing. */
+  evidence_count?: number;
+}
+
 // ------------------------------------------------------------- reports
 export interface ReportFile {
   file_name: string;
@@ -374,6 +390,73 @@ export interface ReportFile {
   size_bytes: number;
   generated_at: string | null;
   modified_at: number;
+}
+
+// Sections of the Phase-2 investigation report artifact. Sections that had
+// no input data are stored by the engine as a plain explanatory string, so
+// every structured section is unioned with `string`.
+export interface ReportEvidenceRow {
+  evidence_id: string;
+  file_name: string;
+  upload_time: string;
+  sha256: string;
+  hash_verified: boolean;
+  ocr_confidence: number;
+  evidence_confidence_score: number | string;
+  entity_count: number;
+}
+
+export interface ReportCorrelationSection {
+  pair_count: number;
+  related_pair_count: number;
+  strength_distribution: Record<string, number>;
+  top_relationships: {
+    pair: string;
+    strength: string;
+    confidence: number;
+    explanation: string;
+  }[];
+}
+
+export interface ReportTimelineSection {
+  summary: string;
+  stage_progression: string[];
+  progression_consistent: boolean;
+  milestones: { timestamp: string; description: string }[];
+  critical_events: unknown[];
+}
+
+export interface ReportCampaignSection {
+  campaign_count: number;
+  unclustered_evidence: string[];
+  campaigns: unknown[];
+}
+
+export interface InvestigationReport {
+  sections: {
+    executive_summary: string[];
+    case_overview: {
+      case_id: string;
+      evidence_count: number;
+      first_evidence: string;
+      last_evidence: string;
+      file_types: string[];
+    };
+    evidence_summary: ReportEvidenceRow[] | string;
+    correlation_analysis: ReportCorrelationSection | string;
+    campaign_analysis: ReportCampaignSection | string;
+    timeline_analysis: ReportTimelineSection | string;
+    suspect_assessment: unknown;
+    threat_intelligence_summary: unknown;
+    evidence_quality_summary: Record<string, number> | string;
+    metadata_summary: unknown[];
+    investigation_statistics: Record<string, Record<string, number>>;
+    confidence_analysis: unknown[];
+    investigation_conclusion: string[];
+    recommendations: string[];
+    appendix: Record<string, unknown>;
+  };
+  generated_from: Record<string, boolean>;
 }
 
 // --------------------------------------------------------------- audit
