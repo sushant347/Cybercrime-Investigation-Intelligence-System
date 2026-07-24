@@ -233,6 +233,63 @@ def _evidence_pipeline():
     return EvidencePipeline(cfg, PaddleOCRService(cfg, lang=cfg.ocr_lang))
 
 
+@lru_cache(maxsize=1)
+def _evidence_orchestrator():
+    """Post-OCR text chain (cleaning -> enhancement -> semantic -> entities).
+
+    Reuses the engine's ``EvidenceProcessingOrchestrator`` unchanged. Built
+    lazily and cached (mirrors ``_evidence_pipeline``) because the semantic
+    knowledge base / dictionaries are non-trivial to load. Runs fully offline:
+    the semantic stage falls back to its heuristic path when the optional
+    transformer weights are absent.
+    """
+    from backend.modules.evidence.semantic.orchestrator import (
+        EvidenceProcessingOrchestrator,
+    )
+
+    return EvidenceProcessingOrchestrator(evidence_config())
+
+
+def _enrich_evidence(case_id: str) -> Optional[dict[str, Any]]:
+    """Run the full post-OCR chain for a case; failure-isolated.
+
+    Returns the orchestrator summary on success, or ``None`` when the chain is
+    disabled or fails. A failure here never discards the already-captured OCR
+    evidence: the upload has succeeded regardless, so we log/report but do not
+    re-raise. The caller must hold ``_pipeline_lock`` (engine CSV storage is
+    not concurrency-safe and several stages append to shared CSVs).
+    """
+    if not getattr(settings, "ENGINE_RUN_FULL_PIPELINE", True):
+        log.info("Full Phase-1 chain disabled (ENGINE_RUN_FULL_PIPELINE=0)")
+        return None
+    try:
+        summary = _evidence_orchestrator().process_case(case_id)
+        log.info(
+            "Post-OCR chain for %s: clean=%s enhance=%s semantic=%s in %s ms",
+            case_id,
+            summary.get("stages", {}).get("cleaning"),
+            summary.get("stages", {}).get("enhancement"),
+            summary.get("stages", {}).get("semantic"),
+            summary.get("duration_ms"),
+        )
+        return summary
+    except Exception:  # noqa: BLE001 - enrichment is best-effort, never fatal
+        log.exception("Post-OCR enrichment chain failed for %s", case_id)
+        return None
+
+
+def _entity_count(summary: Optional[dict[str, Any]]) -> Optional[int]:
+    """Total entities extracted across the case's evidence, if available."""
+    if not summary:
+        return None
+    total = 0
+    for res in summary.get("semantic_results", []) or []:
+        entities = getattr(res, "entities", None)
+        if isinstance(entities, dict):
+            total += sum(len(v) for v in entities.values())
+    return total
+
+
 def submit_evidence_job(job_id: int, tmp_path: str, case_id: str,
                         notes: str, username: str) -> None:
     """Queue Phase-1 processing of an uploaded file (runs in a worker)."""
@@ -248,9 +305,23 @@ def submit_evidence_job(job_id: int, tmp_path: str, case_id: str,
                 result = _evidence_pipeline().process_file(
                     tmp_path, case_id=case_id, notes=notes
                 )
+                # Full Phase-1 chain: cleaning -> enhancement -> semantic ->
+                # entity extraction. Kept inside the SAME lock because these
+                # stages append to shared CSVs (entities.csv, keyword_*.csv).
+                # Best-effort: a failure here does not discard the OCR result.
+                summary = _enrich_evidence(case_id)
             job.status = "completed"
             job.evidence_id = result.evidence_id
-            job.detail = f"Processed as {result.evidence_id}"
+            entities = _entity_count(summary)
+            if summary is None:
+                job.detail = f"Processed as {result.evidence_id} (OCR only)"
+            elif entities is None:
+                job.detail = f"Processed as {result.evidence_id} (full pipeline)"
+            else:
+                job.detail = (
+                    f"Processed as {result.evidence_id}; "
+                    f"{entities} entities extracted"
+                )
             Notification.broadcast(
                 type=NotificationType.PROCESSING_COMPLETE,
                 title=f"Evidence {result.evidence_id} processed",
@@ -274,6 +345,30 @@ def submit_evidence_job(job_id: int, tmp_path: str, case_id: str,
     _executor.submit(work)
 
 
+@lru_cache(maxsize=1)
+def _threat_intel_provider():
+    """Threat-intel provider for Phase-2 analysis.
+
+    Returns the ML-backed provider when ``CIIS_ML_THREAT_INTEL`` is enabled and
+    the classifier loads; otherwise ``None`` so ``build_default_pipeline`` falls
+    back to the engine's static indicator-file provider. The ML adapter itself
+    degrades gracefully, so this never raises.
+    """
+    if not getattr(settings, "ML_THREAT_INTEL_ENABLED", False):
+        return None
+    from backend.modules.investigation.ml_threat_intel import MLThreatIntelProvider
+
+    provider = MLThreatIntelProvider(
+        settings.ML_THREAT_INTEL_ROOT,
+        model_type=getattr(settings, "ML_THREAT_INTEL_MODEL", "xgboost"),
+    )
+    if not provider.available:
+        log.warning("ML threat-intel enabled but classifier unavailable; using static intel")
+        return None
+    log.info("ML threat-intel provider active (model=%s)", settings.ML_THREAT_INTEL_MODEL)
+    return provider
+
+
 def submit_analysis_job(job_id: int, case_id: str, username: str) -> None:
     """Queue the full Phase-2 pipeline for a case (runs in a worker)."""
 
@@ -287,7 +382,9 @@ def submit_analysis_job(job_id: int, case_id: str, username: str) -> None:
             from backend.modules.investigation.pipeline import build_default_pipeline
 
             with _pipeline_lock:
-                results = build_default_pipeline().analyze_case(case_id)
+                results = build_default_pipeline(
+                    threat_intel=_threat_intel_provider()
+                ).analyze_case(case_id)
             failures = results.get("failures") or []
             job.status = "completed"
             job.detail = f"failures={failures or 'none'}"
