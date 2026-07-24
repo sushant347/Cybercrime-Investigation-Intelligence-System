@@ -1,6 +1,24 @@
 {
   "nodes": [
     {
+      "id": "EVID_00031",
+      "case_id": "CASE_0021",
+      "file_name": "messenger_chat_screenshot.jpg",
+      "upload_time": "2026-07-08T18:12:00.000Z"
+    },
+    {
+      "id": "EVID_00032",
+      "case_id": "CASE_0021",
+      "file_name": "esewa_payment_request.jpg",
+      "upload_time": "2026-07-08T19:45:00.000Z"
+    },
+    {
+      "id": "EVID_00033",
+      "case_id": "CASE_0021",
+      "file_name": "unrelated_group_chat.jpg",
+      "upload_time": "2026-07-05T08:00:00.000Z"
+    },
+    {
       "id": "EVID_00101",
       "case_id": "CASE_0042",
       "file_name": "victim1_messenger_chat.jpg",
@@ -44,6 +62,22 @@
     }
   ],
   "edges": [
+    {
+      "source": "EVID_00031",
+      "target": "EVID_00032",
+      "type": "shared_entity",
+      "shared_entities": [
+        {
+          "value": "9841122334",
+          "type": "phones"
+        },
+        {
+          "value": "rajesh.thapa99",
+          "type": "esewa_ids"
+        }
+      ],
+      "weight": 2.0
+    },
     {
       "source": "EVID_00101",
       "target": "EVID_00104",
@@ -125,6 +159,76 @@
       "weight": 1.0
     },
     {
+      "source": "EVID_00031",
+      "target": "EVID_00101",
+      "type": "temporal_proximity",
+      "shared_entities": [],
+      "weight": 0.9145833333333333
+    },
+    {
+      "source": "EVID_00031",
+      "target": "EVID_00102",
+      "type": "temporal_proximity",
+      "shared_entities": [],
+      "weight": 0.8798611111111111
+    },
+    {
+      "source": "EVID_00031",
+      "target": "EVID_00103",
+      "type": "temporal_proximity",
+      "shared_entities": [],
+      "weight": 0.3555555555555555
+    },
+    {
+      "source": "EVID_00031",
+      "target": "EVID_00104",
+      "type": "temporal_proximity",
+      "shared_entities": [],
+      "weight": 0.1611111111111111
+    },
+    {
+      "source": "EVID_00031",
+      "target": "EVID_00105",
+      "type": "temporal_proximity",
+      "shared_entities": [],
+      "weight": 0.1333333333333333
+    },
+    {
+      "source": "EVID_00032",
+      "target": "EVID_00101",
+      "type": "temporal_proximity",
+      "shared_entities": [],
+      "weight": 0.9791666666666666
+    },
+    {
+      "source": "EVID_00032",
+      "target": "EVID_00102",
+      "type": "temporal_proximity",
+      "shared_entities": [],
+      "weight": 0.9444444444444444
+    },
+    {
+      "source": "EVID_00032",
+      "target": "EVID_00103",
+      "type": "temporal_proximity",
+      "shared_entities": [],
+      "weight": 0.42013888888888895
+    },
+    {
+      "source": "EVID_00032",
+      "target": "EVID_00104",
+      "type": "temporal_proximity",
+      "shared_entities": [],
+      "weight": 0.22569444444444453
+    },
+    {
+      "source": "EVID_00032",
+      "target": "EVID_00105",
+      "type": "temporal_proximity",
+      "shared_entities": [],
+      "weight": 0.19791666666666663
+    },
+    {
       "source": "EVID_00102",
       "target": "EVID_00104",
       "type": "temporal_proximity",
@@ -161,6 +265,30 @@
     }
   ],
   "entity_index": {
+    "9841122334": [
+      {
+        "case_id": "CASE_0021",
+        "evidence_id": "EVID_00031",
+        "entity_type": "phones"
+      },
+      {
+        "case_id": "CASE_0021",
+        "evidence_id": "EVID_00032",
+        "entity_type": "phones"
+      }
+    ],
+    "rajesh.thapa99": [
+      {
+        "case_id": "CASE_0021",
+        "evidence_id": "EVID_00031",
+        "entity_type": "esewa_ids"
+      },
+      {
+        "case_id": "CASE_0021",
+        "evidence_id": "EVID_00032",
+        "entity_type": "esewa_ids"
+      }
+    ],
     "esewa-bonus-verify.xyz/claim": [
       {
         "case_id": "CASE_0042",

@@ -1,0 +1,87 @@
+{
+  "case_id": "MULTI_CASE",
+  "node_count": 18,
+  "edge_count": 38,
+  "nodes_by_type": {
+    "evidence": 10,
+    "phone": 2,
+    "wallet": 2,
+    "url": 1,
+    "domain": 1,
+    "social_account": 1,
+    "bank_account": 1
+  },
+  "edges_by_type": {
+    "communicates_with": 6,
+    "transfers_to": 6,
+    "temporal_relation": 22,
+    "references": 2,
+    "resolves_to": 2
+  },
+  "density": 0.124183,
+  "connected_components": 3,
+  "largest_component_size": 15,
+  "average_degree": 4.2222,
+  "top_hubs": [
+    {
+      "id": "evidence:EVID_00101",
+      "label": "victim1_messenger_chat.jpg",
+      "node_type": "evidence",
+      "degree_centrality": "0.5882"
+    },
+    {
+      "id": "evidence:EVID_00031",
+      "label": "messenger_chat_screenshot.jpg",
+      "node_type": "evidence",
+      "degree_centrality": "0.4706"
+    },
+    {
+      "id": "evidence:EVID_00032",
+      "label": "esewa_payment_request.jpg",
+      "node_type": "evidence",
+      "degree_centrality": "0.4706"
+    },
+    {
+      "id": "evidence:EVID_00102",
+      "label": "victim1_esewa_screenshot.jpg",
+      "node_type": "evidence",
+      "degree_centrality": "0.4706"
+    },
+    {
+      "id": "evidence:EVID_00103",
+      "label": "victim1_telegram_followup.jpg",
+      "node_type": "evidence",
+      "degree_centrality": "0.4706"
+    },
+    {
+      "id": "evidence:EVID_00104",
+      "label": "victim2_whatsapp_chat.jpg",
+      "node_type": "evidence",
+      "degree_centrality": "0.4706"
+    },
+    {
+      "id": "evidence:EVID_00105",
+      "label": "victim2_bank_transfer.jpg",
+      "node_type": "evidence",
+      "degree_centrality": "0.4706"
+    },
+    {
+      "id": "phone:9807766554",
+      "label": "9807766554",
+      "node_type": "phone",
+      "degree_centrality": "0.1765"
+    },
+    {
+      "id": "wallet:suraj.offers22",
+      "label": "suraj.offers22",
+      "node_type": "wallet",
+      "degree_centrality": "0.1765"
+    },
+    {
+      "id": "phone:9841122334",
+      "label": "9841122334",
+      "node_type": "phone",
+      "degree_centrality": "0.1176"
+    }
+  ]
+}

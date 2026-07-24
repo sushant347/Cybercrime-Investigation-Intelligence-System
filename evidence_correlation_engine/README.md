@@ -40,6 +40,47 @@ Given one or more case JSON files, the engine:
    useful when the same suspect shows up in evidence from two different
    investigations.
 
+## NetworkX Investigation Graph (`graph_builder.py`)
+
+On top of the legacy dict-based correlation graph (`correlate_cases`, kept for
+backward compatibility), this module now ships a `networkx.MultiDiGraph`-backed
+investigation graph — the backbone of the Investigation Engine. It sits in the
+pipeline immediately after Entity Extraction:
+
+```
+Entity Extraction -> NetworkX Graph Builder -> Correlation / Timeline /
+                                               Campaign / Suspect / Analytics /
+                                               Report Generation
+```
+
+`GraphBuilder` consumes the already-extracted `cleaning.entities` (it never
+re-runs OCR or extraction), turns every entity into a typed node and every
+relationship into a directed edge, and **automatically merges duplicate
+entities** — the same wallet/URL/phone seen in three evidence items becomes one
+node with three evidence links.
+
+Reusable API:
+
+```python
+from graph_builder import GraphBuilder
+
+builder = GraphBuilder(case_id="CASE_0021")
+builder.build_graph(cases)            # MultiDiGraph, dedup + temporal edges
+builder.degree_centrality()           # + betweenness / closeness
+builder.connected_components()        # investigation clusters
+builder.community_detection()         # suspicious communities
+builder.find_shortest_path(a, b)      # indirect victim<->suspect links
+builder.find_isolated_nodes()
+builder.investigation_features()      # most-connected suspect, reused URL, ...
+artifacts = builder.serialize_graph() # {graph, graph_statistics, graph_summary}
+```
+
+`serialize_graph()` emits JSON byte-compatible with the React frontend contract
+(`RelationshipGraph` / `GraphStatistics` / `GraphSummary`), so it drops straight
+into the existing Django/DRF `/cases/{id}/artifacts/graph*` endpoints. Rebuilds
+are skipped when the input signature is unchanged (cache). Requires
+`networkx>=3.0` (see `requirements.txt`). Unit tests: `tests/test_graph_builder.py`.
+
 ## What It Does NOT Do
 
 - It does not re-run OCR or re-extract entities from raw text — that's
