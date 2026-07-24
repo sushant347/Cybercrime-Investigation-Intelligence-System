@@ -56,6 +56,14 @@ def report_repository() -> InvestigationReportRepository:
     return InvestigationReportRepository(investigation_config())
 
 
+@lru_cache(maxsize=1)
+def case_registry():
+    """CSV registry mapping a case reference to its hashed case id."""
+    from backend.modules.evidence.case_registry import CaseRegistry
+
+    return CaseRegistry(evidence_config())
+
+
 # ----------------------------------------------------------------- CSV access
 def _read_csv(path: Path) -> list[dict[str, str]]:
     if not path.is_file():
@@ -179,10 +187,12 @@ def forensics_artifacts(case_id: str, evidence_id: str) -> dict[str, Any]:
 
 
 # ------------------------------------------------------------ engine actions
-def create_case(title: str, notes: str = "") -> dict[str, str]:
+def create_case(title: str, notes: str = "", case_id: str | None = None) -> dict[str, str]:
     from backend.modules.evidence.csv_storage import CaseRepository
 
-    record = CaseRepository(evidence_config()).create(title=title, notes=notes)
+    record = CaseRepository(evidence_config()).create(
+        title=title, notes=notes, case_id=case_id
+    )
     return {
         "case_id": record.case_id,
         "created_at": record.created_at,
@@ -190,6 +200,27 @@ def create_case(title: str, notes: str = "") -> dict[str, str]:
         "investigator_notes": record.investigator_notes,
         "evidence_count": str(record.evidence_count),
     }
+
+
+def intake_case(reference: str, title: str = "") -> tuple[dict[str, str], bool]:
+    """Resolve a case reference to a case, creating it on first use.
+
+    Returns ``(registry_record, created)``. The same reference always yields
+    the same case id, so an investigator returns to their evidence and
+    reports by typing the reference again - no account needed.
+    """
+    with _pipeline_lock:  # engine CSV storage is not concurrent-safe
+        record, created = case_registry().resolve_or_create(reference, title)
+        # Reconcile: the registry is the index, cases.csv is the engine's own
+        # case list. Create the engine case if it is missing (first use, or a
+        # registry entry whose case row was removed).
+        if get_case(record["case_id"]) is None:
+            create_case(
+                title=record.get("title", ""),
+                notes="",
+                case_id=record["case_id"],
+            )
+    return record, created
 
 
 @lru_cache(maxsize=1)

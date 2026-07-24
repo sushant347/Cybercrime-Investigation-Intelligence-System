@@ -21,8 +21,10 @@ import type {
   EvidenceRow,
   GraphStatistics,
   GraphSummary,
+  InvestigationReport,
   LoginResponse,
   Paginated,
+  RegisteredCase,
   RelationshipGraph,
   ReportFile,
   SuspectAssessment,
@@ -169,6 +171,25 @@ export const investigationApi = {
     apiClient.post<BackgroundJob>(`/cases/${caseId}/analyze/`).then((r) => r.data),
 };
 
+// ----------------------------------------------------------------- intake
+// There is deliberately no "list cases" call: cases are private to whoever
+// knows the reference, and the API does not expose the registry.
+export const intakeApi = {
+  /** Open a case by reference, creating it on first use. */
+  open: (reference: string, title = "") =>
+    apiClient
+      .post<RegisteredCase>("/intake/", { reference, title })
+      .then((r) => r.data),
+  /** Check whether a reference already maps to a case (creates nothing). */
+  resolve: (reference: string) =>
+    apiClient
+      .get<{ case_id: string; exists: boolean; case: RegisteredCase | null }>(
+        "/intake/resolve/",
+        { params: { reference } },
+      )
+      .then((r) => r.data),
+};
+
 // ---------------------------------------------------------------- reports
 export const reportsApi = {
   list: (caseId: string) =>
@@ -177,7 +198,7 @@ export const reportsApi = {
       .then((r) => r.data),
   latest: (caseId: string) =>
     apiClient
-      .get<ArtifactDocument<Record<string, unknown>>>(`/cases/${caseId}/reports/latest/`)
+      .get<ArtifactDocument<InvestigationReport>>(`/cases/${caseId}/reports/latest/`)
       .then((r) => r.data),
   previewMarkdown: (caseId: string, fileName: string) =>
     apiClient
