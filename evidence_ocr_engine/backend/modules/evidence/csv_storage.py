@@ -97,17 +97,9 @@ class CaseRepository(BaseCSVRepository):
         """Sequential case identifier: CASE_0001, CASE_0002, ..."""
         return format_sequential_id(self._prefix, self.count() + 1, width=4)
 
-    def create(
-        self, title: str = "", notes: str = "", case_id: Optional[str] = None
-    ) -> CaseRecord:
-        """Create a case, optionally with a caller-supplied identifier.
-
-        ``case_id`` lets the case registry store a hash-derived id (so a case
-        reference always resolves to the same case); omitting it keeps the
-        original sequential ``CASE_0001`` behaviour.
-        """
+    def create(self, title: str = "", notes: str = "") -> CaseRecord:
         record = CaseRecord(
-            case_id=case_id or self.next_case_id(),
+            case_id=self.next_case_id(),
             created_at=utc_now_iso(),
             title=title,
             investigator_notes=notes,

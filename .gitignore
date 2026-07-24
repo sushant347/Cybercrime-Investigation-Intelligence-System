@@ -15,8 +15,6 @@ dist/
 
 # ===== Virtual environments (NEVER commit) =====
 .venv/
-.venv-platform/
-.venv-threat/
 venv/
 env/
 ENV/

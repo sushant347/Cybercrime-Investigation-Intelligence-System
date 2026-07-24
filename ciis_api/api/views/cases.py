@@ -74,6 +74,8 @@ class CaseListCreateView(APIView):
         return paginator.get_paginated_response(page)
 
     def post(self, request):
+        if not request.user.has_platform_permission("case.manage"):
+            return Response({"detail": "Forbidden"}, status=403)
         serializer = CaseCreateSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
@@ -81,7 +83,7 @@ class CaseListCreateView(APIView):
         meta = CaseMeta.objects.create(
             case_id=row["case_id"], title=data["title"],
             description=data["description"], tags=data["tags"],
-            created_by=None, status=CaseStatus.OPEN,
+            created_by=request.user, status=CaseStatus.OPEN,
         )
         CaseHistory.objects.create(
             case_id=row["case_id"], username=request.user.username,
@@ -114,12 +116,12 @@ class CaseDetailView(APIView):
             return Response({"detail": "Case not found."}, status=404)
         meta = CaseMeta.objects.filter(case_id=case_id).select_related("assigned_to").first()
         data = _merged_case(row, meta)
-        registry_row = engine.case_registry().get(case_id)
-        data["case_reference"] = (registry_row or {}).get("case_reference", "")
         data["evidence"] = engine.list_evidence(case_id)
         return Response(data)
 
     def patch(self, request, case_id: str):
+        if not request.user.has_platform_permission("case.manage"):
+            return Response({"detail": "Forbidden"}, status=403)
         if engine.get_case(case_id) is None:
             return Response({"detail": "Case not found."}, status=404)
         meta, _ = CaseMeta.objects.get_or_create(case_id=case_id)

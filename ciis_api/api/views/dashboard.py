@@ -70,7 +70,7 @@ class DashboardView(APIView):
                     "high_priority_cases": len(high_priority_cases),
                     "campaigns": campaign_count,
                     "unread_notifications": Notification.objects.filter(
-                        read=False
+                        user=request.user, read=False
                     ).count(),
                 },
                 "priority_distribution": priority_distribution,

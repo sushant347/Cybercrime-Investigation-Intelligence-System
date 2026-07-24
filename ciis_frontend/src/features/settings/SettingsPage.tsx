@@ -1,5 +1,6 @@
 import SettingsIcon from "@mui/icons-material/Settings";
 import {
+  Alert,
   Box,
   Card,
   CardContent,
@@ -7,24 +8,27 @@ import {
   Chip,
   Divider,
   FormControlLabel,
+  MenuItem,
   Stack,
   Switch,
   Tab,
   Tabs,
+  TextField,
   Typography,
 } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 
-import { settingsApi } from "@/api";
+import { authApi, settingsApi } from "@/api";
 import { EmptyState, ErrorState } from "@/components/common/EmptyState";
 import { KeyValueTable } from "@/components/common/KeyValueTable";
 import { DetailSkeleton } from "@/components/common/LoadingSkeleton";
 import { PageHeader } from "@/components/common/PageHeader";
+import { useAuth } from "@/features/auth/AuthContext";
 import { apiErrorMessage } from "@/lib/apiClient";
 import { useColorMode } from "@/theme/ColorModeProvider";
 
-type TabKey = "appearance" | "ocr" | "preprocessing" | "storage" | "investigation";
+type TabKey = "preferences" | "ocr" | "preprocessing" | "storage" | "investigation";
 
 /**
  * Module 11 - System settings.
@@ -32,23 +36,36 @@ type TabKey = "appearance" | "ocr" | "preprocessing" | "storage" | "investigatio
  * tunables via environment variables); user preferences are editable.
  */
 export default function SettingsPage() {
-  const [tab, setTab] = useState<TabKey>("appearance");
+  const [tab, setTab] = useState<TabKey>("preferences");
+  const { user, refreshUser } = useAuth();
   const { mode, setMode } = useColorMode();
+  const [saved, setSaved] = useState(false);
 
   const { data, isPending, isError, error, refetch } = useQuery({
     queryKey: ["settings"],
     queryFn: settingsApi.get,
   });
 
+  const prefMutation = useMutation({
+    mutationFn: authApi.updatePreferences,
+    onSuccess: async () => {
+      setSaved(true);
+      await refreshUser();
+      window.setTimeout(() => setSaved(false), 2500);
+    },
+  });
+
   if (isPending) return <DetailSkeleton />;
   if (isError) return <ErrorState message={apiErrorMessage(error)} onRetry={() => void refetch()} />;
   if (!data) return <EmptyState icon={<SettingsIcon />} title="No configuration available" />;
+
+  const pref = user?.preference;
 
   return (
     <Box>
       <PageHeader
         title="System Settings"
-        subtitle="Appearance and forensic engine configuration (engine values are read-only by design)"
+        subtitle="User preferences and forensic engine configuration (engine values are read-only by design)"
       />
 
       <Tabs
@@ -58,30 +75,68 @@ export default function SettingsPage() {
         allowScrollButtonsMobile
         sx={{ borderBottom: 1, borderColor: "divider", mb: 3 }}
       >
-        <Tab value="appearance" label="Appearance" />
+        <Tab value="preferences" label="My Preferences" />
         <Tab value="ocr" label="OCR Configuration" />
         <Tab value="preprocessing" label="Image Preprocessing" />
         <Tab value="storage" label="Evidence Storage" />
         <Tab value="investigation" label="Investigation Engine" />
       </Tabs>
 
-      {tab === "appearance" && (
+      {tab === "preferences" && (
         <Card sx={{ maxWidth: 560 }}>
-          <CardHeader
-            title="Appearance"
-            subheader="Stored in this browser — the engine has no user accounts"
-          />
+          <CardHeader title="User Preferences" subheader="Stored on your account" />
           <Divider />
           <CardContent>
-            <FormControlLabel
-              control={
-                <Switch
-                  checked={mode === "dark"}
-                  onChange={(e) => setMode(e.target.checked ? "dark" : "light")}
-                />
-              }
-              label={`Theme: ${mode === "dark" ? "Dark" : "Light"}`}
-            />
+            <Stack spacing={2.5}>
+              {saved && <Alert severity="success">Preferences saved.</Alert>}
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={mode === "dark"}
+                    onChange={(e) => {
+                      const next = e.target.checked ? "dark" : "light";
+                      setMode(next);
+                      prefMutation.mutate({ theme: next });
+                    }}
+                  />
+                }
+                label={`Theme: ${mode === "dark" ? "Dark" : "Light"}`}
+              />
+              <TextField
+                select
+                label="Language"
+                value={pref?.language ?? "en"}
+                onChange={(e) => prefMutation.mutate({ language: e.target.value })}
+                sx={{ maxWidth: 240 }}
+              >
+                <MenuItem value="en">English</MenuItem>
+                <MenuItem value="ne">नेपाली (Nepali)</MenuItem>
+              </TextField>
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={pref?.notifications_enabled ?? true}
+                    onChange={(e) =>
+                      prefMutation.mutate({ notifications_enabled: e.target.checked })
+                    }
+                  />
+                }
+                label="Enable notifications"
+              />
+              <TextField
+                select
+                label="Rows per page (default)"
+                value={pref?.items_per_page ?? 25}
+                onChange={(e) => prefMutation.mutate({ items_per_page: Number(e.target.value) })}
+                sx={{ maxWidth: 240 }}
+              >
+                {[10, 25, 50, 100].map((n) => (
+                  <MenuItem key={n} value={n}>
+                    {n}
+                  </MenuItem>
+                ))}
+              </TextField>
+            </Stack>
           </CardContent>
         </Card>
       )}

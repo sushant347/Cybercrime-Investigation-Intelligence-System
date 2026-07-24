@@ -1,21 +1,18 @@
-"""Permission classes.
-
-This runs as a **case-centric forensic engine**, not a multi-user case
-management system: there are no logins and no role-based access control.
-``require()`` is kept as a documented no-op so each view still records which
-capability it represents - and so RBAC can be reinstated later by restoring
-the check that used to live here (see git history).
-"""
-from rest_framework.permissions import AllowAny, BasePermission
+"""DRF permission classes backed by the configurable RBAC matrix."""
+from rest_framework.permissions import BasePermission
 
 
 def require(permission: str) -> type[BasePermission]:
-    """Formerly enforced an RBAC code; now open access (no authentication)."""
+    """Build a permission class requiring one platform permission code."""
 
-    class _OpenAccess(AllowAny):
-        """Open access - retains the permission code for documentation."""
+    class _HasPermission(BasePermission):
+        message = f"Requires permission '{permission}'."
 
-        required_permission = permission
+        def has_permission(self, request, view) -> bool:  # noqa: D102
+            user = request.user
+            return bool(
+                user and user.is_authenticated and user.has_platform_permission(permission)
+            )
 
-    _OpenAccess.__name__ = f"Open_{permission.replace('.', '_')}"
-    return _OpenAccess
+    _HasPermission.__name__ = f"Requires_{permission.replace('.', '_')}"
+    return _HasPermission

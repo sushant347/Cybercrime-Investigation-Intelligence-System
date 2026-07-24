@@ -1,16 +1,27 @@
 import { Box, Toolbar } from "@mui/material";
+import { useState } from "react";
 import { Outlet } from "react-router-dom";
 
 import { ErrorBoundary } from "@/components/common/ErrorBoundary";
 
+import { Sidebar, SIDEBAR_WIDTH } from "./Sidebar";
 import { Topbar } from "./Topbar";
 
-/** Single-column shell. No sidebar: the flow is one screen at a time. */
 export function AppLayout() {
+  const [mobileOpen, setMobileOpen] = useState(false);
+
   return (
-    <Box sx={{ minHeight: "100vh" }}>
-      <Topbar />
-      <Box component="main" sx={{ p: { xs: 2, sm: 3 } }}>
+    <Box sx={{ display: "flex", minHeight: "100vh" }}>
+      <Topbar onMenuClick={() => setMobileOpen(true)} />
+      <Sidebar mobileOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
+      <Box
+        component="main"
+        sx={{
+          flex: 1,
+          width: { md: `calc(100% - ${SIDEBAR_WIDTH}px)` },
+          p: { xs: 2, sm: 3 },
+        }}
+      >
         <Toolbar />
         <ErrorBoundary>
           <Outlet />

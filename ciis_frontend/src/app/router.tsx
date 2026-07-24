@@ -3,33 +3,52 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 
 import { DetailSkeleton } from "@/components/common/LoadingSkeleton";
 import { AppLayout } from "@/components/layout/AppLayout";
+import { RequireAuth } from "@/features/auth/RequireAuth";
 
-const StartPage = lazy(() => import("@/features/intake/StartPage"));
-const NewCasePage = lazy(() => import("@/features/intake/NewCasePage"));
-const OpenCasePage = lazy(() => import("@/features/intake/OpenCasePage"));
+const LoginPage = lazy(() => import("@/features/auth/LoginPage"));
+const DashboardPage = lazy(() => import("@/features/dashboard/DashboardPage"));
+const CasesPage = lazy(() => import("@/features/cases/CasesPage"));
 const CaseDetailPage = lazy(() => import("@/features/cases/CaseDetailPage"));
 const EvidenceDetailPage = lazy(() => import("@/features/evidence/EvidenceDetailPage"));
+const AuditPage = lazy(() => import("@/features/audit/AuditPage"));
 const SettingsPage = lazy(() => import("@/features/settings/SettingsPage"));
+const NotificationsPage = lazy(() => import("@/features/notifications/NotificationsPage"));
+const UsersPage = lazy(() => import("@/features/users/UsersPage"));
 
-// A guided, one-screen-at-a-time flow: choose -> identify the case -> work on
-// it. There is no case list, dashboard, or cross-case view anywhere, so one
-// case never exposes another. No authentication: this is an engine.
-const wrap = (node: ReactNode) => <Suspense fallback={<DetailSkeleton />}>{node}</Suspense>;
+const wrap = (node: ReactNode, permission?: string) => (
+  <RequireAuth permission={permission}>
+    <Suspense fallback={<DetailSkeleton />}>{node}</Suspense>
+  </RequireAuth>
+);
 
 export const router = createBrowserRouter([
   {
-    element: <AppLayout />,
+    path: "/login",
+    element: (
+      <Suspense fallback={null}>
+        <LoginPage />
+      </Suspense>
+    ),
+  },
+  {
+    element: (
+      <RequireAuth>
+        <AppLayout />
+      </RequireAuth>
+    ),
     children: [
-      { path: "/", element: wrap(<StartPage />) },
-      { path: "/new", element: wrap(<NewCasePage />) },
-      { path: "/open", element: wrap(<OpenCasePage />) },
-      { path: "/cases/:caseId", element: wrap(<CaseDetailPage />) },
-      { path: "/cases/:caseId/:tab", element: wrap(<CaseDetailPage />) },
+      { path: "/", element: wrap(<DashboardPage />, "case.view") },
+      { path: "/cases", element: wrap(<CasesPage />, "case.view") },
+      { path: "/cases/:caseId", element: wrap(<CaseDetailPage />, "case.view") },
+      { path: "/cases/:caseId/:tab", element: wrap(<CaseDetailPage />, "case.view") },
       {
         path: "/cases/:caseId/evidence/:evidenceId",
-        element: wrap(<EvidenceDetailPage />),
+        element: wrap(<EvidenceDetailPage />, "evidence.view"),
       },
-      { path: "/settings", element: wrap(<SettingsPage />) },
+      { path: "/audit", element: wrap(<AuditPage />, "audit.view") },
+      { path: "/settings", element: wrap(<SettingsPage />, "settings.view") },
+      { path: "/notifications", element: wrap(<NotificationsPage />) },
+      { path: "/admin/users", element: wrap(<UsersPage />, "user.manage") },
       { path: "*", element: <Navigate to="/" replace /> },
     ],
   },
