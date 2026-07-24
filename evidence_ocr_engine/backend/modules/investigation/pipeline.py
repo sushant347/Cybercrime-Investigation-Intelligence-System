@@ -96,9 +96,17 @@ class InvestigationPipeline:
                 self._log.exception("module '%s' failed for %s", name, case_id)
                 return None
 
+        # Persist this case's entities to the cross-case index *before* any
+        # correlation, so a case analysed later can match against them.
+        safe("cross_case_index",
+             lambda: self._correlation.index_case_entities(case_id, evidence))
+
         results["correlation"] = safe(
             "correlation",
             lambda: self._correlation.analyze_case(case_id, evidence))
+        results["cross_case"] = safe(
+            "cross_case",
+            lambda: self._run_cross_case(case_id, evidence))
         results["graph"] = safe(
             "graph",
             lambda: self._graph.build(case_id, results["correlation"], evidence))
@@ -133,12 +141,18 @@ class InvestigationPipeline:
                 case_id,
                 evidence=evidence,
                 correlation=results["correlation"],
+                cross_case=results["cross_case"],
                 campaigns=results["campaigns"],
                 suspects=results["suspects"],
                 timeline=results["timeline"],
                 analytics=results["analytics"],
                 priority=(results["priority"].model_dump()
                           if results["priority"] is not None else None)))
+
+        # Bidirectional propagation: refresh the cross-case artifact and report
+        # of every case this one now links to, so links appear on both sides.
+        safe("cross_case_propagation",
+             lambda: self._propagate_cross_case(case_id, results["cross_case"]))
 
         total_ms = round((time.perf_counter() - started) * 1000.0, 1)
         self._audit.record(
@@ -150,6 +164,36 @@ class InvestigationPipeline:
         )
         results["failures"] = failures
         return results
+
+    # ------------------------------------------------------------ cross-case
+
+    def _run_cross_case(self, case_id, evidence):
+        """Compute and persist this case's cross-case correlation."""
+        correlation = self._correlation.correlate_cross_case(case_id, evidence)
+        self._correlation.persist_cross_case(case_id, correlation)
+        return correlation
+
+    def _propagate_cross_case(self, case_id, cross_case) -> List[str]:
+        """Update every case newly linked to this one (one hop, no recursion).
+
+        For each linked case we recompute its cross-case artifact from the
+        shared index; only when that artifact actually changes do we regenerate
+        that case's report. This makes a new match appear on both cases while
+        preventing duplicate correlations and runaway report versions.
+        """
+        if cross_case is None:
+            return []
+        updated: List[str] = []
+        for other_case_id in cross_case.related_case_ids:
+            other = self._correlation.correlate_cross_case(other_case_id)
+            if self._correlation.persist_cross_case(other_case_id, other):
+                self._reporting.regenerate_with_cross_case(other_case_id, other)
+                updated.append(other_case_id)
+        if updated:
+            self._audit.record(
+                case_id, MODULE, "cross_case_propagated",
+                f"updated {len(updated)} linked case(s): {', '.join(updated)}")
+        return updated
 
     def analyze_all_cases(self) -> Dict[str, Dict[str, Any]]:
         """Convenience: run the full analysis for every known case."""

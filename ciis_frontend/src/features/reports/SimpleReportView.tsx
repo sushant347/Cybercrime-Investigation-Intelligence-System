@@ -193,6 +193,37 @@ export function SimpleReportView({ report }: { report: SimpleReport }) {
         </Section>
       )}
 
+      {report.linkedCases.length > 0 && (
+        <Section title="Linked Other Cases">
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell>Case</TableCell>
+                <TableCell>Strength</TableCell>
+                <TableCell>Confidence</TableCell>
+                <TableCell>Shared With This Case</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {report.linkedCases.map((row) => (
+                <TableRow key={row.caseId}>
+                  <TableCell sx={{ fontFamily: '"JetBrains Mono", monospace', whiteSpace: "nowrap" }}>
+                    {row.caseId}
+                  </TableCell>
+                  <TableCell>{row.strength}</TableCell>
+                  <TableCell>{row.confidence}</TableCell>
+                  <TableCell>
+                    <Typography variant="body2" color="text.secondary">
+                      {row.sharedEntities}
+                    </Typography>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Section>
+      )}
+
       {report.nextSteps.length > 0 && (
         <Section title="Recommended Next Steps">
           <Stack spacing={1}>

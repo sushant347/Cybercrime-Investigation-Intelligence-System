@@ -125,6 +125,7 @@ def original_path(evidence_row: dict[str, str]) -> Path:
 #: report_name -> API artifact key (Phase-2 storage spec, config.py docstring)
 ARTIFACTS: dict[str, str] = {
     "correlation": "correlation_analysis",
+    "cross_case": "cross_case_correlation",
     "graph": "graph",
     "graph_statistics": "graph_statistics",
     "graph_summary": "graph_summary",
@@ -221,6 +222,24 @@ def intake_case(reference: str, title: str = "") -> tuple[dict[str, str], bool]:
                 case_id=record["case_id"],
             )
     return record, created
+
+
+def reset_engine_storage() -> dict[str, Any]:
+    """Testing aid: wipe every case and entity from the engine's storage.
+
+    Clears the case registry, evidence/entity/OCR CSVs, stored originals and
+    OCR JSON, Phase-1 forensics, all Phase-2 artifacts, and the persistent
+    cross-case entity index. Django workflow rows are cleared by the caller.
+    """
+    from backend.modules.investigation.maintenance import reset_all
+
+    with _pipeline_lock:  # serialize against any in-flight engine write
+        summary = reset_all(evidence_config(), investigation_config())
+        # Drop cached singletons so nothing holds a handle to cleared state.
+        for cached in (evidence_config, investigation_config, report_repository,
+                       case_registry):
+            cached.cache_clear()
+    return summary
 
 
 @lru_cache(maxsize=1)
