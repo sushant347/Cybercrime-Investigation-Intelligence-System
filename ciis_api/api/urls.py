@@ -7,6 +7,7 @@ from .views import (
     evidence,
     intake,
     investigation,
+    maintenance,
     notifications,
     reports,
     system,
@@ -46,6 +47,8 @@ urlpatterns = [
     ),
     # Engine configuration (read-only)
     path("settings/", system.SystemSettingsView.as_view()),
+    # Testing maintenance: clear all cases and entities.
+    path("maintenance/reset/", maintenance.ResetView.as_view()),
     # Operational surface: cross-case dashboard, unified audit trail, and
     # engine-wide notifications (written by the workers, now also served).
     path("dashboard/", dashboard.DashboardView.as_view()),

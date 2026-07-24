@@ -66,6 +66,18 @@ export function buildReportHtml(report: SimpleReport): string {
     )
     .join("");
 
+  const linkedCaseRows = report.linkedCases
+    .map(
+      (row) => `
+      <tr>
+        <td><code>${escapeHtml(row.caseId)}</code></td>
+        <td>${escapeHtml(row.strength)}</td>
+        <td>${escapeHtml(row.confidence)}</td>
+        <td>${escapeHtml(row.sharedEntities)}</td>
+      </tr>`,
+    )
+    .join("");
+
   const section = (title: string, body: string) =>
     body.trim() ? `<section><h2>${escapeHtml(title)}</h2>${body}</section>` : "";
 
@@ -146,6 +158,14 @@ export function buildReportHtml(report: SimpleReport): string {
       ? section(
           "Links Between Evidence",
           `<table><thead><tr><th>Items</th><th>Strength</th><th>Confidence</th><th>What This Means</th></tr></thead><tbody>${connectionRows}</tbody></table>`,
+        )
+      : ""
+  }
+  ${
+    linkedCaseRows
+      ? section(
+          "Linked Other Cases",
+          `<table><thead><tr><th>Case</th><th>Strength</th><th>Confidence</th><th>Shared With This Case</th></tr></thead><tbody>${linkedCaseRows}</tbody></table>`,
         )
       : ""
   }

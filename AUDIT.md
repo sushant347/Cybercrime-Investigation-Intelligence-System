@@ -5,6 +5,85 @@ undo it. Newest entry first.
 
 ---
 
+## 2026-07-24 — Cross-case entity correlation
+
+**Branch:** `feature/correlation-addition` (from `feature/roadmap-implementation`)
+
+### Why
+
+Entities were correlated only *within* a single case. Investigators needed to
+know when a phone, wallet, URL or email in one case also appears in another —
+automatically, on both cases, without a separate tool.
+
+### Decisions
+
+| Decision | Choice | Rationale |
+|---|---|---|
+| Where the logic lives | Extended the existing `CorrelationService` + `InvestigationReportService` | The brief required extending the integrated services, not a new engine |
+| Persistent store | `storage/investigation/cross_case_index.json` | A storage helper (like `repository.py`), keyed to dedup entity records; no database |
+| What links two cases | Shared **normalized** entities of a *weighted* type (phone/email/url/domain/wallet/bank/social) | Reuses the within-case weights, so cross-case confidence is on the same scale; unweighted noise (otp/amount) is excluded |
+| Scoring | `1 - exp(-Σ weight / normaliser)` with per-type cap, then the existing relationship bands | Identical explainable framework as within-case correlation |
+| Bidirectional update | Analysing a case recomputes + re-saves the linked cases' cross-case artifact and regenerates their report — **only when changed** | Links appear on both sides without duplicate correlations or report-version spam; one hop, no recursion |
+| Reset (“clear cache”) | `POST /api/maintenance/reset/` + Start-page button with confirm | Testing aid; truncates CSVs to headers and clears artifacts/index/index, scoped strictly to engine storage |
+
+### Changed
+
+**Engine** (`evidence_ocr_engine/backend/modules/investigation/`)
+- `crosscase.py` — **new.** Persistent entity index (upsert/dedup, per-case
+  removal, clear, atomic save, lookups).
+- `correlation/models.py` — added `CrossCaseEntityMatch`, `CrossCaseLink`,
+  `CrossCaseCorrelation`.
+- `correlation/service.py` — added `index_case_entities`,
+  `correlate_cross_case`, `persist_cross_case` (save-if-changed) and link
+  scoring. Existing within-case correlation untouched.
+- `reporting/service.py` — new `cross_case_correlation` report section +
+  executive-summary line + markdown title, and `regenerate_with_cross_case`
+  (rebuilds a report from stored artifacts for propagation).
+- `pipeline.py` — indexes entities, runs cross-case, threads it into the
+  report, and propagates to linked cases.
+- `config.py` — cross-case artifact/index names, index path,
+  `cross_case_min_shared_entities`.
+- `maintenance.py` — **new.** `reset_all` (storage wipe, guarded to storage dir).
+- `tests/investigation/test_cross_case_correlation.py` — **new.** exact,
+  normalized, no-match, unweighted-excluded, duplicate-processing idempotence,
+  bidirectional report update, reset.
+
+**API** (`ciis_api/`)
+- `api/engine.py` — `cross_case` artifact key; `reset_engine_storage()`.
+- `api/views/maintenance.py` — **new.** `ResetView` (also clears Django jobs,
+  notifications, audit, case metadata).
+- `api/urls.py` — `maintenance/reset/` route.
+
+**Frontend** (`ciis_frontend/`)
+- `InvestigationTab.tsx` — Cross-Case Correlation panel (linked cases, shared
+  entities, confidence).
+- Report: `reportModel.ts` / `SimpleReportView.tsx` / `reportHtml.ts` — a
+  "Linked Other Cases" summary row + section in the readable report and the
+  HTML download.
+- `StartPage.tsx` — "Clear all data (testing)" button + confirm dialog.
+- `api/index.ts`, `types/index.ts` — `investigationApi.crossCase`,
+  `maintenanceApi.reset`, cross-case types.
+
+### Verified
+
+- Full engine suite passes (incl. 7 new cross-case tests); `tsc` clean; Django
+  check clean; production build succeeds.
+- End-to-end through the API + browser: two cases sharing entities linked
+  VERY_STRONG (0.86, 4 shared entities); the first case auto-updated to
+  artifact v2 and report v2; the panel and readable report both show the link;
+  reset cleared every CSV/artifact/index and made the cases unresolvable.
+
+### How to undo
+
+```bash
+git checkout feature/roadmap-implementation   # the branch this was cut from
+```
+
+The feature is additive: reverting the listed files removes cross-case behaviour
+and leaves within-case correlation exactly as it was.
+
+---
+
 ## 2026-07-23 — Guided one-screen flow + readable report
 
 **Branch:** `guided-flow`

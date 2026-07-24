@@ -21,6 +21,8 @@ analytics, priority, and a report. No accounts, no database for case data.
 | CSV case registry | ✅ Working | `storage/case_registry.csv` |
 | Case privacy | ✅ Working | Nothing lists cases — API or UI |
 | Guided one-screen flow | ✅ Working | Choose → identify case → work on it |
+| Cross-case entity correlation | ✅ Working | Persistent JSON index; auto bidirectional link + report update |
+| Clear-all-data reset | ✅ Working | Testing button + `POST /api/maintenance/reset/` |
 | Database removal | ⚠️ Partial | Cases are CSV; jobs/notifications/audit still SQLite |
 | Threat intelligence ML model | ⚠️ Untrained | Falls back to rule/heuristic scoring |
 

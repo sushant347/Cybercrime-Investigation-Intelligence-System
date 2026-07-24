@@ -183,6 +183,33 @@ export interface CorrelationAnalysis {
   analysis_time_ms: number;
 }
 
+// ---------------------------------------------- Phase-2: cross-case links
+export interface CrossCaseEntityMatch {
+  entity_type: string;
+  value: string;
+  weight: number;
+  this_evidence_ids: string[];
+  other_evidence_ids: string[];
+}
+
+export interface CrossCaseLink {
+  other_case_id: string;
+  match_confidence: number;
+  relationship_strength: string;
+  matched_entities: CrossCaseEntityMatch[];
+  this_evidence_ids: string[];
+  other_evidence_ids: string[];
+  match_reason: string;
+}
+
+export interface CrossCaseCorrelation {
+  case_id: string;
+  related_case_ids: string[];
+  link_count: number;
+  links: CrossCaseLink[];
+  analysis_time_ms: number;
+}
+
 // -------------------------------------------------------- Phase-2: graph
 export interface GraphNode {
   id: string;
@@ -418,6 +445,23 @@ export interface ReportCorrelationSection {
   }[];
 }
 
+export interface ReportCrossCaseSection {
+  related_case_count: number;
+  related_case_ids: string[];
+  links: {
+    other_case_id: string;
+    relationship_strength: string;
+    match_confidence: number;
+    match_reason: string;
+    matched_entities: {
+      entity_type: string;
+      value: string;
+      this_evidence_ids: string[];
+      other_evidence_ids: string[];
+    }[];
+  }[];
+}
+
 export interface ReportTimelineSection {
   summary: string;
   stage_progression: string[];
@@ -444,6 +488,7 @@ export interface InvestigationReport {
     };
     evidence_summary: ReportEvidenceRow[] | string;
     correlation_analysis: ReportCorrelationSection | string;
+    cross_case_correlation: ReportCrossCaseSection | string;
     campaign_analysis: ReportCampaignSection | string;
     timeline_analysis: ReportTimelineSection | string;
     suspect_assessment: unknown;
