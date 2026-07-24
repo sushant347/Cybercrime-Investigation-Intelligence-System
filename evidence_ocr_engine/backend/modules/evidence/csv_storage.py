@@ -74,6 +74,26 @@ class BaseCSVRepository:
     def count(self) -> int:
         return len(self.read_all())
 
+    def delete_where(self, **match: str) -> int:
+        """Remove every row whose columns all equal ``match``; returns count.
+
+        Used to make re-processing idempotent: callers that re-derive rows for
+        a key (e.g. an ``evidence_id``) clear the stale rows first so a second
+        run replaces rather than duplicates them. No-op when the file is empty
+        or nothing matches.
+        """
+        if not match:
+            return 0
+        rows = self.read_all()
+        keep = [
+            row for row in rows
+            if not all(str(row.get(k, "")) == str(v) for k, v in match.items())
+        ]
+        removed = len(rows) - len(keep)
+        if removed:
+            self.overwrite_all(keep)
+        return removed
+
     def _ensure_file(self) -> None:
         """Create the CSV with its header if it does not exist yet."""
         if self._path.exists():
