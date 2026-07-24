@@ -30,7 +30,16 @@ class EntityRepository(BaseCSVRepository):
         super().__init__(config.storage_dir / "entities.csv")
 
     def add_result(self, result: CleaningResult) -> int:
-        """Persist every entity of a cleaning result; returns rows written."""
+        """Persist every entity of a cleaning result; returns rows written.
+
+        Idempotent per evidence item: any existing rows for this
+        ``(case_id, evidence_id)`` are removed first so re-processing (e.g. a
+        second API upload to the same case, which re-cleans every item)
+        replaces the entity rows instead of duplicating them.
+        """
+        self.delete_where(
+            case_id=result.case_id, evidence_id=result.evidence_id
+        )
         written = 0
         timestamp = utc_now_iso()
         for entity_type, records in result.entities.items():
@@ -62,6 +71,10 @@ class KeywordStatisticsRepository(BaseCSVRepository):
     def add_result(self, result: CleaningResult) -> int:
         from .keyword_analyzer import KEYWORD_GROUPS  # avoid import cycle
 
+        # Idempotent per evidence item (see EntityRepository.add_result).
+        self.delete_where(
+            case_id=result.case_id, evidence_id=result.evidence_id
+        )
         written = 0
         timestamp = utc_now_iso()
         for keyword, count in result.keywords.items():
