@@ -123,7 +123,7 @@ export default function CaseDetailPage() {
         sx={{ mb: 2 }}
       >
         <Stack direction="row" spacing={1} alignItems="center" sx={{ flex: 1, minWidth: 0 }}>
-          <IconButton onClick={() => navigate("/cases")} aria-label="Back to cases">
+          <IconButton onClick={() => navigate("/")} aria-label="Back to start">
             <ArrowBackIcon />
           </IconButton>
           <Box sx={{ minWidth: 0 }}>
