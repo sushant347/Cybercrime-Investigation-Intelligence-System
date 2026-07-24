@@ -64,6 +64,10 @@ class InvestigationConfig:
     entity_statistics_name: str = "entity_statistics"
     investigation_report_name: str = "investigation_report"
     priority_report_name: str = "case_priority"
+    #: Per-case cross-case correlation artifact (versioned like the others).
+    cross_case_report_name: str = "cross_case_correlation"
+    #: Persistent, engine-wide entity index (single JSON, not versioned).
+    cross_case_index_name: str = "cross_case_index"
 
     # ------------------------------------------------ Module 1: correlation
     #: Per-factor weights of the explainable correlation framework.
@@ -84,6 +88,12 @@ class InvestigationConfig:
         "NO_RELATIONSHIP": 0.05, "WEAK": 0.30, "MEDIUM": 0.55,
         "STRONG": 0.80, "VERY_STRONG": 1.01,
     })
+    #: Cross-case links are created when at least this many normalized entities
+    #: are shared between two cases (1 = any shared entity forms a link). The
+    #: cross-case scorer reuses ``correlation_weights``, the factor cap, the
+    #: confidence normaliser and the relationship bands above, so cross-case and
+    #: within-case confidence are on the same explainable scale.
+    cross_case_min_shared_entities: int = 1
 
     # ------------------------------------------------------ Module 2: graph
     #: Entity types promoted to graph nodes (entity_type -> node_type).
@@ -215,6 +225,10 @@ class InvestigationConfig:
     @property
     def audit_csv(self) -> Path:
         return self.investigation_dir / self.audit_csv_name
+
+    @property
+    def cross_case_index_path(self) -> Path:
+        return self.investigation_dir / f"{self.cross_case_index_name}.json"
 
     def case_dir(self, case_id: str) -> Path:
         return self.investigation_dir / case_id

@@ -38,6 +38,11 @@ export function InvestigationTab({ caseId }: { caseId: string }) {
     queryFn: () => investigationApi.correlation(caseId),
     retry: false,
   });
+  const crossCase = useQuery({
+    queryKey: ["artifact", caseId, "cross_case"],
+    queryFn: () => investigationApi.crossCase(caseId),
+    retry: false,
+  });
   const campaigns = useQuery({
     queryKey: ["artifact", caseId, "campaigns"],
     queryFn: () => investigationApi.campaigns(caseId),
@@ -49,7 +54,12 @@ export function InvestigationTab({ caseId }: { caseId: string }) {
     retry: false,
   });
 
-  if (correlation.isPending || campaigns.isPending || suspects.isPending) {
+  if (
+    correlation.isPending ||
+    crossCase.isPending ||
+    campaigns.isPending ||
+    suspects.isPending
+  ) {
     return <DetailSkeleton />;
   }
 
@@ -65,6 +75,7 @@ export function InvestigationTab({ caseId }: { caseId: string }) {
   }
 
   const corr = correlation.data?.report;
+  const cross = crossCase.data?.report;
   const camp = campaigns.data?.report;
   const susp = suspects.data?.report;
 
@@ -173,6 +184,86 @@ export function InvestigationTab({ caseId }: { caseId: string }) {
             ))}
           </CardContent>
         )}
+      </Card>
+
+      {/* ------------------------------------------------ Cross-case */}
+      <Card>
+        <CardHeader
+          title="Cross-Case Correlation"
+          subheader={
+            cross
+              ? `${cross.link_count} linked case(s)${cross.related_case_ids.length ? ` · ${cross.related_case_ids.join(", ")}` : ""} · generated ${formatDateTime(crossCase.data?.generated_at)}`
+              : "Not generated"
+          }
+        />
+        <Divider />
+        <CardContent>
+          {!cross ? (
+            <Typography variant="body2" color="text.secondary">
+              Cross-case correlation has not been generated.
+            </Typography>
+          ) : cross.links.length === 0 ? (
+            <Typography variant="body2" color="text.secondary">
+              This case shares no entities with any other case in the engine.
+            </Typography>
+          ) : (
+            cross.links.map((link) => (
+              <Accordion key={link.other_case_id} disableGutters>
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  <Stack
+                    direction="row"
+                    spacing={2}
+                    alignItems="center"
+                    sx={{ flex: 1, minWidth: 0 }}
+                  >
+                    <Typography
+                      variant="body2"
+                      sx={{ fontFamily: '"JetBrains Mono", monospace', fontWeight: 700 }}
+                    >
+                      {link.other_case_id}
+                    </Typography>
+                    <StatusChip value={link.relationship_strength} />
+                    <Chip size="small" label={`${link.matched_entities.length} shared entity(ies)`} />
+                    <ConfidenceBar
+                      value={link.match_confidence}
+                      scale="fraction"
+                      label="Match confidence"
+                    />
+                  </Stack>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Stack spacing={1.5}>
+                    <Typography variant="body2">{link.match_reason}</Typography>
+                    <Table size="small">
+                      <TableHead>
+                        <TableRow>
+                          <TableCell>Entity</TableCell>
+                          <TableCell>Shared value</TableCell>
+                          <TableCell>This case</TableCell>
+                          <TableCell>{link.other_case_id}</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {link.matched_entities.map((match) => (
+                          <TableRow key={`${match.entity_type}-${match.value}`}>
+                            <TableCell sx={{ textTransform: "capitalize" }}>
+                              {match.entity_type.replace(/_/g, " ")}
+                            </TableCell>
+                            <TableCell sx={{ fontFamily: '"JetBrains Mono", monospace' }}>
+                              {match.value}
+                            </TableCell>
+                            <TableCell>{match.this_evidence_ids.join(", ")}</TableCell>
+                            <TableCell>{match.other_evidence_ids.join(", ")}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </Stack>
+                </AccordionDetails>
+              </Accordion>
+            ))
+          )}
+        </CardContent>
       </Card>
 
       {/* -------------------------------------------------- Campaigns */}

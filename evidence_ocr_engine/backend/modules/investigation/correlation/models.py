@@ -51,3 +51,52 @@ class CorrelationAnalysis(BaseModel):
     strength_distribution: Dict[str, int] = Field(default_factory=dict)
     strongest_pair: str = ""
     analysis_time_ms: float = 0.0
+
+
+# --------------------------------------------------------------------------- #
+# Cross-case correlation (Module 1, persistent-index extension)
+# --------------------------------------------------------------------------- #
+
+
+class CrossCaseEntityMatch(BaseModel):
+    """One normalized entity shared between the subject case and another case."""
+
+    entity_type: str
+    value: str = Field(description="Normalized value that matched across cases")
+    weight: float = Field(ge=0.0, description="Configured weight of this entity type")
+    this_evidence_ids: List[str] = Field(
+        default_factory=list, description="Evidence in the subject case carrying it"
+    )
+    other_evidence_ids: List[str] = Field(
+        default_factory=list, description="Evidence in the other case carrying it"
+    )
+
+
+class CrossCaseLink(BaseModel):
+    """Explainable link between the subject case and one other case."""
+
+    other_case_id: str
+    match_confidence: float = Field(ge=0.0, le=1.0)
+    relationship_strength: str = Field(
+        description="VERY_STRONG | STRONG | MEDIUM | WEAK | NO_RELATIONSHIP"
+    )
+    matched_entities: List[CrossCaseEntityMatch] = Field(default_factory=list)
+    this_evidence_ids: List[str] = Field(default_factory=list)
+    other_evidence_ids: List[str] = Field(default_factory=list)
+    match_reason: str = Field(default="", description="Human-readable justification")
+
+
+class CrossCaseCorrelation(BaseModel):
+    """Complete cross-case output stored as ``cross_case_correlation.json``."""
+
+    case_id: str
+    related_case_ids: List[str] = Field(default_factory=list)
+    link_count: int = 0
+    links: List[CrossCaseLink] = Field(default_factory=list)
+    analysis_time_ms: float = 0.0
+
+    def stable_payload(self) -> Dict:
+        """Deterministic dump for change detection (excludes timing)."""
+        data = self.model_dump()
+        data.pop("analysis_time_ms", None)
+        return data

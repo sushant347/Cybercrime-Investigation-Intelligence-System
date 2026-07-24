@@ -1,8 +1,28 @@
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
+import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import GppGoodIcon from "@mui/icons-material/GppGood";
-import { Box, Card, CardActionArea, Stack, Typography } from "@mui/material";
+import {
+  Alert,
+  Box,
+  Button,
+  Card,
+  CardActionArea,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Snackbar,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+import { maintenanceApi } from "@/api";
+import { apiErrorMessage } from "@/lib/apiClient";
 
 /**
  * The engine's front door: one question, two answers.
@@ -12,6 +32,19 @@ import { useNavigate } from "react-router-dom";
  */
 export default function StartPage() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const [confirmReset, setConfirmReset] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
+
+  const reset = useMutation({
+    mutationFn: maintenanceApi.reset,
+    onSuccess: () => {
+      setConfirmReset(false);
+      queryClient.clear();
+      setToast("All cases and entities were cleared.");
+    },
+    onError: (err) => setToast(apiErrorMessage(err)),
+  });
 
   const choices = [
     {
@@ -64,6 +97,54 @@ export default function StartPage() {
       >
         Cases are reached by reference only — nothing on this machine lists them for you.
       </Typography>
+
+      {/* Testing aid: wipe all cases and entities for a clean run. */}
+      <Stack alignItems="center" sx={{ mt: 4 }}>
+        <Button
+          size="small"
+          color="error"
+          variant="text"
+          startIcon={<DeleteSweepIcon />}
+          onClick={() => setConfirmReset(true)}
+        >
+          Clear all data (testing)
+        </Button>
+      </Stack>
+
+      <Dialog open={confirmReset} onClose={() => setConfirmReset(false)}>
+        <DialogTitle>Clear all cases and entities?</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            This permanently deletes <strong>every case</strong>, all uploaded evidence,
+            extracted entities, analysis artifacts, and the cross-case index. It cannot be
+            undone. Intended for testing only.
+          </DialogContentText>
+          {reset.isError && (
+            <Alert severity="error" sx={{ mt: 2 }}>
+              {apiErrorMessage(reset.error)}
+            </Alert>
+          )}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setConfirmReset(false)}>Cancel</Button>
+          <Button
+            color="error"
+            variant="contained"
+            onClick={() => reset.mutate()}
+            disabled={reset.isPending}
+          >
+            {reset.isPending ? "Clearing…" : "Clear everything"}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      <Snackbar
+        open={!!toast}
+        autoHideDuration={4000}
+        onClose={() => setToast(null)}
+        message={toast}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      />
     </Box>
   );
 }

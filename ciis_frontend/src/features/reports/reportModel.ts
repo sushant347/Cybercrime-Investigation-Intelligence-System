@@ -36,6 +36,13 @@ export interface ConnectionRow {
   meaning: string;
 }
 
+export interface LinkedCaseRow {
+  caseId: string;
+  strength: string;
+  confidence: string;
+  sharedEntities: string;
+}
+
 export interface SimpleReport {
   caseId: string;
   caseReference: string;
@@ -46,6 +53,7 @@ export interface SimpleReport {
   findings: string[];
   evidence: EvidenceRow[];
   connections: ConnectionRow[];
+  linkedCases: LinkedCaseRow[];
   progression: string[];
   nextSteps: string[];
 }
@@ -122,6 +130,15 @@ export function buildSimpleReport(
     progression_consistent: boolean;
   }>(sections.timeline_analysis);
   const quality = structured<Record<string, number>>(sections.evidence_quality_summary);
+  const crossCase = structured<{
+    related_case_ids: string[];
+    links: {
+      other_case_id: string;
+      relationship_strength: string;
+      match_confidence: number;
+      matched_entities: { entity_type: string; value: string }[];
+    }[];
+  }>(sections.cross_case_correlation);
   const evidenceRows = Array.isArray(sections.evidence_summary) ? sections.evidence_summary : [];
 
   const verifiedCount = evidenceRows.filter((row) => row.hash_verified).length;
@@ -179,6 +196,28 @@ export function buildSimpleReport(
     });
   }
 
+  const linkedCases: LinkedCaseRow[] = (crossCase?.links ?? []).map((link) => ({
+    caseId: link.other_case_id,
+    strength: link.relationship_strength,
+    confidence: percent(link.match_confidence),
+    sharedEntities: link.matched_entities
+      .map((m) => `${m.entity_type.replace(/_/g, " ").replace(/s$/, "")} ${m.value}`)
+      .join(", "),
+  }));
+
+  if (crossCase) {
+    summary.push({
+      label: "Linked Other Cases",
+      value: linkedCases.length
+        ? `${linkedCases.length} — ${crossCase.related_case_ids.join(", ")}`
+        : "None",
+      badge: linkedCases.length ? "warn" : "neutral",
+      hint: linkedCases.length
+        ? "This case shares entities (phones, wallets, URLs…) with other cases in the system."
+        : "No entities from this case were seen in any other case.",
+    });
+  }
+
   // The executive summary and the conclusion overlap (both restate the
   // chain-of-custody count), so near-identical lines are collapsed.
   const seen = new Set<string>();
@@ -204,6 +243,7 @@ export function buildSimpleReport(
     reportVersion: document.report_version,
     summary,
     findings,
+    linkedCases,
     evidence: evidenceRows.map((row) => ({
       file: row.file_name,
       evidenceId: row.evidence_id,

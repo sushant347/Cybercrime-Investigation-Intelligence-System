@@ -16,6 +16,7 @@ import type {
   CaseSummary,
   CampaignAnalysis,
   CorrelationAnalysis,
+  CrossCaseCorrelation,
   DashboardData,
   EvidenceDetail,
   EvidenceRow,
@@ -135,6 +136,10 @@ export const investigationApi = {
     apiClient
       .get<ArtifactDocument<CorrelationAnalysis>>(`/cases/${caseId}/artifacts/correlation/`)
       .then((r) => r.data),
+  crossCase: (caseId: string) =>
+    apiClient
+      .get<ArtifactDocument<CrossCaseCorrelation>>(`/cases/${caseId}/artifacts/cross_case/`)
+      .then((r) => r.data),
   graph: (caseId: string) =>
     apiClient
       .get<ArtifactDocument<RelationshipGraph>>(`/cases/${caseId}/artifacts/graph/`)
@@ -169,6 +174,13 @@ export const investigationApi = {
       .then((r) => r.data),
   runAnalysis: (caseId: string) =>
     apiClient.post<BackgroundJob>(`/cases/${caseId}/analyze/`).then((r) => r.data),
+};
+
+// ------------------------------------------------------------- maintenance
+export const maintenanceApi = {
+  /** Testing aid: clear every case and entity from the engine. */
+  reset: () =>
+    apiClient.post<{ status: string }>("/maintenance/reset/").then((r) => r.data),
 };
 
 // ----------------------------------------------------------------- intake

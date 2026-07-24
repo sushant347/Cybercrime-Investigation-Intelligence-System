@@ -21,7 +21,7 @@ from ...evidence.utils import utc_now_iso
 from ..audit import InvestigationAuditTrail
 from ..campaigns.models import CampaignAnalysis
 from ..config import InvestigationConfig
-from ..correlation.models import CorrelationAnalysis
+from ..correlation.models import CorrelationAnalysis, CrossCaseCorrelation
 from ..analytics.models import CaseAnalytics
 from ..data_access import CaseDataRepository, EvidenceContext
 from ..repository import InvestigationReportRepository
@@ -60,6 +60,7 @@ class InvestigationReportService:
         timeline: Optional[TimelineAnalysis] = None,
         analytics: Optional[CaseAnalytics] = None,
         priority: Optional[Dict[str, Any]] = None,
+        cross_case: Optional[CrossCaseCorrelation] = None,
         persist: bool = True,
     ) -> Dict[str, Any]:
         """Build the report; returns ``{"markdown": ..., "sections": ...}``."""
@@ -69,10 +70,12 @@ class InvestigationReportService:
 
         sections: Dict[str, Any] = {
             "executive_summary": self._executive_summary(
-                case_id, items, correlation, campaigns, suspects, timeline),
+                case_id, items, correlation, campaigns, suspects, timeline,
+                cross_case),
             "case_overview": self._case_overview(case_id, items),
             "evidence_summary": self._evidence_summary(items),
             "correlation_analysis": self._correlation_section(correlation),
+            "cross_case_correlation": self._cross_case_section(cross_case),
             "campaign_analysis": self._campaign_section(campaigns),
             "timeline_analysis": self._timeline_section(timeline),
             "suspect_assessment": self._suspect_section(suspects),
@@ -95,6 +98,7 @@ class InvestigationReportService:
                 "sections": sections,
                 "generated_from": {
                     "correlation": correlation is not None,
+                    "cross_case": cross_case is not None,
                     "campaigns": campaigns is not None,
                     "suspects": suspects is not None,
                     "timeline": timeline is not None,
@@ -108,15 +112,69 @@ class InvestigationReportService:
                                f"{len(sections)} sections", duration_ms=duration)
         return {"markdown": markdown, "sections": sections}
 
+    def regenerate_with_cross_case(
+        self, case_id: str, cross_case: CrossCaseCorrelation
+    ) -> Dict[str, Any]:
+        """Rebuild a case's report from its stored artifacts + new cross-case data.
+
+        Used for bidirectional propagation: when a newly analysed case links to
+        an *already analysed* case, that other case's report must reflect the
+        link without re-running its full Phase-2 analysis. Every module input is
+        reloaded from its latest stored artifact, so no analysis is recomputed -
+        only the report is regenerated.
+        """
+        correlation = self._load_model(case_id, self._cfg.correlation_report_name,
+                                       CorrelationAnalysis)
+        campaigns = self._load_model(case_id, self._cfg.campaign_report_name,
+                                     CampaignAnalysis)
+        suspects = self._load_model(case_id, self._cfg.suspect_report_name,
+                                    SuspectAssessment)
+        timeline = self._load_model(case_id, self._cfg.timeline_report_name,
+                                    TimelineAnalysis)
+        analytics = self._load_model(case_id, self._cfg.analytics_report_name,
+                                     CaseAnalytics)
+        priority_doc = self._repo.load_latest(case_id, self._cfg.priority_report_name)
+        priority = priority_doc["report"] if priority_doc else None
+
+        return self.generate(
+            case_id,
+            correlation=correlation,
+            campaigns=campaigns,
+            suspects=suspects,
+            timeline=timeline,
+            analytics=analytics,
+            priority=priority,
+            cross_case=cross_case,
+        )
+
+    def _load_model(self, case_id: str, report_name: str, model_cls):
+        """Reconstruct a typed model from its latest stored artifact, or None."""
+        document = self._repo.load_latest(case_id, report_name)
+        if document is None:
+            return None
+        try:
+            return model_cls.model_validate(document["report"])
+        except Exception as exc:  # noqa: BLE001 - tolerate schema drift
+            self._log.warning("could not reload %s for %s: %s",
+                              report_name, case_id, exc)
+            return None
+
     # ---------------------------------------------------------------- sections
 
     @staticmethod
     def _executive_summary(case_id, items, correlation, campaigns,
-                           suspects, timeline) -> List[str]:
+                           suspects, timeline, cross_case=None) -> List[str]:
         lines = [
             f"Case {case_id} contains {len(items)} evidence item(s), each "
             "acquired under SHA-256 chain-of-custody verification."
         ]
+        if cross_case is not None and cross_case.link_count:
+            lines.append(
+                f"This case is linked to {cross_case.link_count} other case(s) "
+                f"through shared entities: "
+                f"{', '.join(cross_case.related_case_ids)} "
+                "[cross_case_correlation.json]."
+            )
         if correlation is not None:
             lines.append(
                 f"The weighted correlation engine found "
@@ -192,6 +250,35 @@ class InvestigationReportService:
                 }
                 for p in correlation.pairs[:5]
                 if p.relationship_strength != "NO_RELATIONSHIP"
+            ],
+        }
+
+    @staticmethod
+    def _cross_case_section(cross_case) -> Any:
+        if cross_case is None:
+            return "Cross-case correlation was not evaluated for this case."
+        if not cross_case.links:
+            return "No cross-case correlations were found for this case."
+        return {
+            "related_case_count": len(cross_case.related_case_ids),
+            "related_case_ids": cross_case.related_case_ids,
+            "links": [
+                {
+                    "other_case_id": link.other_case_id,
+                    "relationship_strength": link.relationship_strength,
+                    "match_confidence": link.match_confidence,
+                    "match_reason": link.match_reason,
+                    "matched_entities": [
+                        {
+                            "entity_type": m.entity_type,
+                            "value": m.value,
+                            "this_evidence_ids": m.this_evidence_ids,
+                            "other_evidence_ids": m.other_evidence_ids,
+                        }
+                        for m in link.matched_entities
+                    ],
+                }
+                for link in cross_case.links
             ],
         }
 
@@ -398,6 +485,7 @@ class InvestigationReportService:
             "case_overview": "Case Overview",
             "evidence_summary": "Evidence Summary",
             "correlation_analysis": "Correlation Analysis",
+            "cross_case_correlation": "Cross-Case Correlation",
             "campaign_analysis": "Campaign Analysis",
             "timeline_analysis": "Timeline Analysis",
             "suspect_assessment": "Suspect Assessment",

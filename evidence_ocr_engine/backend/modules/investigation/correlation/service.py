@@ -14,16 +14,25 @@ from __future__ import annotations
 import math
 import time
 from itertools import combinations
-from typing import Dict, List, Optional, Sequence
+from typing import Dict, List, Optional, Sequence, Tuple
 
 from ...evidence.logger import get_logger
 from ..audit import InvestigationAuditTrail
 from ..config import InvestigationConfig
+from ..crosscase import CrossCaseEntityIndex
 from ..data_access import CaseDataRepository, EvidenceContext
 from ..repository import InvestigationReportRepository
-from .models import CorrelationAnalysis, CorrelationFactor, EvidencePairCorrelation
+from .models import (
+    CorrelationAnalysis,
+    CorrelationFactor,
+    CrossCaseCorrelation,
+    CrossCaseEntityMatch,
+    CrossCaseLink,
+    EvidencePairCorrelation,
+)
 
 MODULE = "correlation"
+CROSS_CASE_MODULE = "cross_case_correlation"
 
 #: Entity types compared value-for-value between two evidence items.
 _SHARED_ENTITY_FACTORS = (
@@ -47,6 +56,7 @@ class CorrelationService:
         self._repo = repository
         self._audit = audit
         self._log = get_logger("investigation.correlation")
+        self._index = CrossCaseEntityIndex(config.cross_case_index_path)
 
     # ------------------------------------------------------------------ public
 
@@ -96,6 +106,180 @@ class CorrelationService:
                 duration_ms=analysis.analysis_time_ms,
             )
         return analysis
+
+    # ------------------------------------------------------- cross-case (M1+)
+
+    @property
+    def index(self) -> CrossCaseEntityIndex:
+        """The persistent cross-case entity index this service maintains."""
+        return self._index
+
+    def index_case_entities(
+        self,
+        case_id: str,
+        evidence: Optional[Sequence[EvidenceContext]] = None,
+    ) -> int:
+        """Ingest a case's normalized entities into the persistent index.
+
+        Idempotent: re-processing a case refreshes existing records rather than
+        duplicating them (dedup is enforced by the index). Returns the number
+        of occurrences written or refreshed.
+        """
+        items = list(evidence) if evidence is not None \
+            else self._data.load_case_evidence(case_id)
+        written = 0
+        for context in items:
+            location = context.file_name or context.evidence_id
+            for entity in context.entities:
+                normalized = (entity.normalized or entity.value or "").strip()
+                if not normalized:
+                    continue
+                self._index.upsert(
+                    entity_type=entity.entity_type,
+                    normalized=normalized,
+                    case_id=case_id,
+                    evidence_id=context.evidence_id,
+                    value=entity.value or normalized,
+                    source_location=location,
+                    confidence=context.ocr_confidence,
+                )
+                written += 1
+        self._index.save()
+        return written
+
+    def correlate_cross_case(
+        self,
+        case_id: str,
+        evidence: Optional[Sequence[EvidenceContext]] = None,
+    ) -> CrossCaseCorrelation:
+        """Link this case to every other case that shares normalized entities.
+
+        Pure computation over the persistent index (no persistence here). Only
+        entity types with a configured correlation weight participate, so the
+        cross-case confidence sits on the same explainable scale as within-case
+        correlation. Call :meth:`persist_cross_case` to store the result.
+        """
+        started = time.perf_counter()
+        items = list(evidence) if evidence is not None \
+            else self._data.load_case_evidence(case_id)
+
+        # (entity_type, normalized) -> set of this-case evidence ids
+        own: Dict[Tuple[str, str], set] = {}
+        for context in items:
+            for entity in context.entities:
+                if self._cfg.correlation_weights.get(entity.entity_type, 0.0) <= 0:
+                    continue  # unweighted types (money/otp/...) don't form links
+                normalized = (entity.normalized or entity.value or "").strip().lower()
+                if not normalized:
+                    continue
+                own.setdefault((entity.entity_type, normalized), set()).add(
+                    context.evidence_id
+                )
+
+        # other_case_id -> {(type, value): {"this": set, "other": set}}
+        grouped: Dict[str, Dict[Tuple[str, str], Dict[str, set]]] = {}
+        for (entity_type, normalized), this_ids in own.items():
+            for occ in self._index.occurrences_in_other_cases(
+                entity_type, normalized, case_id
+            ):
+                slot = grouped.setdefault(occ.case_id, {}).setdefault(
+                    (entity_type, normalized), {"this": set(), "other": set()}
+                )
+                slot["this"].update(this_ids)
+                slot["other"].add(occ.evidence_id)
+
+        links: List[CrossCaseLink] = []
+        for other_case_id, matches in grouped.items():
+            if len(matches) < self._cfg.cross_case_min_shared_entities:
+                continue
+            links.append(self._build_cross_case_link(other_case_id, matches))
+        links.sort(key=lambda link: link.match_confidence, reverse=True)
+
+        return CrossCaseCorrelation(
+            case_id=case_id,
+            related_case_ids=[link.other_case_id for link in links],
+            link_count=len(links),
+            links=links,
+            analysis_time_ms=round((time.perf_counter() - started) * 1000.0, 1),
+        )
+
+    def persist_cross_case(
+        self, case_id: str, correlation: CrossCaseCorrelation
+    ) -> bool:
+        """Store the cross-case artifact, but only if it actually changed.
+
+        Returns ``True`` when a new version was written. Skipping unchanged
+        results prevents duplicate correlations and runaway report versions
+        during bidirectional propagation.
+        """
+        latest = self._repo.load_latest(case_id, self._cfg.cross_case_report_name)
+        if latest is not None:
+            previous = CrossCaseCorrelation.model_validate(latest["report"])
+            if previous.stable_payload() == correlation.stable_payload():
+                return False
+        self._repo.save(case_id, self._cfg.cross_case_report_name,
+                        correlation.model_dump())
+        self._audit.record(
+            case_id, CROSS_CASE_MODULE, "linked",
+            f"{correlation.link_count} related case(s): "
+            f"{', '.join(correlation.related_case_ids) or 'none'}",
+            duration_ms=correlation.analysis_time_ms,
+        )
+        return True
+
+    def _build_cross_case_link(
+        self,
+        other_case_id: str,
+        matches: Dict[Tuple[str, str], Dict[str, set]],
+    ) -> CrossCaseLink:
+        cfg = self._cfg
+        matched_entities: List[CrossCaseEntityMatch] = []
+        this_ids: set = set()
+        other_ids: set = set()
+        # Weighted sum with a per-type cap, mirroring within-case scoring.
+        per_type_count: Dict[str, int] = {}
+        weight_sum = 0.0
+        for (entity_type, normalized), sides in sorted(matches.items()):
+            weight = cfg.correlation_weights.get(entity_type, 0.0)
+            matched_entities.append(CrossCaseEntityMatch(
+                entity_type=entity_type,
+                value=normalized,
+                weight=weight,
+                this_evidence_ids=sorted(sides["this"]),
+                other_evidence_ids=sorted(sides["other"]),
+            ))
+            this_ids.update(sides["this"])
+            other_ids.update(sides["other"])
+            if per_type_count.get(entity_type, 0) < cfg.correlation_factor_cap:
+                weight_sum += weight
+                per_type_count[entity_type] = per_type_count.get(entity_type, 0) + 1
+
+        confidence = round(
+            1.0 - math.exp(-weight_sum / cfg.correlation_confidence_normaliser), 4
+        ) if weight_sum > 0 else 0.0
+        return CrossCaseLink(
+            other_case_id=other_case_id,
+            match_confidence=confidence,
+            relationship_strength=self._strength(confidence),
+            matched_entities=matched_entities,
+            this_evidence_ids=sorted(this_ids),
+            other_evidence_ids=sorted(other_ids),
+            match_reason=self._cross_case_reason(other_case_id, matched_entities),
+        )
+
+    @staticmethod
+    def _cross_case_reason(
+        other_case_id: str, matched: List[CrossCaseEntityMatch]
+    ) -> str:
+        shown = ", ".join(
+            f"{m.entity_type.replace('_', ' ').rstrip('s')} {m.value}"
+            for m in matched[:3]
+        )
+        extra = f" (+{len(matched) - 3} more)" if len(matched) > 3 else ""
+        return (
+            f"Shares {len(matched)} entity(ies) with {other_case_id}: "
+            f"{shown}{extra}"
+        )
 
     def correlate_pair(
         self, a: EvidenceContext, b: EvidenceContext
