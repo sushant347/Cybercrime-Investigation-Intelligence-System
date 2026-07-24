@@ -5,7 +5,7 @@ cybercrime investigation. An investigator opens a case by reference, adds
 evidence files, and the engine produces correlation, timeline, graph,
 analytics, priority, and a report. No accounts, no database for case data.
 
-**Last updated:** 2026-07-23 · branch `engine-refactor`
+**Last updated:** 2026-07-23 · branch `guided-flow`
 
 ---
 
@@ -16,9 +16,11 @@ analytics, priority, and a report. No accounts, no database for case data.
 | Phase 1 — evidence acquisition & OCR | ✅ Working | PaddleOCR PP-OCRv5, SHA-256 chain of custody |
 | Phase 2 — investigation analysis | ✅ Working | 8 modules, failure-isolated, versioned artifacts |
 | Phase 3 — web platform | ✅ Working | React 19 + Django REST |
-| Visual investigation report | ✅ Working | Charts from real engine artifacts |
+| Readable investigation report | ✅ Working | Summary table + plain findings, HTML download |
 | Engine mode (no login) | ✅ Working | Case reference replaces identity |
 | CSV case registry | ✅ Working | `storage/case_registry.csv` |
+| Case privacy | ✅ Working | Nothing lists cases — API or UI |
+| Guided one-screen flow | ✅ Working | Choose → identify case → work on it |
 | Database removal | ⚠️ Partial | Cases are CSV; jobs/notifications/audit still SQLite |
 | Threat intelligence ML model | ⚠️ Untrained | Falls back to rule/heuristic scoring |
 
@@ -33,14 +35,25 @@ analytics, priority, and a report. No accounts, no database for case data.
 - `dev.sh` launcher: `setup` · `api` · `web` · `up` · `reset-db`.
 - Frontend deps installed; Django DB migrated.
 
-### Visual investigation report
-The Reports tab renders the stored `investigation_report` artifact:
-stat cards (evidence, related pairs, priority score/level, timeline stages),
-executive summary, four charts (priority breakdown, correlation strength,
-OCR confidence per item, evidence quality), attack progression with
-milestones, key relationships with engine explanations, chain-of-custody
-table, conclusions, recommendations. Every value comes from engine
-artifacts — nothing is computed in the browser.
+### Readable investigation report
+The Reports tab opens on a plain-language report modelled on a URLVoid-style
+scan summary: a **Report Summary** table of verdicts (priority, evidence
+integrity, linked pairs, text-recognition quality) with coloured badges and a
+one-line explanation of each, then *What We Found*, *How The Scam Progressed*,
+*Evidence Examined*, *Links Between Evidence*, and *Recommended Next Steps*.
+
+- It appears on screen as soon as the analysis finishes.
+- **Download report** produces a self-contained HTML file (no external assets)
+  that opens offline and prints to PDF.
+- The earlier chart-heavy view is still available under **Charts & detail**.
+- Every value comes from engine artifacts — nothing is computed in the browser.
+
+### Guided flow & case privacy
+The UI is one screen at a time: **choose** (new / existing) → **identify the
+case by reference** → **work on it**. There is no dashboard, case list, audit
+page, or sidebar, so one case never exposes another. The case-listing API
+endpoints were removed too — hiding them in the SPA would not have been
+privacy. An unknown reference simply reports "not found".
 
 ### Engine mode — no login
 - Login, RBAC, route guards, and user management removed from the SPA.
@@ -84,8 +97,9 @@ artifacts — nothing is computed in the browser.
 
 | Tag / branch | What it is |
 |---|---|
-| `checkpoint-visual-reports` (on `main`) | Working platform **before** engine mode — login, DB-backed cases, visual report |
-| `engine-refactor` | Current work: no login, CSV case registry |
+| `checkpoint-visual-reports` (on `main`) | Original platform — login, DB-backed cases, chart report |
+| `checkpoint-engine-mode` (on `engine-refactor`) | No login + CSV case registry, but cases were listed and the report was chart-heavy |
+| `guided-flow` | Current: one-screen flow, case privacy, readable report |
 
-`git checkout main` returns to the pre-refactor state. See `AUDIT.md` for the
-full change record.
+Go back with `git checkout <tag or branch>`. See `AUDIT.md` for the full
+change record of each stage.

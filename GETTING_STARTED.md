@@ -67,24 +67,36 @@ bridge between the platform and the forensic engines:
 
 ## Walkthrough — the web platform
 
-1. **Evidence Intake** (the landing page) — type a case reference, e.g.
-   `esewa-lottery-scam-2026`, and press **Open case**. New references create a
-   case; known ones reopen it. Registered cases are listed below the form.
-2. You land on the case's **Evidence** tab.
-3. **Upload** — use anything from `evidence_ocr_engine/samples/`
-   (`scam_sms_screenshot.png` and `phishing_email_screenshot.png` are the clearest
-   demos). Upload runs OCR in a background worker; the UI polls the job.
-4. **Investigation tab → Run Analysis** — builds correlation, graph, timeline,
-   campaigns, suspects, priority.
-5. **Reports tab** — renders the full **visual investigation report**: headline
-   stat cards (evidence count, related pairs, engine priority score/level,
-   timeline stages), executive summary, charts (priority score breakdown,
-   correlation strength distribution, OCR confidence per evidence, evidence
-   quality), the attack-progression timeline with milestones, key evidence
-   relationships with engine explanations, chain-of-custody table, conclusions,
-   and recommendations. Every chart is fed by the stored engine artifacts —
-   the versioned JSON/Markdown report history (preview + download) sits below.
+The flow is one screen at a time. Nothing ever lists your cases: a case is
+private to whoever knows its reference.
+
+1. **Start screen** — choose **Start a new case** or **Open an existing case**.
+2. **New case:** type a reference, e.g. `esewa-lottery-scam-2026` (plus an
+   optional title) → **Create case**. If the reference is already taken it says
+   so and offers to open it instead.
+   **Existing case:** type the reference → **Open case**. An unknown reference
+   reports "No case found" and offers to create it.
+3. You land on the case's **Evidence** tab. **Upload** — use anything from
+   `evidence_ocr_engine/samples/` (`scam_sms_screenshot.png` and
+   `phishing_email_screenshot.png` are the clearest demos). Upload runs OCR in a
+   background worker; the UI polls the job.
+4. **Run Analysis** (top right) — builds correlation, graph, timeline,
+   campaigns, suspects, and priority, then takes you straight to the report.
+5. **Reports tab** — the report in plain language:
+
+   - a **Report Summary** table of verdicts — case priority, evidence
+     integrity, linked evidence pairs, text-recognition quality — each with a
+     coloured badge and a one-line explanation of what it means;
+   - **What We Found**, **How The Scam Progressed**, **Evidence Examined**,
+     **Links Between Evidence**, **Recommended Next Steps**.
+
+   **Download report** saves it as a single self-contained HTML file that opens
+   offline and prints to PDF. **Charts & detail** switches to the chart-heavy
+   view, and the engine's own versioned JSON/Markdown files are listed below.
 6. **Graph / Timeline / Analytics tabs** — the other artifact views.
+
+Every figure in the report comes from the stored engine artifacts; the report
+layer only relabels and explains them.
 
 Tabs show a 503/empty state until analysis has run for that case — that's the
 designed behavior, not a bug. Re-running analysis bumps the report version;
@@ -146,8 +158,10 @@ cd ../threat_intelligence_system
 
 | Command | Result |
 |---|---|
-| `git checkout main` | The state **before** engine mode: login, DB-backed cases, visual report |
-| `git checkout engine-refactor` | Current work: no login, CSV case registry |
+| `git checkout main` | Original: login, DB-backed cases, chart report |
+| `git checkout engine-refactor` | No login + CSV registry, but cases listed and report chart-heavy |
+| `git checkout guided-flow` | Current: one-screen flow, case privacy, readable report |
 
-`main` is tagged `checkpoint-visual-reports`. `AUDIT.md` records exactly what
-changed and why; `PROGRESS.md` tracks overall project state and what's next.
+Tagged restore points: `checkpoint-visual-reports`, `checkpoint-engine-mode`.
+`AUDIT.md` records exactly what changed and why at each stage; `PROGRESS.md`
+tracks overall project state and what's next.

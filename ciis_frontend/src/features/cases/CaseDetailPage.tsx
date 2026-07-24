@@ -69,12 +69,16 @@ export default function CaseDetailPage() {
   const analyzeMutation = useMutation({
     mutationFn: () => investigationApi.runAnalysis(caseId),
     onSuccess: (job) => {
-      setToast(
-        job.status === "running" || job.status === "queued"
-          ? `Analysis ${job.status} (job #${job.id}). Artifacts refresh when it completes.`
-          : `Analysis job #${job.id}: ${job.status}`,
-      );
+      setToast(`Analysis started (job #${job.id}) — the report appears when it finishes.`);
       void queryClient.invalidateQueries({ queryKey: ["jobs"] });
+      // Show the report as it is produced: land on it, then refresh the
+      // artifacts once the engine has had a moment to write them.
+      navigate(`/cases/${caseId}/reports`);
+      window.setTimeout(() => {
+        void queryClient.invalidateQueries({ queryKey: ["reports", caseId] });
+        void queryClient.invalidateQueries({ queryKey: ["report-latest", caseId] });
+        void queryClient.invalidateQueries({ queryKey: ["artifact", caseId] });
+      }, 4000);
     },
     onError: (err) => setToast(apiErrorMessage(err)),
   });
@@ -210,7 +214,9 @@ export default function CaseDetailPage() {
       {activeTab === "graph" && <GraphTab caseId={caseId} />}
       {activeTab === "timeline" && <TimelineTab caseId={caseId} />}
       {activeTab === "analytics" && <AnalyticsTab caseId={caseId} />}
-      {activeTab === "reports" && <ReportsTab caseId={caseId} />}
+      {activeTab === "reports" && (
+        <ReportsTab caseId={caseId} caseReference={caseData.case_reference} />
+      )}
       {activeTab === "history" && <CaseHistoryTab caseId={caseId} />}
 
       <Snackbar

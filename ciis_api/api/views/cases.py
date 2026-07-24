@@ -114,6 +114,8 @@ class CaseDetailView(APIView):
             return Response({"detail": "Case not found."}, status=404)
         meta = CaseMeta.objects.filter(case_id=case_id).select_related("assigned_to").first()
         data = _merged_case(row, meta)
+        registry_row = engine.case_registry().get(case_id)
+        data["case_reference"] = (registry_row or {}).get("case_reference", "")
         data["evidence"] = engine.list_evidence(case_id)
         return Response(data)
 
