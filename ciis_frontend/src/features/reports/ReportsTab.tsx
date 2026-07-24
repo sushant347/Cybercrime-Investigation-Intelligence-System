@@ -24,6 +24,8 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  ToggleButton,
+  ToggleButtonGroup,
   Typography,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
@@ -38,6 +40,10 @@ import { TableSkeleton } from "@/components/common/LoadingSkeleton";
 import { StatCard } from "@/components/common/StatCard";
 import { formatBytes, formatDateTime, titleCase } from "@/lib/format";
 import { BRAND } from "@/theme/theme";
+
+import { buildReportHtml } from "./reportHtml";
+import { buildSimpleReport } from "./reportModel";
+import { SimpleReportView } from "./SimpleReportView";
 import type {
   InvestigationReport,
   ReportCorrelationSection,
@@ -341,10 +347,17 @@ function ReportView({ caseId, report }: { caseId: string; report: InvestigationR
   );
 }
 
-/** Module 9 - Report center: visual report + versioned report history. */
-export function ReportsTab({ caseId }: { caseId: string }) {
+/** Module 9 - Report center: readable report, detail view, and downloads. */
+export function ReportsTab({
+  caseId,
+  caseReference = "",
+}: {
+  caseId: string;
+  caseReference?: string;
+}) {
   const [preview, setPreview] = useState<{ fileName: string; content: string } | null>(null);
   const [jsonPreview, setJsonPreview] = useState(false);
+  const [view, setView] = useState<"summary" | "detailed">("summary");
 
   const listQuery = useQuery({
     queryKey: ["reports", caseId],
@@ -355,6 +368,11 @@ export function ReportsTab({ caseId }: { caseId: string }) {
     queryFn: () => reportsApi.latest(caseId),
     retry: false,
   });
+  const priorityQuery = useQuery({
+    queryKey: ["artifact", caseId, "priority"],
+    queryFn: () => investigationApi.priority(caseId),
+    retry: false,
+  });
 
   if (listQuery.isPending) return <TableSkeleton />;
 
@@ -363,11 +381,26 @@ export function ReportsTab({ caseId }: { caseId: string }) {
     return (
       <EmptyState
         icon={<ArticleIcon />}
-        title="No reports generated"
-        description="Run the investigation analysis — the Phase-2 report generator produces a versioned JSON + Markdown report for this case."
+        title="No report yet"
+        description="Run the analysis on the Investigation tab — the engine then writes a full report for this case."
       />
     );
   }
+
+  const simple = latestQuery.data
+    ? buildSimpleReport(latestQuery.data, priorityQuery.data?.report, caseReference)
+    : null;
+
+  const downloadReadable = () => {
+    if (!simple) return;
+    const blob = new Blob([buildReportHtml(simple)], { type: "text/html;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `investigation-report-${simple.caseReference || simple.caseId}.html`;
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
   const download = async (fileName: string) => {
     const blob = await reportsApi.downloadBlob(caseId, fileName);
@@ -391,25 +424,48 @@ export function ReportsTab({ caseId }: { caseId: string }) {
           <CardContent sx={{ py: 1.5, "&:last-child": { pb: 1.5 } }}>
             <Stack
               direction="row"
-              spacing={2}
+              spacing={1.5}
               alignItems="center"
               justifyContent="space-between"
               flexWrap="wrap"
               useFlexGap
             >
               <Typography variant="body2" color="text.secondary">
-                Latest report · generated {formatDateTime(latestQuery.data.generated_at)} · version{" "}
-                {latestQuery.data.report_version} · schema {latestQuery.data.schema_version}
+                Generated {formatDateTime(latestQuery.data.generated_at)} · version{" "}
+                {latestQuery.data.report_version}
               </Typography>
-              <Button size="small" startIcon={<VisibilityIcon />} onClick={() => setJsonPreview(true)}>
-                Raw JSON
-              </Button>
+              <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                <ToggleButtonGroup
+                  size="small"
+                  exclusive
+                  value={view}
+                  onChange={(_, next: "summary" | "detailed" | null) => next && setView(next)}
+                >
+                  <ToggleButton value="summary">Report</ToggleButton>
+                  <ToggleButton value="detailed">Charts &amp; detail</ToggleButton>
+                </ToggleButtonGroup>
+                <Button
+                  size="small"
+                  variant="contained"
+                  startIcon={<DownloadIcon />}
+                  onClick={downloadReadable}
+                  disabled={!simple}
+                >
+                  Download report
+                </Button>
+                <Button size="small" startIcon={<VisibilityIcon />} onClick={() => setJsonPreview(true)}>
+                  Raw JSON
+                </Button>
+              </Stack>
             </Stack>
           </CardContent>
         </Card>
       )}
 
-      {latestQuery.data && <ReportView caseId={caseId} report={latestQuery.data.report} />}
+      {view === "summary" && simple && <SimpleReportView report={simple} />}
+      {view === "detailed" && latestQuery.data && (
+        <ReportView caseId={caseId} report={latestQuery.data.report} />
+      )}
 
       <Card>
         <CardHeader

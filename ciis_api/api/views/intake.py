@@ -25,25 +25,12 @@ def _payload(record: dict, created: bool) -> dict:
 
 
 class IntakeView(APIView):
-    """``GET`` lists registered cases; ``POST`` opens or creates one."""
+    """``POST`` opens or creates a case from its reference.
 
-    def get(self, request):
-        rows = engine.case_registry().list_all()
-        evidence_counts = {
-            row["case_id"]: int(row.get("evidence_count") or 0)
-            for row in engine.list_cases()
-        }
-        return Response(
-            {
-                "cases": [
-                    {
-                        **_payload(row, created=False),
-                        "evidence_count": evidence_counts.get(row["case_id"], 0),
-                    }
-                    for row in rows
-                ]
-            }
-        )
+    There is deliberately **no listing endpoint**: cases are private to
+    whoever knows the reference, so the registry is never enumerated over
+    the API.
+    """
 
     def post(self, request):
         reference = str(request.data.get("reference", "")).strip()
