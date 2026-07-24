@@ -197,6 +197,22 @@ def correlate_cases(cases: list) -> dict:
     }
 
 
+def build_investigation_graph(cases: list, case_id: str = "MULTI_CASE") -> dict:
+    """NetworkX-backed investigation graph, serialized to the frontend contract.
+
+    Thin adapter over :class:`graph_builder.GraphBuilder` so callers that only
+    imported this module keep working. Returns the three artifact payloads
+    ``{"graph", "graph_statistics", "graph_summary"}``. Kept separate from
+    :func:`correlate_cases` so the legacy evidence-only graph is preserved for
+    backward compatibility.
+    """
+    from graph_builder import GraphBuilder
+
+    builder = GraphBuilder(case_id=case_id)
+    builder.build_graph(cases)
+    return builder.serialize_graph()
+
+
 def summarize_correlation(graph: dict) -> dict:
     """Human-readable summary of the correlation graph for quick review."""
     shared_entity_edges = [e for e in graph["edges"] if e["type"] == "shared_entity"]
@@ -251,6 +267,22 @@ def main():
           f"{summary['temporal_only_links']} temporal-only links")
     print(f"Saved -> {graph_path}")
     print(f"Saved -> {summary_path}")
+
+    # NetworkX investigation graph artifacts (frontend-contract shape).
+    try:
+        case_id = cases[0].get("case_id", "MULTI_CASE") if len(cases) == 1 else "MULTI_CASE"
+        artifacts = build_investigation_graph(cases, case_id=case_id)
+        for key in ("graph", "graph_statistics", "graph_summary"):
+            path = os.path.join(OUTPUT_DIR, f"{key}.json")
+            with open(path, "w", encoding="utf-8") as f:
+                json.dump(artifacts[key], f, indent=2, ensure_ascii=False)
+            print(f"Saved -> {path}")
+        stats = artifacts["graph_statistics"]
+        print(f"NetworkX graph: {stats['node_count']} nodes, {stats['edge_count']} edges, "
+              f"{stats['connected_components']} component(s)")
+    except ImportError:
+        print("networkx not installed - skipped investigation graph artifacts "
+              "(pip install networkx).")
 
     if summary["top_connecting_entities"]:
         print("\nTop connecting entities:")
