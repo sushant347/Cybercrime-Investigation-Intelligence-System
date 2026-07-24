@@ -1,79 +1,32 @@
-/** Session management: login, logout, current user, permission checks. */
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-  type ReactNode,
-} from "react";
+/**
+ * Engine session.
+ *
+ * This is a case-centric evidence processing engine, not a multi-user case
+ * management system: there are no accounts, no login, and no RBAC. A case is
+ * reached by its *reference* (hashed into a case id) rather than by an
+ * identity.
+ *
+ * `hasPermission` is retained as a documented no-op so feature components keep
+ * declaring which capability they represent - mirroring `require()` on the API
+ * side (`accounts/permissions.py`). Restoring access control means restoring
+ * both.
+ */
+import { createContext, useContext, useMemo, type ReactNode } from "react";
 
-import { authApi } from "@/api";
-import { tokenStore } from "@/lib/apiClient";
-import type { User } from "@/types";
-
-interface AuthContextValue {
-  user: User | null;
-  initializing: boolean;
-  login: (username: string, password: string) => Promise<void>;
-  logout: () => Promise<void>;
+interface SessionValue {
+  /** Always true - access control is not enforced in engine mode. */
   hasPermission: (permission: string) => boolean;
-  refreshUser: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextValue | null>(null);
+const SessionContext = createContext<SessionValue | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [initializing, setInitializing] = useState(true);
-
-  useEffect(() => {
-    if (!tokenStore.access) {
-      setInitializing(false);
-      return;
-    }
-    authApi
-      .me()
-      .then(setUser)
-      .catch(() => tokenStore.clear())
-      .finally(() => setInitializing(false));
-  }, []);
-
-  const login = useCallback(async (username: string, password: string) => {
-    const data = await authApi.login(username, password);
-    tokenStore.set(data.access, data.refresh);
-    setUser(data.user);
-  }, []);
-
-  const logout = useCallback(async () => {
-    try {
-      await authApi.logout(tokenStore.refresh);
-    } finally {
-      tokenStore.clear();
-      setUser(null);
-    }
-  }, []);
-
-  const hasPermission = useCallback(
-    (permission: string) => user?.permissions.includes(permission) ?? false,
-    [user],
-  );
-
-  const refreshUser = useCallback(async () => {
-    setUser(await authApi.me());
-  }, []);
-
-  const value = useMemo(
-    () => ({ user, initializing, login, logout, hasPermission, refreshUser }),
-    [user, initializing, login, logout, hasPermission, refreshUser],
-  );
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  const value = useMemo<SessionValue>(() => ({ hasPermission: () => true }), []);
+  return <SessionContext.Provider value={value}>{children}</SessionContext.Provider>;
 }
 
-export function useAuth(): AuthContextValue {
-  const ctx = useContext(AuthContext);
+export function useAuth(): SessionValue {
+  const ctx = useContext(SessionContext);
   if (!ctx) throw new Error("useAuth must be used within AuthProvider");
   return ctx;
 }

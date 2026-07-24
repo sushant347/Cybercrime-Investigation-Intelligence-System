@@ -65,8 +65,10 @@ class NotificationType(models.TextChoices):
 
 
 class Notification(models.Model):
+    #: Nullable: the engine has no accounts, so notifications are engine-wide.
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="notifications"
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
+        related_name="notifications", null=True, blank=True,
     )
     type = models.CharField(max_length=32, choices=NotificationType.choices)
     title = models.CharField(max_length=256)
@@ -82,13 +84,10 @@ class Notification(models.Model):
     @classmethod
     def broadcast(cls, *, type: str, title: str, message: str = "",
                   case_id: str = "", evidence_id: str = "") -> None:
-        """Notify every active user (platform-level events)."""
-        from accounts.models import User
-
-        cls.objects.bulk_create(
-            cls(user=u, type=type, title=title, message=message,
-                case_id=case_id, evidence_id=evidence_id)
-            for u in User.objects.filter(is_active=True)
+        """Record an engine-wide event (one notification, no recipients)."""
+        cls.objects.create(
+            user=None, type=type, title=title, message=message,
+            case_id=case_id, evidence_id=evidence_id,
         )
 
 
