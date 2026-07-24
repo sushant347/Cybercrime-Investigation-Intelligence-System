@@ -70,13 +70,45 @@ class InvestigationConfig:
     cross_case_index_name: str = "cross_case_index"
 
     # ------------------------------------------------ Module 1: correlation
-    #: Per-factor weights of the explainable correlation framework.
+    #: Per-factor weights of the explainable correlation framework. Entity-type
+    #: keys must cover the vocabulary the Phase-1 entity extractor actually
+    #: emits (esewa_ids, khalti_ids, *_usernames, ...), otherwise a shared
+    #: wallet or social handle would be silently ignored.
     correlation_weights: Dict[str, float] = field(default_factory=lambda: {
-        "phones": 0.90, "emails": 0.85, "urls": 0.75, "domains": 0.60,
-        "wallets": 1.00, "bank_accounts": 1.00, "social_accounts": 0.80,
+        # contact identifiers
+        "phones": 0.90, "whatsapp_numbers": 0.90, "emails": 0.85,
+        # wallet / payment identifiers
+        "wallets": 1.00, "esewa_ids": 1.00, "khalti_ids": 1.00,
+        "imepay_ids": 1.00, "bank_accounts": 1.00,
+        "eth_wallets": 1.00, "btc_wallets": 1.00,
+        # social identifiers
+        "social_accounts": 0.80, "telegram_usernames": 0.80,
+        "facebook_usernames": 0.80, "instagram_usernames": 0.80,
+        "social_media_urls": 0.70,
+        # web / network infrastructure
+        "urls": 0.75, "domains": 0.60,
+        "mac_addresses": 0.85, "ipv4": 0.60, "ipv6": 0.60,
+        # weak / transactional signals (low weight -> visible but WEAK)
+        "money": 0.20, "otp": 0.25,
+        # non-entity correlation factors
         "file_hash": 1.00, "device_metadata": 0.70, "image_metadata": 0.50,
         "timeline_proximity": 0.40, "threat_intelligence": 0.80,
     })
+    #: Entity types compared value-for-value between evidence items and across
+    #: cases - every extracted identifier that ties evidence to an actor,
+    #: infrastructure or transaction. Pure temporal values (``dates``,
+    #: ``times``) are intentionally excluded because the timeline module owns
+    #: temporal correlation, as are non-identifying tokens (``ports``,
+    #: ``cve_ids``, raw hashes - file identity is the ``file_hash`` factor).
+    correlation_entity_types: Tuple[str, ...] = (
+        "phones", "whatsapp_numbers", "emails",
+        "wallets", "esewa_ids", "khalti_ids", "imepay_ids", "bank_accounts",
+        "eth_wallets", "btc_wallets",
+        "social_accounts", "telegram_usernames", "facebook_usernames",
+        "instagram_usernames", "social_media_urls",
+        "urls", "domains", "mac_addresses", "ipv4", "ipv6",
+        "money", "otp",
+    )
     #: Max counted matches per factor (prevents one spammy entity dominating).
     correlation_factor_cap: int = 3
     #: Hours within which two evidence items are "temporally close".
