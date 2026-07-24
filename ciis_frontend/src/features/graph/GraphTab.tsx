@@ -15,6 +15,7 @@ import { investigationApi } from "@/api";
 import { EmptyState } from "@/components/common/EmptyState";
 import { DetailSkeleton } from "@/components/common/LoadingSkeleton";
 import { SearchField } from "@/components/common/SearchField";
+import { formatDateTime } from "@/lib/format";
 import { nodeColor } from "@/theme/theme";
 import type { GraphEdge, GraphNode } from "@/types";
 
@@ -202,6 +203,19 @@ export function GraphTab({ caseId }: { caseId: string }) {
                 <Typography variant="body2" color="text.secondary">
                   Weight: {selection.edge.weight}
                 </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Confidence: {((selection.edge.confidence ?? Math.min(selection.edge.weight, 1)) * 100).toFixed(0)}%
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Timestamp: {selection.edge.timestamp
+                    ? `${formatDateTime(selection.edge.timestamp)}${selection.edge.timestamp_inferred ? " (inferred)" : ""}`
+                    : "Unresolved"}
+                </Typography>
+                {(selection.edge.source_evidence_ids?.length ?? 0) > 0 && (
+                  <Typography variant="body2" color="text.secondary">
+                    Source evidence: {selection.edge.source_evidence_ids?.join(", ")}
+                  </Typography>
+                )}
                 {selection.edge.explanation && (
                   <Typography variant="body2">{selection.edge.explanation}</Typography>
                 )}
