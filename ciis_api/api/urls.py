@@ -1,10 +1,13 @@
 from django.urls import path
 
 from .views import (
+    audit,
     cases,
+    dashboard,
     evidence,
     intake,
     investigation,
+    notifications,
     reports,
     system,
 )
@@ -43,4 +46,10 @@ urlpatterns = [
     ),
     # Engine configuration (read-only)
     path("settings/", system.SystemSettingsView.as_view()),
+    # Operational surface: cross-case dashboard, unified audit trail, and
+    # engine-wide notifications (written by the workers, now also served).
+    path("dashboard/", dashboard.DashboardView.as_view()),
+    path("audit/", audit.AuditLogView.as_view()),
+    path("notifications/", notifications.NotificationListView.as_view()),
+    path("notifications/mark-read/", notifications.NotificationMarkReadView.as_view()),
 ]
