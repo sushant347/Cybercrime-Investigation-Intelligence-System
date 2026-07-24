@@ -1,0 +1,17 @@
+[
+  {
+    "id": "example_clean",
+    "reference": "Your account will be suspended. Verify now.",
+    "hypothesis": "Your account will be suspended. Verify now."
+  },
+  {
+    "id": "example_minor_errors",
+    "reference": "Send OTP 4521 to activate your wallet",
+    "hypothesis": "Send 0TP 4521 to activate your vallet"
+  },
+  {
+    "id": "example_devanagari",
+    "reference": "तपाईंको खाता निलम्बित छ।",
+    "hypothesis": "तपाईंको खाता निलम्वित छ।"
+  }
+]
