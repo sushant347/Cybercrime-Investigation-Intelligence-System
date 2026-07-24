@@ -179,17 +179,48 @@ def test_no_match_no_link(ecfg, icfg):
     assert cross.related_case_ids == []
 
 
-def test_unweighted_entities_do_not_link(ecfg, icfg):
-    """A shared OTP/amount (no configured weight) must not create a link."""
+def test_temporal_entities_do_not_link(ecfg, icfg):
+    """Shared dates/times are coincidental and must not link cases."""
     _seed_case(ecfg, icfg, "CASE_1", [("EA", "2026-07-01T10:00:00Z")],
-               [("EA", "otp", "4521", "4521"), ("EA", "money", "rs 5000", "rs 5000")])
+               [("EA", "dates", "2026-01-04", "2026-01-04"),
+                ("EA", "times", "09:12", "09:12")])
     _seed_case(ecfg, icfg, "CASE_2", [("EB", "2026-07-02T10:00:00Z")],
-               [("EB", "otp", "4521", "4521"), ("EB", "money", "rs 5000", "rs 5000")])
+               [("EB", "dates", "2026-01-04", "2026-01-04"),
+                ("EB", "times", "09:12", "09:12")])
     pipe = build_default_pipeline(ecfg, icfg)
     pipe.analyze_case("CASE_1")
     cross = pipe.analyze_case("CASE_2")["cross_case"]
 
     assert cross.link_count == 0
+
+
+def test_wallet_identifier_links_cross_case(ecfg, icfg):
+    """A shared eSewa wallet id links two cases (extractor emits 'esewa_ids')."""
+    _seed_case(ecfg, icfg, "CASE_1", [("EA", "2026-07-01T10:00:00Z")],
+               [("EA", "esewa_ids", "9812345678", "9812345678")])
+    _seed_case(ecfg, icfg, "CASE_2", [("EB", "2026-07-02T10:00:00Z")],
+               [("EB", "esewa_ids", "9812345678", "9812345678")])
+    pipe = build_default_pipeline(ecfg, icfg)
+    pipe.analyze_case("CASE_1")
+    cross = pipe.analyze_case("CASE_2")["cross_case"]
+
+    assert cross.related_case_ids == ["CASE_1"]
+    assert cross.links[0].matched_entities[0].entity_type == "esewa_ids"
+    assert cross.links[0].relationship_strength in {"MEDIUM", "STRONG", "VERY_STRONG"}
+
+
+def test_shared_money_links_weakly(ecfg, icfg):
+    """A shared amount still links (the manual-test case), but only WEAKly."""
+    _seed_case(ecfg, icfg, "CASE_1", [("EA", "2026-07-01T10:00:00Z")],
+               [("EA", "money", "Rs 2000", "Rs 2000")])
+    _seed_case(ecfg, icfg, "CASE_2", [("EB", "2026-07-02T10:00:00Z")],
+               [("EB", "money", "Rs 2000", "Rs 2000")])
+    pipe = build_default_pipeline(ecfg, icfg)
+    pipe.analyze_case("CASE_1")
+    cross = pipe.analyze_case("CASE_2")["cross_case"]
+
+    assert cross.link_count == 1
+    assert cross.links[0].relationship_strength == "WEAK"
 
 
 def test_duplicate_processing_is_idempotent(ecfg, icfg):

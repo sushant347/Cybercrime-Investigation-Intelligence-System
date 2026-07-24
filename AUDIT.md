@@ -82,6 +82,33 @@ git checkout feature/roadmap-implementation   # the branch this was cut from
 The feature is additive: reverting the listed files removes cross-case behaviour
 and leaves within-case correlation exactly as it was.
 
+### Follow-up (same day) — entity-type coverage fix
+
+Manual testing surfaced a real gap: correlation only counted **7 hardcoded
+entity types** (`phones, emails, urls, domains, wallets, bank_accounts,
+social_accounts`), but the Phase-1 extractor emits a much larger vocabulary and
+does not even produce `wallets`/`social_accounts` — it produces `esewa_ids`,
+`khalti_ids`, `imepay_ids`, `eth_wallets`, `btc_wallets`, `whatsapp_numbers`,
+`telegram_usernames`, `facebook_usernames`, `instagram_usernames`,
+`social_media_urls`, `ipv4/ipv6`, `mac_addresses`, `money`, etc. So shared
+wallets/social handles were silently ignored, and cases sharing only weaker
+types (`money`) produced **no** cross-case link at all.
+
+- `config.py` — `correlation_weights` expanded to the full extractor vocabulary;
+  new `correlation_entity_types` tuple enumerates the linkable identifiers.
+  `dates`/`times` stay excluded (the timeline module owns temporal correlation);
+  `money`/`otp` are included at low weight (visible but WEAK).
+- `correlation/service.py` — within-case (`correlate_pair`) and cross-case both
+  iterate `config.correlation_entity_types` instead of the old hardcoded tuple.
+- Tests updated: temporal types don't link; `esewa_ids` links; a shared `money`
+  value links WEAKly (the exact manual-test scenario).
+
+Verified: the user's scenario (two cases sharing `money Rs 2000`) now links; with
+real samples the cross-case panel shows 3 linked cases where it previously showed
+0. Cause of the original "no output": the redacted samples
+(`+977-98XXXXXXXX`, `esewa id 98XXXXXXXX`) yield no clean phone/wallet, only
+`dates`/`times`/`money`, and `money` was not a linkable type.
+
 ---
 
 ## 2026-07-23 — Guided one-screen flow + readable report

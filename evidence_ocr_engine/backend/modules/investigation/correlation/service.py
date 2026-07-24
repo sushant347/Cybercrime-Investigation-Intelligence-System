@@ -34,12 +34,6 @@ from .models import (
 MODULE = "correlation"
 CROSS_CASE_MODULE = "cross_case_correlation"
 
-#: Entity types compared value-for-value between two evidence items.
-_SHARED_ENTITY_FACTORS = (
-    "phones", "emails", "urls", "domains",
-    "wallets", "bank_accounts", "social_accounts",
-)
-
 
 class CorrelationService:
     """Explainable weighted correlation across all evidence of a case."""
@@ -164,11 +158,12 @@ class CorrelationService:
             else self._data.load_case_evidence(case_id)
 
         # (entity_type, normalized) -> set of this-case evidence ids
+        entity_types = set(self._cfg.correlation_entity_types)
         own: Dict[Tuple[str, str], set] = {}
         for context in items:
             for entity in context.entities:
-                if self._cfg.correlation_weights.get(entity.entity_type, 0.0) <= 0:
-                    continue  # unweighted types (money/otp/...) don't form links
+                if entity.entity_type not in entity_types:
+                    continue  # dates/times/... are not actor identifiers
                 normalized = (entity.normalized or entity.value or "").strip().lower()
                 if not normalized:
                     continue
@@ -288,7 +283,7 @@ class CorrelationService:
         cfg = self._cfg
         factors: List[CorrelationFactor] = []
 
-        for entity_type in _SHARED_ENTITY_FACTORS:
+        for entity_type in cfg.correlation_entity_types:
             factor = self._shared_entity_factor(a, b, entity_type)
             if factor is not None:
                 factors.append(factor)
