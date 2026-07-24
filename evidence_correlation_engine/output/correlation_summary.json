@@ -1,8 +1,8 @@
 {
-  "total_evidence_items": 7,
-  "total_correlation_links": 11,
-  "shared_entity_links": 6,
-  "temporal_only_links": 5,
+  "total_evidence_items": 10,
+  "total_correlation_links": 22,
+  "shared_entity_links": 7,
+  "temporal_only_links": 15,
   "top_connecting_entities": [
     {
       "value": "9807766554",
@@ -12,6 +12,16 @@
     {
       "value": "suraj.offers22",
       "connects_evidence_count": 3,
+      "entity_type": "esewa_ids"
+    },
+    {
+      "value": "9841122334",
+      "connects_evidence_count": 2,
+      "entity_type": "phones"
+    },
+    {
+      "value": "rajesh.thapa99",
+      "connects_evidence_count": 2,
       "entity_type": "esewa_ids"
     },
     {

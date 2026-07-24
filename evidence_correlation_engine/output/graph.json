@@ -1,0 +1,528 @@
+{
+  "case_id": "MULTI_CASE",
+  "directed": true,
+  "nodes": [
+    {
+      "id": "evidence:EVID_00031",
+      "node_type": "evidence",
+      "label": "messenger_chat_screenshot.jpg",
+      "properties": {
+        "value": "evid_00031",
+        "confidence": "0.942",
+        "evidence_count": "1",
+        "case_ids": "CASE_0021",
+        "evidence_ids": "EVID_00031",
+        "file_name": "messenger_chat_screenshot.jpg",
+        "upload_time": "2026-07-08T18:12:00.000Z",
+        "ocr_engine": "paddleocr"
+      }
+    },
+    {
+      "id": "phone:9841122334",
+      "node_type": "phone",
+      "label": "9841122334",
+      "properties": {
+        "value": "9841122334",
+        "confidence": "1.000",
+        "evidence_count": "2",
+        "case_ids": "CASE_0021",
+        "evidence_ids": "EVID_00031, EVID_00032",
+        "source_entity_key": "phones"
+      }
+    },
+    {
+      "id": "wallet:rajesh.thapa99",
+      "node_type": "wallet",
+      "label": "rajesh.thapa99",
+      "properties": {
+        "value": "rajesh.thapa99",
+        "confidence": "1.000",
+        "evidence_count": "2",
+        "case_ids": "CASE_0021",
+        "evidence_ids": "EVID_00031, EVID_00032",
+        "source_entity_key": "esewa_ids"
+      }
+    },
+    {
+      "id": "evidence:EVID_00032",
+      "node_type": "evidence",
+      "label": "esewa_payment_request.jpg",
+      "properties": {
+        "value": "evid_00032",
+        "confidence": "0.968",
+        "evidence_count": "1",
+        "case_ids": "CASE_0021",
+        "evidence_ids": "EVID_00032",
+        "file_name": "esewa_payment_request.jpg",
+        "upload_time": "2026-07-08T19:45:00.000Z",
+        "ocr_engine": "paddleocr"
+      }
+    },
+    {
+      "id": "evidence:EVID_00033",
+      "node_type": "evidence",
+      "label": "unrelated_group_chat.jpg",
+      "properties": {
+        "value": "evid_00033",
+        "confidence": "0.931",
+        "evidence_count": "1",
+        "case_ids": "CASE_0021",
+        "evidence_ids": "EVID_00033",
+        "file_name": "unrelated_group_chat.jpg",
+        "upload_time": "2026-07-05T08:00:00.000Z",
+        "ocr_engine": "paddleocr"
+      }
+    },
+    {
+      "id": "evidence:EVID_00101",
+      "node_type": "evidence",
+      "label": "victim1_messenger_chat.jpg",
+      "properties": {
+        "value": "evid_00101",
+        "confidence": "0.951",
+        "evidence_count": "1",
+        "case_ids": "CASE_0042",
+        "evidence_ids": "EVID_00101",
+        "file_name": "victim1_messenger_chat.jpg",
+        "upload_time": "2026-07-08T20:15:00.000Z",
+        "ocr_engine": "paddleocr"
+      }
+    },
+    {
+      "id": "url:esewa-bonus-verify.xyz/claim",
+      "node_type": "url",
+      "label": "esewa-bonus-verify.xyz/claim",
+      "properties": {
+        "value": "esewa-bonus-verify.xyz/claim",
+        "confidence": "1.000",
+        "evidence_count": "2",
+        "case_ids": "CASE_0042",
+        "evidence_ids": "EVID_00101, EVID_00104",
+        "source_entity_key": "urls"
+      }
+    },
+    {
+      "id": "domain:esewa-bonus-verify.xyz",
+      "node_type": "domain",
+      "label": "esewa-bonus-verify.xyz",
+      "properties": {
+        "value": "esewa-bonus-verify.xyz",
+        "confidence": "1.000",
+        "evidence_count": "2",
+        "case_ids": "CASE_0042",
+        "evidence_ids": "EVID_00101, EVID_00104",
+        "source_entity_key": "domains"
+      }
+    },
+    {
+      "id": "phone:9807766554",
+      "node_type": "phone",
+      "label": "9807766554",
+      "properties": {
+        "value": "9807766554",
+        "confidence": "1.000",
+        "evidence_count": "3",
+        "case_ids": "CASE_0042",
+        "evidence_ids": "EVID_00101, EVID_00102, EVID_00103",
+        "source_entity_key": "phones"
+      }
+    },
+    {
+      "id": "wallet:suraj.offers22",
+      "node_type": "wallet",
+      "label": "suraj.offers22",
+      "properties": {
+        "value": "suraj.offers22",
+        "confidence": "1.000",
+        "evidence_count": "3",
+        "case_ids": "CASE_0042",
+        "evidence_ids": "EVID_00101, EVID_00102, EVID_00105",
+        "source_entity_key": "esewa_ids"
+      }
+    },
+    {
+      "id": "evidence:EVID_00102",
+      "node_type": "evidence",
+      "label": "victim1_esewa_screenshot.jpg",
+      "properties": {
+        "value": "evid_00102",
+        "confidence": "0.970",
+        "evidence_count": "1",
+        "case_ids": "CASE_0042",
+        "evidence_ids": "EVID_00102",
+        "file_name": "victim1_esewa_screenshot.jpg",
+        "upload_time": "2026-07-08T21:05:00.000Z",
+        "ocr_engine": "paddleocr"
+      }
+    },
+    {
+      "id": "evidence:EVID_00103",
+      "node_type": "evidence",
+      "label": "victim1_telegram_followup.jpg",
+      "properties": {
+        "value": "evid_00103",
+        "confidence": "0.920",
+        "evidence_count": "1",
+        "case_ids": "CASE_0042",
+        "evidence_ids": "EVID_00103",
+        "file_name": "victim1_telegram_followup.jpg",
+        "upload_time": "2026-07-09T09:40:00.000Z",
+        "ocr_engine": "paddleocr"
+      }
+    },
+    {
+      "id": "social_account:suraj_offers",
+      "node_type": "social_account",
+      "label": "suraj_offers",
+      "properties": {
+        "value": "suraj_offers",
+        "confidence": "1.000",
+        "evidence_count": "1",
+        "case_ids": "CASE_0042",
+        "evidence_ids": "EVID_00103",
+        "source_entity_key": "telegram_usernames"
+      }
+    },
+    {
+      "id": "evidence:EVID_00104",
+      "node_type": "evidence",
+      "label": "victim2_whatsapp_chat.jpg",
+      "properties": {
+        "value": "evid_00104",
+        "confidence": "0.943",
+        "evidence_count": "1",
+        "case_ids": "CASE_0042",
+        "evidence_ids": "EVID_00104",
+        "file_name": "victim2_whatsapp_chat.jpg",
+        "upload_time": "2026-07-09T14:20:00.000Z",
+        "ocr_engine": "paddleocr"
+      }
+    },
+    {
+      "id": "evidence:EVID_00105",
+      "node_type": "evidence",
+      "label": "victim2_bank_transfer.jpg",
+      "properties": {
+        "value": "evid_00105",
+        "confidence": "0.966",
+        "evidence_count": "1",
+        "case_ids": "CASE_0042",
+        "evidence_ids": "EVID_00105",
+        "file_name": "victim2_bank_transfer.jpg",
+        "upload_time": "2026-07-09T15:00:00.000Z",
+        "ocr_engine": "paddleocr"
+      }
+    },
+    {
+      "id": "bank_account:0198765432109",
+      "node_type": "bank_account",
+      "label": "0198765432109",
+      "properties": {
+        "value": "0198765432109",
+        "confidence": "1.000",
+        "evidence_count": "1",
+        "case_ids": "CASE_0042",
+        "evidence_ids": "EVID_00105",
+        "source_entity_key": "bank_accounts"
+      }
+    },
+    {
+      "id": "evidence:EVID_00106",
+      "node_type": "evidence",
+      "label": "unrelated_family_group_chat.jpg",
+      "properties": {
+        "value": "evid_00106",
+        "confidence": "0.929",
+        "evidence_count": "1",
+        "case_ids": "CASE_0042",
+        "evidence_ids": "EVID_00106",
+        "file_name": "unrelated_family_group_chat.jpg",
+        "upload_time": "2026-07-06T11:00:00.000Z",
+        "ocr_engine": "paddleocr"
+      }
+    },
+    {
+      "id": "evidence:EVID_00107",
+      "node_type": "evidence",
+      "label": "unrelated_meeting_reminder.jpg",
+      "properties": {
+        "value": "evid_00107",
+        "confidence": "0.935",
+        "evidence_count": "1",
+        "case_ids": "CASE_0042",
+        "evidence_ids": "EVID_00107",
+        "file_name": "unrelated_meeting_reminder.jpg",
+        "upload_time": "2026-07-06T14:30:00.000Z",
+        "ocr_engine": "paddleocr"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "evidence:EVID_00031",
+      "target": "phone:9841122334",
+      "edge_type": "communicates_with",
+      "weight": 1.0,
+      "explanation": "phone extracted from EVID_00031"
+    },
+    {
+      "source": "evidence:EVID_00031",
+      "target": "wallet:rajesh.thapa99",
+      "edge_type": "transfers_to",
+      "weight": 1.0,
+      "explanation": "wallet extracted from EVID_00031"
+    },
+    {
+      "source": "evidence:EVID_00031",
+      "target": "evidence:EVID_00032",
+      "edge_type": "temporal_relation",
+      "weight": 0.9354,
+      "explanation": "uploaded within 1.6h"
+    },
+    {
+      "source": "evidence:EVID_00031",
+      "target": "evidence:EVID_00101",
+      "edge_type": "temporal_relation",
+      "weight": 0.9146,
+      "explanation": "uploaded within 2.0h"
+    },
+    {
+      "source": "evidence:EVID_00031",
+      "target": "evidence:EVID_00102",
+      "edge_type": "temporal_relation",
+      "weight": 0.8799,
+      "explanation": "uploaded within 2.9h"
+    },
+    {
+      "source": "evidence:EVID_00031",
+      "target": "evidence:EVID_00103",
+      "edge_type": "temporal_relation",
+      "weight": 0.3556,
+      "explanation": "uploaded within 15.5h"
+    },
+    {
+      "source": "evidence:EVID_00031",
+      "target": "evidence:EVID_00104",
+      "edge_type": "temporal_relation",
+      "weight": 0.1611,
+      "explanation": "uploaded within 20.1h"
+    },
+    {
+      "source": "evidence:EVID_00031",
+      "target": "evidence:EVID_00105",
+      "edge_type": "temporal_relation",
+      "weight": 0.1333,
+      "explanation": "uploaded within 20.8h"
+    },
+    {
+      "source": "evidence:EVID_00032",
+      "target": "phone:9841122334",
+      "edge_type": "communicates_with",
+      "weight": 1.0,
+      "explanation": "phone extracted from EVID_00032"
+    },
+    {
+      "source": "evidence:EVID_00032",
+      "target": "wallet:rajesh.thapa99",
+      "edge_type": "transfers_to",
+      "weight": 1.0,
+      "explanation": "wallet extracted from EVID_00032"
+    },
+    {
+      "source": "evidence:EVID_00032",
+      "target": "evidence:EVID_00101",
+      "edge_type": "temporal_relation",
+      "weight": 0.9792,
+      "explanation": "uploaded within 0.5h"
+    },
+    {
+      "source": "evidence:EVID_00032",
+      "target": "evidence:EVID_00102",
+      "edge_type": "temporal_relation",
+      "weight": 0.9444,
+      "explanation": "uploaded within 1.3h"
+    },
+    {
+      "source": "evidence:EVID_00032",
+      "target": "evidence:EVID_00103",
+      "edge_type": "temporal_relation",
+      "weight": 0.4201,
+      "explanation": "uploaded within 13.9h"
+    },
+    {
+      "source": "evidence:EVID_00032",
+      "target": "evidence:EVID_00104",
+      "edge_type": "temporal_relation",
+      "weight": 0.2257,
+      "explanation": "uploaded within 18.6h"
+    },
+    {
+      "source": "evidence:EVID_00032",
+      "target": "evidence:EVID_00105",
+      "edge_type": "temporal_relation",
+      "weight": 0.1979,
+      "explanation": "uploaded within 19.2h"
+    },
+    {
+      "source": "evidence:EVID_00101",
+      "target": "url:esewa-bonus-verify.xyz/claim",
+      "edge_type": "references",
+      "weight": 1.0,
+      "explanation": "url extracted from EVID_00101"
+    },
+    {
+      "source": "evidence:EVID_00101",
+      "target": "domain:esewa-bonus-verify.xyz",
+      "edge_type": "resolves_to",
+      "weight": 1.0,
+      "explanation": "domain extracted from EVID_00101"
+    },
+    {
+      "source": "evidence:EVID_00101",
+      "target": "phone:9807766554",
+      "edge_type": "communicates_with",
+      "weight": 1.0,
+      "explanation": "phone extracted from EVID_00101"
+    },
+    {
+      "source": "evidence:EVID_00101",
+      "target": "wallet:suraj.offers22",
+      "edge_type": "transfers_to",
+      "weight": 1.0,
+      "explanation": "wallet extracted from EVID_00101"
+    },
+    {
+      "source": "evidence:EVID_00101",
+      "target": "evidence:EVID_00102",
+      "edge_type": "temporal_relation",
+      "weight": 0.9653,
+      "explanation": "uploaded within 0.8h"
+    },
+    {
+      "source": "evidence:EVID_00101",
+      "target": "evidence:EVID_00103",
+      "edge_type": "temporal_relation",
+      "weight": 0.441,
+      "explanation": "uploaded within 13.4h"
+    },
+    {
+      "source": "evidence:EVID_00101",
+      "target": "evidence:EVID_00104",
+      "edge_type": "temporal_relation",
+      "weight": 0.2465,
+      "explanation": "uploaded within 18.1h"
+    },
+    {
+      "source": "evidence:EVID_00101",
+      "target": "evidence:EVID_00105",
+      "edge_type": "temporal_relation",
+      "weight": 0.2188,
+      "explanation": "uploaded within 18.8h"
+    },
+    {
+      "source": "evidence:EVID_00102",
+      "target": "phone:9807766554",
+      "edge_type": "communicates_with",
+      "weight": 1.0,
+      "explanation": "phone extracted from EVID_00102"
+    },
+    {
+      "source": "evidence:EVID_00102",
+      "target": "wallet:suraj.offers22",
+      "edge_type": "transfers_to",
+      "weight": 1.0,
+      "explanation": "wallet extracted from EVID_00102"
+    },
+    {
+      "source": "evidence:EVID_00102",
+      "target": "evidence:EVID_00103",
+      "edge_type": "temporal_relation",
+      "weight": 0.4757,
+      "explanation": "uploaded within 12.6h"
+    },
+    {
+      "source": "evidence:EVID_00102",
+      "target": "evidence:EVID_00104",
+      "edge_type": "temporal_relation",
+      "weight": 0.2812,
+      "explanation": "uploaded within 17.2h"
+    },
+    {
+      "source": "evidence:EVID_00102",
+      "target": "evidence:EVID_00105",
+      "edge_type": "temporal_relation",
+      "weight": 0.2535,
+      "explanation": "uploaded within 17.9h"
+    },
+    {
+      "source": "evidence:EVID_00103",
+      "target": "phone:9807766554",
+      "edge_type": "communicates_with",
+      "weight": 1.0,
+      "explanation": "phone extracted from EVID_00103"
+    },
+    {
+      "source": "evidence:EVID_00103",
+      "target": "social_account:suraj_offers",
+      "edge_type": "communicates_with",
+      "weight": 1.0,
+      "explanation": "social_account extracted from EVID_00103"
+    },
+    {
+      "source": "evidence:EVID_00103",
+      "target": "evidence:EVID_00104",
+      "edge_type": "temporal_relation",
+      "weight": 0.8056,
+      "explanation": "uploaded within 4.7h"
+    },
+    {
+      "source": "evidence:EVID_00103",
+      "target": "evidence:EVID_00105",
+      "edge_type": "temporal_relation",
+      "weight": 0.7778,
+      "explanation": "uploaded within 5.3h"
+    },
+    {
+      "source": "evidence:EVID_00104",
+      "target": "url:esewa-bonus-verify.xyz/claim",
+      "edge_type": "references",
+      "weight": 1.0,
+      "explanation": "url extracted from EVID_00104"
+    },
+    {
+      "source": "evidence:EVID_00104",
+      "target": "domain:esewa-bonus-verify.xyz",
+      "edge_type": "resolves_to",
+      "weight": 1.0,
+      "explanation": "domain extracted from EVID_00104"
+    },
+    {
+      "source": "evidence:EVID_00104",
+      "target": "evidence:EVID_00105",
+      "edge_type": "temporal_relation",
+      "weight": 0.9722,
+      "explanation": "uploaded within 0.7h"
+    },
+    {
+      "source": "evidence:EVID_00105",
+      "target": "bank_account:0198765432109",
+      "edge_type": "transfers_to",
+      "weight": 1.0,
+      "explanation": "bank_account extracted from EVID_00105"
+    },
+    {
+      "source": "evidence:EVID_00105",
+      "target": "wallet:suraj.offers22",
+      "edge_type": "transfers_to",
+      "weight": 1.0,
+      "explanation": "wallet extracted from EVID_00105"
+    },
+    {
+      "source": "evidence:EVID_00106",
+      "target": "evidence:EVID_00107",
+      "edge_type": "temporal_relation",
+      "weight": 0.8542,
+      "explanation": "uploaded within 3.5h"
+    }
+  ]
+}
