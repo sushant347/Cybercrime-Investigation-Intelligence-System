@@ -55,6 +55,7 @@ export function UploadEvidenceDialog({
       if (latest.status === "completed" || latest.status === "failed") {
         void queryClient.invalidateQueries({ queryKey: ["evidence", caseId] });
         void queryClient.invalidateQueries({ queryKey: ["case", caseId] });
+        void queryClient.invalidateQueries({ queryKey: ["artifact", caseId] });
         void queryClient.invalidateQueries({ queryKey: ["notifications"] });
       }
       return latest;
