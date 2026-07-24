@@ -172,12 +172,9 @@ export const investigationApi = {
 };
 
 // ----------------------------------------------------------------- intake
+// There is deliberately no "list cases" call: cases are private to whoever
+// knows the reference, and the API does not expose the registry.
 export const intakeApi = {
-  /** Registered cases, most recently opened first. */
-  list: () =>
-    apiClient
-      .get<{ cases: RegisteredCase[] }>("/intake/")
-      .then((r) => r.data),
   /** Open a case by reference, creating it on first use. */
   open: (reference: string, title = "") =>
     apiClient

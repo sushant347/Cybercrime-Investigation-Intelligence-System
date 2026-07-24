@@ -77,6 +77,8 @@ export interface CaseSummary {
 
 export interface CaseDetail extends CaseSummary {
   evidence: EvidenceRow[];
+  /** The reference this case was opened with (from the CSV case registry). */
+  case_reference: string;
 }
 
 export interface CaseHistoryEntry {
