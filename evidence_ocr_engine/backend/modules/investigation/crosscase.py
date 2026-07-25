@@ -1,51 +1,42 @@
-"""Persistent cross-case entity index.
+"""Cross-case entity lookup over the **single** entity file.
 
-A single JSON file (``storage/investigation/cross_case_index.json``) records
-every normalized entity ever extracted, attributed to the case and evidence it
-came from. It is the substrate the correlation service queries to find entities
-shared **across** cases.
+Every extracted entity in the system lives in exactly one place:
 
-This is a storage helper - the *pattern* of the existing ``repository.py`` and
-``data_access.py`` - not a second correlation engine. All cross-case scoring and
-link-building lives in the existing :class:`CorrelationService`.
+    storage/entities.csv
+      case_id, evidence_id, entity_type, value, normalized, extracted_at
 
-Index layout::
+written once by the cleaning stage. Cross-case correlation reads *that* file and
+nothing else, so there is no second store to keep in sync and no way for the two
+to disagree. Deleting a case's rows from ``entities.csv`` removes it from
+cross-case correlation automatically.
 
-    {
-      "version": 1,
-      "updated_at": "<iso>",
-      "buckets": {
-        "<entity_type>\\u001f<normalized_lower>": {
-          "entity_type": "phones",
-          "normalized": "9812345678",
-          "occurrences": [
-            {"case_id": "...", "evidence_id": "...", "value": "...",
-             "source_location": "...", "confidence": 0.97,
-             "first_seen": "<iso>", "last_seen": "<iso>"}
-          ]
-        }
-      }
-    }
+(Historically this module maintained a duplicate ``cross_case_index.json``. That
+file is obsolete; :meth:`CrossCaseEntityIndex.clear` deletes it if present.)
 
-Duplicate entity records are impossible: an occurrence is keyed by
-``(case_id, evidence_id)`` inside its bucket, so re-processing a case updates
-the existing occurrence in place instead of appending a copy.
+Lookups are served from a small in-memory index built from the CSV and
+invalidated by the file's mtime+size, so repeated queries during one analysis
+do not re-read the file, while a fresh write is always picked up.
 """
 
 from __future__ import annotations
 
-import json
+import csv
+import threading
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 
 from ..evidence.logger import get_logger
-from ..evidence.utils import StorageError, utc_now_iso
 
-#: Unit separator - safe key delimiter that cannot occur in a normalized value.
-_SEP = ""
 
-INDEX_VERSION = 1
+def normalize_value(value: str) -> str:
+    """Canonical form used for cross-case matching (case/space-insensitive)."""
+    return (value or "").strip().lower()
+
+
+def bucket_key(entity_type: str, normalized: str) -> str:
+    """Stable key for one (type, value) pair."""
+    return f"{(entity_type or '').strip().lower()}\x1f{normalize_value(normalized)}"
 
 
 @dataclass(frozen=True)
@@ -56,179 +47,135 @@ class EntityOccurrence:
     normalized: str
     case_id: str
     evidence_id: str
-    value: str
-    source_location: str
-    confidence: float
-    first_seen: str
-    last_seen: str
-
-
-def bucket_key(entity_type: str, normalized: str) -> str:
-    return f"{entity_type.strip().lower()}{_SEP}{normalized.strip().lower()}"
+    value: str = ""
+    source_location: str = ""
+    confidence: float = 0.0
+    first_seen: str = ""
+    last_seen: str = ""
 
 
 class CrossCaseEntityIndex:
-    """Read/write access to the persistent cross-case entity index."""
+    """Read-through view of ``entities.csv`` for cross-case lookups.
 
-    def __init__(self, path: Path) -> None:
-        self._path = path
+    Constructed with the path to the *entities CSV*. The legacy JSON index path
+    may still be passed for cleanup purposes via ``legacy_index_path``.
+    """
+
+    def __init__(self, entities_csv: Path,
+                 legacy_index_path: Optional[Path] = None) -> None:
+        self._path = Path(entities_csv)
+        self._legacy_path = Path(legacy_index_path) if legacy_index_path else None
         self._log = get_logger("investigation.crosscase")
-        self._data: Dict = {"version": INDEX_VERSION, "updated_at": "", "buckets": {}}
-        self._loaded = False
+        self._lock = threading.Lock()
+        self._buckets: Dict[str, List[EntityOccurrence]] = {}
+        self._stamp: Optional[Tuple[float, int]] = None  # (mtime, size)
 
-    # ------------------------------------------------------------------- load
+    # ------------------------------------------------------------------ load
+
+    def _current_stamp(self) -> Optional[Tuple[float, int]]:
+        try:
+            stat = self._path.stat()
+            return (stat.st_mtime, stat.st_size)
+        except OSError:
+            return None
 
     def _ensure_loaded(self) -> None:
-        if self._loaded:
+        """(Re)build the in-memory index when entities.csv has changed."""
+        stamp = self._current_stamp()
+        if stamp is not None and stamp == self._stamp and self._buckets:
             return
-        if self._path.exists():
+        buckets: Dict[str, List[EntityOccurrence]] = {}
+        if stamp is not None:
             try:
-                self._data = json.loads(self._path.read_text(encoding="utf-8"))
-                self._data.setdefault("buckets", {})
-            except (OSError, json.JSONDecodeError) as exc:
-                self._log.warning("cross-case index unreadable (%s): %s", self._path, exc)
-                self._data = {"version": INDEX_VERSION, "updated_at": "", "buckets": {}}
-        self._loaded = True
-
-    # ------------------------------------------------------------------ write
-
-    def upsert(
-        self,
-        *,
-        entity_type: str,
-        normalized: str,
-        case_id: str,
-        evidence_id: str,
-        value: str = "",
-        source_location: str = "",
-        confidence: float = 0.0,
-    ) -> bool:
-        """Insert or update one occurrence. Returns True if the index changed.
-
-        Idempotent per ``(entity_type, normalized, case_id, evidence_id)`` - a
-        repeat call only refreshes ``last_seen``/metadata, never duplicates.
-        """
-        if not entity_type or not normalized:
-            return False
-        self._ensure_loaded()
-        key = bucket_key(entity_type, normalized)
-        now = utc_now_iso()
-        bucket = self._data["buckets"].get(key)
-        if bucket is None:
-            bucket = {
-                "entity_type": entity_type.strip().lower(),
-                "normalized": normalized.strip().lower(),
-                "occurrences": [],
-            }
-            self._data["buckets"][key] = bucket
-
-        for occ in bucket["occurrences"]:
-            if occ["case_id"] == case_id and occ["evidence_id"] == evidence_id:
-                changed = (
-                    occ.get("value") != value
-                    or occ.get("source_location") != source_location
-                    or float(occ.get("confidence") or 0.0) != float(confidence)
-                )
-                occ["last_seen"] = now
-                occ["value"] = value
-                occ["source_location"] = source_location
-                occ["confidence"] = round(float(confidence), 4)
-                return changed  # occurrence already present -> no new record
-
-        bucket["occurrences"].append({
-            "case_id": case_id,
-            "evidence_id": evidence_id,
-            "value": value,
-            "source_location": source_location,
-            "confidence": round(float(confidence), 4),
-            "first_seen": now,
-            "last_seen": now,
-        })
-        return True
-
-    def remove_case(self, case_id: str) -> bool:
-        """Drop every occurrence belonging to a case. True if anything changed."""
-        self._ensure_loaded()
-        changed = False
-        empty_keys: List[str] = []
-        for key, bucket in self._data["buckets"].items():
-            before = len(bucket["occurrences"])
-            bucket["occurrences"] = [
-                o for o in bucket["occurrences"] if o["case_id"] != case_id
-            ]
-            if len(bucket["occurrences"]) != before:
-                changed = True
-            if not bucket["occurrences"]:
-                empty_keys.append(key)
-        for key in empty_keys:
-            del self._data["buckets"][key]
-        return changed
-
-    def clear(self) -> None:
-        """Wipe the entire index (used by the testing reset)."""
-        self._data = {"version": INDEX_VERSION, "updated_at": "", "buckets": {}}
-        self._loaded = True
-        if self._path.exists():
-            try:
-                self._path.unlink()
-            except OSError as exc:  # noqa: BLE001
-                self._log.warning("could not delete index %s: %s", self._path, exc)
-
-    def save(self) -> None:
-        self._ensure_loaded()
-        self._data["version"] = INDEX_VERSION
-        self._data["updated_at"] = utc_now_iso()
-        self._path.parent.mkdir(parents=True, exist_ok=True)
-        tmp = self._path.with_suffix(".json.tmp")
-        try:
-            tmp.write_text(
-                json.dumps(self._data, ensure_ascii=False, indent=2),
-                encoding="utf-8",
-            )
-            tmp.replace(self._path)
-        except OSError as exc:
-            raise StorageError(f"Cannot write cross-case index '{self._path}': {exc}") from exc
+                with open(self._path, "r", newline="", encoding="utf-8") as handle:
+                    for row in csv.DictReader(handle):
+                        entity_type = (row.get("entity_type") or "").strip().lower()
+                        raw = row.get("normalized") or row.get("value") or ""
+                        normalized = normalize_value(raw)
+                        case_id = (row.get("case_id") or "").strip()
+                        evidence_id = (row.get("evidence_id") or "").strip()
+                        if not (entity_type and normalized and case_id and evidence_id):
+                            continue
+                        seen = row.get("extracted_at", "")
+                        buckets.setdefault(bucket_key(entity_type, normalized), []).append(
+                            EntityOccurrence(
+                                entity_type=entity_type,
+                                normalized=normalized,
+                                case_id=case_id,
+                                evidence_id=evidence_id,
+                                value=row.get("value", "") or normalized,
+                                source_location=evidence_id,
+                                first_seen=seen,
+                                last_seen=seen,
+                            )
+                        )
+            except OSError as exc:
+                self._log.warning("entities.csv unreadable (%s): %s", self._path, exc)
+        self._buckets = buckets
+        self._stamp = stamp
 
     # ------------------------------------------------------------------- read
 
     def occurrences_for(self, entity_type: str, normalized: str) -> List[EntityOccurrence]:
-        self._ensure_loaded()
-        bucket = self._data["buckets"].get(bucket_key(entity_type, normalized))
-        if not bucket:
-            return []
-        return [_to_occurrence(bucket, o) for o in bucket["occurrences"]]
+        with self._lock:
+            self._ensure_loaded()
+            return list(self._buckets.get(bucket_key(entity_type, normalized), []))
 
     def occurrences_in_other_cases(
         self, entity_type: str, normalized: str, case_id: str
     ) -> List[EntityOccurrence]:
-        return [
-            occ for occ in self.occurrences_for(entity_type, normalized)
-            if occ.case_id != case_id
-        ]
+        """Every occurrence of this entity that belongs to a *different* case."""
+        return [occ for occ in self.occurrences_for(entity_type, normalized)
+                if occ.case_id != case_id]
 
     def case_ids(self) -> List[str]:
-        self._ensure_loaded()
-        seen: List[str] = []
-        for bucket in self._data["buckets"].values():
-            for occ in bucket["occurrences"]:
-                if occ["case_id"] not in seen:
-                    seen.append(occ["case_id"])
-        return seen
+        with self._lock:
+            self._ensure_loaded()
+            seen: List[str] = []
+            for occurrences in self._buckets.values():
+                for occ in occurrences:
+                    if occ.case_id not in seen:
+                        seen.append(occ.case_id)
+            return seen
 
     def entity_count(self) -> int:
-        self._ensure_loaded()
-        return sum(len(b["occurrences"]) for b in self._data["buckets"].values())
+        """Total entity occurrences currently recorded (across all cases)."""
+        with self._lock:
+            self._ensure_loaded()
+            return sum(len(v) for v in self._buckets.values())
 
+    # ------------------------------------------------------------------ write
+    #
+    # There is nothing to write: entities.csv is owned by the cleaning stage.
+    # These remain so callers (pipeline, maintenance) keep a stable API.
 
-def _to_occurrence(bucket: Dict, occ: Dict) -> EntityOccurrence:
-    return EntityOccurrence(
-        entity_type=bucket["entity_type"],
-        normalized=bucket["normalized"],
-        case_id=occ["case_id"],
-        evidence_id=occ["evidence_id"],
-        value=occ.get("value", ""),
-        source_location=occ.get("source_location", ""),
-        confidence=float(occ.get("confidence") or 0.0),
-        first_seen=occ.get("first_seen", ""),
-        last_seen=occ.get("last_seen", ""),
-    )
+    def refresh(self) -> None:
+        """Force the next lookup to re-read entities.csv."""
+        with self._lock:
+            self._stamp = None
+            self._buckets = {}
+
+    def save(self) -> None:
+        """No-op: the single entity file is written by the cleaning stage."""
+        return None
+
+    def remove_case(self, case_id: str) -> bool:
+        """Report whether ``case_id`` still has entities.
+
+        Actual removal happens when the case's rows are deleted from
+        ``entities.csv`` (see ``maintenance.delete_case``); this just drops the
+        cached view so the next lookup reflects that.
+        """
+        had = case_id in self.case_ids()
+        self.refresh()
+        return had
+
+    def clear(self) -> None:
+        """Drop the cache and delete the obsolete legacy JSON index, if any."""
+        self.refresh()
+        if self._legacy_path and self._legacy_path.exists():
+            try:
+                self._legacy_path.unlink()
+            except OSError as exc:  # noqa: BLE001
+                self._log.warning("could not delete legacy index %s: %s",
+                                  self._legacy_path, exc)

@@ -50,7 +50,9 @@ class CorrelationService:
         self._repo = repository
         self._audit = audit
         self._log = get_logger("investigation.correlation")
-        self._index = CrossCaseEntityIndex(config.cross_case_index_path)
+        self._index = CrossCaseEntityIndex(
+            config.entities_csv, legacy_index_path=config.cross_case_index_path
+        )
 
     # ------------------------------------------------------------------ public
 
@@ -113,33 +115,17 @@ class CorrelationService:
         case_id: str,
         evidence: Optional[Sequence[EvidenceContext]] = None,
     ) -> int:
-        """Ingest a case's normalized entities into the persistent index.
+        """Ensure this case's entities are visible to cross-case lookups.
 
-        Idempotent: re-processing a case refreshes existing records rather than
-        duplicating them (dedup is enforced by the index). Returns the number
-        of occurrences written or refreshed.
+        Entities are written once by the cleaning stage into the single
+        ``entities.csv``; there is no second index to populate. This refreshes
+        the cached view so a case analysed moments ago is immediately matchable,
+        and returns the number of entity occurrences the case contributes.
         """
+        self._index.refresh()
         items = list(evidence) if evidence is not None \
             else self._data.load_case_evidence(case_id)
-        written = 0
-        for context in items:
-            location = context.file_name or context.evidence_id
-            for entity in context.entities:
-                normalized = (entity.normalized or entity.value or "").strip()
-                if not normalized:
-                    continue
-                self._index.upsert(
-                    entity_type=entity.entity_type,
-                    normalized=normalized,
-                    case_id=case_id,
-                    evidence_id=context.evidence_id,
-                    value=entity.value or normalized,
-                    source_location=location,
-                    confidence=context.ocr_confidence,
-                )
-                written += 1
-        self._index.save()
-        return written
+        return sum(len(context.entities) for context in items)
 
     def correlate_cross_case(
         self,

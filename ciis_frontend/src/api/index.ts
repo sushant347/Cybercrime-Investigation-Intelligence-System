@@ -93,6 +93,11 @@ export const evidenceApi = {
       .post<BackgroundJob>(`/cases/${caseId}/evidence/upload/`, form)
       .then((r) => r.data);
   },
+  /** Submit a link as evidence (no file). */
+  submitUrl: (caseId: string, url: string, notes: string) =>
+    apiClient
+      .post<BackgroundJob>(`/cases/${caseId}/evidence/url/`, { url, notes })
+      .then((r) => r.data),
   downloadUrl: (caseId: string, evidenceId: string, preview = false) =>
     `${apiClient.defaults.baseURL}/cases/${caseId}/evidence/${evidenceId}/download/${preview ? "?preview=1" : ""}`,
   downloadBlob: (caseId: string, evidenceId: string, preview = false) =>

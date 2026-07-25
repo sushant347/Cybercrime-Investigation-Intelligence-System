@@ -56,7 +56,11 @@ def test_pdf_evidence_pages_kept_in_order(config: EvidenceConfig, sample_pdf: Pa
     engine = FakeOCR()
     result = _pipeline(config, engine).process_file(sample_pdf)
     assert [p.page for p in result.pages] == [1, 2]
-    assert engine.calls == 2  # each page OCRed separately
+    # The sample PDF is a *digital* PDF: its embedded text layer is read
+    # verbatim, so OCR is never invoked (OCR of a text PDF is slower and
+    # strictly less accurate). Scanned pages still fall back to OCR - see
+    # tests/test_evidence_types.py::test_scanned_pdf_falls_back_to_ocr.
+    assert engine.calls == 0
 
 
 def test_text_evidence_skips_ocr_and_preserves_content(

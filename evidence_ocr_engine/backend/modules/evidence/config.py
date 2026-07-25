@@ -38,8 +38,11 @@ class EvidenceConfig:
     case_registry_csv: Path = _MODULE_ROOT / "storage" / "case_registry.csv"
 
     # ------------------------------------------------------------- acquisition
+    #: ``.url`` is a first-class evidence type: a submitted link is stored as a
+    #: small text artifact so it gets the same hashing / chain-of-custody /
+    #: entity-extraction treatment as any uploaded file.
     supported_extensions: frozenset[str] = frozenset(
-        {".png", ".jpeg", ".jpg", ".pdf", ".txt", ".csv", ".docx"}
+        {".png", ".jpeg", ".jpg", ".pdf", ".txt", ".csv", ".docx", ".url"}
     )
     image_extensions: frozenset[str] = frozenset({".png", ".jpeg", ".jpg"})
     text_extensions: frozenset[str] = frozenset({".txt", ".csv"})
@@ -68,6 +71,9 @@ class EvidenceConfig:
     strict_empty_ocr: bool = False
 
     # --------------------------------------------------------------------- PDF
+    #: A PDF page whose embedded text layer has at least this many characters
+    #: is read directly; below it the page is treated as scanned and OCR'd.
+    pdf_text_layer_min_chars: int = 20
     pdf_render_dpi: int = 220
     pdf_max_pages: int = 200
 

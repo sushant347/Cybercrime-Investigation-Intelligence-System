@@ -137,8 +137,11 @@ def test_exact_match_links_two_cases(ecfg, icfg):
                [("EB", "phones", "9812345678", "9812345678")])
     pipe = build_default_pipeline(ecfg, icfg)
 
+    # Entities live in the single entities.csv, so a case is matchable as soon
+    # as its entities are extracted - it does NOT have to be analysed first.
+    # (Previously an unanalysed case was invisible to cross-case correlation.)
     first = pipe.analyze_case("CASE_1")
-    assert first["cross_case"].link_count == 0  # nothing else indexed yet
+    assert first["cross_case"].related_case_ids == ["CASE_2"]
 
     second = pipe.analyze_case("CASE_2")
     cross = second["cross_case"]
@@ -261,19 +264,23 @@ def test_bidirectional_report_update(ecfg, icfg):
     repo = InvestigationReportRepository(icfg)
 
     pipe.analyze_case("CASE_1")
-    # Before CASE_2 exists, CASE_1 knows of no links.
-    assert _cross_case(repo, "CASE_1")["report"]["related_case_ids"] == []
+    # Both cases' entities are already in the single entities.csv, so CASE_1
+    # sees CASE_2 on its first analysis.
+    assert _cross_case(repo, "CASE_1")["report"]["related_case_ids"] == ["CASE_2"]
     assert len(repo.list_versions("CASE_1", "investigation_report")) == 1
 
     pipe.analyze_case("CASE_2")
 
-    # CASE_1's cross-case artifact now includes CASE_2 (a NEW version) ...
+    # CASE_1's stored cross-case artifact reflects the link to CASE_2. It was
+    # already correct at v1 (both cases' entities share one file), so
+    # save-if-changed rightly does NOT write a duplicate version - what matters
+    # is the content, which both sides agree on.
     case1_cross = _cross_case(repo, "CASE_1")["report"]
     assert case1_cross["related_case_ids"] == ["CASE_2"]
-    assert len(repo.list_versions("CASE_1", "cross_case_correlation")) == 2
-    # ... and CASE_1's report was regenerated with the cross-case section.
+    case2_cross = _cross_case(repo, "CASE_2")["report"]
+    assert case2_cross["related_case_ids"] == ["CASE_1"]  # bidirectional
+    # ... and CASE_1's report carries the cross-case section.
     case1_report = _report(repo, "CASE_1")["report"]
-    assert len(repo.list_versions("CASE_1", "investigation_report")) == 2
     section = case1_report["sections"]["cross_case_correlation"]
     assert isinstance(section, dict)
     assert section["related_case_ids"] == ["CASE_2"]
@@ -292,12 +299,14 @@ def test_reset_clears_cases_and_entities(ecfg, icfg):
     pipe.analyze_case("CASE_2")
 
     assert pipe._correlation.index.entity_count() > 0
-    assert icfg.cross_case_index_path.exists()
+    # There is no separate cross-case index file any more: entities.csv is the
+    # single store that cross-case correlation reads.
+    assert not icfg.cross_case_index_path.exists()
     assert (icfg.case_dir("CASE_1")).is_dir()
 
     summary = reset_all(ecfg, icfg)
 
-    # Index and per-case artifacts are gone.
+    # Entities and per-case artifacts are gone.
     assert not icfg.cross_case_index_path.exists()
     assert not icfg.case_dir("CASE_1").is_dir()
     assert not icfg.case_dir("CASE_2").is_dir()

@@ -9,6 +9,8 @@ import {
   DialogTitle,
   LinearProgress,
   Stack,
+  Tab,
+  Tabs,
   TextField,
   Typography,
 } from "@mui/material";
@@ -22,6 +24,8 @@ import { formatBytes } from "@/lib/format";
 import type { BackgroundJob } from "@/types";
 
 const ACCEPT = ".png,.jpg,.jpeg,.pdf,.txt,.csv,.docx";
+
+type Mode = "file" | "url";
 
 export function UploadEvidenceDialog({
   caseId,
@@ -37,11 +41,16 @@ export function UploadEvidenceDialog({
   const [file, setFile] = useState<File | null>(null);
   const [notes, setNotes] = useState("");
   const [dragOver, setDragOver] = useState(false);
+  const [mode, setMode] = useState<Mode>("file");
+  const [url, setUrl] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [job, setJob] = useState<BackgroundJob | null>(null);
 
   const mutation = useMutation({
-    mutationFn: () => evidenceApi.upload(caseId, file!, notes),
+    mutationFn: () =>
+      mode === "url"
+        ? evidenceApi.submitUrl(caseId, url.trim(), notes)
+        : evidenceApi.upload(caseId, file!, notes),
     onSuccess: (created) => setJob(created),
     onError: (err) => setError(apiErrorMessage(err)),
   });
@@ -66,6 +75,8 @@ export function UploadEvidenceDialog({
 
   const reset = useCallback(() => {
     setFile(null);
+    setUrl("");
+    setMode("file");
     setNotes("");
     setError(null);
     setJob(null);
@@ -93,6 +104,43 @@ export function UploadEvidenceDialog({
           {error && <Alert severity="error">{error}</Alert>}
 
           {!job && (
+            <>
+              <Tabs
+                value={mode}
+                onChange={(_, next: Mode) => {
+                  setMode(next);
+                  setError(null);
+                }}
+                sx={{ borderBottom: 1, borderColor: "divider" }}
+              >
+                <Tab value="file" label="Upload a file" />
+                <Tab value="url" label="Submit a link" />
+              </Tabs>
+            </>
+          )}
+
+          {!job && mode === "url" && (
+            <>
+              <TextField
+                label="Evidence URL"
+                placeholder="https://suspicious-site.example/login"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                fullWidth
+                autoFocus
+                helperText="The link is hashed and stored like any other evidence, then scored by threat intelligence and matched across cases."
+              />
+              <TextField
+                label="Investigator notes (chain of custody)"
+                multiline
+                minRows={2}
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+              />
+            </>
+          )}
+
+          {!job && mode === "file" && (
             <>
               <Box
                 onClick={() => inputRef.current?.click()}
@@ -164,10 +212,16 @@ export function UploadEvidenceDialog({
             <Button onClick={handleClose}>Cancel</Button>
             <Button
               variant="contained"
-              disabled={!file || mutation.isPending}
+              disabled={
+                mutation.isPending || (mode === "url" ? !url.trim() : !file)
+              }
               onClick={() => mutation.mutate()}
             >
-              {mutation.isPending ? "Uploading…" : "Upload & Process"}
+              {mutation.isPending
+                ? "Submitting…"
+                : mode === "url"
+                  ? "Submit & Process"
+                  : "Upload & Process"}
             </Button>
           </>
         ) : (

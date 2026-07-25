@@ -32,6 +32,27 @@ class PDFProcessor:
         finally:
             doc.close()
 
+    def iter_page_text(self, path: Path | str) -> Iterator[Tuple[int, str]]:
+        """Yield ``(page_number, text)`` from the PDF's embedded text layer.
+
+        Digital (non-scanned) PDFs carry their text verbatim, so reading it is
+        both faster and exact - OCR on such a page can only introduce errors.
+        Pages without a text layer (scanned images) yield an empty string and
+        must be rendered and OCR'd instead; see :meth:`iter_page_images`.
+        """
+        doc = self._open(path)
+        try:
+            total = min(doc.page_count, self._cfg.pdf_max_pages)
+            for index in range(total):
+                try:
+                    text = doc.load_page(index).get_text() or ""
+                except Exception as exc:  # noqa: BLE001 - one bad page is not fatal
+                    self._log.warning("page %d text extraction failed: %s", index + 1, exc)
+                    text = ""
+                yield index + 1, text
+        finally:
+            doc.close()
+
     def iter_page_images(self, path: Path | str) -> Iterator[Tuple[int, np.ndarray]]:
         """Yield ``(page_number, rgb_image)`` for every page, in order.
 
