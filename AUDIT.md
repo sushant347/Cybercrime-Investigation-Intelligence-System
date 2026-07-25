@@ -5,6 +5,57 @@ undo it. Newest entry first.
 
 ---
 
+## 2026-07-25 — Evaluation completion (metrics, harnesses, consolidated output)
+
+**Branch:** `eval-metrics-completion` (from `feature-new-timeline`, which had
+already merged the earlier `eval-metrics-remediation` work).
+
+### Why
+Complete the evaluation system: fill the remaining reusable-metric gaps, add the
+verification/behaviour tests the tables were missing, build the report-review
+and master-runner output, and re-verify everything against the **new** timeline/
+graph code on `feature-new-timeline`. Hard rules honoured: the verified Table 6.3
+XGBoost result was **not** rerun (only read + cross-checked), nothing fabricated,
+live modules only.
+
+### Built
+- **`investigation/evaluation/classification_metrics.py`** — dependency-free
+  confusion matrix, accuracy, precision/recall/F1, FNR/FPR, and rank-based
+  ROC-AUC + PR-AUC (average precision). Cross-checked against scikit-learn to
+  **0.0e+00** on 2,000 samples. Tests: `tests/investigation/test_classification_metrics.py`.
+- **Table 6.3 provenance test** — `threat_intelligence_system/tests/test_table_6_3_source.py`
+  asserts the source is the full retraining report (has `test_evaluations`), and
+  that every model's stored confusion matrix reproduces its P/R/F1/FNR against
+  n=87,756. Skips cleanly if the gitignored artifact is absent. **Does not rerun
+  the model.**
+- **Table 6.8 posture test** — `ciis_api/api/tests/test_security_posture.py`
+  proves the real open-access behaviour (unauthenticated requests are permitted,
+  never 401/403), backing the honest row-1 claim with a passing test.
+- **Table 6.7 report-review harness** — `scripts/report_review.py` builds a
+  gradeable checklist from a real stored report and scores a human-filled review
+  (correct/partial/incorrect); refuses to score an ungraded template. Test:
+  `tests/evaluation/test_report_review.py`.
+- **`run_all_evaluations.py`** (repo root) + **`EVALUATION.md`** — one command
+  runs every computable table (real 6.3 + 6.7 output) and prints an honest status
+  matrix; the doc lists every table's command, status, and blocker.
+
+### Re-verified on the new code
+Engine, API, and threat suites all pass on `feature-new-timeline`'s reworked
+timeline/graph modules; the eval harnesses target the **live** services (the
+timeline module was un-deprecated on that branch).
+
+### Still blocked (human-only, unchanged)
+6.1/6.2 corpus; 6.4/6.5 gold labels; 6.7 manual baseline + report grading. All
+have working harnesses that refuse to emit fake numbers.
+
+### How to undo
+```bash
+git checkout feature-new-timeline
+```
+Additive: new modules/scripts/tests only; no existing behaviour changed.
+
+---
+
 ## 2026-07-25 — Evaluation-metrics remediation (Tables 6.1–6.8)
 
 **Branch:** `eval-metrics-remediation`
