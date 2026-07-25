@@ -20,8 +20,11 @@ const typography = {
   h4: { fontWeight: 800, letterSpacing: "-0.02em" },
   h5: { fontWeight: 700, letterSpacing: "-0.01em" },
   h6: { fontWeight: 700 },
+  subtitle1: { fontWeight: 600 },
   subtitle2: { fontWeight: 600 },
+  overline: { fontWeight: 600, letterSpacing: "0.08em" },
   button: { textTransform: "none" as const, fontWeight: 600 },
+  body2: { lineHeight: 1.6 },
 } as const;
 
 const shape = { borderRadius: 10 } as const;
@@ -55,6 +58,15 @@ export function buildTheme(mode: "dark" | "light"): Theme {
             backgroundColor: dark ? "#2b3856" : "#c3cad9",
             borderRadius: 8,
           },
+          "::selection": {
+            backgroundColor: dark
+              ? "rgba(61,126,255,0.35)"
+              : "rgba(61,126,255,0.20)",
+          },
+          ":focus-visible": {
+            outline: `2px solid ${BRAND.primary}`,
+            outlineOffset: 2,
+          },
         },
       },
       MuiPaper: {
@@ -65,8 +77,67 @@ export function buildTheme(mode: "dark" | "light"): Theme {
           },
         },
       },
-      MuiCard: { defaultProps: { elevation: 0 } },
-      MuiButton: { defaultProps: { disableElevation: true } },
+      MuiCard: {
+        defaultProps: { elevation: 0 },
+        styleOverrides: {
+          root: {
+            transition: "border-color 160ms ease, box-shadow 160ms ease",
+          },
+        },
+      },
+      MuiCardHeader: {
+        styleOverrides: {
+          title: { fontSize: "1rem", fontWeight: 700 },
+          subheader: { fontSize: "0.8rem" },
+        },
+      },
+      MuiCardActionArea: {
+        styleOverrides: {
+          root: {
+            transition: "transform 160ms ease",
+            "&:hover": { transform: "translateY(-2px)" },
+          },
+        },
+      },
+      MuiButton: {
+        defaultProps: { disableElevation: true },
+        styleOverrides: {
+          root: { borderRadius: 8, paddingInline: 14 },
+          containedPrimary: {
+            "&:hover": { backgroundColor: BRAND.primaryDark },
+          },
+        },
+      },
+      MuiOutlinedInput: {
+        styleOverrides: {
+          root: {
+            "&:hover .MuiOutlinedInput-notchedOutline": {
+              borderColor: BRAND.primary,
+            },
+          },
+        },
+      },
+      MuiTabs: {
+        styleOverrides: {
+          indicator: { height: 3, borderRadius: 3 },
+        },
+      },
+      MuiTab: {
+        styleOverrides: {
+          root: { minHeight: 44, fontWeight: 600 },
+        },
+      },
+      MuiTableRow: {
+        styleOverrides: {
+          root: {
+            "&.MuiTableRow-hover:hover": {
+              backgroundColor: dark
+                ? "rgba(61,126,255,0.06)"
+                : "rgba(61,126,255,0.04)",
+            },
+          },
+        },
+      },
       MuiTableCell: {
         styleOverrides: {
           head: {
@@ -76,11 +147,26 @@ export function buildTheme(mode: "dark" | "light"): Theme {
             letterSpacing: "0.06em",
             color: dark ? "#93a1c0" : "#5b6579",
             whiteSpace: "nowrap",
+            backgroundColor: dark ? "rgba(148,163,204,0.05)" : "rgba(15,23,42,0.02)",
           },
         },
       },
       MuiChip: { styleOverrides: { root: { fontWeight: 600 } } },
-      MuiTooltip: { defaultProps: { arrow: true } },
+      MuiDialog: {
+        styleOverrides: { paper: { borderRadius: 14 } },
+      },
+      MuiTooltip: {
+        defaultProps: { arrow: true },
+        styleOverrides: {
+          tooltip: { fontSize: "0.75rem", fontWeight: 500 },
+        },
+      },
+      MuiLinearProgress: {
+        styleOverrides: { root: { borderRadius: 4 } },
+      },
+      MuiAlert: {
+        styleOverrides: { root: { borderRadius: 10 } },
+      },
     },
   });
 }

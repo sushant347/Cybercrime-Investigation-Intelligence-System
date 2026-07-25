@@ -15,7 +15,13 @@ export function StatCard({
   hint?: string;
 }) {
   return (
-    <Card sx={{ flex: "1 1 200px", minWidth: 180 }}>
+    <Card
+      sx={{
+        flex: "1 1 200px",
+        minWidth: 180,
+        "&:hover": { borderColor: color ?? "primary.main" },
+      }}
+    >
       <CardContent>
         <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
           <Stack spacing={0.5}>

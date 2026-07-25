@@ -1,7 +1,7 @@
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import GppGoodIcon from "@mui/icons-material/GppGood";
 import LightModeIcon from "@mui/icons-material/LightMode";
-import { AppBar, IconButton, Stack, Toolbar, Tooltip, Typography } from "@mui/material";
+import { AppBar, Box, IconButton, Stack, Toolbar, Tooltip, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import { NotificationBell } from "@/features/notifications/NotificationBell";
@@ -23,17 +23,35 @@ export function Topbar() {
           component={Link}
           to="/"
           direction="row"
-          spacing={1}
+          spacing={1.25}
           alignItems="center"
           sx={{ flex: 1, textDecoration: "none", color: "inherit" }}
         >
-          <GppGoodIcon color="primary" />
-          <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-            CIIS
-          </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ display: { xs: "none", sm: "block" } }}>
-            Cybercrime Investigation Intelligence System
-          </Typography>
+          <Box
+            sx={{
+              display: "grid",
+              placeItems: "center",
+              width: 34,
+              height: 34,
+              borderRadius: 2,
+              bgcolor: "rgba(61,126,255,0.12)",
+              color: "primary.main",
+            }}
+          >
+            <GppGoodIcon fontSize="small" />
+          </Box>
+          <Box>
+            <Typography variant="subtitle1" sx={{ fontWeight: 700, lineHeight: 1.2 }}>
+              CIIS
+            </Typography>
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              sx={{ display: { xs: "none", sm: "block" }, lineHeight: 1.2 }}
+            >
+              Cybercrime Investigation Intelligence System
+            </Typography>
+          </Box>
         </Stack>
 
         <NotificationBell />
