@@ -1,0 +1,295 @@
+{
+  "report_type": "investigation_report",
+  "report_version": 1,
+  "schema_version": "2.0",
+  "case_id": "CASE_85B2471DFB",
+  "generated_at": "2026-07-24T16:20:56.672Z",
+  "report": {
+    "sections": {
+      "executive_summary": [
+        "Case CASE_85B2471DFB contains 2 evidence item(s), each acquired under SHA-256 chain-of-custody verification.",
+        "This case is linked to 3 other case(s) through shared entities: CASE_2CF24DBA5F, CASE_F1278DD84F, CASE_8F43434664 [cross_case_correlation.json].",
+        "The weighted correlation engine found 1 related evidence pair(s) out of 1 analysed [correlation_analysis.json].",
+        "Observed attack progression: initial_contact -> financial_transaction [timeline_analysis.json]."
+      ],
+      "case_overview": {
+        "case_id": "CASE_85B2471DFB",
+        "evidence_count": 2,
+        "first_evidence": "2026-07-24T16:20:09.234Z",
+        "last_evidence": "2026-07-24T16:20:09.249Z",
+        "file_types": [
+          "png",
+          "txt"
+        ]
+      },
+      "evidence_summary": [
+        {
+          "evidence_id": "EVID_00009",
+          "file_name": "whatsapp_chat_export.txt",
+          "upload_time": "2026-07-24T16:20:09.234Z",
+          "sha256": "c7ab347cfbd2b80c944c85b3442f3b2c400da1d3b92962f9ded8598e1e06cfb2",
+          "hash_verified": true,
+          "ocr_confidence": 1.0,
+          "evidence_confidence_score": "not available",
+          "entity_count": 5
+        },
+        {
+          "evidence_id": "EVID_00010",
+          "file_name": "scam_sms_screenshot.png",
+          "upload_time": "2026-07-24T16:20:09.249Z",
+          "sha256": "b566c34426563417a8b355e67d17daee57765586450e2c18bb8c160b5b716d7b",
+          "hash_verified": true,
+          "ocr_confidence": 0.9766,
+          "evidence_confidence_score": "not available",
+          "entity_count": 2
+        }
+      ],
+      "correlation_analysis": {
+        "pair_count": 1,
+        "related_pair_count": 1,
+        "strength_distribution": {
+          "WEAK": 1
+        },
+        "top_relationships": [
+          {
+            "pair": "EVID_00009 <-> EVID_00010",
+            "strength": "WEAK",
+            "confidence": 0.2212,
+            "explanation": "EVID_00009 (whatsapp_chat_export.txt) and EVID_00010 (scam_sms_screenshot.png) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+          }
+        ]
+      },
+      "cross_case_correlation": {
+        "related_case_count": 3,
+        "related_case_ids": [
+          "CASE_2CF24DBA5F",
+          "CASE_F1278DD84F",
+          "CASE_8F43434664"
+        ],
+        "links": [
+          {
+            "other_case_id": "CASE_2CF24DBA5F",
+            "relationship_strength": "MEDIUM",
+            "match_confidence": 0.3127,
+            "match_reason": "Shares 3 entity(ies) with CASE_2CF24DBA5F: money rs 2,000, money rs 2000, money rs 5,00,000",
+            "matched_entities": [
+              {
+                "entity_type": "money",
+                "value": "rs 2,000",
+                "this_evidence_ids": [
+                  "EVID_00010"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00002"
+                ]
+              },
+              {
+                "entity_type": "money",
+                "value": "rs 2000",
+                "this_evidence_ids": [
+                  "EVID_00009"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00001"
+                ]
+              },
+              {
+                "entity_type": "money",
+                "value": "rs 5,00,000",
+                "this_evidence_ids": [
+                  "EVID_00010"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00002"
+                ]
+              }
+            ]
+          },
+          {
+            "other_case_id": "CASE_F1278DD84F",
+            "relationship_strength": "MEDIUM",
+            "match_confidence": 0.3127,
+            "match_reason": "Shares 3 entity(ies) with CASE_F1278DD84F: money rs 2,000, money rs 2000, money rs 5,00,000",
+            "matched_entities": [
+              {
+                "entity_type": "money",
+                "value": "rs 2,000",
+                "this_evidence_ids": [
+                  "EVID_00010"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00008"
+                ]
+              },
+              {
+                "entity_type": "money",
+                "value": "rs 2000",
+                "this_evidence_ids": [
+                  "EVID_00009"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00007"
+                ]
+              },
+              {
+                "entity_type": "money",
+                "value": "rs 5,00,000",
+                "this_evidence_ids": [
+                  "EVID_00010"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00008"
+                ]
+              }
+            ]
+          },
+          {
+            "other_case_id": "CASE_8F43434664",
+            "relationship_strength": "WEAK",
+            "match_confidence": 0.1175,
+            "match_reason": "Shares 1 entity(ies) with CASE_8F43434664: money rs 2000",
+            "matched_entities": [
+              {
+                "entity_type": "money",
+                "value": "rs 2000",
+                "this_evidence_ids": [
+                  "EVID_00009"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00004"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "campaign_analysis": {
+        "campaign_count": 0,
+        "unclustered_evidence": [
+          "EVID_00009",
+          "EVID_00010"
+        ],
+        "campaigns": []
+      },
+      "timeline_analysis": {
+        "summary": "2 event(s) spanning 0.0 hour(s). Observed scam progression: initial_contact -> financial_transaction. The progression follows the canonical scam sequence. 2 critical event(s) involve OTP/financial entities.",
+        "stage_progression": [
+          "initial_contact",
+          "financial_transaction"
+        ],
+        "progression_consistent": true,
+        "milestones": [
+          {
+            "timestamp": "2026-07-24T16:20:09.234Z",
+            "description": "Investigation start - first evidence acquired"
+          },
+          {
+            "timestamp": "2026-07-24T16:20:09.234Z",
+            "description": "First observation of stage 'initial_contact' (EVID_00009)"
+          },
+          {
+            "timestamp": "2026-07-24T16:20:09.234Z",
+            "description": "First observation of stage 'financial_transaction' (EVID_00009)"
+          }
+        ],
+        "critical_events": [
+          {
+            "timestamp": "2026-07-24T16:20:09.234Z",
+            "evidence_id": "EVID_00009",
+            "reasons": [
+              "contains money entity/entities: Rs 2000"
+            ]
+          },
+          {
+            "timestamp": "2026-07-24T16:20:09.249Z",
+            "evidence_id": "EVID_00010",
+            "reasons": [
+              "contains money entity/entities: Rs 2,000, Rs 5,00,000"
+            ]
+          }
+        ]
+      },
+      "suspect_assessment": "No suspect anchors were derived from the evidence.",
+      "threat_intelligence_summary": "No threat-intelligence indicator file was provided; threat corroboration was skipped (not an absence of threat).",
+      "evidence_quality_summary": {
+        "mean_image_quality": 0.0,
+        "mean_evidence_confidence": 0.0,
+        "mean_forgery_score": 0.0,
+        "max_forgery_score": 0.0,
+        "mean_ocr_confidence": 0.99,
+        "hash_verified_count": 2.0
+      },
+      "metadata_summary": [
+        {
+          "note": "No Phase-1 metadata reports stored for this case."
+        }
+      ],
+      "investigation_statistics": {
+        "entity_statistics": {
+          "dates": 1,
+          "money": 3,
+          "times": 3
+        },
+        "campaign_statistics": {
+          "campaign_count": 0.0,
+          "largest_campaign_size": 0.0,
+          "clustered_evidence": 0.0,
+          "unclustered_evidence": 2.0,
+          "mean_campaign_confidence": 0.0
+        },
+        "timeline_statistics": {
+          "event_count": 2.0,
+          "stage_count": 2.0,
+          "critical_event_count": 2.0,
+          "timeline_span_hours": 0.0
+        },
+        "correlation_statistics": {
+          "pair_count": 1.0,
+          "related_pair_count": 1.0,
+          "mean_confidence": 0.2212,
+          "max_confidence": 0.2212
+        }
+      },
+      "confidence_analysis": [
+        {
+          "note": "No Phase-1 confidence scores stored for this case."
+        }
+      ],
+      "investigation_conclusion": [
+        "2/2 evidence item(s) passed SHA-256 chain-of-custody verification.",
+        "The evidence set is internally connected (1 weighted relationship(s)), consistent with related activity rather than isolated incidents."
+      ],
+      "recommendations": [
+        "Prioritise the 2 critical event(s) involving OTP/financial entities for victim-impact assessment.",
+        "Case priority: LOW (22.2/100) - Low urgency: archive-ready unless new evidence raises the correlation or threat picture."
+      ],
+      "appendix": {
+        "chain_of_custody": [
+          {
+            "evidence_id": "EVID_00009",
+            "sha256": "c7ab347cfbd2b80c944c85b3442f3b2c400da1d3b92962f9ded8598e1e06cfb2",
+            "upload_time": "2026-07-24T16:20:09.234Z",
+            "status": "processed"
+          },
+          {
+            "evidence_id": "EVID_00010",
+            "sha256": "b566c34426563417a8b355e67d17daee57765586450e2c18bb8c160b5b716d7b",
+            "upload_time": "2026-07-24T16:20:09.249Z",
+            "status": "processed"
+          }
+        ],
+        "stored_artifacts_root": "storage/investigation/<CASE_ID>/",
+        "phase1_artifacts_root": "storage/forensics/<EVIDENCE_ID>/"
+      }
+    },
+    "generated_from": {
+      "correlation": true,
+      "cross_case": true,
+      "campaigns": true,
+      "suspects": true,
+      "timeline": true,
+      "analytics": true,
+      "priority": true
+    }
+  }
+}

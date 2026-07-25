@@ -46,7 +46,7 @@ def _ocr_hypothesis(image_path: Path) -> str:
 
     cfg = EvidenceConfig.from_env()
     ocr = PaddleOCRService(cfg, lang=cfg.ocr_lang)
-    image = ImagePreprocessor(cfg).process(load_image(str(image_path)))
+    image, _ops = ImagePreprocessor(cfg).preprocess(load_image(str(image_path)))
     lines = ocr.recognize(image)
     return "\n".join(line.text for line in lines)
 

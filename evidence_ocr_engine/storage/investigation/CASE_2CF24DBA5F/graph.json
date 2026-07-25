@@ -1,0 +1,90 @@
+{
+  "report_type": "graph",
+  "report_version": 1,
+  "schema_version": "2.0",
+  "case_id": "CASE_2CF24DBA5F",
+  "generated_at": "2026-07-24T16:06:39.339Z",
+  "report": {
+    "case_id": "CASE_2CF24DBA5F",
+    "directed": false,
+    "nodes": [
+      {
+        "id": "case:CASE_2CF24DBA5F",
+        "node_type": "case",
+        "label": "CASE_2CF24DBA5F",
+        "properties": {}
+      },
+      {
+        "id": "evidence:EVID_00001",
+        "node_type": "evidence",
+        "label": "EVID_00001",
+        "properties": {
+          "file_name": "whatsapp_chat_export.txt",
+          "upload_time": "2026-07-24T16:06:05.861Z"
+        }
+      },
+      {
+        "id": "evidence:EVID_00002",
+        "node_type": "evidence",
+        "label": "EVID_00002",
+        "properties": {
+          "file_name": "scam_sms_screenshot.png",
+          "upload_time": "2026-07-24T16:06:16.314Z"
+        }
+      },
+      {
+        "id": "evidence:EVID_00003",
+        "node_type": "evidence",
+        "label": "EVID_00003",
+        "properties": {
+          "file_name": "low_quality_scan_demo.png",
+          "upload_time": "2026-07-24T16:06:29.533Z"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "source": "case:CASE_2CF24DBA5F",
+        "target": "evidence:EVID_00001",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "explanation": "EVID_00001 belongs to CASE_2CF24DBA5F"
+      },
+      {
+        "source": "case:CASE_2CF24DBA5F",
+        "target": "evidence:EVID_00002",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "explanation": "EVID_00002 belongs to CASE_2CF24DBA5F"
+      },
+      {
+        "source": "case:CASE_2CF24DBA5F",
+        "target": "evidence:EVID_00003",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "explanation": "EVID_00003 belongs to CASE_2CF24DBA5F"
+      },
+      {
+        "source": "evidence:EVID_00001",
+        "target": "evidence:EVID_00002",
+        "edge_type": "temporal_relationship",
+        "weight": 0.9999,
+        "explanation": "Acquired 0.0h apart (window 48h)"
+      },
+      {
+        "source": "evidence:EVID_00001",
+        "target": "evidence:EVID_00003",
+        "edge_type": "temporal_relationship",
+        "weight": 0.9999,
+        "explanation": "Acquired 0.0h apart (window 48h)"
+      },
+      {
+        "source": "evidence:EVID_00002",
+        "target": "evidence:EVID_00003",
+        "edge_type": "temporal_relationship",
+        "weight": 0.9999,
+        "explanation": "Acquired 0.0h apart (window 48h)"
+      }
+    ]
+  }
+}

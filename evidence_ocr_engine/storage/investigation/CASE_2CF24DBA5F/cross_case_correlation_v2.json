@@ -1,0 +1,92 @@
+{
+  "report_type": "cross_case_correlation",
+  "report_version": 2,
+  "schema_version": "2.0",
+  "case_id": "CASE_2CF24DBA5F",
+  "generated_at": "2026-07-24T16:20:51.722Z",
+  "report": {
+    "case_id": "CASE_2CF24DBA5F",
+    "related_case_ids": [
+      "CASE_F1278DD84F",
+      "CASE_8F43434664"
+    ],
+    "link_count": 2,
+    "links": [
+      {
+        "other_case_id": "CASE_F1278DD84F",
+        "match_confidence": 0.3127,
+        "relationship_strength": "MEDIUM",
+        "matched_entities": [
+          {
+            "entity_type": "money",
+            "value": "rs 2,000",
+            "weight": 0.2,
+            "this_evidence_ids": [
+              "EVID_00002"
+            ],
+            "other_evidence_ids": [
+              "EVID_00008"
+            ]
+          },
+          {
+            "entity_type": "money",
+            "value": "rs 2000",
+            "weight": 0.2,
+            "this_evidence_ids": [
+              "EVID_00001"
+            ],
+            "other_evidence_ids": [
+              "EVID_00007"
+            ]
+          },
+          {
+            "entity_type": "money",
+            "value": "rs 5,00,000",
+            "weight": 0.2,
+            "this_evidence_ids": [
+              "EVID_00002"
+            ],
+            "other_evidence_ids": [
+              "EVID_00008"
+            ]
+          }
+        ],
+        "this_evidence_ids": [
+          "EVID_00001",
+          "EVID_00002"
+        ],
+        "other_evidence_ids": [
+          "EVID_00007",
+          "EVID_00008"
+        ],
+        "match_reason": "Shares 3 entity(ies) with CASE_F1278DD84F: money rs 2,000, money rs 2000, money rs 5,00,000"
+      },
+      {
+        "other_case_id": "CASE_8F43434664",
+        "match_confidence": 0.1175,
+        "relationship_strength": "WEAK",
+        "matched_entities": [
+          {
+            "entity_type": "money",
+            "value": "rs 2000",
+            "weight": 0.2,
+            "this_evidence_ids": [
+              "EVID_00001"
+            ],
+            "other_evidence_ids": [
+              "EVID_00004"
+            ]
+          }
+        ],
+        "this_evidence_ids": [
+          "EVID_00001"
+        ],
+        "other_evidence_ids": [
+          "EVID_00004"
+        ],
+        "match_reason": "Shares 1 entity(ies) with CASE_8F43434664: money rs 2000"
+      }
+    ],
+    "analysis_time_ms": 3.8
+  }
+}

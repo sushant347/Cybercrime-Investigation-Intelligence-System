@@ -1,0 +1,610 @@
+{
+  "case_id": "CASE_F1278DD84F",
+  "created_at": "2026-07-24T16:19:58.870Z",
+  "updated_at": "2026-07-24T16:20:09.230Z",
+  "evidence_count": 2,
+  "evidence": [
+    {
+      "case_id": "CASE_F1278DD84F",
+      "evidence_id": "EVID_00007",
+      "file_name": "whatsapp_chat_export.txt",
+      "file_hash": "c7ab347cfbd2b80c944c85b3442f3b2c400da1d3b92962f9ded8598e1e06cfb2",
+      "file_size": "303",
+      "upload_time": "2026-07-24T16:19:58.868Z",
+      "processing_time_ms": 4.0,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 1.0,
+          "text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
+          "lines": [
+            {
+              "text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "[2026-01-04 09:14] Victim: k ho yo? कसरी?",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
+              "confidence": 1.0,
+              "bbox": []
+            }
+          ],
+          "bounding_boxes": [
+            [],
+            [],
+            [],
+            []
+          ],
+          "preprocessing_steps": [
+            "none(text_file)"
+          ]
+        }
+      ],
+      "raw_text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
+      "average_confidence": 1.0,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_F1278DD84F",
+        "evidence_id": "EVID_00007",
+        "raw_text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
+        "cleaned_text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
+        "language": "mixed",
+        "line_languages": {
+          "1": "english",
+          "2": "mixed",
+          "3": "mixed",
+          "4": "mixed"
+        },
+        "entities": {
+          "urls": [],
+          "emails": [],
+          "domains": [],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "phones": [],
+          "dates": [
+            {
+              "value": "2026-01-04",
+              "normalized": "2026-01-04"
+            }
+          ],
+          "times": [
+            {
+              "value": "09:12",
+              "normalized": "09:12"
+            },
+            {
+              "value": "09:14",
+              "normalized": "09:14"
+            },
+            {
+              "value": "09:15",
+              "normalized": "09:15"
+            }
+          ],
+          "money": [
+            {
+              "value": "Rs 2000",
+              "normalized": "Rs 2000"
+            }
+          ],
+          "otp": [],
+          "bank_accounts": [],
+          "esewa_ids": [],
+          "khalti_ids": [],
+          "imepay_ids": [],
+          "hashes_sha512": [],
+          "hashes_sha256": [],
+          "hashes_sha1": [],
+          "hashes_md5": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {
+          "lottery": 1,
+          "winner": 1,
+          "money": 1,
+          "wallet": 1
+        },
+        "risk_signals": {
+          "urgency": 0,
+          "financial": 4,
+          "credential": 0,
+          "threat": 0
+        },
+        "statistics": {
+          "characters": 258,
+          "words": 32,
+          "lines": 4,
+          "average_line_length": 63.8,
+          "languages_detected": [
+            "english",
+            "mixed"
+          ],
+          "entity_count": 5,
+          "cleaning_operations": [
+            "entities_protected(9)"
+          ],
+          "ocr_corrections": [],
+          "protected_entities": 9
+        },
+        "processing_time_ms": 1.81
+      },
+      "enhancement": {
+        "case_id": "CASE_F1278DD84F",
+        "evidence_id": "EVID_00007",
+        "cleaned_text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
+        "enhanced_text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
+        "ui_text": "",
+        "message_text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
+        "layout": [
+          {
+            "line": 1,
+            "role": "message",
+            "text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo"
+          },
+          {
+            "line": 2,
+            "role": "message",
+            "text": "[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्"
+          },
+          {
+            "line": 3,
+            "role": "message",
+            "text": "[2026-01-04 09:14] Victim: k ho yo? कसरी?"
+          },
+          {
+            "line": 4,
+            "role": "message",
+            "text": "[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus"
+          }
+        ],
+        "corrections": [],
+        "correction_statistics": {
+          "total_corrections": 0,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 0,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 4,
+          "lines_high_confidence": 4,
+          "lines_correctable": 0,
+          "document_confidence": 1.0,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 1.18
+      },
+      "semantic_correction": {
+        "case_id": "CASE_F1278DD84F",
+        "evidence_id": "EVID_00007",
+        "enhanced_text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
+        "semantic_text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {
+          "dates": [
+            {
+              "value": "2026-01-04",
+              "normalized": "2026-01-04"
+            }
+          ],
+          "times": [
+            {
+              "value": "09:12",
+              "normalized": "09:12"
+            },
+            {
+              "value": "09:14",
+              "normalized": "09:14"
+            },
+            {
+              "value": "09:15",
+              "normalized": "09:15"
+            }
+          ],
+          "money": [
+            {
+              "value": "Rs 2000",
+              "normalized": "Rs 2000"
+            }
+          ]
+        },
+        "statistics": {
+          "suspicious_tokens": 0,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 9,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english",
+            "mixed"
+          ]
+        },
+        "processing_time_ms": 0.81
+      }
+    },
+    {
+      "case_id": "CASE_F1278DD84F",
+      "evidence_id": "EVID_00008",
+      "file_name": "scam_sms_screenshot.png",
+      "file_hash": "b566c34426563417a8b355e67d17daee57765586450e2c18bb8c160b5b716d7b",
+      "file_size": "7350",
+      "upload_time": "2026-07-24T16:19:58.952Z",
+      "processing_time_ms": 10262.3,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 0.9766,
+          "text": "Messages\neSewa Alert You won Rs 5,00,000 lottery!\nSend Rs 2,000 processing fee to ID98xxxxxxxx\nClaim code: ESW-2026-77413",
+          "lines": [
+            {
+              "text": "Messages",
+              "confidence": 0.9999,
+              "bbox": [
+                [
+                  15.0,
+                  11.0
+                ],
+                [
+                  80.0,
+                  11.0
+                ],
+                [
+                  80.0,
+                  31.0
+                ],
+                [
+                  15.0,
+                  31.0
+                ]
+              ]
+            },
+            {
+              "text": "eSewa Alert You won Rs 5,00,000 lottery!",
+              "confidence": 0.9839,
+              "bbox": [
+                [
+                  18.0,
+                  71.0
+                ],
+                [
+                  268.0,
+                  71.0
+                ],
+                [
+                  268.0,
+                  87.0
+                ],
+                [
+                  18.0,
+                  87.0
+                ]
+              ]
+            },
+            {
+              "text": "Send Rs 2,000 processing fee to ID98xxxxxxxx",
+              "confidence": 0.9621,
+              "bbox": [
+                [
+                  20.0,
+                  115.0
+                ],
+                [
+                  310.0,
+                  115.0
+                ],
+                [
+                  310.0,
+                  132.0
+                ],
+                [
+                  20.0,
+                  132.0
+                ]
+              ]
+            },
+            {
+              "text": "Claim code: ESW-2026-77413",
+              "confidence": 0.9604,
+              "bbox": [
+                [
+                  20.0,
+                  162.0
+                ],
+                [
+                  201.0,
+                  162.0
+                ],
+                [
+                  201.0,
+                  175.0
+                ],
+                [
+                  20.0,
+                  175.0
+                ]
+              ]
+            }
+          ],
+          "bounding_boxes": [
+            [
+              [
+                15.0,
+                11.0
+              ],
+              [
+                80.0,
+                11.0
+              ],
+              [
+                80.0,
+                31.0
+              ],
+              [
+                15.0,
+                31.0
+              ]
+            ],
+            [
+              [
+                18.0,
+                71.0
+              ],
+              [
+                268.0,
+                71.0
+              ],
+              [
+                268.0,
+                87.0
+              ],
+              [
+                18.0,
+                87.0
+              ]
+            ],
+            [
+              [
+                20.0,
+                115.0
+              ],
+              [
+                310.0,
+                115.0
+              ],
+              [
+                310.0,
+                132.0
+              ],
+              [
+                20.0,
+                132.0
+              ]
+            ],
+            [
+              [
+                20.0,
+                162.0
+              ],
+              [
+                201.0,
+                162.0
+              ],
+              [
+                201.0,
+                175.0
+              ],
+              [
+                20.0,
+                175.0
+              ]
+            ]
+          ],
+          "preprocessing_steps": [
+            "convert_rgb",
+            "exif_orientation",
+            "resolution_enhancement",
+            "border_removal+whitespace_trim"
+          ]
+        }
+      ],
+      "raw_text": "Messages\neSewa Alert You won Rs 5,00,000 lottery!\nSend Rs 2,000 processing fee to ID98xxxxxxxx\nClaim code: ESW-2026-77413",
+      "average_confidence": 0.9766,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_F1278DD84F",
+        "evidence_id": "EVID_00008",
+        "raw_text": "Messages\neSewa Alert You won Rs 5,00,000 lottery!\nSend Rs 2,000 processing fee to ID98xxxxxxxx\nClaim code: ESW-2026-77413",
+        "cleaned_text": "Messages eSewa Alert You won Rs 5,00,000 lottery!\nSend Rs 2,000 processing fee to ID98xxxxxxxx\nClaim code: ESW-2026-77413",
+        "language": "english",
+        "line_languages": {
+          "1": "english",
+          "2": "english",
+          "3": "english",
+          "4": "english"
+        },
+        "entities": {
+          "urls": [],
+          "emails": [],
+          "domains": [],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "phones": [],
+          "dates": [],
+          "times": [],
+          "money": [
+            {
+              "value": "Rs 5,00,000",
+              "normalized": "Rs 5,00,000"
+            },
+            {
+              "value": "Rs 2,000",
+              "normalized": "Rs 2,000"
+            }
+          ],
+          "otp": [],
+          "bank_accounts": [],
+          "esewa_ids": [],
+          "khalti_ids": [],
+          "imepay_ids": [],
+          "hashes_sha512": [],
+          "hashes_sha256": [],
+          "hashes_sha1": [],
+          "hashes_md5": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {
+          "lottery": 1,
+          "winner": 1,
+          "wallet": 1
+        },
+        "risk_signals": {
+          "urgency": 0,
+          "financial": 3,
+          "credential": 0,
+          "threat": 0
+        },
+        "statistics": {
+          "characters": 121,
+          "words": 18,
+          "lines": 3,
+          "average_line_length": 39.7,
+          "languages_detected": [
+            "english"
+          ],
+          "entity_count": 2,
+          "cleaning_operations": [
+            "entities_protected(2)",
+            "lines_merged(1)"
+          ],
+          "ocr_corrections": [],
+          "protected_entities": 2
+        },
+        "processing_time_ms": 0.7
+      },
+      "enhancement": {
+        "case_id": "CASE_F1278DD84F",
+        "evidence_id": "EVID_00008",
+        "cleaned_text": "Messages eSewa Alert You won Rs 5,00,000 lottery!\nSend Rs 2,000 processing fee to ID98xxxxxxxx\nClaim code: ESW-2026-77413",
+        "enhanced_text": "Messages eSewa Alert You won Rs 5,00,000 lottery!\nSend Rs 2,000 processing fee to ID98xxxxxxxx\nClaim code: ESW-2026-77413",
+        "ui_text": "",
+        "message_text": "Messages eSewa Alert You won Rs 5,00,000 lottery!\nSend Rs 2,000 processing fee to ID98xxxxxxxx\nClaim code: ESW-2026-77413",
+        "layout": [
+          {
+            "line": 1,
+            "role": "message",
+            "text": "Messages eSewa Alert You won Rs 5,00,000 lottery!"
+          },
+          {
+            "line": 2,
+            "role": "message",
+            "text": "Send Rs 2,000 processing fee to ID98xxxxxxxx"
+          },
+          {
+            "line": 3,
+            "role": "message",
+            "text": "Claim code: ESW-2026-77413"
+          }
+        ],
+        "corrections": [],
+        "correction_statistics": {
+          "total_corrections": 0,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 0,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 3,
+          "lines_high_confidence": 3,
+          "lines_correctable": 0,
+          "document_confidence": 0.9688,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 0.29
+      },
+      "semantic_correction": {
+        "case_id": "CASE_F1278DD84F",
+        "evidence_id": "EVID_00008",
+        "enhanced_text": "Messages eSewa Alert You won Rs 5,00,000 lottery!\nSend Rs 2,000 processing fee to ID98xxxxxxxx\nClaim code: ESW-2026-77413",
+        "semantic_text": "Messages eSewa Alert You won Rs 5,00,000 lottery!\nSend Rs 2,000 processing fee to ID98xxxxxxxx\nClaim code: ESW-2026-77413",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {
+          "money": [
+            {
+              "value": "Rs 5,00,000",
+              "normalized": "Rs 5,00,000"
+            },
+            {
+              "value": "Rs 2,000",
+              "normalized": "Rs 2,000"
+            }
+          ]
+        },
+        "statistics": {
+          "suspicious_tokens": 0,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 2,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english"
+          ]
+        },
+        "processing_time_ms": 0.33
+      }
+    }
+  ]
+}

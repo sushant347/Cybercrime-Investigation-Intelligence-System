@@ -1,0 +1,51 @@
+{
+  "report_type": "entity_statistics",
+  "report_version": 1,
+  "schema_version": "2.0",
+  "case_id": "CASE_F1278DD84F",
+  "generated_at": "2026-07-24T16:20:51.709Z",
+  "report": {
+    "case_id": "CASE_F1278DD84F",
+    "entity_statistics": {
+      "dates": 1,
+      "money": 3,
+      "times": 3
+    },
+    "top_entities": {
+      "dates": [
+        {
+          "value": "2026-01-04",
+          "count": 1
+        }
+      ],
+      "money": [
+        {
+          "value": "rs 2000",
+          "count": 1
+        },
+        {
+          "value": "rs 5,00,000",
+          "count": 1
+        },
+        {
+          "value": "rs 2,000",
+          "count": 1
+        }
+      ],
+      "times": [
+        {
+          "value": "09:12",
+          "count": 1
+        },
+        {
+          "value": "09:14",
+          "count": 1
+        },
+        {
+          "value": "09:15",
+          "count": 1
+        }
+      ]
+    }
+  }
+}

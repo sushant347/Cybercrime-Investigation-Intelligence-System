@@ -90,12 +90,59 @@ Two different places, for two different purposes:
    (`threat_intelligence_system/tests/test_table_6_3_source.py`) uses this to
    prove the *stored* matrix reproduces the *reported* P/R/F1/FNR.
 
+## What "ground truth" means, and the evaluation workflow
+
+**Ground truth** is the *correct answer, decided by a human*, that a metric
+compares the system's output against. Precision, recall, CER, MAE — none of them
+mean anything without it: you can only call the engine "right" if you already
+know what "right" is. Per table:
+
+| Table | Ground truth = the human-decided correct… |
+|---|---|
+| 6.1 OCR | exact text a human reads off each image |
+| 6.2 Entities | true list of phones/URLs/wallets/… visible in the evidence |
+| 6.3 Classification | true phishing/legitimate label of each URL (already labelled, 585k rows) |
+| 6.4 Correlation | pairs of evidence a human judges truly related |
+| 6.5 Timeline | true chronological order + true timestamps of the events |
+
+**Every evaluated table follows the same three steps:**
+
+1. **Predict** — run the live engine on real evidence → OCR text / entities /
+   related-pairs / an ordering.
+2. **Ground truth** — a human writes the correct answer for the *same* evidence
+   (the "gold" file).
+3. **Score** — a metric compares (1) vs (2). Baselines (exact-match,
+   upload-time ordering, spaCy) are scored the same way, so the engine's value is
+   measured *relative* to something simpler — e.g. in the demo below the weighted
+   engine scores F1 = 1.0 within-case while the exact-match baseline scores 0.0.
+
+6.1/6.2/6.4/6.5 are "blocked" only at **step 2** (human labels). Steps 1 and 3 —
+the engine and the metric code — are finished and tested. 6.3 is the one table
+whose ground truth already exists at scale, which is why it has real numbers now.
+
+### Try it now with zero labelling (illustrative demo)
+
+A demo runs out of the box on the **real cases already in storage**:
+
+```bash
+python run_all_evaluations.py          # 6.4 / 6.5 auto-run on the example gold
+```
+
+It uses `samples/ground_truth/correlation_gold_example.json` and
+`timeline_gold_example.json` — real cases (`CASE_2CF24DBA5F`, …) with **plausible,
+clearly-labelled DEMO** relationships (e.g. the three screenshots in one fraud
+case are "related"; cases sharing the same scam amount are "one campaign"). This
+lets you watch the full predict→score pipeline work — **but the numbers are not
+thesis-grade** (a human didn't verify them). For real table values, replace the
+example with genuine gold as described next.
+
 ## Step-by-step: producing the blocked tables (6.1, 6.2, 6.4, 6.5)
 
-These are "blocked" only because they need **human-provided ground truth**. All
-code — loaders, validators, baselines, runners — is finished. You provide the
-labels in the exact JSON shapes below, run one command, and real numbers print.
-Every runner refuses to emit a number from an empty template.
+These need **human-provided ground truth**. All code — loaders, validators,
+baselines, runners — is finished. You provide the labels in the exact JSON
+shapes below, run one command, and real numbers print. Every runner refuses to
+emit a number from an empty template. (The `*_gold_example.json` files above are
+a filled-in reference you can copy from.)
 
 > **Shared prerequisite (6.4, 6.5):** the cases you label must already exist in
 > engine storage — upload evidence and run the analysis first, so

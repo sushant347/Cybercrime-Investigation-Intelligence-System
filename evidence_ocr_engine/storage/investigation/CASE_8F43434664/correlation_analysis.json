@@ -1,0 +1,93 @@
+{
+  "report_type": "correlation_analysis",
+  "report_version": 1,
+  "schema_version": "2.0",
+  "case_id": "CASE_8F43434664",
+  "generated_at": "2026-07-24T16:07:53.045Z",
+  "report": {
+    "case_id": "CASE_8F43434664",
+    "evidence_ids": [
+      "EVID_00004",
+      "EVID_00005",
+      "EVID_00006"
+    ],
+    "pair_count": 3,
+    "related_pair_count": 3,
+    "pairs": [
+      {
+        "evidence_a": "EVID_00004",
+        "evidence_b": "EVID_00005",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00004 (whatsapp_chat_export.txt) and EVID_00005 (low_quality_scan_demo.png) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00004",
+        "evidence_b": "EVID_00006",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00004 (whatsapp_chat_export.txt) and EVID_00006 (romanchat.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00005",
+        "evidence_b": "EVID_00006",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00005 (low_quality_scan_demo.png) and EVID_00006 (romanchat.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      }
+    ],
+    "strength_distribution": {
+      "WEAK": 3
+    },
+    "strongest_pair": "EVID_00004|EVID_00005",
+    "analysis_time_ms": 0.2
+  }
+}
