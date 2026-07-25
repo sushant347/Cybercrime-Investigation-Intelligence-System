@@ -6,13 +6,12 @@ import cytoscape, {
   type Core,
   type EdgeSingular,
   type NodeSingular,
-  type Position,
 } from "cytoscape";
 import fcose from "cytoscape-fcose";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 import { nodeColor } from "@/theme/theme";
-import type { GraphNode, RelationshipGraph } from "@/types";
+import type { RelationshipGraph } from "@/types";
 
 import type { Selection } from "./GraphTab";
 
@@ -22,25 +21,18 @@ import type { Selection } from "./GraphTab";
 cytoscape.use(fcose);
 
 /** Layout modes offered to the investigator. */
-export type LayoutMode = "bipartite" | "force" | "structure" | "circle";
+export type LayoutMode = "structure" | "force" | "circle";
 
 /** Structural roles: everything else is an extracted-entity node. */
 export const STRUCTURAL_TYPES = ["case", "evidence", "timeline_event"];
 
 /**
- * Node sizing model, shared by the cytoscape style function (`sizeFor`
- * below) and the bipartite row-spacing math. Defined once so the two can
- * never drift apart and silently reintroduce overlap - the bug this
- * comment is here to prevent already happened once while building this
- * feature (row height was tuned against the node circle alone and missed
- * that the label sits below it).
+ * Node sizing model. Kept at module scope (rather than inline in the
+ * cytoscape style) so layout code and style code read the same numbers.
  */
 const NODE_BASE_SIZE: Record<string, number> = { case: 46, evidence: 38 };
 const NODE_BASE_SIZE_DEFAULT = 26; // entities
 const NODE_DEGREE_BONUS_MAX = 16; // matches Math.min(16, degree * 1.6)
-const NODE_MAX_DIAMETER =
-  Math.max(...Object.values(NODE_BASE_SIZE), NODE_BASE_SIZE_DEFAULT) +
-  NODE_DEGREE_BONUS_MAX;
 
 /** Cytoscape node size: base-by-role, growing slightly with connectivity
  *  so hub entities read as important, capped so a busy node never dwarfs
@@ -48,70 +40,6 @@ const NODE_MAX_DIAMETER =
 function sizeFor(type: string, degree: number): number {
   const base = NODE_BASE_SIZE[type] ?? NODE_BASE_SIZE_DEFAULT;
   return base + Math.min(NODE_DEGREE_BONUS_MAX, degree * 1.6);
-}
-
-/** Vertical space one row needs so a node's label (rendered below it via
- *  text-valign:bottom / text-margin-y / the label background pill) cannot
- *  reach into the node placed in the next row down. Every term here
- *  mirrors an actual style value in the cytoscape node style below -
- *  see the inline comments there if either ever changes. */
-const LABEL_MARGIN_Y = 6; // "text-margin-y"
-const LABEL_TEXT_HEIGHT = 11 * 1.2; // max font-size (11) * ~1.2 line-height
-const LABEL_PILL_PADDING = 3 * 2; // "text-background-padding": "3px", both edges
-const ROW_SAFETY_BUFFER = 10; // extra breathing room, purely cosmetic
-
-/**
- * Minimum centre-to-centre row spacing with zero overlap, for any node
- * mix this graph can produce: worst case is two max-size nodes stacked,
- * where the upper one's label must still clear the lower one's node.
- */
-const BIPARTITE_ROW_HEIGHT = Math.ceil(
-  NODE_MAX_DIAMETER + // upper node's own radius + lower node's own radius
-    LABEL_MARGIN_Y +
-    LABEL_TEXT_HEIGHT +
-    LABEL_PILL_PADDING +
-    ROW_SAFETY_BUFFER,
-);
-
-/**
- * Deterministic two-column layout: evidence (+case, +timeline events) on
- * the left, every extracted entity on the right, one row each. This is the
- * graph's natural shape - it is fundamentally bipartite (evidence mentions
- * entities) - so laying it out as two columns instead of running physics
- * on it guarantees zero node OR label overlap, and is stable across
- * reloads, which a force simulation can never promise.
- */
-export function bipartiteRowPositions(
-  nodes: GraphNode[],
-): Record<string, Position> {
-  const left = nodes
-    .filter((n) => STRUCTURAL_TYPES.includes(n.node_type))
-    .sort((a, b) => {
-      if (a.node_type !== b.node_type) {
-        // case first, then evidence, then timeline events
-        return STRUCTURAL_TYPES.indexOf(a.node_type) - STRUCTURAL_TYPES.indexOf(b.node_type);
-      }
-      return a.label.localeCompare(b.label);
-    });
-  const right = nodes
-    .filter((n) => !STRUCTURAL_TYPES.includes(n.node_type))
-    .sort((a, b) =>
-      a.node_type === b.node_type
-        ? a.label.localeCompare(b.label)
-        : a.node_type.localeCompare(b.node_type),
-    );
-
-  const topPad = 40;
-  const leftX = 160;
-  const rightX = 560;
-  const positions: Record<string, Position> = {};
-  left.forEach((n, i) => {
-    positions[n.id] = { x: leftX, y: topPad + i * BIPARTITE_ROW_HEIGHT };
-  });
-  right.forEach((n, i) => {
-    positions[n.id] = { x: rightX, y: topPad + i * BIPARTITE_ROW_HEIGHT };
-  });
-  return positions;
 }
 
 /** Visual language for engine edge types (legend is rendered in GraphTab). */
@@ -194,24 +122,9 @@ export function GraphCanvas({
   const cyRef = useRef<Core | null>(null);
   const theme = useTheme();
 
-  const bipartitePositions = useMemo(
-    () => bipartiteRowPositions(graph.nodes),
-    [graph.nodes],
-  );
-
   /** Layout options per mode. */
   const layoutOptions = useCallback(
     (mode: LayoutMode): cytoscape.LayoutOptions => {
-      if (mode === "bipartite") {
-        // Preset (explicit) positions — the only mode with a mathematical
-        // overlap guarantee, since nothing is simulated.
-        return {
-          name: "preset",
-          fit: true,
-          padding: 46,
-          positions: (node: NodeSingular) => bipartitePositions[node.id()],
-        } as unknown as cytoscape.LayoutOptions;
-      }
       if (mode === "structure") {
         // Case at the centre, evidence around it, entities furthest out —
         // mirrors how the investigation is actually structured.
@@ -257,7 +170,7 @@ export function GraphCanvas({
         nodeSeparation: 90,
       } as unknown as cytoscape.LayoutOptions;
     },
-    [bipartitePositions],
+    [],
   );
 
   // Build / rebuild the graph instance when the artifact or theme changes.

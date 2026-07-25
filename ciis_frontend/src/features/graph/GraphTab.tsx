@@ -56,19 +56,14 @@ function ShapeSwatch({ type }: { type: string }) {
 
 const LAYOUT_LABELS: { value: LayoutMode; label: string; hint: string }[] = [
   {
-    value: "bipartite",
-    label: "Shared entities",
-    hint: "Evidence in one column, entities in the other — the default, clearest view. Never overlaps.",
+    value: "structure",
+    label: "Structure",
+    hint: "Case at the centre, evidence around it, entities on the outer ring",
   },
   {
     value: "force",
     label: "Clusters",
     hint: "Force-directed with overlap avoidance (fcose) — related items group together",
-  },
-  {
-    value: "structure",
-    label: "Concentric",
-    hint: "Case at the centre, evidence around it, entities on the outer ring",
   },
   { value: "circle", label: "Circle", hint: "All nodes on one ring — good for spotting hubs" },
 ];
@@ -87,7 +82,7 @@ export function GraphTab({ caseId }: { caseId: string }) {
   const [search, setSearch] = useState("");
   const [hiddenTypes, setHiddenTypes] = useState<Set<string>>(new Set());
   const [selection, setSelection] = useState<Selection>(null);
-  const [layout, setLayout] = useState<LayoutMode>("bipartite");
+  const [layout, setLayout] = useState<LayoutMode>("structure");
 
   const graphQuery = useQuery({
     queryKey: ["artifact", caseId, "graph"],
