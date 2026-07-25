@@ -13,7 +13,9 @@ independently as ``investigation_report.md`` / ``investigation_report.json``.
 
 from __future__ import annotations
 
+import hashlib
 import time
+import uuid
 from typing import Any, Dict, List, Optional, Sequence
 
 from ...evidence.logger import get_logger
@@ -27,6 +29,7 @@ from ..data_access import CaseDataRepository, EvidenceContext
 from ..repository import InvestigationReportRepository
 from ..suspects.models import SuspectAssessment
 from ..timeline.models import TimelineAnalysis
+from . import pdf_renderer
 
 MODULE = "reporting"
 
@@ -68,10 +71,17 @@ class InvestigationReportService:
         items = list(evidence) if evidence is not None \
             else self._data.load_case_evidence(case_id)
 
+        generated_at = utc_now_iso()
+        report_id = (
+            f"RPT-{case_id.replace('CASE_', '')}-"
+            f"{uuid.uuid4().hex[:8].upper()}"
+        )
+
         sections: Dict[str, Any] = {
             "executive_summary": self._executive_summary(
                 case_id, items, correlation, campaigns, suspects, timeline,
                 cross_case),
+            "scope_and_methodology": self._scope_section(items),
             "case_overview": self._case_overview(case_id, items),
             "evidence_summary": self._evidence_summary(items),
             "correlation_analysis": self._correlation_section(correlation),
@@ -80,6 +90,7 @@ class InvestigationReportService:
             "timeline_analysis": self._timeline_section(timeline),
             "suspect_assessment": self._suspect_section(suspects),
             "threat_intelligence_summary": self._threat_section(analytics),
+            "model_predictions": self._model_predictions(items),
             "evidence_quality_summary": self._quality_section(analytics, items),
             "metadata_summary": self._metadata_section(items),
             "investigation_statistics": self._statistics_section(analytics),
@@ -88,29 +99,57 @@ class InvestigationReportService:
                 items, correlation, campaigns, suspects, timeline),
             "recommendations": self._recommendations(
                 campaigns, suspects, timeline, priority),
+            "report_provenance": self._provenance(
+                case_id, items, report_id, generated_at),
             "appendix": self._appendix(items),
         }
         markdown = self._render_markdown(case_id, sections)
         duration = round((time.perf_counter() - started) * 1000.0, 1)
 
         if persist:
-            self._repo.save(case_id, self._cfg.investigation_report_name, {
-                "sections": sections,
-                "generated_from": {
-                    "correlation": correlation is not None,
-                    "cross_case": cross_case is not None,
-                    "campaigns": campaigns is not None,
-                    "suspects": suspects is not None,
-                    "timeline": timeline is not None,
-                    "analytics": analytics is not None,
-                    "priority": priority is not None,
-                },
-            })
+            saved = self._repo.save(
+                case_id, self._cfg.investigation_report_name, {
+                    "report_id": report_id,
+                    "sections": sections,
+                    "generated_from": {
+                        "correlation": correlation is not None,
+                        "cross_case": cross_case is not None,
+                        "campaigns": campaigns is not None,
+                        "suspects": suspects is not None,
+                        "timeline": timeline is not None,
+                        "analytics": analytics is not None,
+                        "priority": priority is not None,
+                    },
+                })
             self._repo.save_text(case_id, self._cfg.investigation_report_name,
                                  markdown, ".md")
+            self._persist_pdf(case_id, sections, report_id, generated_at, saved)
             self._audit.record(case_id, MODULE, "generated",
                                f"{len(sections)} sections", duration_ms=duration)
-        return {"markdown": markdown, "sections": sections}
+        return {"markdown": markdown, "sections": sections,
+                "report_id": report_id}
+
+    def _persist_pdf(self, case_id, sections, report_id, generated_at,
+                     saved_json_path) -> None:
+        """Render + store the native PDF twin; never aborts the pipeline."""
+        try:
+            version = 1
+            try:  # derive version from the just-saved JSON name (…_vN.json)
+                stem = saved_json_path.stem
+                if "_v" in stem:
+                    version = int(stem.rsplit("_v", 1)[1])
+            except (ValueError, AttributeError, IndexError):
+                pass
+            payload = pdf_renderer.render_pdf(
+                case_id, sections, report_id=report_id,
+                generated_at=generated_at, report_version=version)
+            if payload is None:
+                self._log.info("reportlab not installed; PDF twin skipped")
+                return
+            self._repo.save_binary(
+                case_id, self._cfg.investigation_report_name, payload, ".pdf")
+        except Exception as exc:  # noqa: BLE001 - PDF must never kill analysis
+            self._log.warning("PDF rendering failed for %s: %s", case_id, exc)
 
     def regenerate_with_cross_case(
         self, case_id: str, cross_case: CrossCaseCorrelation
@@ -348,6 +387,154 @@ class InvestigationReportService:
         return stats
 
     @staticmethod
+    def _scope_section(items) -> Dict[str, Any]:
+        """SWGDE-style scope & methodology statement (tools + reproducibility).
+
+        Report-writing best practice requires the methodology to be recorded
+        in enough detail that the process is reproducible; this section names
+        every module that contributed findings and the storage layout needed
+        to re-derive them.
+        """
+        return {
+            "objective": (
+                "Acquire, verify, correlate and reconstruct the digital "
+                "evidence for this case, and derive investigative leads "
+                "(suspect anchors, campaigns, cross-case links) strictly "
+                "from stored, hash-verified artifacts."),
+            "evidence_scope": (
+                f"{len(items)} evidence item(s) acquired through the CIIS "
+                "intake pipeline under SHA-256 chain-of-custody control."),
+            "methodology": [
+                "Phase 1 - Acquisition & OCR: PaddleOCR PP-OCRv5 text "
+                "extraction with per-item confidence scoring; SHA-256 "
+                "fingerprint recorded at intake and re-verified at read.",
+                "Phase 1 - Forensics: metadata/EXIF consistency, forgery "
+                "signals, logo detection and evidence-confidence scoring "
+                "stored per item under storage/forensics/.",
+                "Phase 2 - Correlation: weighted entity-overlap engine "
+                "scoring every evidence pair; results in "
+                "correlation_analysis.json.",
+                "Phase 2 - Cross-case: shared-entity matching against every "
+                "other analysed case (cross_case_correlation.json).",
+                "Phase 2 - Campaigns / Suspects / Timeline: clustering, "
+                "anchor derivation and event reconstruction over the "
+                "correlated evidence set.",
+                "Threat intelligence: URL/domain indicators scored by the "
+                "configured provider (static indicator file, or the trained "
+                "phishing classifier when CIIS_ML_THREAT_INTEL=1); "
+                "per-indicator results in 'Model Prediction Results'.",
+                "Reporting: this document is assembled exclusively from the "
+                "stored outputs above; it contains no free-text generation.",
+            ],
+            "reproducibility": (
+                "Re-running the analysis against the same stored evidence "
+                "reproduces every figure herein; artifacts are versioned "
+                "and never overwritten."),
+        }
+
+    def _model_predictions(self, items) -> Any:
+        """Per-indicator threat-model predictions (URL/domain classifier).
+
+        Surfaces the *individual* verdicts behind the aggregate threat
+        statistics: indicator, verdict, risk score, model confidence and the
+        model that produced it. With the ML provider enabled these are live
+        XGBoost classifications; with the static provider they are feed
+        lookups; with neither, an explicit unavailability statement.
+        """
+        intel = getattr(self._data, "threat_intel", None)
+        if intel is None or not getattr(intel, "available", False):
+            return ("No threat-intelligence provider was active during this "
+                    "analysis; indicator-level model predictions were not "
+                    "produced (this is a coverage gap, not an absence of "
+                    "threat).")
+        predictions: List[Dict[str, Any]] = []
+        seen: set = set()
+        for context in items:
+            values = []
+            try:
+                values = (context.entity_values("urls")
+                          + context.entity_values("domains"))
+            except Exception:  # noqa: BLE001 - malformed entity lists
+                pass
+            for value in values:
+                key = value.strip().lower()
+                if not key or key in seen:
+                    continue
+                seen.add(key)
+                try:
+                    hit = intel.lookup(value)
+                except Exception:  # noqa: BLE001 - one bad value can't abort
+                    hit = None
+                if hit is None:
+                    continue
+                predictions.append({
+                    "indicator": value,
+                    "evidence_id": context.evidence_id,
+                    "verdict": hit.get("verdict", "unknown"),
+                    "risk_score": hit.get("risk_score"),
+                    "confidence": hit.get("confidence"),
+                    "risk_level": hit.get("risk_level", ""),
+                    "source": hit.get("source", "indicator-file"),
+                    "model_version": hit.get("model_version", ""),
+                })
+        if not predictions:
+            return ("The active threat-intelligence provider returned no "
+                    "classification for any URL/domain indicator in this "
+                    "case's evidence.")
+        malicious = sum(1 for p in predictions
+                        if p["verdict"] in ("malicious", "phishing"))
+        predictions.sort(
+            key=lambda p: (p.get("risk_score") or 0), reverse=True)
+        return {
+            "indicators_classified": len(predictions),
+            "flagged_malicious": malicious,
+            "predictions": predictions,
+        }
+
+    def _provenance(self, case_id, items, report_id, generated_at) -> Dict[str, Any]:
+        """SHA-256 digests tying this report to its exact source artifacts.
+
+        Ported from the retired Module-6 prototype, which hashed its source
+        timeline.json; here every contributing stored artifact is hashed so
+        the report can always be re-tied to the precise inputs it was built
+        from (evidentiary traceability).
+        """
+        hashes: Dict[str, str] = {}
+        artifact_names = (
+            self._cfg.correlation_report_name,
+            self._cfg.cross_case_report_name,
+            self._cfg.campaign_report_name,
+            self._cfg.suspect_report_name,
+            self._cfg.timeline_report_name,
+            self._cfg.analytics_report_name,
+            self._cfg.priority_report_name,
+            self._cfg.graph_report_name,
+        )
+        for name in artifact_names:
+            try:
+                versions = self._repo.list_versions(case_id, name, ".json")
+                if versions:
+                    digest = hashlib.sha256(
+                        versions[-1].read_bytes()).hexdigest()
+                    hashes[versions[-1].name] = digest
+            except OSError:
+                continue
+        evidence_digest = hashlib.sha256(
+            "".join(sorted(c.sha256 or "" for c in items)).encode("utf-8")
+        ).hexdigest()
+        return {
+            "report_id": report_id,
+            "generated_at": generated_at,
+            "generator": ("CIIS Phase-2 reporting module "
+                          "(template-over-data; no free-text generation)"),
+            "evidence_set_digest": evidence_digest,
+            "evidence_set_digest_note": (
+                "SHA-256 over the sorted SHA-256 digests of every evidence "
+                "item; any change to the evidence set changes this value."),
+            "source_artifact_hashes": hashes,
+        }
+
+    @staticmethod
     def _quality_section(analytics, items) -> Any:
         if analytics is not None and analytics.evidence_quality_statistics:
             return analytics.evidence_quality_statistics
@@ -482,6 +669,7 @@ class InvestigationReportService:
     def _render_markdown(case_id: str, sections: Dict[str, Any]) -> str:
         titles = {
             "executive_summary": "Executive Summary",
+            "scope_and_methodology": "Scope & Methodology",
             "case_overview": "Case Overview",
             "evidence_summary": "Evidence Summary",
             "correlation_analysis": "Correlation Analysis",
@@ -490,12 +678,14 @@ class InvestigationReportService:
             "timeline_analysis": "Timeline Analysis",
             "suspect_assessment": "Suspect Assessment",
             "threat_intelligence_summary": "Threat Intelligence Summary",
+            "model_predictions": "Model Prediction Results",
             "evidence_quality_summary": "Evidence Quality Summary",
             "metadata_summary": "Metadata Summary",
             "investigation_statistics": "Investigation Statistics",
             "confidence_analysis": "Confidence Analysis",
             "investigation_conclusion": "Investigation Conclusion",
             "recommendations": "Recommendations",
+            "report_provenance": "Report Provenance & Integrity",
             "appendix": "Appendix",
         }
         out: List[str] = [

@@ -64,6 +64,25 @@ class InvestigationReportRepository:
             raise StorageError(f"Cannot write report '{path}': {exc}") from exc
         return path
 
+    def save_binary(self, case_id: str, report_name: str, payload: bytes,
+                    suffix: str = ".pdf") -> Path:
+        """Persist a binary artefact (e.g. the PDF report twin) with the
+        same never-overwrite versioning and atomic-write semantics."""
+        directory = self._cfg.case_dir(case_id)
+        directory.mkdir(parents=True, exist_ok=True)
+        version = self._next_version(case_id, report_name, suffix)
+        name = report_name if version == 1 else f"{report_name}_v{version}"
+        path = directory / f"{name}{suffix}"
+        tmp = path.with_suffix(suffix + ".tmp")
+        try:
+            tmp.write_bytes(payload)
+            tmp.replace(path)
+        except OSError as exc:
+            raise StorageError(f"Cannot write report '{path}': {exc}") from exc
+        self._log.info("saved %s v%d (%s) for %s",
+                       report_name, version, suffix, case_id)
+        return path
+
     # ------------------------------------------------------------------- read
 
     def load_latest(self, case_id: str, report_name: str) -> Optional[Dict[str, Any]]:

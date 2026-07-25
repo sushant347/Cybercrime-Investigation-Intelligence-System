@@ -18,7 +18,8 @@ class ReportListView(APIView):
 
     def get(self, request, case_id: str):
         items = []
-        for suffix, fmt in ((".json", "json"), (".md", "markdown")):
+        for suffix, fmt in ((".json", "json"), (".md", "markdown"),
+                            (".pdf", "pdf")):
             for path in engine.report_versions(case_id, suffix):
                 stat = path.stat()
                 generated_at = None
