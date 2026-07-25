@@ -171,7 +171,14 @@ export const investigationApi = {
 
 // ------------------------------------------------------------- maintenance
 export const maintenanceApi = {
-  /** Testing aid: clear every case and entity from the engine. */
+  /**
+   * Testing aid: clear every case and entity from the engine.
+   *
+   * Deliberately not reachable from the UI. It used to sit on the start
+   * screen next to "Open a case", one click away from destroying every case in
+   * the system — not something to put in front of an investigator. The
+   * endpoint remains for test setup and command-line use.
+   */
   reset: () =>
     apiClient.post<{ status: string }>("/maintenance/reset/").then((r) => r.data),
 };

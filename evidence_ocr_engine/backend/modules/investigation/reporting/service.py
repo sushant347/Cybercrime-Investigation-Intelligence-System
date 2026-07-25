@@ -654,14 +654,22 @@ class InvestigationReportService:
 
     #: Where each payment rail's records actually live - so a recommendation
     #: names the institution to serve, not just "the provider".
+    #: Written for a reader who is not a forensic specialist: the person who
+    #: holds the records, and what to ask them for, in ordinary words. Terms an
+    #: investigator will meet on the official request form ("KYC") are kept in
+    #: brackets after the plain wording rather than used on their own.
     _RAIL_AUTHORITIES = {
-        "esewa_ids": ("eSewa", "wallet KYC + transactions"),
-        "khalti_ids": ("Khalti", "wallet KYC + transactions"),
-        "imepay_ids": ("IME Pay", "wallet KYC + transactions"),
-        "bank_accounts": ("the bank", "account KYC + statements"),
-        "card_numbers": ("the card issuer", "cardholder KYC"),
-        "eth_wallets": ("a blockchain analyst", "on-chain tracing"),
-        "btc_wallets": ("a blockchain analyst", "on-chain tracing"),
+        "esewa_ids": ("eSewa", "who owns these wallets (KYC) and their payment "
+                               "history"),
+        "khalti_ids": ("Khalti", "who owns these wallets (KYC) and their "
+                                 "payment history"),
+        "imepay_ids": ("IME Pay", "who owns these wallets (KYC) and their "
+                                  "payment history"),
+        "bank_accounts": ("the bank", "who owns these accounts and their "
+                                      "statements"),
+        "card_numbers": ("the card issuer", "who owns these cards"),
+        "eth_wallets": ("a crypto-tracing specialist", "where the coins went"),
+        "btc_wallets": ("a crypto-tracing specialist", "where the coins went"),
     }
 
     #: How a brand name is written in a report ("esewa" is a matcher key).
@@ -684,12 +692,19 @@ class InvestigationReportService:
     @classmethod
     def _recommendations(cls, campaigns, suspects, timeline, priority,
                          analytics=None) -> List[str]:
-        """One short, concrete action per line - nothing else.
+        """One short, plain-English action per line - nothing else.
 
-        Contract: each line is a single imperative sentence naming what to do
-        and to which identifier, capped at ~150 characters. No rationale, no
-        methodology, no repetition of the same instruction across lines: the
-        evidence for each action is in the report sections above it.
+        Written for the person handling the complaint, who is not a forensic
+        specialist: ordinary words ("get the fake website shut down", "ask the
+        bank who owns this account"), never the engine's vocabulary
+        ("registrar", "indicator", "anchor", "subscriber records"). Where a
+        term will appear on the official request form - KYC, OTP - it is given
+        once in brackets after the plain wording, so the reader can match it up
+        without having to know it first.
+
+        Each line is a single sentence naming what to do and to which
+        identifier, capped at ~150 characters. No rationale and no repetition:
+        the evidence behind each action is in the report sections above it.
         """
         actions: List[str] = []
 
@@ -701,17 +716,21 @@ class InvestigationReportService:
             if host and host not in hosts:
                 hosts.append(host)
         if hosts:
-            shown = ", ".join(hosts[:3])
-            more = f" (+{len(hosts) - 3} more)" if len(hosts) > 3 else ""
+            shown = ", ".join(hosts[:2])
+            more = f" (+{len(hosts) - 2} more)" if len(hosts) > 2 else ""
             actions.append(
-                f"Request registrar/host logs, then take down: {shown}{more}."
+                f"Get the fake website(s) shut down: {shown}{more}. Ask the "
+                "hosting company to save its records first."
             )
         brands = sorted({i.brand_impersonated for i in flagged
                          if i.brand_impersonated})
         if brands:
             named = ", ".join(cls._BRAND_NAMES.get(b, b.title())
                               for b in brands[:3])
-            actions.append(f"Report the impersonation to {named}.")
+            actions.append(
+                f"Tell {named} their name is being used in this scam, so they "
+                "can warn other customers."
+            )
 
         # -- 2. Follow the money -------------------------------------------
         by_rail = dict(getattr(analytics, "wallet_statistics_by_rail", None) or {})
@@ -722,46 +741,60 @@ class InvestigationReportService:
                 rail, ("the operating institution", "account records"))
             ids = ", ".join(v.value for v in values[:2])
             extra = f" (+{len(values) - 2} more)" if len(values) > 2 else ""
-            actions.append(
-                f"Ask {authority} for {records}: {ids}{extra}."
-            )
+            actions.append(f"Ask {authority} {records}: {ids}{extra}.")
         transaction_ids = (getattr(analytics, "top_entities", None) or {}
                            ).get("transaction_ids") or []
         if transaction_ids:
             codes = ", ".join(v.value.upper() for v in transaction_ids[:3])
-            actions.append(f"Quote transaction codes {codes} in those requests.")
+            actions.append(
+                f"Include these payment reference numbers in those requests so "
+                f"the transfers are easy to find: {codes}."
+            )
 
         # -- 3. Identify the actor -------------------------------------------
         anchors = [s for s in (getattr(suspects, "suspects", None) or [])[:2]
                    if s.threat_flagged or s.confidence_score >= 60]
         if anchors:
             named = ", ".join(s.identity_value for s in anchors)
-            actions.append(f"Request subscriber/KYC records for {named}.")
+            actions.append(
+                f"Ask the phone/wallet company who is registered to {named} - "
+                "it appears again and again across this evidence."
+            )
         clustered = [c for c in (getattr(campaigns, "campaigns", None) or [])
                      if c.shared_domains]
         if clustered:
             total = sum(len(c.members) for c in clustered)
             actions.append(
-                f"Charge the {total} clustered items as one campaign, not "
-                f"{total} separate incidents."
+                f"Treat {total} of the items as one scam operation rather than "
+                f"{total} separate incidents - they share the same website."
             )
 
         # -- 4. Victim care & handling ----------------------------------------
         if (getattr(analytics, "entity_statistics", None) or {}).get("otp"):
             actions.append(
-                "An OTP was disclosed: have the victim reset credentials and "
-                "flag the account for takeover monitoring."
+                "A one-time password (OTP) was given to the scammer. Tell the "
+                "victim to change their passwords now and ask their bank or "
+                "wallet to watch the account."
             )
         critical = len(getattr(timeline, "critical_events", None) or [])
         if critical:
             actions.append(
-                f"Confirm the {critical} critical timeline moment(s) with the "
-                "complainant for the impact statement."
+                f"Go through the {critical} key moment(s) - when money moved "
+                "and codes were shared - with the victim, and record what they "
+                "lost."
             )
         if priority is not None:
-            level = priority.get("priority_level", "N/A")
-            score = priority.get("priority_score", "N/A")
-            actions.append(f"Handle at {level} priority ({score}/100).")
+            level = str(priority.get("priority_level", "")).lower()
+            score = priority.get("priority_score")
+            urgency = {
+                "critical": "Act on this case first",
+                "high": "Give this case early attention",
+                "medium": "Handle this case in the normal queue",
+                "low": "Low urgency - handle after the others",
+            }.get(level, "Handle this case in the normal queue")
+            scored = f" (rated {float(score):.0f} out of 100)" \
+                if isinstance(score, (int, float)) else ""
+            actions.append(f"{urgency}{scored}.")
 
         # Presentation (numbering, bullets) belongs to the renderers - the
         # markdown writer prefixes "- " and the report view prefixes "N." so
