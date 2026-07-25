@@ -474,6 +474,7 @@ def _threat_intel_provider():
     provider = MLThreatIntelProvider(
         settings.ML_THREAT_INTEL_ROOT,
         model_type=getattr(settings, "ML_THREAT_INTEL_MODEL", "xgboost"),
+        use_intelligence=getattr(settings, "ML_THREAT_INTEL_LIVE", False),
     )
     if not provider.available:
         log.warning("ML threat-intel enabled but classifier unavailable; using static intel")

@@ -9,7 +9,12 @@
  * The on-screen report and the downloadable file are both rendered from this
  * one model so they can never drift apart.
  */
-import type { ArtifactDocument, CasePriority, InvestigationReport } from "@/types";
+import type {
+  ArtifactDocument,
+  CasePriority,
+  InvestigationReport,
+  ReportModelPrediction,
+} from "@/types";
 
 export interface SummaryRow {
   label: string;
@@ -53,6 +58,23 @@ export interface ModelPredictionRow {
   riskValue: number | null;
   confidence: string;
   model: string;
+  /**
+   * Domain facts behind the verdict (domain, age, registrar, SPF/DMARC, …),
+   * already formatted for display. Empty when the active provider supplied
+   * none — the static indicator file supplies none of it.
+   */
+  facts: PredictionFact[];
+  /** Plain-language reasons the model gave, verbatim. */
+  reasons: string[];
+  /** Negative security indicators, verbatim. */
+  threatSignals: string[];
+}
+
+export interface PredictionFact {
+  label: string;
+  value: string;
+  /** True when this fact is itself a warning sign (missing SPF, young domain). */
+  bad?: boolean;
 }
 
 export interface ProvenanceInfo {
@@ -178,15 +200,7 @@ export function buildSimpleReport(
   const predictions = structured<{
     indicators_classified: number;
     flagged_malicious: number;
-    predictions: {
-      indicator: string;
-      evidence_id: string;
-      verdict: string;
-      risk_score: number | null;
-      confidence: number | null;
-      source: string;
-      model_version: string;
-    }[];
+    predictions: ReportModelPrediction[];
   }>(sections.model_predictions);
   const provenanceSection = structured<{
     report_id: string;
@@ -345,6 +359,56 @@ export function buildSimpleReport(
         typeof p.risk_score === "number" ? p.risk_score : null,
       confidence: percent(p.confidence),
       model: p.model_version ? `${p.source} (${p.model_version})` : p.source,
+      // "Only the necessary info": the facts an investigator would cite,
+      // as label/value pairs. Anything the provider did not supply is
+      // simply absent rather than rendered as an empty or zero field.
+      facts: [
+        p.domain ? { label: "Domain", value: p.domain } : null,
+        p.ip_address ? { label: "Resolves to", value: p.ip_address } : null,
+        typeof p.domain_age_days === "number"
+          ? {
+              label: "Domain age",
+              value: `${p.domain_age_days} day${p.domain_age_days === 1 ? "" : "s"}`,
+              bad: p.domain_age_days < 180,
+            }
+          : null,
+        p.registrar ? { label: "Registrar", value: p.registrar } : null,
+        p.hosting ? { label: "Hosted by", value: p.hosting } : null,
+        p.ssl_status
+          ? {
+              label: "SSL",
+              value:
+                typeof p.ssl_days_left === "number"
+                  ? `${p.ssl_status} (${p.ssl_days_left} days left)`
+                  : p.ssl_status,
+              bad: p.ssl_status.toUpperCase() !== "VALID",
+            }
+          : null,
+        typeof p.spf_present === "boolean"
+          ? { label: "SPF", value: p.spf_present ? "present" : "missing", bad: !p.spf_present }
+          : null,
+        typeof p.dmarc_present === "boolean"
+          ? {
+              label: "DMARC",
+              value: p.dmarc_present ? "present" : "missing",
+              bad: !p.dmarc_present,
+            }
+          : null,
+        p.brand_impersonated
+          ? {
+              label: "Brand",
+              value: p.official_domain
+                ? `${p.brand_impersonated} (official domain)`
+                : `impersonates ${p.brand_impersonated}`,
+              bad: !p.official_domain,
+            }
+          : null,
+        typeof p.trust_score === "number"
+          ? { label: "Trust", value: `${p.trust_score}/100`, bad: p.trust_score < 50 }
+          : null,
+      ].filter((f): f is PredictionFact => f !== null),
+      reasons: p.reasons ?? [],
+      threatSignals: p.threat_signals ?? [],
     })),
     modelPredictionsNote:
       typeof sections.model_predictions === "string"

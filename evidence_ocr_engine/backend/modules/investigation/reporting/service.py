@@ -34,6 +34,21 @@ from . import pdf_renderer
 MODULE = "reporting"
 
 
+def _url_host(value: str) -> str:
+    """Bare host of a URL or domain, for de-duplicating indicators.
+
+    ``https://www.x.top/login`` and ``www.x.top`` are the same site and must
+    not be reported as two separate findings.
+    """
+    text = (value or "").strip().lower()
+    if "://" in text:
+        text = text.split("://", 1)[1]
+    host = text.split("/", 1)[0].split("?", 1)[0]
+    if "@" in host:
+        host = host.rsplit("@", 1)[1]
+    return host.split(":", 1)[0]
+
+
 class InvestigationReportService:
     """Finding-referenced professional investigation report."""
 
@@ -449,25 +464,35 @@ class InvestigationReportService:
                     "threat).")
         predictions: List[Dict[str, Any]] = []
         seen: set = set()
+        # Entity extraction emits both the full URL and its bare host, so the
+        # same site would otherwise be classified twice - and the schemeless
+        # host scores worse ("does not use HTTPS") purely because it has no
+        # scheme. Classify the full URL and skip a domain already covered by
+        # one; URLs are listed first so the host is always seen after it.
+        hosts_covered: set = set()
         for context in items:
-            values = []
+            urls, domains = [], []
             try:
-                values = (context.entity_values("urls")
-                          + context.entity_values("domains"))
+                urls = list(context.entity_values("urls"))
+                domains = list(context.entity_values("domains"))
             except Exception:  # noqa: BLE001 - malformed entity lists
                 pass
-            for value in values:
+            for value in urls + domains:
                 key = value.strip().lower()
                 if not key or key in seen:
                     continue
                 seen.add(key)
+                host = _url_host(key)
+                if host in hosts_covered:
+                    continue
+                hosts_covered.add(host)
                 try:
                     hit = intel.lookup(value)
                 except Exception:  # noqa: BLE001 - one bad value can't abort
                     hit = None
                 if hit is None:
                     continue
-                predictions.append({
+                row = {
                     "indicator": value,
                     "evidence_id": context.evidence_id,
                     "verdict": hit.get("verdict", "unknown"),
@@ -476,7 +501,19 @@ class InvestigationReportService:
                     "risk_level": hit.get("risk_level", ""),
                     "source": hit.get("source", "indicator-file"),
                     "model_version": hit.get("model_version", ""),
-                })
+                }
+                # Carry through the investigator-facing detail when the
+                # provider supplies it (the ML adapter does; the static
+                # indicator file does not). Empty values are dropped so the
+                # report never shows a blank "Registrar:" line.
+                for key in ("domain", "trust_score", "brand_impersonated",
+                            "official_domain", "ssl_status", "domain_age_days",
+                            "registrar", "spf_present", "dmarc_present",
+                            "ssl_days_left", "hosting", "ip_address",
+                            "reasons", "threat_signals", "trust_signals"):
+                    if key in hit and hit[key] not in ("", None, []):
+                        row[key] = hit[key]
+                predictions.append(row)
         if not predictions:
             return ("The active threat-intelligence provider returned no "
                     "classification for any URL/domain indicator in this "

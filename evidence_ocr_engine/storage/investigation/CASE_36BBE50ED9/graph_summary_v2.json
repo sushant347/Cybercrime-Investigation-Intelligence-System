@@ -1,0 +1,21 @@
+{
+  "report_type": "graph_summary",
+  "report_version": 2,
+  "schema_version": "2.0",
+  "case_id": "CASE_36BBE50ED9",
+  "generated_at": "2026-07-25T13:49:40.350Z",
+  "report": {
+    "case_id": "CASE_36BBE50ED9",
+    "headline": "8 nodes and 7 edges across 1 component(s)",
+    "key_connectors": [
+      "money:npr 250000",
+      "date:2026-01-03",
+      "date:2026-01-04",
+      "timeline_event:CASE_36BBE50ED9:EVID_00010",
+      "timeline_event:CASE_36BBE50ED9:EVID_00009"
+    ],
+    "observations": [
+      "All entities and evidence form a single connected component - consistent with one coordinated activity."
+    ]
+  }
+}

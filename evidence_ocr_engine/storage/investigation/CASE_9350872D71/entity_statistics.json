@@ -1,0 +1,21 @@
+{
+  "report_type": "entity_statistics",
+  "report_version": 1,
+  "schema_version": "2.0",
+  "case_id": "CASE_9350872D71",
+  "generated_at": "2026-07-25T13:52:24.238Z",
+  "report": {
+    "case_id": "CASE_9350872D71",
+    "entity_statistics": {
+      "money": 1
+    },
+    "top_entities": {
+      "money": [
+        {
+          "value": "npr 250000",
+          "count": 1
+        }
+      ]
+    }
+  }
+}

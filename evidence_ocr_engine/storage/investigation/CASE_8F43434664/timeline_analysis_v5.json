@@ -1,0 +1,239 @@
+{
+  "report_type": "timeline_analysis",
+  "report_version": 5,
+  "schema_version": "2.0",
+  "case_id": "CASE_8F43434664",
+  "generated_at": "2026-07-25T13:53:49.293Z",
+  "report": {
+    "case_id": "CASE_8F43434664",
+    "events": [
+      {
+        "timestamp": "2026-07-25T12:55:29.488000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00005",
+        "case_id": "CASE_8F43434664",
+        "file_name": "romanchat.jpg",
+        "description": "Evidence EVID_00005 (romanchat.jpg)",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00006",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          },
+          {
+            "linked_to": "EVID_00007",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          },
+          {
+            "linked_to": "EVID_00008",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          }
+        ],
+        "text_preview": "०o|०००००cl०६०००००००|००००|००००००००००००००|०००००००५\n६o६००६००००|१००००od०|१०००o००६०\nnHoddns pauo pepuedsns ueeqseu junge Jno\n",
+        "risk_signals": {},
+        "stages": [],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-07-25T12:55:59.642000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00006",
+        "case_id": "CASE_8F43434664",
+        "file_name": "phishing_email_screenshot.png",
+        "description": "Evidence EVID_00006 (phishing_email_screenshot.png)",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00006"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00005",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          },
+          {
+            "linked_to": "EVID_00007",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          },
+          {
+            "linked_to": "EVID_00008",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          }
+        ],
+        "text_preview": "Soltine...\nK gardai xau timi.\nTimi\nre\nkaslai timi vanya oee...\nTimi lai timi vanako...\nKan sundaina k ho Vai..e\nBoyfrien",
+        "risk_signals": {},
+        "stages": [],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-07-25T12:56:12.284000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00007",
+        "case_id": "CASE_8F43434664",
+        "file_name": "bank_transactions.csv",
+        "description": "Evidence EVID_00007 (bank_transactions.csv)",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00007"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00005",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          },
+          {
+            "linked_to": "EVID_00006",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          },
+          {
+            "linked_to": "EVID_00008",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          }
+        ],
+        "text_preview": "",
+        "risk_signals": {},
+        "stages": [],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-07-25T12:56:24.334000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00008",
+        "case_id": "CASE_8F43434664",
+        "file_name": "police_scan_report.pdf",
+        "description": "Evidence EVID_00008 (police_scan_report.pdf)",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00008"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00005",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          },
+          {
+            "linked_to": "EVID_00006",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          },
+          {
+            "linked_to": "EVID_00007",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          }
+        ],
+        "text_preview": "",
+        "risk_signals": {},
+        "stages": [],
+        "critical": false,
+        "critical_reasons": []
+      }
+    ],
+    "attack_stages": [],
+    "stage_progression": [],
+    "progression_consistent": true,
+    "milestones": [
+      {
+        "timestamp": "2026-07-25T12:55:29.488000+00:00",
+        "event_type": "milestone",
+        "evidence_id": "EVID_00005",
+        "case_id": "CASE_8F43434664",
+        "file_name": "romanchat.jpg",
+        "description": "Investigation start - first reconstructed evidence event",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00006",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          },
+          {
+            "linked_to": "EVID_00007",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          },
+          {
+            "linked_to": "EVID_00008",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          }
+        ],
+        "text_preview": "०o|०००००cl०६०००००००|००००|००००००००००००००|०००००००५\n६o६००६००००|१००००od०|१०००o००६०\nnHoddns pauo pepuedsns ueeqseu junge Jno\n",
+        "risk_signals": {},
+        "stages": [],
+        "critical": false,
+        "critical_reasons": []
+      }
+    ],
+    "critical_events": [],
+    "summary": "4 event(s) spanning 0.0 hour(s); 0 timestamp(s) unresolved.",
+    "statistics": {
+      "event_count": 4.0,
+      "resolved_event_count": 4.0,
+      "unresolved_event_count": 0.0,
+      "inferred_event_count": 4.0,
+      "stage_count": 0.0,
+      "critical_event_count": 0.0,
+      "timeline_span_hours": 0.02
+    },
+    "analysis_time_ms": 2.2
+  }
+}

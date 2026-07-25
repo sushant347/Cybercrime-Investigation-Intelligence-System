@@ -1,0 +1,188 @@
+{
+  "case_id": "CASE_4106C94201",
+  "created_at": "2026-07-25T14:11:41.917Z",
+  "updated_at": "2026-07-25T14:11:41.979Z",
+  "evidence_count": 1,
+  "evidence": [
+    {
+      "case_id": "CASE_4106C94201",
+      "evidence_id": "EVID_00014",
+      "file_name": "https_www.telegrammessage.com_.url",
+      "file_hash": "14625a373e9fcbc09d3047faae956eb1d23d38ed22deb9f816daff0136353200",
+      "file_size": "33",
+      "upload_time": "2026-07-25T14:11:41.914Z",
+      "processing_time_ms": 3.9,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 1.0,
+          "text": "https://www.telegrammessage.com/",
+          "lines": [
+            {
+              "text": "https://www.telegrammessage.com/",
+              "confidence": 1.0,
+              "bbox": []
+            }
+          ],
+          "bounding_boxes": [
+            []
+          ],
+          "preprocessing_steps": [
+            "none(url)"
+          ]
+        }
+      ],
+      "raw_text": "https://www.telegrammessage.com/",
+      "average_confidence": 1.0,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_4106C94201",
+        "evidence_id": "EVID_00014",
+        "raw_text": "https://www.telegrammessage.com/",
+        "cleaned_text": "https://www.telegrammessage.com/",
+        "language": "english",
+        "line_languages": {
+          "1": "english"
+        },
+        "entities": {
+          "urls": [
+            {
+              "value": "https://www.telegrammessage.com/",
+              "normalized": "https://www.telegrammessage.com/"
+            }
+          ],
+          "emails": [],
+          "domains": [
+            {
+              "value": "www.telegrammessage.com",
+              "normalized": "www.telegrammessage.com"
+            }
+          ],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "phones": [],
+          "dates": [],
+          "times": [],
+          "money": [],
+          "otp": [],
+          "bank_accounts": [],
+          "esewa_ids": [],
+          "khalti_ids": [],
+          "imepay_ids": [],
+          "hashes_sha512": [],
+          "hashes_sha256": [],
+          "hashes_sha1": [],
+          "hashes_md5": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {},
+        "risk_signals": {
+          "urgency": 0,
+          "financial": 0,
+          "credential": 0,
+          "threat": 0
+        },
+        "statistics": {
+          "characters": 32,
+          "words": 1,
+          "lines": 1,
+          "average_line_length": 32.0,
+          "languages_detected": [
+            "english"
+          ],
+          "entity_count": 2,
+          "cleaning_operations": [
+            "entities_protected(1)"
+          ],
+          "ocr_corrections": [],
+          "protected_entities": 1
+        },
+        "processing_time_ms": 0.45
+      },
+      "enhancement": {
+        "case_id": "CASE_4106C94201",
+        "evidence_id": "EVID_00014",
+        "cleaned_text": "https://www.telegrammessage.com/",
+        "enhanced_text": "https://www.telegrammessage.com/",
+        "ui_text": "",
+        "message_text": "https://www.telegrammessage.com/",
+        "layout": [
+          {
+            "line": 1,
+            "role": "message",
+            "text": "https://www.telegrammessage.com/"
+          }
+        ],
+        "corrections": [],
+        "correction_statistics": {
+          "total_corrections": 0,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 0,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 1,
+          "lines_high_confidence": 1,
+          "lines_correctable": 0,
+          "document_confidence": 1.0,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 0.51
+      },
+      "semantic_correction": {
+        "case_id": "CASE_4106C94201",
+        "evidence_id": "EVID_00014",
+        "enhanced_text": "https://www.telegrammessage.com/",
+        "semantic_text": "https://www.telegrammessage.com/",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {
+          "urls": [
+            {
+              "value": "https://www.telegrammessage.com/",
+              "normalized": "https://www.telegrammessage.com/"
+            }
+          ],
+          "domains": [
+            {
+              "value": "www.telegrammessage.com",
+              "normalized": "www.telegrammessage.com"
+            }
+          ]
+        },
+        "statistics": {
+          "suspicious_tokens": 0,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 1,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english"
+          ]
+        },
+        "processing_time_ms": 0.16
+      }
+    }
+  ]
+}

@@ -153,10 +153,21 @@ ENGINE_RUN_FULL_PIPELINE = os.environ.get("CIIS_RUN_FULL_PIPELINE", "1") == "1"
 # of (well, in addition to falling back to) the static indicator file. The ML
 # stack is imported lazily and degrades gracefully if unavailable, so enabling
 # this never breaks a deployment that lacks the ML dependencies/model artifact.
-ML_THREAT_INTEL_ENABLED = os.environ.get("CIIS_ML_THREAT_INTEL", "0") == "1"
+# Enabled by default: a URL submitted as evidence is useless in a report
+# without a verdict, and the adapter already degrades to the static indicator
+# file when the ML stack or model artifact is missing. Set to "0" to force the
+# static provider (e.g. an air-gapped deployment).
+ML_THREAT_INTEL_ENABLED = os.environ.get("CIIS_ML_THREAT_INTEL", "1") == "1"
 ML_THREAT_INTEL_ROOT = Path(
     os.environ.get(
         "CIIS_THREAT_INTEL_ROOT", BASE_DIR.parent / "threat_intelligence_system"
     )
 ).resolve()
 ML_THREAT_INTEL_MODEL = os.environ.get("CIIS_THREAT_INTEL_MODEL", "xgboost")
+
+# Live enrichment (WHOIS / DNS / SSL / GeoIP) behind the URL verdict. This is
+# what supplies domain age, registrar, SPF/DMARC and hosting - the facts an
+# investigator actually cites - so it is on by default. It costs a few seconds
+# per *distinct* URL (results are memoized) and each connector fails soft, so
+# an offline host still gets the ML verdict, just without the network facts.
+ML_THREAT_INTEL_LIVE = os.environ.get("CIIS_THREAT_INTEL_LIVE", "1") == "1"
