@@ -100,20 +100,28 @@ def main() -> None:
     print("Row 4 oversized upload    : REJECTED — api/tests/test_evidence.py::test_upload_rejects_oversized")
     status["6.8 Security (4 rows)"] = "IMPLEMENTED (row 3 component-level, row 1 open-by-design)"
 
-    banner("TABLES 6.4 / 6.5 — Correlation & Timeline  [HARNESS · blocked on gold]")
-    for label, path, key, script in (
+    banner("TABLES 6.4 / 6.5 — Correlation & Timeline  [live services vs. gold]")
+    for label, tmpl, key, script in (
         ("6.4 Correlation", GT / "correlation_gold_template.json", "correlation", "run_table_6_4.py"),
         ("6.5 Timeline", GT / "timeline_gold_template.json", "timeline", "run_table_6_5.py"),
     ):
-        gold = path.with_name(path.name.replace("_template", ""))
-        target = gold if gold.is_file() else path
-        if _gold_is_template(target, key):
-            print(f"{label}: BLOCKED — fill {target.name} then: "
-                  f"scripts/{script} --gold samples/ground_truth/{target.name}")
-            status[label] = "BLOCKED (needs human gold labels)"
+        real = tmpl.with_name(tmpl.name.replace("_template", ""))       # *_gold.json
+        example = tmpl.with_name(tmpl.name.replace("_template", "_example"))
+        if real.is_file() and not _gold_is_template(real, key):
+            target, tag = real, "real gold"
+            status[label] = "IMPLEMENTED (real gold provided)"
+        elif example.is_file() and not _gold_is_template(example, key):
+            target, tag = example, "ILLUSTRATIVE demo gold — real cases, not thesis-grade"
+            status[label] = "DEMO runs (example gold; supply real gold for the table)"
         else:
+            target = None
+            status[label] = "BLOCKED (needs human gold labels)"
+        if target is None:
+            print(f"{label}: BLOCKED — fill {real.name} then: "
+                  f"scripts/{script} --gold samples/ground_truth/{real.name}")
+        else:
+            print(f"[{tag}]  ({target.name})")
             print(_run(PLATFORM_PY, OCR / "scripts" / script, "--gold", str(target), cwd=OCR))
-            status[label] = "IMPLEMENTED (real, gold provided)"
 
     banner("TABLES 6.1 / 6.2 — OCR & Entity extraction  [HARNESS · blocked on corpus]")
     print("6.1 OCR (3 stages): scripts/run_table_6_1.py --manifest <corpus>.json")
