@@ -22,8 +22,9 @@ import type {
   EvidenceRow,
   GraphStatistics,
   GraphSummary,
+  AdminCase,
+  AdminDeleteResult,
   InvestigationReport,
-  LoginResponse,
   Paginated,
   RegisteredCase,
   RelationshipGraph,
@@ -31,43 +32,24 @@ import type {
   SuspectAssessment,
   SystemSettings,
   TimelineAnalysis,
-  User,
-  UserPreference,
 } from "@/types";
 
 type Query = Record<string, string | number | boolean | undefined>;
 
-// ------------------------------------------------------------------- auth
-export const authApi = {
-  login: (username: string, password: string) =>
+// ------------------------------------------------------------------ admin
+// The only privileged surface: unlocked with a shared password, not a user
+// account. The signed token is attached automatically by apiClient.
+export const adminApi = {
+  login: (password: string) =>
     apiClient
-      .post<LoginResponse>("/auth/login/", { username, password })
+      .post<{ token: string; role: string }>("/admin/login/", { password })
       .then((r) => r.data),
-  logout: (refresh: string | null) =>
-    apiClient.post("/auth/logout/", { refresh }).then(() => undefined),
-  me: () => apiClient.get<User>("/auth/me/").then((r) => r.data),
-  updatePreferences: (patch: Partial<UserPreference>) =>
-    apiClient.patch<UserPreference>("/auth/me/preferences/", patch).then((r) => r.data),
-  listUsers: (params?: Query) =>
-    apiClient.get<Paginated<User>>("/auth/users/", { params }).then((r) => r.data),
-  createUser: (payload: Record<string, unknown>) =>
-    apiClient.post<User>("/auth/users/", payload).then((r) => r.data),
-  updateUser: (id: number, patch: Record<string, unknown>) =>
-    apiClient.patch<User>(`/auth/users/${id}/`, patch).then((r) => r.data),
-  permissionMatrix: () =>
-    apiClient
-      .get<{
-        matrix: Record<string, string[]>;
-        available_permissions: { code: string; label: string }[];
-      }>("/auth/permissions/")
-      .then((r) => r.data),
-  savePermissions: (role: string, permissions: string[]) =>
-    apiClient
-      .put("/auth/permissions/", {
-        role,
-        entries: permissions.map((permission) => ({ role, permission })),
-      })
-      .then((r) => r.data),
+  session: () =>
+    apiClient.get<{ role: string; valid: boolean }>("/admin/session/").then((r) => r.data),
+  listCases: () =>
+    apiClient.get<{ count: number; cases: AdminCase[] }>("/admin/cases/").then((r) => r.data),
+  deleteCase: (caseId: string) =>
+    apiClient.delete<AdminDeleteResult>(`/admin/cases/${caseId}/`).then((r) => r.data),
 };
 
 // -------------------------------------------------------------- dashboard

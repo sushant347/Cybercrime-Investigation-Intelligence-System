@@ -5,10 +5,10 @@ from django.http import FileResponse, HttpResponse
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from accounts.permissions import require
+from ..permissions import require
 
 from .. import engine
-from ..models import ActivityLog
+from ..store import activity
 
 
 class ReportListView(APIView):
@@ -58,10 +58,8 @@ class ReportDownloadView(APIView):
         # Path traversal guard: file must stay inside the case directory.
         if directory.resolve() not in path.parents or not path.is_file():
             return Response({"detail": "Report not found."}, status=404)
-        ActivityLog.record(
-            username=request.user.username, module="reports",
-            action="download", case_id=case_id, detail=file_name,
-        )
+        activity.record(module="reports", action="download",
+                        case_id=case_id, detail=file_name)
         if path.suffix == ".md" and request.query_params.get("preview") == "1":
             return HttpResponse(
                 path.read_text(encoding="utf-8"), content_type="text/markdown"

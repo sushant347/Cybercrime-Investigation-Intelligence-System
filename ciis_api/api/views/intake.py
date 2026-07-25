@@ -10,7 +10,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .. import engine
-from ..models import ActivityLog
+from ..store import activity
 
 
 def _payload(record: dict, created: bool) -> dict:
@@ -46,11 +46,10 @@ class IntakeView(APIView):
         except ValueError as exc:
             return Response({"detail": str(exc)}, status=status.HTTP_400_BAD_REQUEST)
 
-        ActivityLog.record(
-            username="", module="intake",
-            action="created" if created else "opened",
-            case_id=record["case_id"], detail=record.get("case_reference", ""),
-        )
+        activity.record(module="intake",
+                        action="created" if created else "opened",
+                        case_id=record["case_id"],
+                        detail=record.get("case_reference", ""))
         return Response(
             _payload(record, created),
             status=status.HTTP_201_CREATED if created else status.HTTP_200_OK,

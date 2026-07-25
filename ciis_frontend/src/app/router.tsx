@@ -10,6 +10,7 @@ const OpenCasePage = lazy(() => import("@/features/intake/OpenCasePage"));
 const CaseDetailPage = lazy(() => import("@/features/cases/CaseDetailPage"));
 const EvidenceDetailPage = lazy(() => import("@/features/evidence/EvidenceDetailPage"));
 const SettingsPage = lazy(() => import("@/features/settings/SettingsPage"));
+const AdminPage = lazy(() => import("@/features/admin/AdminPage"));
 
 // A guided, one-screen-at-a-time flow: choose -> identify the case -> work on
 // it. There is no case list, dashboard, or cross-case view anywhere, so one
@@ -30,6 +31,7 @@ export const router = createBrowserRouter([
         element: wrap(<EvidenceDetailPage />),
       },
       { path: "/settings", element: wrap(<SettingsPage />) },
+      { path: "/admin", element: wrap(<AdminPage />) },
       { path: "*", element: <Navigate to="/" replace /> },
     ],
   },

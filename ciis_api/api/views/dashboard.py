@@ -2,11 +2,12 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from accounts.permissions import require
+from ..permissions import require
 
 from .. import engine
-from ..models import ActivityLog, BackgroundJob, CaseMeta, CaseStatus, Notification
-from ..serializers import ActivityLogSerializer, BackgroundJobSerializer
+from ..constants import CaseStatus
+from ..serializers import activity_payload, job_payload
+from ..store import activity, case_meta, jobs, notifications
 
 
 class DashboardView(APIView):
@@ -15,11 +16,11 @@ class DashboardView(APIView):
     def get(self, request):
         cases = engine.list_cases()
         evidence = engine.list_evidence()
-        meta = {m.case_id: m for m in CaseMeta.objects.all()}
+        meta = {m["case_id"]: m for m in case_meta.all_decoded()}
 
         def status_of(case_id: str) -> str:
             m = meta.get(case_id)
-            return m.status if m else CaseStatus.OPEN
+            return (m.get("status") if m else None) or CaseStatus.OPEN
 
         statuses = [status_of(c["case_id"]) for c in cases]
         case_ids = [c["case_id"] for c in cases]
@@ -54,8 +55,8 @@ class DashboardView(APIView):
                     if isinstance(v, (int, float)):
                         threat_distribution[k] = threat_distribution.get(k, 0) + int(v)
 
-        recent_jobs = BackgroundJob.objects.all()[:8]
-        recent_activity = ActivityLog.objects.all()[:10]
+        recent_jobs = jobs.list(limit=8)
+        recent_activity = activity.list(limit=10)
 
         return Response(
             {
@@ -69,9 +70,7 @@ class DashboardView(APIView):
                     "evidence": len(evidence),
                     "high_priority_cases": len(high_priority_cases),
                     "campaigns": campaign_count,
-                    "unread_notifications": Notification.objects.filter(
-                        read=False
-                    ).count(),
+                    "unread_notifications": notifications.unread_count(),
                 },
                 "priority_distribution": priority_distribution,
                 "threat_distribution": threat_distribution,
@@ -79,8 +78,8 @@ class DashboardView(APIView):
                     high_priority_cases,
                     key=lambda c: (c["score"] is None, -(c["score"] or 0)),
                 )[:5],
-                "processing": BackgroundJobSerializer(recent_jobs, many=True).data,
-                "recent_activity": ActivityLogSerializer(recent_activity, many=True).data,
+                "processing": [job_payload(j) for j in recent_jobs],
+                "recent_activity": [activity_payload(a) for a in recent_activity],
                 "engine_health": engine.engine_health(),
             }
         )

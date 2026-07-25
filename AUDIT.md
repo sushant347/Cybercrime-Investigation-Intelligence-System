@@ -5,6 +5,72 @@ undo it. Newest entry first.
 
 ---
 
+## 2026-07-25 — Database removed, admin role added, analytics rebuilt
+
+**Branch:** `feature-new-timeline`
+
+### 1. No database anywhere (approved: full removal → CSV/JSON)
+Five Django models were live (`BackgroundJob`, `Notification`, `ActivityLog`,
+`CaseMeta`, `CaseHistory`); three (`User`, `RolePermission`, `UserPreference`)
+were already dead. All are gone:
+
+- **`api/store.py`** — new file-backed store under `storage/platform/`:
+  `jobs.json`, `notifications.json`, `activity_log.csv`, `case_meta.csv`,
+  `case_history.csv`. Atomic writes (temp + rename), per-file locks (the upload
+  worker writes from a background thread), auto-increment ids for JSON records.
+- **Deleted:** `api/models.py`, `api/migrations/`, the whole `accounts/` app,
+  and `ciis_platform.sqlite3`.
+- **`config/settings.py`** — `DATABASES = {}`; removed `django.contrib.{admin,
+  auth,contenttypes,sessions,messages}`, `AUTH_USER_MODEL`, JWT settings and the
+  session/auth/message middleware. `UNAUTHENTICATED_USER = None` (there is no
+  `AnonymousUser` to import any more).
+- **Dropped dependencies:** `djangorestframework-simplejwt`, `django-filter`.
+- Serializers are plain dict shapers; `accounts.permissions` → `api/permissions.py`.
+
+### 2. Admin role (shared password)
+- **`api/admin_auth.py`** — password check + **stateless signed token**
+  (`django.core.signing`), so admin sessions need no table. Password from
+  `CIIS_ADMIN_PASSWORD`, default `hello123`; 8-hour expiry.
+- **`api/views/admin.py`** — `POST /api/admin/login/`, `GET /api/admin/session/`,
+  `GET /api/admin/cases/` (every case + evidence count, analysed flag, linked
+  cases), `DELETE /api/admin/cases/<id>/`.
+- **Deletion cascade** (`maintenance.delete_case` + `engine.delete_case_cascade`):
+  purges the case from the registry, evidence/entity/OCR/processing/audit CSVs,
+  its OCR JSON, uploaded originals, Phase-1 forensics and all Phase-2 artifacts,
+  and drops it from the cross-case index — then **re-analyses every case that was
+  linked to it** so their cross-case correlation, timeline, graph and reports stop
+  referencing the deleted case.
+- **Frontend:** `features/admin/AdminPage.tsx` (password gate → case table →
+  delete dialog spelling out the cascade), `/admin` route, entry point on the
+  start page. `apiClient` lost its JWT plumbing and now attaches `X-Admin-Token`.
+
+### 3. Analytics rebuilt
+Root cause of the "blank charts": the engine legitimately returns **all-zero
+metric dicts** (no threat intel configured, no forensic reports) and **empty
+lists** (no URLs/brands/wallets in the evidence). A bar chart of zeros renders as
+an empty plot, which looked broken.
+
+- `AnalyticsTab` now leads with four headline stat cards, groups panels into
+  "What the engine found" / "How the case fits together" / "Evidence quality",
+  and uses a `SmartChart` that detects empty-or-all-zero data and prints a
+  plain-language reason instead of an empty chart.
+- Quality metrics render as labelled progress bars (with an explicit note when
+  forensic scores are 0 because those reports were not generated).
+
+### Verified
+API suite **42 passed** (incl. 8 new admin tests) with no database; engine suite
+passes; `tsc` clean; production build succeeds. Live: admin login rejects a wrong
+password, lists 5 cases, and deleting a case refreshed all 4 linked cases —
+`CASE_2CF24DBA5F`'s cross-case artifact went v4→v5 and its report no longer
+mentions the deleted case.
+
+### How to undo
+```bash
+git checkout <commit-before-this-change>
+```
+
+---
+
 ## 2026-07-25 — Evaluation completion (metrics, harnesses, consolidated output)
 
 **Branch:** `eval-metrics-completion` (from `feature-new-timeline`, which had

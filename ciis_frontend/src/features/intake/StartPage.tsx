@@ -1,4 +1,5 @@
 import CreateNewFolderIcon from "@mui/icons-material/CreateNewFolder";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import DeleteSweepIcon from "@mui/icons-material/DeleteSweep";
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import GppGoodIcon from "@mui/icons-material/GppGood";
@@ -157,8 +158,23 @@ export default function StartPage() {
         Cases are reached by reference only — nothing on this machine lists them for you.
       </Typography>
 
-      {/* Testing aid: wipe all cases and entities for a clean run. */}
-      <Stack alignItems="center" sx={{ mt: 4 }}>
+      <Stack
+        direction="row"
+        spacing={2}
+        justifyContent="center"
+        alignItems="center"
+        sx={{ mt: 4 }}
+      >
+        {/* Administrators can see and remove every case (password required). */}
+        <Button
+          size="small"
+          variant="text"
+          startIcon={<AdminPanelSettingsIcon />}
+          onClick={() => navigate("/admin")}
+        >
+          Administrator
+        </Button>
+        {/* Testing aid: wipe all cases and entities for a clean run. */}
         <Button
           size="small"
           color="error"

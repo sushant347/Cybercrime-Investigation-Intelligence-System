@@ -3,7 +3,6 @@
 web-uploaded evidence, not OCR only."""
 import pytest
 
-pytestmark = pytest.mark.django_db
 
 
 def test_upload_returns_job_and_completes(uploaded_evidence, api):

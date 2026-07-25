@@ -3,11 +3,11 @@ come exclusively from the engine's stored JSON - never recomputed here."""
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from accounts.permissions import require
+from ..permissions import require
 
 from .. import engine
-from ..models import ActivityLog, BackgroundJob
-from ..serializers import BackgroundJobSerializer
+from ..serializers import job_payload
+from ..store import activity, jobs
 
 
 class ArtifactView(APIView):
@@ -40,19 +40,11 @@ class RunAnalysisView(APIView):
     def post(self, request, case_id: str):
         if engine.get_case(case_id) is None:
             return Response({"detail": "Case not found."}, status=404)
-        running = BackgroundJob.objects.filter(
-            job_type="case_analysis", case_id=case_id,
-            status__in=("queued", "running"),
-        ).first()
+        running = jobs.active("case_analysis", case_id)
         if running:
-            return Response(BackgroundJobSerializer(running).data, status=200)
-        job = BackgroundJob.objects.create(
-            job_type="case_analysis", case_id=case_id,
-            created_by=request.user.username,
-        )
-        engine.submit_analysis_job(job.pk, case_id, request.user.username)
-        ActivityLog.record(
-            username=request.user.username, module="investigation",
-            action="run_analysis", case_id=case_id,
-        )
-        return Response(BackgroundJobSerializer(job).data, status=202)
+            return Response(job_payload(running), status=200)
+        job = jobs.start("case_analysis", case_id=case_id)
+        engine.submit_analysis_job(job["id"], case_id, "")
+        activity.record(module="investigation", action="run_analysis",
+                        case_id=case_id)
+        return Response(job_payload(job), status=202)

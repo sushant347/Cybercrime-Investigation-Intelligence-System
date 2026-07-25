@@ -1,7 +1,6 @@
 """Direct unit tests for the engine bridge helpers (no HTTP)."""
 import pytest
 
-pytestmark = pytest.mark.django_db
 
 
 def test_engine_health_reports_storage(api):
