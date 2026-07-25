@@ -107,7 +107,7 @@
     "message": "Removed by an administrator. Linked cases refreshed: none",
     "case_id": "",
     "evidence_id": "",
-    "read": false
+    "read": true
   },
   {
     "id": 12,
@@ -117,7 +117,7 @@
     "message": "01_sms_screenshot.jpg processed for CASE_7916EFB87E.",
     "case_id": "CASE_7916EFB87E",
     "evidence_id": "EVID_00009",
-    "read": false
+    "read": true
   },
   {
     "id": 13,
@@ -127,7 +127,7 @@
     "message": "02_messenger_chat.jpg processed for CASE_7916EFB87E.",
     "case_id": "CASE_7916EFB87E",
     "evidence_id": "EVID_00010",
-    "read": false
+    "read": true
   },
   {
     "id": 14,
@@ -137,7 +137,7 @@
     "message": "03_qr_code_flyer.png processed for CASE_7916EFB87E.",
     "case_id": "CASE_7916EFB87E",
     "evidence_id": "EVID_00011",
-    "read": false
+    "read": true
   },
   {
     "id": 15,
@@ -147,7 +147,7 @@
     "message": "04_esewa_payment_screenshot.jpg processed for CASE_7916EFB87E.",
     "case_id": "CASE_7916EFB87E",
     "evidence_id": "EVID_00012",
-    "read": false
+    "read": true
   },
   {
     "id": 16,
@@ -157,7 +157,7 @@
     "message": "05_khalti_receipt.jpg processed for CASE_7916EFB87E.",
     "case_id": "CASE_7916EFB87E",
     "evidence_id": "EVID_00013",
-    "read": false
+    "read": true
   },
   {
     "id": 17,
@@ -167,7 +167,7 @@
     "message": "06_phishing_email_screenshot.jpg processed for CASE_7916EFB87E.",
     "case_id": "CASE_7916EFB87E",
     "evidence_id": "EVID_00014",
-    "read": false
+    "read": true
   },
   {
     "id": 18,
@@ -177,7 +177,7 @@
     "message": "07_bank_transfer_slip.pdf processed for CASE_7916EFB87E.",
     "case_id": "CASE_7916EFB87E",
     "evidence_id": "EVID_00015",
-    "read": false
+    "read": true
   },
   {
     "id": 19,
@@ -187,7 +187,7 @@
     "message": "08_complaint_letter.pdf processed for CASE_7916EFB87E.",
     "case_id": "CASE_7916EFB87E",
     "evidence_id": "EVID_00016",
-    "read": false
+    "read": true
   },
   {
     "id": 20,
@@ -197,7 +197,7 @@
     "message": "All Phase-2 artifacts regenerated.",
     "case_id": "CASE_7916EFB87E",
     "evidence_id": "",
-    "read": false
+    "read": true
   },
   {
     "id": 21,
@@ -207,6 +207,6 @@
     "message": "Engine priority score: 76.3.",
     "case_id": "CASE_7916EFB87E",
     "evidence_id": "",
-    "read": false
+    "read": true
   }
 ]

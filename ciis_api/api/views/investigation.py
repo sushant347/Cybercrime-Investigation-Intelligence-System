@@ -25,9 +25,9 @@ class ArtifactIndexView(APIView):
     permission_classes = (require("investigation.view"),)
 
     def get(self, request, case_id: str):
+        # Existence check only - never deserialise the artifacts here.
         availability = {
-            key: engine.try_artifact(case_id, key) is not None
-            for key in engine.ARTIFACTS
+            key: engine.artifact_exists(case_id, key) for key in engine.ARTIFACTS
         }
         return Response({"case_id": case_id, "artifacts": availability})
 

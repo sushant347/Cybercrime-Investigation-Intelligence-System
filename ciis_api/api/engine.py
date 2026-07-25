@@ -64,11 +64,32 @@ def case_registry():
 
 
 # ----------------------------------------------------------------- CSV access
+#
+# The register CSVs (cases, evidence, processing log) are read on essentially
+# every request the platform serves — the case header alone triggers three of
+# them — and each read re-parsed the whole file from disk. An mtime-keyed
+# cache makes repeat reads free while staying exactly as fresh as the file:
+# every engine write goes through the filesystem, so a change always bumps
+# mtime and invalidates the entry. Entries are copied out so a caller mutating
+# a row (several views decorate rows in place) cannot poison the cache.
+_csv_cache: dict[str, tuple[float, list[dict[str, str]]]] = {}
+_csv_cache_lock = threading.Lock()
+
+
 def _read_csv(path: Path) -> list[dict[str, str]]:
     if not path.is_file():
         return []
+    key = str(path)
+    mtime = path.stat().st_mtime
+    with _csv_cache_lock:
+        cached = _csv_cache.get(key)
+        if cached is not None and cached[0] == mtime:
+            return [dict(r) for r in cached[1]]
     with open(path, "r", encoding="utf-8", newline="") as handle:
-        return list(csv.DictReader(handle))
+        rows = list(csv.DictReader(handle))
+    with _csv_cache_lock:
+        _csv_cache[key] = (mtime, rows)
+    return [dict(r) for r in rows]
 
 
 def list_cases() -> list[dict[str, str]]:
@@ -160,6 +181,21 @@ def try_artifact(case_id: str, key: str) -> Optional[dict[str, Any]]:
         return None
 
 
+def artifact_exists(case_id: str, key: str) -> bool:
+    """Does this artifact exist, without reading or parsing it?
+
+    The availability map asked ``try_artifact(...) is not None`` for all
+    thirteen artifacts, which deserialised every one of them - including the
+    relationship graph and the full report, the two largest documents in the
+    system - to answer a yes/no question. On a case with a rich graph that is
+    megabytes of JSON parsed on every page load.
+    """
+    name = ARTIFACTS.get(key)
+    if name is None:
+        return False
+    return bool(report_repository().list_versions(case_id, name, ".json"))
+
+
 def report_versions(case_id: str, suffix: str = ".json") -> list[Path]:
     return report_repository().list_versions(case_id, "investigation_report", suffix)
 
@@ -177,12 +213,23 @@ def forensics_artifacts(case_id: str, evidence_id: str) -> dict[str, Any]:
         return found
     import json
 
-    for path in sorted(root.rglob("*.json")):
-        if evidence_id in path.name or evidence_id in str(path.parent):
-            try:
-                found[path.stem] = json.loads(path.read_text(encoding="utf-8"))
-            except (OSError, json.JSONDecodeError):
-                continue
+    # The reports for an item live in ``forensics/<EVIDENCE_ID>/``. This used
+    # to ``rglob("*.json")`` the entire forensics tree and filter by name, so
+    # opening one evidence item walked every report of every item in the
+    # system — cost grew with the corpus, not with the request. Scan the
+    # item's own directory, and only fall back to the walk for legacy layouts
+    # where reports were written beside each other.
+    directory = root / evidence_id
+    candidates = (
+        sorted(directory.glob("*.json"))
+        if directory.is_dir()
+        else [p for p in sorted(root.glob("*.json")) if evidence_id in p.name]
+    )
+    for path in candidates:
+        try:
+            found[path.stem] = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            continue
     return found
 
 
@@ -380,12 +427,16 @@ def _forensics_pipeline():
     ecfg = evidence_config()
     fcfg = ForensicsConfig.from_env(ecfg)
 
-    # Multi-OCR fusion is the one Phase-1 module that can add tens of seconds
-    # per upload, because EasyOCR and Tesseract are separate OCR stacks (and
-    # EasyOCR downloads its weights on first use). Nothing downstream reads the
-    # fusion report today, so an interactive upload uses the OCR engine that is
-    # already resident; the other engines are opt-in per deployment.
-    engines = [PaddleOCRAdapter(ecfg, engine=_ocr_engine())]
+    # Multi-OCR fusion is by far the most expensive Phase-1 module: every
+    # engine listed here performs a *complete second OCR pass* over the image
+    # the acquisition pipeline has already read, and EasyOCR/Tesseract are
+    # whole extra stacks (EasyOCR downloads weights on first use). Nothing
+    # downstream consumes the fusion report today, so it is off by default —
+    # that alone roughly halves the forensic cost of an upload. Each engine is
+    # opt-in per deployment.
+    engines = []
+    if getattr(settings, "FORENSICS_FUSION_PADDLE", False):
+        engines.append(PaddleOCRAdapter(ecfg, engine=_ocr_engine()))
     if getattr(settings, "FORENSICS_FUSION_EASYOCR", False):
         engines.append(EasyOCRAdapter(fcfg))
     if getattr(settings, "FORENSICS_FUSION_TESSERACT", False):
@@ -516,9 +567,32 @@ def _refresh_timeline_graph(case_id: str) -> Optional[dict[str, Any]]:
         return None
 
 
+#: Evidence jobs still queued or running, per case. Guarded by its own lock so
+#: a worker can read it without waiting on the (long-held) pipeline lock.
+_pending_uploads: dict[str, int] = {}
+_pending_lock = threading.Lock()
+
+
+def _upload_queued(case_id: str) -> None:
+    with _pending_lock:
+        _pending_uploads[case_id] = _pending_uploads.get(case_id, 0) + 1
+
+
+def _upload_finished(case_id: str) -> int:
+    """Mark one upload done; returns how many are still outstanding."""
+    with _pending_lock:
+        remaining = max(0, _pending_uploads.get(case_id, 1) - 1)
+        if remaining:
+            _pending_uploads[case_id] = remaining
+        else:
+            _pending_uploads.pop(case_id, None)
+        return remaining
+
+
 def submit_evidence_job(job_id: int, tmp_path: str, case_id: str,
                         notes: str, username: str) -> None:
     """Queue Phase-1 processing of an uploaded file (runs in a worker)."""
+    _upload_queued(case_id)
 
     def work() -> None:
         from .store import jobs, notifications
@@ -526,6 +600,7 @@ def submit_evidence_job(job_id: int, tmp_path: str, case_id: str,
 
         jobs.update(job_id, status="running")
         detail = ""
+        still_pending: Optional[int] = None   # set once this item is accounted for
         try:
             with _pipeline_lock:  # engine CSV storage is not concurrent-safe
                 result = _evidence_pipeline().process_file(
@@ -543,9 +618,16 @@ def submit_evidence_job(job_id: int, tmp_path: str, case_id: str,
                 # the composite evidence-confidence score. Runs inside the same
                 # lock (it appends to the forensic CSV registers).
                 forensics = _run_forensics(result.evidence_id)
-                # Entities are now durable, so regenerate only the timeline and
-                # relationship graph.  Other Phase-2/report modules are not run.
-                live_artifacts = _refresh_timeline_graph(case_id)
+                # Entities are durable now, so only the timeline and graph need
+                # regenerating — and only once per *burst*. Rebuilding them per
+                # item made a batch of n uploads recompute correlation over the
+                # whole case n times (O(n²) pairs on the last item alone), which
+                # is what made multi-file uploads crawl. When more uploads for
+                # this case are still queued, the last one to finish does it.
+                still_pending = _upload_finished(case_id)
+                live_artifacts = (
+                    _refresh_timeline_graph(case_id) if still_pending == 0 else None
+                )
             entities = _entity_count(summary)
             if summary is None:
                 detail = f"Processed as {result.evidence_id} (OCR only)"
@@ -560,6 +642,11 @@ def submit_evidence_job(job_id: int, tmp_path: str, case_id: str,
                 detail += "; forensic reports generated"
             if live_artifacts is not None:
                 detail += "; timeline and graph refreshed"
+            elif still_pending:
+                detail += (
+                    f"; timeline/graph refresh deferred "
+                    f"({still_pending} upload(s) still queued)"
+                )
             else:
                 detail += "; timeline/graph refresh pending"
             jobs.finish(job_id, "completed", detail=detail,
@@ -572,6 +659,11 @@ def submit_evidence_job(job_id: int, tmp_path: str, case_id: str,
             )
         except Exception as exc:  # noqa: BLE001 - report, never crash worker
             log.exception("Evidence processing failed (job %s)", job_id)
+            # A failed item must not hold the burst counter open, or a queued
+            # sibling would never trigger the refresh. Only decrement if this
+            # item was not already accounted for before the failure.
+            if still_pending is None and _upload_finished(case_id) == 0:
+                _refresh_timeline_graph(case_id)
             jobs.finish(job_id, "failed", error=str(exc))
             notifications.broadcast(
                 type=NotificationType.SYSTEM_ERROR,
@@ -736,3 +828,22 @@ def iter_case_artifact(case_ids: list[str], key: str) -> Iterator[tuple[str, dic
         doc = try_artifact(cid, key)
         if doc is not None:
             yield cid, doc.get("report", doc)
+
+
+def iter_case_artifacts(case_ids: list[str], keys: tuple[str, ...]
+                        ) -> Iterator[tuple[str, dict[str, dict]]]:
+    """Several artifacts per case in **one** pass over the case ids.
+
+    The dashboard needs priority, campaigns and analytics for every case;
+    calling :func:`iter_case_artifact` once per key walked the case list three
+    times and re-globbed each case directory three times. Reading them together
+    keeps the directory listing warm and cuts the syscalls by two thirds.
+    """
+    for cid in case_ids:
+        found: dict[str, dict] = {}
+        for key in keys:
+            doc = try_artifact(cid, key)
+            if doc is not None:
+                found[key] = doc.get("report", doc)
+        if found:
+            yield cid, found

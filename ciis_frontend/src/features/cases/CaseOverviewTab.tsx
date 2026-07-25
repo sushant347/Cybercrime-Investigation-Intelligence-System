@@ -1,4 +1,5 @@
 import DescriptionIcon from "@mui/icons-material/Description";
+import EditIcon from "@mui/icons-material/Edit";
 import GavelIcon from "@mui/icons-material/Gavel";
 import HubIcon from "@mui/icons-material/Hub";
 import SecurityIcon from "@mui/icons-material/Security";
@@ -10,16 +11,25 @@ import {
   CardContent,
   CardHeader,
   Chip,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
   Divider,
+  IconButton,
   LinearProgress,
   Stack,
+  TextField,
   Tooltip,
   Typography,
 } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
-import { investigationApi } from "@/api";
+import { casesApi, investigationApi } from "@/api";
+import { useAuth } from "@/features/auth/AuthContext";
+import { apiErrorMessage } from "@/lib/apiClient";
 import { KeyValueTable } from "@/components/common/KeyValueTable";
 import { StatCard } from "@/components/common/StatCard";
 import { StatusChip } from "@/components/common/StatusChip";
@@ -39,6 +49,87 @@ function evidenceBreakdown(evidence: EvidenceRow[]) {
     if (String(row.hash_verified) === "True") counts.verified += 1;
   }
   return counts;
+}
+
+/**
+ * Edit dialog for the case's descriptive fields.
+ *
+ * Title, description and tags live in the platform's case metadata and were
+ * settable through the API from day one — but no screen ever offered an input
+ * for them, so on every real case they rendered as "—" and looked broken.
+ * (Investigator notes are different: those are entered per-evidence in the
+ * upload dialog and belong to the evidence record.)
+ */
+function EditDetailsDialog({
+  caseData,
+  open,
+  onClose,
+}: {
+  caseData: CaseDetail;
+  open: boolean;
+  onClose: () => void;
+}) {
+  const queryClient = useQueryClient();
+  const [title, setTitle] = useState(caseData.title ?? "");
+  const [description, setDescription] = useState(caseData.description ?? "");
+  const [tags, setTags] = useState(caseData.tags.join(", "));
+  const [error, setError] = useState<string | null>(null);
+
+  const save = useMutation({
+    mutationFn: () =>
+      casesApi.update(caseData.case_id, {
+        title: title.trim(),
+        description: description.trim(),
+        tags: tags
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean),
+      }),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ["case", caseData.case_id] });
+      onClose();
+    },
+    onError: (err) => setError(apiErrorMessage(err)),
+  });
+
+  return (
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
+      <DialogTitle>Edit case details</DialogTitle>
+      <DialogContent>
+        <Stack spacing={2} sx={{ mt: 1 }}>
+          <TextField
+            label="Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            fullWidth
+          />
+          <TextField
+            label="Description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            fullWidth
+            multiline
+            minRows={3}
+            helperText="What this case is about — complaint summary, context, scope."
+          />
+          <TextField
+            label="Tags"
+            value={tags}
+            onChange={(e) => setTags(e.target.value)}
+            fullWidth
+            helperText="Comma-separated, e.g. phishing, esewa, dashain-scam"
+          />
+          {error && <Alert severity="error">{error}</Alert>}
+        </Stack>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose}>Cancel</Button>
+        <Button variant="contained" disabled={save.isPending} onClick={() => save.mutate()}>
+          Save
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
 }
 
 /** Compact "identifier ×n" list used by the findings panel. */
@@ -84,6 +175,8 @@ export function CaseOverviewTab({ caseData }: { caseData: CaseDetail }) {
   const priority = caseData.priority;
   const evidence = caseData.evidence ?? [];
   const counts = evidenceBreakdown(evidence);
+  const { hasPermission } = useAuth();
+  const [editOpen, setEditOpen] = useState(false);
 
   // Analysis has not necessarily been run: a missing artifact is an expected
   // state, not an error, so failures are swallowed and reported as "not yet".
@@ -192,7 +285,19 @@ export function CaseOverviewTab({ caseData }: { caseData: CaseDetail }) {
       <Stack direction={{ xs: "column", lg: "row" }} spacing={2} alignItems="stretch">
         <Stack spacing={2} sx={{ flex: 1, minWidth: 0 }}>
           <Card>
-            <CardHeader title="Case Details" titleTypographyProps={{ variant: "subtitle1" }} />
+            <CardHeader
+              title="Case Details"
+              titleTypographyProps={{ variant: "subtitle1" }}
+              action={
+                hasPermission("case.manage") && (
+                  <Tooltip title="Edit title, description and tags">
+                    <IconButton size="small" onClick={() => setEditOpen(true)}>
+                      <EditIcon fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                )
+              }
+            />
             <Divider />
             <KeyValueTable
               data={{
@@ -421,6 +526,14 @@ export function CaseOverviewTab({ caseData }: { caseData: CaseDetail }) {
           </Card>
         </Stack>
       </Stack>
+
+      {editOpen && (
+        <EditDetailsDialog
+          caseData={caseData}
+          open={editOpen}
+          onClose={() => setEditOpen(false)}
+        />
+      )}
     </Stack>
   );
 }

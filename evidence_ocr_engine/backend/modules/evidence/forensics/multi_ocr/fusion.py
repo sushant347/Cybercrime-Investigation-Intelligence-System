@@ -44,6 +44,17 @@ class MultiOCRFusionService:
         self._engines = list(engines)
         self._log = get_logger("forensics.fusion")
 
+    @property
+    def enabled(self) -> bool:
+        """False when no OCR engine is configured for fusion.
+
+        Fusion is the most expensive Phase-1 module (one full OCR pass per
+        engine). A deployment that configures no engines wants it skipped
+        entirely - including the advanced preprocessing that exists only to
+        feed it - rather than a fusion report over zero engines.
+        """
+        return bool(self._engines)
+
     # ------------------------------------------------------------------ public
 
     def run(

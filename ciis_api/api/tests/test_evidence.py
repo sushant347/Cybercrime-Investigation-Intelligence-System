@@ -186,3 +186,45 @@ def test_unprocessed_evidence_can_be_deleted(api, case):
 def test_deleting_unknown_evidence_is_404(api, case):
     resp = api.delete(f"/api/cases/{case['case_id']}/evidence/EVID_NOPE/")
     assert resp.status_code == 404
+
+
+# -------------------------------------------------------------- performance
+def test_artifact_refresh_is_coalesced_across_a_burst(api, case, tmp_path, monkeypatch):
+    """A batch of uploads rebuilds the timeline/graph once, not once per file.
+
+    Rebuilding per item made correlation re-run over the whole case on every
+    upload — quadratic in the number of evidence items, and the reason a
+    multi-file upload crawled. The last item of a burst does the rebuild.
+    """
+    from django.core.files.uploadedfile import SimpleUploadedFile
+
+    from api import engine
+    from api.tests.conftest import make_png
+
+    calls: list[str] = []
+    monkeypatch.setattr(
+        engine, "_refresh_timeline_graph", lambda cid: calls.append(cid) or {}
+    )
+
+    case_id = case["case_id"]
+    # Queue three uploads *before* any of them is allowed to finish, which is
+    # what the UI now does (submit the whole batch, then watch the jobs).
+    queued = []
+    for name in ("a.png", "b.png", "c.png"):
+        engine._upload_queued(case_id)
+        queued.append(name)
+    # ...then let each job's worker run to completion in order.
+    for name in queued:
+        png = make_png(tmp_path / name)
+        upload = SimpleUploadedFile(name, png.read_bytes(), content_type="image/png")
+        resp = api.post(
+            f"/api/cases/{case_id}/evidence/upload/",
+            {"file": upload, "notes": ""}, format="multipart",
+        )
+        assert resp.status_code == 202, resp.content
+    # Drain the three placeholder tickets: only the final one triggers a rebuild.
+    remaining = [engine._upload_finished(case_id) for _ in range(3)]
+
+    assert remaining[-1] == 0, "burst counter did not drain to zero"
+    # Three uploads, but far fewer rebuilds than one-per-item.
+    assert len(calls) < 3, f"expected coalescing, got {len(calls)} rebuilds"

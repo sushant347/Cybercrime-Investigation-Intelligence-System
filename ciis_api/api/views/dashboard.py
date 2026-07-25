@@ -30,54 +30,65 @@ class DashboardView(APIView):
         campaign_count = 0
         threat_distribution: dict[str, int] = {}
         high_priority_cases: list[dict] = []
-        for cid, payload in engine.iter_case_artifact(case_ids, "priority"):
-            band = str(
-                payload.get("priority_band") or payload.get("band")
-                or payload.get("priority_level") or "unknown"
-            ).lower()
-            priority_distribution[band] = priority_distribution.get(band, 0) + 1
-            if band in {"high", "critical", "urgent"}:
-                high_priority_cases.append(
-                    {"case_id": cid, "band": band,
-                     "score": payload.get("priority_score") or payload.get("score")}
-                )
-        for cid, payload in engine.iter_case_artifact(case_ids, "campaigns"):
-            campaigns = (
-                payload.get("campaigns")
-                or payload.get("detected_campaigns")
-                or []
-            )
-            campaign_count += len(campaigns) if isinstance(campaigns, list) else 0
-        # Threat verdicts and entity totals, summed over every analysed case.
-        #
-        # This used to read ``threat_distribution`` off the analytics artifact -
-        # a key the engine has never written (the analytics model calls it
-        # ``threat_statistics``), so the dashboard's threat panel was empty on
-        # every deployment regardless of what the cases contained.
+        # One pass over the cases for all three artifacts (was three passes,
+        # each re-listing every case directory).
         entity_total = 0
         analysed_cases = 0
         cases_with_threats = 0
-        for cid, payload in engine.iter_case_artifact(case_ids, "analytics"):
-            analysed_cases += 1
-            stats = payload.get("threat_statistics") or {}
-            if isinstance(stats, dict):
-                for verdict, key in (
-                    ("malicious", "malicious_indicators"),
-                    ("suspicious", "suspicious_indicators"),
-                    ("benign", "benign_indicators"),
-                ):
-                    value = stats.get(key)
-                    if isinstance(value, (int, float)) and value:
-                        threat_distribution[verdict] = (
-                            threat_distribution.get(verdict, 0) + int(value)
-                        )
-                if float(stats.get("evidence_with_threats") or 0) > 0:
-                    cases_with_threats += 1
-            entities = payload.get("entity_statistics") or {}
-            if isinstance(entities, dict):
-                entity_total += sum(
-                    int(v) for v in entities.values() if isinstance(v, (int, float))
+        for cid, artifacts in engine.iter_case_artifacts(
+            case_ids, ("priority", "campaigns", "analytics")
+        ):
+            payload = artifacts.get("priority")
+            if payload:
+                band = str(
+                    payload.get("priority_band") or payload.get("band")
+                    or payload.get("priority_level") or "unknown"
+                ).lower()
+                priority_distribution[band] = priority_distribution.get(band, 0) + 1
+                if band in {"high", "critical", "urgent"}:
+                    high_priority_cases.append(
+                        {"case_id": cid, "band": band,
+                         "score": payload.get("priority_score") or payload.get("score")}
+                    )
+
+            payload = artifacts.get("campaigns")
+            if payload:
+                campaigns = (
+                    payload.get("campaigns")
+                    or payload.get("detected_campaigns")
+                    or []
                 )
+                campaign_count += len(campaigns) if isinstance(campaigns, list) else 0
+            # Threat verdicts and entity totals.
+            #
+            # This used to read ``threat_distribution`` off the analytics
+            # artifact - a key the engine has never written (the analytics
+            # model calls it ``threat_statistics``), so the dashboard's threat
+            # panel was empty on every deployment regardless of what the cases
+            # contained.
+            payload = artifacts.get("analytics")
+            if payload:
+                analysed_cases += 1
+                stats = payload.get("threat_statistics") or {}
+                if isinstance(stats, dict):
+                    for verdict, key in (
+                        ("malicious", "malicious_indicators"),
+                        ("suspicious", "suspicious_indicators"),
+                        ("benign", "benign_indicators"),
+                    ):
+                        value = stats.get(key)
+                        if isinstance(value, (int, float)) and value:
+                            threat_distribution[verdict] = (
+                                threat_distribution.get(verdict, 0) + int(value)
+                            )
+                    if float(stats.get("evidence_with_threats") or 0) > 0:
+                        cases_with_threats += 1
+                entities = payload.get("entity_statistics") or {}
+                if isinstance(entities, dict):
+                    entity_total += sum(
+                        int(v) for v in entities.values()
+                        if isinstance(v, (int, float))
+                    )
 
         recent_jobs = jobs.list(limit=8)
         recent_activity = activity.list(limit=10)
