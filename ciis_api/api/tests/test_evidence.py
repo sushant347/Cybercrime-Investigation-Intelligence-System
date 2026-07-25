@@ -112,3 +112,77 @@ def test_evidence_detail_exposes_ocr(uploaded_evidence, api):
     body = resp.json()
     assert body["record"]["evidence_id"] == evidence_id
     assert body["ocr"] is not None
+
+
+# --------------------------------------------------------------- forensics
+def test_upload_generates_phase1_forensic_reports(uploaded_evidence, api):
+    """Phase-1 forensics must run on upload, not just OCR + entities.
+
+    Without this the analytics quality/brand/forgery panels and the forgery
+    component of the priority score read zero on every case in the system,
+    because ``storage/forensics/`` was never written at all.
+    """
+    case_id, job = uploaded_evidence
+    evidence_id = api.get(f"/api/jobs/{job['id']}/").json()["evidence_id"]
+
+    detail = api.get(f"/api/cases/{case_id}/evidence/{evidence_id}/").json()
+    forensics = detail["forensics"]
+    assert forensics, "no Phase-1 forensic artifacts were produced"
+    # Integrity + confidence run for every file type; the image ones too here.
+    names = " ".join(forensics.keys()).lower()
+    assert "fingerprint" in names or "integrity" in names
+    assert "confidence" in names
+
+
+# ----------------------------------------------------------------- deletion
+def test_processed_evidence_cannot_be_deleted(uploaded_evidence, api):
+    """Processed evidence is part of the case record: 409, and it survives."""
+    case_id, job = uploaded_evidence
+    evidence_id = api.get(f"/api/jobs/{job['id']}/").json()["evidence_id"]
+
+    resp = api.delete(f"/api/cases/{case_id}/evidence/{evidence_id}/")
+    assert resp.status_code == 409, resp.content
+    assert resp.json()["processing_state"]["processed"] is True
+    assert api.get(f"/api/cases/{case_id}/evidence/{evidence_id}/").status_code == 200
+
+
+def test_unprocessed_evidence_can_be_deleted(api, case):
+    """An item that produced nothing can be withdrawn by the investigator."""
+    from api import engine
+    import csv
+
+    case_id = case["case_id"]
+    cfg = engine.evidence_config()
+    # A register row with no OCR text, no entities and no forensic reports -
+    # what an upload that failed before processing leaves behind.
+    with open(cfg.evidence_csv, "a", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=[
+            "evidence_id", "case_id", "original_file_name", "stored_file_name",
+            "file_extension", "file_size_bytes", "sha256_before", "sha256_after",
+            "hash_verified", "upload_time", "processing_time", "status",
+            "investigator_notes",
+        ])
+        if cfg.evidence_csv.stat().st_size == 0:
+            writer.writeheader()
+        writer.writerow({
+            "evidence_id": "EVID_STUCK", "case_id": case_id,
+            "original_file_name": "half-upload.png",
+            "stored_file_name": "EVID_STUCK__x__half-upload.png",
+            "file_extension": ".png", "file_size_bytes": "12",
+            "sha256_before": "f" * 64, "sha256_after": "", "hash_verified": "",
+            "upload_time": "2026-07-06T09:00:00.000Z", "processing_time": "",
+            "status": "failed", "investigator_notes": "",
+        })
+
+    detail = api.get(f"/api/cases/{case_id}/evidence/EVID_STUCK/").json()
+    assert detail["deletable"] is True
+
+    resp = api.delete(f"/api/cases/{case_id}/evidence/EVID_STUCK/")
+    assert resp.status_code == 200, resp.content
+    assert resp.json()["deleted"] is True
+    assert api.get(f"/api/cases/{case_id}/evidence/EVID_STUCK/").status_code == 404
+
+
+def test_deleting_unknown_evidence_is_404(api, case):
+    resp = api.delete(f"/api/cases/{case['case_id']}/evidence/EVID_NOPE/")
+    assert resp.status_code == 404

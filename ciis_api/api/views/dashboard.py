@@ -48,12 +48,36 @@ class DashboardView(APIView):
                 or []
             )
             campaign_count += len(campaigns) if isinstance(campaigns, list) else 0
+        # Threat verdicts and entity totals, summed over every analysed case.
+        #
+        # This used to read ``threat_distribution`` off the analytics artifact -
+        # a key the engine has never written (the analytics model calls it
+        # ``threat_statistics``), so the dashboard's threat panel was empty on
+        # every deployment regardless of what the cases contained.
+        entity_total = 0
+        analysed_cases = 0
+        cases_with_threats = 0
         for cid, payload in engine.iter_case_artifact(case_ids, "analytics"):
-            dist = payload.get("threat_distribution") or {}
-            if isinstance(dist, dict):
-                for k, v in dist.items():
-                    if isinstance(v, (int, float)):
-                        threat_distribution[k] = threat_distribution.get(k, 0) + int(v)
+            analysed_cases += 1
+            stats = payload.get("threat_statistics") or {}
+            if isinstance(stats, dict):
+                for verdict, key in (
+                    ("malicious", "malicious_indicators"),
+                    ("suspicious", "suspicious_indicators"),
+                    ("benign", "benign_indicators"),
+                ):
+                    value = stats.get(key)
+                    if isinstance(value, (int, float)) and value:
+                        threat_distribution[verdict] = (
+                            threat_distribution.get(verdict, 0) + int(value)
+                        )
+                if float(stats.get("evidence_with_threats") or 0) > 0:
+                    cases_with_threats += 1
+            entities = payload.get("entity_statistics") or {}
+            if isinstance(entities, dict):
+                entity_total += sum(
+                    int(v) for v in entities.values() if isinstance(v, (int, float))
+                )
 
         recent_jobs = jobs.list(limit=8)
         recent_activity = activity.list(limit=10)
@@ -71,6 +95,12 @@ class DashboardView(APIView):
                     "high_priority_cases": len(high_priority_cases),
                     "campaigns": campaign_count,
                     "unread_notifications": notifications.unread_count(),
+                    # Coverage: how much of the workload has actually been
+                    # analysed, so an empty chart can be explained rather than
+                    # read as "nothing found".
+                    "analysed_cases": analysed_cases,
+                    "cases_with_threats": cases_with_threats,
+                    "entities_extracted": entity_total,
                 },
                 "priority_distribution": priority_distribution,
                 "threat_distribution": threat_distribution,

@@ -53,10 +53,18 @@ MAC_ADDRESS: Pattern[str] = re.compile(
     r"\b[0-9A-Fa-f]{2}(?:([:-])[0-9A-Fa-f]{2})(?:\1[0-9A-Fa-f]{2}){4}\b"
 )
 
-#: Ports - contextual only ("port 8080", ":443" after a host-like token).
+#: Ports - contextual only ("port 8080", ":443" after a *host-like* token).
+#:
+#: The second alternative used to accept ``:(\d{2,5})`` after any alphanumeric,
+#: which matched the minutes of every clock time ("11:15 AM" -> port 15) and
+#: filled the entity record with phantom ports. A port now has to follow either
+#: a token containing a letter (a hostname) or a dotted-quad IPv4, which is the
+#: only place ``host:port`` legitimately appears.
 PORT: Pattern[str] = re.compile(
     r"(?:\bport\s*(?:no\.?|number)?\s*[:#]?\s*(\d{1,5})\b)"
-    r"|(?<=[a-z0-9]):(\d{2,5})(?=[/\s,.]|$)",
+    r"|(?:\b(?:[a-z0-9-]*[a-z][a-z0-9-]*(?:\.[a-z0-9-]+)*"
+    r"|\d{1,3}(?:\.\d{1,3}){3})"
+    r":(\d{2,5})(?=[/\s,]|$))",
     re.IGNORECASE,
 )
 
@@ -102,10 +110,60 @@ MONEY: Pattern[str] = re.compile(
     re.IGNORECASE,
 )
 
-#: Bank account numbers - contextual (label within 12 chars of the digits).
+# --------------------------------------------------------------------------- #
+# Label -> value glue
+#
+# Screenshots and receipts print the label and the value on *separate lines*
+# ("Sent To (Khalti ID)\n9801122334", "Depositor Account No.:\n0501-0198765432").
+# The original contextual patterns required the value on the same line, so a
+# receipt - the single most common evidence type in a payment-fraud case -
+# yielded no wallet id, no account number and no transaction code at all.
+#
+# ``_LABEL_GAP`` therefore allows the separator characters, an optional
+# punctuation run, and **at most one** line break before the value. One line is
+# the deliberate limit: it covers the label/value layout of every receipt in the
+# corpus without letting a label on one line bind to an unrelated number three
+# lines below it.
+# --------------------------------------------------------------------------- #
+
+#: Optional "no./number/#/code/id" qualifier that may follow a label word.
+_LABEL_QUALIFIER = r"(?:[ \t]*(?:no|number|num|code|id|#)\b\.?)?"
+#: Separator between a label and its value: punctuation, spaces, one newline.
+_LABEL_GAP = r"[^\S\n]*[:#.\-)\]]*[^\S\n]*\n?[^\S\n]*"
+#: Wider gap for prose ("esewa id ma paisa pathaunus 98XXXXXXXX"), still
+#: capped and still limited to a single line break.
+_PROSE_GAP = r"[^\d\n]{0,40}\n?[^\d\n]{0,25}"
+
+#: Nepali mobile number as it appears inside a contextual capture group.
+_NP_MOBILE = r"(?:\+?977[-\s]?)?9[678]\d{8}"
+
+#: Bank account numbers - contextual (label, then the digits, possibly on the
+#: next line). Accepts the "Account No.:" form the previous pattern rejected.
 BANK_ACCOUNT: Pattern[str] = re.compile(
-    r"(?:a/c|acc?(?:oun)?t|khata|खाता)\s*(?:no\.?|number|#|:)?\s*[.\-]?\s*"
+    r"(?:a/c|acc?(?:oun)?t|khata|खाता)" + _LABEL_QUALIFIER + _LABEL_GAP +
     r"(\d[\d\- ]{7,24}\d)",
+    re.IGNORECASE,
+)
+
+#: Payment card numbers (13-19 digits, optionally grouped). Every candidate is
+#: Luhn-validated by the extractor, so a receipt total or a long reference
+#: number cannot masquerade as a card.
+CARD_NUMBER: Pattern[str] = re.compile(r"\b(?:\d[ -]?){12,18}\d\b")
+
+#: Transaction / voucher / reference codes.
+#:
+#: Two ways in: a label ("Transaction Code", "Voucher No.:", "Ref:") followed by
+#: the code, or the two unmistakable code *shapes* used by Nepali payment rails
+#: and banks - ``0119.0625.987456`` (eSewa) and ``KH-2026-0611-77245`` /
+#: ``MBL-2026-441829`` (wallet + bank vouchers). The structural forms matter
+#: because OCR frequently mangles the label itself ("TansatianD") while the
+#: code - printed in a monospaced field - survives intact.
+TRANSACTION_ID: Pattern[str] = re.compile(
+    r"(?:\b(?:transaction|txn|trxn|tranx|voucher|receipt|reference|ref|invoice|"
+    r"order|bill|payment)\b" + _LABEL_QUALIFIER + _LABEL_GAP +
+    r"([A-Za-z0-9][A-Za-z0-9._/-]{4,29}))"
+    r"|(\b\d{3,6}(?:\.\d{3,6}){2}\b)"
+    r"|(\b[A-Z]{2,5}-\d{2,4}(?:-\d{2,6}){1,3}\b)",
     re.IGNORECASE,
 )
 
@@ -116,20 +174,31 @@ OTP: Pattern[str] = re.compile(
     re.IGNORECASE,
 )
 
-#: Nepali digital wallet IDs - contextual; wallet IDs are usually the
-#: registered mobile number, so the value shape is phone-like. Up to 40
-#: non-digit characters may separate the wallet name from the number on the
-#: same line ("esewa id ma paisa pathaunus 98XXXXXXXX").
+#: Nepali digital wallet IDs - contextual.
+#:
+#: A wallet id is either the registered mobile number *or* the registered email
+#: address (all three rails accept both), so both shapes are captured. The
+#: value may sit on the label's line ("esewa id ma paisa pathaunus 98XXXXXXXX")
+#: or on the next line, which is how every receipt screenshot lays it out
+#: ("Sent To (Khalti ID)\n9801122334").
+_WALLET_VALUE = (
+    r"(" + _NP_MOBILE +
+    r"|[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,24})"
+)
+
 ESEWA_ID: Pattern[str] = re.compile(
-    r"\besewa\b[^\n\d]{0,40}?((?:\+?977[-\s]?)?9[678]\d{8})",
+    r"\be[\s-]?sewa\b" + _LABEL_QUALIFIER + _LABEL_GAP + _WALLET_VALUE +
+    r"|\be[\s-]?sewa\b" + _PROSE_GAP + r"(" + _NP_MOBILE + r")",
     re.IGNORECASE,
 )
 KHALTI_ID: Pattern[str] = re.compile(
-    r"\bkhalti\b[^\n\d]{0,40}?((?:\+?977[-\s]?)?9[678]\d{8})",
+    r"\bkhalti\b" + _LABEL_QUALIFIER + _LABEL_GAP + _WALLET_VALUE +
+    r"|\bkhalti\b" + _PROSE_GAP + r"(" + _NP_MOBILE + r")",
     re.IGNORECASE,
 )
 IMEPAY_ID: Pattern[str] = re.compile(
-    r"\bime\s?pay\b[^\n\d]{0,40}?((?:\+?977[-\s]?)?9[678]\d{8})",
+    r"\bime[\s-]?pay\b" + _LABEL_QUALIFIER + _LABEL_GAP + _WALLET_VALUE +
+    r"|\bime[\s-]?pay\b" + _PROSE_GAP + r"(" + _NP_MOBILE + r")",
     re.IGNORECASE,
 )
 
@@ -188,11 +257,21 @@ INSTAGRAM_USERNAME: Pattern[str] = re.compile(
 # Pattern registries
 # --------------------------------------------------------------------------- #
 
+#: Bare transaction/voucher code *shapes*, used only for preservation. The
+#: contextual :data:`TRANSACTION_ID` pattern spans the label too, and shielding
+#: a label from cleaning would degrade the cleaned text for no benefit - only
+#: the code itself must survive byte-for-byte.
+TRANSACTION_CODE_SHAPE: Pattern[str] = re.compile(
+    r"\b\d{3,6}(?:\.\d{3,6}){2}\b|\b[A-Z]{2,5}-\d{2,4}(?:-\d{2,6}){1,3}\b"
+)
+
 #: Patterns used by :class:`EntityPreserver` to shield spans from cleaning.
 #: Ordered longest/most-specific first so protection is maximal.
 PROTECTED_PATTERNS: Dict[str, Pattern[str]] = {
     "url": URL,
     "email": EMAIL,
+    "card_number": CARD_NUMBER,
+    "transaction_code": TRANSACTION_CODE_SHAPE,
     "sha512": SHA512,
     "sha256": SHA256,
     "sha1": SHA1,

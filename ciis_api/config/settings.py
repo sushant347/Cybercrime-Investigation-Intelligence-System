@@ -148,6 +148,23 @@ DATA_UPLOAD_MAX_MEMORY_SIZE = 55 * 1024 * 1024
 # or environments without the heavier enhancement/semantic stages).
 ENGINE_RUN_FULL_PIPELINE = os.environ.get("CIIS_RUN_FULL_PIPELINE", "1") == "1"
 
+# Phase-1 forensic analyses (integrity, EXIF/metadata, image quality, forgery
+# indicators, logo/brand detection, evidence confidence) after OCR on upload.
+# These write storage/forensics/<EVIDENCE_ID>/*.json, which is what the
+# analytics quality panel, brand/device statistics, the forgery component of
+# the priority score and the suspect scorer all read. With this off, every one
+# of those reads zero - which is the state the platform shipped in, because the
+# upload path never ran them at all. Set to "0" for fast tests or when an
+# environment lacks the optional imaging dependencies.
+ENGINE_RUN_FORENSICS = os.environ.get("CIIS_RUN_FORENSICS", "1") == "1"
+
+# Extra OCR engines for the multi-OCR fusion module. Off by default: each is a
+# separate OCR stack (EasyOCR downloads model weights on first use) and would
+# add tens of seconds to an interactive upload for a report nothing currently
+# consumes. Turn on per deployment when fusion output is actually wanted.
+FORENSICS_FUSION_EASYOCR = os.environ.get("CIIS_FUSION_EASYOCR", "0") == "1"
+FORENSICS_FUSION_TESSERACT = os.environ.get("CIIS_FUSION_TESSERACT", "0") == "1"
+
 # ML threat intelligence: when enabled, Phase-2 analysis scores URL entities
 # with the trained phishing classifier in ``threat_intelligence_system`` instead
 # of (well, in addition to falling back to) the static indicator file. The ML

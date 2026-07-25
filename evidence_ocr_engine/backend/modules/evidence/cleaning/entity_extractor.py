@@ -27,6 +27,40 @@ class ExtractedEntity:
     normalized: str   # canonical form used for de-duplication / correlation
 
 
+#: Every entity type the extractor can produce, grouped the way an
+#: investigator reads them. This is the *schema*: :meth:`EntityExtractor.extract`
+#: returns a key for each of these types on every call, empty list included, so
+#: downstream consumers (analytics, UI) can distinguish "searched for and not
+#: found" from "never looked for".
+ENTITY_TYPE_GROUPS: Dict[str, tuple] = {
+    "network": ("urls", "domains", "ipv4", "ipv6", "mac_addresses", "ports",
+                "cve_ids"),
+    "contact": ("emails", "phones"),
+    "temporal": ("dates", "times"),
+    "financial": ("money", "bank_accounts", "card_numbers", "transaction_ids",
+                  "esewa_ids", "khalti_ids", "imepay_ids", "otp"),
+    "crypto": ("eth_wallets", "btc_wallets", "hashes_md5", "hashes_sha1",
+               "hashes_sha256", "hashes_sha512"),
+    "social": ("social_media_urls", "telegram_usernames", "whatsapp_numbers",
+               "facebook_usernames", "instagram_usernames"),
+}
+
+#: Flat tuple of every supported entity type (stable order).
+SUPPORTED_ENTITY_TYPES: tuple = tuple(
+    entity_type
+    for group in ENTITY_TYPE_GROUPS.values()
+    for entity_type in group
+)
+
+#: Entity types that identify a payment instrument or rail. Analytics
+#: aggregates these into the "Payment & Wallet IDs" view; keeping the list here
+#: means adding a new rail updates every consumer at once.
+PAYMENT_ENTITY_TYPES: tuple = (
+    "esewa_ids", "khalti_ids", "imepay_ids", "bank_accounts", "card_numbers",
+    "eth_wallets", "btc_wallets",
+)
+
+
 class EntityExtractor:
     """Regex-driven extractor with per-type validation and normalisation."""
 
@@ -58,7 +92,8 @@ class EntityExtractor:
                                            normalize=str.upper)
 
         results["phones"] = self._collect(
-            text, rx.PHONE, "phones", normalize=self._normalize_phone
+            text, rx.PHONE, "phones", normalize=self._normalize_phone,
+            validate=self._valid_phone,
         )
         results["dates"] = self._collect(text, rx.DATE, "dates")
         results["times"] = self._collect(text, rx.TIME, "times")
@@ -71,14 +106,23 @@ class EntityExtractor:
             text, rx.BANK_ACCOUNT, "bank_accounts",
             normalize=lambda v: re.sub(r"[\s-]", "", v),
         )
+        results["card_numbers"] = self._collect(
+            text, rx.CARD_NUMBER, "card_numbers",
+            normalize=lambda v: re.sub(r"[\s-]", "", v),
+            validate=self._valid_card,
+        )
+        results["transaction_ids"] = self._group_matches(
+            text, rx.TRANSACTION_ID, "transaction_ids",
+            normalize=str.upper, validate=self._valid_transaction_id,
+        )
         results["esewa_ids"] = self._group_matches(
-            text, rx.ESEWA_ID, "esewa_ids", normalize=self._normalize_phone
+            text, rx.ESEWA_ID, "esewa_ids", normalize=self._normalize_wallet_id
         )
         results["khalti_ids"] = self._group_matches(
-            text, rx.KHALTI_ID, "khalti_ids", normalize=self._normalize_phone
+            text, rx.KHALTI_ID, "khalti_ids", normalize=self._normalize_wallet_id
         )
         results["imepay_ids"] = self._group_matches(
-            text, rx.IMEPAY_ID, "imepay_ids", normalize=self._normalize_phone
+            text, rx.IMEPAY_ID, "imepay_ids", normalize=self._normalize_wallet_id
         )
 
         results["hashes_sha512"] = self._collect(text, rx.SHA512, "hashes_sha512",
@@ -124,7 +168,12 @@ class EntityExtractor:
         results["instagram_usernames"] = self._group_matches(
             text, rx.INSTAGRAM_USERNAME, "instagram_usernames", normalize=str.lower
         )
-        return results
+        # Stable schema: every supported type is present, empty or not, and in
+        # the documented order.
+        return {
+            entity_type: results.get(entity_type, [])
+            for entity_type in SUPPORTED_ENTITY_TYPES
+        }
 
     @staticmethod
     def total_count(entities: Dict[str, List[ExtractedEntity]]) -> int:
@@ -195,6 +244,76 @@ class EntityExtractor:
     def _valid_port(value: str) -> bool:
         return value.isdigit() and 1 <= int(value) <= 65535
 
+    @staticmethod
+    def _valid_card(value: str) -> bool:
+        """Issuer prefix + length + Luhn - all three, in that order.
+
+        Luhn alone is far too weak on OCR output: a run of zeros satisfies it
+        (checksum 0), and so does roughly one digit string in ten, so a phone
+        number, a voucher number or a garbled digit block would be recorded as
+        a payment card. Requiring a real issuer identification number (IIN)
+        and that issuer's card length first is what makes the finding
+        defensible - in a forensic record an invented card number is far worse
+        than a missed one.
+        """
+        digits = re.sub(r"[^\d]", "", value)
+        if not 13 <= len(digits) <= 19:
+            return False
+        if len(set(digits)) < 2:          # a single repeated digit is OCR noise
+            return False
+        length, prefix2, prefix4 = len(digits), int(digits[:2]), int(digits[:4])
+        issuer_ok = (
+            (digits[0] == "4" and length in (13, 16, 19))                # Visa
+            or (51 <= prefix2 <= 55 and length == 16)                    # MC
+            or (2221 <= prefix4 <= 2720 and length == 16)                # MC 2-series
+            or (prefix2 in (34, 37) and length == 15)                    # Amex
+            or (prefix4 == 6011 and length == 16)                        # Discover
+            or (prefix2 == 65 and length == 16)                          # Discover
+            or (prefix2 == 62 and 16 <= length <= 19)                    # UnionPay
+            or (prefix2 == 35 and length == 16)                          # JCB
+            or (prefix2 in (36, 38) and length == 14)                    # Diners
+        )
+        if not issuer_ok:
+            return False
+        total = 0
+        for index, char in enumerate(reversed(digits)):
+            digit = int(char)
+            if index % 2 == 1:
+                digit *= 2
+                if digit > 9:
+                    digit -= 9
+            total += digit
+        return total % 10 == 0
+
+    @staticmethod
+    def _valid_phone(value: str) -> bool:
+        """Reject OCR noise blocks ("00000001", "999999999") as phone numbers.
+
+        The landline alternative of :data:`~.regex_patterns.PHONE` starts at a
+        literal ``0``, which is exactly the shape of the zero-runs PaddleOCR
+        emits for unreadable Devanagari, so a chat screenshot produced a dozen
+        phantom "phone numbers" per item.
+        """
+        digits = re.sub(r"[^\d]", "", value)
+        return len(set(digits)) >= 3
+
+    @staticmethod
+    def _valid_transaction_id(value: str) -> bool:
+        """A transaction code carries at least one digit and one more char.
+
+        The label alternative of :data:`~.regex_patterns.TRANSACTION_ID` would
+        otherwise capture the next ordinary word after "reference" or "order".
+        """
+        candidate = value.strip()
+        if len(candidate) < 5 or not any(c.isdigit() for c in candidate):
+            return False
+        # Reject amounts ("1,500.00", "2,000") - a money value that happens to
+        # follow the word "payment" is not a transaction code. The dotted
+        # eSewa form ("0119.0625.987456") has two separators and survives.
+        if re.fullmatch(r"\d{1,3}(?:,\d{3})*(?:\.\d{1,2})?", candidate):
+            return False
+        return not re.fullmatch(r"\d+\.\d+", candidate)
+
     # ---------------------------------------------------------- normalisation
 
     @staticmethod
@@ -220,6 +339,20 @@ class EntityExtractor:
         if bare.startswith("977") and len(bare) == 13:
             return f"+{bare}"
         return digits
+
+    @classmethod
+    def _normalize_wallet_id(cls, value: str) -> str:
+        """Wallet ids are a mobile number *or* an email; normalise either.
+
+        eSewa/Khalti/IME Pay all accept an email address as the account
+        identifier, so running every wallet id through the phone normaliser
+        (which strips non-digits) turned ``user@gmail.com`` into ``21`` and
+        silently corrupted the record.
+        """
+        candidate = value.strip()
+        if "@" in candidate:
+            return candidate.lower()
+        return cls._normalize_phone(candidate)
 
     @staticmethod
     def _normalize_mac(value: str) -> str:

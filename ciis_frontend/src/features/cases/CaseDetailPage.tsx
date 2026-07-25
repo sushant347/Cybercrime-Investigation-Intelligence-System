@@ -35,7 +35,6 @@ import { TimelineTab } from "@/features/timeline/TimelineTab";
 import { apiErrorMessage } from "@/lib/apiClient";
 import { formatDateTime } from "@/lib/format";
 
-import { CaseHistoryTab } from "./CaseHistoryTab";
 import { CaseOverviewTab } from "./CaseOverviewTab";
 
 const TABS = [
@@ -46,7 +45,6 @@ const TABS = [
   "timeline",
   "analytics",
   "reports",
-  "history",
 ] as const;
 
 type TabKey = (typeof TABS)[number];
@@ -229,7 +227,6 @@ export default function CaseDetailPage() {
       {activeTab === "reports" && (
         <ReportsTab caseId={caseId} caseReference={caseData.case_reference} />
       )}
-      {activeTab === "history" && <CaseHistoryTab caseId={caseId} />}
 
       <Snackbar
         open={!!toast}

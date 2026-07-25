@@ -169,6 +169,166 @@ def linked_case_ids(
     return [str(c) for c in related]
 
 
+def evidence_processing_state(
+    evidence_config: EvidenceConfig,
+    investigation_config: InvestigationConfig,
+    evidence_id: str,
+) -> Dict[str, object]:
+    """What the engine actually produced for one evidence item.
+
+    "Processed" is not a single flag: the register's ``status`` column says
+    what the acquisition step *thought*, while the real question - has this
+    item contributed anything to the investigation record? - is answered by
+    whether OCR text, entities or forensic reports exist. Deletion policy
+    depends on that distinction, so it is computed in one place rather than
+    guessed at by each caller.
+    """
+    row: Dict[str, str] = {}
+    if evidence_config.evidence_csv.is_file():
+        with open(evidence_config.evidence_csv, "r", newline="",
+                  encoding="utf-8") as handle:
+            for candidate in csv.DictReader(handle):
+                if candidate.get("evidence_id") == evidence_id:
+                    row = candidate
+                    break
+    if not row:
+        return {"exists": False}
+
+    case_id = row.get("case_id", "")
+
+    entity_count = 0
+    if investigation_config.entities_csv.is_file():
+        with open(investigation_config.entities_csv, "r", newline="",
+                  encoding="utf-8") as handle:
+            entity_count = sum(
+                1 for r in csv.DictReader(handle)
+                if r.get("evidence_id") == evidence_id
+            )
+
+    has_text = False
+    case_json = evidence_config.json_dir / f"{case_id}.json"
+    if case_json.is_file():
+        try:
+            import json
+
+            document = json.loads(case_json.read_text(encoding="utf-8"))
+            has_text = any(
+                (item.get("raw_text") or "").strip()
+                for item in document.get("evidence", [])
+                if item.get("evidence_id") == evidence_id
+            )
+        except (OSError, ValueError) as exc:  # noqa: BLE001
+            log.warning("case JSON unreadable for %s: %s", evidence_id, exc)
+
+    has_forensics = (investigation_config.forensics_dir / evidence_id).is_dir()
+
+    return {
+        "exists": True,
+        "evidence_id": evidence_id,
+        "case_id": case_id,
+        "status": row.get("status", ""),
+        "entity_count": entity_count,
+        "has_ocr_text": has_text,
+        "has_forensics": has_forensics,
+        "processed": bool(has_text or entity_count or has_forensics),
+    }
+
+
+def delete_evidence(
+    evidence_config: EvidenceConfig,
+    investigation_config: InvestigationConfig,
+    evidence_id: str,
+) -> Dict[str, object]:
+    """Remove one evidence item and everything derived from it.
+
+    Deletes the register row, the OCR result row and processing-log rows, the
+    item's entry in the case's OCR JSON, its entity rows, its stored original
+    and any Phase-1 forensic reports. Phase-2 artifacts are *not* rewritten
+    here: they are regenerated from the surviving evidence by the caller (the
+    API refreshes correlation/timeline/graph immediately after), which is the
+    same contract :func:`delete_case` follows.
+
+    Returns a summary; ``{"deleted": False}`` when the id is unknown.
+    """
+    import json
+
+    storage = evidence_config.storage_dir.resolve()
+
+    def _guard(path: Path) -> bool:
+        try:
+            path.resolve().relative_to(storage)
+            return True
+        except ValueError:
+            log.error("refusing to touch path outside storage: %s", path)
+            return False
+
+    row: Dict[str, str] = {}
+    if evidence_config.evidence_csv.is_file():
+        with open(evidence_config.evidence_csv, "r", newline="",
+                  encoding="utf-8") as handle:
+            for candidate in csv.DictReader(handle):
+                if candidate.get("evidence_id") == evidence_id:
+                    row = candidate
+                    break
+    if not row:
+        return {"deleted": False, "evidence_id": evidence_id}
+
+    case_id = row.get("case_id", "")
+    stored_file_name = row.get("stored_file_name", "")
+
+    removed_rows: Dict[str, int] = {}
+    for path in (
+        evidence_config.evidence_csv,
+        evidence_config.ocr_results_csv,
+        evidence_config.processing_log_csv,
+        investigation_config.entities_csv,
+    ):
+        if _guard(path):
+            removed_rows[path.name] = _filter_csv_rows(
+                path, lambda r: r.get("evidence_id") != evidence_id
+            )
+
+    deleted_paths: List[str] = []
+
+    # The case's OCR JSON holds one entry per evidence item.
+    case_json = evidence_config.json_dir / f"{case_id}.json"
+    if case_id and _guard(case_json) and case_json.is_file():
+        try:
+            document = json.loads(case_json.read_text(encoding="utf-8"))
+            items = document.get("evidence", [])
+            kept = [i for i in items if i.get("evidence_id") != evidence_id]
+            if len(kept) != len(items):
+                document["evidence"] = kept
+                document["evidence_count"] = len(kept)
+                case_json.write_text(json.dumps(document, indent=2,
+                                                ensure_ascii=False),
+                                     encoding="utf-8")
+                deleted_paths.append(f"json/{case_id}.json#{evidence_id}")
+        except (OSError, ValueError) as exc:  # noqa: BLE001
+            log.warning("could not update case JSON %s: %s", case_json, exc)
+
+    if stored_file_name:
+        original = evidence_config.originals_dir / stored_file_name
+        if _guard(original) and original.is_file():
+            original.unlink()
+            deleted_paths.append(original.name)
+
+    forensic_dir = investigation_config.forensics_dir / evidence_id
+    if _guard(forensic_dir) and forensic_dir.is_dir():
+        shutil.rmtree(forensic_dir, ignore_errors=True)
+        deleted_paths.append(f"forensics/{evidence_id}")
+
+    summary = {
+        "deleted": True,
+        "evidence_id": evidence_id,
+        "case_id": case_id,
+        "csv_rows_removed": removed_rows,
+        "paths_deleted": deleted_paths,
+    }
+    log.info("deleted evidence %s: %s", evidence_id, summary)
+    return summary
+
+
 def delete_case(
     evidence_config: EvidenceConfig,
     investigation_config: InvestigationConfig,

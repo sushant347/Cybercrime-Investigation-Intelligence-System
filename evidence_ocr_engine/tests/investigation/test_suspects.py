@@ -20,13 +20,13 @@ def assessment(icfg, data, repo, audit):
 def test_identity_anchors_found(assessment):
     anchors = {(s.identity_type, s.identity_value) for s in assessment.suspects}
     assert ("phones", "9812345678") in anchors
-    assert ("wallets", "esewa:9812345678") in anchors
+    assert ("esewa_ids", "+9779812345678") in anchors
     assert ("emails", "victim@example.com") in anchors
 
 
 def test_wallet_outranks_lone_email(assessment):
     by_value = {s.identity_value: s for s in assessment.suspects}
-    wallet = by_value["esewa:9812345678"]
+    wallet = by_value["+9779812345678"]
     email = by_value["victim@example.com"]
     assert wallet.confidence_score > email.confidence_score
     assert wallet.evidence_count == 2
@@ -35,7 +35,7 @@ def test_wallet_outranks_lone_email(assessment):
 
 def test_threat_flag_via_cooccurrence(assessment):
     wallet = next(s for s in assessment.suspects
-                  if s.identity_value == "esewa:9812345678")
+                  if s.identity_value == "+9779812345678")
     assert wallet.threat_flagged  # co-occurs with scam-bank.top in EVID_A
 
 

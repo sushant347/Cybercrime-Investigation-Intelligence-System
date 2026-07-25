@@ -58,7 +58,7 @@ def test_report_references_findings_not_hallucinations(pipeline, icfg, repo):
     # every substantive claim is grounded in computed artefacts
     assert CASE in markdown
     assert "EVID_A" in markdown and "EVID_B" in markdown
-    assert "esewa:9812345678" in markdown          # suspect anchor from data
+    assert "+9779812345678" in markdown          # suspect anchor from data
     assert "campaign_analysis.json" in markdown     # findings referenced
     assert "scam-bank.top" in markdown
     # all 15 mandated sections present

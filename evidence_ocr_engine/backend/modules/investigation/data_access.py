@@ -76,6 +76,8 @@ class ThreatIntelProvider:
                                             "source": "PhishTank"}}}
     """
 
+    source_name = "static-indicators"
+
     def __init__(self, path: Path) -> None:
         self._log = get_logger("investigation.threat_intel")
         self._indicators: Dict[str, Dict[str, Any]] = {}
@@ -111,6 +113,27 @@ class ThreatIntelProvider:
         }
 
 
+def default_threat_intel(config: InvestigationConfig):
+    """The provider a case gets when the caller injects nothing.
+
+    Curated indicators first, rule-based scoring behind them. Pairing the two
+    means the factor is *never* unavailable: before this, a deployment without
+    an indicator file (the default - the file is not shipped) produced
+    ``intel_available = 0`` and an empty threat panel on every case, which
+    reads as "nothing suspicious found" when the truth was "nothing was ever
+    checked".
+    """
+    from .threat_heuristics import (
+        ChainedThreatIntelProvider,
+        HeuristicThreatIntelProvider,
+    )
+
+    return ChainedThreatIntelProvider(
+        ThreatIntelProvider(config.threat_intel_json),
+        HeuristicThreatIntelProvider(),
+    )
+
+
 class CaseDataRepository:
     """Read-only access to every input a Phase-2 analysis needs."""
 
@@ -125,7 +148,7 @@ class CaseDataRepository:
                  threat_intel: Optional[ThreatIntelProvider] = None) -> None:
         self._cfg = config
         self._log = get_logger("investigation.data")
-        self.threat_intel = threat_intel or ThreatIntelProvider(config.threat_intel_json)
+        self.threat_intel = threat_intel or default_threat_intel(config)
 
     # ------------------------------------------------------------------ cases
 

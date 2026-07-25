@@ -81,15 +81,6 @@ export interface CaseDetail extends CaseSummary {
   case_reference: string;
 }
 
-export interface CaseHistoryEntry {
-  id: number;
-  case_id: string;
-  username: string;
-  action: string;
-  detail: string;
-  created_at: string;
-}
-
 // ------------------------------------------------------------- evidence
 export interface EvidenceRow {
   evidence_id: string;
@@ -132,10 +123,33 @@ export interface EvidenceOcr {
   [key: string]: unknown;
 }
 
+/** What the engine has produced for an item — the gate on deletion. */
+export interface EvidenceProcessingState {
+  exists: boolean;
+  evidence_id?: string;
+  case_id?: string;
+  status?: string;
+  entity_count?: number;
+  has_ocr_text?: boolean;
+  has_forensics?: boolean;
+  processed?: boolean;
+}
+
 export interface EvidenceDetail {
   record: EvidenceRow;
   ocr: EvidenceOcr | null;
   forensics: Record<string, unknown>;
+  /** True only while the item has produced no findings at all. */
+  deletable?: boolean;
+  processing_state?: EvidenceProcessingState;
+}
+
+export interface EvidenceDeleteResult {
+  deleted: boolean;
+  evidence_id: string;
+  case_id?: string;
+  remaining_evidence?: number;
+  artifacts_refreshed?: boolean;
 }
 
 export interface BackgroundJob {
@@ -378,14 +392,35 @@ export interface ValueCount {
   count: number;
 }
 
+/** One non-benign threat verdict, with the grounds the provider gave. */
+export interface ThreatIndicator {
+  value: string;
+  verdict: string;
+  source: string;
+  risk_score: number;
+  confidence: number;
+  brand_impersonated: string;
+  reasons: string[];
+  evidence_ids: string[];
+}
+
 export interface CaseAnalytics {
   case_id: string;
   evidence_count: number;
   entity_statistics: Record<string, number>;
+  /** How many entity types the extractor searches for (schema size). */
+  entity_types_supported?: number;
+  /** How many of those this case actually contains. */
+  entity_types_found?: number;
   top_entities: Record<string, ValueCount[]>;
   threat_statistics: Record<string, number>;
+  threat_indicators?: ThreatIndicator[];
+  /** Which provider(s) produced the verdicts, e.g. "static-indicators+heuristics". */
+  threat_source?: string;
   brand_statistics: ValueCount[];
   wallet_statistics: ValueCount[];
+  /** Payment identifiers split by rail: esewa_ids, khalti_ids, bank_accounts, … */
+  wallet_statistics_by_rail?: Record<string, ValueCount[]>;
   url_statistics: ValueCount[];
   device_statistics: ValueCount[];
   metadata_statistics: Record<string, number>;
@@ -651,6 +686,11 @@ export interface DashboardData {
     high_priority_cases: number;
     campaigns: number;
     unread_notifications: number;
+    /** Cases that have a stored analytics artifact. */
+    analysed_cases?: number;
+    /** Analysed cases holding at least one flagged indicator. */
+    cases_with_threats?: number;
+    entities_extracted?: number;
   };
   priority_distribution: Record<string, number>;
   threat_distribution: Record<string, number>;

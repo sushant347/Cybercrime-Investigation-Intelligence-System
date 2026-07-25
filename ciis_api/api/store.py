@@ -11,7 +11,6 @@ Layout (all under ``storage/platform/``)::
     notifications.json   engine-wide notifications           - needs ids
     activity_log.csv     user/system activity audit          - append-only
     case_meta.csv        per-case workflow state (status, tags, ...)
-    case_history.csv     immutable trail of case changes
 
 JSON is used where records are updated in place and need an auto-increment id;
 CSV where the data is a flat, append-mostly log (matching the engine's own
@@ -325,43 +324,14 @@ class CaseMetaStore(CsvCollection):
             return True
 
 
-# ------------------------------------------------------------ case history
-
-
-class CaseHistoryStore(CsvCollection):
-    """Immutable trail of workflow changes on a case."""
-
-    filename = "case_history.csv"
-    fieldnames = ("id", "created_at", "case_id", "username", "action", "detail")
-
-    def add(self, *, case_id: str, action: str, username: str = "",
-            detail: str = "") -> Dict[str, Any]:
-        return self.append(case_id=case_id, username=username, action=action, detail=detail)
-
-    def list(self, case_id: str = "") -> List[Dict[str, str]]:
-        rows = [r for r in self.all() if not case_id or r.get("case_id") == case_id]
-        rows.sort(key=lambda r: int(r.get("id", 0) or 0), reverse=True)
-        return rows
-
-    def delete_case(self, case_id: str) -> int:
-        with self._lock:
-            rows = self._read()
-            keep = [r for r in rows if r.get("case_id") != case_id]
-            removed = len(rows) - len(keep)
-            if removed:
-                self._write(keep)
-            return removed
-
-
 # ------------------------------------------------------------- singletons
 
 jobs = Jobs()
 notifications = Notifications()
 activity = ActivityLogStore()
 case_meta = CaseMetaStore()
-case_history = CaseHistoryStore()
 
-ALL_COLLECTIONS = (jobs, notifications, activity, case_meta, case_history)
+ALL_COLLECTIONS = (jobs, notifications, activity, case_meta)
 
 
 def clear_all() -> None:
@@ -376,5 +346,4 @@ def delete_case_everywhere(case_id: str) -> Dict[str, int]:
         "jobs": jobs.delete_case(case_id),
         "notifications": notifications.delete_case(case_id),
         "case_meta": int(case_meta.delete_case(case_id)),
-        "case_history": case_history.delete_case(case_id),
     }

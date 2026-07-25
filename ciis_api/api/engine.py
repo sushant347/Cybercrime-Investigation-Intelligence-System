@@ -270,6 +270,42 @@ def delete_case_cascade(case_id: str) -> dict[str, Any]:
     return {**purge, "linked_cases": linked, "refreshed_cases": refreshed}
 
 
+def evidence_state(evidence_id: str) -> dict[str, Any]:
+    """Whether an evidence item produced any findings yet (deletion gate)."""
+    from backend.modules.investigation.maintenance import evidence_processing_state
+
+    return evidence_processing_state(
+        evidence_config(), investigation_config(), evidence_id
+    )
+
+
+def delete_evidence_item(case_id: str, evidence_id: str) -> dict[str, Any]:
+    """Delete one evidence item, then refresh the case's live artifacts.
+
+    The purge itself is the engine's; what belongs here is the follow-up. A
+    case's correlation, timeline and graph are derived artifacts, so leaving
+    them untouched would keep an item visible in the graph and on the timeline
+    after its record had been removed - a discrepancy that is much worse in a
+    chain-of-custody product than a slow delete.
+    """
+    from backend.modules.investigation.maintenance import delete_evidence
+
+    with _pipeline_lock:  # engine CSV storage is not concurrent-safe
+        summary = delete_evidence(
+            evidence_config(), investigation_config(), evidence_id
+        )
+    if not summary.get("deleted"):
+        return summary
+
+    remaining = len(list_evidence(case_id))
+    refreshed = _refresh_timeline_graph(case_id) if remaining else None
+    return {
+        **summary,
+        "remaining_evidence": remaining,
+        "artifacts_refreshed": refreshed is not None,
+    }
+
+
 def _refresh_linked_cases(case_ids: list[str]) -> list[str]:
     """Recompute cross-case correlation + report for each surviving case."""
     if not case_ids:
@@ -307,12 +343,83 @@ def _refresh_linked_cases(case_ids: list[str]) -> list[str]:
 
 @lru_cache(maxsize=1)
 def _evidence_pipeline():
-    """Phase-1 pipeline with the production OCR engine (heavy: lazy)."""
-    from backend.modules.evidence.paddle_service import PaddleOCRService
+    """Acquisition + OCR pipeline with the production OCR engine (lazy)."""
     from backend.modules.evidence.pipeline import EvidencePipeline
 
+    return EvidencePipeline(evidence_config(), _ocr_engine())
+
+
+@lru_cache(maxsize=1)
+def _forensics_pipeline():
+    """Phase-1 forensic analyses, sharing the already-built OCR engine.
+
+    Built lazily and cached: the services themselves are cheap, but the OCR
+    adapters they compose are not, so the engine instance from
+    ``_evidence_pipeline`` is injected rather than a second one created.
+    """
+    from backend.modules.evidence.forensics.config import ForensicsConfig
+    from backend.modules.evidence.forensics.multi_ocr.engines import (
+        EasyOCRAdapter,
+        PaddleOCRAdapter,
+        TesseractAdapter,
+    )
+    from backend.modules.evidence.forensics.pipeline import build_default_pipeline
+
+    ecfg = evidence_config()
+    fcfg = ForensicsConfig.from_env(ecfg)
+
+    # Multi-OCR fusion is the one Phase-1 module that can add tens of seconds
+    # per upload, because EasyOCR and Tesseract are separate OCR stacks (and
+    # EasyOCR downloads its weights on first use). Nothing downstream reads the
+    # fusion report today, so an interactive upload uses the OCR engine that is
+    # already resident; the other engines are opt-in per deployment.
+    engines = [PaddleOCRAdapter(ecfg, engine=_ocr_engine())]
+    if getattr(settings, "FORENSICS_FUSION_EASYOCR", False):
+        engines.append(EasyOCRAdapter(fcfg))
+    if getattr(settings, "FORENSICS_FUSION_TESSERACT", False):
+        engines.append(TesseractAdapter(fcfg))
+
+    return build_default_pipeline(
+        ecfg, fcfg, ocr_engine=_ocr_engine(), fusion_engines=engines,
+    )
+
+
+def _run_forensics(evidence_id: str) -> Optional[dict[str, Any]]:
+    """Run the Phase-1 forensic chain on one already-acquired item.
+
+    The upload path used to stop after OCR + entity extraction, so
+    ``storage/forensics/`` was never created and *no* case in the system had a
+    quality score, EXIF/metadata report, forgery assessment, logo/brand
+    detection or evidence-confidence score. Everything downstream that reads
+    those reports - the analytics quality panel, brand statistics, device
+    statistics, the forgery component of the priority score, and the evidence
+    confidence the suspect scorer uses - was therefore permanently zero.
+
+    ``analyze_evidence`` re-uses the stored original and the existing evidence
+    row, so nothing is re-acquired or re-hashed for custody. Failure-isolated:
+    a forensic analysis that cannot run must never discard captured evidence.
+    """
+    if not getattr(settings, "ENGINE_RUN_FORENSICS", True):
+        log.info("Phase-1 forensics disabled (ENGINE_RUN_FORENSICS=0)")
+        return None
+    try:
+        results = _forensics_pipeline().analyze_evidence(evidence_id)
+        failures = results.get("failures") or []
+        log.info("Phase-1 forensics for %s: failures=%s", evidence_id,
+                 failures or "none")
+        return results
+    except Exception:  # noqa: BLE001 - best-effort, never fatal
+        log.exception("Phase-1 forensics failed for %s", evidence_id)
+        return None
+
+
+@lru_cache(maxsize=1)
+def _ocr_engine():
+    """The single PaddleOCR instance shared by every pipeline (heavy: lazy)."""
+    from backend.modules.evidence.paddle_service import PaddleOCRService
+
     cfg = evidence_config()
-    return EvidencePipeline(cfg, PaddleOCRService(cfg, lang=cfg.ocr_lang))
+    return PaddleOCRService(cfg, lang=cfg.ocr_lang)
 
 
 @lru_cache(maxsize=1)
@@ -419,6 +526,11 @@ def submit_evidence_job(job_id: int, tmp_path: str, case_id: str,
                 # keyword_*.csv). Best-effort: a failure here does not discard
                 # the OCR result.
                 summary = _enrich_evidence(case_id, result.evidence_id)
+                # Phase-1 forensics on the stored original: integrity, EXIF /
+                # metadata, image quality, forgery indicators, brand logos and
+                # the composite evidence-confidence score. Runs inside the same
+                # lock (it appends to the forensic CSV registers).
+                forensics = _run_forensics(result.evidence_id)
                 # Entities are now durable, so regenerate only the timeline and
                 # relationship graph.  Other Phase-2/report modules are not run.
                 live_artifacts = _refresh_timeline_graph(case_id)
@@ -432,6 +544,8 @@ def submit_evidence_job(job_id: int, tmp_path: str, case_id: str,
                     f"Processed as {result.evidence_id}; "
                     f"{entities} entities extracted"
                 )
+            if forensics is not None:
+                detail += "; forensic reports generated"
             if live_artifacts is not None:
                 detail += "; timeline and graph refreshed"
             else:
@@ -460,27 +574,68 @@ def submit_evidence_job(job_id: int, tmp_path: str, case_id: str,
 
 @lru_cache(maxsize=1)
 def _threat_intel_provider():
-    """Threat-intel provider for Phase-2 analysis.
+    """Threat-intel provider chain for Phase-2 analysis.
 
-    Returns the ML-backed provider when ``CIIS_ML_THREAT_INTEL`` is enabled and
-    the classifier loads; otherwise ``None`` so ``build_default_pipeline`` falls
-    back to the engine's static indicator-file provider. The ML adapter itself
-    degrades gracefully, so this never raises.
+    Curated indicator file -> ML classifier (when its dependencies are
+    installed and the model loads) -> rule-based heuristics. The chain keeps
+    the most serious *explained* verdict, so a deployment with no indicator
+    file and no ML stack still scores every link instead of reporting
+    "intelligence unavailable" - which is what happened before, on every case,
+    because the indicator file is not shipped and the ML dependencies live in a
+    separate virtualenv.
     """
-    if not getattr(settings, "ML_THREAT_INTEL_ENABLED", False):
-        return None
-    from backend.modules.investigation.ml_threat_intel import MLThreatIntelProvider
-
-    provider = MLThreatIntelProvider(
-        settings.ML_THREAT_INTEL_ROOT,
-        model_type=getattr(settings, "ML_THREAT_INTEL_MODEL", "xgboost"),
-        use_intelligence=getattr(settings, "ML_THREAT_INTEL_LIVE", False),
+    from backend.modules.investigation.data_access import ThreatIntelProvider
+    from backend.modules.investigation.threat_heuristics import (
+        ChainedThreatIntelProvider,
+        HeuristicThreatIntelProvider,
     )
-    if not provider.available:
-        log.warning("ML threat-intel enabled but classifier unavailable; using static intel")
-        return None
-    log.info("ML threat-intel provider active (model=%s)", settings.ML_THREAT_INTEL_MODEL)
-    return provider
+
+    providers = [ThreatIntelProvider(investigation_config().threat_intel_json)]
+
+    if getattr(settings, "ML_THREAT_INTEL_ENABLED", False):
+        from backend.modules.investigation.ml_threat_intel import MLThreatIntelProvider
+
+        ml = MLThreatIntelProvider(
+            settings.ML_THREAT_INTEL_ROOT,
+            model_type=getattr(settings, "ML_THREAT_INTEL_MODEL", "xgboost"),
+            use_intelligence=getattr(settings, "ML_THREAT_INTEL_LIVE", False),
+        )
+        if ml.available:
+            log.info("ML threat-intel active (model=%s)", settings.ML_THREAT_INTEL_MODEL)
+            providers.append(ml)
+        else:
+            log.warning(
+                "ML threat-intel enabled but the classifier did not load; "
+                "continuing with indicator file + heuristics"
+            )
+
+    providers.append(HeuristicThreatIntelProvider())
+    chain = ChainedThreatIntelProvider(*providers)
+    log.info("threat-intel chain: %s", chain.source_name)
+    return chain
+
+
+def _backfill_forensics(case_id: str) -> int:
+    """Generate missing Phase-1 reports for a case; returns items repaired.
+
+    Only items with no forensics directory are touched, so this is cheap on a
+    healthy case and self-limiting on a repeat run. The caller must hold
+    ``_pipeline_lock``.
+    """
+    if not getattr(settings, "ENGINE_RUN_FORENSICS", True):
+        return 0
+    root = investigation_config().forensics_dir
+    repaired = 0
+    for row in list_evidence(case_id):
+        evidence_id = row.get("evidence_id", "")
+        if not evidence_id or (root / evidence_id).is_dir():
+            continue
+        if _run_forensics(evidence_id) is not None:
+            repaired += 1
+    if repaired:
+        log.info("backfilled Phase-1 forensics for %d item(s) in %s",
+                 repaired, case_id)
+    return repaired
 
 
 def submit_analysis_job(job_id: int, case_id: str, username: str) -> None:
@@ -496,11 +651,20 @@ def submit_analysis_job(job_id: int, case_id: str, username: str) -> None:
             from backend.modules.investigation.pipeline import build_default_pipeline
 
             with _pipeline_lock:
+                # Evidence captured before forensics ran on upload has no
+                # Phase-1 reports, which would leave this case's quality,
+                # brand and forgery statistics at zero forever. Analysis is
+                # the natural place to repair that: it is explicit, already
+                # long-running, and the reports are what the analysis reads.
+                backfilled = _backfill_forensics(case_id)
                 results = build_default_pipeline(
                     threat_intel=_threat_intel_provider()
                 ).analyze_case(case_id)
             failures = results.get("failures") or []
-            jobs.finish(job_id, "completed", detail=f"failures={failures or 'none'}")
+            detail = f"failures={failures or 'none'}"
+            if backfilled:
+                detail += f"; forensics backfilled for {backfilled} item(s)"
+            jobs.finish(job_id, "completed", detail=detail)
             notifications.broadcast(
                 type=NotificationType.REPORT_GENERATED,
                 title=f"Investigation analysis completed for {case_id}",

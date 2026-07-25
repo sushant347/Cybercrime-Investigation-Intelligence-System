@@ -25,7 +25,7 @@ def test_strong_pair_from_shared_wallet_phone_device(service):
     analysis = service.analyze_case(CASE, persist=False)
     ab = _pair(analysis, "EVID_A", "EVID_B")
     factors = {f.factor for f in ab.factors}
-    assert {"phones", "wallets", "device_metadata", "timeline_proximity"} <= factors
+    assert {"phones", "esewa_ids", "device_metadata", "timeline_proximity"} <= factors
     assert ab.relationship_strength in {"STRONG", "VERY_STRONG"}
     assert ab.correlation_confidence > 0.7
     # explainability contract

@@ -112,7 +112,15 @@ class EvidenceUrlView(APIView):
 
 
 class EvidenceDetailView(APIView):
-    """Chain-of-custody row + every Phase-1 artifact for one evidence item."""
+    """Chain-of-custody row + every Phase-1 artifact for one evidence item.
+
+    ``DELETE`` removes an item that never produced anything. Evidence that has
+    been processed is immutable: once OCR text, entities or forensic reports
+    exist, findings elsewhere in the case cite it, and silently removing it
+    would break the chain of custody the rest of the product depends on. An
+    upload that failed, or one still queued, has no such standing - and leaving
+    the user no way to clear it was the actual complaint.
+    """
 
     permission_classes = (require("evidence.view"),)
 
@@ -120,13 +128,44 @@ class EvidenceDetailView(APIView):
         row = engine.get_evidence(evidence_id)
         if row is None or row.get("case_id") != case_id:
             return Response({"detail": "Evidence not found."}, status=404)
+        state = engine.evidence_state(evidence_id)
         return Response(
             {
                 "record": row,  # sha256 before/after, hash_verified, custody times
                 "ocr": engine.evidence_ocr(case_id, evidence_id),
                 "forensics": engine.forensics_artifacts(case_id, evidence_id),
+                # Lets the UI show *why* an item can or cannot be removed.
+                "deletable": not state.get("processed", True),
+                "processing_state": state,
             }
         )
+
+    #: Deletion carries the same capability as upload (see ``permissions``:
+    #: the engine is open access, so this documents intent rather than gating).
+    delete_permission = "evidence.upload"
+
+    def delete(self, request, case_id: str, evidence_id: str):
+        row = engine.get_evidence(evidence_id)
+        if row is None or row.get("case_id") != case_id:
+            return Response({"detail": "Evidence not found."}, status=404)
+
+        state = engine.evidence_state(evidence_id)
+        if state.get("processed"):
+            return Response(
+                {
+                    "detail": (
+                        "This item has already been processed and is part of "
+                        "the case record. Processed evidence cannot be deleted."
+                    ),
+                    "processing_state": state,
+                },
+                status=409,
+            )
+
+        summary = engine.delete_evidence_item(case_id, evidence_id)
+        activity.record(module="evidence", action="delete",
+                        case_id=case_id, detail=evidence_id)
+        return Response(summary, status=200)
 
 
 class EvidenceDownloadView(APIView):

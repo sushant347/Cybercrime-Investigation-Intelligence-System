@@ -8,8 +8,8 @@ from .. import engine
 from ..constants import CaseStatus
 from ..pagination import DefaultPagination
 from ..permissions import require
-from ..serializers import CaseCreateSerializer, case_history_payload
-from ..store import activity, case_history, case_meta
+from ..serializers import CaseCreateSerializer
+from ..store import activity, case_meta
 
 
 def _merged_case(row: dict, meta: dict | None) -> dict:
@@ -91,8 +91,6 @@ class CaseListCreateView(APIView):
             row["case_id"], title=data["title"], description=data["description"],
             tags=data["tags"], status=CaseStatus.OPEN,
         )
-        case_history.add(case_id=row["case_id"], action="created",
-                         detail=f"Case created: {data['title']}")
         activity.record(module="cases", action="create",
                         case_id=row["case_id"], detail=data["title"])
         return Response(_merged_case(row, meta), status=status.HTTP_201_CREATED)
@@ -120,8 +118,6 @@ class CaseDetailView(APIView):
             return Response({"detail": f"Unknown status '{fields['status']}'."}, status=400)
         case_meta.upsert(case_id, **fields)
         changed = ", ".join(sorted(fields))
-        case_history.add(case_id=case_id, action="updated",
-                         detail=f"Fields changed: {changed}")
         activity.record(module="cases", action="update",
                         case_id=case_id, detail=changed)
         return self.get(request, case_id)
@@ -135,16 +131,6 @@ class CaseArchiveView(APIView):
         new_status = CaseStatus.OPEN if unarchive else CaseStatus.ARCHIVED
         case_meta.upsert(case_id, status=new_status)
         action = "unarchived" if unarchive else "archived"
-        case_history.add(case_id=case_id, action=action)
         activity.record(module="cases", action=action, case_id=case_id)
         return Response({"case_id": case_id, "status": new_status})
 
-
-class CaseHistoryView(APIView):
-    permission_classes = (require("case.view"),)
-
-    def get(self, request, case_id: str):
-        rows = [case_history_payload(r) for r in case_history.list(case_id)]
-        paginator = DefaultPagination()
-        page = paginator.paginate_queryset(rows, request)
-        return paginator.get_paginated_response(page)

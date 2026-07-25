@@ -13,8 +13,12 @@ from __future__ import annotations
 
 import time
 from collections import Counter
-from typing import Dict, List, Optional, Sequence
+from typing import Any, Dict, List, Optional, Sequence
 
+from ...evidence.cleaning.entity_extractor import (
+    PAYMENT_ENTITY_TYPES,
+    SUPPORTED_ENTITY_TYPES,
+)
 from ...evidence.logger import get_logger
 from ..audit import InvestigationAuditTrail
 from ..campaigns.models import CampaignAnalysis
@@ -23,9 +27,13 @@ from ..correlation.models import CorrelationAnalysis
 from ..data_access import CaseDataRepository, EvidenceContext
 from ..repository import InvestigationReportRepository
 from ..timeline.models import TimelineAnalysis
-from .models import CaseAnalytics, ValueCount
+from .models import CaseAnalytics, ThreatIndicator, ValueCount
 
 MODULE = "analytics"
+
+#: Verdicts that count as a positive threat finding, whichever provider
+#: produced them (static indicator file, ML classifier or heuristics).
+_MALICIOUS_VERDICTS = frozenset({"malicious", "phishing", "scam", "fraud"})
 
 
 class AnalyticsService:
@@ -70,17 +78,24 @@ class AnalyticsService:
                     (entity.normalized or entity.value).lower()
                 ] += 1
 
+        threat = self._threat_analysis(items)
+
         analytics = CaseAnalytics(
             case_id=case_id,
             evidence_count=len(items),
             entity_statistics=dict(sorted(entity_counts.items())),
+            entity_types_supported=len(SUPPORTED_ENTITY_TYPES),
+            entity_types_found=len(entity_counts),
             top_entities={
                 entity_type: _top(counter, top_n)
                 for entity_type, counter in sorted(values_by_type.items())
             },
-            threat_statistics=self._threat_statistics(items),
+            threat_statistics=threat["statistics"],
+            threat_indicators=threat["indicators"],
+            threat_source=threat["source"],
             brand_statistics=self._brand_statistics(items, top_n),
-            wallet_statistics=_top(values_by_type.get("wallets", Counter()), top_n),
+            wallet_statistics=self._wallet_statistics(values_by_type, top_n),
+            wallet_statistics_by_rail=self._wallet_by_rail(values_by_type, top_n),
             url_statistics=_top(values_by_type.get("urls", Counter()), top_n),
             device_statistics=self._device_statistics(items, top_n),
             metadata_statistics=self._metadata_statistics(items),
@@ -121,26 +136,104 @@ class AnalyticsService:
 
     # ---------------------------------------------------------------- internal
 
-    def _threat_statistics(self, items: Sequence[EvidenceContext]) -> Dict[str, float]:
+    #: Entity types worth submitting to threat intelligence.
+    _INDICATOR_TYPES = ("urls", "domains", "social_media_urls")
+
+    def _threat_analysis(self, items: Sequence[EvidenceContext]) -> Dict[str, Any]:
+        """Score every indicator in the case and keep the *reasons*.
+
+        The previous version recorded five counters and threw the verdicts
+        away, so a case whose evidence was full of phishing links showed an
+        empty panel with no way to tell "clean" from "never checked". It also
+        counted the same URL once per occurrence. Now each distinct indicator
+        is looked up once, and the per-indicator verdict - with the grounds the
+        provider gave - is stored alongside the counters.
+        """
         intel = self._data.threat_intel
-        flagged_values: set = set()
-        flagged_evidence: set = set()
-        checked = 0
+        available = bool(getattr(intel, "available", False))
+
+        # Distinct indicator -> the evidence items it appears in.
+        occurrences: Dict[str, set] = {}
         for context in items:
-            for value in context.entity_values("urls") + context.entity_values("domains"):
-                checked += 1
-                if intel.available and intel.is_malicious(value):
-                    flagged_values.add(value.lower())
-                    flagged_evidence.add(context.evidence_id)
-        return {
-            "intel_available": 1.0 if intel.available else 0.0,
-            "indicators_checked": float(checked),
-            "malicious_indicators": float(len(flagged_values)),
+            for entity_type in self._INDICATOR_TYPES:
+                for value in context.entity_values(entity_type):
+                    key = value.strip().lower()
+                    if key:
+                        occurrences.setdefault(key, set()).add(context.evidence_id)
+
+        verdicts: Counter = Counter()
+        flagged_evidence: set = set()
+        indicators: List[ThreatIndicator] = []
+        for value, evidence_ids in sorted(occurrences.items()):
+            hit = intel.lookup(value) if available else None
+            verdict = str((hit or {}).get("verdict", "") or
+                          ("unknown" if not available else "benign")).lower()
+            verdicts[verdict] += 1
+            if verdict in _MALICIOUS_VERDICTS:
+                flagged_evidence.update(evidence_ids)
+            if hit is not None and verdict != "benign":
+                indicators.append(ThreatIndicator(
+                    value=value,
+                    verdict=verdict,
+                    source=str(hit.get("source", "") or ""),
+                    risk_score=float(hit.get("risk_score", 0.0) or 0.0),
+                    confidence=float(hit.get("confidence", 0.0) or 0.0),
+                    brand_impersonated=str(hit.get("brand_impersonated", "") or ""),
+                    reasons=[str(r) for r in (hit.get("reasons") or [])][:6],
+                    evidence_ids=sorted(evidence_ids),
+                ))
+        indicators.sort(key=lambda i: (-i.risk_score, i.value))
+
+        statistics = {
+            "intel_available": 1.0 if available else 0.0,
+            "indicators_checked": float(len(occurrences)),
+            "malicious_indicators": float(
+                sum(verdicts[v] for v in _MALICIOUS_VERDICTS)
+            ),
+            "suspicious_indicators": float(verdicts.get("suspicious", 0)),
+            "benign_indicators": float(verdicts.get("benign", 0)),
             "evidence_with_threats": float(len(flagged_evidence)),
             "threat_evidence_ratio": round(
                 len(flagged_evidence) / len(items), 4
             ) if items else 0.0,
         }
+        return {
+            "statistics": statistics,
+            "indicators": indicators[: self._cfg.analytics_top_n],
+            "source": str(getattr(intel, "source_name", "") or
+                          ("static-indicators" if available else "unavailable")),
+        }
+
+    @staticmethod
+    def _wallet_statistics(values_by_type: Dict[str, Counter], top_n: int
+                           ) -> List[ValueCount]:
+        """Every payment identifier in the case, most frequent first.
+
+        This used to read ``values_by_type["wallets"]`` - an entity type the
+        extractor has never produced - so the panel was empty on every case
+        ever analysed, including cases whose evidence was nothing *but* eSewa,
+        Khalti and bank transfers. The payment rails are enumerated in
+        :data:`PAYMENT_ENTITY_TYPES`, so a new rail shows up here for free.
+        """
+        merged: Counter = Counter()
+        for entity_type in PAYMENT_ENTITY_TYPES:
+            merged.update(values_by_type.get(entity_type, Counter()))
+        return _top(merged, top_n)
+
+    @staticmethod
+    def _wallet_by_rail(values_by_type: Dict[str, Counter], top_n: int
+                        ) -> Dict[str, List[ValueCount]]:
+        """Payment identifiers split by rail (eSewa / Khalti / bank / …).
+
+        Investigators follow the money one rail at a time; the merged list
+        answers "which id recurs", this answers "which rail was used".
+        """
+        by_rail: Dict[str, List[ValueCount]] = {}
+        for entity_type in PAYMENT_ENTITY_TYPES:
+            counter = values_by_type.get(entity_type)
+            if counter:
+                by_rail[entity_type] = _top(counter, top_n)
+        return by_rail
 
     @staticmethod
     def _brand_statistics(items: Sequence[EvidenceContext], top_n: int
