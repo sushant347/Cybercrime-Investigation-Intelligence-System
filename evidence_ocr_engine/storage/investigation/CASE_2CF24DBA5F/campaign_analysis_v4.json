@@ -1,0 +1,20 @@
+{
+  "report_type": "campaign_analysis",
+  "report_version": 4,
+  "schema_version": "2.0",
+  "case_id": "CASE_2CF24DBA5F",
+  "generated_at": "2026-07-25T14:45:18.973Z",
+  "report": {
+    "case_id": "CASE_2CF24DBA5F",
+    "campaign_count": 0,
+    "campaigns": [],
+    "unclustered_evidence": [
+      "EVID_00001",
+      "EVID_00002",
+      "EVID_00003",
+      "EVID_00004",
+      "EVID_00005"
+    ],
+    "analysis_time_ms": 0.0
+  }
+}

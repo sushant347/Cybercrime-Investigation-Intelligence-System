@@ -3,69 +3,70 @@
   "report_version": 3,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-07-25T12:53:33.500Z",
+  "generated_at": "2026-07-25T14:23:40.636Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
-    "node_count": 16,
-    "edge_count": 16,
+    "node_count": 14,
+    "edge_count": 19,
     "nodes_by_type": {
       "case": 1,
       "evidence": 3,
-      "port": 2,
-      "time": 5,
-      "date": 1,
+      "domain": 3,
+      "url": 2,
       "money": 1,
+      "email": 1,
       "timeline_event": 3
     },
     "edges_by_type": {
       "contains": 3,
-      "shared_entity": 9,
+      "shared_entity": 7,
+      "threat_relationship": 3,
       "timeline_event": 3,
-      "temporal_relationship": 1
+      "temporal_relationship": 3
     },
-    "density": 0.1333,
+    "density": 0.2088,
     "connected_components": 1,
-    "largest_component_size": 16,
-    "average_degree": 2.0,
+    "largest_component_size": 14,
+    "average_degree": 2.714,
     "top_hubs": [
       {
+        "node": "evidence:EVID_00003",
+        "degree": "11"
+      },
+      {
         "node": "evidence:EVID_00001",
-        "degree": "7"
+        "degree": "6"
       },
       {
         "node": "evidence:EVID_00002",
-        "degree": "7"
+        "degree": "5"
       },
       {
         "node": "case:CASE_2CF24DBA5F",
         "degree": "3"
       },
       {
-        "node": "evidence:EVID_00003",
-        "degree": "3"
+        "node": "domain:nabil-bank-alerts.com",
+        "degree": "2"
       },
       {
-        "node": "port:41",
+        "node": "domain:nabil-verify.example-scam.top",
+        "degree": "2"
+      },
+      {
+        "node": "url:http://nabil-verify.example-scam.top/login",
+        "degree": "2"
+      },
+      {
+        "node": "domain:plasticostermoencogibles.pe",
         "degree": "1"
       },
       {
-        "node": "port:43",
+        "node": "url:https://plasticostermoencogibles.pe/scss/css/scss/",
         "degree": "1"
       },
       {
-        "node": "time:11:43\n",
-        "degree": "1"
-      },
-      {
-        "node": "time:1:41 pm",
-        "degree": "1"
-      },
-      {
-        "node": "date:2026-01-04",
-        "degree": "1"
-      },
-      {
-        "node": "money:rs 2000",
+        "node": "money:npr 250000",
         "degree": "1"
       }
     ]

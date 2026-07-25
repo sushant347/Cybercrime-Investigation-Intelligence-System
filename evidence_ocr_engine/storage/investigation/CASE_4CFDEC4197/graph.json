@@ -1,0 +1,136 @@
+{
+  "report_type": "graph",
+  "report_version": 1,
+  "schema_version": "2.0",
+  "case_id": "CASE_4CFDEC4197",
+  "generated_at": "2026-07-25T14:41:23.910Z",
+  "report": {
+    "case_id": "CASE_4CFDEC4197",
+    "directed": false,
+    "nodes": [
+      {
+        "id": "case:CASE_4CFDEC4197",
+        "node_type": "case",
+        "label": "CASE_4CFDEC4197",
+        "properties": {}
+      },
+      {
+        "id": "evidence:EVID_00006",
+        "node_type": "evidence",
+        "label": "EVID_00006",
+        "properties": {
+          "file_name": "http_shared-scam-domain.test_pay.url",
+          "upload_time": "2026-07-25T14:41:19.994Z"
+        }
+      },
+      {
+        "id": "domain:shared-scam-domain.test",
+        "node_type": "domain",
+        "label": "shared-scam-domain.test",
+        "properties": {}
+      },
+      {
+        "id": "url:http://shared-scam-domain.test/pay",
+        "node_type": "url",
+        "label": "http://shared-scam-domain.test/pay",
+        "properties": {}
+      },
+      {
+        "id": "timeline_event:CASE_4CFDEC4197:EVID_00006",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00006 (http_shared-scam-domain.test_pay.url)",
+        "properties": {
+          "timestamp": "2026-07-25T14:41:19.994000+00:00",
+          "time_source": "upload_time_fallback",
+          "timestamp_inferred": "true"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "source": "case:CASE_4CFDEC4197",
+        "target": "evidence:EVID_00006",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00006"
+        ],
+        "timestamp": "2026-07-25T14:41:19.994000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00006 belongs to CASE_4CFDEC4197"
+      },
+      {
+        "source": "evidence:EVID_00006",
+        "target": "domain:shared-scam-domain.test",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00006"
+        ],
+        "timestamp": "2026-07-25T14:41:19.994000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00006 mentions shared-scam-domain.test"
+      },
+      {
+        "source": "domain:shared-scam-domain.test",
+        "target": "evidence:EVID_00006",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00006"
+        ],
+        "timestamp": "2026-07-25T14:41:19.994000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "shared-scam-domain.test is flagged malicious by threat intelligence (ml:xgboost)"
+      },
+      {
+        "source": "evidence:EVID_00006",
+        "target": "url:http://shared-scam-domain.test/pay",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00006"
+        ],
+        "timestamp": "2026-07-25T14:41:19.994000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00006 mentions http://shared-scam-domain.test/pay"
+      },
+      {
+        "source": "url:http://shared-scam-domain.test/pay",
+        "target": "evidence:EVID_00006",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00006"
+        ],
+        "timestamp": "2026-07-25T14:41:19.994000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "http://shared-scam-domain.test/pay is flagged malicious by threat intelligence (ml:xgboost)"
+      },
+      {
+        "source": "evidence:EVID_00006",
+        "target": "timeline_event:CASE_4CFDEC4197:EVID_00006",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 0.4,
+        "source_evidence_ids": [
+          "EVID_00006"
+        ],
+        "timestamp": "2026-07-25T14:41:19.994000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Reconstructed event for EVID_00006"
+      }
+    ]
+  }
+}

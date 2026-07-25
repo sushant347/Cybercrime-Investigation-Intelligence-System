@@ -3,18 +3,17 @@
   "report_version": 1,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-07-25T12:53:55.987Z",
+  "generated_at": "2026-07-25T14:24:15.345Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
-    "evidence_count": 4,
+    "evidence_count": 5,
     "entity_statistics": {
       "dates": 1,
-      "domains": 2,
+      "domains": 3,
       "emails": 1,
-      "money": 1,
-      "ports": 2,
-      "times": 5,
-      "urls": 1
+      "money": 2,
+      "times": 3,
+      "urls": 2
     },
     "top_entities": {
       "dates": [
@@ -24,6 +23,10 @@
         }
       ],
       "domains": [
+        {
+          "value": "plasticostermoencogibles.pe",
+          "count": 1
+        },
         {
           "value": "nabil-verify.example-scam.top",
           "count": 1
@@ -41,29 +44,15 @@
       ],
       "money": [
         {
-          "value": "rs 2000",
-          "count": 1
-        }
-      ],
-      "ports": [
-        {
-          "value": "43",
+          "value": "npr 250000",
           "count": 1
         },
         {
-          "value": "41",
+          "value": "npr 2000",
           "count": 1
         }
       ],
       "times": [
-        {
-          "value": "11:43\n",
-          "count": 1
-        },
-        {
-          "value": "1:41 pm",
-          "count": 1
-        },
         {
           "value": "09:12",
           "count": 1
@@ -79,21 +68,29 @@
       ],
       "urls": [
         {
+          "value": "https://plasticostermoencogibles.pe/scss/css/scss/",
+          "count": 1
+        },
+        {
           "value": "http://nabil-verify.example-scam.top/login",
           "count": 1
         }
       ]
     },
     "threat_statistics": {
-      "intel_available": 0.0,
-      "indicators_checked": 3.0,
-      "malicious_indicators": 0.0,
-      "evidence_with_threats": 0.0,
-      "threat_evidence_ratio": 0.0
+      "intel_available": 1.0,
+      "indicators_checked": 5.0,
+      "malicious_indicators": 3.0,
+      "evidence_with_threats": 1.0,
+      "threat_evidence_ratio": 0.2
     },
     "brand_statistics": [],
     "wallet_statistics": [],
     "url_statistics": [
+      {
+        "value": "https://plasticostermoencogibles.pe/scss/css/scss/",
+        "count": 1
+      },
       {
         "value": "http://nabil-verify.example-scam.top/login",
         "count": 1
@@ -110,29 +107,29 @@
       "campaign_count": 0.0,
       "largest_campaign_size": 0.0,
       "clustered_evidence": 0.0,
-      "unclustered_evidence": 4.0,
+      "unclustered_evidence": 5.0,
       "mean_campaign_confidence": 0.0
     },
     "timeline_statistics": {
-      "event_count": 4.0,
-      "resolved_event_count": 4.0,
+      "event_count": 5.0,
+      "resolved_event_count": 5.0,
       "unresolved_event_count": 0.0,
-      "inferred_event_count": 3.0,
-      "stage_count": 4.0,
-      "critical_event_count": 1.0,
-      "timeline_span_hours": 4851.7
+      "inferred_event_count": 4.0,
+      "stage_count": 5.0,
+      "critical_event_count": 2.0,
+      "timeline_span_hours": 4853.19
     },
     "evidence_quality_statistics": {
       "mean_image_quality": 0.0,
       "mean_evidence_confidence": 0.0,
       "mean_forgery_score": 0.0,
       "max_forgery_score": 0.0,
-      "mean_ocr_confidence": 0.97,
-      "hash_verified_count": 4.0
+      "mean_ocr_confidence": 0.98,
+      "hash_verified_count": 5.0
     },
     "correlation_statistics": {
-      "pair_count": 6.0,
-      "related_pair_count": 6.0,
+      "pair_count": 10.0,
+      "related_pair_count": 10.0,
       "mean_confidence": 0.2212,
       "max_confidence": 0.2212
     },

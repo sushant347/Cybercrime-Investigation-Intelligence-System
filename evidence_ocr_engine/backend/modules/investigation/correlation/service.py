@@ -51,7 +51,11 @@ class CorrelationService:
         self._audit = audit
         self._log = get_logger("investigation.correlation")
         self._index = CrossCaseEntityIndex(
-            config.entities_csv, legacy_index_path=config.cross_case_index_path
+            config.entities_csv,
+            legacy_index_path=config.cross_case_index_path,
+            # Ignore entity rows whose case has no evidence left, so a stale
+            # row can never resurrect a deleted case in cross-correlation.
+            evidence_csv=config.evidence_csv,
         )
 
     # ------------------------------------------------------------------ public

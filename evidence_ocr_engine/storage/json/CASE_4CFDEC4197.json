@@ -1,0 +1,188 @@
+{
+  "case_id": "CASE_4CFDEC4197",
+  "created_at": "2026-07-25T14:41:19.996Z",
+  "updated_at": "2026-07-25T14:41:20.055Z",
+  "evidence_count": 1,
+  "evidence": [
+    {
+      "case_id": "CASE_4CFDEC4197",
+      "evidence_id": "EVID_00006",
+      "file_name": "http_shared-scam-domain.test_pay.url",
+      "file_hash": "08dcf69e8c1888d919ce088901076b95b3badf8d840a871a461d622d679ac619",
+      "file_size": "35",
+      "upload_time": "2026-07-25T14:41:19.994Z",
+      "processing_time_ms": 3.1,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 1.0,
+          "text": "http://shared-scam-domain.test/pay",
+          "lines": [
+            {
+              "text": "http://shared-scam-domain.test/pay",
+              "confidence": 1.0,
+              "bbox": []
+            }
+          ],
+          "bounding_boxes": [
+            []
+          ],
+          "preprocessing_steps": [
+            "none(url)"
+          ]
+        }
+      ],
+      "raw_text": "http://shared-scam-domain.test/pay",
+      "average_confidence": 1.0,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_4CFDEC4197",
+        "evidence_id": "EVID_00006",
+        "raw_text": "http://shared-scam-domain.test/pay",
+        "cleaned_text": "http://shared-scam-domain.test/pay",
+        "language": "english",
+        "line_languages": {
+          "1": "english"
+        },
+        "entities": {
+          "urls": [
+            {
+              "value": "http://shared-scam-domain.test/pay",
+              "normalized": "http://shared-scam-domain.test/pay"
+            }
+          ],
+          "emails": [],
+          "domains": [
+            {
+              "value": "shared-scam-domain.test",
+              "normalized": "shared-scam-domain.test"
+            }
+          ],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "phones": [],
+          "dates": [],
+          "times": [],
+          "money": [],
+          "otp": [],
+          "bank_accounts": [],
+          "esewa_ids": [],
+          "khalti_ids": [],
+          "imepay_ids": [],
+          "hashes_sha512": [],
+          "hashes_sha256": [],
+          "hashes_sha1": [],
+          "hashes_md5": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {},
+        "risk_signals": {
+          "urgency": 0,
+          "financial": 0,
+          "credential": 0,
+          "threat": 0
+        },
+        "statistics": {
+          "characters": 34,
+          "words": 1,
+          "lines": 1,
+          "average_line_length": 34.0,
+          "languages_detected": [
+            "english"
+          ],
+          "entity_count": 2,
+          "cleaning_operations": [
+            "entities_protected(1)"
+          ],
+          "ocr_corrections": [],
+          "protected_entities": 1
+        },
+        "processing_time_ms": 0.47
+      },
+      "enhancement": {
+        "case_id": "CASE_4CFDEC4197",
+        "evidence_id": "EVID_00006",
+        "cleaned_text": "http://shared-scam-domain.test/pay",
+        "enhanced_text": "http://shared-scam-domain.test/pay",
+        "ui_text": "",
+        "message_text": "http://shared-scam-domain.test/pay",
+        "layout": [
+          {
+            "line": 1,
+            "role": "message",
+            "text": "http://shared-scam-domain.test/pay"
+          }
+        ],
+        "corrections": [],
+        "correction_statistics": {
+          "total_corrections": 0,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 0,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 1,
+          "lines_high_confidence": 1,
+          "lines_correctable": 0,
+          "document_confidence": 1.0,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 0.17
+      },
+      "semantic_correction": {
+        "case_id": "CASE_4CFDEC4197",
+        "evidence_id": "EVID_00006",
+        "enhanced_text": "http://shared-scam-domain.test/pay",
+        "semantic_text": "http://shared-scam-domain.test/pay",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {
+          "urls": [
+            {
+              "value": "http://shared-scam-domain.test/pay",
+              "normalized": "http://shared-scam-domain.test/pay"
+            }
+          ],
+          "domains": [
+            {
+              "value": "shared-scam-domain.test",
+              "normalized": "shared-scam-domain.test"
+            }
+          ]
+        },
+        "statistics": {
+          "suspicious_tokens": 0,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 1,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english"
+          ]
+        },
+        "processing_time_ms": 0.16
+      }
+    }
+  ]
+}

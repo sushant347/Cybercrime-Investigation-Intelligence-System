@@ -1,0 +1,256 @@
+{
+  "report_type": "correlation_analysis",
+  "report_version": 7,
+  "schema_version": "2.0",
+  "case_id": "CASE_2CF24DBA5F",
+  "generated_at": "2026-07-25T14:28:29.690Z",
+  "report": {
+    "case_id": "CASE_2CF24DBA5F",
+    "evidence_ids": [
+      "EVID_00001",
+      "EVID_00002",
+      "EVID_00003",
+      "EVID_00004",
+      "EVID_00005"
+    ],
+    "pair_count": 10,
+    "related_pair_count": 10,
+    "pairs": [
+      {
+        "evidence_a": "EVID_00001",
+        "evidence_b": "EVID_00002",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00001 (https_plasticostermoencogibles.pe_scss_css_scss_.url) and EVID_00002 (police_scan_report.pdf) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00001",
+        "evidence_b": "EVID_00003",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00001 (https_plasticostermoencogibles.pe_scss_css_scss_.url) and EVID_00003 (phishing_email_screenshot.png) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00001",
+        "evidence_b": "EVID_00004",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00001 (https_plasticostermoencogibles.pe_scss_css_scss_.url) and EVID_00004 (const.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00001",
+        "evidence_b": "EVID_00005",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00001 (https_plasticostermoencogibles.pe_scss_css_scss_.url) and EVID_00005 (whatsapp_chat_export.txt) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00002",
+        "evidence_b": "EVID_00003",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00002 (police_scan_report.pdf) and EVID_00003 (phishing_email_screenshot.png) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00002",
+        "evidence_b": "EVID_00004",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00002 (police_scan_report.pdf) and EVID_00004 (const.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00002",
+        "evidence_b": "EVID_00005",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00002 (police_scan_report.pdf) and EVID_00005 (whatsapp_chat_export.txt) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00003",
+        "evidence_b": "EVID_00004",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00003 (phishing_email_screenshot.png) and EVID_00004 (const.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00003",
+        "evidence_b": "EVID_00005",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00003 (phishing_email_screenshot.png) and EVID_00005 (whatsapp_chat_export.txt) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00004",
+        "evidence_b": "EVID_00005",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00004 (const.jpg) and EVID_00005 (whatsapp_chat_export.txt) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      }
+    ],
+    "strength_distribution": {
+      "WEAK": 10
+    },
+    "strongest_pair": "EVID_00001|EVID_00002",
+    "analysis_time_ms": 1.1
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "report_type": "graph_summary",
+  "report_version": 9,
+  "schema_version": "2.0",
+  "case_id": "CASE_2CF24DBA5F",
+  "generated_at": "2026-07-25T14:45:18.972Z",
+  "report": {
+    "case_id": "CASE_2CF24DBA5F",
+    "headline": "23 nodes and 31 edges across 1 component(s)",
+    "key_connectors": [
+      "domain:nabil-bank-alerts.com",
+      "domain:nabil-verify.example-scam.top",
+      "url:http://nabil-verify.example-scam.top/login",
+      "domain:plasticostermoencogibles.pe"
+    ],
+    "observations": [
+      "3 threat-intelligence edge(s) link flagged indicators to evidence.",
+      "All entities and evidence form a single connected component - consistent with one coordinated activity."
+    ]
+  }
+}

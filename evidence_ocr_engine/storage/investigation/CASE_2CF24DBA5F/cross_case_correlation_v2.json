@@ -3,73 +3,70 @@
   "report_version": 2,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-07-25T13:02:00.321Z",
+  "generated_at": "2026-07-25T14:24:07.626Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
     "related_case_ids": [
-      "CASE_8F43434664"
+      "CASE_F1278DD84F",
+      "CASE_85B2471DFB"
     ],
-    "link_count": 1,
+    "link_count": 2,
     "links": [
       {
-        "other_case_id": "CASE_8F43434664",
-        "match_confidence": 0.8262,
-        "relationship_strength": "VERY_STRONG",
+        "other_case_id": "CASE_F1278DD84F",
+        "match_confidence": 0.1175,
+        "relationship_strength": "WEAK",
         "matched_entities": [
           {
-            "entity_type": "domains",
-            "value": "nabil-bank-alerts.com",
-            "weight": 0.6,
+            "entity_type": "money",
+            "value": "npr 2000",
+            "weight": 0.2,
             "this_evidence_ids": [
-              "EVID_00004"
+              "EVID_00005"
             ],
             "other_evidence_ids": [
-              "EVID_00006"
-            ]
-          },
-          {
-            "entity_type": "domains",
-            "value": "nabil-verify.example-scam.top",
-            "weight": 0.6,
-            "this_evidence_ids": [
-              "EVID_00004"
-            ],
-            "other_evidence_ids": [
-              "EVID_00006"
-            ]
-          },
-          {
-            "entity_type": "emails",
-            "value": "security@nabil-bank-alerts.com",
-            "weight": 0.85,
-            "this_evidence_ids": [
-              "EVID_00004"
-            ],
-            "other_evidence_ids": [
-              "EVID_00006"
-            ]
-          },
-          {
-            "entity_type": "urls",
-            "value": "http://nabil-verify.example-scam.top/login",
-            "weight": 0.75,
-            "this_evidence_ids": [
-              "EVID_00004"
-            ],
-            "other_evidence_ids": [
-              "EVID_00006"
+              "EVID_00007",
+              "EVID_00008"
             ]
           }
         ],
         "this_evidence_ids": [
-          "EVID_00004"
+          "EVID_00005"
         ],
         "other_evidence_ids": [
-          "EVID_00006"
+          "EVID_00007",
+          "EVID_00008"
         ],
-        "match_reason": "Shares 4 entity(ies) with CASE_8F43434664: domain nabil-bank-alerts.com, domain nabil-verify.example-scam.top, email security@nabil-bank-alerts.com (+1 more)"
+        "match_reason": "Shares 1 entity(ies) with CASE_F1278DD84F: money npr 2000"
+      },
+      {
+        "other_case_id": "CASE_85B2471DFB",
+        "match_confidence": 0.1175,
+        "relationship_strength": "WEAK",
+        "matched_entities": [
+          {
+            "entity_type": "money",
+            "value": "npr 2000",
+            "weight": 0.2,
+            "this_evidence_ids": [
+              "EVID_00005"
+            ],
+            "other_evidence_ids": [
+              "EVID_00009",
+              "EVID_00010"
+            ]
+          }
+        ],
+        "this_evidence_ids": [
+          "EVID_00005"
+        ],
+        "other_evidence_ids": [
+          "EVID_00009",
+          "EVID_00010"
+        ],
+        "match_reason": "Shares 1 entity(ies) with CASE_85B2471DFB: money npr 2000"
       }
     ],
-    "analysis_time_ms": 2.1
+    "analysis_time_ms": 0.4
   }
 }

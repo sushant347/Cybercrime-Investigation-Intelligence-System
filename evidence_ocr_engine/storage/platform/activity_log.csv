@@ -29,3 +29,25 @@ id,created_at,username,module,action,case_id,detail
 28,2026-07-25T14:08:16.550Z,,evidence,upload,CASE_7916EFB87E,07_bank_transfer_slip.pdf
 29,2026-07-25T14:08:27.028Z,,evidence,upload,CASE_7916EFB87E,08_complaint_letter.pdf
 30,2026-07-25T14:09:34.243Z,,investigation,run_analysis,CASE_7916EFB87E,
+31,2026-07-25T14:22:00.234Z,,admin,login,,
+32,2026-07-25T14:22:02.879Z,,admin,delete_case,CASE_7916EFB87E,deleted; refreshed 0 linked case(s)
+33,2026-07-25T14:22:05.200Z,,admin,delete_case,CASE_8F43434664,deleted; refreshed 0 linked case(s)
+34,2026-07-25T14:22:06.918Z,,admin,delete_case,CASE_2CF24DBA5F,deleted; refreshed 0 linked case(s)
+35,2026-07-25T14:22:16.506Z,,intake,created,CASE_2CF24DBA5F,hello
+36,2026-07-25T14:22:38.350Z,,evidence,submit_url,CASE_2CF24DBA5F,https://plasticostermoencogibles.pe/scss/css/scss/
+37,2026-07-25T14:23:23.714Z,,evidence,upload,CASE_2CF24DBA5F,police_scan_report.pdf
+38,2026-07-25T14:23:26.287Z,,evidence,upload,CASE_2CF24DBA5F,phishing_email_screenshot.png
+39,2026-07-25T14:23:41.794Z,,evidence,upload,CASE_2CF24DBA5F,const.jpg
+40,2026-07-25T14:24:07.585Z,,evidence,upload,CASE_2CF24DBA5F,whatsapp_chat_export.txt
+41,2026-07-25T14:24:15.321Z,,investigation,run_analysis,CASE_2CF24DBA5F,
+42,2026-07-25T14:28:29.680Z,,investigation,run_analysis,CASE_2CF24DBA5F,
+43,2026-07-25T14:41:19.940Z,,intake,created,CASE_4CFDEC4197,DEL-CASCADE-A
+44,2026-07-25T14:41:19.992Z,,evidence,submit_url,CASE_4CFDEC4197,http://shared-scam-domain.test/pay
+45,2026-07-25T14:41:24.161Z,,investigation,run_analysis,CASE_4CFDEC4197,
+46,2026-07-25T14:41:27.295Z,,intake,created,CASE_4D7CD3FD4E,DEL-CASCADE-B
+47,2026-07-25T14:41:27.333Z,,evidence,submit_url,CASE_4D7CD3FD4E,http://shared-scam-domain.test/pay
+48,2026-07-25T14:41:27.406Z,,investigation,run_analysis,CASE_4D7CD3FD4E,
+49,2026-07-25T14:41:38.387Z,,admin,login,,
+50,2026-07-25T14:41:38.482Z,,admin,delete_case,CASE_4D7CD3FD4E,deleted; refreshed 1 linked case(s)
+51,2026-07-25T14:42:19.919Z,,investigation,run_analysis,CASE_2CF24DBA5F,
+52,2026-07-25T14:45:09.402Z,,investigation,run_analysis,CASE_2CF24DBA5F,

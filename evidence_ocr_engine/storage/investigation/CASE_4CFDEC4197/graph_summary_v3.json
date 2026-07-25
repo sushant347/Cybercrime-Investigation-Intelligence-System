@@ -1,0 +1,20 @@
+{
+  "report_type": "graph_summary",
+  "report_version": 3,
+  "schema_version": "2.0",
+  "case_id": "CASE_4CFDEC4197",
+  "generated_at": "2026-07-25T14:41:38.441Z",
+  "report": {
+    "case_id": "CASE_4CFDEC4197",
+    "headline": "5 nodes and 6 edges across 1 component(s)",
+    "key_connectors": [
+      "domain:shared-scam-domain.test",
+      "url:http://shared-scam-domain.test/pay",
+      "timeline_event:CASE_4CFDEC4197:EVID_00006"
+    ],
+    "observations": [
+      "2 threat-intelligence edge(s) link flagged indicators to evidence.",
+      "All entities and evidence form a single connected component - consistent with one coordinated activity."
+    ]
+  }
+}
