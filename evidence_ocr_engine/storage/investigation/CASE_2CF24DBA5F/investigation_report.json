@@ -3,20 +3,37 @@
   "report_version": 1,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-07-24T16:06:39.374Z",
+  "generated_at": "2026-07-25T12:53:55.994Z",
   "report": {
+    "report_id": "RPT-2CF24DBA5F-010216D0",
     "sections": {
       "executive_summary": [
-        "Case CASE_2CF24DBA5F contains 3 evidence item(s), each acquired under SHA-256 chain-of-custody verification.",
-        "The weighted correlation engine found 3 related evidence pair(s) out of 3 analysed [correlation_analysis.json].",
-        "Observed attack progression: initial_contact -> financial_transaction [timeline_analysis.json]."
+        "Case CASE_2CF24DBA5F contains 4 evidence item(s), each acquired under SHA-256 chain-of-custody verification.",
+        "The weighted correlation engine found 6 related evidence pair(s) out of 6 analysed [correlation_analysis.json].",
+        "The strongest suspect anchor is 'security@nabil-bank-alerts.com' (emails) with confidence 39/100 [suspect_assessment.json].",
+        "Observed attack progression: initial_contact -> financial_transaction -> social_engineering -> credential_theft [timeline_analysis.json]."
       ],
+      "scope_and_methodology": {
+        "objective": "Acquire, verify, correlate and reconstruct the digital evidence for this case, and derive investigative leads (suspect anchors, campaigns, cross-case links) strictly from stored, hash-verified artifacts.",
+        "evidence_scope": "4 evidence item(s) acquired through the CIIS intake pipeline under SHA-256 chain-of-custody control.",
+        "methodology": [
+          "Phase 1 - Acquisition & OCR: PaddleOCR PP-OCRv5 text extraction with per-item confidence scoring; SHA-256 fingerprint recorded at intake and re-verified at read.",
+          "Phase 1 - Forensics: metadata/EXIF consistency, forgery signals, logo detection and evidence-confidence scoring stored per item under storage/forensics/.",
+          "Phase 2 - Correlation: weighted entity-overlap engine scoring every evidence pair; results in correlation_analysis.json.",
+          "Phase 2 - Cross-case: shared-entity matching against every other analysed case (cross_case_correlation.json).",
+          "Phase 2 - Campaigns / Suspects / Timeline: clustering, anchor derivation and event reconstruction over the correlated evidence set.",
+          "Threat intelligence: URL/domain indicators scored by the configured provider (static indicator file, or the trained phishing classifier when CIIS_ML_THREAT_INTEL=1); per-indicator results in 'Model Prediction Results'.",
+          "Reporting: this document is assembled exclusively from the stored outputs above; it contains no free-text generation."
+        ],
+        "reproducibility": "Re-running the analysis against the same stored evidence reproduces every figure herein; artifacts are versioned and never overwritten."
+      },
       "case_overview": {
         "case_id": "CASE_2CF24DBA5F",
-        "evidence_count": 3,
-        "first_evidence": "2026-07-24T16:06:05.861Z",
-        "last_evidence": "2026-07-24T16:06:29.533Z",
+        "evidence_count": 4,
+        "first_evidence": "2026-07-25T12:50:00.695Z",
+        "last_evidence": "2026-07-25T12:53:47.011Z",
         "file_types": [
+          "jpg",
           "png",
           "txt"
         ]
@@ -24,8 +41,18 @@
       "evidence_summary": [
         {
           "evidence_id": "EVID_00001",
+          "file_name": "yeti.jpg",
+          "upload_time": "2026-07-25T12:50:00.695Z",
+          "sha256": "8f2e60ea6fc0eeffd209e28eb29228797104b60a2505934fc3d42642c100ea79",
+          "hash_verified": true,
+          "ocr_confidence": 0.9152,
+          "evidence_confidence_score": "not available",
+          "entity_count": 4
+        },
+        {
+          "evidence_id": "EVID_00002",
           "file_name": "whatsapp_chat_export.txt",
-          "upload_time": "2026-07-24T16:06:05.861Z",
+          "upload_time": "2026-07-25T12:53:07.182Z",
           "sha256": "c7ab347cfbd2b80c944c85b3442f3b2c400da1d3b92962f9ded8598e1e06cfb2",
           "hash_verified": true,
           "ocr_confidence": 1.0,
@@ -33,50 +60,62 @@
           "entity_count": 5
         },
         {
-          "evidence_id": "EVID_00002",
-          "file_name": "scam_sms_screenshot.png",
-          "upload_time": "2026-07-24T16:06:16.314Z",
-          "sha256": "b566c34426563417a8b355e67d17daee57765586450e2c18bb8c160b5b716d7b",
-          "hash_verified": true,
-          "ocr_confidence": 0.9766,
-          "evidence_confidence_score": "not available",
-          "entity_count": 2
-        },
-        {
           "evidence_id": "EVID_00003",
-          "file_name": "low_quality_scan_demo.png",
-          "upload_time": "2026-07-24T16:06:29.533Z",
-          "sha256": "75b2a30d39404920c875e5ba3c57e951d4ee762153936fbfb408ef8cd7d24fdd",
+          "file_name": "romanchat.jpg",
+          "upload_time": "2026-07-25T12:53:23.174Z",
+          "sha256": "0340d5863313f4cc0b9b40ed835a77a71b8304d2e08eb32f08a56ed93a6e0b10",
           "hash_verified": true,
-          "ocr_confidence": 0.5607,
+          "ocr_confidence": 0.9686,
           "evidence_confidence_score": "not available",
           "entity_count": 0
+        },
+        {
+          "evidence_id": "EVID_00004",
+          "file_name": "phishing_email_screenshot.png",
+          "upload_time": "2026-07-25T12:53:47.011Z",
+          "sha256": "8ef0f27a84960b656d9051892e36096ce56fe9f30eb9a935d4d4330a002b9b7f",
+          "hash_verified": true,
+          "ocr_confidence": 0.9859,
+          "evidence_confidence_score": "not available",
+          "entity_count": 4
         }
       ],
       "correlation_analysis": {
-        "pair_count": 3,
-        "related_pair_count": 3,
+        "pair_count": 6,
+        "related_pair_count": 6,
         "strength_distribution": {
-          "WEAK": 3
+          "WEAK": 6
         },
         "top_relationships": [
           {
             "pair": "EVID_00001 <-> EVID_00002",
             "strength": "WEAK",
             "confidence": 0.2212,
-            "explanation": "EVID_00001 (whatsapp_chat_export.txt) and EVID_00002 (scam_sms_screenshot.png) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+            "explanation": "EVID_00001 (yeti.jpg) and EVID_00002 (whatsapp_chat_export.txt) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
           },
           {
             "pair": "EVID_00001 <-> EVID_00003",
             "strength": "WEAK",
             "confidence": 0.2212,
-            "explanation": "EVID_00001 (whatsapp_chat_export.txt) and EVID_00003 (low_quality_scan_demo.png) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+            "explanation": "EVID_00001 (yeti.jpg) and EVID_00003 (romanchat.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
+          },
+          {
+            "pair": "EVID_00001 <-> EVID_00004",
+            "strength": "WEAK",
+            "confidence": 0.2212,
+            "explanation": "EVID_00001 (yeti.jpg) and EVID_00004 (phishing_email_screenshot.png) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
           },
           {
             "pair": "EVID_00002 <-> EVID_00003",
             "strength": "WEAK",
             "confidence": 0.2212,
-            "explanation": "EVID_00002 (scam_sms_screenshot.png) and EVID_00003 (low_quality_scan_demo.png) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+            "explanation": "EVID_00002 (whatsapp_chat_export.txt) and EVID_00003 (romanchat.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+          },
+          {
+            "pair": "EVID_00002 <-> EVID_00004",
+            "strength": "WEAK",
+            "confidence": 0.2212,
+            "explanation": "EVID_00002 (whatsapp_chat_export.txt) and EVID_00004 (phishing_email_screenshot.png) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
           }
         ]
       },
@@ -86,57 +125,74 @@
         "unclustered_evidence": [
           "EVID_00001",
           "EVID_00002",
-          "EVID_00003"
+          "EVID_00003",
+          "EVID_00004"
         ],
         "campaigns": []
       },
       "timeline_analysis": {
-        "summary": "3 event(s) spanning 0.0 hour(s). Observed scam progression: initial_contact -> financial_transaction. The progression follows the canonical scam sequence. 2 critical event(s) involve OTP/financial entities.",
+        "summary": "4 event(s) spanning 4851.7 hour(s); 0 timestamp(s) unresolved. Observed scam progression: initial_contact -> financial_transaction -> social_engineering -> credential_theft.",
         "stage_progression": [
           "initial_contact",
-          "financial_transaction"
+          "financial_transaction",
+          "social_engineering",
+          "credential_theft"
         ],
-        "progression_consistent": true,
+        "progression_consistent": false,
         "milestones": [
           {
-            "timestamp": "2026-07-24T16:06:05.861Z",
-            "description": "Investigation start - first evidence acquired"
+            "timestamp": "2026-01-04T09:12:00+00:00",
+            "description": "Investigation start - first reconstructed evidence event"
           },
           {
-            "timestamp": "2026-07-24T16:06:05.861Z",
-            "description": "First observation of stage 'initial_contact' (EVID_00001)"
+            "timestamp": "2026-01-04T09:12:00+00:00",
+            "description": "First observation of stage 'initial_contact' (EVID_00002)"
           },
           {
-            "timestamp": "2026-07-24T16:06:05.861Z",
-            "description": "First observation of stage 'financial_transaction' (EVID_00001)"
+            "timestamp": "2026-01-04T09:12:00+00:00",
+            "description": "First observation of stage 'financial_transaction' (EVID_00002)"
+          },
+          {
+            "timestamp": "2026-07-25T12:53:47.011000+00:00",
+            "description": "First observation of stage 'social_engineering' (EVID_00004)"
+          },
+          {
+            "timestamp": "2026-07-25T12:53:47.011000+00:00",
+            "description": "First observation of stage 'credential_theft' (EVID_00004)"
           }
         ],
         "critical_events": [
           {
-            "timestamp": "2026-07-24T16:06:05.861Z",
-            "evidence_id": "EVID_00001",
-            "reasons": [
-              "contains money entity/entities: Rs 2000"
-            ]
-          },
-          {
-            "timestamp": "2026-07-24T16:06:16.314Z",
+            "timestamp": "2026-01-04T09:12:00+00:00",
             "evidence_id": "EVID_00002",
             "reasons": [
-              "contains money entity/entities: Rs 2,000, Rs 5,00,000"
+              "contains money entity/entities: Rs 2000"
             ]
           }
         ]
       },
-      "suspect_assessment": "No suspect anchors were derived from the evidence.",
+      "suspect_assessment": [
+        {
+          "suspect_id": "SUSPECT_CASE_2CF24DBA5F_01",
+          "identity": "emails:security@nabil-bank-alerts.com",
+          "confidence_score": 38.8,
+          "confidence_level": "LOW",
+          "risk_level": "LOW",
+          "evidence_ids": [
+            "EVID_00004"
+          ],
+          "explanation": "Suspect anchor 'security@nabil-bank-alerts.com' (emails) scores 38.8/100 (LOW, risk LOW) across 1 evidence item(s): EVID_00004. Identity strength: 75/100 (weight 0.25) - 'security@nabil-bank-alerts.com' is a email - identity weight 75/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 4 evidence item(s). Evidence confidence: 50/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 50/100 (no Phase-1 scores stored; neutral 50 assumed). Threat intelligence: 0/100 (weight 0.15) - no threat-intelligence indicator file available. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 day(s) across its evidence set."
+        }
+      ],
       "threat_intelligence_summary": "No threat-intelligence indicator file was provided; threat corroboration was skipped (not an absence of threat).",
+      "model_predictions": "No threat-intelligence provider was active during this analysis; indicator-level model predictions were not produced (this is a coverage gap, not an absence of threat).",
       "evidence_quality_summary": {
         "mean_image_quality": 0.0,
         "mean_evidence_confidence": 0.0,
         "mean_forgery_score": 0.0,
         "max_forgery_score": 0.0,
-        "mean_ocr_confidence": 0.85,
-        "hash_verified_count": 3.0
+        "mean_ocr_confidence": 0.97,
+        "hash_verified_count": 4.0
       },
       "metadata_summary": [
         {
@@ -146,25 +202,32 @@
       "investigation_statistics": {
         "entity_statistics": {
           "dates": 1,
-          "money": 3,
-          "times": 3
+          "domains": 2,
+          "emails": 1,
+          "money": 1,
+          "ports": 2,
+          "times": 5,
+          "urls": 1
         },
         "campaign_statistics": {
           "campaign_count": 0.0,
           "largest_campaign_size": 0.0,
           "clustered_evidence": 0.0,
-          "unclustered_evidence": 3.0,
+          "unclustered_evidence": 4.0,
           "mean_campaign_confidence": 0.0
         },
         "timeline_statistics": {
-          "event_count": 3.0,
-          "stage_count": 2.0,
-          "critical_event_count": 2.0,
-          "timeline_span_hours": 0.01
+          "event_count": 4.0,
+          "resolved_event_count": 4.0,
+          "unresolved_event_count": 0.0,
+          "inferred_event_count": 3.0,
+          "stage_count": 4.0,
+          "critical_event_count": 1.0,
+          "timeline_span_hours": 4851.7
         },
         "correlation_statistics": {
-          "pair_count": 3.0,
-          "related_pair_count": 3.0,
+          "pair_count": 6.0,
+          "related_pair_count": 6.0,
           "mean_confidence": 0.2212,
           "max_confidence": 0.2212
         }
@@ -175,31 +238,56 @@
         }
       ],
       "investigation_conclusion": [
-        "3/3 evidence item(s) passed SHA-256 chain-of-custody verification.",
-        "The evidence set is internally connected (3 weighted relationship(s)), consistent with related activity rather than isolated incidents."
+        "4/4 evidence item(s) passed SHA-256 chain-of-custody verification.",
+        "The evidence set is internally connected (6 weighted relationship(s)), consistent with related activity rather than isolated incidents.",
+        "Investigation should focus on anchor 'security@nabil-bank-alerts.com' (39/100 confidence).",
+        "Observed stage order deviates from the canonical scam sequence; evidence acquisition order should be reviewed."
       ],
       "recommendations": [
-        "Prioritise the 2 critical event(s) involving OTP/financial entities for victim-impact assessment.",
-        "Case priority: LOW (22.2/100) - Low urgency: archive-ready unless new evidence raises the correlation or threat picture."
+        "Prioritise the 1 critical event(s) involving OTP/financial entities for victim-impact assessment.",
+        "Case priority: LOW (13.8/100) - Low urgency: archive-ready unless new evidence raises the correlation or threat picture."
       ],
+      "report_provenance": {
+        "report_id": "RPT-2CF24DBA5F-010216D0",
+        "generated_at": "2026-07-25T12:53:55.992Z",
+        "generator": "CIIS Phase-2 reporting module (template-over-data; no free-text generation)",
+        "evidence_set_digest": "845d2580a93c7505d88a3b735dd3a956db233d26f779d05f4a85f60abfe82c3f",
+        "evidence_set_digest_note": "SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.",
+        "source_artifact_hashes": {
+          "correlation_analysis_v5.json": "606cd3e9ddfb9ea51edae3fd4809b28c145ded3c31c71a77552d3134012b22d5",
+          "cross_case_correlation.json": "ec5d454817713980deeaaa23fe58adf8ffef30b91488d6aac04b194addcc7b17",
+          "campaign_analysis.json": "69e9ef6d9e9ed939484307d8d50cb975803a505a9aeb0a7926fde19b38bb344e",
+          "suspect_assessment.json": "2eb4374c1f785a610e6d940e9cf2d9e038cc6e33a958bca933ba2e0ddb89da88",
+          "timeline_analysis_v5.json": "d79e22ff86d5f7eb147dcc7d438e8e13adeedea98c801ae754f82f67ddb2dfd5",
+          "analytics.json": "22df3eb99a31dff38b24892ee9adfdb7fe951595e96e99232962fc231313ee4d",
+          "case_priority.json": "186dbbf2d52b4faa5c8d137af1e04e7d5c86110faa5c4a680f482ff16d93b2b5",
+          "graph_v5.json": "dc41844c51c4135f888e6339c7f06cfc362878b86373ddedbcff39f112f94327"
+        }
+      },
       "appendix": {
         "chain_of_custody": [
           {
             "evidence_id": "EVID_00001",
-            "sha256": "c7ab347cfbd2b80c944c85b3442f3b2c400da1d3b92962f9ded8598e1e06cfb2",
-            "upload_time": "2026-07-24T16:06:05.861Z",
+            "sha256": "8f2e60ea6fc0eeffd209e28eb29228797104b60a2505934fc3d42642c100ea79",
+            "upload_time": "2026-07-25T12:50:00.695Z",
             "status": "processed"
           },
           {
             "evidence_id": "EVID_00002",
-            "sha256": "b566c34426563417a8b355e67d17daee57765586450e2c18bb8c160b5b716d7b",
-            "upload_time": "2026-07-24T16:06:16.314Z",
+            "sha256": "c7ab347cfbd2b80c944c85b3442f3b2c400da1d3b92962f9ded8598e1e06cfb2",
+            "upload_time": "2026-07-25T12:53:07.182Z",
             "status": "processed"
           },
           {
             "evidence_id": "EVID_00003",
-            "sha256": "75b2a30d39404920c875e5ba3c57e951d4ee762153936fbfb408ef8cd7d24fdd",
-            "upload_time": "2026-07-24T16:06:29.533Z",
+            "sha256": "0340d5863313f4cc0b9b40ed835a77a71b8304d2e08eb32f08a56ed93a6e0b10",
+            "upload_time": "2026-07-25T12:53:23.174Z",
+            "status": "processed"
+          },
+          {
+            "evidence_id": "EVID_00004",
+            "sha256": "8ef0f27a84960b656d9051892e36096ce56fe9f30eb9a935d4d4330a002b9b7f",
+            "upload_time": "2026-07-25T12:53:47.011Z",
             "status": "processed"
           }
         ],

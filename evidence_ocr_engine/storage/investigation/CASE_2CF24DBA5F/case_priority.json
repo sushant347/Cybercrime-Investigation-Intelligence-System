@@ -3,7 +3,7 @@
   "report_version": 1,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-07-24T16:06:39.372Z",
+  "generated_at": "2026-07-25T12:53:55.991Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
     "components": [
@@ -44,19 +44,19 @@
       },
       {
         "name": "timeline_criticality",
-        "score": 66.7,
+        "score": 33.3,
         "weight": 0.15,
         "available": true,
-        "explanation": "2 critical timeline event(s)"
+        "explanation": "1 critical timeline event(s)"
       }
     ],
-    "priority_score": 22.2,
+    "priority_score": 13.8,
     "priority_level": "LOW",
     "high_risk_indicators": [
-      "2 critical event(s) involving OTP/financial entities"
+      "1 critical event(s) involving OTP/financial entities"
     ],
     "investigation_recommendation": "Low urgency: archive-ready unless new evidence raises the correlation or threat picture.",
-    "explanation": "Case priority is 22.2/100 (LOW), computed from 4 available dimension(s) with renormalised weights. Timeline criticality: 67/100 (weight 0.15) - 2 critical timeline event(s). Correlation strength: 22/100 (weight 0.15) - strongest evidence-pair confidence 0.22. Forgery risk: 0/100 (weight 0.15) - max Phase-1 forgery score 0.0. Campaign size: 0/100 (weight 0.15) - largest campaign groups 0 item(s).",
-    "computed_at": "2026-07-24T16:06:39.371Z"
+    "explanation": "Case priority is 13.8/100 (LOW), computed from 4 available dimension(s) with renormalised weights. Timeline criticality: 33/100 (weight 0.15) - 1 critical timeline event(s). Correlation strength: 22/100 (weight 0.15) - strongest evidence-pair confidence 0.22. Forgery risk: 0/100 (weight 0.15) - max Phase-1 forgery score 0.0. Campaign size: 0/100 (weight 0.15) - largest campaign groups 0 item(s).",
+    "computed_at": "2026-07-25T12:53:55.990Z"
   }
 }

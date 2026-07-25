@@ -3,13 +3,13 @@
   "report_version": 1,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-07-24T16:06:39.368Z",
+  "generated_at": "2026-07-25T12:53:55.988Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
-    "evidence_count": 3,
+    "evidence_count": 4,
     "threat_statistics": {
       "intel_available": 0.0,
-      "indicators_checked": 0.0,
+      "indicators_checked": 3.0,
       "malicious_indicators": 0.0,
       "evidence_with_threats": 0.0,
       "threat_evidence_ratio": 0.0
@@ -18,26 +18,29 @@
       "campaign_count": 0.0,
       "largest_campaign_size": 0.0,
       "clustered_evidence": 0.0,
-      "unclustered_evidence": 3.0,
+      "unclustered_evidence": 4.0,
       "mean_campaign_confidence": 0.0
     },
     "timeline_statistics": {
-      "event_count": 3.0,
-      "stage_count": 2.0,
-      "critical_event_count": 2.0,
-      "timeline_span_hours": 0.01
+      "event_count": 4.0,
+      "resolved_event_count": 4.0,
+      "unresolved_event_count": 0.0,
+      "inferred_event_count": 3.0,
+      "stage_count": 4.0,
+      "critical_event_count": 1.0,
+      "timeline_span_hours": 4851.7
     },
     "evidence_quality_statistics": {
       "mean_image_quality": 0.0,
       "mean_evidence_confidence": 0.0,
       "mean_forgery_score": 0.0,
       "max_forgery_score": 0.0,
-      "mean_ocr_confidence": 0.85,
-      "hash_verified_count": 3.0
+      "mean_ocr_confidence": 0.97,
+      "hash_verified_count": 4.0
     },
     "correlation_statistics": {
-      "pair_count": 3.0,
-      "related_pair_count": 3.0,
+      "pair_count": 6.0,
+      "related_pair_count": 6.0,
       "mean_confidence": 0.2212,
       "max_confidence": 0.2212
     },
