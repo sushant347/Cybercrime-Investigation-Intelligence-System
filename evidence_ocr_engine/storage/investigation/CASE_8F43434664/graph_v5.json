@@ -1,0 +1,299 @@
+{
+  "report_type": "graph",
+  "report_version": 5,
+  "schema_version": "2.0",
+  "case_id": "CASE_8F43434664",
+  "generated_at": "2026-07-25T13:53:49.297Z",
+  "report": {
+    "case_id": "CASE_8F43434664",
+    "directed": false,
+    "nodes": [
+      {
+        "id": "case:CASE_8F43434664",
+        "node_type": "case",
+        "label": "CASE_8F43434664",
+        "properties": {}
+      },
+      {
+        "id": "evidence:EVID_00005",
+        "node_type": "evidence",
+        "label": "EVID_00005",
+        "properties": {
+          "file_name": "romanchat.jpg",
+          "upload_time": "2026-07-25T12:55:29.488Z"
+        }
+      },
+      {
+        "id": "evidence:EVID_00006",
+        "node_type": "evidence",
+        "label": "EVID_00006",
+        "properties": {
+          "file_name": "phishing_email_screenshot.png",
+          "upload_time": "2026-07-25T12:55:59.642Z"
+        }
+      },
+      {
+        "id": "evidence:EVID_00007",
+        "node_type": "evidence",
+        "label": "EVID_00007",
+        "properties": {
+          "file_name": "bank_transactions.csv",
+          "upload_time": "2026-07-25T12:56:12.284Z"
+        }
+      },
+      {
+        "id": "evidence:EVID_00008",
+        "node_type": "evidence",
+        "label": "EVID_00008",
+        "properties": {
+          "file_name": "police_scan_report.pdf",
+          "upload_time": "2026-07-25T12:56:24.334Z"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_8F43434664:EVID_00005",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00005 (romanchat.jpg)",
+        "properties": {
+          "timestamp": "2026-07-25T12:55:29.488000+00:00",
+          "time_source": "upload_time_fallback",
+          "timestamp_inferred": "true"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_8F43434664:EVID_00006",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00006 (phishing_email_screenshot.png)",
+        "properties": {
+          "timestamp": "2026-07-25T12:55:59.642000+00:00",
+          "time_source": "upload_time_fallback",
+          "timestamp_inferred": "true"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_8F43434664:EVID_00007",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00007 (bank_transactions.csv)",
+        "properties": {
+          "timestamp": "2026-07-25T12:56:12.284000+00:00",
+          "time_source": "upload_time_fallback",
+          "timestamp_inferred": "true"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_8F43434664:EVID_00008",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00008 (police_scan_report.pdf)",
+        "properties": {
+          "timestamp": "2026-07-25T12:56:24.334000+00:00",
+          "time_source": "upload_time_fallback",
+          "timestamp_inferred": "true"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "source": "case:CASE_8F43434664",
+        "target": "evidence:EVID_00005",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-07-25T12:55:29.488000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 belongs to CASE_8F43434664"
+      },
+      {
+        "source": "case:CASE_8F43434664",
+        "target": "evidence:EVID_00006",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00006"
+        ],
+        "timestamp": "2026-07-25T12:55:59.642000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00006 belongs to CASE_8F43434664"
+      },
+      {
+        "source": "case:CASE_8F43434664",
+        "target": "evidence:EVID_00007",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00007"
+        ],
+        "timestamp": "2026-07-25T12:56:12.284000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00007 belongs to CASE_8F43434664"
+      },
+      {
+        "source": "case:CASE_8F43434664",
+        "target": "evidence:EVID_00008",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00008"
+        ],
+        "timestamp": "2026-07-25T12:56:24.334000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00008 belongs to CASE_8F43434664"
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "timeline_event:CASE_8F43434664:EVID_00005",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 0.4,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-07-25T12:55:29.488000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Reconstructed event for EVID_00005"
+      },
+      {
+        "source": "evidence:EVID_00006",
+        "target": "timeline_event:CASE_8F43434664:EVID_00006",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 0.4,
+        "source_evidence_ids": [
+          "EVID_00006"
+        ],
+        "timestamp": "2026-07-25T12:55:59.642000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Reconstructed event for EVID_00006"
+      },
+      {
+        "source": "evidence:EVID_00007",
+        "target": "timeline_event:CASE_8F43434664:EVID_00007",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 0.4,
+        "source_evidence_ids": [
+          "EVID_00007"
+        ],
+        "timestamp": "2026-07-25T12:56:12.284000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Reconstructed event for EVID_00007"
+      },
+      {
+        "source": "evidence:EVID_00008",
+        "target": "timeline_event:CASE_8F43434664:EVID_00008",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 0.4,
+        "source_evidence_ids": [
+          "EVID_00008"
+        ],
+        "timestamp": "2026-07-25T12:56:24.334000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Reconstructed event for EVID_00008"
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "evidence:EVID_00006",
+        "edge_type": "temporal_relationship",
+        "weight": 0.9998,
+        "confidence": 0.9998,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00006"
+        ],
+        "timestamp": "2026-07-25T12:55:29.488000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Acquired 0.0h apart (window 48h)"
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "evidence:EVID_00007",
+        "edge_type": "temporal_relationship",
+        "weight": 0.9998,
+        "confidence": 0.9998,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00007"
+        ],
+        "timestamp": "2026-07-25T12:55:29.488000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Acquired 0.0h apart (window 48h)"
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "evidence:EVID_00008",
+        "edge_type": "temporal_relationship",
+        "weight": 0.9997,
+        "confidence": 0.9997,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00008"
+        ],
+        "timestamp": "2026-07-25T12:55:29.488000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Acquired 0.0h apart (window 48h)"
+      },
+      {
+        "source": "evidence:EVID_00006",
+        "target": "evidence:EVID_00007",
+        "edge_type": "temporal_relationship",
+        "weight": 0.9999,
+        "confidence": 0.9999,
+        "source_evidence_ids": [
+          "EVID_00006",
+          "EVID_00007"
+        ],
+        "timestamp": "2026-07-25T12:55:59.642000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Acquired 0.0h apart (window 48h)"
+      },
+      {
+        "source": "evidence:EVID_00006",
+        "target": "evidence:EVID_00008",
+        "edge_type": "temporal_relationship",
+        "weight": 0.9999,
+        "confidence": 0.9999,
+        "source_evidence_ids": [
+          "EVID_00006",
+          "EVID_00008"
+        ],
+        "timestamp": "2026-07-25T12:55:59.642000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Acquired 0.0h apart (window 48h)"
+      },
+      {
+        "source": "evidence:EVID_00007",
+        "target": "evidence:EVID_00008",
+        "edge_type": "temporal_relationship",
+        "weight": 0.9999,
+        "confidence": 0.9999,
+        "source_evidence_ids": [
+          "EVID_00007",
+          "EVID_00008"
+        ],
+        "timestamp": "2026-07-25T12:56:12.284000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Acquired 0.0h apart (window 48h)"
+      }
+    ]
+  }
+}

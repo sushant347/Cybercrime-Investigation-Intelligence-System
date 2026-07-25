@@ -540,6 +540,24 @@ export interface ReportModelPrediction {
   risk_level: string;
   source: string;
   model_version: string;
+  // Investigator-facing detail behind the verdict. Present only when the
+  // ML provider is active (the static indicator file supplies none of it),
+  // and each network-derived field only when its lookup actually succeeded.
+  domain?: string;
+  trust_score?: number;
+  brand_impersonated?: string;
+  official_domain?: boolean;
+  ssl_status?: string;
+  domain_age_days?: number;
+  registrar?: string;
+  spf_present?: boolean;
+  dmarc_present?: boolean;
+  ssl_days_left?: number;
+  hosting?: string;
+  ip_address?: string;
+  reasons?: string[];
+  threat_signals?: string[];
+  trust_signals?: string[];
 }
 
 export interface ReportModelPredictionsSection {

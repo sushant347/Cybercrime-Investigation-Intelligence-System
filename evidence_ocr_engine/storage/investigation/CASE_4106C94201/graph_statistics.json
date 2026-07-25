@@ -1,0 +1,51 @@
+{
+  "report_type": "graph_statistics",
+  "report_version": 1,
+  "schema_version": "2.0",
+  "case_id": "CASE_4106C94201",
+  "generated_at": "2026-07-25T14:11:47.059Z",
+  "report": {
+    "case_id": "CASE_4106C94201",
+    "node_count": 5,
+    "edge_count": 6,
+    "nodes_by_type": {
+      "case": 1,
+      "evidence": 1,
+      "domain": 1,
+      "url": 1,
+      "timeline_event": 1
+    },
+    "edges_by_type": {
+      "contains": 1,
+      "shared_entity": 2,
+      "threat_relationship": 2,
+      "timeline_event": 1
+    },
+    "density": 0.6,
+    "connected_components": 1,
+    "largest_component_size": 5,
+    "average_degree": 2.4,
+    "top_hubs": [
+      {
+        "node": "evidence:EVID_00014",
+        "degree": "6"
+      },
+      {
+        "node": "domain:www.telegrammessage.com",
+        "degree": "2"
+      },
+      {
+        "node": "url:https://www.telegrammessage.com/",
+        "degree": "2"
+      },
+      {
+        "node": "case:CASE_4106C94201",
+        "degree": "1"
+      },
+      {
+        "node": "timeline_event:CASE_4106C94201:EVID_00014",
+        "degree": "1"
+      }
+    ]
+  }
+}

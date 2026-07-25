@@ -1,0 +1,19 @@
+{
+  "report_type": "correlation_analysis",
+  "report_version": 1,
+  "schema_version": "2.0",
+  "case_id": "CASE_36BBE50ED9",
+  "generated_at": "2026-07-25T13:49:38.331Z",
+  "report": {
+    "case_id": "CASE_36BBE50ED9",
+    "evidence_ids": [
+      "EVID_00009"
+    ],
+    "pair_count": 0,
+    "related_pair_count": 0,
+    "pairs": [],
+    "strength_distribution": {},
+    "strongest_pair": "",
+    "analysis_time_ms": 0.0
+  }
+}

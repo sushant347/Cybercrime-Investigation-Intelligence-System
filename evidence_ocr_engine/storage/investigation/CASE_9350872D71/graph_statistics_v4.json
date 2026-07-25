@@ -1,0 +1,74 @@
+{
+  "report_type": "graph_statistics",
+  "report_version": 4,
+  "schema_version": "2.0",
+  "case_id": "CASE_9350872D71",
+  "generated_at": "2026-07-25T13:56:06.844Z",
+  "report": {
+    "case_id": "CASE_9350872D71",
+    "node_count": 12,
+    "edge_count": 15,
+    "nodes_by_type": {
+      "case": 2,
+      "evidence": 4,
+      "money": 1,
+      "domain": 1,
+      "url": 1,
+      "timeline_event": 3
+    },
+    "edges_by_type": {
+      "contains": 4,
+      "shared_entity": 3,
+      "timeline_event": 3,
+      "cross_case_relationship": 1,
+      "cross_case_entity_match": 1,
+      "temporal_relationship": 3
+    },
+    "density": 0.2273,
+    "connected_components": 1,
+    "largest_component_size": 12,
+    "average_degree": 2.5,
+    "top_hubs": [
+      {
+        "node": "evidence:EVID_00013",
+        "degree": "6"
+      },
+      {
+        "node": "evidence:EVID_00011",
+        "degree": "5"
+      },
+      {
+        "node": "case:CASE_9350872D71",
+        "degree": "4"
+      },
+      {
+        "node": "evidence:EVID_00012",
+        "degree": "4"
+      },
+      {
+        "node": "money:npr 250000",
+        "degree": "2"
+      },
+      {
+        "node": "case:CASE_36BBE50ED9",
+        "degree": "2"
+      },
+      {
+        "node": "evidence:EVID_00009",
+        "degree": "2"
+      },
+      {
+        "node": "domain:plasticostermoencogibles.pe",
+        "degree": "1"
+      },
+      {
+        "node": "url:https://plasticostermoencogibles.pe/scss/css/scss/",
+        "degree": "1"
+      },
+      {
+        "node": "timeline_event:CASE_9350872D71:EVID_00011",
+        "degree": "1"
+      }
+    ]
+  }
+}

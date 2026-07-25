@@ -1,0 +1,12 @@
+{
+  "report_type": "entity_statistics",
+  "report_version": 2,
+  "schema_version": "2.0",
+  "case_id": "CASE_8F43434664",
+  "generated_at": "2026-07-25T13:53:49.307Z",
+  "report": {
+    "case_id": "CASE_8F43434664",
+    "entity_statistics": {},
+    "top_entities": {}
+  }
+}

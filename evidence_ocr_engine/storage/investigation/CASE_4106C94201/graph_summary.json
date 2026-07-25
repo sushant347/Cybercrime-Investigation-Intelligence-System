@@ -1,0 +1,20 @@
+{
+  "report_type": "graph_summary",
+  "report_version": 1,
+  "schema_version": "2.0",
+  "case_id": "CASE_4106C94201",
+  "generated_at": "2026-07-25T14:11:47.059Z",
+  "report": {
+    "case_id": "CASE_4106C94201",
+    "headline": "5 nodes and 6 edges across 1 component(s)",
+    "key_connectors": [
+      "domain:www.telegrammessage.com",
+      "url:https://www.telegrammessage.com/",
+      "timeline_event:CASE_4106C94201:EVID_00014"
+    ],
+    "observations": [
+      "2 threat-intelligence edge(s) link flagged indicators to evidence.",
+      "All entities and evidence form a single connected component - consistent with one coordinated activity."
+    ]
+  }
+}

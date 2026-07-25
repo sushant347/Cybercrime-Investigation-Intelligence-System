@@ -67,6 +67,53 @@ SECTION_TITLES = [
 ]
 
 
+def _esc(value: Any) -> str:
+    """Escape text for ReportLab's mini-HTML paragraph markup.
+
+    Model reasons contain ``&`` and quoted brand names, which would otherwise
+    be parsed as markup and abort the render.
+    """
+    return (str(value)
+            .replace("&", "&amp;")
+            .replace("<", "&lt;")
+            .replace(">", "&gt;"))
+
+
+def _prediction_facts(row: Dict[str, Any]) -> List[str]:
+    """Short 'label: value' facts behind a URL verdict, in reading order.
+
+    Only what an investigator would cite. Fields the provider did not supply
+    are skipped, so an offline analysis simply shows fewer facts instead of
+    claiming a domain has no registrar or an age of zero.
+    """
+    facts: List[str] = []
+    if row.get("domain"):
+        facts.append(f"domain: {row['domain']}")
+    if row.get("ip_address"):
+        facts.append(f"resolves to: {row['ip_address']}")
+    age = row.get("domain_age_days")
+    if isinstance(age, int):
+        facts.append(f"domain age: {age} day{'' if age == 1 else 's'}")
+    if row.get("registrar"):
+        facts.append(f"registrar: {row['registrar']}")
+    if row.get("hosting"):
+        facts.append(f"hosted by: {row['hosting']}")
+    if row.get("ssl_status"):
+        left = row.get("ssl_days_left")
+        facts.append(f"SSL: {row['ssl_status']}"
+                     + (f" ({left} days left)" if isinstance(left, int) else ""))
+    if isinstance(row.get("spf_present"), bool):
+        facts.append(f"SPF: {'present' if row['spf_present'] else 'missing'}")
+    if isinstance(row.get("dmarc_present"), bool):
+        facts.append(f"DMARC: {'present' if row['dmarc_present'] else 'missing'}")
+    if row.get("brand_impersonated"):
+        facts.append(f"brand: {row['brand_impersonated']}"
+                     + ("" if row.get("official_domain") else " (impersonated)"))
+    if isinstance(row.get("trust_score"), int):
+        facts.append(f"trust: {row['trust_score']}/100")
+    return facts
+
+
 def available() -> bool:
     """True when reportlab is importable in this environment."""
     return _REPORTLAB
@@ -272,6 +319,25 @@ def render_pdf(
               r.get("source", "")]
              for r in rows],
             widths=[58 * mm, 22 * mm, 14 * mm, 22 * mm, 42 * mm]))
+        # The table gives the verdict; these paragraphs give the grounds for
+        # it. Only flagged indicators are expanded - a clean URL needs no
+        # justification and expanding every one would bury the findings.
+        for row in rows:
+            if str(row.get("verdict", "")).lower() not in ("malicious", "suspicious",
+                                                           "phishing"):
+                continue
+            facts = _prediction_facts(row)
+            reasons = [str(r) for r in (row.get("reasons") or []) if str(r).strip()]
+            if not facts and not reasons:
+                continue
+            story.append(Spacer(1, 4))
+            story.append(Paragraph(
+                f"<b>{_esc(row.get('indicator', ''))}</b>", styles["body"]))
+            if facts:
+                story.append(Paragraph(
+                    " &middot; ".join(_esc(f) for f in facts), styles["subtitle"]))
+            for reason in reasons:
+                story.append(Paragraph(f"&bull; {_esc(reason)}", styles["subtitle"]))
         remainder = {k: v for k, v in section.items() if k != "predictions"}
         if remainder:
             story.append(Spacer(1, 3))

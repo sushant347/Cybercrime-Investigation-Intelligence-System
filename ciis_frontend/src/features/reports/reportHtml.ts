@@ -103,17 +103,35 @@ export function buildReportHtml(report: SimpleReport): string {
     )
     .join("");
 
+  // Each indicator gets a second row carrying the domain facts and the
+  // model's plain-language reasons, so the downloaded file says exactly what
+  // the on-screen report says.
   const predictionRows = report.modelPredictions
-    .map(
-      (row) => `
+    .map((row) => {
+      const facts = row.facts
+        .map(
+          (f) =>
+            `<span class="fact${f.bad ? " fact-bad" : ""}">${escapeHtml(f.label)}: ${escapeHtml(f.value)}</span>`,
+        )
+        .join("");
+      const reasons = row.reasons.length
+        ? `<ul class="reasons">${row.reasons
+            .map((r) => `<li>${escapeHtml(r)}</li>`)
+            .join("")}</ul>`
+        : "";
+      const detail =
+        facts || reasons
+          ? `<tr class="detail"><td colspan="5">${facts ? `<p class="facts">${facts}</p>` : ""}${reasons}</td></tr>`
+          : "";
+      return `
       <tr>
         <td><code>${escapeHtml(row.indicator)}</code></td>
         <td><span class="badge" style="background:${row.verdictBad ? BADGE_COLORS.bad : BADGE_COLORS.good}">${escapeHtml(row.verdict)}</span></td>
         <td>${escapeHtml(row.risk)}</td>
         <td>${escapeHtml(row.confidence)}</td>
         <td><code>${escapeHtml(row.model)}</code></td>
-      </tr>`,
-    )
+      </tr>${detail}`;
+    })
     .join("");
 
   const progression = report.progression.length
@@ -174,6 +192,14 @@ export function buildReportHtml(report: SimpleReport): string {
   .badge{ display:inline-block; padding:3px 10px; border-radius:999px;
           color:#fff; font-size:12px; font-weight:700; }
   .hint{ margin-top:4px; color:#68758a; font-size:12.5px; }
+  tr.detail td{ padding-top:0; border-top:0; }
+  .facts{ margin:0 0 6px; }
+  .fact{ display:inline-block; margin:0 6px 4px 0; padding:2px 8px;
+         border:1px solid #cbd5e1; border-radius:999px; font-size:11.5px;
+         color:#334155; }
+  .fact-bad{ border-color:#b3261e; color:#b3261e; }
+  .reasons{ margin:0; padding-left:20px; color:#68758a; font-size:12px; }
+  .reasons li{ margin-bottom:3px; }
   ul,ol{ margin:0; padding-left:22px; }
   li{ margin-bottom:8px; }
   code{ font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:12.5px; }

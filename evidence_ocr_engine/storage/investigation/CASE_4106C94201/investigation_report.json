@@ -1,0 +1,264 @@
+{
+  "report_type": "investigation_report",
+  "report_version": 1,
+  "schema_version": "2.0",
+  "case_id": "CASE_4106C94201",
+  "generated_at": "2026-07-25T14:11:56.044Z",
+  "report": {
+    "report_id": "RPT-4106C94201-3C01ED2A",
+    "sections": {
+      "executive_summary": [
+        "Case CASE_4106C94201 contains 1 evidence item(s), each acquired under SHA-256 chain-of-custody verification.",
+        "The weighted correlation engine found 0 related evidence pair(s) out of 0 analysed [correlation_analysis.json]."
+      ],
+      "scope_and_methodology": {
+        "objective": "Acquire, verify, correlate and reconstruct the digital evidence for this case, and derive investigative leads (suspect anchors, campaigns, cross-case links) strictly from stored, hash-verified artifacts.",
+        "evidence_scope": "1 evidence item(s) acquired through the CIIS intake pipeline under SHA-256 chain-of-custody control.",
+        "methodology": [
+          "Phase 1 - Acquisition & OCR: PaddleOCR PP-OCRv5 text extraction with per-item confidence scoring; SHA-256 fingerprint recorded at intake and re-verified at read.",
+          "Phase 1 - Forensics: metadata/EXIF consistency, forgery signals, logo detection and evidence-confidence scoring stored per item under storage/forensics/.",
+          "Phase 2 - Correlation: weighted entity-overlap engine scoring every evidence pair; results in correlation_analysis.json.",
+          "Phase 2 - Cross-case: shared-entity matching against every other analysed case (cross_case_correlation.json).",
+          "Phase 2 - Campaigns / Suspects / Timeline: clustering, anchor derivation and event reconstruction over the correlated evidence set.",
+          "Threat intelligence: URL/domain indicators scored by the configured provider (static indicator file, or the trained phishing classifier when CIIS_ML_THREAT_INTEL=1); per-indicator results in 'Model Prediction Results'.",
+          "Reporting: this document is assembled exclusively from the stored outputs above; it contains no free-text generation."
+        ],
+        "reproducibility": "Re-running the analysis against the same stored evidence reproduces every figure herein; artifacts are versioned and never overwritten."
+      },
+      "case_overview": {
+        "case_id": "CASE_4106C94201",
+        "evidence_count": 1,
+        "first_evidence": "2026-07-25T14:11:41.914Z",
+        "last_evidence": "2026-07-25T14:11:41.914Z",
+        "file_types": [
+          "url"
+        ]
+      },
+      "evidence_summary": [
+        {
+          "evidence_id": "EVID_00014",
+          "file_name": "https_www.telegrammessage.com_.url",
+          "upload_time": "2026-07-25T14:11:41.914Z",
+          "sha256": "14625a373e9fcbc09d3047faae956eb1d23d38ed22deb9f816daff0136353200",
+          "hash_verified": true,
+          "ocr_confidence": 1.0,
+          "evidence_confidence_score": "not available",
+          "entity_count": 2
+        }
+      ],
+      "correlation_analysis": {
+        "pair_count": 0,
+        "related_pair_count": 0,
+        "strength_distribution": {},
+        "top_relationships": []
+      },
+      "cross_case_correlation": "No cross-case correlations were found for this case.",
+      "campaign_analysis": {
+        "campaign_count": 0,
+        "unclustered_evidence": [
+          "EVID_00014"
+        ],
+        "campaigns": []
+      },
+      "timeline_analysis": {
+        "summary": "1 event(s) spanning 0.0 hour(s); 0 timestamp(s) unresolved.",
+        "stage_progression": [],
+        "progression_consistent": true,
+        "milestones": [
+          {
+            "timestamp": "2026-07-25T14:11:41.914000+00:00",
+            "description": "Investigation start - first reconstructed evidence event"
+          }
+        ],
+        "critical_events": []
+      },
+      "suspect_assessment": "No suspect anchors were derived from the evidence.",
+      "threat_intelligence_summary": {
+        "intel_available": 1.0,
+        "indicators_checked": 2.0,
+        "malicious_indicators": 2.0,
+        "evidence_with_threats": 1.0,
+        "threat_evidence_ratio": 1.0
+      },
+      "model_predictions": {
+        "indicators_classified": 2,
+        "flagged_malicious": 2,
+        "predictions": [
+          {
+            "indicator": "www.telegrammessage.com",
+            "evidence_id": "EVID_00014",
+            "verdict": "malicious",
+            "risk_score": 82,
+            "confidence": 0.82,
+            "risk_level": "Critical",
+            "source": "ml:xgboost",
+            "model_version": "4.0.0",
+            "domain": "www.telegrammessage.com",
+            "trust_score": 10,
+            "brand_impersonated": "telegram",
+            "official_domain": false,
+            "ssl_status": "VALID",
+            "domain_age_days": 42,
+            "registrar": "Spaceship, Inc.",
+            "spf_present": false,
+            "dmarc_present": false,
+            "ssl_days_left": 51,
+            "hosting": "Cloudflare, Inc., Canada",
+            "ip_address": "104.21.88.199",
+            "reasons": [
+              "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
+              "AI model classified this URL as phishing with 100% confidence.",
+              "The domain contains the brand name 'telegram' but is not the official domain -- possible brand impersonation.",
+              "The URL does not use HTTPS, meaning data is transmitted without encryption.",
+              "The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure.",
+              "The domain contains 'telegram' but is not the official telegram.com domain — a common brand impersonation technique."
+            ],
+            "threat_signals": [
+              "✗ Impersonates known brand: telegram (found in domain)",
+              "✗ Plain HTTP protocol used (unencrypted connections)",
+              "✗ Recently registered domain (age 42 days)",
+              "✗ Missing SPF record (facilitates email spoofing)",
+              "✗ Missing DMARC record (facilitates email spoofing)"
+            ],
+            "trust_signals": [
+              "✓ Valid SSL certificate",
+              "✓ Registered with trusted registrar (Spaceship, Inc.)",
+              "✓ Hosted on a trusted enterprise network (Cloudflare, Inc.)"
+            ]
+          },
+          {
+            "indicator": "https://www.telegrammessage.com/",
+            "evidence_id": "EVID_00014",
+            "verdict": "malicious",
+            "risk_score": 81,
+            "confidence": 0.81,
+            "risk_level": "Critical",
+            "source": "ml:xgboost",
+            "model_version": "4.0.0",
+            "domain": "www.telegrammessage.com",
+            "trust_score": 10,
+            "brand_impersonated": "telegram",
+            "official_domain": false,
+            "ssl_status": "VALID",
+            "domain_age_days": 42,
+            "registrar": "Spaceship, Inc.",
+            "spf_present": false,
+            "dmarc_present": false,
+            "ssl_days_left": 51,
+            "hosting": "Cloudflare, Inc., Canada",
+            "ip_address": "104.21.88.199",
+            "reasons": [
+              "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
+              "AI model classified this URL as phishing with 97% confidence.",
+              "The domain contains the brand name 'telegram' but is not the official domain -- possible brand impersonation.",
+              "The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure.",
+              "The domain contains 'telegram' but is not the official telegram.com domain — a common brand impersonation technique.",
+              "Brand 'Telegram' referenced in hostname, but registrable domain 'telegrammessage.com' does not belong to the official Telegram infrastructure."
+            ],
+            "threat_signals": [
+              "✗ Impersonates known brand: telegram (found in domain)",
+              "✗ Recently registered domain (age 42 days)",
+              "✗ Missing SPF record (facilitates email spoofing)",
+              "✗ Missing DMARC record (facilitates email spoofing)"
+            ],
+            "trust_signals": [
+              "✓ Valid SSL certificate",
+              "✓ Registered with trusted registrar (Spaceship, Inc.)",
+              "✓ Hosted on a trusted enterprise network (Cloudflare, Inc.)"
+            ]
+          }
+        ]
+      },
+      "evidence_quality_summary": {
+        "mean_image_quality": 0.0,
+        "mean_evidence_confidence": 0.0,
+        "mean_forgery_score": 0.0,
+        "max_forgery_score": 0.0,
+        "mean_ocr_confidence": 1.0,
+        "hash_verified_count": 1.0
+      },
+      "metadata_summary": [
+        {
+          "note": "No Phase-1 metadata reports stored for this case."
+        }
+      ],
+      "investigation_statistics": {
+        "entity_statistics": {
+          "domains": 1,
+          "urls": 1
+        },
+        "campaign_statistics": {
+          "campaign_count": 0.0,
+          "largest_campaign_size": 0.0,
+          "clustered_evidence": 0.0,
+          "unclustered_evidence": 1.0,
+          "mean_campaign_confidence": 0.0
+        },
+        "timeline_statistics": {
+          "event_count": 1.0,
+          "resolved_event_count": 1.0,
+          "unresolved_event_count": 0.0,
+          "inferred_event_count": 1.0,
+          "stage_count": 0.0,
+          "critical_event_count": 0.0,
+          "timeline_span_hours": 0.0
+        },
+        "correlation_statistics": {
+          "pair_count": 0.0,
+          "related_pair_count": 0.0,
+          "mean_confidence": 0.0,
+          "max_confidence": 0.0
+        }
+      },
+      "confidence_analysis": [
+        {
+          "note": "No Phase-1 confidence scores stored for this case."
+        }
+      ],
+      "investigation_conclusion": [
+        "1/1 evidence item(s) passed SHA-256 chain-of-custody verification."
+      ],
+      "recommendations": [
+        "Case priority: MEDIUM (30.8/100) - Standard queue: process in normal rotation while monitoring for new linked evidence."
+      ],
+      "report_provenance": {
+        "report_id": "RPT-4106C94201-3C01ED2A",
+        "generated_at": "2026-07-25T14:11:56.042Z",
+        "generator": "CIIS Phase-2 reporting module (template-over-data; no free-text generation)",
+        "evidence_set_digest": "3bebac03c4a83c85e101c7e264d7e5ad4517ed7bc5c3fdff5820dd343991c5ad",
+        "evidence_set_digest_note": "SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.",
+        "source_artifact_hashes": {
+          "correlation_analysis_v2.json": "4e5d8c6e098fb71330f3f57867a3094b69d02b52c52f15130452ede2259f20d1",
+          "cross_case_correlation.json": "037204937a4cff74d5de9ef621a3435c7db1332c1c518a22a5bd9f894fc3e680",
+          "campaign_analysis.json": "8ad8ada226020ebfc566a7a84d201fa88a26dbbcaf1d38567225b500de574450",
+          "suspect_assessment.json": "30dea2ffd2ef4f559e725fe5eab3a322b8464800f57b4fd72b9784e645482e94",
+          "timeline_analysis_v2.json": "4e5c998552dd3248df04f1b1b0af1058999c61e500c2d9ae8e71728d6ae19f2d",
+          "analytics.json": "31b84070ef8125c22348d8261c9028ee1cc19dfef9b26eaee10dc719f590184d",
+          "case_priority.json": "ad7dad6273fa5b62036c4e3cb76cce7d9352f550d3882098f116f1237816ee42",
+          "graph_v2.json": "3197cac9bf13e3f9be04400b5970a4a6d72d008114ca4613d579f990fc116fd6"
+        }
+      },
+      "appendix": {
+        "chain_of_custody": [
+          {
+            "evidence_id": "EVID_00014",
+            "sha256": "14625a373e9fcbc09d3047faae956eb1d23d38ed22deb9f816daff0136353200",
+            "upload_time": "2026-07-25T14:11:41.914Z",
+            "status": "processed"
+          }
+        ],
+        "stored_artifacts_root": "storage/investigation/<CASE_ID>/",
+        "phase1_artifacts_root": "storage/forensics/<EVIDENCE_ID>/"
+      }
+    },
+    "generated_from": {
+      "correlation": true,
+      "cross_case": true,
+      "campaigns": true,
+      "suspects": true,
+      "timeline": true,
+      "analytics": true,
+      "priority": true
+    }
+  }
+}

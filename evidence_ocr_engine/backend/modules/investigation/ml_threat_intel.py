@@ -41,6 +41,21 @@ def _looks_like_url(value: str) -> bool:
     return " " not in v and "." in head and not v.isdigit()
 
 
+def _registrable_domain(url: str) -> str:
+    """Host part of a URL, without scheme, credentials, port or path.
+
+    Not a public-suffix parse — the report shows the host an investigator
+    would recognise ("nabil-verify.scam.top"), which is what matters here.
+    """
+    value = (url or "").strip()
+    if "://" in value:
+        value = value.split("://", 1)[1]
+    host = value.split("/", 1)[0].split("?", 1)[0]
+    if "@" in host:                     # strip user:pass@
+        host = host.rsplit("@", 1)[1]
+    return host.split(":", 1)[0].lower()   # drop any :port
+
+
 class MLThreatIntelProvider:
     """Adapts the phishing-URL ML classifier to the ThreatIntelProvider API."""
 
@@ -149,4 +164,58 @@ class MLThreatIntelProvider:
             "risk_level": getattr(result, "risk_level", ""),
             "prediction": getattr(result, "prediction", ""),
             "model_version": getattr(result, "model_version", ""),
+            # Investigator-facing detail. A verdict on its own is not evidence:
+            # a report has to say *which domain* was judged and *why*, in terms
+            # an investigator can put in front of a court. Everything below is
+            # already computed by the classifier, so surfacing it is free.
+            **self._investigator_detail(url, result),
         }
+
+    def _investigator_detail(self, url: str, result: Any) -> Dict[str, Any]:
+        """The subset of the classifier output worth putting in a report.
+
+        Deliberately *not* everything the engine produces: SHAP contributions,
+        raw feature vectors and ensemble weights are model diagnostics, not
+        findings. Kept: the registrable domain, brand impersonation, the
+        network-derived facts (domain age, registrar, SSL, SPF/DMARC, hosting)
+        and the plain-language reasons.
+        """
+        # ``threat_intelligence`` is a *flat* dict keyed by connector prefix
+        # (``whois_registrar``, ``dns_has_spf``, …), not a nested mapping.
+        intel = getattr(result, "threat_intelligence", None) or {}
+
+        def _clean(seq: Any, limit: int) -> list:
+            return [str(x).strip() for x in list(seq or [])[:limit] if str(x).strip()]
+
+        detail: Dict[str, Any] = {
+            "domain": _registrable_domain(url),
+            "trust_score": int(getattr(result, "trust_score", 0) or 0),
+            "brand_impersonated": getattr(result, "brand_detected", None) or "",
+            "official_domain": bool(getattr(result, "official_domain", False)),
+            "ssl_status": getattr(result, "ssl_status", "") or "",
+            "reasons": _clean(getattr(result, "reasons", []), 6),
+            "threat_signals": _clean(getattr(result, "negative_indicators", []), 6),
+            "trust_signals": _clean(getattr(result, "positive_indicators", []), 6),
+        }
+        # Network-derived facts: recorded only when the corresponding connector
+        # actually succeeded, so an offline or rate-limited analysis omits the
+        # field entirely rather than reporting a misleading zero/False.
+        if intel.get("whois_success"):
+            if intel.get("whois_domain_age_days") is not None:
+                detail["domain_age_days"] = intel["whois_domain_age_days"]
+            if intel.get("whois_registrar"):
+                detail["registrar"] = str(intel["whois_registrar"])
+        if intel.get("dns_success"):
+            detail["spf_present"] = bool(intel.get("dns_has_spf"))
+            detail["dmarc_present"] = bool(intel.get("dns_has_dmarc"))
+        if intel.get("ssl_success") and intel.get("ssl_days_until_expiry") is not None:
+            detail["ssl_days_left"] = intel["ssl_days_until_expiry"]
+        if intel.get("geoip_success"):
+            hosting = ", ".join(
+                str(v) for v in (intel.get("geoip_asn_org"), intel.get("geoip_country")) if v
+            )
+            if hosting:
+                detail["hosting"] = hosting
+            if intel.get("geoip_ip_address"):
+                detail["ip_address"] = str(intel["geoip_ip_address"])
+        return detail

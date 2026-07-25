@@ -1,0 +1,28 @@
+{
+  "report_type": "entity_statistics",
+  "report_version": 1,
+  "schema_version": "2.0",
+  "case_id": "CASE_4106C94201",
+  "generated_at": "2026-07-25T14:11:56.041Z",
+  "report": {
+    "case_id": "CASE_4106C94201",
+    "entity_statistics": {
+      "domains": 1,
+      "urls": 1
+    },
+    "top_entities": {
+      "domains": [
+        {
+          "value": "www.telegrammessage.com",
+          "count": 1
+        }
+      ],
+      "urls": [
+        {
+          "value": "https://www.telegrammessage.com/",
+          "count": 1
+        }
+      ]
+    }
+  }
+}

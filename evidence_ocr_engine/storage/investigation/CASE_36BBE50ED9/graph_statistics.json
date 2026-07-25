@@ -1,0 +1,45 @@
+{
+  "report_type": "graph_statistics",
+  "report_version": 1,
+  "schema_version": "2.0",
+  "case_id": "CASE_36BBE50ED9",
+  "generated_at": "2026-07-25T13:49:38.336Z",
+  "report": {
+    "case_id": "CASE_36BBE50ED9",
+    "node_count": 4,
+    "edge_count": 3,
+    "nodes_by_type": {
+      "case": 1,
+      "evidence": 1,
+      "money": 1,
+      "timeline_event": 1
+    },
+    "edges_by_type": {
+      "contains": 1,
+      "shared_entity": 1,
+      "timeline_event": 1
+    },
+    "density": 0.5,
+    "connected_components": 1,
+    "largest_component_size": 4,
+    "average_degree": 1.5,
+    "top_hubs": [
+      {
+        "node": "evidence:EVID_00009",
+        "degree": "3"
+      },
+      {
+        "node": "case:CASE_36BBE50ED9",
+        "degree": "1"
+      },
+      {
+        "node": "money:npr 250000",
+        "degree": "1"
+      },
+      {
+        "node": "timeline_event:CASE_36BBE50ED9:EVID_00009",
+        "degree": "1"
+      }
+    ]
+  }
+}

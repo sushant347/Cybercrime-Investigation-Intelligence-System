@@ -1,0 +1,276 @@
+{
+  "report_type": "investigation_report",
+  "report_version": 2,
+  "schema_version": "2.0",
+  "case_id": "CASE_9350872D71",
+  "generated_at": "2026-07-25T13:56:14.979Z",
+  "report": {
+    "report_id": "RPT-9350872D71-C99DB01B",
+    "sections": {
+      "executive_summary": [
+        "Case CASE_9350872D71 contains 3 evidence item(s), each acquired under SHA-256 chain-of-custody verification.",
+        "This case is linked to 1 other case(s) through shared entities: CASE_36BBE50ED9 [cross_case_correlation.json].",
+        "The weighted correlation engine found 3 related evidence pair(s) out of 3 analysed [correlation_analysis.json].",
+        "Observed attack progression: financial_transaction -> post_attack [timeline_analysis.json]."
+      ],
+      "scope_and_methodology": {
+        "objective": "Acquire, verify, correlate and reconstruct the digital evidence for this case, and derive investigative leads (suspect anchors, campaigns, cross-case links) strictly from stored, hash-verified artifacts.",
+        "evidence_scope": "3 evidence item(s) acquired through the CIIS intake pipeline under SHA-256 chain-of-custody control.",
+        "methodology": [
+          "Phase 1 - Acquisition & OCR: PaddleOCR PP-OCRv5 text extraction with per-item confidence scoring; SHA-256 fingerprint recorded at intake and re-verified at read.",
+          "Phase 1 - Forensics: metadata/EXIF consistency, forgery signals, logo detection and evidence-confidence scoring stored per item under storage/forensics/.",
+          "Phase 2 - Correlation: weighted entity-overlap engine scoring every evidence pair; results in correlation_analysis.json.",
+          "Phase 2 - Cross-case: shared-entity matching against every other analysed case (cross_case_correlation.json).",
+          "Phase 2 - Campaigns / Suspects / Timeline: clustering, anchor derivation and event reconstruction over the correlated evidence set.",
+          "Threat intelligence: URL/domain indicators scored by the configured provider (static indicator file, or the trained phishing classifier when CIIS_ML_THREAT_INTEL=1); per-indicator results in 'Model Prediction Results'.",
+          "Reporting: this document is assembled exclusively from the stored outputs above; it contains no free-text generation."
+        ],
+        "reproducibility": "Re-running the analysis against the same stored evidence reproduces every figure herein; artifacts are versioned and never overwritten."
+      },
+      "case_overview": {
+        "case_id": "CASE_9350872D71",
+        "evidence_count": 3,
+        "first_evidence": "2026-07-25T13:51:58.581Z",
+        "last_evidence": "2026-07-25T13:56:06.791Z",
+        "file_types": [
+          "jpg",
+          "pdf",
+          "url"
+        ]
+      },
+      "evidence_summary": [
+        {
+          "evidence_id": "EVID_00011",
+          "file_name": "police_scan_report.pdf",
+          "upload_time": "2026-07-25T13:51:58.581Z",
+          "sha256": "63b677916b711ece64fc71292577dfb70a2385c2de817cd0200f86d777b0b350",
+          "hash_verified": true,
+          "ocr_confidence": 1.0,
+          "evidence_confidence_score": "not available",
+          "entity_count": 1
+        },
+        {
+          "evidence_id": "EVID_00012",
+          "file_name": "romanchat.jpg",
+          "upload_time": "2026-07-25T13:52:01.149Z",
+          "sha256": "0340d5863313f4cc0b9b40ed835a77a71b8304d2e08eb32f08a56ed93a6e0b10",
+          "hash_verified": true,
+          "ocr_confidence": 0.9686,
+          "evidence_confidence_score": "not available",
+          "entity_count": 0
+        },
+        {
+          "evidence_id": "EVID_00013",
+          "file_name": "https_plasticostermoencogibles.pe_scss_css_scss_.url",
+          "upload_time": "2026-07-25T13:56:06.791Z",
+          "sha256": "fab44e99bd90f1ffe214d4d2bb6580e4c0d52f5fe930e773d96cf92ee820a2f5",
+          "hash_verified": true,
+          "ocr_confidence": 1.0,
+          "evidence_confidence_score": "not available",
+          "entity_count": 2
+        }
+      ],
+      "correlation_analysis": {
+        "pair_count": 3,
+        "related_pair_count": 3,
+        "strength_distribution": {
+          "WEAK": 3
+        },
+        "top_relationships": [
+          {
+            "pair": "EVID_00011 <-> EVID_00012",
+            "strength": "WEAK",
+            "confidence": 0.2212,
+            "explanation": "EVID_00011 (police_scan_report.pdf) and EVID_00012 (romanchat.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+          },
+          {
+            "pair": "EVID_00011 <-> EVID_00013",
+            "strength": "WEAK",
+            "confidence": 0.2212,
+            "explanation": "EVID_00011 (police_scan_report.pdf) and EVID_00013 (https_plasticostermoencogibles.pe_scss_css_scss_.url) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
+          },
+          {
+            "pair": "EVID_00012 <-> EVID_00013",
+            "strength": "WEAK",
+            "confidence": 0.2212,
+            "explanation": "EVID_00012 (romanchat.jpg) and EVID_00013 (https_plasticostermoencogibles.pe_scss_css_scss_.url) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
+          }
+        ]
+      },
+      "cross_case_correlation": {
+        "related_case_count": 1,
+        "related_case_ids": [
+          "CASE_36BBE50ED9"
+        ],
+        "links": [
+          {
+            "other_case_id": "CASE_36BBE50ED9",
+            "relationship_strength": "WEAK",
+            "match_confidence": 0.1175,
+            "match_reason": "Shares 1 entity(ies) with CASE_36BBE50ED9: money npr 250000",
+            "matched_entities": [
+              {
+                "entity_type": "money",
+                "value": "npr 250000",
+                "this_evidence_ids": [
+                  "EVID_00011"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00009"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "campaign_analysis": {
+        "campaign_count": 0,
+        "unclustered_evidence": [
+          "EVID_00011",
+          "EVID_00012",
+          "EVID_00013"
+        ],
+        "campaigns": []
+      },
+      "timeline_analysis": {
+        "summary": "3 event(s) spanning 0.1 hour(s); 0 timestamp(s) unresolved. Observed scam progression: financial_transaction -> post_attack.",
+        "stage_progression": [
+          "financial_transaction",
+          "post_attack"
+        ],
+        "progression_consistent": true,
+        "milestones": [
+          {
+            "timestamp": "2026-07-25T13:51:58.581000+00:00",
+            "description": "Investigation start - first reconstructed evidence event"
+          },
+          {
+            "timestamp": "2026-07-25T13:51:58.581000+00:00",
+            "description": "First observation of stage 'financial_transaction' (EVID_00011)"
+          },
+          {
+            "timestamp": "2026-07-25T13:51:58.581000+00:00",
+            "description": "First observation of stage 'post_attack' (EVID_00011)"
+          }
+        ],
+        "critical_events": [
+          {
+            "timestamp": "2026-07-25T13:51:58.581000+00:00",
+            "evidence_id": "EVID_00011",
+            "reasons": [
+              "contains money entity/entities: NPR 250000"
+            ]
+          }
+        ]
+      },
+      "suspect_assessment": "No suspect anchors were derived from the evidence.",
+      "threat_intelligence_summary": "No threat-intelligence indicator file was provided; threat corroboration was skipped (not an absence of threat).",
+      "model_predictions": "No threat-intelligence provider was active during this analysis; indicator-level model predictions were not produced (this is a coverage gap, not an absence of threat).",
+      "evidence_quality_summary": {
+        "mean_image_quality": 0.0,
+        "mean_evidence_confidence": 0.0,
+        "mean_forgery_score": 0.0,
+        "max_forgery_score": 0.0,
+        "mean_ocr_confidence": 0.99,
+        "hash_verified_count": 3.0
+      },
+      "metadata_summary": [
+        {
+          "note": "No Phase-1 metadata reports stored for this case."
+        }
+      ],
+      "investigation_statistics": {
+        "entity_statistics": {
+          "domains": 1,
+          "money": 1,
+          "urls": 1
+        },
+        "campaign_statistics": {
+          "campaign_count": 0.0,
+          "largest_campaign_size": 0.0,
+          "clustered_evidence": 0.0,
+          "unclustered_evidence": 3.0,
+          "mean_campaign_confidence": 0.0
+        },
+        "timeline_statistics": {
+          "event_count": 3.0,
+          "resolved_event_count": 3.0,
+          "unresolved_event_count": 0.0,
+          "inferred_event_count": 3.0,
+          "stage_count": 2.0,
+          "critical_event_count": 1.0,
+          "timeline_span_hours": 0.07
+        },
+        "correlation_statistics": {
+          "pair_count": 3.0,
+          "related_pair_count": 3.0,
+          "mean_confidence": 0.2212,
+          "max_confidence": 0.2212
+        }
+      },
+      "confidence_analysis": [
+        {
+          "note": "No Phase-1 confidence scores stored for this case."
+        }
+      ],
+      "investigation_conclusion": [
+        "3/3 evidence item(s) passed SHA-256 chain-of-custody verification.",
+        "The evidence set is internally connected (3 weighted relationship(s)), consistent with related activity rather than isolated incidents."
+      ],
+      "recommendations": [
+        "Prioritise the 1 critical event(s) involving OTP/financial entities for victim-impact assessment.",
+        "Case priority: LOW (13.8/100) - Low urgency: archive-ready unless new evidence raises the correlation or threat picture."
+      ],
+      "report_provenance": {
+        "report_id": "RPT-9350872D71-C99DB01B",
+        "generated_at": "2026-07-25T13:56:14.974Z",
+        "generator": "CIIS Phase-2 reporting module (template-over-data; no free-text generation)",
+        "evidence_set_digest": "df0581a5f3fdcd847a35bf227c9923bd7cf0c7e1561366e527f37941220bcb67",
+        "evidence_set_digest_note": "SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.",
+        "source_artifact_hashes": {
+          "correlation_analysis_v5.json": "188dbf18d875ca4e4d4168818158b1a79ac29d5273af7ee3277b3586c29afce9",
+          "cross_case_correlation.json": "4ce52bade5f8d6b4c6f6f75272414bf2d2544ec2ca13a20ad3391e3536423405",
+          "campaign_analysis_v2.json": "ebdd40290d7d16c01c98e79d73f9bd490720dd70774b94eea743fa9c6c2db119",
+          "suspect_assessment_v2.json": "925cd6fa99d5e6afb0075618f44e3e576bb522deb715a748723d593330031dae",
+          "timeline_analysis_v5.json": "5b01be646572254ca6f47d896a9f16f1c1d6db3cd379423ff814a16ee5631f5a",
+          "analytics_v2.json": "d09c170131bbbf6fb60638f81b8de13b6ee9798edd0dab299445dbaf04c2550e",
+          "case_priority_v2.json": "ddce4cee31a21e213758f1f7747855b898aee50739cc6385aeb09139d0bf9561",
+          "graph_v5.json": "028ba5c1cc5c4473452e18b41a555a01c275650044598f0994396aa0ad3c860b"
+        }
+      },
+      "appendix": {
+        "chain_of_custody": [
+          {
+            "evidence_id": "EVID_00011",
+            "sha256": "63b677916b711ece64fc71292577dfb70a2385c2de817cd0200f86d777b0b350",
+            "upload_time": "2026-07-25T13:51:58.581Z",
+            "status": "processed"
+          },
+          {
+            "evidence_id": "EVID_00012",
+            "sha256": "0340d5863313f4cc0b9b40ed835a77a71b8304d2e08eb32f08a56ed93a6e0b10",
+            "upload_time": "2026-07-25T13:52:01.149Z",
+            "status": "processed"
+          },
+          {
+            "evidence_id": "EVID_00013",
+            "sha256": "fab44e99bd90f1ffe214d4d2bb6580e4c0d52f5fe930e773d96cf92ee820a2f5",
+            "upload_time": "2026-07-25T13:56:06.791Z",
+            "status": "processed"
+          }
+        ],
+        "stored_artifacts_root": "storage/investigation/<CASE_ID>/",
+        "phase1_artifacts_root": "storage/forensics/<EVIDENCE_ID>/"
+      }
+    },
+    "generated_from": {
+      "correlation": true,
+      "cross_case": true,
+      "campaigns": true,
+      "suspects": true,
+      "timeline": true,
+      "analytics": true,
+      "priority": true
+    }
+  }
+}

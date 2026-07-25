@@ -1,0 +1,19 @@
+{
+  "report_type": "correlation_analysis",
+  "report_version": 3,
+  "schema_version": "2.0",
+  "case_id": "CASE_4106C94201",
+  "generated_at": "2026-07-25T14:12:49.801Z",
+  "report": {
+    "case_id": "CASE_4106C94201",
+    "evidence_ids": [
+      "EVID_00014"
+    ],
+    "pair_count": 0,
+    "related_pair_count": 0,
+    "pairs": [],
+    "strength_distribution": {},
+    "strongest_pair": "",
+    "analysis_time_ms": 0.0
+  }
+}

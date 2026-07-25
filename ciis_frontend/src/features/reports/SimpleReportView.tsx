@@ -10,6 +10,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import { Fragment } from "react";
 import type { ReactNode } from "react";
 
 import type { SimpleReport, SummaryRow } from "./reportModel";
@@ -296,19 +297,64 @@ export function SimpleReportView({ report }: { report: SimpleReport }) {
                 </TableHead>
                 <TableBody>
                   {report.modelPredictions.map((row) => (
-                    <TableRow key={row.indicator}>
-                      <TableCell sx={{ fontFamily: MONO, wordBreak: "break-all" }}>
-                        {row.indicator}
-                      </TableCell>
-                      <TableCell>
-                        <Badge label={row.verdict} tone={row.verdictBad ? "bad" : "good"} />
-                      </TableCell>
-                      <TableCell>{row.risk}</TableCell>
-                      <TableCell>{row.confidence}</TableCell>
-                      <TableCell sx={{ fontFamily: MONO, fontSize: "0.72rem" }}>
-                        {row.model}
-                      </TableCell>
-                    </TableRow>
+                    <Fragment key={row.indicator}>
+                      <TableRow>
+                        <TableCell sx={{ fontFamily: MONO, wordBreak: "break-all" }}>
+                          {row.indicator}
+                        </TableCell>
+                        <TableCell>
+                          <Badge label={row.verdict} tone={row.verdictBad ? "bad" : "good"} />
+                        </TableCell>
+                        <TableCell>{row.risk}</TableCell>
+                        <TableCell>{row.confidence}</TableCell>
+                        <TableCell sx={{ fontFamily: MONO, fontSize: "0.72rem" }}>
+                          {row.model}
+                        </TableCell>
+                      </TableRow>
+                      {(row.facts.length > 0 || row.reasons.length > 0) && (
+                        <TableRow>
+                          {/* The verdict alone is not usable in a report — this
+                              row carries the domain facts and the plain-language
+                              reasons the model actually relied on. */}
+                          <TableCell colSpan={5} sx={{ pt: 0, pb: 2, borderBottom: 0 }}>
+                            {row.facts.length > 0 && (
+                              <Stack
+                                direction="row"
+                                spacing={0.75}
+                                flexWrap="wrap"
+                                useFlexGap
+                                sx={{ mb: row.reasons.length ? 1 : 0 }}
+                              >
+                                {row.facts.map((fact) => (
+                                  <Chip
+                                    key={fact.label}
+                                    size="small"
+                                    variant="outlined"
+                                    color={fact.bad ? "error" : "default"}
+                                    label={`${fact.label}: ${fact.value}`}
+                                    sx={{ fontSize: "0.72rem" }}
+                                  />
+                                ))}
+                              </Stack>
+                            )}
+                            {row.reasons.length > 0 && (
+                              <Stack component="ul" sx={{ m: 0, pl: 2.5 }} spacing={0.25}>
+                                {row.reasons.map((reason) => (
+                                  <Typography
+                                    key={reason}
+                                    component="li"
+                                    variant="caption"
+                                    color="text.secondary"
+                                  >
+                                    {reason}
+                                  </Typography>
+                                ))}
+                              </Stack>
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      )}
+                    </Fragment>
                   ))}
                 </TableBody>
               </Table>
