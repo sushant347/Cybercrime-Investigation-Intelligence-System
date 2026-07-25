@@ -44,10 +44,10 @@ def _stages(image_path: Path) -> dict:
 
     cfg = EvidenceConfig.from_env()
     ocr = PaddleOCRService(cfg, lang=cfg.ocr_lang)
-    image = ImagePreprocessor(cfg).process(load_image(str(image_path)))
+    image, _ops = ImagePreprocessor(cfg).preprocess(load_image(str(image_path)))
     raw = "\n".join(line.text for line in ocr.recognize(image))
-    cleaned = CleaningPipeline(cfg).clean(raw).cleaned_text
-    enhanced = EnhancementPipeline(cfg).enhance(cleaned).enhanced_text
+    cleaned = CleaningPipeline().clean(raw).cleaned_text
+    enhanced = EnhancementPipeline().enhance(cleaned).enhanced_text
     return {"raw": raw, "preprocessed": cleaned, "enhanced": enhanced}
 
 

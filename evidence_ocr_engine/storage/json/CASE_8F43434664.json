@@ -1,0 +1,1378 @@
+{
+  "case_id": "CASE_8F43434664",
+  "created_at": "2026-07-24T16:07:15.488Z",
+  "updated_at": "2026-07-24T16:07:48.878Z",
+  "evidence_count": 3,
+  "evidence": [
+    {
+      "case_id": "CASE_8F43434664",
+      "evidence_id": "EVID_00004",
+      "file_name": "whatsapp_chat_export.txt",
+      "file_hash": "c7ab347cfbd2b80c944c85b3442f3b2c400da1d3b92962f9ded8598e1e06cfb2",
+      "file_size": "303",
+      "upload_time": "2026-07-24T16:07:15.486Z",
+      "processing_time_ms": 5.1,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 1.0,
+          "text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
+          "lines": [
+            {
+              "text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "[2026-01-04 09:14] Victim: k ho yo? कसरी?",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
+              "confidence": 1.0,
+              "bbox": []
+            }
+          ],
+          "bounding_boxes": [
+            [],
+            [],
+            [],
+            []
+          ],
+          "preprocessing_steps": [
+            "none(text_file)"
+          ]
+        }
+      ],
+      "raw_text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
+      "average_confidence": 1.0,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_8F43434664",
+        "evidence_id": "EVID_00004",
+        "raw_text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
+        "cleaned_text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
+        "language": "mixed",
+        "line_languages": {
+          "1": "english",
+          "2": "mixed",
+          "3": "mixed",
+          "4": "mixed"
+        },
+        "entities": {
+          "urls": [],
+          "emails": [],
+          "domains": [],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "phones": [],
+          "dates": [
+            {
+              "value": "2026-01-04",
+              "normalized": "2026-01-04"
+            }
+          ],
+          "times": [
+            {
+              "value": "09:12",
+              "normalized": "09:12"
+            },
+            {
+              "value": "09:14",
+              "normalized": "09:14"
+            },
+            {
+              "value": "09:15",
+              "normalized": "09:15"
+            }
+          ],
+          "money": [
+            {
+              "value": "Rs 2000",
+              "normalized": "Rs 2000"
+            }
+          ],
+          "otp": [],
+          "bank_accounts": [],
+          "esewa_ids": [],
+          "khalti_ids": [],
+          "imepay_ids": [],
+          "hashes_sha512": [],
+          "hashes_sha256": [],
+          "hashes_sha1": [],
+          "hashes_md5": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {
+          "lottery": 1,
+          "winner": 1,
+          "money": 1,
+          "wallet": 1
+        },
+        "risk_signals": {
+          "urgency": 0,
+          "financial": 4,
+          "credential": 0,
+          "threat": 0
+        },
+        "statistics": {
+          "characters": 258,
+          "words": 32,
+          "lines": 4,
+          "average_line_length": 63.8,
+          "languages_detected": [
+            "english",
+            "mixed"
+          ],
+          "entity_count": 5,
+          "cleaning_operations": [
+            "entities_protected(9)"
+          ],
+          "ocr_corrections": [],
+          "protected_entities": 9
+        },
+        "processing_time_ms": 2.82
+      },
+      "enhancement": {
+        "case_id": "CASE_8F43434664",
+        "evidence_id": "EVID_00004",
+        "cleaned_text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
+        "enhanced_text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
+        "ui_text": "",
+        "message_text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
+        "layout": [
+          {
+            "line": 1,
+            "role": "message",
+            "text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo"
+          },
+          {
+            "line": 2,
+            "role": "message",
+            "text": "[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्"
+          },
+          {
+            "line": 3,
+            "role": "message",
+            "text": "[2026-01-04 09:14] Victim: k ho yo? कसरी?"
+          },
+          {
+            "line": 4,
+            "role": "message",
+            "text": "[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus"
+          }
+        ],
+        "corrections": [],
+        "correction_statistics": {
+          "total_corrections": 0,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 0,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 4,
+          "lines_high_confidence": 4,
+          "lines_correctable": 0,
+          "document_confidence": 1.0,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 1.11
+      },
+      "semantic_correction": {
+        "case_id": "CASE_8F43434664",
+        "evidence_id": "EVID_00004",
+        "enhanced_text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
+        "semantic_text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {
+          "dates": [
+            {
+              "value": "2026-01-04",
+              "normalized": "2026-01-04"
+            }
+          ],
+          "times": [
+            {
+              "value": "09:12",
+              "normalized": "09:12"
+            },
+            {
+              "value": "09:14",
+              "normalized": "09:14"
+            },
+            {
+              "value": "09:15",
+              "normalized": "09:15"
+            }
+          ],
+          "money": [
+            {
+              "value": "Rs 2000",
+              "normalized": "Rs 2000"
+            }
+          ]
+        },
+        "statistics": {
+          "suspicious_tokens": 0,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 9,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english",
+            "mixed"
+          ]
+        },
+        "processing_time_ms": 0.87
+      }
+    },
+    {
+      "case_id": "CASE_8F43434664",
+      "evidence_id": "EVID_00005",
+      "file_name": "low_quality_scan_demo.png",
+      "file_hash": "75b2a30d39404920c875e5ba3c57e951d4ee762153936fbfb408ef8cd7d24fdd",
+      "file_size": "7161",
+      "upload_time": "2026-07-24T16:07:27.960Z",
+      "processing_time_ms": 4608.4,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 0.5607,
+          "text": "०o|०००००cl०६०००००००|००००|००००००००००००००|०००००००५\n६o६००६००००|१००००od०|१०००o००६०\nnHoddns pauo pepuedsns ueeqseu junge Jno\nWापशसdल 'wक्कबAपागaम-ावeण//duपiहणाb्oL 8बeed\nep0odloपim wकyue्q-axe@pddns  sाaeppues",
+          "lines": [
+            {
+              "text": "०o|०००००cl०६०००००००|००००|००००००००००००००|०००००००५",
+              "confidence": 0.453,
+              "bbox": [
+                [
+                  8.0,
+                  8.0
+                ],
+                [
+                  377.0,
+                  8.0
+                ],
+                [
+                  377.0,
+                  18.0
+                ],
+                [
+                  8.0,
+                  18.0
+                ]
+              ]
+            },
+            {
+              "text": "६o६००६००००|१००००od०|१०००o००६०",
+              "confidence": 0.3816,
+              "bbox": [
+                [
+                  8.0,
+                  49.0
+                ],
+                [
+                  286.0,
+                  49.0
+                ],
+                [
+                  286.0,
+                  59.0
+                ],
+                [
+                  8.0,
+                  59.0
+                ]
+              ]
+            },
+            {
+              "text": "nHoddns pauo pepuedsns ueeqseu junge Jno",
+              "confidence": 0.8309,
+              "bbox": [
+                [
+                  9.0,
+                  87.0
+                ],
+                [
+                  340.0,
+                  87.0
+                ],
+                [
+                  340.0,
+                  102.0
+                ],
+                [
+                  9.0,
+                  102.0
+                ]
+              ]
+            },
+            {
+              "text": "Wापशसdल 'wक्कबAपागaम-ावeण//duपiहणाb्oL 8बeed",
+              "confidence": 0.5172,
+              "bbox": [
+                [
+                  8.0,
+                  127.0
+                ],
+                [
+                  307.0,
+                  127.0
+                ],
+                [
+                  307.0,
+                  144.0
+                ],
+                [
+                  8.0,
+                  144.0
+                ]
+              ]
+            },
+            {
+              "text": "ep0odloपim wकyue्q-axe@pddns  sाaeppues",
+              "confidence": 0.6209,
+              "bbox": [
+                [
+                  7.0,
+                  168.0
+                ],
+                [
+                  347.0,
+                  168.0
+                ],
+                [
+                  347.0,
+                  185.0
+                ],
+                [
+                  7.0,
+                  185.0
+                ]
+              ]
+            }
+          ],
+          "bounding_boxes": [
+            [
+              [
+                8.0,
+                8.0
+              ],
+              [
+                377.0,
+                8.0
+              ],
+              [
+                377.0,
+                18.0
+              ],
+              [
+                8.0,
+                18.0
+              ]
+            ],
+            [
+              [
+                8.0,
+                49.0
+              ],
+              [
+                286.0,
+                49.0
+              ],
+              [
+                286.0,
+                59.0
+              ],
+              [
+                8.0,
+                59.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                87.0
+              ],
+              [
+                340.0,
+                87.0
+              ],
+              [
+                340.0,
+                102.0
+              ],
+              [
+                9.0,
+                102.0
+              ]
+            ],
+            [
+              [
+                8.0,
+                127.0
+              ],
+              [
+                307.0,
+                127.0
+              ],
+              [
+                307.0,
+                144.0
+              ],
+              [
+                8.0,
+                144.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                168.0
+              ],
+              [
+                347.0,
+                168.0
+              ],
+              [
+                347.0,
+                185.0
+              ],
+              [
+                7.0,
+                185.0
+              ]
+            ]
+          ],
+          "preprocessing_steps": [
+            "convert_rgb",
+            "exif_orientation",
+            "resolution_enhancement",
+            "clahe",
+            "border_removal+whitespace_trim",
+            "adaptive_threshold"
+          ]
+        }
+      ],
+      "raw_text": "०o|०००००cl०६०००००००|००००|००००००००००००००|०००००००५\n६o६००६००००|१००००od०|१०००o००६०\nnHoddns pauo pepuedsns ueeqseu junge Jno\nWापशसdल 'wक्कबAपागaम-ावeण//duपiहणाb्oL 8बeed\nep0odloपim wकyue्q-axe@pddns  sाaeppues",
+      "average_confidence": 0.5607,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_8F43434664",
+        "evidence_id": "EVID_00005",
+        "raw_text": "०o|०००००cl०६०००००००|००००|००००००००००००००|०००००००५\n६o६००६००००|१००००od०|१०००o००६०\nnHoddns pauo pepuedsns ueeqseu junge Jno\nWापशसdल 'wक्कबAपागaम-ावeण//duपiहणाb्oL 8बeed\nep0odloपim wकyue्q-axe@pddns  sाaeppues",
+        "cleaned_text": "०o|०००००cl०६०००००००|००००|००००००००००००००|०००००००५ ६o६००६००००|१००००od०|१०००o००६०\nnHoddns pauo pepuedsns ueeqseu junge Jno\nWापशसdल 'wक्कबAपागaम-ावeण//duपiहणाb्oL 8बeed ep0odloपim wकyue्q-axe@pddns sाaeppues",
+        "language": "mixed",
+        "line_languages": {
+          "1": "mixed",
+          "2": "mixed",
+          "3": "english",
+          "4": "mixed",
+          "5": "mixed"
+        },
+        "entities": {
+          "urls": [],
+          "emails": [],
+          "domains": [],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "phones": [],
+          "dates": [],
+          "times": [],
+          "money": [],
+          "otp": [],
+          "bank_accounts": [],
+          "esewa_ids": [],
+          "khalti_ids": [],
+          "imepay_ids": [],
+          "hashes_sha512": [],
+          "hashes_sha256": [],
+          "hashes_sha1": [],
+          "hashes_md5": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {},
+        "risk_signals": {
+          "urgency": 0,
+          "financial": 0,
+          "credential": 0,
+          "threat": 0
+        },
+        "statistics": {
+          "characters": 203,
+          "words": 14,
+          "lines": 3,
+          "average_line_length": 67.0,
+          "languages_detected": [
+            "english",
+            "mixed"
+          ],
+          "entity_count": 0,
+          "cleaning_operations": [
+            "whitespace_normalized",
+            "lines_merged(2)"
+          ],
+          "ocr_corrections": [],
+          "protected_entities": 0
+        },
+        "processing_time_ms": 1.19
+      },
+      "enhancement": {
+        "case_id": "CASE_8F43434664",
+        "evidence_id": "EVID_00005",
+        "cleaned_text": "०o|०००००cl०६०००००००|००००|००००००००००००००|०००००००५ ६o६००६००००|१००००od०|१०००o००६०\nnHoddns pauo pepuedsns ueeqseu junge Jno\nWापशसdल 'wक्कबAपागaम-ावeण//duपiहणाb्oL 8बeed ep0odloपim wकyue्q-axe@pddns sाaeppues",
+        "enhanced_text": "०o|०००००cl०६०००००००|००००|००००००००००००००|०००००००५ ६o६००६००००|१००००od०|१०००o००६०\nnHoddns pauo pepuedsns ueeqseu junge Jno\nWपशसdल 'wक्कबAपागaम-वeण//duपiहणाboL 8बeed ep0odloपim wकyueq-axe@pddns saeppues",
+        "ui_text": "",
+        "message_text": "०o|०००००cl०६०००००००|००००|००००००००००००००|०००००००५ ६o६००६००००|१००००od०|१०००o००६०\nnHoddns pauo pepuedsns ueeqseu junge Jno\nWपशसdल 'wक्कबAपागaम-वeण//duपiहणाboL 8बeed ep0odloपim wकyueq-axe@pddns saeppues",
+        "layout": [
+          {
+            "line": 1,
+            "role": "message",
+            "text": "०o|०००००cl०६०००००००|००००|००००००००००००००|०००००००५ ६o६००६००००|१००००od०|१०००o००६०"
+          },
+          {
+            "line": 2,
+            "role": "message",
+            "text": "nHoddns pauo pepuedsns ueeqseu junge Jno"
+          },
+          {
+            "line": 3,
+            "role": "message",
+            "text": "Wपशसdल 'wक्कबAपागaम-वeण//duपiहणाboL 8बeed ep0odloपim wकyueq-axe@pddns saeppues"
+          }
+        ],
+        "corrections": [
+          {
+            "original": "",
+            "corrected": "",
+            "confidence": 1.0,
+            "rule": "unicode_validation:orphan_marks_removed(5)",
+            "language": "",
+            "context_score": 0.0,
+            "line": 0,
+            "character_replacement": "",
+            "dictionary_match": ""
+          }
+        ],
+        "correction_statistics": {
+          "total_corrections": 1,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 5,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 3,
+          "lines_high_confidence": 0,
+          "lines_correctable": 3,
+          "document_confidence": 0.5766,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 2.17
+      },
+      "semantic_correction": {
+        "case_id": "CASE_8F43434664",
+        "evidence_id": "EVID_00005",
+        "enhanced_text": "०o|०००००cl०६०००००००|००००|००००००००००००००|०००००००५ ६o६००६००००|१००००od०|१०००o००६०\nnHoddns pauo pepuedsns ueeqseu junge Jno\nWपशसdल 'wक्कबAपागaम-वeण//duपiहणाboL 8बeed ep0odloपim wकyueq-axe@pddns saeppues",
+        "semantic_text": "०o|०००००cl०६०००००००|००००|००००००००००००००|०००००००५ ६o६००६००००|१००००od०|१०००o००६० nHoddns pauo pepuedsns ueeqseu junge Jno\nWपशसdल 'wक्कबAपागaम-वeण//duपiहणाboL 8बeed ep0odloपim wकyueq-axe@pddns saeppues",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {},
+        "statistics": {
+          "suspicious_tokens": 7,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 0,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english",
+            "mixed"
+          ]
+        },
+        "processing_time_ms": 2.1
+      }
+    },
+    {
+      "case_id": "CASE_8F43434664",
+      "evidence_id": "EVID_00006",
+      "file_name": "romanchat.jpg",
+      "file_hash": "0340d5863313f4cc0b9b40ed835a77a71b8304d2e08eb32f08a56ed93a6e0b10",
+      "file_size": "33294",
+      "upload_time": "2026-07-24T16:07:39.891Z",
+      "processing_time_ms": 8956.9,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 0.9686,
+          "text": "Soltine...\nK gardai xau timi.\nTimi\nre\nkaslai timi vanya oee...\nTimi lai timi vanako...\nKan sundaina k ho Vai..e\nBoyfriend lai Vai...\nUmmm..\nWaha\nWaha\nUso wya tero hatko Vai Tika\nlagauna aauxu tihar ma pakh.",
+          "lines": [
+            {
+              "text": "Soltine...",
+              "confidence": 0.9599,
+              "bbox": [
+                [
+                  151.0,
+                  28.0
+                ],
+                [
+                  245.0,
+                  28.0
+                ],
+                [
+                  245.0,
+                  49.0
+                ],
+                [
+                  151.0,
+                  49.0
+                ]
+              ]
+            },
+            {
+              "text": "K gardai xau timi.",
+              "confidence": 0.9537,
+              "bbox": [
+                [
+                  93.0,
+                  194.0
+                ],
+                [
+                  289.0,
+                  194.0
+                ],
+                [
+                  289.0,
+                  218.0
+                ],
+                [
+                  93.0,
+                  218.0
+                ]
+              ]
+            },
+            {
+              "text": "Timi",
+              "confidence": 0.9985,
+              "bbox": [
+                [
+                  430.0,
+                  264.0
+                ],
+                [
+                  479.0,
+                  264.0
+                ],
+                [
+                  479.0,
+                  286.0
+                ],
+                [
+                  430.0,
+                  286.0
+                ]
+              ]
+            },
+            {
+              "text": "re",
+              "confidence": 0.9994,
+              "bbox": [
+                [
+                  480.0,
+                  268.0
+                ],
+                [
+                  508.0,
+                  268.0
+                ],
+                [
+                  508.0,
+                  286.0
+                ],
+                [
+                  480.0,
+                  286.0
+                ]
+              ]
+            },
+            {
+              "text": "kaslai timi vanya oee...",
+              "confidence": 0.9664,
+              "bbox": [
+                [
+                  249.0,
+                  317.0
+                ],
+                [
+                  500.0,
+                  319.0
+                ],
+                [
+                  500.0,
+                  341.0
+                ],
+                [
+                  249.0,
+                  338.0
+                ]
+              ]
+            },
+            {
+              "text": "Timi lai timi vanako...",
+              "confidence": 0.9711,
+              "bbox": [
+                [
+                  95.0,
+                  386.0
+                ],
+                [
+                  331.0,
+                  387.0
+                ],
+                [
+                  331.0,
+                  411.0
+                ],
+                [
+                  94.0,
+                  410.0
+                ]
+              ]
+            },
+            {
+              "text": "Kan sundaina k ho Vai..e",
+              "confidence": 0.8955,
+              "bbox": [
+                [
+                  94.0,
+                  456.0
+                ],
+                [
+                  404.0,
+                  456.0
+                ],
+                [
+                  404.0,
+                  480.0
+                ],
+                [
+                  94.0,
+                  480.0
+                ]
+              ]
+            },
+            {
+              "text": "Boyfriend lai Vai...",
+              "confidence": 0.9746,
+              "bbox": [
+                [
+                  323.0,
+                  527.0
+                ],
+                [
+                  520.0,
+                  527.0
+                ],
+                [
+                  520.0,
+                  548.0
+                ],
+                [
+                  323.0,
+                  548.0
+                ]
+              ]
+            },
+            {
+              "text": "Ummm..",
+              "confidence": 0.9092,
+              "bbox": [
+                [
+                  94.0,
+                  593.0
+                ],
+                [
+                  189.0,
+                  596.0
+                ],
+                [
+                  188.0,
+                  620.0
+                ],
+                [
+                  93.0,
+                  618.0
+                ]
+              ]
+            },
+            {
+              "text": "Waha",
+              "confidence": 0.9962,
+              "bbox": [
+                [
+                  455.0,
+                  664.0
+                ],
+                [
+                  520.0,
+                  666.0
+                ],
+                [
+                  519.0,
+                  688.0
+                ],
+                [
+                  454.0,
+                  686.0
+                ]
+              ]
+            },
+            {
+              "text": "Waha",
+              "confidence": 0.9951,
+              "bbox": [
+                [
+                  455.0,
+                  720.0
+                ],
+                [
+                  521.0,
+                  720.0
+                ],
+                [
+                  521.0,
+                  741.0
+                ],
+                [
+                  455.0,
+                  741.0
+                ]
+              ]
+            },
+            {
+              "text": "Uso wya tero hatko Vai Tika",
+              "confidence": 0.9757,
+              "bbox": [
+                [
+                  207.0,
+                  788.0
+                ],
+                [
+                  505.0,
+                  788.0
+                ],
+                [
+                  505.0,
+                  811.0
+                ],
+                [
+                  207.0,
+                  811.0
+                ]
+              ]
+            },
+            {
+              "text": "lagauna aauxu tihar ma pakh.",
+              "confidence": 0.9962,
+              "bbox": [
+                [
+                  207.0,
+                  818.0
+                ],
+                [
+                  532.0,
+                  818.0
+                ],
+                [
+                  532.0,
+                  838.0
+                ],
+                [
+                  207.0,
+                  838.0
+                ]
+              ]
+            }
+          ],
+          "bounding_boxes": [
+            [
+              [
+                151.0,
+                28.0
+              ],
+              [
+                245.0,
+                28.0
+              ],
+              [
+                245.0,
+                49.0
+              ],
+              [
+                151.0,
+                49.0
+              ]
+            ],
+            [
+              [
+                93.0,
+                194.0
+              ],
+              [
+                289.0,
+                194.0
+              ],
+              [
+                289.0,
+                218.0
+              ],
+              [
+                93.0,
+                218.0
+              ]
+            ],
+            [
+              [
+                430.0,
+                264.0
+              ],
+              [
+                479.0,
+                264.0
+              ],
+              [
+                479.0,
+                286.0
+              ],
+              [
+                430.0,
+                286.0
+              ]
+            ],
+            [
+              [
+                480.0,
+                268.0
+              ],
+              [
+                508.0,
+                268.0
+              ],
+              [
+                508.0,
+                286.0
+              ],
+              [
+                480.0,
+                286.0
+              ]
+            ],
+            [
+              [
+                249.0,
+                317.0
+              ],
+              [
+                500.0,
+                319.0
+              ],
+              [
+                500.0,
+                341.0
+              ],
+              [
+                249.0,
+                338.0
+              ]
+            ],
+            [
+              [
+                95.0,
+                386.0
+              ],
+              [
+                331.0,
+                387.0
+              ],
+              [
+                331.0,
+                411.0
+              ],
+              [
+                94.0,
+                410.0
+              ]
+            ],
+            [
+              [
+                94.0,
+                456.0
+              ],
+              [
+                404.0,
+                456.0
+              ],
+              [
+                404.0,
+                480.0
+              ],
+              [
+                94.0,
+                480.0
+              ]
+            ],
+            [
+              [
+                323.0,
+                527.0
+              ],
+              [
+                520.0,
+                527.0
+              ],
+              [
+                520.0,
+                548.0
+              ],
+              [
+                323.0,
+                548.0
+              ]
+            ],
+            [
+              [
+                94.0,
+                593.0
+              ],
+              [
+                189.0,
+                596.0
+              ],
+              [
+                188.0,
+                620.0
+              ],
+              [
+                93.0,
+                618.0
+              ]
+            ],
+            [
+              [
+                455.0,
+                664.0
+              ],
+              [
+                520.0,
+                666.0
+              ],
+              [
+                519.0,
+                688.0
+              ],
+              [
+                454.0,
+                686.0
+              ]
+            ],
+            [
+              [
+                455.0,
+                720.0
+              ],
+              [
+                521.0,
+                720.0
+              ],
+              [
+                521.0,
+                741.0
+              ],
+              [
+                455.0,
+                741.0
+              ]
+            ],
+            [
+              [
+                207.0,
+                788.0
+              ],
+              [
+                505.0,
+                788.0
+              ],
+              [
+                505.0,
+                811.0
+              ],
+              [
+                207.0,
+                811.0
+              ]
+            ],
+            [
+              [
+                207.0,
+                818.0
+              ],
+              [
+                532.0,
+                818.0
+              ],
+              [
+                532.0,
+                838.0
+              ],
+              [
+                207.0,
+                838.0
+              ]
+            ]
+          ],
+          "preprocessing_steps": [
+            "convert_rgb",
+            "exif_orientation",
+            "resolution_enhancement",
+            "border_removal+whitespace_trim"
+          ]
+        }
+      ],
+      "raw_text": "Soltine...\nK gardai xau timi.\nTimi\nre\nkaslai timi vanya oee...\nTimi lai timi vanako...\nKan sundaina k ho Vai..e\nBoyfriend lai Vai...\nUmmm..\nWaha\nWaha\nUso wya tero hatko Vai Tika\nlagauna aauxu tihar ma pakh.",
+      "average_confidence": 0.9686,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_8F43434664",
+        "evidence_id": "EVID_00006",
+        "raw_text": "Soltine...\nK gardai xau timi.\nTimi\nre\nkaslai timi vanya oee...\nTimi lai timi vanako...\nKan sundaina k ho Vai..e\nBoyfriend lai Vai...\nUmmm..\nWaha\nWaha\nUso wya tero hatko Vai Tika\nlagauna aauxu tihar ma pakh.",
+        "cleaned_text": "Soltine.\nK gardai xau timi.\nTimi re kaslai timi vanya oee.\nTimi lai timi vanako.\nKan sundaina k ho Vai..e\nboyfriend lai vai.\nUmmm..\nWaha\nWaha\nUso wya tero hatko Vai Tika lagauna aauxu tihar ma pakh.",
+        "language": "mixed",
+        "line_languages": {
+          "1": "english",
+          "2": "english",
+          "3": "english",
+          "4": "english",
+          "5": "english",
+          "6": "english",
+          "7": "english",
+          "8": "roman_nepali",
+          "9": "english",
+          "10": "english",
+          "11": "english",
+          "12": "english",
+          "13": "english"
+        },
+        "entities": {
+          "urls": [],
+          "emails": [],
+          "domains": [],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "phones": [],
+          "dates": [],
+          "times": [],
+          "money": [],
+          "otp": [],
+          "bank_accounts": [],
+          "esewa_ids": [],
+          "khalti_ids": [],
+          "imepay_ids": [],
+          "hashes_sha512": [],
+          "hashes_sha256": [],
+          "hashes_sha1": [],
+          "hashes_md5": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {},
+        "risk_signals": {
+          "urgency": 0,
+          "financial": 0,
+          "credential": 0,
+          "threat": 0
+        },
+        "statistics": {
+          "characters": 198,
+          "words": 37,
+          "lines": 10,
+          "average_line_length": 18.9,
+          "languages_detected": [
+            "english",
+            "roman_nepali"
+          ],
+          "entity_count": 0,
+          "cleaning_operations": [
+            "repeated_punctuation_collapsed",
+            "lines_merged(3)",
+            "roman_nepali_lines_normalized(1)"
+          ],
+          "ocr_corrections": [],
+          "protected_entities": 0
+        },
+        "processing_time_ms": 1.11
+      },
+      "enhancement": {
+        "case_id": "CASE_8F43434664",
+        "evidence_id": "EVID_00006",
+        "cleaned_text": "Soltine.\nK gardai xau timi.\nTimi re kaslai timi vanya oee.\nTimi lai timi vanako.\nKan sundaina k ho Vai..e\nboyfriend lai vai.\nUmmm..\nWaha\nWaha\nUso wya tero hatko Vai Tika lagauna aauxu tihar ma pakh.",
+        "enhanced_text": "Soltine.\nK gardai xau timi.\nTimi re kaslai timi vanya oee.\nTimi lai timi vanako.\nKan sundaina k ho Vai..e\nboyfriend lai vai.\nUmmm..\nWaha\nWaha\nUso wya tero hatko Vai Tika lagauna aauxu tihar ma pakh.",
+        "ui_text": "",
+        "message_text": "Soltine.\nK gardai xau timi.\nTimi re kaslai timi vanya oee.\nTimi lai timi vanako.\nKan sundaina k ho Vai..e\nboyfriend lai vai.\nUmmm..\nWaha\nWaha\nUso wya tero hatko Vai Tika lagauna aauxu tihar ma pakh.",
+        "layout": [
+          {
+            "line": 1,
+            "role": "sender",
+            "text": "Soltine."
+          },
+          {
+            "line": 2,
+            "role": "message",
+            "text": "K gardai xau timi."
+          },
+          {
+            "line": 3,
+            "role": "message",
+            "text": "Timi re kaslai timi vanya oee."
+          },
+          {
+            "line": 4,
+            "role": "message",
+            "text": "Timi lai timi vanako."
+          },
+          {
+            "line": 5,
+            "role": "message",
+            "text": "Kan sundaina k ho Vai..e"
+          },
+          {
+            "line": 6,
+            "role": "message",
+            "text": "boyfriend lai vai."
+          },
+          {
+            "line": 7,
+            "role": "sender",
+            "text": "Ummm.."
+          },
+          {
+            "line": 8,
+            "role": "sender",
+            "text": "Waha"
+          },
+          {
+            "line": 9,
+            "role": "sender",
+            "text": "Waha"
+          },
+          {
+            "line": 10,
+            "role": "message",
+            "text": "Uso wya tero hatko Vai Tika lagauna aauxu tihar ma pakh."
+          }
+        ],
+        "corrections": [],
+        "correction_statistics": {
+          "total_corrections": 0,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 0,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 10,
+          "lines_high_confidence": 9,
+          "lines_correctable": 1,
+          "document_confidence": 0.9628,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 0.89
+      },
+      "semantic_correction": {
+        "case_id": "CASE_8F43434664",
+        "evidence_id": "EVID_00006",
+        "enhanced_text": "Soltine.\nK gardai xau timi.\nTimi re kaslai timi vanya oee.\nTimi lai timi vanako.\nKan sundaina k ho Vai..e\nboyfriend lai vai.\nUmmm..\nWaha\nWaha\nUso wya tero hatko Vai Tika lagauna aauxu tihar ma pakh.",
+        "semantic_text": "Soltine.\nK gardai xau timi.\nTimi re kaslai timi vanya oee.\nTimi lai timi vanako.\nKan sundaina k ho Vai..e boyfriend lai vai.\nUmmm..\nWaha\nWaha\nUso wya tero hatko Vai Tika lagauna aauxu tihar ma pakh.",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {},
+        "statistics": {
+          "suspicious_tokens": 0,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 0,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english",
+            "roman_nepali"
+          ]
+        },
+        "processing_time_ms": 0.47
+      }
+    }
+  ]
+}

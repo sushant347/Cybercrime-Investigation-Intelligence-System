@@ -63,9 +63,12 @@ def main() -> None:
     icfg, data, correlation = _services()
     header = f"{'Case':<16}{'Method':<22}{'Prec':>8}{'Rec':>8}{'F1':>8}{'TP':>5}{'FP':>5}{'FN':>5}"
     print("Table 6.4 — Correlation (live weighted engine vs. baselines)")
+    print("\n[WITHIN-CASE]")
     print(header); print("-" * len(header))
 
-    for case_id, gold_pairs in gold.within_case.items():
+    labelled = [c for c in gold.within_case if data.case_exists(c)]
+    for case_id in gold.within_case:
+        gold_pairs = gold.within_case[case_id]
         if not data.case_exists(case_id):
             print(f"{case_id:<16}(no evidence in storage — skipped)")
             continue
@@ -80,6 +83,25 @@ def main() -> None:
             ev = evaluate_correlation(gold_pairs, pred).to_dict()
             print(f"{case_id:<16}{name:<22}{ev['precision']:>8}{ev['recall']:>8}"
                   f"{ev['f1']:>8}{ev['tp']:>5}{ev['fp']:>5}{ev['fn']:>5}")
+
+    # ---- Cross-case: score linked evidence pairs ACROSS cases against gold ----
+    if gold.cross_case:
+        print("\n[CROSS-CASE]")
+        # Index every labelled case first so the shared-entity index is current.
+        for case_id in labelled:
+            correlation.index_case_entities(case_id, data.load_case_evidence(case_id))
+        predicted: set = set()
+        for case_id in labelled:
+            cc = correlation.correlate_cross_case(case_id, data.load_case_evidence(case_id))
+            for link in cc.links:
+                for match in link.matched_entities:
+                    for a in match.this_evidence_ids:
+                        for b in match.other_evidence_ids:
+                            predicted.add((a, b))
+        ev = evaluate_correlation(gold.cross_case, predicted).to_dict()
+        print(header); print("-" * len(header))
+        print(f"{'ALL CASES':<16}{'live_cross_case':<22}{ev['precision']:>8}"
+              f"{ev['recall']:>8}{ev['f1']:>8}{ev['tp']:>5}{ev['fp']:>5}{ev['fn']:>5}")
 
 
 if __name__ == "__main__":

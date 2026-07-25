@@ -1,0 +1,47 @@
+timestamp,case_id,evidence_id,stage,level,message,duration_ms
+2026-07-24T16:06:05.863Z,CASE_2CF24DBA5F,EVID_00001,upload,INFO,"acquired 'whatsapp_chat_export.txt' (303 B), sha256=c7ab347cfbd2b80c...",9.2
+2026-07-24T16:06:05.869Z,CASE_2CF24DBA5F,EVID_00001,ocr,INFO,plain-text evidence: 4 lines read directly,0.0
+2026-07-24T16:06:05.870Z,CASE_2CF24DBA5F,EVID_00001,hashing,INFO,post-processing hash VERIFIED,0.3
+2026-07-24T16:06:05.893Z,CASE_2CF24DBA5F,EVID_00001,pipeline,INFO,"completed: 1 page(s), avg confidence 1.00",20.3
+2026-07-24T16:06:16.314Z,CASE_2CF24DBA5F,EVID_00002,upload,INFO,"acquired 'scam_sms_screenshot.png' (7.2 KB), sha256=b566c34426563417...",4.0
+2026-07-24T16:06:16.411Z,CASE_2CF24DBA5F,EVID_00002,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, resolution_enhancement, border_removal+whitespace_trim",70.4
+2026-07-24T16:06:19.602Z,CASE_2CF24DBA5F,EVID_00002,ocr,INFO,page 1: 4 lines via paddleocr-v5,3190.2
+2026-07-24T16:06:19.602Z,CASE_2CF24DBA5F,EVID_00002,hashing,INFO,post-processing hash VERIFIED,0.3
+2026-07-24T16:06:19.610Z,CASE_2CF24DBA5F,EVID_00002,pipeline,INFO,"completed: 1 page(s), avg confidence 0.98",3293.7
+2026-07-24T16:06:29.533Z,CASE_2CF24DBA5F,EVID_00003,upload,INFO,"acquired 'low_quality_scan_demo.png' (7.0 KB), sha256=75b2a30d39404920...",3.3
+2026-07-24T16:06:29.707Z,CASE_2CF24DBA5F,EVID_00003,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, resolution_enhancement, clahe, border_removal+whitespace_trim, adaptive_threshold",170.7
+2026-07-24T16:06:34.159Z,CASE_2CF24DBA5F,EVID_00003,ocr,INFO,page 1: 5 lines via paddleocr-v5,4451.6
+2026-07-24T16:06:34.160Z,CASE_2CF24DBA5F,EVID_00003,hashing,INFO,post-processing hash VERIFIED,0.2
+2026-07-24T16:06:34.164Z,CASE_2CF24DBA5F,EVID_00003,pipeline,INFO,"completed: 1 page(s), avg confidence 0.56",4630.7
+2026-07-24T16:07:15.486Z,CASE_8F43434664,EVID_00004,upload,INFO,"acquired 'whatsapp_chat_export.txt' (303 B), sha256=c7ab347cfbd2b80c...",2.9
+2026-07-24T16:07:15.487Z,CASE_8F43434664,EVID_00004,ocr,INFO,plain-text evidence: 4 lines read directly,0.0
+2026-07-24T16:07:15.487Z,CASE_8F43434664,EVID_00004,hashing,INFO,post-processing hash VERIFIED,0.1
+2026-07-24T16:07:15.490Z,CASE_8F43434664,EVID_00004,pipeline,INFO,"completed: 1 page(s), avg confidence 1.00",5.1
+2026-07-24T16:07:27.960Z,CASE_8F43434664,EVID_00005,upload,INFO,"acquired 'low_quality_scan_demo.png' (7.0 KB), sha256=75b2a30d39404920...",4.9
+2026-07-24T16:07:27.983Z,CASE_8F43434664,EVID_00005,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, resolution_enhancement, clahe, border_removal+whitespace_trim, adaptive_threshold",20.3
+2026-07-24T16:07:32.562Z,CASE_8F43434664,EVID_00005,ocr,INFO,page 1: 5 lines via paddleocr-v5,4578.4
+2026-07-24T16:07:32.562Z,CASE_8F43434664,EVID_00005,hashing,INFO,post-processing hash VERIFIED,0.2
+2026-07-24T16:07:32.566Z,CASE_8F43434664,EVID_00005,pipeline,INFO,"completed: 1 page(s), avg confidence 0.56",4608.4
+2026-07-24T16:07:39.892Z,CASE_8F43434664,EVID_00006,upload,INFO,"acquired 'romanchat.jpg' (32.5 KB), sha256=0340d5863313f4cc...",6.5
+2026-07-24T16:07:39.967Z,CASE_8F43434664,EVID_00006,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, resolution_enhancement, border_removal+whitespace_trim",41.6
+2026-07-24T16:07:48.837Z,CASE_8F43434664,EVID_00006,ocr,INFO,page 1: 13 lines via paddleocr-v5,8869.6
+2026-07-24T16:07:48.841Z,CASE_8F43434664,EVID_00006,hashing,INFO,post-processing hash VERIFIED,3.1
+2026-07-24T16:07:48.849Z,CASE_8F43434664,EVID_00006,pipeline,INFO,"completed: 1 page(s), avg confidence 0.97",8956.9
+2026-07-24T16:19:58.868Z,CASE_F1278DD84F,EVID_00007,upload,INFO,"acquired 'whatsapp_chat_export.txt' (303 B), sha256=c7ab347cfbd2b80c...",1.7
+2026-07-24T16:19:58.868Z,CASE_F1278DD84F,EVID_00007,ocr,INFO,plain-text evidence: 4 lines read directly,0.0
+2026-07-24T16:19:58.869Z,CASE_F1278DD84F,EVID_00007,hashing,INFO,post-processing hash VERIFIED,0.1
+2026-07-24T16:19:58.872Z,CASE_F1278DD84F,EVID_00007,pipeline,INFO,"completed: 1 page(s), avg confidence 1.00",4.0
+2026-07-24T16:19:58.953Z,CASE_F1278DD84F,EVID_00008,upload,INFO,"acquired 'scam_sms_screenshot.png' (7.2 KB), sha256=b566c34426563417...",2.1
+2026-07-24T16:19:58.996Z,CASE_F1278DD84F,EVID_00008,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, resolution_enhancement, border_removal+whitespace_trim",33.3
+2026-07-24T16:20:09.211Z,CASE_F1278DD84F,EVID_00008,ocr,INFO,page 1: 4 lines via paddleocr-v5,10214.2
+2026-07-24T16:20:09.212Z,CASE_F1278DD84F,EVID_00008,hashing,INFO,post-processing hash VERIFIED,0.3
+2026-07-24T16:20:09.215Z,CASE_F1278DD84F,EVID_00008,pipeline,INFO,"completed: 1 page(s), avg confidence 0.98",10262.3
+2026-07-24T16:20:09.234Z,CASE_85B2471DFB,EVID_00009,upload,INFO,"acquired 'whatsapp_chat_export.txt' (303 B), sha256=c7ab347cfbd2b80c...",2.3
+2026-07-24T16:20:09.235Z,CASE_85B2471DFB,EVID_00009,ocr,INFO,plain-text evidence: 4 lines read directly,0.0
+2026-07-24T16:20:09.235Z,CASE_85B2471DFB,EVID_00009,hashing,INFO,post-processing hash VERIFIED,0.1
+2026-07-24T16:20:09.239Z,CASE_85B2471DFB,EVID_00009,pipeline,INFO,"completed: 1 page(s), avg confidence 1.00",5.5
+2026-07-24T16:20:09.249Z,CASE_85B2471DFB,EVID_00010,upload,INFO,"acquired 'scam_sms_screenshot.png' (7.2 KB), sha256=b566c34426563417...",1.9
+2026-07-24T16:20:09.266Z,CASE_85B2471DFB,EVID_00010,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, resolution_enhancement, border_removal+whitespace_trim",12.8
+2026-07-24T16:20:12.251Z,CASE_85B2471DFB,EVID_00010,ocr,INFO,page 1: 4 lines via paddleocr-v5,2984.5
+2026-07-24T16:20:12.252Z,CASE_85B2471DFB,EVID_00010,hashing,INFO,post-processing hash VERIFIED,0.3
+2026-07-24T16:20:12.256Z,CASE_85B2471DFB,EVID_00010,pipeline,INFO,"completed: 1 page(s), avg confidence 0.98",3006.0
