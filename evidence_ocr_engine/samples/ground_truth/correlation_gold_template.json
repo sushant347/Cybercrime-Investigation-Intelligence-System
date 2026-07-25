@@ -1,0 +1,10 @@
+{
+  "_README": "Fill related_pairs with evidence-id pairs a human judges TRULY related. within_case = pairs inside one case; cross_case = pairs whose two evidence items live in DIFFERENT cases. Delete this _README key. Leave a case's list empty ([]) only if it genuinely has no related pairs.",
+  "within_case": {
+    "CASE_0021": {"related_pairs": []},
+    "CASE_0042": {"related_pairs": []}
+  },
+  "cross_case": {
+    "related_pairs": []
+  }
+}

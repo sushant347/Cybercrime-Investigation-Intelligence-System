@@ -67,6 +67,31 @@ def test_upload_rejects_unsupported_type(api, case, tmp_path):
     assert "Unsupported" in resp.json()["detail"]
 
 
+def test_upload_rejects_oversized(api, case):
+    """A supported-type file over the 50 MB limit is rejected with 400.
+
+    Table 6.8 row 4 (oversized/malformed upload): this is the oversized half,
+    complementing test_upload_rejects_unsupported_type (the malformed half).
+    The extension is valid (.png) so the size branch at
+    ciis_api/api/views/evidence.py:55 is what does the rejecting, not the
+    type check above it.
+    """
+    from django.core.files.uploadedfile import SimpleUploadedFile
+
+    from api import engine
+
+    limit = engine.evidence_config().max_file_size_bytes
+    oversized = SimpleUploadedFile(
+        "big.png", b"\x00" * (limit + 1), content_type="image/png"
+    )
+    resp = api.post(
+        f"/api/cases/{case['case_id']}/evidence/upload/",
+        {"file": oversized, "notes": ""}, format="multipart",
+    )
+    assert resp.status_code == 400
+    assert "50 MB" in resp.json()["detail"]
+
+
 def test_upload_to_missing_case_404(api, tmp_path):
     from django.core.files.uploadedfile import SimpleUploadedFile
     from api.tests.conftest import make_png
