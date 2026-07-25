@@ -1,6 +1,7 @@
 from django.urls import path
 
 from .views import (
+    admin,
     audit,
     cases,
     dashboard,
@@ -49,6 +50,11 @@ urlpatterns = [
     path("settings/", system.SystemSettingsView.as_view()),
     # Testing maintenance: clear all cases and entities.
     path("maintenance/reset/", maintenance.ResetView.as_view()),
+    # Admin role (shared password): view every case, delete a case.
+    path("admin/login/", admin.AdminLoginView.as_view()),
+    path("admin/session/", admin.AdminSessionView.as_view()),
+    path("admin/cases/", admin.AdminCaseListView.as_view()),
+    path("admin/cases/<str:case_id>/", admin.AdminCaseDeleteView.as_view()),
     # Operational surface: cross-case dashboard, unified audit trail, and
     # engine-wide notifications (written by the workers, now also served).
     path("dashboard/", dashboard.DashboardView.as_view()),

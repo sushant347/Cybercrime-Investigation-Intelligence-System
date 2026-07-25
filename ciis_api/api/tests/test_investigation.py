@@ -1,7 +1,6 @@
 """Phase-2 analysis: run analysis on an enriched case and read artifacts."""
 import pytest
 
-pytestmark = pytest.mark.django_db
 
 
 def _run_analysis(api, case_id):

@@ -1,7 +1,6 @@
 """F8: the dashboard / audit / notifications endpoints are now routed + served."""
 import pytest
 
-pytestmark = pytest.mark.django_db
 
 
 def test_dashboard_endpoint_reachable(api, case):

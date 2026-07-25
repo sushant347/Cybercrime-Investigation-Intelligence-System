@@ -1,8 +1,6 @@
 Django>=5.0,<6.0
 djangorestframework>=3.15
-djangorestframework-simplejwt>=5.3
 django-cors-headers>=4.3
-django-filter>=24.1
 networkx>=3.0,<4.0
 
 # Testing
@@ -10,6 +8,6 @@ pytest>=8.0
 pytest-django>=4.8
 Pillow>=10.0  # test fixtures generate tiny PNGs for the upload path
 
-# Production (optional; only needed for a Postgres + WSGI deployment)
-# psycopg[binary]>=3.1
+# Production (optional; only needed for a WSGI deployment)
 # gunicorn>=22.0
+# NOTE: no database driver — the platform stores its state as CSV/JSON.

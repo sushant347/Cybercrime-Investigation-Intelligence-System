@@ -55,3 +55,19 @@ timestamp,case_id,module,action,level,message,duration_ms
 2026-07-24T16:20:56.695Z,CASE_8F43434664,reporting,generated,INFO,16 sections,1.0
 2026-07-24T16:20:56.695Z,CASE_85B2471DFB,phase2_pipeline,cross_case_propagated,INFO,"updated 3 linked case(s): CASE_2CF24DBA5F, CASE_F1278DD84F, CASE_8F43434664",0.0
 2026-07-24T16:20:56.695Z,CASE_85B2471DFB,phase2_pipeline,completed,INFO,"modules_ok=['analytics', 'campaigns', 'correlation', 'cross_case', 'graph', 'priority', 'report', 'suspects', 'timeline'] failures=none",37.5
+2026-07-25T10:16:04.075Z,CASE_2CF24DBA5F,cross_case_correlation,linked,INFO,"4 related case(s): CASE_F1278DD84F, CASE_85B2471DFB, CASE_8F43434664, CASE_88D4266FD4",1.4
+2026-07-25T10:16:04.184Z,CASE_2CF24DBA5F,reporting,generated,INFO,19 sections,2.9
+2026-07-25T10:16:04.187Z,CASE_8F43434664,cross_case_correlation,linked,INFO,"4 related case(s): CASE_2CF24DBA5F, CASE_F1278DD84F, CASE_85B2471DFB, CASE_88D4266FD4",1.7
+2026-07-25T10:16:04.268Z,CASE_8F43434664,reporting,generated,INFO,19 sections,2.4
+2026-07-25T10:16:04.272Z,CASE_F1278DD84F,cross_case_correlation,linked,INFO,"4 related case(s): CASE_2CF24DBA5F, CASE_85B2471DFB, CASE_8F43434664, CASE_88D4266FD4",1.3
+2026-07-25T10:16:04.352Z,CASE_F1278DD84F,reporting,generated,INFO,19 sections,2.1
+2026-07-25T10:16:04.356Z,CASE_85B2471DFB,cross_case_correlation,linked,INFO,"4 related case(s): CASE_2CF24DBA5F, CASE_F1278DD84F, CASE_8F43434664, CASE_88D4266FD4",1.3
+2026-07-25T10:16:04.434Z,CASE_85B2471DFB,reporting,generated,INFO,19 sections,3.3
+2026-07-25T10:41:24.539Z,CASE_2CF24DBA5F,cross_case_correlation,linked,INFO,"3 related case(s): CASE_F1278DD84F, CASE_85B2471DFB, CASE_8F43434664",2.0
+2026-07-25T10:41:24.617Z,CASE_2CF24DBA5F,reporting,generated,INFO,19 sections,3.3
+2026-07-25T10:41:24.621Z,CASE_8F43434664,cross_case_correlation,linked,INFO,"3 related case(s): CASE_2CF24DBA5F, CASE_F1278DD84F, CASE_85B2471DFB",1.2
+2026-07-25T10:41:24.684Z,CASE_8F43434664,reporting,generated,INFO,19 sections,3.3
+2026-07-25T10:41:24.688Z,CASE_F1278DD84F,cross_case_correlation,linked,INFO,"3 related case(s): CASE_2CF24DBA5F, CASE_85B2471DFB, CASE_8F43434664",1.6
+2026-07-25T10:41:24.753Z,CASE_F1278DD84F,reporting,generated,INFO,19 sections,3.6
+2026-07-25T10:41:24.757Z,CASE_85B2471DFB,cross_case_correlation,linked,INFO,"3 related case(s): CASE_2CF24DBA5F, CASE_F1278DD84F, CASE_8F43434664",1.2
+2026-07-25T10:41:24.821Z,CASE_85B2471DFB,reporting,generated,INFO,19 sections,2.8

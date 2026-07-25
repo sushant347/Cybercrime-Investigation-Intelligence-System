@@ -7,12 +7,12 @@ from rest_framework.parsers import FormParser, MultiPartParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from accounts.permissions import require
+from ..permissions import require
 
 from .. import engine
-from ..models import ActivityLog, BackgroundJob
 from ..pagination import DefaultPagination
-from ..serializers import BackgroundJobSerializer, EvidenceUploadSerializer
+from ..serializers import EvidenceUploadSerializer, job_payload
+from ..store import activity, jobs
 
 
 class EvidenceListView(APIView):
@@ -62,19 +62,14 @@ class EvidenceUploadView(APIView):
             for chunk in upload.chunks():
                 target.write(chunk)
 
-        job = BackgroundJob.objects.create(
-            job_type="evidence_processing", case_id=case_id,
-            detail=upload.name, created_by=request.user.username,
-        )
+        job = jobs.start("evidence_processing", case_id=case_id, detail=upload.name)
         engine.submit_evidence_job(
-            job.pk, str(tmp_path), case_id,
-            serializer.validated_data["notes"], request.user.username,
+            job["id"], str(tmp_path), case_id,
+            serializer.validated_data["notes"], "",
         )
-        ActivityLog.record(
-            username=request.user.username, module="evidence",
-            action="upload", case_id=case_id, detail=upload.name,
-        )
-        return Response(BackgroundJobSerializer(job).data, status=202)
+        activity.record(module="evidence", action="upload",
+                        case_id=case_id, detail=upload.name)
+        return Response(job_payload(job), status=202)
 
 
 class EvidenceDetailView(APIView):
@@ -105,10 +100,8 @@ class EvidenceDownloadView(APIView):
         path = engine.original_path(row)
         if not path.is_file():
             return Response({"detail": "Original file missing from storage."}, status=404)
-        ActivityLog.record(
-            username=request.user.username, module="evidence",
-            action="download", case_id=case_id, detail=evidence_id,
-        )
+        activity.record(module="evidence", action="download",
+                        case_id=case_id, detail=evidence_id)
         return FileResponse(
             open(path, "rb"), as_attachment=request.query_params.get("preview") != "1",
             filename=row["original_file_name"],
@@ -119,11 +112,10 @@ class JobStatusView(APIView):
     permission_classes = (require("evidence.view"),)
 
     def get(self, request, job_id: int):
-        try:
-            job = BackgroundJob.objects.get(pk=job_id)
-        except BackgroundJob.DoesNotExist:
+        job = jobs.get(job_id)
+        if job is None:
             return Response({"detail": "Job not found."}, status=404)
-        return Response(BackgroundJobSerializer(job).data)
+        return Response(job_payload(job))
 
 
 class JobListView(APIView):
@@ -132,15 +124,11 @@ class JobListView(APIView):
     permission_classes = (require("evidence.view"),)
 
     def get(self, request):
-        qs = BackgroundJob.objects.all()
-        case_id = request.query_params.get("case_id")
-        if case_id:
-            qs = qs.filter(case_id=case_id)
+        rows = jobs.list(case_id=request.query_params.get("case_id", ""))
         st = request.query_params.get("status")
         if st:
-            qs = qs.filter(status=st)
+            rows = [r for r in rows if r.get("status") == st]
+        payload = [job_payload(r) for r in rows]
         paginator = DefaultPagination()
-        page = paginator.paginate_queryset(qs, request)
-        return paginator.get_paginated_response(
-            BackgroundJobSerializer(page, many=True).data
-        )
+        page = paginator.paginate_queryset(payload, request)
+        return paginator.get_paginated_response(page)
