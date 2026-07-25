@@ -7,13 +7,13 @@ evidence and orders it into a chronological narrative, cross-referenced
 with the correlation links found by Module 4.
 
 ```text
-Case JSON (Module 2) + correlation_graph.json (Module 4)
+Stored OCR/entity evidence + correlation analysis
         ↓
 Timeline Reconstruction (this module)
         ↓
-timeline.json + timeline_narrative.txt
+timeline_analysis.json + graph.json
         ↓
-Report Generator (Module 6)
+Frontend timeline and graph views
 ```
 
 ## The Core Problem It Solves
@@ -75,6 +75,11 @@ graph = load_correlation_graph("output/correlation_graph.json")
 timeline = build_timeline(cases, graph)
 narrative = generate_narrative(timeline)
 ```
+
+In the running application, the investigation pipeline calls the integrated
+`TimelineService`, which is a thin adapter to this engine. After a new evidence
+upload completes OCR and semantic entity extraction, the API automatically
+refreshes the timeline and graph artifacts for the case.
 
 ## Output
 
