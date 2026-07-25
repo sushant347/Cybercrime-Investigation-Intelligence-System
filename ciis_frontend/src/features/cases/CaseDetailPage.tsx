@@ -128,8 +128,8 @@ export default function CaseDetailPage() {
           </IconButton>
           <Box sx={{ minWidth: 0 }}>
             <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap" useFlexGap>
-              <Typography variant="h5" sx={{ fontFamily: '"JetBrains Mono", monospace' }}>
-                {caseData.case_id}
+              <Typography variant="h5" noWrap>
+                {caseData.case_reference || caseData.case_id}
               </Typography>
               <StatusChip value={caseData.status} />
               {caseData.priority && (
@@ -146,6 +146,10 @@ export default function CaseDetailPage() {
               ))}
             </Stack>
             <Typography variant="body2" color="text.secondary" noWrap>
+              <Box component="span" sx={{ fontFamily: '"JetBrains Mono", monospace' }}>
+                {caseData.case_id}
+              </Box>
+              {" · "}
               {caseData.title || "Untitled case"} · opened {formatDateTime(caseData.created_at)} ·{" "}
               {caseData.evidence_count} evidence item(s)
             </Typography>
@@ -201,7 +205,15 @@ export default function CaseDetailPage() {
         }
         variant="scrollable"
         allowScrollButtonsMobile
-        sx={{ borderBottom: 1, borderColor: "divider", mb: 3 }}
+        sx={{
+          borderBottom: 1,
+          borderColor: "divider",
+          mb: 3,
+          position: "sticky",
+          top: { xs: 56, sm: 64 },
+          zIndex: (theme) => theme.zIndex.appBar - 1,
+          bgcolor: "background.default",
+        }}
       >
         {TABS.map((t) => (
           <Tab key={t} value={t} label={t} sx={{ textTransform: "capitalize" }} />

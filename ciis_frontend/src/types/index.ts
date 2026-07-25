@@ -496,7 +496,41 @@ export interface ReportCampaignSection {
   campaigns: unknown[];
 }
 
+export interface ReportScopeSection {
+  objective: string;
+  evidence_scope: string;
+  methodology: string[];
+  reproducibility: string;
+}
+
+export interface ReportModelPrediction {
+  indicator: string;
+  evidence_id: string;
+  verdict: string;
+  risk_score: number | null;
+  confidence: number | null;
+  risk_level: string;
+  source: string;
+  model_version: string;
+}
+
+export interface ReportModelPredictionsSection {
+  indicators_classified: number;
+  flagged_malicious: number;
+  predictions: ReportModelPrediction[];
+}
+
+export interface ReportProvenanceSection {
+  report_id: string;
+  generated_at: string;
+  generator: string;
+  evidence_set_digest: string;
+  evidence_set_digest_note: string;
+  source_artifact_hashes: Record<string, string>;
+}
+
 export interface InvestigationReport {
+  report_id?: string;
   sections: {
     executive_summary: string[];
     case_overview: {
@@ -513,6 +547,9 @@ export interface InvestigationReport {
     timeline_analysis: ReportTimelineSection | string;
     suspect_assessment: unknown;
     threat_intelligence_summary: unknown;
+    scope_and_methodology?: ReportScopeSection | string;
+    model_predictions?: ReportModelPredictionsSection | string;
+    report_provenance?: ReportProvenanceSection | string;
     evidence_quality_summary: Record<string, number> | string;
     metadata_summary: unknown[];
     investigation_statistics: Record<string, Record<string, number>>;

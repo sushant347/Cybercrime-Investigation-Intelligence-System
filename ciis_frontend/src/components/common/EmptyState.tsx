@@ -24,7 +24,18 @@ export function EmptyState({
         gap: 1,
       }}
     >
-      <Box sx={{ color: "text.secondary", "& svg": { fontSize: 56 } }}>
+      <Box
+        sx={{
+          display: "grid",
+          placeItems: "center",
+          width: 88,
+          height: 88,
+          borderRadius: "50%",
+          bgcolor: "action.hover",
+          color: "text.secondary",
+          "& svg": { fontSize: 44 },
+        }}
+      >
         {icon ?? <InboxIcon />}
       </Box>
       <Typography variant="h6">{title}</Typography>

@@ -25,15 +25,41 @@ export interface EvidenceRow {
   evidenceId: string;
   acquired: string;
   textConfidence: string;
+  /** Numeric OCR confidence (0–1) for chart rendering; null when unknown. */
+  textConfidenceValue: number | null;
   integrity: string;
   integrityOk: boolean;
 }
 
 export interface ConnectionRow {
   pair: string;
+  /** The two evidence ids, split out for diagram rendering. */
+  from: string;
+  to: string;
   strength: string;
   confidence: string;
+  /** Numeric confidence (0–1) for diagram rendering; null when unknown. */
+  confidenceValue: number | null;
   meaning: string;
+}
+
+export interface ModelPredictionRow {
+  indicator: string;
+  evidenceId: string;
+  verdict: string;
+  verdictBad: boolean;
+  risk: string;
+  /** Numeric risk (0–100) for chart rendering; null when unknown. */
+  riskValue: number | null;
+  confidence: string;
+  model: string;
+}
+
+export interface ProvenanceInfo {
+  reportId: string;
+  generator: string;
+  evidenceSetDigest: string;
+  artifactHashes: { name: string; digest: string }[];
 }
 
 export interface LinkedCaseRow {
@@ -54,8 +80,12 @@ export interface SimpleReport {
   evidence: EvidenceRow[];
   connections: ConnectionRow[];
   linkedCases: LinkedCaseRow[];
+  modelPredictions: ModelPredictionRow[];
+  modelPredictionsNote: string | null;
+  methodology: string[];
   progression: string[];
   nextSteps: string[];
+  provenance: ProvenanceInfo | null;
 }
 
 const PRIORITY_BADGE: Record<string, SummaryRow["badge"]> = {
@@ -140,6 +170,30 @@ export function buildSimpleReport(
     }[];
   }>(sections.cross_case_correlation);
   const evidenceRows = Array.isArray(sections.evidence_summary) ? sections.evidence_summary : [];
+  const scope = structured<{
+    objective: string;
+    methodology: string[];
+    reproducibility: string;
+  }>(sections.scope_and_methodology);
+  const predictions = structured<{
+    indicators_classified: number;
+    flagged_malicious: number;
+    predictions: {
+      indicator: string;
+      evidence_id: string;
+      verdict: string;
+      risk_score: number | null;
+      confidence: number | null;
+      source: string;
+      model_version: string;
+    }[];
+  }>(sections.model_predictions);
+  const provenanceSection = structured<{
+    report_id: string;
+    generator: string;
+    evidence_set_digest: string;
+    source_artifact_hashes: Record<string, string>;
+  }>(sections.report_provenance);
 
   const verifiedCount = evidenceRows.filter((row) => row.hash_verified).length;
   const allVerified = evidenceRows.length > 0 && verifiedCount === evidenceRows.length;
@@ -184,6 +238,18 @@ export function buildSimpleReport(
         correlation.related_pair_count > 0
           ? "The engine found evidence items that appear to belong to the same activity."
           : "No links were found between the evidence items.",
+    });
+  }
+
+  if (predictions) {
+    summary.push({
+      label: "Threat Model Verdicts",
+      value: `${predictions.flagged_malicious} malicious of ${predictions.indicators_classified} classified`,
+      badge: predictions.flagged_malicious > 0 ? "bad" : "good",
+      hint:
+        predictions.flagged_malicious > 0
+          ? "The URL classifier flagged indicators in this case as malicious — details in Model Prediction Results."
+          : "No URL or domain in the evidence was classified as malicious.",
     });
   }
 
@@ -249,16 +315,53 @@ export function buildSimpleReport(
       evidenceId: row.evidence_id,
       acquired: humanDate(row.upload_time),
       textConfidence: percent(row.ocr_confidence),
+      textConfidenceValue:
+        typeof row.ocr_confidence === "number" ? row.ocr_confidence : null,
       integrity: row.hash_verified ? "Verified" : "FAILED",
       integrityOk: row.hash_verified,
     })),
-    connections: (correlation?.top_relationships ?? []).map((rel) => ({
-      pair: rel.pair,
-      strength: rel.strength,
-      confidence: percent(rel.confidence),
-      meaning: strengthMeaning(rel.strength),
+    connections: (correlation?.top_relationships ?? []).map((rel) => {
+      const [from = "", to = ""] = rel.pair.split("<->").map((s) => s.trim());
+      return {
+        pair: rel.pair,
+        from,
+        to,
+        strength: rel.strength,
+        confidence: percent(rel.confidence),
+        confidenceValue:
+          typeof rel.confidence === "number" ? rel.confidence : null,
+        meaning: strengthMeaning(rel.strength),
+      };
+    }),
+    modelPredictions: (predictions?.predictions ?? []).map((p) => ({
+      indicator: p.indicator,
+      evidenceId: p.evidence_id,
+      verdict: p.verdict.toUpperCase(),
+      verdictBad: ["malicious", "phishing", "suspicious"].includes(
+        p.verdict.toLowerCase(),
+      ),
+      risk: p.risk_score === null || p.risk_score === undefined ? "—" : `${p.risk_score}/100`,
+      riskValue:
+        typeof p.risk_score === "number" ? p.risk_score : null,
+      confidence: percent(p.confidence),
+      model: p.model_version ? `${p.source} (${p.model_version})` : p.source,
     })),
+    modelPredictionsNote:
+      typeof sections.model_predictions === "string"
+        ? sections.model_predictions
+        : null,
+    methodology: scope?.methodology ?? [],
     progression: (timeline?.stage_progression ?? []).map(titleCaseStage),
     nextSteps: sections.recommendations ?? [],
+    provenance: provenanceSection
+      ? {
+          reportId: provenanceSection.report_id,
+          generator: provenanceSection.generator,
+          evidenceSetDigest: provenanceSection.evidence_set_digest,
+          artifactHashes: Object.entries(
+            provenanceSection.source_artifact_hashes ?? {},
+          ).map(([name, digest]) => ({ name, digest })),
+        }
+      : null,
   };
 }
