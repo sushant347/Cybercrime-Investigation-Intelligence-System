@@ -1,7 +1,7 @@
 {
   "case_id": "CASE_8F43434664",
   "created_at": "2026-07-24T16:07:15.488Z",
-  "updated_at": "2026-07-24T16:07:48.878Z",
+  "updated_at": "2026-07-25T11:55:12.934Z",
   "evidence_count": 3,
   "evidence": [
     {
@@ -99,7 +99,7 @@
           "money": [
             {
               "value": "Rs 2000",
-              "normalized": "Rs 2000"
+              "normalized": "NPR 2000"
             }
           ],
           "otp": [],
@@ -147,7 +147,7 @@
           "ocr_corrections": [],
           "protected_entities": 9
         },
-        "processing_time_ms": 2.82
+        "processing_time_ms": 2.6
       },
       "enhancement": {
         "case_id": "CASE_8F43434664",
@@ -199,7 +199,7 @@
           "nepali_correction_rate": 0.0,
           "english_correction_rate": 0.0
         },
-        "processing_time_ms": 1.11
+        "processing_time_ms": 1.72
       },
       "semantic_correction": {
         "case_id": "CASE_8F43434664",
@@ -234,7 +234,7 @@
           "money": [
             {
               "value": "Rs 2000",
-              "normalized": "Rs 2000"
+              "normalized": "NPR 2000"
             }
           ]
         },
@@ -251,7 +251,7 @@
             "mixed"
           ]
         },
-        "processing_time_ms": 0.87
+        "processing_time_ms": 2.11
       }
     },
     {
@@ -552,7 +552,7 @@
           "ocr_corrections": [],
           "protected_entities": 0
         },
-        "processing_time_ms": 1.19
+        "processing_time_ms": 1.93
       },
       "enhancement": {
         "case_id": "CASE_8F43434664",
@@ -611,7 +611,7 @@
           "nepali_correction_rate": 0.0,
           "english_correction_rate": 0.0
         },
-        "processing_time_ms": 2.17
+        "processing_time_ms": 6.32
       },
       "semantic_correction": {
         "case_id": "CASE_8F43434664",
@@ -636,7 +636,7 @@
             "mixed"
           ]
         },
-        "processing_time_ms": 2.1
+        "processing_time_ms": 5.47
       }
     },
     {
@@ -1264,7 +1264,7 @@
           "ocr_corrections": [],
           "protected_entities": 0
         },
-        "processing_time_ms": 1.11
+        "processing_time_ms": 2.46
       },
       "enhancement": {
         "case_id": "CASE_8F43434664",
@@ -1346,7 +1346,7 @@
           "nepali_correction_rate": 0.0,
           "english_correction_rate": 0.0
         },
-        "processing_time_ms": 0.89
+        "processing_time_ms": 2.81
       },
       "semantic_correction": {
         "case_id": "CASE_8F43434664",
@@ -1371,7 +1371,7 @@
             "roman_nepali"
           ]
         },
-        "processing_time_ms": 0.47
+        "processing_time_ms": 0.76
       }
     }
   ]
