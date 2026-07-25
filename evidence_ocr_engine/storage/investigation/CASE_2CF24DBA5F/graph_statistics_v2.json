@@ -3,68 +3,60 @@
   "report_version": 2,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-07-25T12:53:07.264Z",
+  "generated_at": "2026-07-25T14:23:24.049Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
-    "node_count": 14,
-    "edge_count": 13,
+    "node_count": 8,
+    "edge_count": 8,
     "nodes_by_type": {
       "case": 1,
       "evidence": 2,
-      "port": 2,
-      "time": 5,
-      "date": 1,
+      "domain": 1,
+      "url": 1,
       "money": 1,
       "timeline_event": 2
     },
     "edges_by_type": {
       "contains": 2,
-      "shared_entity": 9,
-      "timeline_event": 2
+      "shared_entity": 3,
+      "timeline_event": 2,
+      "temporal_relationship": 1
     },
-    "density": 0.1429,
+    "density": 0.2857,
     "connected_components": 1,
-    "largest_component_size": 14,
-    "average_degree": 1.857,
+    "largest_component_size": 8,
+    "average_degree": 2.0,
     "top_hubs": [
       {
-        "node": "evidence:EVID_00002",
-        "degree": "7"
+        "node": "evidence:EVID_00001",
+        "degree": "5"
       },
       {
-        "node": "evidence:EVID_00001",
-        "degree": "6"
+        "node": "evidence:EVID_00002",
+        "degree": "4"
       },
       {
         "node": "case:CASE_2CF24DBA5F",
         "degree": "2"
       },
       {
-        "node": "port:41",
+        "node": "domain:plasticostermoencogibles.pe",
         "degree": "1"
       },
       {
-        "node": "port:43",
+        "node": "url:https://plasticostermoencogibles.pe/scss/css/scss/",
         "degree": "1"
       },
       {
-        "node": "time:11:43\n",
+        "node": "money:npr 250000",
         "degree": "1"
       },
       {
-        "node": "time:1:41 pm",
+        "node": "timeline_event:CASE_2CF24DBA5F:EVID_00001",
         "degree": "1"
       },
       {
-        "node": "date:2026-01-04",
-        "degree": "1"
-      },
-      {
-        "node": "money:rs 2000",
-        "degree": "1"
-      },
-      {
-        "node": "time:09:12",
+        "node": "timeline_event:CASE_2CF24DBA5F:EVID_00002",
         "degree": "1"
       }
     ]

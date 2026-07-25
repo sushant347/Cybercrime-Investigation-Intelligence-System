@@ -1,0 +1,628 @@
+{
+  "report_type": "graph",
+  "report_version": 9,
+  "schema_version": "2.0",
+  "case_id": "CASE_2CF24DBA5F",
+  "generated_at": "2026-07-25T14:45:18.969Z",
+  "report": {
+    "case_id": "CASE_2CF24DBA5F",
+    "directed": false,
+    "nodes": [
+      {
+        "id": "case:CASE_2CF24DBA5F",
+        "node_type": "case",
+        "label": "CASE_2CF24DBA5F",
+        "properties": {}
+      },
+      {
+        "id": "evidence:EVID_00001",
+        "node_type": "evidence",
+        "label": "EVID_00001",
+        "properties": {
+          "file_name": "https_plasticostermoencogibles.pe_scss_css_scss_.url",
+          "upload_time": "2026-07-25T14:22:38.355Z"
+        }
+      },
+      {
+        "id": "domain:plasticostermoencogibles.pe",
+        "node_type": "domain",
+        "label": "plasticostermoencogibles.pe",
+        "properties": {}
+      },
+      {
+        "id": "url:https://plasticostermoencogibles.pe/scss/css/scss/",
+        "node_type": "url",
+        "label": "https://plasticostermoencogibles.pe/scss/css/scss/",
+        "properties": {}
+      },
+      {
+        "id": "evidence:EVID_00002",
+        "node_type": "evidence",
+        "label": "EVID_00002",
+        "properties": {
+          "file_name": "police_scan_report.pdf",
+          "upload_time": "2026-07-25T14:23:23.722Z"
+        }
+      },
+      {
+        "id": "money:npr 250000",
+        "node_type": "money",
+        "label": "NPR 250000",
+        "properties": {}
+      },
+      {
+        "id": "evidence:EVID_00003",
+        "node_type": "evidence",
+        "label": "EVID_00003",
+        "properties": {
+          "file_name": "phishing_email_screenshot.png",
+          "upload_time": "2026-07-25T14:23:26.295Z"
+        }
+      },
+      {
+        "id": "domain:nabil-bank-alerts.com",
+        "node_type": "domain",
+        "label": "nabil-bank-alerts.com",
+        "properties": {}
+      },
+      {
+        "id": "domain:nabil-verify.example-scam.top",
+        "node_type": "domain",
+        "label": "nabil-verify.example-scam.top",
+        "properties": {}
+      },
+      {
+        "id": "email:security@nabil-bank-alerts.com",
+        "node_type": "email",
+        "label": "security@nabil-bank-alerts.com",
+        "properties": {}
+      },
+      {
+        "id": "url:http://nabil-verify.example-scam.top/login",
+        "node_type": "url",
+        "label": "http://nabil-verify.example-scam.top/login",
+        "properties": {}
+      },
+      {
+        "id": "evidence:EVID_00004",
+        "node_type": "evidence",
+        "label": "EVID_00004",
+        "properties": {
+          "file_name": "const.jpg",
+          "upload_time": "2026-07-25T14:23:41.798Z"
+        }
+      },
+      {
+        "id": "evidence:EVID_00005",
+        "node_type": "evidence",
+        "label": "EVID_00005",
+        "properties": {
+          "file_name": "whatsapp_chat_export.txt",
+          "upload_time": "2026-07-25T14:24:07.592Z"
+        }
+      },
+      {
+        "id": "date:2026-01-04",
+        "node_type": "date",
+        "label": "2026-01-04",
+        "properties": {}
+      },
+      {
+        "id": "money:npr 2000",
+        "node_type": "money",
+        "label": "NPR 2000",
+        "properties": {}
+      },
+      {
+        "id": "time:09:12",
+        "node_type": "time",
+        "label": "09:12",
+        "properties": {}
+      },
+      {
+        "id": "time:09:14",
+        "node_type": "time",
+        "label": "09:14",
+        "properties": {}
+      },
+      {
+        "id": "time:09:15",
+        "node_type": "time",
+        "label": "09:15",
+        "properties": {}
+      },
+      {
+        "id": "timeline_event:CASE_2CF24DBA5F:EVID_00005",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00005 (whatsapp_chat_export.txt); stages: initial_contact, financial_transaction",
+        "properties": {
+          "timestamp": "2026-01-04T09:12:00+00:00",
+          "time_source": "content_date_time",
+          "timestamp_inferred": "false"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_2CF24DBA5F:EVID_00001",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00001 (https_plasticostermoencogibles.pe_scss_css_scss_.url)",
+        "properties": {
+          "timestamp": "2026-07-25T14:22:38.355000+00:00",
+          "time_source": "upload_time_fallback",
+          "timestamp_inferred": "true"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_2CF24DBA5F:EVID_00002",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00002 (police_scan_report.pdf); stages: financial_transaction, post_attack",
+        "properties": {
+          "timestamp": "2026-07-25T14:23:23.722000+00:00",
+          "time_source": "upload_time_fallback",
+          "timestamp_inferred": "true"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_2CF24DBA5F:EVID_00003",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00003 (phishing_email_screenshot.png); stages: initial_contact, social_engineering, credential_theft, financial_transaction",
+        "properties": {
+          "timestamp": "2026-07-25T14:23:26.295000+00:00",
+          "time_source": "upload_time_fallback",
+          "timestamp_inferred": "true"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_2CF24DBA5F:EVID_00004",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00004 (const.jpg)",
+        "properties": {
+          "timestamp": "2026-07-25T14:23:41.798000+00:00",
+          "time_source": "upload_time_fallback",
+          "timestamp_inferred": "true"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "source": "case:CASE_2CF24DBA5F",
+        "target": "evidence:EVID_00001",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00001"
+        ],
+        "timestamp": "2026-07-25T14:22:38.355000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00001 belongs to CASE_2CF24DBA5F"
+      },
+      {
+        "source": "evidence:EVID_00001",
+        "target": "domain:plasticostermoencogibles.pe",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00001"
+        ],
+        "timestamp": "2026-07-25T14:22:38.355000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00001 mentions plasticostermoencogibles.pe"
+      },
+      {
+        "source": "evidence:EVID_00001",
+        "target": "url:https://plasticostermoencogibles.pe/scss/css/scss/",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00001"
+        ],
+        "timestamp": "2026-07-25T14:22:38.355000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00001 mentions https://plasticostermoencogibles.pe/scss/css/scss/"
+      },
+      {
+        "source": "case:CASE_2CF24DBA5F",
+        "target": "evidence:EVID_00002",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00002"
+        ],
+        "timestamp": "2026-07-25T14:23:23.722000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00002 belongs to CASE_2CF24DBA5F"
+      },
+      {
+        "source": "evidence:EVID_00002",
+        "target": "money:npr 250000",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00002"
+        ],
+        "timestamp": "2026-07-25T14:23:23.722000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00002 mentions NPR 250000"
+      },
+      {
+        "source": "case:CASE_2CF24DBA5F",
+        "target": "evidence:EVID_00003",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00003"
+        ],
+        "timestamp": "2026-07-25T14:23:26.295000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00003 belongs to CASE_2CF24DBA5F"
+      },
+      {
+        "source": "evidence:EVID_00003",
+        "target": "domain:nabil-bank-alerts.com",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00003"
+        ],
+        "timestamp": "2026-07-25T14:23:26.295000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00003 mentions nabil-bank-alerts.com"
+      },
+      {
+        "source": "domain:nabil-bank-alerts.com",
+        "target": "evidence:EVID_00003",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00003"
+        ],
+        "timestamp": "2026-07-25T14:23:26.295000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "nabil-bank-alerts.com is flagged malicious by threat intelligence (ml:xgboost)"
+      },
+      {
+        "source": "evidence:EVID_00003",
+        "target": "domain:nabil-verify.example-scam.top",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00003"
+        ],
+        "timestamp": "2026-07-25T14:23:26.295000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00003 mentions nabil-verify.example-scam.top"
+      },
+      {
+        "source": "domain:nabil-verify.example-scam.top",
+        "target": "evidence:EVID_00003",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00003"
+        ],
+        "timestamp": "2026-07-25T14:23:26.295000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "nabil-verify.example-scam.top is flagged malicious by threat intelligence (ml:xgboost)"
+      },
+      {
+        "source": "evidence:EVID_00003",
+        "target": "email:security@nabil-bank-alerts.com",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00003"
+        ],
+        "timestamp": "2026-07-25T14:23:26.295000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00003 mentions security@nabil-bank-alerts.com"
+      },
+      {
+        "source": "evidence:EVID_00003",
+        "target": "url:http://nabil-verify.example-scam.top/login",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00003"
+        ],
+        "timestamp": "2026-07-25T14:23:26.295000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00003 mentions http://nabil-verify.example-scam.top/login"
+      },
+      {
+        "source": "url:http://nabil-verify.example-scam.top/login",
+        "target": "evidence:EVID_00003",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00003"
+        ],
+        "timestamp": "2026-07-25T14:23:26.295000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "http://nabil-verify.example-scam.top/login is flagged malicious by threat intelligence (ml:xgboost)"
+      },
+      {
+        "source": "case:CASE_2CF24DBA5F",
+        "target": "evidence:EVID_00004",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00004"
+        ],
+        "timestamp": "2026-07-25T14:23:41.798000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00004 belongs to CASE_2CF24DBA5F"
+      },
+      {
+        "source": "case:CASE_2CF24DBA5F",
+        "target": "evidence:EVID_00005",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-01-04T09:12:00+00:00",
+        "timestamp_source": "content_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00005 belongs to CASE_2CF24DBA5F"
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "date:2026-01-04",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-01-04T09:12:00+00:00",
+        "timestamp_source": "content_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00005 mentions 2026-01-04"
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "money:npr 2000",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-01-04T09:12:00+00:00",
+        "timestamp_source": "content_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00005 mentions NPR 2000"
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "time:09:12",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-01-04T09:12:00+00:00",
+        "timestamp_source": "content_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00005 mentions 09:12"
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "time:09:14",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-01-04T09:12:00+00:00",
+        "timestamp_source": "content_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00005 mentions 09:14"
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "time:09:15",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-01-04T09:12:00+00:00",
+        "timestamp_source": "content_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00005 mentions 09:15"
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "timeline_event:CASE_2CF24DBA5F:EVID_00005",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-01-04T09:12:00+00:00",
+        "timestamp_source": "content_date_time",
+        "timestamp_inferred": false,
+        "explanation": "Reconstructed event for EVID_00005"
+      },
+      {
+        "source": "evidence:EVID_00001",
+        "target": "timeline_event:CASE_2CF24DBA5F:EVID_00001",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 0.4,
+        "source_evidence_ids": [
+          "EVID_00001"
+        ],
+        "timestamp": "2026-07-25T14:22:38.355000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Reconstructed event for EVID_00001"
+      },
+      {
+        "source": "evidence:EVID_00002",
+        "target": "timeline_event:CASE_2CF24DBA5F:EVID_00002",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 0.4,
+        "source_evidence_ids": [
+          "EVID_00002"
+        ],
+        "timestamp": "2026-07-25T14:23:23.722000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Reconstructed event for EVID_00002"
+      },
+      {
+        "source": "evidence:EVID_00003",
+        "target": "timeline_event:CASE_2CF24DBA5F:EVID_00003",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 0.4,
+        "source_evidence_ids": [
+          "EVID_00003"
+        ],
+        "timestamp": "2026-07-25T14:23:26.295000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Reconstructed event for EVID_00003"
+      },
+      {
+        "source": "evidence:EVID_00004",
+        "target": "timeline_event:CASE_2CF24DBA5F:EVID_00004",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 0.4,
+        "source_evidence_ids": [
+          "EVID_00004"
+        ],
+        "timestamp": "2026-07-25T14:23:41.798000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Reconstructed event for EVID_00004"
+      },
+      {
+        "source": "evidence:EVID_00001",
+        "target": "evidence:EVID_00002",
+        "edge_type": "temporal_relationship",
+        "weight": 0.9997,
+        "confidence": 0.9997,
+        "source_evidence_ids": [
+          "EVID_00001",
+          "EVID_00002"
+        ],
+        "timestamp": "2026-07-25T14:22:38.355000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Acquired 0.0h apart (window 48h)"
+      },
+      {
+        "source": "evidence:EVID_00001",
+        "target": "evidence:EVID_00003",
+        "edge_type": "temporal_relationship",
+        "weight": 0.9997,
+        "confidence": 0.9997,
+        "source_evidence_ids": [
+          "EVID_00001",
+          "EVID_00003"
+        ],
+        "timestamp": "2026-07-25T14:22:38.355000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Acquired 0.0h apart (window 48h)"
+      },
+      {
+        "source": "evidence:EVID_00001",
+        "target": "evidence:EVID_00004",
+        "edge_type": "temporal_relationship",
+        "weight": 0.9996,
+        "confidence": 0.9996,
+        "source_evidence_ids": [
+          "EVID_00001",
+          "EVID_00004"
+        ],
+        "timestamp": "2026-07-25T14:22:38.355000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Acquired 0.0h apart (window 48h)"
+      },
+      {
+        "source": "evidence:EVID_00002",
+        "target": "evidence:EVID_00003",
+        "edge_type": "temporal_relationship",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00002",
+          "EVID_00003"
+        ],
+        "timestamp": "2026-07-25T14:23:23.722000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Acquired 0.0h apart (window 48h)"
+      },
+      {
+        "source": "evidence:EVID_00002",
+        "target": "evidence:EVID_00004",
+        "edge_type": "temporal_relationship",
+        "weight": 0.9999,
+        "confidence": 0.9999,
+        "source_evidence_ids": [
+          "EVID_00002",
+          "EVID_00004"
+        ],
+        "timestamp": "2026-07-25T14:23:23.722000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Acquired 0.0h apart (window 48h)"
+      },
+      {
+        "source": "evidence:EVID_00003",
+        "target": "evidence:EVID_00004",
+        "edge_type": "temporal_relationship",
+        "weight": 0.9999,
+        "confidence": 0.9999,
+        "source_evidence_ids": [
+          "EVID_00003",
+          "EVID_00004"
+        ],
+        "timestamp": "2026-07-25T14:23:26.295000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Acquired 0.0h apart (window 48h)"
+      }
+    ]
+  }
+}

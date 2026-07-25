@@ -3,7 +3,7 @@
   "report_version": 2,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-07-25T12:53:07.262Z",
+  "generated_at": "2026-07-25T14:23:24.047Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
     "directed": false,
@@ -19,32 +19,20 @@
         "node_type": "evidence",
         "label": "EVID_00001",
         "properties": {
-          "file_name": "yeti.jpg",
-          "upload_time": "2026-07-25T12:50:00.695Z"
+          "file_name": "https_plasticostermoencogibles.pe_scss_css_scss_.url",
+          "upload_time": "2026-07-25T14:22:38.355Z"
         }
       },
       {
-        "id": "port:41",
-        "node_type": "port",
-        "label": "41",
+        "id": "domain:plasticostermoencogibles.pe",
+        "node_type": "domain",
+        "label": "plasticostermoencogibles.pe",
         "properties": {}
       },
       {
-        "id": "port:43",
-        "node_type": "port",
-        "label": "43",
-        "properties": {}
-      },
-      {
-        "id": "time:11:43\n",
-        "node_type": "time",
-        "label": "11:43\n",
-        "properties": {}
-      },
-      {
-        "id": "time:1:41 pm",
-        "node_type": "time",
-        "label": "1:41 pm",
+        "id": "url:https://plasticostermoencogibles.pe/scss/css/scss/",
+        "node_type": "url",
+        "label": "https://plasticostermoencogibles.pe/scss/css/scss/",
         "properties": {}
       },
       {
@@ -52,57 +40,33 @@
         "node_type": "evidence",
         "label": "EVID_00002",
         "properties": {
-          "file_name": "whatsapp_chat_export.txt",
-          "upload_time": "2026-07-25T12:53:07.182Z"
+          "file_name": "police_scan_report.pdf",
+          "upload_time": "2026-07-25T14:23:23.722Z"
         }
       },
       {
-        "id": "date:2026-01-04",
-        "node_type": "date",
-        "label": "2026-01-04",
-        "properties": {}
-      },
-      {
-        "id": "money:rs 2000",
+        "id": "money:npr 250000",
         "node_type": "money",
-        "label": "Rs 2000",
+        "label": "NPR 250000",
         "properties": {}
-      },
-      {
-        "id": "time:09:12",
-        "node_type": "time",
-        "label": "09:12",
-        "properties": {}
-      },
-      {
-        "id": "time:09:14",
-        "node_type": "time",
-        "label": "09:14",
-        "properties": {}
-      },
-      {
-        "id": "time:09:15",
-        "node_type": "time",
-        "label": "09:15",
-        "properties": {}
-      },
-      {
-        "id": "timeline_event:CASE_2CF24DBA5F:EVID_00002",
-        "node_type": "timeline_event",
-        "label": "Evidence EVID_00002 (whatsapp_chat_export.txt); stages: initial_contact, financial_transaction",
-        "properties": {
-          "timestamp": "2026-01-04T09:12:00+00:00",
-          "time_source": "content_date_time",
-          "timestamp_inferred": "false"
-        }
       },
       {
         "id": "timeline_event:CASE_2CF24DBA5F:EVID_00001",
         "node_type": "timeline_event",
-        "label": "Evidence EVID_00001 (yeti.jpg); stages: initial_contact",
+        "label": "Evidence EVID_00001 (https_plasticostermoencogibles.pe_scss_css_scss_.url)",
         "properties": {
-          "timestamp": "2026-07-25T11:43:00+00:00",
-          "time_source": "content_time_only",
+          "timestamp": "2026-07-25T14:22:38.355000+00:00",
+          "time_source": "upload_time_fallback",
+          "timestamp_inferred": "true"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_2CF24DBA5F:EVID_00002",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00002 (police_scan_report.pdf); stages: financial_transaction, post_attack",
+        "properties": {
+          "timestamp": "2026-07-25T14:23:23.722000+00:00",
+          "time_source": "upload_time_fallback",
           "timestamp_inferred": "true"
         }
       }
@@ -117,66 +81,38 @@
         "source_evidence_ids": [
           "EVID_00001"
         ],
-        "timestamp": "2026-07-25T11:43:00+00:00",
-        "timestamp_source": "content_time_only",
+        "timestamp": "2026-07-25T14:22:38.355000+00:00",
+        "timestamp_source": "upload_time_fallback",
         "timestamp_inferred": true,
         "explanation": "EVID_00001 belongs to CASE_2CF24DBA5F"
       },
       {
         "source": "evidence:EVID_00001",
-        "target": "port:41",
+        "target": "domain:plasticostermoencogibles.pe",
         "edge_type": "shared_entity",
         "weight": 1.0,
         "confidence": 1.0,
         "source_evidence_ids": [
           "EVID_00001"
         ],
-        "timestamp": "2026-07-25T11:43:00+00:00",
-        "timestamp_source": "content_time_only",
+        "timestamp": "2026-07-25T14:22:38.355000+00:00",
+        "timestamp_source": "upload_time_fallback",
         "timestamp_inferred": true,
-        "explanation": "EVID_00001 mentions 41"
+        "explanation": "EVID_00001 mentions plasticostermoencogibles.pe"
       },
       {
         "source": "evidence:EVID_00001",
-        "target": "port:43",
+        "target": "url:https://plasticostermoencogibles.pe/scss/css/scss/",
         "edge_type": "shared_entity",
         "weight": 1.0,
         "confidence": 1.0,
         "source_evidence_ids": [
           "EVID_00001"
         ],
-        "timestamp": "2026-07-25T11:43:00+00:00",
-        "timestamp_source": "content_time_only",
+        "timestamp": "2026-07-25T14:22:38.355000+00:00",
+        "timestamp_source": "upload_time_fallback",
         "timestamp_inferred": true,
-        "explanation": "EVID_00001 mentions 43"
-      },
-      {
-        "source": "evidence:EVID_00001",
-        "target": "time:11:43\n",
-        "edge_type": "shared_entity",
-        "weight": 1.0,
-        "confidence": 1.0,
-        "source_evidence_ids": [
-          "EVID_00001"
-        ],
-        "timestamp": "2026-07-25T11:43:00+00:00",
-        "timestamp_source": "content_time_only",
-        "timestamp_inferred": true,
-        "explanation": "EVID_00001 mentions 11:43\n"
-      },
-      {
-        "source": "evidence:EVID_00001",
-        "target": "time:1:41 pm",
-        "edge_type": "shared_entity",
-        "weight": 1.0,
-        "confidence": 1.0,
-        "source_evidence_ids": [
-          "EVID_00001"
-        ],
-        "timestamp": "2026-07-25T11:43:00+00:00",
-        "timestamp_source": "content_time_only",
-        "timestamp_inferred": true,
-        "explanation": "EVID_00001 mentions 1:41 pm"
+        "explanation": "EVID_00001 mentions https://plasticostermoencogibles.pe/scss/css/scss/"
       },
       {
         "source": "case:CASE_2CF24DBA5F",
@@ -187,108 +123,67 @@
         "source_evidence_ids": [
           "EVID_00002"
         ],
-        "timestamp": "2026-01-04T09:12:00+00:00",
-        "timestamp_source": "content_date_time",
-        "timestamp_inferred": false,
+        "timestamp": "2026-07-25T14:23:23.722000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
         "explanation": "EVID_00002 belongs to CASE_2CF24DBA5F"
       },
       {
         "source": "evidence:EVID_00002",
-        "target": "date:2026-01-04",
+        "target": "money:npr 250000",
         "edge_type": "shared_entity",
         "weight": 1.0,
         "confidence": 1.0,
         "source_evidence_ids": [
           "EVID_00002"
         ],
-        "timestamp": "2026-01-04T09:12:00+00:00",
-        "timestamp_source": "content_date_time",
-        "timestamp_inferred": false,
-        "explanation": "EVID_00002 mentions 2026-01-04"
-      },
-      {
-        "source": "evidence:EVID_00002",
-        "target": "money:rs 2000",
-        "edge_type": "shared_entity",
-        "weight": 1.0,
-        "confidence": 1.0,
-        "source_evidence_ids": [
-          "EVID_00002"
-        ],
-        "timestamp": "2026-01-04T09:12:00+00:00",
-        "timestamp_source": "content_date_time",
-        "timestamp_inferred": false,
-        "explanation": "EVID_00002 mentions Rs 2000"
-      },
-      {
-        "source": "evidence:EVID_00002",
-        "target": "time:09:12",
-        "edge_type": "shared_entity",
-        "weight": 1.0,
-        "confidence": 1.0,
-        "source_evidence_ids": [
-          "EVID_00002"
-        ],
-        "timestamp": "2026-01-04T09:12:00+00:00",
-        "timestamp_source": "content_date_time",
-        "timestamp_inferred": false,
-        "explanation": "EVID_00002 mentions 09:12"
-      },
-      {
-        "source": "evidence:EVID_00002",
-        "target": "time:09:14",
-        "edge_type": "shared_entity",
-        "weight": 1.0,
-        "confidence": 1.0,
-        "source_evidence_ids": [
-          "EVID_00002"
-        ],
-        "timestamp": "2026-01-04T09:12:00+00:00",
-        "timestamp_source": "content_date_time",
-        "timestamp_inferred": false,
-        "explanation": "EVID_00002 mentions 09:14"
-      },
-      {
-        "source": "evidence:EVID_00002",
-        "target": "time:09:15",
-        "edge_type": "shared_entity",
-        "weight": 1.0,
-        "confidence": 1.0,
-        "source_evidence_ids": [
-          "EVID_00002"
-        ],
-        "timestamp": "2026-01-04T09:12:00+00:00",
-        "timestamp_source": "content_date_time",
-        "timestamp_inferred": false,
-        "explanation": "EVID_00002 mentions 09:15"
-      },
-      {
-        "source": "evidence:EVID_00002",
-        "target": "timeline_event:CASE_2CF24DBA5F:EVID_00002",
-        "edge_type": "timeline_event",
-        "weight": 1.0,
-        "confidence": 1.0,
-        "source_evidence_ids": [
-          "EVID_00002"
-        ],
-        "timestamp": "2026-01-04T09:12:00+00:00",
-        "timestamp_source": "content_date_time",
-        "timestamp_inferred": false,
-        "explanation": "Reconstructed event for EVID_00002"
+        "timestamp": "2026-07-25T14:23:23.722000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00002 mentions NPR 250000"
       },
       {
         "source": "evidence:EVID_00001",
         "target": "timeline_event:CASE_2CF24DBA5F:EVID_00001",
         "edge_type": "timeline_event",
         "weight": 1.0,
-        "confidence": 0.7,
+        "confidence": 0.4,
         "source_evidence_ids": [
           "EVID_00001"
         ],
-        "timestamp": "2026-07-25T11:43:00+00:00",
-        "timestamp_source": "content_time_only",
+        "timestamp": "2026-07-25T14:22:38.355000+00:00",
+        "timestamp_source": "upload_time_fallback",
         "timestamp_inferred": true,
         "explanation": "Reconstructed event for EVID_00001"
+      },
+      {
+        "source": "evidence:EVID_00002",
+        "target": "timeline_event:CASE_2CF24DBA5F:EVID_00002",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 0.4,
+        "source_evidence_ids": [
+          "EVID_00002"
+        ],
+        "timestamp": "2026-07-25T14:23:23.722000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Reconstructed event for EVID_00002"
+      },
+      {
+        "source": "evidence:EVID_00001",
+        "target": "evidence:EVID_00002",
+        "edge_type": "temporal_relationship",
+        "weight": 0.9997,
+        "confidence": 0.9997,
+        "source_evidence_ids": [
+          "EVID_00001",
+          "EVID_00002"
+        ],
+        "timestamp": "2026-07-25T14:22:38.355000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Acquired 0.0h apart (window 48h)"
       }
     ]
   }

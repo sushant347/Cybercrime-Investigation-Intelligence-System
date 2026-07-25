@@ -3,72 +3,70 @@
   "report_version": 4,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-07-25T12:53:51.704Z",
+  "generated_at": "2026-07-25T14:24:05.140Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
-    "node_count": 22,
+    "node_count": 16,
     "edge_count": 24,
     "nodes_by_type": {
       "case": 1,
       "evidence": 4,
-      "port": 2,
-      "time": 5,
-      "date": 1,
+      "domain": 3,
+      "url": 2,
       "money": 1,
-      "domain": 2,
       "email": 1,
-      "url": 1,
       "timeline_event": 4
     },
     "edges_by_type": {
       "contains": 4,
-      "shared_entity": 13,
+      "shared_entity": 7,
+      "threat_relationship": 3,
       "timeline_event": 4,
-      "temporal_relationship": 3
+      "temporal_relationship": 6
     },
-    "density": 0.1039,
+    "density": 0.2,
     "connected_components": 1,
-    "largest_component_size": 22,
-    "average_degree": 2.182,
+    "largest_component_size": 16,
+    "average_degree": 3.0,
     "top_hubs": [
       {
-        "node": "evidence:EVID_00001",
-        "degree": "8"
+        "node": "evidence:EVID_00003",
+        "degree": "12"
       },
       {
-        "node": "evidence:EVID_00004",
-        "degree": "8"
+        "node": "evidence:EVID_00001",
+        "degree": "7"
       },
       {
         "node": "evidence:EVID_00002",
-        "degree": "7"
+        "degree": "6"
+      },
+      {
+        "node": "evidence:EVID_00004",
+        "degree": "5"
       },
       {
         "node": "case:CASE_2CF24DBA5F",
         "degree": "4"
       },
       {
-        "node": "evidence:EVID_00003",
-        "degree": "4"
+        "node": "domain:nabil-bank-alerts.com",
+        "degree": "2"
       },
       {
-        "node": "port:41",
+        "node": "domain:nabil-verify.example-scam.top",
+        "degree": "2"
+      },
+      {
+        "node": "url:http://nabil-verify.example-scam.top/login",
+        "degree": "2"
+      },
+      {
+        "node": "domain:plasticostermoencogibles.pe",
         "degree": "1"
       },
       {
-        "node": "port:43",
-        "degree": "1"
-      },
-      {
-        "node": "time:11:43\n",
-        "degree": "1"
-      },
-      {
-        "node": "time:1:41 pm",
-        "degree": "1"
-      },
-      {
-        "node": "date:2026-01-04",
+        "node": "url:https://plasticostermoencogibles.pe/scss/css/scss/",
         "degree": "1"
       }
     ]

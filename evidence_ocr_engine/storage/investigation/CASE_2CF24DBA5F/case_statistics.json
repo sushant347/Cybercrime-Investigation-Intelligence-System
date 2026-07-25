@@ -3,44 +3,44 @@
   "report_version": 1,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-07-25T12:53:55.988Z",
+  "generated_at": "2026-07-25T14:24:15.346Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
-    "evidence_count": 4,
+    "evidence_count": 5,
     "threat_statistics": {
-      "intel_available": 0.0,
-      "indicators_checked": 3.0,
-      "malicious_indicators": 0.0,
-      "evidence_with_threats": 0.0,
-      "threat_evidence_ratio": 0.0
+      "intel_available": 1.0,
+      "indicators_checked": 5.0,
+      "malicious_indicators": 3.0,
+      "evidence_with_threats": 1.0,
+      "threat_evidence_ratio": 0.2
     },
     "campaign_statistics": {
       "campaign_count": 0.0,
       "largest_campaign_size": 0.0,
       "clustered_evidence": 0.0,
-      "unclustered_evidence": 4.0,
+      "unclustered_evidence": 5.0,
       "mean_campaign_confidence": 0.0
     },
     "timeline_statistics": {
-      "event_count": 4.0,
-      "resolved_event_count": 4.0,
+      "event_count": 5.0,
+      "resolved_event_count": 5.0,
       "unresolved_event_count": 0.0,
-      "inferred_event_count": 3.0,
-      "stage_count": 4.0,
-      "critical_event_count": 1.0,
-      "timeline_span_hours": 4851.7
+      "inferred_event_count": 4.0,
+      "stage_count": 5.0,
+      "critical_event_count": 2.0,
+      "timeline_span_hours": 4853.19
     },
     "evidence_quality_statistics": {
       "mean_image_quality": 0.0,
       "mean_evidence_confidence": 0.0,
       "mean_forgery_score": 0.0,
       "max_forgery_score": 0.0,
-      "mean_ocr_confidence": 0.97,
-      "hash_verified_count": 4.0
+      "mean_ocr_confidence": 0.98,
+      "hash_verified_count": 5.0
     },
     "correlation_statistics": {
-      "pair_count": 6.0,
-      "related_pair_count": 6.0,
+      "pair_count": 10.0,
+      "related_pair_count": 10.0,
       "mean_confidence": 0.2212,
       "max_confidence": 0.2212
     },

@@ -1,0 +1,69 @@
+{
+  "report_type": "timeline_analysis",
+  "report_version": 1,
+  "schema_version": "2.0",
+  "case_id": "CASE_4CFDEC4197",
+  "generated_at": "2026-07-25T14:41:21.127Z",
+  "report": {
+    "case_id": "CASE_4CFDEC4197",
+    "events": [
+      {
+        "timestamp": "2026-07-25T14:41:19.994000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00006",
+        "case_id": "CASE_4CFDEC4197",
+        "file_name": "http_shared-scam-domain.test_pay.url",
+        "description": "Evidence EVID_00006 (http_shared-scam-domain.test_pay.url)",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00006"
+        ],
+        "correlated_with": [],
+        "text_preview": "http://shared-scam-domain.test/pay",
+        "risk_signals": {},
+        "stages": [],
+        "critical": false,
+        "critical_reasons": []
+      }
+    ],
+    "attack_stages": [],
+    "stage_progression": [],
+    "progression_consistent": true,
+    "milestones": [
+      {
+        "timestamp": "2026-07-25T14:41:19.994000+00:00",
+        "event_type": "milestone",
+        "evidence_id": "EVID_00006",
+        "case_id": "CASE_4CFDEC4197",
+        "file_name": "http_shared-scam-domain.test_pay.url",
+        "description": "Investigation start - first reconstructed evidence event",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00006"
+        ],
+        "correlated_with": [],
+        "text_preview": "http://shared-scam-domain.test/pay",
+        "risk_signals": {},
+        "stages": [],
+        "critical": false,
+        "critical_reasons": []
+      }
+    ],
+    "critical_events": [],
+    "summary": "1 event(s) spanning 0.0 hour(s); 0 timestamp(s) unresolved.",
+    "statistics": {
+      "event_count": 1.0,
+      "resolved_event_count": 1.0,
+      "unresolved_event_count": 0.0,
+      "inferred_event_count": 1.0,
+      "stage_count": 0.0,
+      "critical_event_count": 0.0,
+      "timeline_span_hours": 0.0
+    },
+    "analysis_time_ms": 1.0
+  }
+}

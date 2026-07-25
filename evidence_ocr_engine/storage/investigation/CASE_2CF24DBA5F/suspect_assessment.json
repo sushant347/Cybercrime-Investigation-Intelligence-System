@@ -3,7 +3,7 @@
   "report_version": 1,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-07-25T12:53:55.986Z",
+  "generated_at": "2026-07-25T14:24:15.343Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
     "suspect_count": 1,
@@ -14,7 +14,7 @@
         "identity_value": "security@nabil-bank-alerts.com",
         "aliases": [],
         "evidence_ids": [
-          "EVID_00004"
+          "EVID_00003"
         ],
         "evidence_count": 1,
         "components": [
@@ -28,7 +28,7 @@
             "name": "evidence_count",
             "score": 25.0,
             "weight": 0.2,
-            "explanation": "appears in 1 of 4 evidence item(s)"
+            "explanation": "appears in 1 of 5 evidence item(s)"
           },
           {
             "name": "evidence_confidence",
@@ -38,9 +38,9 @@
           },
           {
             "name": "threat_intelligence",
-            "score": 0.0,
+            "score": 100.0,
             "weight": 0.15,
-            "explanation": "no threat-intelligence indicator file available"
+            "explanation": "co-occurs with threat-flagged indicator 'http://nabil-verify.example-scam.top/login' in EVID_00003"
           },
           {
             "name": "correlation_strength",
@@ -55,18 +55,18 @@
             "explanation": "activity spans 0.0 day(s) across its evidence set"
           }
         ],
-        "confidence_score": 38.8,
-        "confidence_level": "LOW",
+        "confidence_score": 53.8,
+        "confidence_level": "MODERATE",
         "relationship_strength": "N/A",
-        "risk_level": "LOW",
-        "threat_flagged": false,
-        "first_seen": "2026-07-25T12:53:47.011Z",
-        "last_seen": "2026-07-25T12:53:47.011Z",
-        "explanation": "Suspect anchor 'security@nabil-bank-alerts.com' (emails) scores 38.8/100 (LOW, risk LOW) across 1 evidence item(s): EVID_00004. Identity strength: 75/100 (weight 0.25) - 'security@nabil-bank-alerts.com' is a email - identity weight 75/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 4 evidence item(s). Evidence confidence: 50/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 50/100 (no Phase-1 scores stored; neutral 50 assumed). Threat intelligence: 0/100 (weight 0.15) - no threat-intelligence indicator file available. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 day(s) across its evidence set."
+        "risk_level": "MEDIUM",
+        "threat_flagged": true,
+        "first_seen": "2026-07-25T14:23:26.295Z",
+        "last_seen": "2026-07-25T14:23:26.295Z",
+        "explanation": "Suspect anchor 'security@nabil-bank-alerts.com' (emails) scores 53.8/100 (MODERATE, risk MEDIUM) across 1 evidence item(s): EVID_00003. Identity strength: 75/100 (weight 0.25) - 'security@nabil-bank-alerts.com' is a email - identity weight 75/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 5 evidence item(s). Evidence confidence: 50/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 50/100 (no Phase-1 scores stored; neutral 50 assumed). Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'http://nabil-verify.example-scam.top/login' in EVID_00003. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 day(s) across its evidence set."
       }
     ],
     "top_suspect": "SUSPECT_CASE_2CF24DBA5F_01",
-    "analysis_time_ms": 0.2,
+    "analysis_time_ms": 1.8,
     "methodology": "Deterministic weighted scoring over identity anchors (no machine learning); every component carries its own explanation."
   }
 }

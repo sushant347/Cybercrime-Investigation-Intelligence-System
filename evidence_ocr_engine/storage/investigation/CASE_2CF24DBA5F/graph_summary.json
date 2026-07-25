@@ -3,15 +3,13 @@
   "report_version": 1,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-07-25T12:52:44.107Z",
+  "generated_at": "2026-07-25T14:22:50.450Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
-    "headline": "7 nodes and 6 edges across 1 component(s)",
+    "headline": "5 nodes and 4 edges across 1 component(s)",
     "key_connectors": [
-      "port:41",
-      "port:43",
-      "time:11:43\n",
-      "time:1:41 pm",
+      "domain:plasticostermoencogibles.pe",
+      "url:https://plasticostermoencogibles.pe/scss/css/scss/",
       "timeline_event:CASE_2CF24DBA5F:EVID_00001"
     ],
     "observations": [
