@@ -1,6 +1,9 @@
 import HubIcon from "@mui/icons-material/Hub";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import {
+  Alert,
   Box,
+  Button,
   Card,
   CardContent,
   Chip,
@@ -10,6 +13,7 @@ import {
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
 
 import { investigationApi } from "@/api";
 import { EmptyState } from "@/components/common/EmptyState";
@@ -19,7 +23,7 @@ import { formatDateTime } from "@/lib/format";
 import { nodeColor } from "@/theme/theme";
 import type { GraphEdge, GraphNode } from "@/types";
 
-import { GraphCanvas } from "./GraphCanvas";
+import { EDGE_STYLES, GraphCanvas } from "./GraphCanvas";
 
 export type Selection =
   | { kind: "node"; node: GraphNode }
@@ -60,6 +64,24 @@ export function GraphTab({ caseId }: { caseId: string }) {
     return [...counts.entries()].sort((a, b) => b[1] - a[1]);
   }, [graph]);
 
+  const edgeTypesPresent = useMemo(
+    () => new Set(graph?.edges.map((e) => e.edge_type) ?? []),
+    [graph],
+  );
+
+  /** Structural node types; anything else is an extracted-entity node. */
+  const hasEntityNodes = useMemo(
+    () =>
+      graph?.nodes.some(
+        (n) => !["case", "evidence", "timeline_event"].includes(n.node_type),
+      ) ?? false,
+    [graph],
+  );
+  const evidenceNodeCount = useMemo(
+    () => graph?.nodes.filter((n) => n.node_type === "evidence").length ?? 0,
+    [graph],
+  );
+
   if (graphQuery.isPending) return <DetailSkeleton />;
   if (!graph) {
     return (
@@ -85,6 +107,14 @@ export function GraphTab({ caseId }: { caseId: string }) {
 
   return (
     <Stack spacing={2}>
+      {!hasEntityNodes && evidenceNodeCount > 0 && (
+        <Alert severity="info">
+          This stored graph contains no entity nodes (phones, URLs, wallets,
+          amounts…). If entities have been extracted from the evidence — or the
+          engine has been updated — run the analysis again to regenerate the
+          graph with entity relationships included.
+        </Alert>
+      )}
       {summary?.headline && (
         <Card>
           <CardContent>
@@ -182,6 +212,18 @@ export function GraphTab({ caseId }: { caseId: string }) {
                 <Typography variant="caption" color="text.secondary" sx={{ wordBreak: "break-all" }}>
                   {selection.node.id}
                 </Typography>
+                {selection.node.node_type === "evidence" && (
+                  <Button
+                    size="small"
+                    variant="outlined"
+                    startIcon={<OpenInNewIcon />}
+                    component={RouterLink}
+                    to={`/cases/${caseId}/evidence/${selection.node.label || selection.node.id.split(":").pop()}`}
+                    sx={{ alignSelf: "flex-start" }}
+                  >
+                    Open evidence
+                  </Button>
+                )}
                 {Object.entries(selection.node.properties).map(([key, value]) => (
                   <Stack key={key} direction="row" spacing={1}>
                     <Typography variant="body2" color="text.secondary" sx={{ minWidth: 90 }}>
@@ -212,9 +254,24 @@ export function GraphTab({ caseId }: { caseId: string }) {
                     : "Unresolved"}
                 </Typography>
                 {(selection.edge.source_evidence_ids?.length ?? 0) > 0 && (
-                  <Typography variant="body2" color="text.secondary">
-                    Source evidence: {selection.edge.source_evidence_ids?.join(", ")}
-                  </Typography>
+                  <Stack spacing={0.5}>
+                    <Typography variant="body2" color="text.secondary">
+                      Source evidence:
+                    </Typography>
+                    <Stack direction="row" spacing={0.5} flexWrap="wrap" useFlexGap>
+                      {selection.edge.source_evidence_ids?.map((id) => (
+                        <Chip
+                          key={id}
+                          size="small"
+                          label={id}
+                          component={RouterLink}
+                          to={`/cases/${caseId}/evidence/${id}`}
+                          clickable
+                          variant="outlined"
+                        />
+                      ))}
+                    </Stack>
+                  </Stack>
                 )}
                 {selection.edge.explanation && (
                   <Typography variant="body2">{selection.edge.explanation}</Typography>
@@ -222,6 +279,37 @@ export function GraphTab({ caseId }: { caseId: string }) {
               </Stack>
             )}
           </Box>
+        </Stack>
+        <Divider />
+        {/* Edge legend — only the relationship types present in this graph. */}
+        <Stack
+          direction="row"
+          spacing={2}
+          flexWrap="wrap"
+          useFlexGap
+          sx={{ px: 2, py: 1.25 }}
+        >
+          {Object.entries(EDGE_STYLES)
+            .filter(([type]) => edgeTypesPresent.has(type))
+            .map(([type, meta]) => (
+              <Stack key={type} direction="row" spacing={0.75} alignItems="center">
+                <Box
+                  sx={{
+                    width: 26,
+                    height: 0,
+                    borderTop: 3,
+                    borderColor: meta.color,
+                    borderTopStyle: meta.style,
+                  }}
+                />
+                <Typography variant="caption" color="text.secondary">
+                  {meta.label}
+                </Typography>
+              </Stack>
+            ))}
+          <Typography variant="caption" color="text.disabled" sx={{ ml: "auto" }}>
+            Hover a node or line for details · scroll to zoom · drag to pan
+          </Typography>
         </Stack>
       </Card>
     </Stack>

@@ -25,6 +25,8 @@ import { formatDateTime, titleCase } from "@/lib/format";
 import { BRAND } from "@/theme/theme";
 import type { TimelineEvent } from "@/types";
 
+import { TimelineAxis } from "./TimelineAxis";
+
 /**
  * Module 7 - Interactive investigation timeline.
  * All events, stages, milestones and critical flags come from the engine's
@@ -63,6 +65,14 @@ export function TimelineTab({ caseId }: { caseId: string }) {
       return true;
     });
   }, [timeline, search, dateFrom, dateTo, criticalOnly]);
+
+  const milestoneKeys = useMemo(
+    () =>
+      new Set(
+        (timeline?.milestones ?? []).map((m) => `${m.timestamp}|${m.description}`),
+      ),
+    [timeline],
+  );
 
   if (isPending) return <DetailSkeleton />;
   if (!timeline) {
@@ -168,6 +178,15 @@ export function TimelineTab({ caseId }: { caseId: string }) {
             label="Critical only"
           />
         </Stack>
+        <Divider />
+
+        {/* Time-axis view of the filtered events */}
+        <TimelineAxis
+          events={filtered}
+          milestoneKeys={milestoneKeys}
+          selected={selected}
+          onSelect={setSelected}
+        />
         <Divider />
 
         <Stack direction={{ xs: "column", lg: "row" }}>
@@ -287,9 +306,46 @@ export function TimelineTab({ caseId }: { caseId: string }) {
                   </>
                 )}
                 {(selected.correlated_with?.length ?? 0) > 0 && (
-                  <Typography variant="body2">
-                    Related evidence: {selected.correlated_with?.map((item) => item.linked_to).join(", ")}
-                  </Typography>
+                  <>
+                    <Typography variant="subtitle2">Correlated evidence</Typography>
+                    {selected.correlated_with?.map((item, i) => (
+                      <Box key={`${item.linked_to}-${i}`} sx={{ mb: 0.75 }}>
+                        <Typography
+                          variant="body2"
+                          sx={{ fontFamily: '"JetBrains Mono", monospace' }}
+                        >
+                          {item.linked_to}
+                          <Typography
+                            component="span"
+                            variant="caption"
+                            color="text.secondary"
+                          >
+                            {" "}
+                            · {titleCase(item.type)} ·{" "}
+                            {Math.round((item.confidence ?? 0) * 100)}%
+                          </Typography>
+                        </Typography>
+                        {item.shared_entities.length > 0 && (
+                          <Stack
+                            direction="row"
+                            spacing={0.5}
+                            flexWrap="wrap"
+                            useFlexGap
+                            sx={{ mt: 0.5 }}
+                          >
+                            {item.shared_entities.map((entity) => (
+                              <Chip
+                                key={entity}
+                                size="small"
+                                label={entity}
+                                sx={{ bgcolor: `${BRAND.accent}22`, color: BRAND.accent }}
+                              />
+                            ))}
+                          </Stack>
+                        )}
+                      </Box>
+                    ))}
+                  </>
                 )}
               </Stack>
             )}
