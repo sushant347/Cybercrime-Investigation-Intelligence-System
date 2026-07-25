@@ -1,0 +1,41 @@
+{
+  "report_type": "logo_detections",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00012",
+  "case_id": "CASE_185915593C",
+  "generated_at": "2026-07-25T17:20:49.546Z",
+  "report": {
+    "evidence_id": "EVID_00012",
+    "case_id": "CASE_185915593C",
+    "source_file": "06_phishing_email_screenshot.jpg",
+    "brands_checked": [
+      "eSewa",
+      "Khalti",
+      "IME Pay",
+      "Facebook",
+      "Messenger",
+      "WhatsApp",
+      "Telegram",
+      "Gmail",
+      "Outlook",
+      "Google",
+      "Microsoft"
+    ],
+    "detections": [
+      {
+        "brand": "eSewa",
+        "confidence": 0.8387,
+        "bbox": [],
+        "detection_method": "ocr_keyword",
+        "detected_at": "2026-07-25T17:20:49.520Z",
+        "detail": "keyword 'esewa' in OCR line"
+      }
+    ],
+    "detected_brands": [
+      "eSewa"
+    ],
+    "template_assets_available": false,
+    "analysis_time_ms": 27.4
+  }
+}

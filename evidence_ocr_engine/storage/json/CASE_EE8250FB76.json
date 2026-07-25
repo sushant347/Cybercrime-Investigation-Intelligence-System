@@ -1,0 +1,802 @@
+{
+  "case_id": "CASE_EE8250FB76",
+  "created_at": "2026-07-25T16:24:17.847Z",
+  "updated_at": "2026-07-25T16:24:18.004Z",
+  "evidence_count": 1,
+  "evidence": [
+    {
+      "case_id": "CASE_EE8250FB76",
+      "evidence_id": "EVID_00005",
+      "file_name": "08_complaint_letter.pdf",
+      "file_hash": "fe644062bf75e62c8ae13ec24c7e0461491a5610095a50546c4fa757d98e866f",
+      "file_size": "3750",
+      "upload_time": "2026-07-25T16:24:17.560Z",
+      "processing_time_ms": 296.7,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 1.0,
+          "text": "To,\nThe Chief, Cyber Bureau,\nNepal Police, Bhotahity, Kathmandu.\nSubject: Complaint regarding online fraud impersonating eSewa (Cashback Scam)\nRespected Sir/Madam,\nI, Sunita Gurung, resident of Pokhara-6, Kaski, holder of eSewa ID\nsunita.gurung21@gmail.com and mobile number 9847011223, would like to file a complaint\nregarding an online fraud I fell victim to between 10 June 2026 and 14 June 2026.\nOn 10 June 2026, I received an SMS claiming to be from \"eSewa\" stating that I had won a\nDashain Cashback offer of NPR 5,000, and asking me to visit the link\nhttps://esewa-cashback-offer.xyz/claim to claim it. I later received messages on Facebook\nMessenger from an account calling itself \"eSewa Cashback Support,\" which asked me to\nconfirm my eSewa ID and phone number, and then requested a \"verification fee\" of NPR 200,\nwhich I paid to the eSewa ID esewa.cashback99@gmail.com on 11 June 2026 (Transaction\nID: 0119.0625.987456).\nFollowing this, the same contact, using phone/Khalti ID 9801122334, asked me to pay an\nadditional processing fee of NPR 1,500 through Khalti (Transaction Code:\nKH-2026-0611-77245) to release a larger prize of NPR 25,000. I also received a phishing\nemail from \"support@esewa-verify-kyc.com\" threatening that my account KYC would be\nsuspended, again directing me to the same link and phone number +977-9801122334.\nOn 14 June 2026, believing the prize was genuine, I transferred NPR 25,000 via\nMachhapuchhre Bank Limited (Voucher No. MBL-2026-441829) to an account held in the\nname \"Rabin Thapa,\" Account Number 0501-9012345678, at Machhapuchhre Bank Limited,\nKathmandu Branch.\nAfter this transfer, all communication from the contact stopped, and I was unable to reach the\nphone number 9801122334 again. I later learned that eSewa does not conduct cashback\npromotions in this manner and that the link used does not belong to eSewa's official domain.\nI am attaching screenshots of the SMS, the Messenger conversation, the QR code flyer I was\nsent, my eSewa and Khalti payment confirmations, and the bank transfer voucher as\nsupporting evidence. I respectfully request the Cyber Bureau to investigate this matter, trace\nthe phone number, Khalti ID, bank account, and the phishing domain involved, and take\nappropriate legal action against the perpetrators.\nThank you for your attention to this matter.\nSincerely,",
+          "lines": [
+            {
+              "text": "To,",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "The Chief, Cyber Bureau,",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "Nepal Police, Bhotahity, Kathmandu.",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "Subject: Complaint regarding online fraud impersonating eSewa (Cashback Scam)",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "Respected Sir/Madam,",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "I, Sunita Gurung, resident of Pokhara-6, Kaski, holder of eSewa ID",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "sunita.gurung21@gmail.com and mobile number 9847011223, would like to file a complaint",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "regarding an online fraud I fell victim to between 10 June 2026 and 14 June 2026.",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "On 10 June 2026, I received an SMS claiming to be from \"eSewa\" stating that I had won a",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "Dashain Cashback offer of NPR 5,000, and asking me to visit the link",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "https://esewa-cashback-offer.xyz/claim to claim it. I later received messages on Facebook",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "Messenger from an account calling itself \"eSewa Cashback Support,\" which asked me to",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "confirm my eSewa ID and phone number, and then requested a \"verification fee\" of NPR 200,",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "which I paid to the eSewa ID esewa.cashback99@gmail.com on 11 June 2026 (Transaction",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "ID: 0119.0625.987456).",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "Following this, the same contact, using phone/Khalti ID 9801122334, asked me to pay an",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "additional processing fee of NPR 1,500 through Khalti (Transaction Code:",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "KH-2026-0611-77245) to release a larger prize of NPR 25,000. I also received a phishing",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "email from \"support@esewa-verify-kyc.com\" threatening that my account KYC would be",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "suspended, again directing me to the same link and phone number +977-9801122334.",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "On 14 June 2026, believing the prize was genuine, I transferred NPR 25,000 via",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "Machhapuchhre Bank Limited (Voucher No. MBL-2026-441829) to an account held in the",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "name \"Rabin Thapa,\" Account Number 0501-9012345678, at Machhapuchhre Bank Limited,",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "Kathmandu Branch.",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "After this transfer, all communication from the contact stopped, and I was unable to reach the",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "phone number 9801122334 again. I later learned that eSewa does not conduct cashback",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "promotions in this manner and that the link used does not belong to eSewa's official domain.",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "I am attaching screenshots of the SMS, the Messenger conversation, the QR code flyer I was",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "sent, my eSewa and Khalti payment confirmations, and the bank transfer voucher as",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "supporting evidence. I respectfully request the Cyber Bureau to investigate this matter, trace",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "the phone number, Khalti ID, bank account, and the phishing domain involved, and take",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "appropriate legal action against the perpetrators.",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "Thank you for your attention to this matter.",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "Sincerely,",
+              "confidence": 1.0,
+              "bbox": []
+            }
+          ],
+          "bounding_boxes": [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          "preprocessing_steps": [
+            "none(pdf_text_layer)"
+          ]
+        },
+        {
+          "page": 2,
+          "confidence": 1.0,
+          "text": "Sunita Gurung\nPhone: 9847011223\nDate of Complaint: 15 June 2026\nComplaint Reference: CASE_2026_0088",
+          "lines": [
+            {
+              "text": "Sunita Gurung",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "Phone: 9847011223",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "Date of Complaint: 15 June 2026",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "Complaint Reference: CASE_2026_0088",
+              "confidence": 1.0,
+              "bbox": []
+            }
+          ],
+          "bounding_boxes": [
+            [],
+            [],
+            [],
+            []
+          ],
+          "preprocessing_steps": [
+            "none(pdf_text_layer)"
+          ]
+        }
+      ],
+      "raw_text": "To,\nThe Chief, Cyber Bureau,\nNepal Police, Bhotahity, Kathmandu.\nSubject: Complaint regarding online fraud impersonating eSewa (Cashback Scam)\nRespected Sir/Madam,\nI, Sunita Gurung, resident of Pokhara-6, Kaski, holder of eSewa ID\nsunita.gurung21@gmail.com and mobile number 9847011223, would like to file a complaint\nregarding an online fraud I fell victim to between 10 June 2026 and 14 June 2026.\nOn 10 June 2026, I received an SMS claiming to be from \"eSewa\" stating that I had won a\nDashain Cashback offer of NPR 5,000, and asking me to visit the link\nhttps://esewa-cashback-offer.xyz/claim to claim it. I later received messages on Facebook\nMessenger from an account calling itself \"eSewa Cashback Support,\" which asked me to\nconfirm my eSewa ID and phone number, and then requested a \"verification fee\" of NPR 200,\nwhich I paid to the eSewa ID esewa.cashback99@gmail.com on 11 June 2026 (Transaction\nID: 0119.0625.987456).\nFollowing this, the same contact, using phone/Khalti ID 9801122334, asked me to pay an\nadditional processing fee of NPR 1,500 through Khalti (Transaction Code:\nKH-2026-0611-77245) to release a larger prize of NPR 25,000. I also received a phishing\nemail from \"support@esewa-verify-kyc.com\" threatening that my account KYC would be\nsuspended, again directing me to the same link and phone number +977-9801122334.\nOn 14 June 2026, believing the prize was genuine, I transferred NPR 25,000 via\nMachhapuchhre Bank Limited (Voucher No. MBL-2026-441829) to an account held in the\nname \"Rabin Thapa,\" Account Number 0501-9012345678, at Machhapuchhre Bank Limited,\nKathmandu Branch.\nAfter this transfer, all communication from the contact stopped, and I was unable to reach the\nphone number 9801122334 again. I later learned that eSewa does not conduct cashback\npromotions in this manner and that the link used does not belong to eSewa's official domain.\nI am attaching screenshots of the SMS, the Messenger conversation, the QR code flyer I was\nsent, my eSewa and Khalti payment confirmations, and the bank transfer voucher as\nsupporting evidence. I respectfully request the Cyber Bureau to investigate this matter, trace\nthe phone number, Khalti ID, bank account, and the phishing domain involved, and take\nappropriate legal action against the perpetrators.\nThank you for your attention to this matter.\nSincerely,\nSunita Gurung\nPhone: 9847011223\nDate of Complaint: 15 June 2026\nComplaint Reference: CASE_2026_0088",
+      "average_confidence": 1.0,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_EE8250FB76",
+        "evidence_id": "EVID_00005",
+        "raw_text": "To,\nThe Chief, Cyber Bureau,\nNepal Police, Bhotahity, Kathmandu.\nSubject: Complaint regarding online fraud impersonating eSewa (Cashback Scam)\nRespected Sir/Madam,\nI, Sunita Gurung, resident of Pokhara-6, Kaski, holder of eSewa ID\nsunita.gurung21@gmail.com and mobile number 9847011223, would like to file a complaint\nregarding an online fraud I fell victim to between 10 June 2026 and 14 June 2026.\nOn 10 June 2026, I received an SMS claiming to be from \"eSewa\" stating that I had won a\nDashain Cashback offer of NPR 5,000, and asking me to visit the link\nhttps://esewa-cashback-offer.xyz/claim to claim it. I later received messages on Facebook\nMessenger from an account calling itself \"eSewa Cashback Support,\" which asked me to\nconfirm my eSewa ID and phone number, and then requested a \"verification fee\" of NPR 200,\nwhich I paid to the eSewa ID esewa.cashback99@gmail.com on 11 June 2026 (Transaction\nID: 0119.0625.987456).\nFollowing this, the same contact, using phone/Khalti ID 9801122334, asked me to pay an\nadditional processing fee of NPR 1,500 through Khalti (Transaction Code:\nKH-2026-0611-77245) to release a larger prize of NPR 25,000. I also received a phishing\nemail from \"support@esewa-verify-kyc.com\" threatening that my account KYC would be\nsuspended, again directing me to the same link and phone number +977-9801122334.\nOn 14 June 2026, believing the prize was genuine, I transferred NPR 25,000 via\nMachhapuchhre Bank Limited (Voucher No. MBL-2026-441829) to an account held in the\nname \"Rabin Thapa,\" Account Number 0501-9012345678, at Machhapuchhre Bank Limited,\nKathmandu Branch.\nAfter this transfer, all communication from the contact stopped, and I was unable to reach the\nphone number 9801122334 again. I later learned that eSewa does not conduct cashback\npromotions in this manner and that the link used does not belong to eSewa's official domain.\nI am attaching screenshots of the SMS, the Messenger conversation, the QR code flyer I was\nsent, my eSewa and Khalti payment confirmations, and the bank transfer voucher as\nsupporting evidence. I respectfully request the Cyber Bureau to investigate this matter, trace\nthe phone number, Khalti ID, bank account, and the phishing domain involved, and take\nappropriate legal action against the perpetrators.\nThank you for your attention to this matter.\nSincerely,\nSunita Gurung\nPhone: 9847011223\nDate of Complaint: 15 June 2026\nComplaint Reference: CASE_2026_0088",
+        "cleaned_text": "To,\nThe Chief, Cyber Bureau,\nNepal Police, Bhotahity, Kathmandu.\nSubject: Complaint regarding online fraud impersonating eSewa (Cashback Scam)\nRespected Sir/Madam,\nI, Sunita Gurung, resident of Pokhara-6, Kaski, holder of eSewa ID\nsunita.gurung21@gmail.com and mobile number 9847011223, would like to file a complaint regarding an online fraud I fell victim to between 10 June 2026 and 14 June 2026.\nOn 10 June 2026, I received an SMS claiming to be from \"eSewa\" stating that I had won a\nDashain Cashback offer of NPR 5,000, and asking me to visit the link\nhttps://esewa-cashback-offer.xyz/claim to claim it. I later received messages on Facebook\nMessenger from an account calling itself \"eSewa Cashback Support,\" which asked me to confirm my eSewa ID and phone number, and then requested a \"verification fee\" of NPR 200, which I paid to the eSewa ID esewa.cashback99@gmail.com on 11 June 2026 (Transaction\nID: 0119.0625.987456).\nFollowing this, the same contact, using phone/Khalti ID 9801122334, asked me to pay an additional processing fee of NPR 1,500 through Khalti (Transaction Code:\nKH-2026-0611-77245) to release a larger prize of NPR 25,000. I also received a phishing email from \"support@esewa-verify-kyc.com\" threatening that my account KYC would be suspended, again directing me to the same link and phone number +977-9801122334.\nOn 14 June 2026, believing the prize was genuine, I transferred NPR 25,000 via\nMachhapuchhre Bank Limited (Voucher No. MBL-2026-441829) to an account held in the name \"Rabin Thapa,\" Account Number 0501-9012345678, at Machhapuchhre Bank Limited,\nKathmandu Branch.\nAfter this transfer, all communication from the contact stopped, and I was unable to reach the phone number 9801122334 again. I later learned that eSewa does not conduct cashback promotions in this manner and that the link used does not belong to eSewa's official domain.\nI am attaching screenshots of the SMS, the Messenger conversation, the QR code flyer I was sent, my eSewa and Khalti payment confirmations, and the bank transfer voucher as supporting evidence. I respectfully request the Cyber Bureau to investigate this matter, trace the phone number, Khalti ID, bank account, and the phishing domain involved, and take appropriate legal action against the perpetrators.\nThank you for your attention to this matter.\nSincerely,\nSunita Gurung\nPhone: 9847011223\nDate of Complaint: 15 June 2026\nComplaint Reference: CASE_2026_0088",
+        "language": "english",
+        "line_languages": {
+          "1": "english",
+          "2": "english",
+          "3": "english",
+          "4": "english",
+          "5": "english",
+          "6": "english",
+          "7": "english",
+          "8": "english",
+          "9": "english",
+          "10": "english",
+          "11": "english",
+          "12": "english",
+          "13": "english",
+          "14": "english",
+          "15": "english",
+          "16": "english",
+          "17": "english",
+          "18": "english",
+          "19": "english",
+          "20": "english",
+          "21": "english",
+          "22": "english",
+          "23": "english",
+          "24": "english",
+          "25": "english",
+          "26": "english",
+          "27": "english",
+          "28": "english",
+          "29": "english",
+          "30": "english",
+          "31": "english",
+          "32": "english",
+          "33": "english",
+          "34": "english",
+          "35": "english",
+          "36": "english",
+          "37": "english",
+          "38": "english"
+        },
+        "entities": {
+          "urls": [
+            {
+              "value": "https://esewa-cashback-offer.xyz/claim",
+              "normalized": "https://esewa-cashback-offer.xyz/claim"
+            }
+          ],
+          "domains": [
+            {
+              "value": "esewa-cashback-offer.xyz",
+              "normalized": "esewa-cashback-offer.xyz"
+            },
+            {
+              "value": "gmail.com",
+              "normalized": "gmail.com"
+            },
+            {
+              "value": "esewa-verify-kyc.com",
+              "normalized": "esewa-verify-kyc.com"
+            }
+          ],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "emails": [
+            {
+              "value": "sunita.gurung21@gmail.com",
+              "normalized": "sunita.gurung21@gmail.com"
+            },
+            {
+              "value": "esewa.cashback99@gmail.com",
+              "normalized": "esewa.cashback99@gmail.com"
+            },
+            {
+              "value": "support@esewa-verify-kyc.com",
+              "normalized": "support@esewa-verify-kyc.com"
+            }
+          ],
+          "phones": [
+            {
+              "value": "9847011223",
+              "normalized": "+9779847011223"
+            },
+            {
+              "value": "9801122334",
+              "normalized": "+9779801122334"
+            }
+          ],
+          "dates": [
+            {
+              "value": "10 June 2026",
+              "normalized": "10 June 2026"
+            },
+            {
+              "value": "14 June 2026",
+              "normalized": "14 June 2026"
+            },
+            {
+              "value": "11 June 2026",
+              "normalized": "11 June 2026"
+            },
+            {
+              "value": "15 June 2026",
+              "normalized": "15 June 2026"
+            }
+          ],
+          "times": [],
+          "money": [
+            {
+              "value": "NPR 5,000",
+              "normalized": "NPR 5000"
+            },
+            {
+              "value": "NPR 200",
+              "normalized": "NPR 200"
+            },
+            {
+              "value": "NPR 1,500",
+              "normalized": "NPR 1500"
+            },
+            {
+              "value": "NPR 25,000",
+              "normalized": "NPR 25000"
+            }
+          ],
+          "bank_accounts": [
+            {
+              "value": "0501-9012345678",
+              "normalized": "05019012345678"
+            }
+          ],
+          "card_numbers": [],
+          "transaction_ids": [
+            {
+              "value": "0119.0625.987456",
+              "normalized": "0119.0625.987456"
+            },
+            {
+              "value": "KH-2026-0611-77245",
+              "normalized": "KH-2026-0611-77245"
+            },
+            {
+              "value": "MBL-2026-441829",
+              "normalized": "MBL-2026-441829"
+            },
+            {
+              "value": "CASE_2026_0088",
+              "normalized": "CASE_2026_0088"
+            }
+          ],
+          "esewa_ids": [
+            {
+              "value": "sunita.gurung21@gmail.com",
+              "normalized": "sunita.gurung21@gmail.com"
+            },
+            {
+              "value": "esewa.cashback99@gmail.com",
+              "normalized": "esewa.cashback99@gmail.com"
+            }
+          ],
+          "khalti_ids": [
+            {
+              "value": "9801122334",
+              "normalized": "+9779801122334"
+            }
+          ],
+          "imepay_ids": [],
+          "otp": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "hashes_md5": [],
+          "hashes_sha1": [],
+          "hashes_sha256": [],
+          "hashes_sha512": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {
+          "wallet": 16,
+          "account": 5,
+          "reward": 5,
+          "bank": 4,
+          "payment": 3,
+          "verify": 2,
+          "kyc": 2,
+          "prize": 2,
+          "threat": 2,
+          "suspended": 1,
+          "winner": 1
+        },
+        "risk_signals": {
+          "urgency": 1,
+          "financial": 31,
+          "credential": 9,
+          "threat": 2
+        },
+        "statistics": {
+          "characters": 2437,
+          "words": 371,
+          "lines": 25,
+          "average_line_length": 96.5,
+          "languages_detected": [
+            "english"
+          ],
+          "entity_count": 25,
+          "cleaning_operations": [
+            "entities_protected(24)",
+            "lines_merged(13)"
+          ],
+          "ocr_corrections": [],
+          "protected_entities": 24
+        },
+        "processing_time_ms": 11.62
+      },
+      "enhancement": {
+        "case_id": "CASE_EE8250FB76",
+        "evidence_id": "EVID_00005",
+        "cleaned_text": "To,\nThe Chief, Cyber Bureau,\nNepal Police, Bhotahity, Kathmandu.\nSubject: Complaint regarding online fraud impersonating eSewa (Cashback Scam)\nRespected Sir/Madam,\nI, Sunita Gurung, resident of Pokhara-6, Kaski, holder of eSewa ID\nsunita.gurung21@gmail.com and mobile number 9847011223, would like to file a complaint regarding an online fraud I fell victim to between 10 June 2026 and 14 June 2026.\nOn 10 June 2026, I received an SMS claiming to be from \"eSewa\" stating that I had won a\nDashain Cashback offer of NPR 5,000, and asking me to visit the link\nhttps://esewa-cashback-offer.xyz/claim to claim it. I later received messages on Facebook\nMessenger from an account calling itself \"eSewa Cashback Support,\" which asked me to confirm my eSewa ID and phone number, and then requested a \"verification fee\" of NPR 200, which I paid to the eSewa ID esewa.cashback99@gmail.com on 11 June 2026 (Transaction\nID: 0119.0625.987456).\nFollowing this, the same contact, using phone/Khalti ID 9801122334, asked me to pay an additional processing fee of NPR 1,500 through Khalti (Transaction Code:\nKH-2026-0611-77245) to release a larger prize of NPR 25,000. I also received a phishing email from \"support@esewa-verify-kyc.com\" threatening that my account KYC would be suspended, again directing me to the same link and phone number +977-9801122334.\nOn 14 June 2026, believing the prize was genuine, I transferred NPR 25,000 via\nMachhapuchhre Bank Limited (Voucher No. MBL-2026-441829) to an account held in the name \"Rabin Thapa,\" Account Number 0501-9012345678, at Machhapuchhre Bank Limited,\nKathmandu Branch.\nAfter this transfer, all communication from the contact stopped, and I was unable to reach the phone number 9801122334 again. I later learned that eSewa does not conduct cashback promotions in this manner and that the link used does not belong to eSewa's official domain.\nI am attaching screenshots of the SMS, the Messenger conversation, the QR code flyer I was sent, my eSewa and Khalti payment confirmations, and the bank transfer voucher as supporting evidence. I respectfully request the Cyber Bureau to investigate this matter, trace the phone number, Khalti ID, bank account, and the phishing domain involved, and take appropriate legal action against the perpetrators.\nThank you for your attention to this matter.\nSincerely,\nSunita Gurung\nPhone: 9847011223\nDate of Complaint: 15 June 2026\nComplaint Reference: CASE_2026_0088",
+        "enhanced_text": "To,\nThe Chief, Cyber Bureau,\nNepal Police, Bhotahity, Kathmandu.\nSubject: Complaint regarding online fraud impersonating eSewa (Cashback Scam)\nRespected Sir/Madam,\nI, Sunita Gurung, resident of Pokhara-6, Kaski, holder of eSewa ID\nsunita.gurung21@gmail.com and mobile number 9847011223, would like to file a complaint regarding an online fraud I fell victim to between 10 June 2026 and 14 June 2026.\nOn 10 June 2026, I received an SMS claiming to be from \"eSewa\" stating that I had won a\nDashain Cashback offer of NPR 5,000, and asking me to visit the link\nhttps://esewa-cashback-offer.xyz/claim to claim it. I later received messages on Facebook\nMessenger from an account calling itself \"eSewa Cashback Support,\" which asked me to confirm my eSewa ID and phone number, and then requested a \"verification fee\" of NPR 200, which I paid to the eSewa ID esewa.cashback99@gmail.com on 11 June 2026 (Transaction\nID: 0119.0625.987456).\nFollowing this, the same contact, using phone/Khalti ID 9801122334, asked me to pay an additional processing fee of NPR 1,500 through Khalti (Transaction Code:\nKH-2026-0611-77245) to release a larger prize of NPR 25,000. I also received a phishing email from \"support@esewa-verify-kyc.com\" threatening that my account KYC would be suspended, again directing me to the same link and phone number +977-9801122334.\nOn 14 June 2026, believing the prize was genuine, I transferred NPR 25,000 via\nMachhapuchhre Bank Limited (Voucher No. MBL-2026-441829) to an account held in the name \"Rabin Thapa,\" Account Number 0501-9012345678, at Machhapuchhre Bank Limited,\nKathmandu Branch.\nAfter this transfer, all communication from the contact stopped, and I was unable to reach the phone number 9801122334 again. I later learned that eSewa does not conduct cashback promotions in this manner and that the link used does not belong to eSewa's official domain.\nI am attaching screenshots of the SMS, the Messenger conversation, the QR code flyer I was sent, my eSewa and Khalti payment confirmations, and the bank transfer voucher as supporting evidence. I respectfully request the Cyber Bureau to investigate this matter, trace the phone number, Khalti ID, bank account, and the phishing domain involved, and take appropriate legal action against the perpetrators.\nThank you for your attention to this matter.\nSincerely,\nSunita Gurung\nPhone: 9847011223\nDate of Complaint: 15 June 2026\nComplaint Reference: CASE_2026_0088",
+        "ui_text": "",
+        "message_text": "To,\nThe Chief, Cyber Bureau,\nNepal Police, Bhotahity, Kathmandu.\nSubject: Complaint regarding online fraud impersonating eSewa (Cashback Scam)\nRespected Sir/Madam,\nI, Sunita Gurung, resident of Pokhara-6, Kaski, holder of eSewa ID\nsunita.gurung21@gmail.com and mobile number 9847011223, would like to file a complaint regarding an online fraud I fell victim to between 10 June 2026 and 14 June 2026.\nOn 10 June 2026, I received an SMS claiming to be from \"eSewa\" stating that I had won a\nDashain Cashback offer of NPR 5,000, and asking me to visit the link\nhttps://esewa-cashback-offer.xyz/claim to claim it. I later received messages on Facebook\nMessenger from an account calling itself \"eSewa Cashback Support,\" which asked me to confirm my eSewa ID and phone number, and then requested a \"verification fee\" of NPR 200, which I paid to the eSewa ID esewa.cashback99@gmail.com on 11 June 2026 (Transaction\nID: 0119.0625.987456).\nFollowing this, the same contact, using phone/Khalti ID 9801122334, asked me to pay an additional processing fee of NPR 1,500 through Khalti (Transaction Code:\nKH-2026-0611-77245) to release a larger prize of NPR 25,000. I also received a phishing email from \"support@esewa-verify-kyc.com\" threatening that my account KYC would be suspended, again directing me to the same link and phone number +977-9801122334.\nOn 14 June 2026, believing the prize was genuine, I transferred NPR 25,000 via\nMachhapuchhre Bank Limited (Voucher No. MBL-2026-441829) to an account held in the name \"Rabin Thapa,\" Account Number 0501-9012345678, at Machhapuchhre Bank Limited,\nKathmandu Branch.\nAfter this transfer, all communication from the contact stopped, and I was unable to reach the phone number 9801122334 again. I later learned that eSewa does not conduct cashback promotions in this manner and that the link used does not belong to eSewa's official domain.\nI am attaching screenshots of the SMS, the Messenger conversation, the QR code flyer I was sent, my eSewa and Khalti payment confirmations, and the bank transfer voucher as supporting evidence. I respectfully request the Cyber Bureau to investigate this matter, trace the phone number, Khalti ID, bank account, and the phishing domain involved, and take appropriate legal action against the perpetrators.\nThank you for your attention to this matter.\nSincerely,\nSunita Gurung\nPhone: 9847011223\nDate of Complaint: 15 June 2026\nComplaint Reference: CASE_2026_0088",
+        "layout": [
+          {
+            "line": 1,
+            "role": "message",
+            "text": "To,"
+          },
+          {
+            "line": 2,
+            "role": "message",
+            "text": "The Chief, Cyber Bureau,"
+          },
+          {
+            "line": 3,
+            "role": "message",
+            "text": "Nepal Police, Bhotahity, Kathmandu."
+          },
+          {
+            "line": 4,
+            "role": "message",
+            "text": "Subject: Complaint regarding online fraud impersonating eSewa (Cashback Scam)"
+          },
+          {
+            "line": 5,
+            "role": "message",
+            "text": "Respected Sir/Madam,"
+          },
+          {
+            "line": 6,
+            "role": "message",
+            "text": "I, Sunita Gurung, resident of Pokhara-6, Kaski, holder of eSewa ID"
+          },
+          {
+            "line": 7,
+            "role": "message",
+            "text": "sunita.gurung21@gmail.com and mobile number 9847011223, would like to file a complaint regarding an online fraud I fell victim to between 10 June 2026 and 14 June 2026."
+          },
+          {
+            "line": 8,
+            "role": "message",
+            "text": "On 10 June 2026, I received an SMS claiming to be from \"eSewa\" stating that I had won a"
+          },
+          {
+            "line": 9,
+            "role": "message",
+            "text": "Dashain Cashback offer of NPR 5,000, and asking me to visit the link"
+          },
+          {
+            "line": 10,
+            "role": "message",
+            "text": "https://esewa-cashback-offer.xyz/claim to claim it. I later received messages on Facebook"
+          },
+          {
+            "line": 11,
+            "role": "message",
+            "text": "Messenger from an account calling itself \"eSewa Cashback Support,\" which asked me to confirm my eSewa ID and phone number, and then requested a \"verification fee\" of NPR 200, which I paid to the eSewa ID esewa.cashback99@gmail.com on 11 June 2026 (Transaction"
+          },
+          {
+            "line": 12,
+            "role": "message",
+            "text": "ID: 0119.0625.987456)."
+          },
+          {
+            "line": 13,
+            "role": "message",
+            "text": "Following this, the same contact, using phone/Khalti ID 9801122334, asked me to pay an additional processing fee of NPR 1,500 through Khalti (Transaction Code:"
+          },
+          {
+            "line": 14,
+            "role": "message",
+            "text": "KH-2026-0611-77245) to release a larger prize of NPR 25,000. I also received a phishing email from \"support@esewa-verify-kyc.com\" threatening that my account KYC would be suspended, again directing me to the same link and phone number +977-9801122334."
+          },
+          {
+            "line": 15,
+            "role": "message",
+            "text": "On 14 June 2026, believing the prize was genuine, I transferred NPR 25,000 via"
+          },
+          {
+            "line": 16,
+            "role": "message",
+            "text": "Machhapuchhre Bank Limited (Voucher No. MBL-2026-441829) to an account held in the name \"Rabin Thapa,\" Account Number 0501-9012345678, at Machhapuchhre Bank Limited,"
+          },
+          {
+            "line": 17,
+            "role": "sender",
+            "text": "Kathmandu Branch."
+          },
+          {
+            "line": 18,
+            "role": "message",
+            "text": "After this transfer, all communication from the contact stopped, and I was unable to reach the phone number 9801122334 again. I later learned that eSewa does not conduct cashback promotions in this manner and that the link used does not belong to eSewa's official domain."
+          },
+          {
+            "line": 19,
+            "role": "message",
+            "text": "I am attaching screenshots of the SMS, the Messenger conversation, the QR code flyer I was sent, my eSewa and Khalti payment confirmations, and the bank transfer voucher as supporting evidence. I respectfully request the Cyber Bureau to investigate this matter, trace the phone number, Khalti ID, bank account, and the phishing domain involved, and take appropriate legal action against the perpetrators."
+          },
+          {
+            "line": 20,
+            "role": "message",
+            "text": "Thank you for your attention to this matter."
+          },
+          {
+            "line": 21,
+            "role": "message",
+            "text": "Sincerely,"
+          },
+          {
+            "line": 22,
+            "role": "sender",
+            "text": "Sunita Gurung"
+          },
+          {
+            "line": 23,
+            "role": "message",
+            "text": "Phone: 9847011223"
+          },
+          {
+            "line": 24,
+            "role": "message",
+            "text": "Date of Complaint: 15 June 2026"
+          },
+          {
+            "line": 25,
+            "role": "message",
+            "text": "Complaint Reference: CASE_2026_0088"
+          }
+        ],
+        "corrections": [],
+        "correction_statistics": {
+          "total_corrections": 0,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 0,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 25,
+          "lines_high_confidence": 25,
+          "lines_correctable": 0,
+          "document_confidence": 1.0,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 4.34
+      },
+      "semantic_correction": {
+        "case_id": "CASE_EE8250FB76",
+        "evidence_id": "EVID_00005",
+        "enhanced_text": "To,\nThe Chief, Cyber Bureau,\nNepal Police, Bhotahity, Kathmandu.\nSubject: Complaint regarding online fraud impersonating eSewa (Cashback Scam)\nRespected Sir/Madam,\nI, Sunita Gurung, resident of Pokhara-6, Kaski, holder of eSewa ID\nsunita.gurung21@gmail.com and mobile number 9847011223, would like to file a complaint regarding an online fraud I fell victim to between 10 June 2026 and 14 June 2026.\nOn 10 June 2026, I received an SMS claiming to be from \"eSewa\" stating that I had won a\nDashain Cashback offer of NPR 5,000, and asking me to visit the link\nhttps://esewa-cashback-offer.xyz/claim to claim it. I later received messages on Facebook\nMessenger from an account calling itself \"eSewa Cashback Support,\" which asked me to confirm my eSewa ID and phone number, and then requested a \"verification fee\" of NPR 200, which I paid to the eSewa ID esewa.cashback99@gmail.com on 11 June 2026 (Transaction\nID: 0119.0625.987456).\nFollowing this, the same contact, using phone/Khalti ID 9801122334, asked me to pay an additional processing fee of NPR 1,500 through Khalti (Transaction Code:\nKH-2026-0611-77245) to release a larger prize of NPR 25,000. I also received a phishing email from \"support@esewa-verify-kyc.com\" threatening that my account KYC would be suspended, again directing me to the same link and phone number +977-9801122334.\nOn 14 June 2026, believing the prize was genuine, I transferred NPR 25,000 via\nMachhapuchhre Bank Limited (Voucher No. MBL-2026-441829) to an account held in the name \"Rabin Thapa,\" Account Number 0501-9012345678, at Machhapuchhre Bank Limited,\nKathmandu Branch.\nAfter this transfer, all communication from the contact stopped, and I was unable to reach the phone number 9801122334 again. I later learned that eSewa does not conduct cashback promotions in this manner and that the link used does not belong to eSewa's official domain.\nI am attaching screenshots of the SMS, the Messenger conversation, the QR code flyer I was sent, my eSewa and Khalti payment confirmations, and the bank transfer voucher as supporting evidence. I respectfully request the Cyber Bureau to investigate this matter, trace the phone number, Khalti ID, bank account, and the phishing domain involved, and take appropriate legal action against the perpetrators.\nThank you for your attention to this matter.\nSincerely,\nSunita Gurung\nPhone: 9847011223\nDate of Complaint: 15 June 2026\nComplaint Reference: CASE_2026_0088",
+        "semantic_text": "To,\nThe Chief, Cyber Bureau,\nNepal Police, Bhotahity, Kathmandu.\nSubject: Complaint regarding online fraud impersonating eSewa (Cashback Scam)\nRespected Sir/Madam,\nI, Sunita Gurung, resident of Pokhara-6, Kaski, holder of eSewa ID\nsunita.gurung21@gmail.com and mobile number 9847011223, would like to file a complaint regarding an online fraud I fell victim to between 10 June 2026 and 14 June 2026.\nOn 10 June 2026, I received an SMS claiming to be from \"eSewa\" stating that I had won a\nDashain Cashback offer of NPR 5,000, and asking me to visit the link\nhttps://esewa-cashback-offer.xyz/claim to claim it. I later received messages on Facebook\nMessenger from an account calling itself \"eSewa Cashback Support,\" which asked me to confirm my eSewa ID and phone number, and then requested a \"verification fee\" of NPR 200, which I paid to the eSewa ID esewa.cashback99@gmail.com on 11 June 2026 (Transaction\nID: 0119.0625.987456).\nFollowing this, the same contact, using phone/Khalti ID 9801122334, asked me to pay an additional processing fee of NPR 1,500 through Khalti (Transaction Code:\nKH-2026-0611-77245) to release a larger prize of NPR 25,000. I also received a phishing email from \"support@esewa-verify-kyc.com\" threatening that my account KYC would be suspended, again directing me to the same link and phone number +977-9801122334.\nOn 14 June 2026, believing the prize was genuine, I transferred NPR 25,000 via\nMachhapuchhre Bank Limited (Voucher No. MBL-2026-441829) to an account held in the name \"Rabin Thapa,\" Account Number 0501-9012345678, at Machhapuchhre Bank Limited,\nKathmandu Branch.\nAfter this transfer, all communication from the contact stopped, and I was unable to reach the phone number 9801122334 again. I later learned that eSewa does not conduct cashback promotions in this manner and that the link used does not belong to eSewa's official domain.\nI am attaching screenshots of the SMS, the Messenger conversation, the QR code flyer I was sent, my eSewa and Khalti payment confirmations, and the bank transfer voucher as supporting evidence. I respectfully request the Cyber Bureau to investigate this matter, trace the phone number, Khalti ID, bank account, and the phishing domain involved, and take appropriate legal action against the perpetrators.\nThank you for your attention to this matter.\nSincerely,\nSunita Gurung\nPhone: 9847011223\nDate of Complaint: 15 June 2026\nComplaint Reference: CASE_2026_0088",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {
+          "urls": [
+            {
+              "value": "https://esewa-cashback-offer.xyz/claim",
+              "normalized": "https://esewa-cashback-offer.xyz/claim"
+            }
+          ],
+          "domains": [
+            {
+              "value": "esewa-cashback-offer.xyz",
+              "normalized": "esewa-cashback-offer.xyz"
+            },
+            {
+              "value": "gmail.com",
+              "normalized": "gmail.com"
+            },
+            {
+              "value": "esewa-verify-kyc.com",
+              "normalized": "esewa-verify-kyc.com"
+            }
+          ],
+          "emails": [
+            {
+              "value": "sunita.gurung21@gmail.com",
+              "normalized": "sunita.gurung21@gmail.com"
+            },
+            {
+              "value": "esewa.cashback99@gmail.com",
+              "normalized": "esewa.cashback99@gmail.com"
+            },
+            {
+              "value": "support@esewa-verify-kyc.com",
+              "normalized": "support@esewa-verify-kyc.com"
+            }
+          ],
+          "phones": [
+            {
+              "value": "9847011223",
+              "normalized": "+9779847011223"
+            },
+            {
+              "value": "9801122334",
+              "normalized": "+9779801122334"
+            }
+          ],
+          "dates": [
+            {
+              "value": "10 June 2026",
+              "normalized": "10 June 2026"
+            },
+            {
+              "value": "14 June 2026",
+              "normalized": "14 June 2026"
+            },
+            {
+              "value": "11 June 2026",
+              "normalized": "11 June 2026"
+            },
+            {
+              "value": "15 June 2026",
+              "normalized": "15 June 2026"
+            }
+          ],
+          "money": [
+            {
+              "value": "NPR 5,000",
+              "normalized": "NPR 5000"
+            },
+            {
+              "value": "NPR 200",
+              "normalized": "NPR 200"
+            },
+            {
+              "value": "NPR 1,500",
+              "normalized": "NPR 1500"
+            },
+            {
+              "value": "NPR 25,000",
+              "normalized": "NPR 25000"
+            }
+          ],
+          "bank_accounts": [
+            {
+              "value": "0501-9012345678",
+              "normalized": "05019012345678"
+            }
+          ],
+          "transaction_ids": [
+            {
+              "value": "0119.0625.987456",
+              "normalized": "0119.0625.987456"
+            },
+            {
+              "value": "KH-2026-0611-77245",
+              "normalized": "KH-2026-0611-77245"
+            },
+            {
+              "value": "MBL-2026-441829",
+              "normalized": "MBL-2026-441829"
+            },
+            {
+              "value": "CASE_2026_0088",
+              "normalized": "CASE_2026_0088"
+            }
+          ],
+          "esewa_ids": [
+            {
+              "value": "sunita.gurung21@gmail.com",
+              "normalized": "sunita.gurung21@gmail.com"
+            },
+            {
+              "value": "esewa.cashback99@gmail.com",
+              "normalized": "esewa.cashback99@gmail.com"
+            }
+          ],
+          "khalti_ids": [
+            {
+              "value": "9801122334",
+              "normalized": "+9779801122334"
+            }
+          ]
+        },
+        "statistics": {
+          "suspicious_tokens": 0,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 24,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english"
+          ]
+        },
+        "processing_time_ms": 6.91
+      }
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "report_type": "preprocessing_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00007",
+  "case_id": "CASE_185915593C",
+  "generated_at": "2026-07-25T17:16:47.443Z",
+  "report": {
+    "evidence_id": "EVID_00007",
+    "case_id": "CASE_185915593C",
+    "driven_by_quality_score": 62.4,
+    "planned_operations": [
+      "perspective_correction",
+      "super_resolution",
+      "edge_enhancement"
+    ],
+    "operations": [
+      {
+        "name": "perspective_correction",
+        "applied": false,
+        "reason": "probe for photographed-document geometry",
+        "parameters": {},
+        "duration_ms": 2.5,
+        "detail": "no dominant quadrilateral"
+      },
+      {
+        "name": "super_resolution",
+        "applied": true,
+        "reason": "min dimension 500 px below the OCR-adequate threshold",
+        "parameters": {},
+        "duration_ms": 4.0,
+        "detail": "lanczos_x1.40"
+      },
+      {
+        "name": "edge_enhancement",
+        "applied": true,
+        "reason": "blur sub-score 5/100 (laplacian var 39)",
+        "parameters": {},
+        "duration_ms": 3.0,
+        "detail": "unsharp_mask(amount=0.6)"
+      }
+    ],
+    "input_shape": [
+      500,
+      720,
+      3
+    ],
+    "output_shape": [
+      700,
+      1007,
+      3
+    ],
+    "derived_image_file": "enhanced_2026-07-25T17-16-47.426Z.png",
+    "total_time_ms": 27.2
+  }
+}

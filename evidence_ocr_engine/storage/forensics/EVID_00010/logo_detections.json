@@ -1,0 +1,50 @@
+{
+  "report_type": "logo_detections",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00010",
+  "case_id": "CASE_185915593C",
+  "generated_at": "2026-07-25T17:19:50.346Z",
+  "report": {
+    "evidence_id": "EVID_00010",
+    "case_id": "CASE_185915593C",
+    "source_file": "04_esewa_payment_screenshot.jpg",
+    "brands_checked": [
+      "eSewa",
+      "Khalti",
+      "IME Pay",
+      "Facebook",
+      "Messenger",
+      "WhatsApp",
+      "Telegram",
+      "Gmail",
+      "Outlook",
+      "Google",
+      "Microsoft"
+    ],
+    "detections": [
+      {
+        "brand": "eSewa",
+        "confidence": 1.0,
+        "bbox": [],
+        "detection_method": "ocr_keyword",
+        "detected_at": "2026-07-25T17:19:50.303Z",
+        "detail": "keyword 'esewa' in OCR line + corroborating colour signature"
+      },
+      {
+        "brand": "Gmail",
+        "confidence": 0.823,
+        "bbox": [],
+        "detection_method": "ocr_keyword",
+        "detected_at": "2026-07-25T17:19:50.338Z",
+        "detail": "keyword 'gmail' in OCR line"
+      }
+    ],
+    "detected_brands": [
+      "Gmail",
+      "eSewa"
+    ],
+    "template_assets_available": false,
+    "analysis_time_ms": 44.2
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "report_type": "graph_summary",
+  "report_version": 9,
+  "schema_version": "2.0",
+  "case_id": "CASE_185915593C",
+  "generated_at": "2026-07-25T17:26:36.472Z",
+  "report": {
+    "case_id": "CASE_185915593C",
+    "headline": "65 nodes and 152 edges across 1 component(s)",
+    "key_connectors": [],
+    "observations": [
+      "9 threat-intelligence edge(s) link flagged indicators to evidence.",
+      "10 strong behavioural link(s) derived from the weighted correlation engine.",
+      "All entities and evidence form a single connected component - consistent with one coordinated activity."
+    ]
+  }
+}

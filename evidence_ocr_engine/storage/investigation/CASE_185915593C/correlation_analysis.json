@@ -1,0 +1,952 @@
+{
+  "report_type": "correlation_analysis",
+  "report_version": 9,
+  "schema_version": "2.0",
+  "case_id": "CASE_185915593C",
+  "generated_at": "2026-07-25T17:26:36.455Z",
+  "report": {
+    "case_id": "CASE_185915593C",
+    "evidence_ids": [
+      "EVID_00007",
+      "EVID_00008",
+      "EVID_00009",
+      "EVID_00010",
+      "EVID_00011",
+      "EVID_00012",
+      "EVID_00013",
+      "EVID_00014"
+    ],
+    "pair_count": 28,
+    "related_pair_count": 28,
+    "pairs": [
+      {
+        "evidence_a": "EVID_00011",
+        "evidence_b": "EVID_00014",
+        "correlation_weight": 5.75,
+        "correlation_confidence": 0.9725,
+        "relationship_strength": "VERY_STRONG",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 2,
+            "contribution": 1.8,
+            "supporting_evidence": [
+              "+9779801122334",
+              "+9779847011223"
+            ],
+            "reason": "Both items reference the same phones: +9779801122334, +9779847011223"
+          },
+          {
+            "factor": "khalti_ids",
+            "weight": 1.0,
+            "matches": 1,
+            "contribution": 1.0,
+            "supporting_evidence": [
+              "+9779801122334"
+            ],
+            "reason": "Both items reference the same khalti ids: +9779801122334"
+          },
+          {
+            "factor": "transaction_ids",
+            "weight": 0.95,
+            "matches": 1,
+            "contribution": 0.95,
+            "supporting_evidence": [
+              "kh-2026-0611-77245"
+            ],
+            "reason": "Both items reference the same transaction ids: kh-2026-0611-77245"
+          },
+          {
+            "factor": "domains",
+            "weight": 0.6,
+            "matches": 1,
+            "contribution": 0.6,
+            "supporting_evidence": [
+              "esewa-cashback-offer.xyz"
+            ],
+            "reason": "Both items reference the same domains: esewa-cashback-offer.xyz"
+          },
+          {
+            "factor": "money",
+            "weight": 0.2,
+            "matches": 1,
+            "contribution": 0.2,
+            "supporting_evidence": [
+              "npr 1500"
+            ],
+            "reason": "Both items reference the same money: npr 1500"
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.1h apart"
+            ],
+            "reason": "Acquired 0.1 hours apart (within the 48h proximity window)"
+          },
+          {
+            "factor": "threat_intelligence",
+            "weight": 0.8,
+            "matches": 1,
+            "contribution": 0.8,
+            "supporting_evidence": [
+              "esewa-cashback-offer.xyz"
+            ],
+            "reason": "Threat intelligence flags the same malicious indicator(s) in both items: esewa-cashback-offer.xyz"
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779801122334, +9779847011223",
+          "Both items reference the same khalti ids: +9779801122334",
+          "Both items reference the same transaction ids: kh-2026-0611-77245",
+          "Both items reference the same domains: esewa-cashback-offer.xyz",
+          "Both items reference the same money: npr 1500",
+          "Acquired 0.1 hours apart (within the 48h proximity window)",
+          "Threat intelligence flags the same malicious indicator(s) in both items: esewa-cashback-offer.xyz"
+        ],
+        "explanation": "EVID_00011 (05_khalti_receipt.jpg) and EVID_00014 (08_complaint_letter.pdf) show a very strong relationship (confidence 0.97) based on 7 independent factor(s). Both items reference the same phones: +9779801122334, +9779847011223 [weight 1.80]. Both items reference the same khalti ids: +9779801122334 [weight 1.00]. Both items reference the same transaction ids: kh-2026-0611-77245 [weight 0.95]. Both items reference the same domains: esewa-cashback-offer.xyz [weight 0.60]. Both items reference the same money: npr 1500 [weight 0.20]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]. Threat intelligence flags the same malicious indicator(s) in both items: esewa-cashback-offer.xyz [weight 0.80]."
+      },
+      {
+        "evidence_a": "EVID_00008",
+        "evidence_b": "EVID_00014",
+        "correlation_weight": 3.05,
+        "correlation_confidence": 0.8514,
+        "relationship_strength": "VERY_STRONG",
+        "factors": [
+          {
+            "factor": "emails",
+            "weight": 0.85,
+            "matches": 1,
+            "contribution": 0.85,
+            "supporting_evidence": [
+              "sunita.gurung21@gmail.com"
+            ],
+            "reason": "Both items reference the same emails: sunita.gurung21@gmail.com"
+          },
+          {
+            "factor": "esewa_ids",
+            "weight": 1.0,
+            "matches": 1,
+            "contribution": 1.0,
+            "supporting_evidence": [
+              "sunita.gurung21@gmail.com"
+            ],
+            "reason": "Both items reference the same esewa ids: sunita.gurung21@gmail.com"
+          },
+          {
+            "factor": "domains",
+            "weight": 0.6,
+            "matches": 1,
+            "contribution": 0.6,
+            "supporting_evidence": [
+              "gmail.com"
+            ],
+            "reason": "Both items reference the same domains: gmail.com"
+          },
+          {
+            "factor": "money",
+            "weight": 0.2,
+            "matches": 1,
+            "contribution": 0.2,
+            "supporting_evidence": [
+              "npr 200"
+            ],
+            "reason": "Both items reference the same money: npr 200"
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.2h apart"
+            ],
+            "reason": "Acquired 0.2 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same emails: sunita.gurung21@gmail.com",
+          "Both items reference the same esewa ids: sunita.gurung21@gmail.com",
+          "Both items reference the same domains: gmail.com",
+          "Both items reference the same money: npr 200",
+          "Acquired 0.2 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00008 (02_messenger_chat.jpg) and EVID_00014 (08_complaint_letter.pdf) show a very strong relationship (confidence 0.85) based on 5 independent factor(s). Both items reference the same emails: sunita.gurung21@gmail.com [weight 0.85]. Both items reference the same esewa ids: sunita.gurung21@gmail.com [weight 1.00]. Both items reference the same domains: gmail.com [weight 0.60]. Both items reference the same money: npr 200 [weight 0.20]. Acquired 0.2 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00013",
+        "evidence_b": "EVID_00014",
+        "correlation_weight": 2.45,
+        "correlation_confidence": 0.7837,
+        "relationship_strength": "STRONG",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.9,
+            "supporting_evidence": [
+              "+9779847011223"
+            ],
+            "reason": "Both items reference the same phones: +9779847011223"
+          },
+          {
+            "factor": "transaction_ids",
+            "weight": 0.95,
+            "matches": 1,
+            "contribution": 0.95,
+            "supporting_evidence": [
+              "mbl-2026-441829"
+            ],
+            "reason": "Both items reference the same transaction ids: mbl-2026-441829"
+          },
+          {
+            "factor": "money",
+            "weight": 0.2,
+            "matches": 1,
+            "contribution": 0.2,
+            "supporting_evidence": [
+              "npr 25000"
+            ],
+            "reason": "Both items reference the same money: npr 25000"
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.1h apart"
+            ],
+            "reason": "Acquired 0.1 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779847011223",
+          "Both items reference the same transaction ids: mbl-2026-441829",
+          "Both items reference the same money: npr 25000",
+          "Acquired 0.1 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00013 (07_bank_transfer_slip.pdf) and EVID_00014 (08_complaint_letter.pdf) show a strong relationship (confidence 0.78) based on 4 independent factor(s). Both items reference the same phones: +9779847011223 [weight 0.90]. Both items reference the same transaction ids: mbl-2026-441829 [weight 0.95]. Both items reference the same money: npr 25000 [weight 0.20]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00009",
+        "evidence_b": "EVID_00014",
+        "correlation_weight": 2.0,
+        "correlation_confidence": 0.7135,
+        "relationship_strength": "STRONG",
+        "factors": [
+          {
+            "factor": "domains",
+            "weight": 0.6,
+            "matches": 1,
+            "contribution": 0.6,
+            "supporting_evidence": [
+              "esewa-cashback-offer.xyz"
+            ],
+            "reason": "Both items reference the same domains: esewa-cashback-offer.xyz"
+          },
+          {
+            "factor": "money",
+            "weight": 0.2,
+            "matches": 1,
+            "contribution": 0.2,
+            "supporting_evidence": [
+              "npr 5000"
+            ],
+            "reason": "Both items reference the same money: npr 5000"
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.1h apart"
+            ],
+            "reason": "Acquired 0.1 hours apart (within the 48h proximity window)"
+          },
+          {
+            "factor": "threat_intelligence",
+            "weight": 0.8,
+            "matches": 1,
+            "contribution": 0.8,
+            "supporting_evidence": [
+              "esewa-cashback-offer.xyz"
+            ],
+            "reason": "Threat intelligence flags the same malicious indicator(s) in both items: esewa-cashback-offer.xyz"
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same domains: esewa-cashback-offer.xyz",
+          "Both items reference the same money: npr 5000",
+          "Acquired 0.1 hours apart (within the 48h proximity window)",
+          "Threat intelligence flags the same malicious indicator(s) in both items: esewa-cashback-offer.xyz"
+        ],
+        "explanation": "EVID_00009 (03_qr_code_flyer.png) and EVID_00014 (08_complaint_letter.pdf) show a strong relationship (confidence 0.71) based on 4 independent factor(s). Both items reference the same domains: esewa-cashback-offer.xyz [weight 0.60]. Both items reference the same money: npr 5000 [weight 0.20]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]. Threat intelligence flags the same malicious indicator(s) in both items: esewa-cashback-offer.xyz [weight 0.80]."
+      },
+      {
+        "evidence_a": "EVID_00009",
+        "evidence_b": "EVID_00011",
+        "correlation_weight": 1.8,
+        "correlation_confidence": 0.6753,
+        "relationship_strength": "STRONG",
+        "factors": [
+          {
+            "factor": "domains",
+            "weight": 0.6,
+            "matches": 1,
+            "contribution": 0.6,
+            "supporting_evidence": [
+              "esewa-cashback-offer.xyz"
+            ],
+            "reason": "Both items reference the same domains: esewa-cashback-offer.xyz"
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          },
+          {
+            "factor": "threat_intelligence",
+            "weight": 0.8,
+            "matches": 1,
+            "contribution": 0.8,
+            "supporting_evidence": [
+              "esewa-cashback-offer.xyz"
+            ],
+            "reason": "Threat intelligence flags the same malicious indicator(s) in both items: esewa-cashback-offer.xyz"
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same domains: esewa-cashback-offer.xyz",
+          "Acquired 0.0 hours apart (within the 48h proximity window)",
+          "Threat intelligence flags the same malicious indicator(s) in both items: esewa-cashback-offer.xyz"
+        ],
+        "explanation": "EVID_00009 (03_qr_code_flyer.png) and EVID_00011 (05_khalti_receipt.jpg) show a strong relationship (confidence 0.68) based on 3 independent factor(s). Both items reference the same domains: esewa-cashback-offer.xyz [weight 0.60]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]. Threat intelligence flags the same malicious indicator(s) in both items: esewa-cashback-offer.xyz [weight 0.80]."
+      },
+      {
+        "evidence_a": "EVID_00010",
+        "evidence_b": "EVID_00014",
+        "correlation_weight": 1.55,
+        "correlation_confidence": 0.6204,
+        "relationship_strength": "STRONG",
+        "factors": [
+          {
+            "factor": "transaction_ids",
+            "weight": 0.95,
+            "matches": 1,
+            "contribution": 0.95,
+            "supporting_evidence": [
+              "0119.0625.987456"
+            ],
+            "reason": "Both items reference the same transaction ids: 0119.0625.987456"
+          },
+          {
+            "factor": "money",
+            "weight": 0.2,
+            "matches": 1,
+            "contribution": 0.2,
+            "supporting_evidence": [
+              "npr 200"
+            ],
+            "reason": "Both items reference the same money: npr 200"
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.1h apart"
+            ],
+            "reason": "Acquired 0.1 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same transaction ids: 0119.0625.987456",
+          "Both items reference the same money: npr 200",
+          "Acquired 0.1 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00010 (04_esewa_payment_screenshot.jpg) and EVID_00014 (08_complaint_letter.pdf) show a strong relationship (confidence 0.62) based on 3 independent factor(s). Both items reference the same transaction ids: 0119.0625.987456 [weight 0.95]. Both items reference the same money: npr 200 [weight 0.20]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00009",
+        "evidence_b": "EVID_00013",
+        "correlation_weight": 1.35,
+        "correlation_confidence": 0.5699,
+        "relationship_strength": "STRONG",
+        "factors": [
+          {
+            "factor": "transaction_ids",
+            "weight": 0.95,
+            "matches": 1,
+            "contribution": 0.95,
+            "supporting_evidence": [
+              "dsn2026"
+            ],
+            "reason": "Both items reference the same transaction ids: dsn2026"
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same transaction ids: dsn2026",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00009 (03_qr_code_flyer.png) and EVID_00013 (07_bank_transfer_slip.pdf) show a strong relationship (confidence 0.57) based on 2 independent factor(s). Both items reference the same transaction ids: dsn2026 [weight 0.95]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00011",
+        "evidence_b": "EVID_00012",
+        "correlation_weight": 1.3,
+        "correlation_confidence": 0.5563,
+        "relationship_strength": "STRONG",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.9,
+            "supporting_evidence": [
+              "+9779801122334"
+            ],
+            "reason": "Both items reference the same phones: +9779801122334"
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779801122334",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00011 (05_khalti_receipt.jpg) and EVID_00012 (06_phishing_email_screenshot.jpg) show a strong relationship (confidence 0.56) based on 2 independent factor(s). Both items reference the same phones: +9779801122334 [weight 0.90]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00011",
+        "evidence_b": "EVID_00013",
+        "correlation_weight": 1.3,
+        "correlation_confidence": 0.5563,
+        "relationship_strength": "STRONG",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.9,
+            "supporting_evidence": [
+              "+9779847011223"
+            ],
+            "reason": "Both items reference the same phones: +9779847011223"
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779847011223",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00011 (05_khalti_receipt.jpg) and EVID_00013 (07_bank_transfer_slip.pdf) show a strong relationship (confidence 0.56) based on 2 independent factor(s). Both items reference the same phones: +9779847011223 [weight 0.90]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00012",
+        "evidence_b": "EVID_00014",
+        "correlation_weight": 1.3,
+        "correlation_confidence": 0.5563,
+        "relationship_strength": "STRONG",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.9,
+            "supporting_evidence": [
+              "+9779801122334"
+            ],
+            "reason": "Both items reference the same phones: +9779801122334"
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.1h apart"
+            ],
+            "reason": "Acquired 0.1 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779801122334",
+          "Acquired 0.1 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00012 (06_phishing_email_screenshot.jpg) and EVID_00014 (08_complaint_letter.pdf) show a strong relationship (confidence 0.56) based on 2 independent factor(s). Both items reference the same phones: +9779801122334 [weight 0.90]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00008",
+        "evidence_b": "EVID_00010",
+        "correlation_weight": 0.6,
+        "correlation_confidence": 0.3127,
+        "relationship_strength": "MEDIUM",
+        "factors": [
+          {
+            "factor": "money",
+            "weight": 0.2,
+            "matches": 1,
+            "contribution": 0.2,
+            "supporting_evidence": [
+              "npr 200"
+            ],
+            "reason": "Both items reference the same money: npr 200"
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same money: npr 200",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00008 (02_messenger_chat.jpg) and EVID_00010 (04_esewa_payment_screenshot.jpg) show a medium relationship (confidence 0.31) based on 2 independent factor(s). Both items reference the same money: npr 200 [weight 0.20]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00007",
+        "evidence_b": "EVID_00008",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00007 (01_sms_screenshot.jpg) and EVID_00008 (02_messenger_chat.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00007",
+        "evidence_b": "EVID_00009",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00007 (01_sms_screenshot.jpg) and EVID_00009 (03_qr_code_flyer.png) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00007",
+        "evidence_b": "EVID_00010",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00007 (01_sms_screenshot.jpg) and EVID_00010 (04_esewa_payment_screenshot.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00007",
+        "evidence_b": "EVID_00011",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.1h apart"
+            ],
+            "reason": "Acquired 0.1 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.1 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00007 (01_sms_screenshot.jpg) and EVID_00011 (05_khalti_receipt.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00007",
+        "evidence_b": "EVID_00012",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.1h apart"
+            ],
+            "reason": "Acquired 0.1 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.1 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00007 (01_sms_screenshot.jpg) and EVID_00012 (06_phishing_email_screenshot.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00007",
+        "evidence_b": "EVID_00013",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.1h apart"
+            ],
+            "reason": "Acquired 0.1 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.1 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00007 (01_sms_screenshot.jpg) and EVID_00013 (07_bank_transfer_slip.pdf) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00007",
+        "evidence_b": "EVID_00014",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.2h apart"
+            ],
+            "reason": "Acquired 0.2 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.2 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00007 (01_sms_screenshot.jpg) and EVID_00014 (08_complaint_letter.pdf) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.2 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00008",
+        "evidence_b": "EVID_00009",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00008 (02_messenger_chat.jpg) and EVID_00009 (03_qr_code_flyer.png) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00008",
+        "evidence_b": "EVID_00011",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00008 (02_messenger_chat.jpg) and EVID_00011 (05_khalti_receipt.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00008",
+        "evidence_b": "EVID_00012",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.1h apart"
+            ],
+            "reason": "Acquired 0.1 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.1 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00008 (02_messenger_chat.jpg) and EVID_00012 (06_phishing_email_screenshot.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00008",
+        "evidence_b": "EVID_00013",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.1h apart"
+            ],
+            "reason": "Acquired 0.1 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.1 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00008 (02_messenger_chat.jpg) and EVID_00013 (07_bank_transfer_slip.pdf) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00009",
+        "evidence_b": "EVID_00010",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00009 (03_qr_code_flyer.png) and EVID_00010 (04_esewa_payment_screenshot.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00009",
+        "evidence_b": "EVID_00012",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00009 (03_qr_code_flyer.png) and EVID_00012 (06_phishing_email_screenshot.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00010",
+        "evidence_b": "EVID_00011",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00010 (04_esewa_payment_screenshot.jpg) and EVID_00011 (05_khalti_receipt.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00010",
+        "evidence_b": "EVID_00012",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00010 (04_esewa_payment_screenshot.jpg) and EVID_00012 (06_phishing_email_screenshot.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00010",
+        "evidence_b": "EVID_00013",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00010 (04_esewa_payment_screenshot.jpg) and EVID_00013 (07_bank_transfer_slip.pdf) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00012",
+        "evidence_b": "EVID_00013",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00012 (06_phishing_email_screenshot.jpg) and EVID_00013 (07_bank_transfer_slip.pdf) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      }
+    ],
+    "strength_distribution": {
+      "VERY_STRONG": 2,
+      "STRONG": 8,
+      "MEDIUM": 1,
+      "WEAK": 17
+    },
+    "strongest_pair": "EVID_00011|EVID_00014",
+    "analysis_time_ms": 1.7
+  }
+}

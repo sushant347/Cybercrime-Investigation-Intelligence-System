@@ -1,0 +1,39 @@
+{
+  "report_type": "metadata_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00011",
+  "case_id": "CASE_185915593C",
+  "generated_at": "2026-07-25T17:20:06.413Z",
+  "report": {
+    "evidence_id": "EVID_00011",
+    "case_id": "CASE_185915593C",
+    "source_file": "EVID_00011__2a6393e0__05_khalti_receipt.jpg",
+    "file_type": "image",
+    "filesystem": {
+      "file_size_bytes": 23769,
+      "created": "2026-07-25T17:19:57.040009+00:00",
+      "modified": "2026-07-25T17:19:57.032455+00:00",
+      "accessed": "2026-07-25T17:20:02.950543+00:00"
+    },
+    "image": {
+      "has_exif": false,
+      "camera_make": "",
+      "camera_model": "",
+      "device": "",
+      "software": "",
+      "date_created": "",
+      "date_modified": "",
+      "orientation": "",
+      "gps": null,
+      "all_tags": {}
+    },
+    "pdf": null,
+    "office": null,
+    "consistency_notes": [
+      "Image carries no EXIF metadata (typical for screenshots and messaging-app exports; one less authenticity signal)."
+    ],
+    "extraction_errors": [],
+    "analysis_time_ms": 9.2
+  }
+}

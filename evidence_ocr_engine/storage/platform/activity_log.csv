@@ -44,3 +44,25 @@ id,created_at,username,module,action,case_id,detail
 43,2026-07-25T15:24:51.910Z,,evidence,upload,CASE_7916EFB87E,08_complaint_letter.pdf
 44,2026-07-25T15:25:01.663Z,,investigation,run_analysis,CASE_7916EFB87E,
 45,2026-07-25T15:30:04.673Z,,admin,login,,
+46,2026-07-25T16:23:27.414Z,,admin,login,,
+47,2026-07-25T16:23:34.407Z,,admin,delete_case,CASE_7916EFB87E,deleted; refreshed 0 linked case(s)
+48,2026-07-25T16:23:36.169Z,,admin,delete_case,CASE_8F43434664,deleted; refreshed 0 linked case(s)
+49,2026-07-25T16:23:58.180Z,,intake,created,CASE_EE8250FB76,evidence
+50,2026-07-25T16:24:17.541Z,,evidence,upload,CASE_EE8250FB76,08_complaint_letter.pdf
+51,2026-07-25T16:24:17.668Z,,evidence,upload,CASE_EE8250FB76,07_bank_transfer_slip.pdf
+52,2026-07-25T16:24:17.802Z,,evidence,upload,CASE_EE8250FB76,06_phishing_email_screenshot.jpg
+53,2026-07-25T16:24:17.841Z,,evidence,upload,CASE_EE8250FB76,05_khalti_receipt.jpg
+54,2026-07-25T16:24:17.865Z,,evidence,upload,CASE_EE8250FB76,04_esewa_payment_screenshot.jpg
+55,2026-07-25T16:24:17.896Z,,evidence,upload,CASE_EE8250FB76,03_qr_code_flyer.png
+56,2026-07-25T16:24:17.923Z,,evidence,upload,CASE_EE8250FB76,02_messenger_chat.jpg
+57,2026-07-25T16:24:17.939Z,,evidence,upload,CASE_EE8250FB76,01_sms_screenshot.jpg
+58,2026-07-25T17:16:30.168Z,,intake,created,CASE_185915593C,M1-CRASH-REPRO-8FILES
+59,2026-07-25T17:16:30.230Z,,evidence,upload,CASE_185915593C,01_sms_screenshot.jpg
+60,2026-07-25T17:17:07.914Z,,evidence,upload,CASE_185915593C,02_messenger_chat.jpg
+61,2026-07-25T17:18:32.456Z,,evidence,upload,CASE_185915593C,03_qr_code_flyer.png
+62,2026-07-25T17:18:54.469Z,,evidence,upload,CASE_185915593C,04_esewa_payment_screenshot.jpg
+63,2026-07-25T17:19:57.034Z,,evidence,upload,CASE_185915593C,05_khalti_receipt.jpg
+64,2026-07-25T17:20:21.978Z,,evidence,upload,CASE_185915593C,06_phishing_email_screenshot.jpg
+65,2026-07-25T17:20:51.461Z,,evidence,upload,CASE_185915593C,07_bank_transfer_slip.pdf
+66,2026-07-25T17:26:20.450Z,,evidence,upload,CASE_185915593C,08_complaint_letter.pdf
+67,2026-07-25T17:26:36.448Z,,investigation,run_analysis,CASE_185915593C,
