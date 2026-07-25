@@ -95,9 +95,18 @@ def test_unknown_case_raises(pipeline):
         pipeline.analyze_case("CASE_0000")
 
 
-def test_reanalysis_versions_not_overwrites(pipeline, icfg, repo):
+def test_reanalysis_replaces_rather_than_accumulates(pipeline, icfg, repo):
+    """Two analyses leave one artifact per report, not one per run."""
     pipeline.analyze_case(CASE)
     pipeline.analyze_case(CASE)
+
     versions = repo.list_versions(CASE, icfg.correlation_report_name)
-    assert len(versions) == 2
-    assert versions[1].name == "correlation_analysis_v2.json"
+    assert len(versions) == 1
+    assert versions[0].name == "correlation_analysis.json"
+    # The run counter lives inside the document, not in the file name.
+    assert repo.load_latest(CASE, icfg.correlation_report_name)["report_version"] == 2
+
+    # The same holds for the report's Markdown and PDF twins.
+    for suffix in (".md", ".pdf"):
+        stored = repo.list_versions(CASE, icfg.investigation_report_name, suffix)
+        assert len(stored) <= 1, f"{suffix} artifacts accumulated: {stored}"

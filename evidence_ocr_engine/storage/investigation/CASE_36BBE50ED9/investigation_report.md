@@ -1,12 +1,13 @@
 # Forensic Investigation Report - CASE_36BBE50ED9
 
-Generated: 2026-07-25T13:49:48.832Z  
+Generated: 2026-07-25T13:52:24.397Z  
 System: Cybercrime Investigation Intelligence System (CIIS), Phase 2  
 Basis: every statement below references stored forensic findings; no content is generated outside computed results.
 
 ## Executive Summary
 
 - Case CASE_36BBE50ED9 contains 2 evidence item(s), each acquired under SHA-256 chain-of-custody verification.
+- This case is linked to 1 other case(s) through shared entities: CASE_9350872D71 [cross_case_correlation.json].
 - The weighted correlation engine found 1 related evidence pair(s) out of 1 analysed [correlation_analysis.json].
 - Observed attack progression: financial_transaction -> post_attack [timeline_analysis.json].
 
@@ -67,7 +68,21 @@ Basis: every statement below references stored forensic findings; no content is 
 
 ## Cross-Case Correlation
 
-No cross-case correlations were found for this case.
+- **related case count**: 1
+- **related case ids**:
+  - CASE_9350872D71
+- **links**:
+  - **other case id**: CASE_9350872D71
+  - **relationship strength**: WEAK
+  - **match confidence**: 0.1175
+  - **match reason**: Shares 1 entity(ies) with CASE_9350872D71: money npr 250000
+  - **matched entities**:
+    - **entity type**: money
+    - **value**: npr 250000
+    - **this evidence ids**:
+      - EVID_00009
+    - **other evidence ids**:
+      - EVID_00011
 
 ## Campaign Analysis
 
@@ -164,14 +179,14 @@ No threat-intelligence provider was active during this analysis; indicator-level
 
 ## Report Provenance & Integrity
 
-- **report id**: RPT-36BBE50ED9-309FABD4
-- **generated at**: 2026-07-25T13:49:48.829Z
+- **report id**: RPT-36BBE50ED9-868B9B4C
+- **generated at**: 2026-07-25T13:52:24.394Z
 - **generator**: CIIS Phase-2 reporting module (template-over-data; no free-text generation)
 - **evidence set digest**: 4ae6ecf18ac754c27899be758225d730e56c272281c639e9a7f5d0dccda2600c
 - **evidence set digest note**: SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.
 - **source artifact hashes**:
   - **correlation analysis v3.json**: 07f2d6b71782322ce24dc77d2f2c949651eacfd80ed416e62c02fcf6237166eb
-  - **cross case correlation.json**: ba60e5cdc44b372956254459715fadf1c84fcacac8d1a980ff3f6d016b401df3
+  - **cross case correlation v2.json**: 821221364299d80f47081fb4b375fe2271df2c48654383a6b550b935524e899d
   - **campaign analysis.json**: a741c38d16a6e83430586bce53349dd129389edcde638455fb97b0b1b8491cd3
   - **suspect assessment.json**: f1196001c8590f39790a43cb042ac15ce2375a43279f79491bd75d498aca62de
   - **timeline analysis v3.json**: 2556f16ce8463a51351be7d87f50c6763fe5f4fe4c681cd7551d7ae6efccfca9

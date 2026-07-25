@@ -1,19 +1,93 @@
 {
   "report_type": "correlation_analysis",
-  "report_version": 1,
+  "report_version": 5,
   "schema_version": "2.0",
   "case_id": "CASE_9350872D71",
-  "generated_at": "2026-07-25T13:51:58.669Z",
+  "generated_at": "2026-07-25T13:56:14.947Z",
   "report": {
     "case_id": "CASE_9350872D71",
     "evidence_ids": [
-      "EVID_00011"
+      "EVID_00011",
+      "EVID_00012",
+      "EVID_00013"
     ],
-    "pair_count": 0,
-    "related_pair_count": 0,
-    "pairs": [],
-    "strength_distribution": {},
-    "strongest_pair": "",
-    "analysis_time_ms": 0.0
+    "pair_count": 3,
+    "related_pair_count": 3,
+    "pairs": [
+      {
+        "evidence_a": "EVID_00011",
+        "evidence_b": "EVID_00012",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00011 (police_scan_report.pdf) and EVID_00012 (romanchat.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00011",
+        "evidence_b": "EVID_00013",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.1h apart"
+            ],
+            "reason": "Acquired 0.1 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.1 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00011 (police_scan_report.pdf) and EVID_00013 (https_plasticostermoencogibles.pe_scss_css_scss_.url) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
+      },
+      {
+        "evidence_a": "EVID_00012",
+        "evidence_b": "EVID_00013",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.1h apart"
+            ],
+            "reason": "Acquired 0.1 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.1 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00012 (romanchat.jpg) and EVID_00013 (https_plasticostermoencogibles.pe_scss_css_scss_.url) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
+      }
+    ],
+    "strength_distribution": {
+      "WEAK": 3
+    },
+    "strongest_pair": "EVID_00011|EVID_00012",
+    "analysis_time_ms": 6.1
   }
 }

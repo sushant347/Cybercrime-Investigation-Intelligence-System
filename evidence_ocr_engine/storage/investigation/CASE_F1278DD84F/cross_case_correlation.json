@@ -1,0 +1,14 @@
+{
+  "report_type": "cross_case_correlation",
+  "report_version": 1,
+  "schema_version": "2.0",
+  "case_id": "CASE_F1278DD84F",
+  "generated_at": "2026-07-25T14:24:15.484Z",
+  "report": {
+    "case_id": "CASE_F1278DD84F",
+    "related_case_ids": [],
+    "link_count": 0,
+    "links": [],
+    "analysis_time_ms": 1.0
+  }
+}

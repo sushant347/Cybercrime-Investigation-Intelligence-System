@@ -86,3 +86,48 @@ def test_delete_purges_engine_storage(uploaded_evidence, api):
     assert engine.list_evidence(case_id) == []
     assert engine.get_case(case_id) is None
     assert not engine.investigation_config().case_dir(case_id).is_dir()
+
+
+def test_cascade_rebuilds_the_graph_not_just_the_cross_case_artifact(monkeypatch):
+    """A deleted case also has to leave the *graph* of every case that cited it.
+
+    The relationship graph embeds cross-case nodes, so refreshing only the
+    cross-case artifact left the investigation view still showing the deleted
+    case. The cascade must therefore go through ``refresh_timeline_graph``,
+    which recomputes correlation, cross-case, timeline and graph together.
+    """
+    from api import engine
+
+    calls: dict[str, list[str]] = {"refresh": [], "report": []}
+
+    class _FakePipeline:
+        def refresh_timeline_graph(self, case_id):
+            calls["refresh"].append(case_id)
+            return {"cross_case": object()}
+
+    class _FakeReporting:
+        def __init__(self, *a, **kw):
+            pass
+
+        def regenerate_with_cross_case(self, case_id, cross_case):
+            calls["report"].append(case_id)
+
+    monkeypatch.setattr(engine, "_threat_intel_provider", lambda: None)
+    monkeypatch.setattr(
+        "backend.modules.investigation.pipeline.build_default_pipeline",
+        lambda **kw: _FakePipeline(),
+    )
+    monkeypatch.setattr(
+        "backend.modules.investigation.reporting.service.InvestigationReportService",
+        _FakeReporting,
+    )
+    monkeypatch.setattr(
+        "backend.modules.investigation.data_access.CaseDataRepository",
+        lambda *a, **kw: type("_D", (), {"case_exists": lambda self, c: True})(),
+    )
+
+    assert engine._refresh_linked_cases(["CASE_SURVIVOR"]) == ["CASE_SURVIVOR"]
+    assert calls["refresh"] == ["CASE_SURVIVOR"], (
+        "the graph/timeline refresh path must run, not just cross-case"
+    )
+    assert calls["report"] == ["CASE_SURVIVOR"]

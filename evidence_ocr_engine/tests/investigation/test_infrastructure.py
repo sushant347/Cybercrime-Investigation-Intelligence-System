@@ -30,21 +30,54 @@ def test_threat_intel_provider(data):
     assert not intel.is_malicious("https://example.com")
 
 
-def test_repository_versioning_never_overwrites(repo):
+def test_repository_keeps_one_file_per_report(repo):
+    """Re-analysis replaces the stored report instead of piling up _v2, _v3…"""
     p1 = repo.save(CASE, "correlation_analysis", {"n": 1})
     p2 = repo.save(CASE, "correlation_analysis", {"n": 2})
-    assert p1.name == "correlation_analysis.json"
-    assert p2.name == "correlation_analysis_v2.json"
-    assert p1.exists() and p2.exists()
+
+    assert p1 == p2 == repo._cfg.case_dir(CASE) / "correlation_analysis.json"
+    assert repo.list_versions(CASE, "correlation_analysis", ".json") == [p2]
     assert repo.load_latest(CASE, "correlation_analysis")["report"]["n"] == 2
 
 
-def test_repository_text_versioning(repo):
+def test_report_version_still_counts_the_analysis_runs(repo):
+    """Only one file is kept, but it must still say which run produced it."""
+    repo.save(CASE, "correlation_analysis", {"n": 1})
+    repo.save(CASE, "correlation_analysis", {"n": 2})
+    repo.save(CASE, "correlation_analysis", {"n": 3})
+
+    assert repo.load_latest(CASE, "correlation_analysis")["report_version"] == 3
+
+
+def test_legacy_versioned_files_are_swept_on_next_save(repo):
+    """Artifacts written before single-file storage must not linger."""
+    directory = repo._cfg.case_dir(CASE)
+    directory.mkdir(parents=True, exist_ok=True)
+    (directory / "correlation_analysis_v2.json").write_text(
+        '{"report_version": 2, "report": {}}', encoding="utf-8")
+    (directory / "correlation_analysis_v3.json").write_text(
+        '{"report_version": 3, "report": {}}', encoding="utf-8")
+
+    saved = repo.save(CASE, "correlation_analysis", {"n": 9})
+
+    assert sorted(p.name for p in directory.glob("correlation_analysis*.json")) == [
+        "correlation_analysis.json"
+    ]
+    # The counter carries over from the legacy files rather than resetting.
+    assert repo.load_latest(CASE, "correlation_analysis")["report_version"] == 4
+    assert saved.name == "correlation_analysis.json"
+
+
+def test_repository_text_and_pdf_keep_one_file(repo):
     p1 = repo.save_text(CASE, "investigation_report", "# one", ".md")
     p2 = repo.save_text(CASE, "investigation_report", "# two", ".md")
-    assert p1.name == "investigation_report.md"
-    assert p2.name == "investigation_report_v2.md"
+    assert p1 == p2 and p2.name == "investigation_report.md"
     assert p2.read_text(encoding="utf-8") == "# two"
+
+    b1 = repo.save_binary(CASE, "investigation_report", b"%PDF-1", ".pdf")
+    b2 = repo.save_binary(CASE, "investigation_report", b"%PDF-2", ".pdf")
+    assert b1 == b2 and b2.name == "investigation_report.pdf"
+    assert b2.read_bytes() == b"%PDF-2"
 
 
 def test_audit_appends(audit):

@@ -1,14 +1,14 @@
 {
   "report_type": "cross_case_correlation",
-  "report_version": 1,
+  "report_version": 5,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-07-25T12:52:44.097Z",
+  "generated_at": "2026-07-25T14:52:47.392Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
     "related_case_ids": [],
     "link_count": 0,
     "links": [],
-    "analysis_time_ms": 0.0
+    "analysis_time_ms": 0.4
   }
 }

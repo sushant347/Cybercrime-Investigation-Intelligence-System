@@ -59,33 +59,69 @@ class CrossCaseEntityIndex:
 
     Constructed with the path to the *entities CSV*. The legacy JSON index path
     may still be passed for cleanup purposes via ``legacy_index_path``.
+
+    When ``evidence_csv`` is supplied, occurrences belonging to a case that has
+    no evidence left are ignored. An entity row can outlive its case - a delete
+    that failed part-way, an externally edited CSV, a restored backup - and
+    without this guard a single orphaned row silently resurrects a deleted case
+    in every other case's cross-case correlation, graph and report. Filtering
+    at read time makes that whole class of failure impossible regardless of how
+    the row got orphaned, instead of relying on every writer to clean up.
     """
 
     def __init__(self, entities_csv: Path,
-                 legacy_index_path: Optional[Path] = None) -> None:
+                 legacy_index_path: Optional[Path] = None,
+                 evidence_csv: Optional[Path] = None) -> None:
         self._path = Path(entities_csv)
+        self._evidence_path = Path(evidence_csv) if evidence_csv else None
         self._legacy_path = Path(legacy_index_path) if legacy_index_path else None
         self._log = get_logger("investigation.crosscase")
         self._lock = threading.Lock()
         self._buckets: Dict[str, List[EntityOccurrence]] = {}
-        self._stamp: Optional[Tuple[float, int]] = None  # (mtime, size)
+        self._stamp: Optional[Tuple[Optional[Tuple[float, int]], ...]] = None
 
     # ------------------------------------------------------------------ load
 
-    def _current_stamp(self) -> Optional[Tuple[float, int]]:
+    @staticmethod
+    def _file_stamp(path: Optional[Path]) -> Optional[Tuple[float, int]]:
+        if path is None:
+            return None
         try:
-            stat = self._path.stat()
+            stat = path.stat()
             return (stat.st_mtime, stat.st_size)
         except OSError:
+            return None
+
+    def _current_stamp(self):
+        """Cache key: both files matter, so deleting a case invalidates too."""
+        return (self._file_stamp(self._path), self._file_stamp(self._evidence_path))
+
+    def _live_case_ids(self) -> Optional[set]:
+        """Cases that still have evidence, or None when not filtering.
+
+        Mirrors ``CaseDataRepository.case_exists``: a case is live exactly when
+        evidence.csv still has a row for it.
+        """
+        if self._evidence_path is None:
+            return None
+        try:
+            with open(self._evidence_path, "r", newline="", encoding="utf-8") as handle:
+                return {(row.get("case_id") or "").strip()
+                        for row in csv.DictReader(handle)}
+        except OSError:
+            # Unreadable evidence file: fall back to not filtering rather than
+            # silently reporting that every case is gone.
             return None
 
     def _ensure_loaded(self) -> None:
         """(Re)build the in-memory index when entities.csv has changed."""
         stamp = self._current_stamp()
-        if stamp is not None and stamp == self._stamp and self._buckets:
+        if stamp[0] is not None and stamp == self._stamp and self._buckets:
             return
         buckets: Dict[str, List[EntityOccurrence]] = {}
-        if stamp is not None:
+        live = self._live_case_ids()
+        skipped = 0
+        if stamp[0] is not None:
             try:
                 with open(self._path, "r", newline="", encoding="utf-8") as handle:
                     for row in csv.DictReader(handle):
@@ -95,6 +131,9 @@ class CrossCaseEntityIndex:
                         case_id = (row.get("case_id") or "").strip()
                         evidence_id = (row.get("evidence_id") or "").strip()
                         if not (entity_type and normalized and case_id and evidence_id):
+                            continue
+                        if live is not None and case_id not in live:
+                            skipped += 1   # orphaned row: its case is gone
                             continue
                         seen = row.get("extracted_at", "")
                         buckets.setdefault(bucket_key(entity_type, normalized), []).append(
@@ -111,6 +150,10 @@ class CrossCaseEntityIndex:
                         )
             except OSError as exc:
                 self._log.warning("entities.csv unreadable (%s): %s", self._path, exc)
+        if skipped:
+            self._log.warning(
+                "ignored %d entity row(s) whose case no longer has evidence; "
+                "run maintenance to purge them from %s", skipped, self._path.name)
         self._buckets = buckets
         self._stamp = stamp
 

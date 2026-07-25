@@ -307,22 +307,37 @@ def delete_evidence_item(case_id: str, evidence_id: str) -> dict[str, Any]:
 
 
 def _refresh_linked_cases(case_ids: list[str]) -> list[str]:
-    """Recompute cross-case correlation + report for each surviving case."""
+    """Rebuild the artifacts of every case that referenced a deleted case.
+
+    Cross-case correlation is not the only place a case id appears: the
+    relationship **graph** embeds cross-case nodes too, and the report is
+    assembled from both. Refreshing only the cross-case artifact left the graph
+    (and therefore the investigation view) still showing the deleted case.
+
+    So this reuses ``refresh_timeline_graph`` - the same path evidence
+    enrichment already uses - which recomputes correlation, cross-case,
+    timeline and graph from live storage, and then regenerates the report on
+    top of the fresh cross-case result.
+
+    The report is regenerated unconditionally rather than only when the
+    cross-case artifact changed: these cases were selected *because* something
+    they store names the deleted case, so there is always something to rewrite.
+    """
     if not case_ids:
         return []
     from backend.modules.investigation.audit import InvestigationAuditTrail
-    from backend.modules.investigation.correlation.service import CorrelationService
     from backend.modules.investigation.data_access import CaseDataRepository
+    from backend.modules.investigation.pipeline import build_default_pipeline
     from backend.modules.investigation.reporting.service import (
         InvestigationReportService,
     )
 
     icfg = investigation_config()
     data = CaseDataRepository(icfg)
-    repo = report_repository()
-    audit = InvestigationAuditTrail(icfg)
-    correlation = CorrelationService(icfg, data, repo, audit)
-    reporting = InvestigationReportService(icfg, data, repo, audit)
+    reporting = InvestigationReportService(
+        icfg, data, report_repository(), InvestigationAuditTrail(icfg)
+    )
+    pipeline = build_default_pipeline(threat_intel=_threat_intel_provider())
 
     refreshed: list[str] = []
     with _pipeline_lock:
@@ -330,11 +345,8 @@ def _refresh_linked_cases(case_ids: list[str]) -> list[str]:
             if not data.case_exists(other):
                 continue  # that case is gone too
             try:
-                cross = correlation.correlate_cross_case(other)
-                # Persist only when it actually changed, then rebuild the report
-                # from that case's latest stored artifacts.
-                if correlation.persist_cross_case(other, cross):
-                    reporting.regenerate_with_cross_case(other, cross)
+                result = pipeline.refresh_timeline_graph(other)
+                reporting.regenerate_with_cross_case(other, result["cross_case"])
                 refreshed.append(other)
             except Exception:  # noqa: BLE001 - one bad case must not abort
                 log.exception("Could not refresh linked case %s", other)
