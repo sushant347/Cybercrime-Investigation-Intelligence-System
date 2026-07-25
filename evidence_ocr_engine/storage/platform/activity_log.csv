@@ -1,0 +1,19 @@
+id,created_at,username,module,action,case_id,detail
+1,2026-07-25T12:48:12.850Z,,maintenance,reset,,Cleared all cases and entities.
+2,2026-07-25T12:48:24.581Z,,intake,created,CASE_2CF24DBA5F,hello
+3,2026-07-25T12:48:33.174Z,,evidence,upload,CASE_2CF24DBA5F,yeti.jpg
+4,2026-07-25T12:49:39.925Z,,admin,login,,
+5,2026-07-25T12:49:42.839Z,,admin,delete_case,CASE_2CF24DBA5F,deleted; refreshed 0 linked case(s)
+6,2026-07-25T12:49:51.768Z,,intake,created,CASE_2CF24DBA5F,hello
+7,2026-07-25T12:50:00.689Z,,evidence,upload,CASE_2CF24DBA5F,yeti.jpg
+8,2026-07-25T12:53:07.177Z,,evidence,upload,CASE_2CF24DBA5F,whatsapp_chat_export.txt
+9,2026-07-25T12:53:23.171Z,,evidence,upload,CASE_2CF24DBA5F,romanchat.jpg
+10,2026-07-25T12:53:47.007Z,,evidence,upload,CASE_2CF24DBA5F,phishing_email_screenshot.png
+11,2026-07-25T12:53:55.968Z,,investigation,run_analysis,CASE_2CF24DBA5F,
+12,2026-07-25T12:55:21.524Z,,intake,created,CASE_8F43434664,hi
+13,2026-07-25T12:55:29.484Z,,evidence,upload,CASE_8F43434664,romanchat.jpg
+14,2026-07-25T12:55:59.637Z,,evidence,upload,CASE_8F43434664,phishing_email_screenshot.png
+15,2026-07-25T12:56:12.276Z,,evidence,upload,CASE_8F43434664,bank_transactions.csv
+16,2026-07-25T12:56:24.331Z,,evidence,upload,CASE_8F43434664,police_scan_report.pdf
+17,2026-07-25T12:58:09.041Z,,evidence,upload,CASE_8F43434664,const.jpg
+18,2026-07-25T13:02:00.075Z,,investigation,run_analysis,CASE_8F43434664,

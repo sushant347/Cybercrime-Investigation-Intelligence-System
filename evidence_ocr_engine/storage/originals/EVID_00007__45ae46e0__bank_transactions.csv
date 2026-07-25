@@ -1,0 +1,4 @@
+date,description,amount_npr,channel
+2026-01-04,IBFT transfer to 0071-XXXX-9912,-250000,mobile_banking
+2026-01-04,Balance inquiry,0,mobile_banking
+2026-01-03,Salary credit,85000,branch

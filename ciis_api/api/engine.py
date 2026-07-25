@@ -332,8 +332,16 @@ def _evidence_orchestrator():
     return EvidenceProcessingOrchestrator(evidence_config())
 
 
-def _enrich_evidence(case_id: str) -> Optional[dict[str, Any]]:
-    """Run the full post-OCR chain for a case; failure-isolated.
+def _enrich_evidence(case_id: str,
+                     evidence_id: str | None = None) -> Optional[dict[str, Any]]:
+    """Run the full post-OCR chain; failure-isolated.
+
+    When ``evidence_id`` is given, only that item is cleaned/enhanced/
+    corrected — the incremental path used on upload. Re-processing the whole
+    case on every upload made the n-th upload re-do all n items (quadratic
+    over a case's lifetime), which is why multi-evidence cases slowed to a
+    crawl. Without ``evidence_id`` the whole case is processed (used when a
+    normalization rule changes and stored entities must be recomputed).
 
     Returns the orchestrator summary on success, or ``None`` when the chain is
     disabled or fails. A failure here never discards the already-captured OCR
@@ -345,7 +353,11 @@ def _enrich_evidence(case_id: str) -> Optional[dict[str, Any]]:
         log.info("Full Phase-1 chain disabled (ENGINE_RUN_FULL_PIPELINE=0)")
         return None
     try:
-        summary = _evidence_orchestrator().process_case(case_id)
+        orchestrator = _evidence_orchestrator()
+        if evidence_id:
+            summary = orchestrator.process_evidence(case_id, evidence_id)
+        else:
+            summary = orchestrator.process_case(case_id)
         log.info(
             "Post-OCR chain for %s: clean=%s enhance=%s semantic=%s in %s ms",
             case_id,
@@ -401,10 +413,12 @@ def submit_evidence_job(job_id: int, tmp_path: str, case_id: str,
                     tmp_path, case_id=case_id, notes=notes
                 )
                 # Full Phase-1 chain: cleaning -> enhancement -> semantic ->
-                # entity extraction. Kept inside the SAME lock because these
-                # stages append to shared CSVs (entities.csv, keyword_*.csv).
-                # Best-effort: a failure here does not discard the OCR result.
-                summary = _enrich_evidence(case_id)
+                # entity extraction, for THIS item only (previously the whole
+                # case was re-processed per upload). Kept inside the SAME lock
+                # because these stages append to shared CSVs (entities.csv,
+                # keyword_*.csv). Best-effort: a failure here does not discard
+                # the OCR result.
+                summary = _enrich_evidence(case_id, result.evidence_id)
                 # Entities are now durable, so regenerate only the timeline and
                 # relationship graph.  Other Phase-2/report modules are not run.
                 live_artifacts = _refresh_timeline_graph(case_id)

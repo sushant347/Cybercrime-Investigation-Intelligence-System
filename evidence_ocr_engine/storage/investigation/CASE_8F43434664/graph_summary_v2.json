@@ -1,0 +1,21 @@
+{
+  "report_type": "graph_summary",
+  "report_version": 2,
+  "schema_version": "2.0",
+  "case_id": "CASE_8F43434664",
+  "generated_at": "2026-07-25T12:56:04.556Z",
+  "report": {
+    "case_id": "CASE_8F43434664",
+    "headline": "11 nodes and 15 edges across 1 component(s)",
+    "key_connectors": [
+      "domain:nabil-bank-alerts.com",
+      "domain:nabil-verify.example-scam.top",
+      "email:security@nabil-bank-alerts.com",
+      "url:http://nabil-verify.example-scam.top/login",
+      "timeline_event:CASE_8F43434664:EVID_00005"
+    ],
+    "observations": [
+      "All entities and evidence form a single connected component - consistent with one coordinated activity."
+    ]
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "report_type": "graph_statistics",
+  "report_version": 3,
+  "schema_version": "2.0",
+  "case_id": "CASE_8F43434664",
+  "generated_at": "2026-07-25T12:56:12.344Z",
+  "report": {
+    "case_id": "CASE_8F43434664",
+    "node_count": 15,
+    "edge_count": 19,
+    "nodes_by_type": {
+      "case": 2,
+      "evidence": 4,
+      "domain": 2,
+      "email": 1,
+      "url": 1,
+      "date": 2,
+      "timeline_event": 3
+    },
+    "edges_by_type": {
+      "contains": 4,
+      "shared_entity": 6,
+      "timeline_event": 3,
+      "cross_case_relationship": 1,
+      "cross_case_entity_match": 4,
+      "temporal_relationship": 1
+    },
+    "density": 0.181,
+    "connected_components": 1,
+    "largest_component_size": 15,
+    "average_degree": 2.533,
+    "top_hubs": [
+      {
+        "node": "evidence:EVID_00006",
+        "degree": "7"
+      },
+      {
+        "node": "evidence:EVID_00004",
+        "degree": "5"
+      },
+      {
+        "node": "case:CASE_8F43434664",
+        "degree": "4"
+      },
+      {
+        "node": "evidence:EVID_00007",
+        "degree": "4"
+      },
+      {
+        "node": "evidence:EVID_00005",
+        "degree": "3"
+      },
+      {
+        "node": "domain:nabil-bank-alerts.com",
+        "degree": "2"
+      },
+      {
+        "node": "domain:nabil-verify.example-scam.top",
+        "degree": "2"
+      },
+      {
+        "node": "email:security@nabil-bank-alerts.com",
+        "degree": "2"
+      },
+      {
+        "node": "url:http://nabil-verify.example-scam.top/login",
+        "degree": "2"
+      },
+      {
+        "node": "case:CASE_2CF24DBA5F",
+        "degree": "2"
+      }
+    ]
+  }
+}

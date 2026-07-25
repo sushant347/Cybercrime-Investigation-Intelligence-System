@@ -1,0 +1,46 @@
+{
+  "report_type": "correlation_analysis",
+  "report_version": 2,
+  "schema_version": "2.0",
+  "case_id": "CASE_8F43434664",
+  "generated_at": "2026-07-25T12:56:04.546Z",
+  "report": {
+    "case_id": "CASE_8F43434664",
+    "evidence_ids": [
+      "EVID_00005",
+      "EVID_00006"
+    ],
+    "pair_count": 1,
+    "related_pair_count": 1,
+    "pairs": [
+      {
+        "evidence_a": "EVID_00005",
+        "evidence_b": "EVID_00006",
+        "correlation_weight": 0.4,
+        "correlation_confidence": 0.2212,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.4,
+            "matches": 1,
+            "contribution": 0.4,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)"
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00005 (romanchat.jpg) and EVID_00006 (phishing_email_screenshot.png) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+      }
+    ],
+    "strength_distribution": {
+      "WEAK": 1
+    },
+    "strongest_pair": "EVID_00005|EVID_00006",
+    "analysis_time_ms": 0.1
+  }
+}

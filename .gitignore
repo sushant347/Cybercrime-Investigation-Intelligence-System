@@ -79,3 +79,7 @@ ciis_frontend/dist/
 # ===== Raw training datasets (too large for git) =====
 sample/
 *.sqlite3-journal
+
+# Quarantine for files git deleted but OneDrive refused to unlink. Safe to
+# delete by hand; kept out of the tree so Django/Vite never import them.
+.stale_trash/
