@@ -3,39 +3,55 @@
   "report_version": 1,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-07-24T16:06:39.339Z",
+  "generated_at": "2026-07-25T12:52:44.107Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
-    "node_count": 4,
+    "node_count": 7,
     "edge_count": 6,
     "nodes_by_type": {
       "case": 1,
-      "evidence": 3
+      "evidence": 1,
+      "port": 2,
+      "time": 2,
+      "timeline_event": 1
     },
     "edges_by_type": {
-      "contains": 3,
-      "temporal_relationship": 3
+      "contains": 1,
+      "shared_entity": 4,
+      "timeline_event": 1
     },
-    "density": 1.0,
+    "density": 0.2857,
     "connected_components": 1,
-    "largest_component_size": 4,
-    "average_degree": 3.0,
+    "largest_component_size": 7,
+    "average_degree": 1.714,
     "top_hubs": [
       {
-        "node": "case:CASE_2CF24DBA5F",
-        "degree": "3"
-      },
-      {
         "node": "evidence:EVID_00001",
-        "degree": "3"
+        "degree": "6"
       },
       {
-        "node": "evidence:EVID_00002",
-        "degree": "3"
+        "node": "case:CASE_2CF24DBA5F",
+        "degree": "1"
       },
       {
-        "node": "evidence:EVID_00003",
-        "degree": "3"
+        "node": "port:41",
+        "degree": "1"
+      },
+      {
+        "node": "port:43",
+        "degree": "1"
+      },
+      {
+        "node": "time:11:43\n",
+        "degree": "1"
+      },
+      {
+        "node": "time:1:41 pm",
+        "degree": "1"
+      },
+      {
+        "node": "timeline_event:CASE_2CF24DBA5F:EVID_00001",
+        "degree": "1"
       }
     ]
   }

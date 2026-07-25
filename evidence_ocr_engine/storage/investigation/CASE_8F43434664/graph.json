@@ -3,7 +3,7 @@
   "report_version": 1,
   "schema_version": "2.0",
   "case_id": "CASE_8F43434664",
-  "generated_at": "2026-07-24T16:07:53.047Z",
+  "generated_at": "2026-07-25T12:55:38.657Z",
   "report": {
     "case_id": "CASE_8F43434664",
     "directed": false,
@@ -15,75 +15,53 @@
         "properties": {}
       },
       {
-        "id": "evidence:EVID_00004",
-        "node_type": "evidence",
-        "label": "EVID_00004",
-        "properties": {
-          "file_name": "whatsapp_chat_export.txt",
-          "upload_time": "2026-07-24T16:07:15.486Z"
-        }
-      },
-      {
         "id": "evidence:EVID_00005",
         "node_type": "evidence",
         "label": "EVID_00005",
         "properties": {
-          "file_name": "low_quality_scan_demo.png",
-          "upload_time": "2026-07-24T16:07:27.960Z"
+          "file_name": "romanchat.jpg",
+          "upload_time": "2026-07-25T12:55:29.488Z"
         }
       },
       {
-        "id": "evidence:EVID_00006",
-        "node_type": "evidence",
-        "label": "EVID_00006",
+        "id": "timeline_event:CASE_8F43434664:EVID_00005",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00005 (romanchat.jpg)",
         "properties": {
-          "file_name": "romanchat.jpg",
-          "upload_time": "2026-07-24T16:07:39.891Z"
+          "timestamp": "2026-07-25T12:55:29.488000+00:00",
+          "time_source": "upload_time_fallback",
+          "timestamp_inferred": "true"
         }
       }
     ],
     "edges": [
       {
         "source": "case:CASE_8F43434664",
-        "target": "evidence:EVID_00004",
-        "edge_type": "contains",
-        "weight": 1.0,
-        "explanation": "EVID_00004 belongs to CASE_8F43434664"
-      },
-      {
-        "source": "case:CASE_8F43434664",
         "target": "evidence:EVID_00005",
         "edge_type": "contains",
         "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-07-25T12:55:29.488000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
         "explanation": "EVID_00005 belongs to CASE_8F43434664"
       },
       {
-        "source": "case:CASE_8F43434664",
-        "target": "evidence:EVID_00006",
-        "edge_type": "contains",
-        "weight": 1.0,
-        "explanation": "EVID_00006 belongs to CASE_8F43434664"
-      },
-      {
-        "source": "evidence:EVID_00004",
-        "target": "evidence:EVID_00005",
-        "edge_type": "temporal_relationship",
-        "weight": 0.9999,
-        "explanation": "Acquired 0.0h apart (window 48h)"
-      },
-      {
-        "source": "evidence:EVID_00004",
-        "target": "evidence:EVID_00006",
-        "edge_type": "temporal_relationship",
-        "weight": 0.9999,
-        "explanation": "Acquired 0.0h apart (window 48h)"
-      },
-      {
         "source": "evidence:EVID_00005",
-        "target": "evidence:EVID_00006",
-        "edge_type": "temporal_relationship",
-        "weight": 0.9999,
-        "explanation": "Acquired 0.0h apart (window 48h)"
+        "target": "timeline_event:CASE_8F43434664:EVID_00005",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 0.4,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-07-25T12:55:29.488000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Reconstructed event for EVID_00005"
       }
     ]
   }

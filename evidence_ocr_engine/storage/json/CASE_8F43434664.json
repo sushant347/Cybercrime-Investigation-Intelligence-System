@@ -1,652 +1,17 @@
 {
   "case_id": "CASE_8F43434664",
-  "created_at": "2026-07-24T16:07:15.488Z",
-  "updated_at": "2026-07-24T16:07:48.878Z",
+  "created_at": "2026-07-25T12:55:38.576Z",
+  "updated_at": "2026-07-25T12:56:12.329Z",
   "evidence_count": 3,
   "evidence": [
     {
       "case_id": "CASE_8F43434664",
-      "evidence_id": "EVID_00004",
-      "file_name": "whatsapp_chat_export.txt",
-      "file_hash": "c7ab347cfbd2b80c944c85b3442f3b2c400da1d3b92962f9ded8598e1e06cfb2",
-      "file_size": "303",
-      "upload_time": "2026-07-24T16:07:15.486Z",
-      "processing_time_ms": 5.1,
-      "pages": [
-        {
-          "page": 1,
-          "confidence": 1.0,
-          "text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
-          "lines": [
-            {
-              "text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo",
-              "confidence": 1.0,
-              "bbox": []
-            },
-            {
-              "text": "[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्",
-              "confidence": 1.0,
-              "bbox": []
-            },
-            {
-              "text": "[2026-01-04 09:14] Victim: k ho yo? कसरी?",
-              "confidence": 1.0,
-              "bbox": []
-            },
-            {
-              "text": "[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
-              "confidence": 1.0,
-              "bbox": []
-            }
-          ],
-          "bounding_boxes": [
-            [],
-            [],
-            [],
-            []
-          ],
-          "preprocessing_steps": [
-            "none(text_file)"
-          ]
-        }
-      ],
-      "raw_text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
-      "average_confidence": 1.0,
-      "hash_verified": true,
-      "ocr_engine": "paddleocr-v5",
-      "cleaning": {
-        "case_id": "CASE_8F43434664",
-        "evidence_id": "EVID_00004",
-        "raw_text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
-        "cleaned_text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
-        "language": "mixed",
-        "line_languages": {
-          "1": "english",
-          "2": "mixed",
-          "3": "mixed",
-          "4": "mixed"
-        },
-        "entities": {
-          "urls": [],
-          "emails": [],
-          "domains": [],
-          "ipv4": [],
-          "ipv6": [],
-          "mac_addresses": [],
-          "ports": [],
-          "cve_ids": [],
-          "phones": [],
-          "dates": [
-            {
-              "value": "2026-01-04",
-              "normalized": "2026-01-04"
-            }
-          ],
-          "times": [
-            {
-              "value": "09:12",
-              "normalized": "09:12"
-            },
-            {
-              "value": "09:14",
-              "normalized": "09:14"
-            },
-            {
-              "value": "09:15",
-              "normalized": "09:15"
-            }
-          ],
-          "money": [
-            {
-              "value": "Rs 2000",
-              "normalized": "Rs 2000"
-            }
-          ],
-          "otp": [],
-          "bank_accounts": [],
-          "esewa_ids": [],
-          "khalti_ids": [],
-          "imepay_ids": [],
-          "hashes_sha512": [],
-          "hashes_sha256": [],
-          "hashes_sha1": [],
-          "hashes_md5": [],
-          "eth_wallets": [],
-          "btc_wallets": [],
-          "social_media_urls": [],
-          "telegram_usernames": [],
-          "whatsapp_numbers": [],
-          "facebook_usernames": [],
-          "instagram_usernames": []
-        },
-        "keywords": {
-          "lottery": 1,
-          "winner": 1,
-          "money": 1,
-          "wallet": 1
-        },
-        "risk_signals": {
-          "urgency": 0,
-          "financial": 4,
-          "credential": 0,
-          "threat": 0
-        },
-        "statistics": {
-          "characters": 258,
-          "words": 32,
-          "lines": 4,
-          "average_line_length": 63.8,
-          "languages_detected": [
-            "english",
-            "mixed"
-          ],
-          "entity_count": 5,
-          "cleaning_operations": [
-            "entities_protected(9)"
-          ],
-          "ocr_corrections": [],
-          "protected_entities": 9
-        },
-        "processing_time_ms": 2.82
-      },
-      "enhancement": {
-        "case_id": "CASE_8F43434664",
-        "evidence_id": "EVID_00004",
-        "cleaned_text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
-        "enhanced_text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
-        "ui_text": "",
-        "message_text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
-        "layout": [
-          {
-            "line": 1,
-            "role": "message",
-            "text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo"
-          },
-          {
-            "line": 2,
-            "role": "message",
-            "text": "[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्"
-          },
-          {
-            "line": 3,
-            "role": "message",
-            "text": "[2026-01-04 09:14] Victim: k ho yo? कसरी?"
-          },
-          {
-            "line": 4,
-            "role": "message",
-            "text": "[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus"
-          }
-        ],
-        "corrections": [],
-        "correction_statistics": {
-          "total_corrections": 0,
-          "dictionary_corrections": 0,
-          "unicode_corrections": 0,
-          "english_corrections": 0,
-          "nepali_corrections": 0,
-          "confidence_based": 0,
-          "rule_based": 0,
-          "entity_punctuation_fixes": 0,
-          "character_confusion_corrections": 0,
-          "mixed_script_corrections": 0,
-          "layout_ui_lines": 0,
-          "average_confidence_improvement": 0.0,
-          "lines_analyzed": 4,
-          "lines_high_confidence": 4,
-          "lines_correctable": 0,
-          "document_confidence": 1.0,
-          "nepali_correction_rate": 0.0,
-          "english_correction_rate": 0.0
-        },
-        "processing_time_ms": 1.11
-      },
-      "semantic_correction": {
-        "case_id": "CASE_8F43434664",
-        "evidence_id": "EVID_00004",
-        "enhanced_text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
-        "semantic_text": "[2026-01-04 09:12] +977-98XXXXXXXX: Congratulations! tapaile lottery jitnu bhayo\n[2026-01-04 09:12] +977-98XXXXXXXX: पैसा पाउन Rs 2000 पठाउनुहोस्\n[2026-01-04 09:14] Victim: k ho yo? कसरी?\n[2026-01-04 09:15] +977-98XXXXXXXX: esewa id 98XXXXXXXX ma send garnus",
-        "corrections": [],
-        "accepted_corrections": [],
-        "rejected_corrections": [],
-        "confidence": 0.0,
-        "entities": {
-          "dates": [
-            {
-              "value": "2026-01-04",
-              "normalized": "2026-01-04"
-            }
-          ],
-          "times": [
-            {
-              "value": "09:12",
-              "normalized": "09:12"
-            },
-            {
-              "value": "09:14",
-              "normalized": "09:14"
-            },
-            {
-              "value": "09:15",
-              "normalized": "09:15"
-            }
-          ],
-          "money": [
-            {
-              "value": "Rs 2000",
-              "normalized": "Rs 2000"
-            }
-          ]
-        },
-        "statistics": {
-          "suspicious_tokens": 0,
-          "candidates_evaluated": 0,
-          "accepted_corrections": 0,
-          "rejected_corrections": 0,
-          "average_confidence": 0.0,
-          "protected_entities": 9,
-          "validator": "heuristic",
-          "languages_detected": [
-            "english",
-            "mixed"
-          ]
-        },
-        "processing_time_ms": 0.87
-      }
-    },
-    {
-      "case_id": "CASE_8F43434664",
       "evidence_id": "EVID_00005",
-      "file_name": "low_quality_scan_demo.png",
-      "file_hash": "75b2a30d39404920c875e5ba3c57e951d4ee762153936fbfb408ef8cd7d24fdd",
-      "file_size": "7161",
-      "upload_time": "2026-07-24T16:07:27.960Z",
-      "processing_time_ms": 4608.4,
-      "pages": [
-        {
-          "page": 1,
-          "confidence": 0.5607,
-          "text": "०o|०००००cl०६०००००००|००००|००००००००००००००|०००००००५\n६o६००६००००|१००००od०|१०००o००६०\nnHoddns pauo pepuedsns ueeqseu junge Jno\nWापशसdल 'wक्कबAपागaम-ावeण//duपiहणाb्oL 8बeed\nep0odloपim wकyue्q-axe@pddns  sाaeppues",
-          "lines": [
-            {
-              "text": "०o|०००००cl०६०००००००|००००|००००००००००००००|०००००००५",
-              "confidence": 0.453,
-              "bbox": [
-                [
-                  8.0,
-                  8.0
-                ],
-                [
-                  377.0,
-                  8.0
-                ],
-                [
-                  377.0,
-                  18.0
-                ],
-                [
-                  8.0,
-                  18.0
-                ]
-              ]
-            },
-            {
-              "text": "६o६००६००००|१००००od०|१०००o००६०",
-              "confidence": 0.3816,
-              "bbox": [
-                [
-                  8.0,
-                  49.0
-                ],
-                [
-                  286.0,
-                  49.0
-                ],
-                [
-                  286.0,
-                  59.0
-                ],
-                [
-                  8.0,
-                  59.0
-                ]
-              ]
-            },
-            {
-              "text": "nHoddns pauo pepuedsns ueeqseu junge Jno",
-              "confidence": 0.8309,
-              "bbox": [
-                [
-                  9.0,
-                  87.0
-                ],
-                [
-                  340.0,
-                  87.0
-                ],
-                [
-                  340.0,
-                  102.0
-                ],
-                [
-                  9.0,
-                  102.0
-                ]
-              ]
-            },
-            {
-              "text": "Wापशसdल 'wक्कबAपागaम-ावeण//duपiहणाb्oL 8बeed",
-              "confidence": 0.5172,
-              "bbox": [
-                [
-                  8.0,
-                  127.0
-                ],
-                [
-                  307.0,
-                  127.0
-                ],
-                [
-                  307.0,
-                  144.0
-                ],
-                [
-                  8.0,
-                  144.0
-                ]
-              ]
-            },
-            {
-              "text": "ep0odloपim wकyue्q-axe@pddns  sाaeppues",
-              "confidence": 0.6209,
-              "bbox": [
-                [
-                  7.0,
-                  168.0
-                ],
-                [
-                  347.0,
-                  168.0
-                ],
-                [
-                  347.0,
-                  185.0
-                ],
-                [
-                  7.0,
-                  185.0
-                ]
-              ]
-            }
-          ],
-          "bounding_boxes": [
-            [
-              [
-                8.0,
-                8.0
-              ],
-              [
-                377.0,
-                8.0
-              ],
-              [
-                377.0,
-                18.0
-              ],
-              [
-                8.0,
-                18.0
-              ]
-            ],
-            [
-              [
-                8.0,
-                49.0
-              ],
-              [
-                286.0,
-                49.0
-              ],
-              [
-                286.0,
-                59.0
-              ],
-              [
-                8.0,
-                59.0
-              ]
-            ],
-            [
-              [
-                9.0,
-                87.0
-              ],
-              [
-                340.0,
-                87.0
-              ],
-              [
-                340.0,
-                102.0
-              ],
-              [
-                9.0,
-                102.0
-              ]
-            ],
-            [
-              [
-                8.0,
-                127.0
-              ],
-              [
-                307.0,
-                127.0
-              ],
-              [
-                307.0,
-                144.0
-              ],
-              [
-                8.0,
-                144.0
-              ]
-            ],
-            [
-              [
-                7.0,
-                168.0
-              ],
-              [
-                347.0,
-                168.0
-              ],
-              [
-                347.0,
-                185.0
-              ],
-              [
-                7.0,
-                185.0
-              ]
-            ]
-          ],
-          "preprocessing_steps": [
-            "convert_rgb",
-            "exif_orientation",
-            "resolution_enhancement",
-            "clahe",
-            "border_removal+whitespace_trim",
-            "adaptive_threshold"
-          ]
-        }
-      ],
-      "raw_text": "०o|०००००cl०६०००००००|००००|००००००००००००००|०००००००५\n६o६००६००००|१००००od०|१०००o००६०\nnHoddns pauo pepuedsns ueeqseu junge Jno\nWापशसdल 'wक्कबAपागaम-ावeण//duपiहणाb्oL 8बeed\nep0odloपim wकyue्q-axe@pddns  sाaeppues",
-      "average_confidence": 0.5607,
-      "hash_verified": true,
-      "ocr_engine": "paddleocr-v5",
-      "cleaning": {
-        "case_id": "CASE_8F43434664",
-        "evidence_id": "EVID_00005",
-        "raw_text": "०o|०००००cl०६०००००००|००००|००००००००००००००|०००००००५\n६o६००६००००|१००००od०|१०००o००६०\nnHoddns pauo pepuedsns ueeqseu junge Jno\nWापशसdल 'wक्कबAपागaम-ावeण//duपiहणाb्oL 8बeed\nep0odloपim wकyue्q-axe@pddns  sाaeppues",
-        "cleaned_text": "०o|०००००cl०६०००००००|००००|००००००००००००००|०००००००५ ६o६००६००००|१००००od०|१०००o००६०\nnHoddns pauo pepuedsns ueeqseu junge Jno\nWापशसdल 'wक्कबAपागaम-ावeण//duपiहणाb्oL 8बeed ep0odloपim wकyue्q-axe@pddns sाaeppues",
-        "language": "mixed",
-        "line_languages": {
-          "1": "mixed",
-          "2": "mixed",
-          "3": "english",
-          "4": "mixed",
-          "5": "mixed"
-        },
-        "entities": {
-          "urls": [],
-          "emails": [],
-          "domains": [],
-          "ipv4": [],
-          "ipv6": [],
-          "mac_addresses": [],
-          "ports": [],
-          "cve_ids": [],
-          "phones": [],
-          "dates": [],
-          "times": [],
-          "money": [],
-          "otp": [],
-          "bank_accounts": [],
-          "esewa_ids": [],
-          "khalti_ids": [],
-          "imepay_ids": [],
-          "hashes_sha512": [],
-          "hashes_sha256": [],
-          "hashes_sha1": [],
-          "hashes_md5": [],
-          "eth_wallets": [],
-          "btc_wallets": [],
-          "social_media_urls": [],
-          "telegram_usernames": [],
-          "whatsapp_numbers": [],
-          "facebook_usernames": [],
-          "instagram_usernames": []
-        },
-        "keywords": {},
-        "risk_signals": {
-          "urgency": 0,
-          "financial": 0,
-          "credential": 0,
-          "threat": 0
-        },
-        "statistics": {
-          "characters": 203,
-          "words": 14,
-          "lines": 3,
-          "average_line_length": 67.0,
-          "languages_detected": [
-            "english",
-            "mixed"
-          ],
-          "entity_count": 0,
-          "cleaning_operations": [
-            "whitespace_normalized",
-            "lines_merged(2)"
-          ],
-          "ocr_corrections": [],
-          "protected_entities": 0
-        },
-        "processing_time_ms": 1.19
-      },
-      "enhancement": {
-        "case_id": "CASE_8F43434664",
-        "evidence_id": "EVID_00005",
-        "cleaned_text": "०o|०००००cl०६०००००००|००००|००००००००००००००|०००००००५ ६o६००६००००|१००००od०|१०००o००६०\nnHoddns pauo pepuedsns ueeqseu junge Jno\nWापशसdल 'wक्कबAपागaम-ावeण//duपiहणाb्oL 8बeed ep0odloपim wकyue्q-axe@pddns sाaeppues",
-        "enhanced_text": "०o|०००००cl०६०००००००|००००|००००००००००००००|०००००००५ ६o६००६००००|१००००od०|१०००o००६०\nnHoddns pauo pepuedsns ueeqseu junge Jno\nWपशसdल 'wक्कबAपागaम-वeण//duपiहणाboL 8बeed ep0odloपim wकyueq-axe@pddns saeppues",
-        "ui_text": "",
-        "message_text": "०o|०००००cl०६०००००००|००००|००००००००००००००|०००००००५ ६o६००६००००|१००००od०|१०००o००६०\nnHoddns pauo pepuedsns ueeqseu junge Jno\nWपशसdल 'wक्कबAपागaम-वeण//duपiहणाboL 8बeed ep0odloपim wकyueq-axe@pddns saeppues",
-        "layout": [
-          {
-            "line": 1,
-            "role": "message",
-            "text": "०o|०००००cl०६०००००००|००००|००००००००००००००|०००००००५ ६o६००६००००|१००००od०|१०००o००६०"
-          },
-          {
-            "line": 2,
-            "role": "message",
-            "text": "nHoddns pauo pepuedsns ueeqseu junge Jno"
-          },
-          {
-            "line": 3,
-            "role": "message",
-            "text": "Wपशसdल 'wक्कबAपागaम-वeण//duपiहणाboL 8बeed ep0odloपim wकyueq-axe@pddns saeppues"
-          }
-        ],
-        "corrections": [
-          {
-            "original": "",
-            "corrected": "",
-            "confidence": 1.0,
-            "rule": "unicode_validation:orphan_marks_removed(5)",
-            "language": "",
-            "context_score": 0.0,
-            "line": 0,
-            "character_replacement": "",
-            "dictionary_match": ""
-          }
-        ],
-        "correction_statistics": {
-          "total_corrections": 1,
-          "dictionary_corrections": 0,
-          "unicode_corrections": 5,
-          "english_corrections": 0,
-          "nepali_corrections": 0,
-          "confidence_based": 0,
-          "rule_based": 0,
-          "entity_punctuation_fixes": 0,
-          "character_confusion_corrections": 0,
-          "mixed_script_corrections": 0,
-          "layout_ui_lines": 0,
-          "average_confidence_improvement": 0.0,
-          "lines_analyzed": 3,
-          "lines_high_confidence": 0,
-          "lines_correctable": 3,
-          "document_confidence": 0.5766,
-          "nepali_correction_rate": 0.0,
-          "english_correction_rate": 0.0
-        },
-        "processing_time_ms": 2.17
-      },
-      "semantic_correction": {
-        "case_id": "CASE_8F43434664",
-        "evidence_id": "EVID_00005",
-        "enhanced_text": "०o|०००००cl०६०००००००|००००|००००००००००००००|०००००००५ ६o६००६००००|१००००od०|१०००o००६०\nnHoddns pauo pepuedsns ueeqseu junge Jno\nWपशसdल 'wक्कबAपागaम-वeण//duपiहणाboL 8बeed ep0odloपim wकyueq-axe@pddns saeppues",
-        "semantic_text": "०o|०००००cl०६०००००००|००००|००००००००००००००|०००००००५ ६o६००६००००|१००००od०|१०००o००६० nHoddns pauo pepuedsns ueeqseu junge Jno\nWपशसdल 'wक्कबAपागaम-वeण//duपiहणाboL 8बeed ep0odloपim wकyueq-axe@pddns saeppues",
-        "corrections": [],
-        "accepted_corrections": [],
-        "rejected_corrections": [],
-        "confidence": 0.0,
-        "entities": {},
-        "statistics": {
-          "suspicious_tokens": 7,
-          "candidates_evaluated": 0,
-          "accepted_corrections": 0,
-          "rejected_corrections": 0,
-          "average_confidence": 0.0,
-          "protected_entities": 0,
-          "validator": "heuristic",
-          "languages_detected": [
-            "english",
-            "mixed"
-          ]
-        },
-        "processing_time_ms": 2.1
-      }
-    },
-    {
-      "case_id": "CASE_8F43434664",
-      "evidence_id": "EVID_00006",
       "file_name": "romanchat.jpg",
       "file_hash": "0340d5863313f4cc0b9b40ed835a77a71b8304d2e08eb32f08a56ed93a6e0b10",
       "file_size": "33294",
-      "upload_time": "2026-07-24T16:07:39.891Z",
-      "processing_time_ms": 8956.9,
+      "upload_time": "2026-07-25T12:55:29.488Z",
+      "processing_time_ms": 9083.5,
       "pages": [
         {
           "page": 1,
@@ -1190,7 +555,7 @@
       "ocr_engine": "paddleocr-v5",
       "cleaning": {
         "case_id": "CASE_8F43434664",
-        "evidence_id": "EVID_00006",
+        "evidence_id": "EVID_00005",
         "raw_text": "Soltine...\nK gardai xau timi.\nTimi\nre\nkaslai timi vanya oee...\nTimi lai timi vanako...\nKan sundaina k ho Vai..e\nBoyfriend lai Vai...\nUmmm..\nWaha\nWaha\nUso wya tero hatko Vai Tika\nlagauna aauxu tihar ma pakh.",
         "cleaned_text": "Soltine.\nK gardai xau timi.\nTimi re kaslai timi vanya oee.\nTimi lai timi vanako.\nKan sundaina k ho Vai..e\nboyfriend lai vai.\nUmmm..\nWaha\nWaha\nUso wya tero hatko Vai Tika lagauna aauxu tihar ma pakh.",
         "language": "mixed",
@@ -1264,11 +629,11 @@
           "ocr_corrections": [],
           "protected_entities": 0
         },
-        "processing_time_ms": 1.11
+        "processing_time_ms": 1.64
       },
       "enhancement": {
         "case_id": "CASE_8F43434664",
-        "evidence_id": "EVID_00006",
+        "evidence_id": "EVID_00005",
         "cleaned_text": "Soltine.\nK gardai xau timi.\nTimi re kaslai timi vanya oee.\nTimi lai timi vanako.\nKan sundaina k ho Vai..e\nboyfriend lai vai.\nUmmm..\nWaha\nWaha\nUso wya tero hatko Vai Tika lagauna aauxu tihar ma pakh.",
         "enhanced_text": "Soltine.\nK gardai xau timi.\nTimi re kaslai timi vanya oee.\nTimi lai timi vanako.\nKan sundaina k ho Vai..e\nboyfriend lai vai.\nUmmm..\nWaha\nWaha\nUso wya tero hatko Vai Tika lagauna aauxu tihar ma pakh.",
         "ui_text": "",
@@ -1346,11 +711,11 @@
           "nepali_correction_rate": 0.0,
           "english_correction_rate": 0.0
         },
-        "processing_time_ms": 0.89
+        "processing_time_ms": 0.96
       },
       "semantic_correction": {
         "case_id": "CASE_8F43434664",
-        "evidence_id": "EVID_00006",
+        "evidence_id": "EVID_00005",
         "enhanced_text": "Soltine.\nK gardai xau timi.\nTimi re kaslai timi vanya oee.\nTimi lai timi vanako.\nKan sundaina k ho Vai..e\nboyfriend lai vai.\nUmmm..\nWaha\nWaha\nUso wya tero hatko Vai Tika lagauna aauxu tihar ma pakh.",
         "semantic_text": "Soltine.\nK gardai xau timi.\nTimi re kaslai timi vanya oee.\nTimi lai timi vanako.\nKan sundaina k ho Vai..e boyfriend lai vai.\nUmmm..\nWaha\nWaha\nUso wya tero hatko Vai Tika lagauna aauxu tihar ma pakh.",
         "corrections": [],
@@ -1371,7 +736,695 @@
             "roman_nepali"
           ]
         },
-        "processing_time_ms": 0.47
+        "processing_time_ms": 0.57
+      }
+    },
+    {
+      "case_id": "CASE_8F43434664",
+      "evidence_id": "EVID_00006",
+      "file_name": "phishing_email_screenshot.png",
+      "file_hash": "8ef0f27a84960b656d9051892e36096ce56fe9f30eb9a935d4d4330a002b9b7f",
+      "file_size": "11738",
+      "upload_time": "2026-07-25T12:55:59.642Z",
+      "processing_time_ms": 4878.6,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 0.9859,
+          "text": "Nabil Bank- Secure Message\nFrom: security@nabil-bank-alerts.com\nSubject URGENT- Your account has been suspended\nDear customer, unusual activitywas detected.\nVerify now: http://nabil-verify.example-scam.top/login\nFailure to verifywithin 24 hours locks your account",
+          "lines": [
+            {
+              "text": "Nabil Bank- Secure Message",
+              "confidence": 0.9834,
+              "bbox": [
+                [
+                  13.0,
+                  9.0
+                ],
+                [
+                  176.0,
+                  11.0
+                ],
+                [
+                  175.0,
+                  27.0
+                ],
+                [
+                  13.0,
+                  25.0
+                ]
+              ]
+            },
+            {
+              "text": "From: security@nabil-bank-alerts.com",
+              "confidence": 0.9938,
+              "bbox": [
+                [
+                  18.0,
+                  64.0
+                ],
+                [
+                  225.0,
+                  64.0
+                ],
+                [
+                  225.0,
+                  77.0
+                ],
+                [
+                  18.0,
+                  77.0
+                ]
+              ]
+            },
+            {
+              "text": "Subject URGENT- Your account has been suspended",
+              "confidence": 0.9935,
+              "bbox": [
+                [
+                  19.0,
+                  104.0
+                ],
+                [
+                  309.0,
+                  104.0
+                ],
+                [
+                  309.0,
+                  118.0
+                ],
+                [
+                  19.0,
+                  118.0
+                ]
+              ]
+            },
+            {
+              "text": "Dear customer, unusual activitywas detected.",
+              "confidence": 0.9854,
+              "bbox": [
+                [
+                  18.0,
+                  145.0
+                ],
+                [
+                  265.0,
+                  145.0
+                ],
+                [
+                  265.0,
+                  157.0
+                ],
+                [
+                  18.0,
+                  157.0
+                ]
+              ]
+            },
+            {
+              "text": "Verify now: http://nabil-verify.example-scam.top/login",
+              "confidence": 0.9752,
+              "bbox": [
+                [
+                  18.0,
+                  184.0
+                ],
+                [
+                  307.0,
+                  184.0
+                ],
+                [
+                  307.0,
+                  198.0
+                ],
+                [
+                  18.0,
+                  198.0
+                ]
+              ]
+            },
+            {
+              "text": "Failure to verifywithin 24 hours locks your account",
+              "confidence": 0.9842,
+              "bbox": [
+                [
+                  16.0,
+                  222.0
+                ],
+                [
+                  299.0,
+                  223.0
+                ],
+                [
+                  299.0,
+                  239.0
+                ],
+                [
+                  16.0,
+                  238.0
+                ]
+              ]
+            }
+          ],
+          "bounding_boxes": [
+            [
+              [
+                13.0,
+                9.0
+              ],
+              [
+                176.0,
+                11.0
+              ],
+              [
+                175.0,
+                27.0
+              ],
+              [
+                13.0,
+                25.0
+              ]
+            ],
+            [
+              [
+                18.0,
+                64.0
+              ],
+              [
+                225.0,
+                64.0
+              ],
+              [
+                225.0,
+                77.0
+              ],
+              [
+                18.0,
+                77.0
+              ]
+            ],
+            [
+              [
+                19.0,
+                104.0
+              ],
+              [
+                309.0,
+                104.0
+              ],
+              [
+                309.0,
+                118.0
+              ],
+              [
+                19.0,
+                118.0
+              ]
+            ],
+            [
+              [
+                18.0,
+                145.0
+              ],
+              [
+                265.0,
+                145.0
+              ],
+              [
+                265.0,
+                157.0
+              ],
+              [
+                18.0,
+                157.0
+              ]
+            ],
+            [
+              [
+                18.0,
+                184.0
+              ],
+              [
+                307.0,
+                184.0
+              ],
+              [
+                307.0,
+                198.0
+              ],
+              [
+                18.0,
+                198.0
+              ]
+            ],
+            [
+              [
+                16.0,
+                222.0
+              ],
+              [
+                299.0,
+                223.0
+              ],
+              [
+                299.0,
+                239.0
+              ],
+              [
+                16.0,
+                238.0
+              ]
+            ]
+          ],
+          "preprocessing_steps": [
+            "convert_rgb",
+            "exif_orientation",
+            "resolution_enhancement",
+            "border_removal+whitespace_trim"
+          ]
+        }
+      ],
+      "raw_text": "Nabil Bank- Secure Message\nFrom: security@nabil-bank-alerts.com\nSubject URGENT- Your account has been suspended\nDear customer, unusual activitywas detected.\nVerify now: http://nabil-verify.example-scam.top/login\nFailure to verifywithin 24 hours locks your account",
+      "average_confidence": 0.9859,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_8F43434664",
+        "evidence_id": "EVID_00006",
+        "raw_text": "Nabil Bank- Secure Message\nFrom: security@nabil-bank-alerts.com\nSubject URGENT- Your account has been suspended\nDear customer, unusual activitywas detected.\nVerify now: http://nabil-verify.example-scam.top/login\nFailure to verifywithin 24 hours locks your account",
+        "cleaned_text": "Nabil Bank- Secure Message\nFrom: security@nabil-bank-alerts.com\nSubject URGENT- Your account has been suspended\nDear customer, unusual activitywas detected.\nVerify now: http://nabil-verify.example-scam.top/login\nFailure to verifywithin 24 hours locks your account",
+        "language": "english",
+        "line_languages": {
+          "1": "english",
+          "2": "english",
+          "3": "english",
+          "4": "english",
+          "5": "english",
+          "6": "english"
+        },
+        "entities": {
+          "urls": [
+            {
+              "value": "http://nabil-verify.example-scam.top/login",
+              "normalized": "http://nabil-verify.example-scam.top/login"
+            }
+          ],
+          "emails": [
+            {
+              "value": "security@nabil-bank-alerts.com",
+              "normalized": "security@nabil-bank-alerts.com"
+            }
+          ],
+          "domains": [
+            {
+              "value": "nabil-verify.example-scam.top",
+              "normalized": "nabil-verify.example-scam.top"
+            },
+            {
+              "value": "nabil-bank-alerts.com",
+              "normalized": "nabil-bank-alerts.com"
+            }
+          ],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "phones": [],
+          "dates": [],
+          "times": [],
+          "money": [],
+          "otp": [],
+          "bank_accounts": [],
+          "esewa_ids": [],
+          "khalti_ids": [],
+          "imepay_ids": [],
+          "hashes_sha512": [],
+          "hashes_sha256": [],
+          "hashes_sha1": [],
+          "hashes_md5": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {
+          "verify": 2,
+          "account": 2,
+          "bank": 2,
+          "login": 1,
+          "suspended": 1,
+          "urgent": 1
+        },
+        "risk_signals": {
+          "urgency": 2,
+          "financial": 2,
+          "credential": 5,
+          "threat": 0
+        },
+        "statistics": {
+          "characters": 263,
+          "words": 29,
+          "lines": 6,
+          "average_line_length": 43.0,
+          "languages_detected": [
+            "english"
+          ],
+          "entity_count": 4,
+          "cleaning_operations": [
+            "entities_protected(2)"
+          ],
+          "ocr_corrections": [],
+          "protected_entities": 2
+        },
+        "processing_time_ms": 1.42
+      },
+      "enhancement": {
+        "case_id": "CASE_8F43434664",
+        "evidence_id": "EVID_00006",
+        "cleaned_text": "Nabil Bank- Secure Message\nFrom: security@nabil-bank-alerts.com\nSubject URGENT- Your account has been suspended\nDear customer, unusual activitywas detected.\nVerify now: http://nabil-verify.example-scam.top/login\nFailure to verifywithin 24 hours locks your account",
+        "enhanced_text": "Nabil Bank- Secure Message\nFrom: security@nabil-bank-alerts.com\nSubject URGENT- Your account has been suspended\nDear customer, unusual activitywas detected.\nVerify now: http://nabil-verify.example-scam.top/login\nFailure to verifywithin 24 hours locks your account",
+        "ui_text": "",
+        "message_text": "Nabil Bank- Secure Message\nFrom: security@nabil-bank-alerts.com\nSubject URGENT- Your account has been suspended\nDear customer, unusual activitywas detected.\nVerify now: http://nabil-verify.example-scam.top/login\nFailure to verifywithin 24 hours locks your account",
+        "layout": [
+          {
+            "line": 1,
+            "role": "message",
+            "text": "Nabil Bank- Secure Message"
+          },
+          {
+            "line": 2,
+            "role": "message",
+            "text": "From: security@nabil-bank-alerts.com"
+          },
+          {
+            "line": 3,
+            "role": "message",
+            "text": "Subject URGENT- Your account has been suspended"
+          },
+          {
+            "line": 4,
+            "role": "message",
+            "text": "Dear customer, unusual activitywas detected."
+          },
+          {
+            "line": 5,
+            "role": "message",
+            "text": "Verify now: http://nabil-verify.example-scam.top/login"
+          },
+          {
+            "line": 6,
+            "role": "message",
+            "text": "Failure to verifywithin 24 hours locks your account"
+          }
+        ],
+        "corrections": [],
+        "correction_statistics": {
+          "total_corrections": 0,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 0,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 6,
+          "lines_high_confidence": 6,
+          "lines_correctable": 0,
+          "document_confidence": 0.9859,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 0.45
+      },
+      "semantic_correction": {
+        "case_id": "CASE_8F43434664",
+        "evidence_id": "EVID_00006",
+        "enhanced_text": "Nabil Bank- Secure Message\nFrom: security@nabil-bank-alerts.com\nSubject URGENT- Your account has been suspended\nDear customer, unusual activitywas detected.\nVerify now: http://nabil-verify.example-scam.top/login\nFailure to verifywithin 24 hours locks your account",
+        "semantic_text": "Nabil Bank- Secure Message\nFrom: security@nabil-bank-alerts.com\nSubject URGENT- Your account has been suspended\nDear customer, unusual activitywas detected.\nVerify now: http://nabil-verify.example-scam.top/login\nFailure to verifywithin 24 hours locks your account",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {
+          "urls": [
+            {
+              "value": "http://nabil-verify.example-scam.top/login",
+              "normalized": "http://nabil-verify.example-scam.top/login"
+            }
+          ],
+          "emails": [
+            {
+              "value": "security@nabil-bank-alerts.com",
+              "normalized": "security@nabil-bank-alerts.com"
+            }
+          ],
+          "domains": [
+            {
+              "value": "nabil-verify.example-scam.top",
+              "normalized": "nabil-verify.example-scam.top"
+            },
+            {
+              "value": "nabil-bank-alerts.com",
+              "normalized": "nabil-bank-alerts.com"
+            }
+          ]
+        },
+        "statistics": {
+          "suspicious_tokens": 0,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 2,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english"
+          ]
+        },
+        "processing_time_ms": 0.61
+      }
+    },
+    {
+      "case_id": "CASE_8F43434664",
+      "evidence_id": "EVID_00007",
+      "file_name": "bank_transactions.csv",
+      "file_hash": "fbc5fcf7403a5aa8c042baed4343d0162e8d3506ff5d1163864662d25602e87e",
+      "file_size": "184",
+      "upload_time": "2026-07-25T12:56:12.284Z",
+      "processing_time_ms": 13.1,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 1.0,
+          "text": "date,description,amount_npr,channel\n2026-01-04,IBFT transfer to 0071-XXXX-9912,-250000,mobile_banking\n2026-01-04,Balance inquiry,0,mobile_banking\n2026-01-03,Salary credit,85000,branch",
+          "lines": [
+            {
+              "text": "date,description,amount_npr,channel",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "2026-01-04,IBFT transfer to 0071-XXXX-9912,-250000,mobile_banking",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "2026-01-04,Balance inquiry,0,mobile_banking",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "2026-01-03,Salary credit,85000,branch",
+              "confidence": 1.0,
+              "bbox": []
+            }
+          ],
+          "bounding_boxes": [
+            [],
+            [],
+            [],
+            []
+          ],
+          "preprocessing_steps": [
+            "none(text_file)"
+          ]
+        }
+      ],
+      "raw_text": "date,description,amount_npr,channel\n2026-01-04,IBFT transfer to 0071-XXXX-9912,-250000,mobile_banking\n2026-01-04,Balance inquiry,0,mobile_banking\n2026-01-03,Salary credit,85000,branch",
+      "average_confidence": 1.0,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_8F43434664",
+        "evidence_id": "EVID_00007",
+        "raw_text": "date,description,amount_npr,channel\n2026-01-04,IBFT transfer to 0071-XXXX-9912,-250000,mobile_banking\n2026-01-04,Balance inquiry,0,mobile_banking\n2026-01-03,Salary credit,85000,branch",
+        "cleaned_text": "date,description,amount_npr,channel\n2026-01-04,IBFT transfer to 0071-XXXX-9912,-250000,mobile_banking\n2026-01-04,Balance inquiry,0,mobile_banking\n2026-01-03,Salary credit,85000,branch",
+        "language": "english",
+        "line_languages": {
+          "1": "english",
+          "2": "english",
+          "3": "english",
+          "4": "english"
+        },
+        "entities": {
+          "urls": [],
+          "emails": [],
+          "domains": [],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "phones": [],
+          "dates": [
+            {
+              "value": "2026-01-04",
+              "normalized": "2026-01-04"
+            },
+            {
+              "value": "2026-01-03",
+              "normalized": "2026-01-03"
+            }
+          ],
+          "times": [],
+          "money": [],
+          "otp": [],
+          "bank_accounts": [],
+          "esewa_ids": [],
+          "khalti_ids": [],
+          "imepay_ids": [],
+          "hashes_sha512": [],
+          "hashes_sha256": [],
+          "hashes_sha1": [],
+          "hashes_md5": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {
+          "payment": 1
+        },
+        "risk_signals": {
+          "urgency": 0,
+          "financial": 1,
+          "credential": 0,
+          "threat": 0
+        },
+        "statistics": {
+          "characters": 183,
+          "words": 9,
+          "lines": 4,
+          "average_line_length": 45.0,
+          "languages_detected": [
+            "english"
+          ],
+          "entity_count": 2,
+          "cleaning_operations": [
+            "entities_protected(3)"
+          ],
+          "ocr_corrections": [],
+          "protected_entities": 3
+        },
+        "processing_time_ms": 0.94
+      },
+      "enhancement": {
+        "case_id": "CASE_8F43434664",
+        "evidence_id": "EVID_00007",
+        "cleaned_text": "date,description,amount_npr,channel\n2026-01-04,IBFT transfer to 0071-XXXX-9912,-250000,mobile_banking\n2026-01-04,Balance inquiry,0,mobile_banking\n2026-01-03,Salary credit,85000,branch",
+        "enhanced_text": "date,description,amount_npr,channel\n2026-01-04,IBFT transfer to 0071-XXXX-9912,-250000,mobile_banking\n2026-01-04,Balance inquiry,0,mobile_banking\n2026-01-03,Salary credit,85000,branch",
+        "ui_text": "",
+        "message_text": "date,description,amount_npr,channel\n2026-01-04,IBFT transfer to 0071-XXXX-9912,-250000,mobile_banking\n2026-01-04,Balance inquiry,0,mobile_banking\n2026-01-03,Salary credit,85000,branch",
+        "layout": [
+          {
+            "line": 1,
+            "role": "message",
+            "text": "date,description,amount_npr,channel"
+          },
+          {
+            "line": 2,
+            "role": "message",
+            "text": "2026-01-04,IBFT transfer to 0071-XXXX-9912,-250000,mobile_banking"
+          },
+          {
+            "line": 3,
+            "role": "message",
+            "text": "2026-01-04,Balance inquiry,0,mobile_banking"
+          },
+          {
+            "line": 4,
+            "role": "message",
+            "text": "2026-01-03,Salary credit,85000,branch"
+          }
+        ],
+        "corrections": [],
+        "correction_statistics": {
+          "total_corrections": 0,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 0,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 4,
+          "lines_high_confidence": 4,
+          "lines_correctable": 0,
+          "document_confidence": 1.0,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 0.36
+      },
+      "semantic_correction": {
+        "case_id": "CASE_8F43434664",
+        "evidence_id": "EVID_00007",
+        "enhanced_text": "date,description,amount_npr,channel\n2026-01-04,IBFT transfer to 0071-XXXX-9912,-250000,mobile_banking\n2026-01-04,Balance inquiry,0,mobile_banking\n2026-01-03,Salary credit,85000,branch",
+        "semantic_text": "date,description,amount_npr,channel\n2026-01-04,IBFT transfer to 0071-XXXX-9912,-250000,mobile_banking\n2026-01-04,Balance inquiry,0,mobile_banking\n2026-01-03,Salary credit,85000,branch",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {
+          "dates": [
+            {
+              "value": "2026-01-04",
+              "normalized": "2026-01-04"
+            },
+            {
+              "value": "2026-01-03",
+              "normalized": "2026-01-03"
+            }
+          ]
+        },
+        "statistics": {
+          "suspicious_tokens": 0,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 3,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english"
+          ]
+        },
+        "processing_time_ms": 0.52
       }
     }
   ]

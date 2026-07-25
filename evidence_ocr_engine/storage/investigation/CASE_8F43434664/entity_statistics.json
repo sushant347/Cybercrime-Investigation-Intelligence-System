@@ -3,38 +3,45 @@
   "report_version": 1,
   "schema_version": "2.0",
   "case_id": "CASE_8F43434664",
-  "generated_at": "2026-07-24T16:07:53.053Z",
+  "generated_at": "2026-07-25T13:02:00.247Z",
   "report": {
     "case_id": "CASE_8F43434664",
     "entity_statistics": {
-      "dates": 1,
-      "money": 1,
-      "times": 3
+      "dates": 2,
+      "domains": 2,
+      "emails": 1,
+      "urls": 1
     },
     "top_entities": {
       "dates": [
         {
           "value": "2026-01-04",
           "count": 1
-        }
-      ],
-      "money": [
+        },
         {
-          "value": "rs 2000",
+          "value": "2026-01-03",
           "count": 1
         }
       ],
-      "times": [
+      "domains": [
         {
-          "value": "09:12",
+          "value": "nabil-verify.example-scam.top",
           "count": 1
         },
         {
-          "value": "09:14",
+          "value": "nabil-bank-alerts.com",
           "count": 1
-        },
+        }
+      ],
+      "emails": [
         {
-          "value": "09:15",
+          "value": "security@nabil-bank-alerts.com",
+          "count": 1
+        }
+      ],
+      "urls": [
+        {
+          "value": "http://nabil-verify.example-scam.top/login",
           "count": 1
         }
       ]
