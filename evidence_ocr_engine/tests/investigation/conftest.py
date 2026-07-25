@@ -48,13 +48,20 @@ _EVIDENCE_ROWS = [
      "He blocked me after payment, I was scammed, filing police report."),
 ]
 
+#: Entity rows in the *real* extractor vocabulary.
+#:
+#: These used to use a made-up ``wallets`` type. Nothing in the engine emits
+#: it, so every module keyed on payment identifiers (analytics' wallet panel,
+#: the graph's wallet nodes, suspect anchors, timeline criticality) passed its
+#: tests against a type that could never occur in production - which is exactly
+#: how the empty "Payment & Wallet IDs" panel survived a green suite.
 _ENTITIES: List[tuple] = [
     ("EVID_A", "phones", "9812345678"),
-    ("EVID_A", "wallets", "esewa:9812345678"),
+    ("EVID_A", "esewa_ids", "+9779812345678"),
     ("EVID_A", "urls", "http://scam-bank.top/login"),
     ("EVID_A", "domains", "scam-bank.top"),
     ("EVID_B", "phones", "9812345678"),
-    ("EVID_B", "wallets", "esewa:9812345678"),
+    ("EVID_B", "esewa_ids", "+9779812345678"),
     ("EVID_B", "money", "rs 5000"),
     ("EVID_B", "otp", "4521"),
     ("EVID_C", "urls", "http://scam-bank.top/verify"),

@@ -30,7 +30,11 @@ def test_entity_and_quality_statistics(bundle):
     _, _, _, analytics = bundle
     assert analytics.evidence_count == 4
     assert analytics.entity_statistics["phones"] == 2
-    assert analytics.entity_statistics["wallets"] == 2
+    assert analytics.entity_statistics["esewa_ids"] == 2
+    # The payment panel is fed by the real rails, not a phantom "wallets" type.
+    assert [(v.value, v.count) for v in analytics.wallet_statistics] == [
+        ("+9779812345678", 2)]
+    assert "esewa_ids" in analytics.wallet_statistics_by_rail
     top_phones = analytics.top_entities["phones"]
     assert top_phones[0].value == "9812345678" and top_phones[0].count == 2
     quality = analytics.evidence_quality_statistics

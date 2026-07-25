@@ -79,14 +79,3 @@ def activity_payload(row: dict) -> dict:
         "detail": row.get("detail", "") or "",
         "created_at": row.get("created_at", ""),
     }
-
-
-def case_history_payload(row: dict) -> dict:
-    return {
-        "id": _int(row.get("id")),
-        "case_id": row.get("case_id", ""),
-        "username": row.get("username", "") or "",
-        "action": row.get("action", ""),
-        "detail": row.get("detail", "") or "",
-        "created_at": row.get("created_at", ""),
-    }

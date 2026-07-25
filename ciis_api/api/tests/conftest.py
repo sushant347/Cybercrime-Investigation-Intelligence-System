@@ -92,6 +92,10 @@ def engine_env(tmp_path, monkeypatch):
     monkeypatch.setattr(
         engine, "_evidence_pipeline", lambda: EvidencePipeline(cfg, FakeOCR())
     )
+    # The Phase-1 forensic chain shares the OCR engine; give it the canned one
+    # too, and rebuild it per test so it binds to this test's storage dir.
+    monkeypatch.setattr(engine, "_ocr_engine", lambda: FakeOCR())
+    engine._forensics_pipeline.cache_clear()
     # A fresh orchestrator bound to the temp storage (bypass the module cache).
     from backend.modules.evidence.semantic.orchestrator import (
         EvidenceProcessingOrchestrator,
@@ -117,6 +121,11 @@ def engine_env(tmp_path, monkeypatch):
         engine.case_registry,
     ):
         factory.cache_clear()
+    # These two may have been monkeypatched with plain callables by a test.
+    for cached in (engine._forensics_pipeline, engine._threat_intel_provider):
+        clear = getattr(cached, "cache_clear", None)
+        if clear is not None:
+            clear()
 
 
 @pytest.fixture

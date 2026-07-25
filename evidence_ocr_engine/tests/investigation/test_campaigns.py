@@ -36,7 +36,7 @@ def test_membership_explanations(analysis):
 
 def test_signature_and_shared_indicators(analysis):
     campaign = analysis.campaigns[0]
-    assert any("wallets:esewa:9812345678" == s or "phones:9812345678" == s
+    assert any("esewa_ids:+9779812345678" == s or "phones:9812345678" == s
                for s in campaign.signature)
     assert campaign.shared_brands == ["esewa"]
     assert campaign.shared_domains == ["scam-bank.top"]

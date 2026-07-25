@@ -33,27 +33,38 @@ def test_enrich_failure_is_isolated(monkeypatch, api):
     assert engine._enrich_evidence("CASE_0001") is None
 
 
-def test_threat_intel_provider_disabled_by_default(api):
-    """With the ML flag off, analysis uses the static intel (provider is None)."""
+def test_threat_intel_is_available_without_the_ml_stack(api):
+    """With the ML flag off there is still a working provider.
+
+    Previously this returned ``None``, which left analysis with only the static
+    indicator file - a file that is not shipped - so every case reported
+    "threat intelligence unavailable". The chain now always includes the
+    rule-based provider, which needs no model, data file or network.
+    """
     from django.test import override_settings
     from api import engine
 
     engine._threat_intel_provider.cache_clear()
     with override_settings(ML_THREAT_INTEL_ENABLED=False):
-        assert engine._threat_intel_provider() is None
+        provider = engine._threat_intel_provider()
+        assert provider is not None
+        assert provider.available is True
+        assert "heuristics" in provider.source_name
+        # And it produces an explained verdict, not just a boolean.
+        hit = provider.lookup("https://esewa-cashback-offer.xyz/claim")
+        assert hit["verdict"] == "malicious"
+        assert hit["reasons"]
     engine._threat_intel_provider.cache_clear()
 
 
 def test_threat_intel_provider_enabled_loads_or_degrades(api, settings):
-    """Enabling the flag returns an available ML provider, or None if the ML
-    system/deps are absent (graceful degradation) — never raises."""
+    """Enabling the ML flag never raises, whether or not the model loads."""
     from api import engine
 
     engine._threat_intel_provider.cache_clear()
     settings.ML_THREAT_INTEL_ENABLED = True
     provider = engine._threat_intel_provider()  # must not raise
-    if provider is not None:
-        assert provider.available is True
+    assert provider.available is True           # heuristics guarantee this
     engine._threat_intel_provider.cache_clear()
 
 

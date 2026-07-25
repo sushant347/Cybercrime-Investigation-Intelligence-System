@@ -11,13 +11,13 @@ import type {
   BackgroundJob,
   CaseAnalytics,
   CaseDetail,
-  CaseHistoryEntry,
   CasePriority,
   CaseSummary,
   CampaignAnalysis,
   CorrelationAnalysis,
   CrossCaseCorrelation,
   DashboardData,
+  EvidenceDeleteResult,
   EvidenceDetail,
   EvidenceRow,
   GraphStatistics,
@@ -69,10 +69,6 @@ export const casesApi = {
     apiClient.patch<CaseDetail>(`/cases/${caseId}/`, patch).then((r) => r.data),
   archive: (caseId: string, unarchive = false) =>
     apiClient.post(`/cases/${caseId}/archive/`, { unarchive }).then((r) => r.data),
-  history: (caseId: string, params?: Query) =>
-    apiClient
-      .get<Paginated<CaseHistoryEntry>>(`/cases/${caseId}/history/`, { params })
-      .then((r) => r.data),
 };
 
 // --------------------------------------------------------------- evidence
@@ -97,6 +93,16 @@ export const evidenceApi = {
   submitUrl: (caseId: string, url: string, notes: string) =>
     apiClient
       .post<BackgroundJob>(`/cases/${caseId}/evidence/url/`, { url, notes })
+      .then((r) => r.data),
+  /**
+   * Delete an evidence item that never produced anything.
+   *
+   * The API rejects this with 409 once the item has OCR text, entities or
+   * forensic reports: processed evidence is part of the case record.
+   */
+  remove: (caseId: string, evidenceId: string) =>
+    apiClient
+      .delete<EvidenceDeleteResult>(`/cases/${caseId}/evidence/${evidenceId}/`)
       .then((r) => r.data),
   downloadUrl: (caseId: string, evidenceId: string, preview = false) =>
     `${apiClient.defaults.baseURL}/cases/${caseId}/evidence/${evidenceId}/download/${preview ? "?preview=1" : ""}`,

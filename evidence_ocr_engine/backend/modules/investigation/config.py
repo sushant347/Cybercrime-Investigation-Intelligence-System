@@ -80,6 +80,9 @@ class InvestigationConfig:
         # wallet / payment identifiers
         "wallets": 1.00, "esewa_ids": 1.00, "khalti_ids": 1.00,
         "imepay_ids": 1.00, "bank_accounts": 1.00,
+        "card_numbers": 1.00,
+        # a shared transaction code is the same payment seen from both sides
+        "transaction_ids": 0.95,
         "eth_wallets": 1.00, "btc_wallets": 1.00,
         # social identifiers
         "social_accounts": 0.80, "telegram_usernames": 0.80,
@@ -103,6 +106,7 @@ class InvestigationConfig:
     correlation_entity_types: Tuple[str, ...] = (
         "phones", "whatsapp_numbers", "emails",
         "wallets", "esewa_ids", "khalti_ids", "imepay_ids", "bank_accounts",
+        "card_numbers", "transaction_ids",
         "eth_wallets", "btc_wallets",
         "social_accounts", "telegram_usernames", "facebook_usernames",
         "instagram_usernames", "social_media_urls",
@@ -129,10 +133,24 @@ class InvestigationConfig:
 
     # ------------------------------------------------------ Module 2: graph
     #: Entity types promoted to graph nodes (entity_type -> node_type).
+    #:
+    #: ``wallets`` and ``social_accounts`` are legacy vocabulary the extractor
+    #: has never emitted; they are kept so older stored entity rows still map,
+    #: but the *real* types are what populate a graph today. Without the real
+    #: ones listed here, a case built entirely on eSewa/Khalti transfers drew a
+    #: relationship graph with no payment nodes in it at all.
     graph_entity_node_types: Dict[str, str] = field(default_factory=lambda: {
-        "phones": "phone_number", "emails": "email", "urls": "url",
-        "domains": "domain", "wallets": "wallet",
-        "bank_accounts": "bank_account", "social_accounts": "social_media_account",
+        "phones": "phone_number", "whatsapp_numbers": "phone_number",
+        "emails": "email", "urls": "url", "domains": "domain",
+        "esewa_ids": "wallet", "khalti_ids": "wallet", "imepay_ids": "wallet",
+        "eth_wallets": "wallet", "btc_wallets": "wallet",
+        "bank_accounts": "bank_account", "card_numbers": "payment_card",
+        "transaction_ids": "transaction",
+        "telegram_usernames": "social_media_account",
+        "facebook_usernames": "social_media_account",
+        "instagram_usernames": "social_media_account",
+        # legacy vocabulary (pre-existing stored rows)
+        "wallets": "wallet", "social_accounts": "social_media_account",
     })
     #: Correlation confidence required for a behavioural evidence-evidence edge.
     graph_behavioral_min_confidence: float = 0.55
@@ -147,8 +165,17 @@ class InvestigationConfig:
 
     # --------------------------------------------------- Module 4: suspects
     #: Entity types treated as suspect identity anchors.
+    #: Entity types treated as suspect identity anchors. The wallet rails are
+    #: listed individually: with only the legacy ``wallets`` key here, a
+    #: suspect who was identified purely by an eSewa or Khalti id - the usual
+    #: case - was never assessed at all.
     suspect_identity_types: Tuple[str, ...] = (
-        "phones", "emails", "wallets", "bank_accounts", "social_accounts",
+        "phones", "whatsapp_numbers", "emails",
+        "esewa_ids", "khalti_ids", "imepay_ids",
+        "bank_accounts", "card_numbers",
+        "eth_wallets", "btc_wallets",
+        "telegram_usernames", "facebook_usernames", "instagram_usernames",
+        "wallets", "social_accounts",          # legacy vocabulary
     )
     suspect_weights: Dict[str, float] = field(default_factory=lambda: {
         "identity_strength": 0.25,   # anchor type weight (wallet > phone > ...)
@@ -159,8 +186,13 @@ class InvestigationConfig:
         "timeline_span": 0.10,       # sustained activity over time
     })
     suspect_identity_type_scores: Dict[str, float] = field(default_factory=lambda: {
-        "wallets": 100.0, "bank_accounts": 100.0, "phones": 85.0,
+        "wallets": 100.0, "esewa_ids": 100.0, "khalti_ids": 100.0,
+        "imepay_ids": 100.0, "bank_accounts": 100.0, "card_numbers": 100.0,
+        "eth_wallets": 95.0, "btc_wallets": 95.0,
+        "phones": 85.0, "whatsapp_numbers": 85.0,
         "emails": 75.0, "social_accounts": 70.0,
+        "telegram_usernames": 70.0, "facebook_usernames": 70.0,
+        "instagram_usernames": 70.0,
     })
     suspect_evidence_count_full_score: int = 4
     suspect_timeline_span_full_days: float = 7.0
@@ -195,8 +227,12 @@ class InvestigationConfig:
         "financial_transaction", "post_attack",
     )
     #: Events flagged critical when these entity types appear in the evidence.
-    timeline_critical_entity_types: Tuple[str, ...] = ("otp", "money", "wallets",
-                                                       "bank_accounts")
+    #: A money movement or a credential hand-over is what makes a moment
+    #: critical, so every payment rail counts - not just the legacy key.
+    timeline_critical_entity_types: Tuple[str, ...] = (
+        "otp", "money", "wallets", "esewa_ids", "khalti_ids", "imepay_ids",
+        "bank_accounts", "card_numbers", "transaction_ids",
+    )
 
     # -------------------------------------------------- Module 6: analytics
     analytics_top_n: int = 10

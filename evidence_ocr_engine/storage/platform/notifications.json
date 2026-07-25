@@ -7,7 +7,7 @@
     "message": "Removed by an administrator. Linked cases refreshed: none",
     "case_id": "",
     "evidence_id": "",
-    "read": false
+    "read": true
   },
   {
     "id": 2,
@@ -17,7 +17,7 @@
     "message": "yeti.jpg processed for CASE_2CF24DBA5F.",
     "case_id": "CASE_2CF24DBA5F",
     "evidence_id": "EVID_00001",
-    "read": false
+    "read": true
   },
   {
     "id": 3,
@@ -27,7 +27,7 @@
     "message": "whatsapp_chat_export.txt processed for CASE_2CF24DBA5F.",
     "case_id": "CASE_2CF24DBA5F",
     "evidence_id": "EVID_00002",
-    "read": false
+    "read": true
   },
   {
     "id": 4,
@@ -37,7 +37,7 @@
     "message": "romanchat.jpg processed for CASE_2CF24DBA5F.",
     "case_id": "CASE_2CF24DBA5F",
     "evidence_id": "EVID_00003",
-    "read": false
+    "read": true
   },
   {
     "id": 5,
@@ -47,7 +47,7 @@
     "message": "phishing_email_screenshot.png processed for CASE_2CF24DBA5F.",
     "case_id": "CASE_2CF24DBA5F",
     "evidence_id": "EVID_00004",
-    "read": false
+    "read": true
   },
   {
     "id": 6,
@@ -57,7 +57,7 @@
     "message": "All Phase-2 artifacts regenerated.",
     "case_id": "CASE_2CF24DBA5F",
     "evidence_id": "",
-    "read": false
+    "read": true
   },
   {
     "id": 7,
@@ -67,7 +67,7 @@
     "message": "romanchat.jpg processed for CASE_8F43434664.",
     "case_id": "CASE_8F43434664",
     "evidence_id": "EVID_00005",
-    "read": false
+    "read": true
   },
   {
     "id": 8,
@@ -77,7 +77,7 @@
     "message": "phishing_email_screenshot.png processed for CASE_8F43434664.",
     "case_id": "CASE_8F43434664",
     "evidence_id": "EVID_00006",
-    "read": false
+    "read": true
   },
   {
     "id": 9,
@@ -87,7 +87,7 @@
     "message": "bank_transactions.csv processed for CASE_8F43434664.",
     "case_id": "CASE_8F43434664",
     "evidence_id": "EVID_00007",
-    "read": false
+    "read": true
   },
   {
     "id": 10,
@@ -97,11 +97,21 @@
     "message": "All Phase-2 artifacts regenerated.",
     "case_id": "CASE_8F43434664",
     "evidence_id": "",
-    "read": false
+    "read": true
   },
   {
     "id": 11,
-    "created_at": "2026-07-25T14:07:46.467Z",
+    "created_at": "2026-07-25T15:22:39.436Z",
+    "type": "case_deleted",
+    "title": "Case CASE_7916EFB87E deleted",
+    "message": "Removed by an administrator. Linked cases refreshed: none",
+    "case_id": "",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 12,
+    "created_at": "2026-07-25T15:23:40.184Z",
     "type": "processing_complete",
     "title": "Evidence EVID_00009 processed",
     "message": "01_sms_screenshot.jpg processed for CASE_7916EFB87E.",
@@ -110,8 +120,8 @@
     "read": false
   },
   {
-    "id": 12,
-    "created_at": "2026-07-25T14:07:55.013Z",
+    "id": 13,
+    "created_at": "2026-07-25T15:23:58.740Z",
     "type": "processing_complete",
     "title": "Evidence EVID_00010 processed",
     "message": "02_messenger_chat.jpg processed for CASE_7916EFB87E.",
@@ -120,8 +130,8 @@
     "read": false
   },
   {
-    "id": 13,
-    "created_at": "2026-07-25T14:07:59.441Z",
+    "id": 14,
+    "created_at": "2026-07-25T15:24:07.052Z",
     "type": "processing_complete",
     "title": "Evidence EVID_00011 processed",
     "message": "03_qr_code_flyer.png processed for CASE_7916EFB87E.",
@@ -130,8 +140,8 @@
     "read": false
   },
   {
-    "id": 14,
-    "created_at": "2026-07-25T14:08:04.806Z",
+    "id": 15,
+    "created_at": "2026-07-25T15:24:16.816Z",
     "type": "processing_complete",
     "title": "Evidence EVID_00012 processed",
     "message": "04_esewa_payment_screenshot.jpg processed for CASE_7916EFB87E.",
@@ -140,8 +150,8 @@
     "read": false
   },
   {
-    "id": 15,
-    "created_at": "2026-07-25T14:08:10.336Z",
+    "id": 16,
+    "created_at": "2026-07-25T15:24:27.995Z",
     "type": "processing_complete",
     "title": "Evidence EVID_00013 processed",
     "message": "05_khalti_receipt.jpg processed for CASE_7916EFB87E.",
@@ -150,8 +160,8 @@
     "read": false
   },
   {
-    "id": 16,
-    "created_at": "2026-07-25T14:08:16.112Z",
+    "id": 17,
+    "created_at": "2026-07-25T15:24:38.365Z",
     "type": "processing_complete",
     "title": "Evidence EVID_00014 processed",
     "message": "06_phishing_email_screenshot.jpg processed for CASE_7916EFB87E.",
@@ -160,8 +170,8 @@
     "read": false
   },
   {
-    "id": 17,
-    "created_at": "2026-07-25T14:08:25.343Z",
+    "id": 18,
+    "created_at": "2026-07-25T15:24:49.945Z",
     "type": "processing_complete",
     "title": "Evidence EVID_00015 processed",
     "message": "07_bank_transfer_slip.pdf processed for CASE_7916EFB87E.",
@@ -170,8 +180,8 @@
     "read": false
   },
   {
-    "id": 18,
-    "created_at": "2026-07-25T14:08:27.820Z",
+    "id": 19,
+    "created_at": "2026-07-25T15:24:52.852Z",
     "type": "processing_complete",
     "title": "Evidence EVID_00016 processed",
     "message": "08_complaint_letter.pdf processed for CASE_7916EFB87E.",
@@ -180,8 +190,8 @@
     "read": false
   },
   {
-    "id": 19,
-    "created_at": "2026-07-25T14:09:34.885Z",
+    "id": 20,
+    "created_at": "2026-07-25T15:25:02.717Z",
     "type": "report_generated",
     "title": "Investigation analysis completed for CASE_7916EFB87E",
     "message": "All Phase-2 artifacts regenerated.",
@@ -190,11 +200,11 @@
     "read": false
   },
   {
-    "id": 20,
-    "created_at": "2026-07-25T14:09:34.912Z",
+    "id": 21,
+    "created_at": "2026-07-25T15:25:02.743Z",
     "type": "high_priority",
-    "title": "CASE_7916EFB87E flagged HIGH priority",
-    "message": "Engine priority score: 71.2.",
+    "title": "CASE_7916EFB87E flagged CRITICAL priority",
+    "message": "Engine priority score: 76.3.",
     "case_id": "CASE_7916EFB87E",
     "evidence_id": "",
     "read": false

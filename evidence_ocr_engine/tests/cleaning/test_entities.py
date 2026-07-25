@@ -153,3 +153,83 @@ def test_stable_schema_all_keys_present(extractor: EntityExtractor) -> None:
                 "instagram_usernames"):
         assert key in entities
         assert entities[key] == []
+
+
+# ------------------------------------------------- receipt / statement layout
+#
+# Every case in this system is built on screenshots and PDF slips, where the
+# label and its value sit on *separate lines*. These tests pin that layout,
+# because the same-line-only patterns silently produced zero wallet ids,
+# account numbers and transaction codes from exactly this evidence.
+
+
+def test_wallet_id_on_the_line_below_its_label(extractor: EntityExtractor) -> None:
+    text = (
+        "Khalti\nPayment Receipt\nSent To (Khalti ID)\n9801122334\n"
+        "Sender (Khalti ID)\n9847011223\n"
+    )
+    assert _normalized(extractor.extract(text), "khalti_ids") == [
+        "+9779801122334", "+9779847011223",
+    ]
+
+
+def test_wallet_id_may_be_an_email(extractor: EntityExtractor) -> None:
+    """eSewa/Khalti accept an email as the account id; the phone normaliser
+    used to strip it to a meaningless digit fragment."""
+    text = "From eSewa ID\nsunita.gurung21@gmail.com\n"
+    assert _normalized(extractor.extract(text), "esewa_ids") == [
+        "sunita.gurung21@gmail.com",
+    ]
+
+
+def test_bank_account_with_no_colon_label(extractor: EntityExtractor) -> None:
+    text = "Depositor Account No.:\n0501-0198765432\n"
+    assert _normalized(extractor.extract(text), "bank_accounts") == ["05010198765432"]
+
+
+def test_transaction_codes_labelled_and_structural(extractor: EntityExtractor) -> None:
+    text = (
+        "Transaction Code\nKH-2026-0611-77245\n"
+        "Voucher No.:\nMBL-2026-441829\n"
+        "TansatianD\n0119.0625.987456\n"          # OCR-mangled label, intact code
+        "Ref: DSN2026\n"
+    )
+    found = _normalized(extractor.extract(text), "transaction_ids")
+    for code in ("KH-2026-0611-77245", "MBL-2026-441829", "0119.0625.987456",
+                 "DSN2026"):
+        assert code in found
+
+
+def test_amounts_are_not_transaction_codes(extractor: EntityExtractor) -> None:
+    assert extractor.extract("Payment 1,500.00\nAmount Rs. 2,000") \
+        ["transaction_ids"] == []
+
+
+# --------------------------------------------------------- false-positive gate
+
+
+def test_card_number_requires_issuer_prefix_and_luhn(extractor: EntityExtractor) -> None:
+    text = (
+        "Card 4111 1111 1111 1111\n"      # real Visa test PAN, Luhn-valid
+        "0000000000000000\n"              # OCR zero-run: Luhn-valid, not a card
+        "9779801122334\n"                 # phone digits
+    )
+    assert _normalized(extractor.extract(text), "card_numbers") == [
+        "4111111111111111",
+    ]
+
+
+def test_clock_time_is_not_a_port(extractor: EntityExtractor) -> None:
+    entities = extractor.extract("Date & Time\n2026-06-11 10:42 AM, 11:15 AM")
+    assert entities["ports"] == []
+    assert _values(entities, "ports") == []
+
+
+def test_host_port_is_still_a_port(extractor: EntityExtractor) -> None:
+    entities = extractor.extract("connect to scam-panel.top:8443 and port 22")
+    assert set(_normalized(entities, "ports")) == {"8443", "22"}
+
+
+def test_ocr_zero_runs_are_not_phone_numbers(extractor: EntityExtractor) -> None:
+    entities = extractor.extract("00000001 00 00000 2 0000000 और 9847011223")
+    assert _normalized(entities, "phones") == ["+9779847011223"]

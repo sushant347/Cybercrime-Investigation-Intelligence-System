@@ -24,7 +24,6 @@ urlpatterns = [
     # them; every route below addresses one already-known case id.
     path("cases/<str:case_id>/", cases.CaseDetailView.as_view()),
     path("cases/<str:case_id>/archive/", cases.CaseArchiveView.as_view()),
-    path("cases/<str:case_id>/history/", cases.CaseHistoryView.as_view()),
     # Evidence
     path("cases/<str:case_id>/evidence/", evidence.EvidenceListView.as_view()),
     path("cases/<str:case_id>/evidence/upload/", evidence.EvidenceUploadView.as_view()),

@@ -31,10 +31,11 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { adminApi } from "@/api";
+import { adminApi, dashboardApi } from "@/api";
 import { EmptyState } from "@/components/common/EmptyState";
 import { TableSkeleton } from "@/components/common/LoadingSkeleton";
 import { PageHeader } from "@/components/common/PageHeader";
+import { StatCard } from "@/components/common/StatCard";
 import { adminToken, apiErrorMessage } from "@/lib/apiClient";
 import { formatDateTime } from "@/lib/format";
 import type { AdminCase, AdminDeleteResult } from "@/types";
@@ -98,6 +99,118 @@ function AdminLogin({ onSuccess }: { onSuccess: () => void }) {
         </CardContent>
       </Card>
     </Box>
+  );
+}
+
+/**
+ * Cross-case overview.
+ *
+ * Deliberately only on this page: the product has no dashboard for
+ * investigators, because a case is private to whoever knows its reference and
+ * a cross-case view would expose one case to another. The administrator is
+ * already past that boundary, so the aggregates belong here.
+ */
+function SystemOverview() {
+  const { data, isPending, isError, error } = useQuery({
+    queryKey: ["dashboard"],
+    queryFn: dashboardApi.get,
+    retry: false,
+  });
+
+  if (isPending) return <TableSkeleton />;
+  if (isError) {
+    return (
+      <Alert severity="warning" sx={{ mb: 2 }}>
+        {apiErrorMessage(error)}
+      </Alert>
+    );
+  }
+
+  const totals = data.totals;
+  const threat = data.threat_distribution ?? {};
+  const priority = data.priority_distribution ?? {};
+  const analysed = totals.analysed_cases ?? 0;
+  const threatTotal = Object.values(threat).reduce((sum, n) => sum + n, 0);
+
+  return (
+    <Stack spacing={2} sx={{ mb: 3 }}>
+      <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
+        <StatCard label="Cases" value={totals.cases} hint={`${totals.active_cases} active`} />
+        <StatCard
+          label="Evidence"
+          value={totals.evidence}
+          hint={`${totals.entities_extracted ?? 0} entities extracted`}
+        />
+        <StatCard
+          label="Analysed"
+          value={`${analysed}/${totals.cases}`}
+          hint={
+            analysed < totals.cases
+              ? `${totals.cases - analysed} case(s) never analysed`
+              : "every case has findings"
+          }
+        />
+        <StatCard
+          label="Cases with threats"
+          value={totals.cases_with_threats ?? 0}
+          hint={`${totals.campaigns} campaign(s) detected`}
+        />
+      </Stack>
+
+      <Stack direction={{ xs: "column", md: "row" }} spacing={2}>
+        <Card sx={{ flex: 1 }}>
+          <CardContent>
+            <Typography variant="subtitle2" gutterBottom>
+              Threat verdicts across all cases
+            </Typography>
+            {threatTotal === 0 ? (
+              <Typography variant="body2" color="text.secondary">
+                {analysed === 0
+                  ? "No case has been analysed yet, so nothing has been checked."
+                  : "No URLs or domains were found in any analysed case."}
+              </Typography>
+            ) : (
+              <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                {Object.entries(threat).map(([verdict, count]) => (
+                  <Chip
+                    key={verdict}
+                    size="small"
+                    label={`${verdict}: ${count}`}
+                    color={
+                      verdict === "malicious"
+                        ? "error"
+                        : verdict === "suspicious"
+                          ? "warning"
+                          : "default"
+                    }
+                    variant={verdict === "benign" ? "outlined" : "filled"}
+                  />
+                ))}
+              </Stack>
+            )}
+          </CardContent>
+        </Card>
+
+        <Card sx={{ flex: 1 }}>
+          <CardContent>
+            <Typography variant="subtitle2" gutterBottom>
+              Priority distribution
+            </Typography>
+            {Object.keys(priority).length === 0 ? (
+              <Typography variant="body2" color="text.secondary">
+                No priority verdicts yet — they are produced by a case analysis.
+              </Typography>
+            ) : (
+              <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                {Object.entries(priority).map(([band, count]) => (
+                  <Chip key={band} size="small" variant="outlined" label={`${band}: ${count}`} />
+                ))}
+              </Stack>
+            )}
+          </CardContent>
+        </Card>
+      </Stack>
+    </Stack>
   );
 }
 
@@ -165,6 +278,8 @@ export default function AdminPage() {
           </Stack>
         }
       />
+
+      <SystemOverview />
 
       {casesQuery.isError && (
         <Alert severity="error" sx={{ mb: 2 }}>

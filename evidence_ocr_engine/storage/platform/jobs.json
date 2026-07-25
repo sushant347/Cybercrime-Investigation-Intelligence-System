@@ -133,103 +133,103 @@
   },
   {
     "id": 12,
-    "created_at": "2026-07-25T14:07:22.226Z",
+    "created_at": "2026-07-25T15:23:29.763Z",
     "job_type": "evidence_processing",
     "status": "completed",
     "case_id": "CASE_7916EFB87E",
     "evidence_id": "EVID_00009",
-    "detail": "Processed as EVID_00009; 0 entities extracted; timeline and graph refreshed",
+    "detail": "Processed as EVID_00009; 0 entities extracted; forensic reports generated; timeline and graph refreshed",
     "error": "",
     "created_by": "",
-    "finished_at": "2026-07-25T14:07:46.460Z"
+    "finished_at": "2026-07-25T15:23:40.178Z"
   },
   {
     "id": 13,
-    "created_at": "2026-07-25T14:07:47.940Z",
+    "created_at": "2026-07-25T15:23:42.508Z",
     "job_type": "evidence_processing",
     "status": "completed",
     "case_id": "CASE_7916EFB87E",
     "evidence_id": "EVID_00010",
-    "detail": "Processed as EVID_00010; 9 entities extracted; timeline and graph refreshed",
+    "detail": "Processed as EVID_00010; 5 entities extracted; forensic reports generated; timeline and graph refreshed",
     "error": "",
     "created_by": "",
-    "finished_at": "2026-07-25T14:07:55.006Z"
+    "finished_at": "2026-07-25T15:23:58.733Z"
   },
   {
     "id": 14,
-    "created_at": "2026-07-25T14:07:55.710Z",
+    "created_at": "2026-07-25T15:24:00.364Z",
     "job_type": "evidence_processing",
     "status": "completed",
     "case_id": "CASE_7916EFB87E",
     "evidence_id": "EVID_00011",
-    "detail": "Processed as EVID_00011; 3 entities extracted; timeline and graph refreshed",
+    "detail": "Processed as EVID_00011; 4 entities extracted; forensic reports generated; timeline and graph refreshed",
     "error": "",
     "created_by": "",
-    "finished_at": "2026-07-25T14:07:59.434Z"
+    "finished_at": "2026-07-25T15:24:07.044Z"
   },
   {
     "id": 15,
-    "created_at": "2026-07-25T14:08:00.924Z",
+    "created_at": "2026-07-25T15:24:08.114Z",
     "job_type": "evidence_processing",
     "status": "completed",
     "case_id": "CASE_7916EFB87E",
     "evidence_id": "EVID_00012",
-    "detail": "Processed as EVID_00012; 3 entities extracted; timeline and graph refreshed",
+    "detail": "Processed as EVID_00012; 4 entities extracted; forensic reports generated; timeline and graph refreshed",
     "error": "",
     "created_by": "",
-    "finished_at": "2026-07-25T14:08:04.799Z"
+    "finished_at": "2026-07-25T15:24:16.808Z"
   },
   {
     "id": 16,
-    "created_at": "2026-07-25T14:08:06.122Z",
+    "created_at": "2026-07-25T15:24:18.419Z",
     "job_type": "evidence_processing",
     "status": "completed",
     "case_id": "CASE_7916EFB87E",
     "evidence_id": "EVID_00013",
-    "detail": "Processed as EVID_00013; 7 entities extracted; timeline and graph refreshed",
+    "detail": "Processed as EVID_00013; 10 entities extracted; forensic reports generated; timeline and graph refreshed",
     "error": "",
     "created_by": "",
-    "finished_at": "2026-07-25T14:08:10.331Z"
+    "finished_at": "2026-07-25T15:24:27.987Z"
   },
   {
     "id": 17,
-    "created_at": "2026-07-25T14:08:11.310Z",
+    "created_at": "2026-07-25T15:24:28.709Z",
     "job_type": "evidence_processing",
     "status": "completed",
     "case_id": "CASE_7916EFB87E",
     "evidence_id": "EVID_00014",
-    "detail": "Processed as EVID_00014; 2 entities extracted; timeline and graph refreshed",
+    "detail": "Processed as EVID_00014; 2 entities extracted; forensic reports generated; timeline and graph refreshed",
     "error": "",
     "created_by": "",
-    "finished_at": "2026-07-25T14:08:16.105Z"
+    "finished_at": "2026-07-25T15:24:38.358Z"
   },
   {
     "id": 18,
-    "created_at": "2026-07-25T14:08:16.523Z",
+    "created_at": "2026-07-25T15:24:39.031Z",
     "job_type": "evidence_processing",
     "status": "completed",
     "case_id": "CASE_7916EFB87E",
     "evidence_id": "EVID_00015",
-    "detail": "Processed as EVID_00015; 4 entities extracted; timeline and graph refreshed",
+    "detail": "Processed as EVID_00015; 8 entities extracted; forensic reports generated; timeline and graph refreshed",
     "error": "",
     "created_by": "",
-    "finished_at": "2026-07-25T14:08:25.337Z"
+    "finished_at": "2026-07-25T15:24:49.937Z"
   },
   {
     "id": 19,
-    "created_at": "2026-07-25T14:08:27.001Z",
+    "created_at": "2026-07-25T15:24:51.886Z",
     "job_type": "evidence_processing",
     "status": "completed",
     "case_id": "CASE_7916EFB87E",
     "evidence_id": "EVID_00016",
-    "detail": "Processed as EVID_00016; 19 entities extracted; timeline and graph refreshed",
+    "detail": "Processed as EVID_00016; 25 entities extracted; forensic reports generated; timeline and graph refreshed",
     "error": "",
     "created_by": "",
-    "finished_at": "2026-07-25T14:08:27.793Z"
+    "finished_at": "2026-07-25T15:24:52.823Z"
   },
   {
     "id": 20,
-    "created_at": "2026-07-25T14:09:34.214Z",
+    "created_at": "2026-07-25T15:25:01.634Z",
     "job_type": "case_analysis",
     "status": "completed",
     "case_id": "CASE_7916EFB87E",
@@ -237,6 +237,6 @@
     "detail": "failures=none",
     "error": "",
     "created_by": "",
-    "finished_at": "2026-07-25T14:09:34.860Z"
+    "finished_at": "2026-07-25T15:25:02.682Z"
   }
 ]
