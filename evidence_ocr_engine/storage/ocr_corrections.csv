@@ -9,3 +9,4 @@ CASE_2CF24DBA5F,EVID_00003,,,1.0000,unicode_validation:orphan_marks_removed(5),,
 CASE_8F43434664,EVID_00005,,,1.0000,unicode_validation:orphan_marks_removed(5),,,,0.000,0,2026-07-25T11:54:37.470Z
 CASE_2CF24DBA5F,EVID_00003,,,1.0000,unicode_validation:orphan_marks_removed(5),,,,0.000,0,2026-07-25T11:55:11.859Z
 CASE_8F43434664,EVID_00005,,,1.0000,unicode_validation:orphan_marks_removed(5),,,,0.000,0,2026-07-25T11:55:12.823Z
+CASE_7916EFB87E,EVID_00010,gन,ga,0.8541,script_consistency,न→a,single_script,mixed,0.600,5,2026-07-25T14:07:54.819Z

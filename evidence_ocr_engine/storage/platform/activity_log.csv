@@ -17,3 +17,15 @@ id,created_at,username,module,action,case_id,detail
 16,2026-07-25T12:56:24.331Z,,evidence,upload,CASE_8F43434664,police_scan_report.pdf
 17,2026-07-25T12:58:09.041Z,,evidence,upload,CASE_8F43434664,const.jpg
 18,2026-07-25T13:02:00.075Z,,investigation,run_analysis,CASE_8F43434664,
+19,2026-07-25T14:05:09.472Z,,admin,login_failed,,
+20,2026-07-25T14:05:18.902Z,,admin,login,,
+21,2026-07-25T14:06:41.405Z,,intake,created,CASE_7916EFB87E,Evidence Case
+22,2026-07-25T14:07:22.253Z,,evidence,upload,CASE_7916EFB87E,01_sms_screenshot.jpg
+23,2026-07-25T14:07:47.962Z,,evidence,upload,CASE_7916EFB87E,02_messenger_chat.jpg
+24,2026-07-25T14:07:55.735Z,,evidence,upload,CASE_7916EFB87E,03_qr_code_flyer.png
+25,2026-07-25T14:08:00.957Z,,evidence,upload,CASE_7916EFB87E,04_esewa_payment_screenshot.jpg
+26,2026-07-25T14:08:06.147Z,,evidence,upload,CASE_7916EFB87E,05_khalti_receipt.jpg
+27,2026-07-25T14:08:11.360Z,,evidence,upload,CASE_7916EFB87E,06_phishing_email_screenshot.jpg
+28,2026-07-25T14:08:16.550Z,,evidence,upload,CASE_7916EFB87E,07_bank_transfer_slip.pdf
+29,2026-07-25T14:08:27.028Z,,evidence,upload,CASE_7916EFB87E,08_complaint_letter.pdf
+30,2026-07-25T14:09:34.243Z,,investigation,run_analysis,CASE_7916EFB87E,
