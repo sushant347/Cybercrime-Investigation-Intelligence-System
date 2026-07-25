@@ -63,7 +63,9 @@ class EntityExtractor:
         results["dates"] = self._collect(text, rx.DATE, "dates")
         results["times"] = self._collect(text, rx.TIME, "times")
 
-        results["money"] = self._collect(text, rx.MONEY, "money")
+        results["money"] = self._collect(
+            text, rx.MONEY, "money", normalize=self._normalize_money
+        )
         results["otp"] = self._group_matches(text, rx.OTP, "otp")
         results["bank_accounts"] = self._group_matches(
             text, rx.BANK_ACCOUNT, "bank_accounts",
@@ -222,6 +224,48 @@ class EntityExtractor:
     @staticmethod
     def _normalize_mac(value: str) -> str:
         return value.lower().replace("-", ":")
+
+    #: Currency markers (prefix or suffix, case-insensitive) -> canonical
+    #: 3-letter code. "Rs"/"रु"/"rupees"/"rupaiya" are the same Nepali-rupee
+    #: family used throughout this Nepal-focused engine (esewa/khalti/imepay
+    #: are Nepali payment systems); paisa is a distinct subunit (1/100 NPR)
+    #: and is deliberately kept out of this map rather than aliased to NPR,
+    #: since collapsing them would assert an incorrect 1:1 equivalence.
+    _CURRENCY_ALIASES: Dict[str, str] = {
+        "npr": "NPR", "rs": "NPR", "rs.": "NPR",
+        "रु": "NPR", "रु.": "NPR", "rupees": "NPR", "rupaiya": "NPR",
+        "inr": "INR", "₹": "INR",
+        "usd": "USD", "$": "USD", "dollar": "USD", "dollars": "USD",
+        "eur": "EUR", "€": "EUR",
+        "gbp": "GBP", "£": "GBP",
+        "paisa": "NPR-PAISA",
+    }
+
+    @classmethod
+    def _normalize_money(cls, value: str) -> str:
+        """Canonical ``"<CODE> <amount>"`` form so the same amount written
+        with different commas, spacing, casing, or a prefix/suffix currency
+        marker (``Rs 2,000`` vs ``rs2000`` vs ``2000 NPR`` vs ``2000.00``)
+        de-duplicates to one entity instead of appearing as unrelated nodes
+        in the correlation engine and relationship graph.
+
+        The regex caps fractional digits at 2 places (`MONEY` pattern), so a
+        float round-trip is exact for every value it can match - amounts
+        stay well inside float's ~15-digit precision - and canonicalizing
+        through it is what lets ``2000`` and ``2000.00`` collapse together.
+        """
+        amount_match = re.search(r"\d[\d,]*(?:\.\d{1,2})?", value)
+        if not amount_match:
+            return value.strip()
+        amount = float(amount_match.group(0).replace(",", ""))
+        amount_str = (
+            str(int(amount))
+            if amount == int(amount)
+            else f"{amount:.2f}".rstrip("0").rstrip(".")
+        )
+        token = (value[: amount_match.start()] + value[amount_match.end() :]).strip(" .")
+        code = cls._CURRENCY_ALIASES.get(token.lower(), token.upper())
+        return f"{code} {amount_str}".strip()
 
     # ----------------------------------------------------------------- domains
 
