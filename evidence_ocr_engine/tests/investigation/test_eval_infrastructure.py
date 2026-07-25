@@ -106,6 +106,18 @@ def test_timeline_gold_template_parses_and_is_flagged_template():
     assert gold.is_template()
 
 
+def test_example_gold_files_are_valid_and_not_templates():
+    """The demo example gold must stay parseable and populated (so the
+    out-of-the-box `run_all_evaluations` demo keeps working)."""
+    corr = load_correlation_gold(GT / "correlation_gold_example.json")
+    assert not corr.is_template()
+    assert corr.within_case and corr.cross_case  # both populated
+    tl = load_timeline_gold(GT / "timeline_gold_example.json")
+    assert not tl.is_template()
+    # every timeline gold item has a non-empty order
+    assert all(order for order in tl.order.values())
+
+
 def test_bad_pair_shape_raises(tmp_path):
     p = tmp_path / "bad.json"
     p.write_text(json.dumps({"within_case": {"C": {"related_pairs": [["only_one"]]}}}))

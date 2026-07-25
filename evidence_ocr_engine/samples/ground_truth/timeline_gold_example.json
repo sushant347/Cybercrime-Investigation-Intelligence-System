@@ -1,0 +1,11 @@
+{
+  "_note": "ILLUSTRATIVE DEMO — real case CASE_2CF24DBA5F with a plausible content-derived order and timestamps (from the WhatsApp/SMS sample: 2026-01-04, 09:12-09:15). Demonstrates the runner; not thesis-grade. The engine currently resolves upload_time, so expect a large timestamp MAE here — that is the finding, not a bug.",
+  "CASE_2CF24DBA5F": {
+    "order": ["EVID_00001", "EVID_00002", "EVID_00003"],
+    "timestamps": {
+      "EVID_00001": "2026-01-04T09:12:00Z",
+      "EVID_00002": "2026-01-04T09:14:00Z",
+      "EVID_00003": "2026-01-04T09:15:00Z"
+    }
+  }
+}

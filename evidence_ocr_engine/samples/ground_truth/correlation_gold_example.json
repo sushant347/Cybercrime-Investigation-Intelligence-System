@@ -1,0 +1,10 @@
+{
+  "_note": "ILLUSTRATIVE DEMO — built from the real cases already in storage, with plausible (NOT thesis-grade) human-style labels, so the runner executes end-to-end out of the box. within_case: the multiple screenshots in one fraud case are treated as related. cross_case: cases sharing the same scam amounts are treated as one campaign. Replace with genuine human-verified gold before quoting any number.",
+  "within_case": {
+    "CASE_2CF24DBA5F": {"related_pairs": [["EVID_00001", "EVID_00002"], ["EVID_00001", "EVID_00003"], ["EVID_00002", "EVID_00003"]]},
+    "CASE_8F43434664": {"related_pairs": [["EVID_00004", "EVID_00005"], ["EVID_00004", "EVID_00006"], ["EVID_00005", "EVID_00006"]]},
+    "CASE_F1278DD84F": {"related_pairs": [["EVID_00007", "EVID_00008"]]},
+    "CASE_85B2471DFB": {"related_pairs": [["EVID_00009", "EVID_00010"]]}
+  },
+  "cross_case": {"related_pairs": [["EVID_00002", "EVID_00008"], ["EVID_00002", "EVID_00010"], ["EVID_00008", "EVID_00010"]]}
+}
