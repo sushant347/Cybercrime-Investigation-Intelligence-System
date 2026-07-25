@@ -28,6 +28,7 @@ urlpatterns = [
     # Evidence
     path("cases/<str:case_id>/evidence/", evidence.EvidenceListView.as_view()),
     path("cases/<str:case_id>/evidence/upload/", evidence.EvidenceUploadView.as_view()),
+    path("cases/<str:case_id>/evidence/url/", evidence.EvidenceUrlView.as_view()),
     path("cases/<str:case_id>/evidence/<str:evidence_id>/", evidence.EvidenceDetailView.as_view()),
     path(
         "cases/<str:case_id>/evidence/<str:evidence_id>/download/",

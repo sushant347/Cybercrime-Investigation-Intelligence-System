@@ -124,6 +124,8 @@ class EvidencePipeline:
             return [self._extract_plain_text(stored, record)]
         if extension == ".docx":
             return [self._extract_docx(stored, record)]
+        if extension == ".url":
+            return [self._extract_url(stored, record)]
         raise EvidenceError(f"No extractor for '{extension}'")  # defensive; upload validates
 
     def _ocr_image_page(
@@ -151,10 +153,47 @@ class EvidencePipeline:
         )
 
     def _extract_pdf(self, stored: Path, record: EvidenceRecord) -> List[OCRPageResult]:
-        """Every PDF page is processed separately; page order is preserved."""
+        """Hybrid PDF extraction: embedded text first, OCR only when needed.
+
+        A digital PDF carries its text verbatim, so reading that text layer is
+        exact and fast; running OCR over a rendered image of it would be slower
+        and *less* accurate. Pages with no usable text layer (i.e. scanned
+        images) fall back to render + OCR, so scanned evidence still works.
+        Page order is preserved either way.
+        """
+        text_pages: dict[int, str] = {}
+        try:
+            for page_number, text in self._pdf.iter_page_text(stored):
+                text_pages[page_number] = text or ""
+        except Exception as exc:  # noqa: BLE001 - fall back to OCR wholesale
+            self._log.warning("PDF text layer unavailable (%s); using OCR", exc)
+
         pages: List[OCRPageResult] = []
-        for page_number, image in self._pdf.iter_page_images(stored):
-            pages.append(self._ocr_image_page(image, page_number, record))
+        needs_ocr: List[int] = []
+        for page_number, text in sorted(text_pages.items()):
+            if len(text.strip()) >= self._cfg.pdf_text_layer_min_chars:
+                lines = [OCRLine(text=ln, confidence=1.0)
+                         for ln in text.splitlines() if ln.strip()]
+                self._audit.log_stage(
+                    record.case_id, record.evidence_id, "ocr",
+                    f"page {page_number}: {len(lines)} lines from PDF text layer "
+                    "(no OCR needed)",
+                )
+                pages.append(OCRPageResult(
+                    page_number=page_number, lines=lines,
+                    preprocessing_steps=["none(pdf_text_layer)"],
+                ))
+            else:
+                needs_ocr.append(page_number)
+
+        # Scanned pages (and the whole file if the text layer was unreadable).
+        if needs_ocr or not text_pages:
+            wanted = set(needs_ocr)
+            for page_number, image in self._pdf.iter_page_images(stored):
+                if text_pages and page_number not in wanted:
+                    continue
+                pages.append(self._ocr_image_page(image, page_number, record))
+
         pages.sort(key=lambda p: p.page_number)  # guarantee page order on merge
         return pages
 
@@ -167,6 +206,25 @@ class EvidencePipeline:
             f"plain-text evidence: {len(lines)} lines read directly",
         )
         return OCRPageResult(page_number=1, lines=lines, preprocessing_steps=["none(text_file)"])
+
+    def _extract_url(self, stored: Path, record: EvidenceRecord) -> OCRPageResult:
+        """URL evidence: the link (plus any captured page text) read verbatim.
+
+        A submitted link is persisted as a ``.url`` text artifact, so it flows
+        through the identical acquisition path as a file: hashed for chain of
+        custody, stored, and read here without OCR. The URL then surfaces as a
+        ``urls`` entity, which is what lets threat intelligence score it and
+        cross-case correlation match it against other cases.
+        """
+        text = stored.read_text(encoding="utf-8", errors="replace")
+        lines = [OCRLine(text=ln, confidence=1.0)
+                 for ln in text.splitlines() if ln.strip()]
+        self._audit.log_stage(
+            record.case_id, record.evidence_id, "ocr",
+            f"URL evidence: {len(lines)} line(s) read directly (no OCR)",
+        )
+        return OCRPageResult(page_number=1, lines=lines,
+                             preprocessing_steps=["none(url)"])
 
     def _extract_docx(self, stored: Path, record: EvidenceRecord) -> OCRPageResult:
         """Optional DOCX support via python-docx (text extracted verbatim)."""

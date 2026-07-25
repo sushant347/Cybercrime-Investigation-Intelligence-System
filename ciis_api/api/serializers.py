@@ -22,6 +22,13 @@ class EvidenceUploadSerializer(serializers.Serializer):
     notes = serializers.CharField(allow_blank=True, required=False, default="")
 
 
+class UrlEvidenceSerializer(serializers.Serializer):
+    """A link submitted as evidence (instead of a file upload)."""
+
+    url = serializers.URLField(max_length=2000)
+    notes = serializers.CharField(allow_blank=True, required=False, default="")
+
+
 class AdminLoginSerializer(serializers.Serializer):
     password = serializers.CharField(max_length=256, trim_whitespace=False)
 

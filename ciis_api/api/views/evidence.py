@@ -1,4 +1,5 @@
 """Evidence management: upload (Phase-1 pipeline), artifacts, download."""
+import re
 import tempfile
 from pathlib import Path
 
@@ -11,7 +12,11 @@ from ..permissions import require
 
 from .. import engine
 from ..pagination import DefaultPagination
-from ..serializers import EvidenceUploadSerializer, job_payload
+from ..serializers import (
+    EvidenceUploadSerializer,
+    UrlEvidenceSerializer,
+    job_payload,
+)
 from ..store import activity, jobs
 
 
@@ -69,6 +74,40 @@ class EvidenceUploadView(APIView):
         )
         activity.record(module="evidence", action="upload",
                         case_id=case_id, detail=upload.name)
+        return Response(job_payload(job), status=202)
+
+
+class EvidenceUrlView(APIView):
+    """Submit a **link** as evidence (no file upload).
+
+    The URL is written to a small ``.url`` artifact and pushed through the same
+    Phase-1 pipeline as a file, so it is hashed for chain of custody, stored,
+    and entity-extracted. The link then participates in threat-intelligence
+    scoring and cross-case correlation like any other entity.
+    """
+
+    permission_classes = (require("evidence.upload"),)
+
+    def post(self, request, case_id: str):
+        if engine.get_case(case_id) is None:
+            return Response({"detail": "Case not found."}, status=404)
+        serializer = UrlEvidenceSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        url = serializer.validated_data["url"]
+
+        # Persist the link as a .url text artifact the engine can acquire.
+        tmp_dir = Path(tempfile.mkdtemp(prefix="ciis_url_"))
+        safe_name = re.sub(r"[^A-Za-z0-9._-]+", "_", url)[:60] or "link"
+        tmp_path = tmp_dir / f"{safe_name}.url"
+        tmp_path.write_text(f"{url}\n", encoding="utf-8")
+
+        job = jobs.start("evidence_processing", case_id=case_id, detail=url)
+        engine.submit_evidence_job(
+            job["id"], str(tmp_path), case_id,
+            serializer.validated_data["notes"], "",
+        )
+        activity.record(module="evidence", action="submit_url",
+                        case_id=case_id, detail=url)
         return Response(job_payload(job), status=202)
 
 

@@ -256,10 +256,13 @@ def delete_case(
     # 4. Cross-case entity index.
     from .crosscase import CrossCaseEntityIndex
 
-    index = CrossCaseEntityIndex(investigation_config.cross_case_index_path)
+    index = CrossCaseEntityIndex(
+        investigation_config.entities_csv,
+        legacy_index_path=investigation_config.cross_case_index_path,
+    )
+    # The case's rows were already removed from entities.csv above, so this
+    # just invalidates the cached view (the single file is the only store).
     index_changed = index.remove_case(case_id)
-    if index_changed:
-        index.save()
 
     summary = {
         "case_id": case_id,
