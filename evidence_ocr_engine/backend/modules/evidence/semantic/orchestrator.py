@@ -67,3 +67,27 @@ class EvidenceProcessingOrchestrator:
                        case_id, len(cleaned), len(enhanced), len(semantic),
                        timer.elapsed_ms)
         return summary
+
+    def process_evidence(self, case_id: str, evidence_id: str) -> Dict[str, Any]:
+        """Run the full chain for ONE evidence item of a case.
+
+        Same contract as :meth:`process_case`, but scoped to a single
+        ``evidence_id``. This is what incremental uploads should use: cleaning,
+        enhancement and semantic correction are per-item operations, so
+        re-running them over the whole case on every upload made the n-th
+        upload do n items' worth of work (O(n^2) across a case's lifetime)
+        for identical results — already-processed items are simply rewritten.
+        The CSV side-effects (entities.csv, keyword_statistics.csv) are
+        idempotent per (case_id, evidence_id) either way.
+        """
+        summary: Dict[str, Any] = {"case_id": case_id, "stages": {}}
+        with StageTimer(self._log, f"orchestrate {case_id}/{evidence_id}") as timer:
+            self._clean.clean_evidence(case_id, evidence_id)
+            self._enhance.enhance_evidence(case_id, evidence_id)
+            semantic = self._semantic.correct_evidence(case_id, evidence_id)
+        summary["stages"] = {"cleaning": 1, "enhancement": 1, "semantic": 1}
+        summary["semantic_results"] = [semantic]
+        summary["duration_ms"] = round(timer.elapsed_ms, 1)
+        self._log.info("orchestrated %s/%s in %.0f ms",
+                       case_id, evidence_id, timer.elapsed_ms)
+        return summary

@@ -1,0 +1,21 @@
+{
+  "report_type": "graph_summary",
+  "report_version": 2,
+  "schema_version": "2.0",
+  "case_id": "CASE_2CF24DBA5F",
+  "generated_at": "2026-07-25T12:53:07.264Z",
+  "report": {
+    "case_id": "CASE_2CF24DBA5F",
+    "headline": "14 nodes and 13 edges across 1 component(s)",
+    "key_connectors": [
+      "port:41",
+      "port:43",
+      "time:11:43\n",
+      "time:1:41 pm",
+      "date:2026-01-04"
+    ],
+    "observations": [
+      "All entities and evidence form a single connected component - consistent with one coordinated activity."
+    ]
+  }
+}

@@ -1,88 +1,46 @@
 {
   "version": 1,
-  "updated_at": "2026-07-25T13:02:00.229Z",
+  "updated_at": "2026-07-25T11:55:16.624Z",
   "buckets": {
-    "ports\u001f43": {
-      "entity_type": "ports",
-      "normalized": "43",
-      "occurrences": [
-        {
-          "case_id": "CASE_2CF24DBA5F",
-          "evidence_id": "EVID_00001",
-          "value": "43",
-          "source_location": "yeti.jpg",
-          "confidence": 0.9152,
-          "first_seen": "2026-07-25T12:52:44.095Z",
-          "last_seen": "2026-07-25T12:53:55.975Z"
-        }
-      ]
-    },
-    "ports\u001f41": {
-      "entity_type": "ports",
-      "normalized": "41",
-      "occurrences": [
-        {
-          "case_id": "CASE_2CF24DBA5F",
-          "evidence_id": "EVID_00001",
-          "value": "41",
-          "source_location": "yeti.jpg",
-          "confidence": 0.9152,
-          "first_seen": "2026-07-25T12:52:44.095Z",
-          "last_seen": "2026-07-25T12:53:55.975Z"
-        }
-      ]
-    },
-    "times\u001f11:43": {
-      "entity_type": "times",
-      "normalized": "11:43",
-      "occurrences": [
-        {
-          "case_id": "CASE_2CF24DBA5F",
-          "evidence_id": "EVID_00001",
-          "value": "11:43\n",
-          "source_location": "yeti.jpg",
-          "confidence": 0.9152,
-          "first_seen": "2026-07-25T12:52:44.095Z",
-          "last_seen": "2026-07-25T12:53:55.975Z"
-        }
-      ]
-    },
-    "times\u001f1:41 pm": {
-      "entity_type": "times",
-      "normalized": "1:41 pm",
-      "occurrences": [
-        {
-          "case_id": "CASE_2CF24DBA5F",
-          "evidence_id": "EVID_00001",
-          "value": "1:41 pm",
-          "source_location": "yeti.jpg",
-          "confidence": 0.9152,
-          "first_seen": "2026-07-25T12:52:44.095Z",
-          "last_seen": "2026-07-25T12:53:55.975Z"
-        }
-      ]
-    },
     "dates\u001f2026-01-04": {
       "entity_type": "dates",
       "normalized": "2026-01-04",
       "occurrences": [
         {
           "case_id": "CASE_2CF24DBA5F",
-          "evidence_id": "EVID_00002",
+          "evidence_id": "EVID_00001",
           "value": "2026-01-04",
           "source_location": "whatsapp_chat_export.txt",
           "confidence": 1.0,
-          "first_seen": "2026-07-25T12:53:07.254Z",
-          "last_seen": "2026-07-25T12:53:55.975Z"
+          "first_seen": "2026-07-25T11:55:14.860Z",
+          "last_seen": "2026-07-25T11:55:14.860Z"
         },
         {
           "case_id": "CASE_8F43434664",
+          "evidence_id": "EVID_00004",
+          "value": "2026-01-04",
+          "source_location": "whatsapp_chat_export.txt",
+          "confidence": 1.0,
+          "first_seen": "2026-07-25T11:55:15.498Z",
+          "last_seen": "2026-07-25T11:55:15.498Z"
+        },
+        {
+          "case_id": "CASE_F1278DD84F",
           "evidence_id": "EVID_00007",
           "value": "2026-01-04",
-          "source_location": "bank_transactions.csv",
+          "source_location": "whatsapp_chat_export.txt",
           "confidence": 1.0,
-          "first_seen": "2026-07-25T12:56:12.337Z",
-          "last_seen": "2026-07-25T13:02:00.229Z"
+          "first_seen": "2026-07-25T11:55:16.045Z",
+          "last_seen": "2026-07-25T11:55:16.045Z"
+        },
+        {
+          "case_id": "CASE_85B2471DFB",
+          "evidence_id": "EVID_00009",
+          "value": "2026-01-04",
+          "source_location": "whatsapp_chat_export.txt",
+          "confidence": 1.0,
+          "first_seen": "2026-07-25T11:55:16.623Z",
+          "last_seen": "2026-07-25T11:55:16.623Z"
         }
       ]
     },
@@ -92,12 +50,39 @@
       "occurrences": [
         {
           "case_id": "CASE_2CF24DBA5F",
-          "evidence_id": "EVID_00002",
+          "evidence_id": "EVID_00001",
           "value": "09:12",
           "source_location": "whatsapp_chat_export.txt",
           "confidence": 1.0,
-          "first_seen": "2026-07-25T12:53:07.254Z",
-          "last_seen": "2026-07-25T12:53:55.975Z"
+          "first_seen": "2026-07-25T11:55:14.860Z",
+          "last_seen": "2026-07-25T11:55:14.860Z"
+        },
+        {
+          "case_id": "CASE_8F43434664",
+          "evidence_id": "EVID_00004",
+          "value": "09:12",
+          "source_location": "whatsapp_chat_export.txt",
+          "confidence": 1.0,
+          "first_seen": "2026-07-25T11:55:15.498Z",
+          "last_seen": "2026-07-25T11:55:15.498Z"
+        },
+        {
+          "case_id": "CASE_F1278DD84F",
+          "evidence_id": "EVID_00007",
+          "value": "09:12",
+          "source_location": "whatsapp_chat_export.txt",
+          "confidence": 1.0,
+          "first_seen": "2026-07-25T11:55:16.045Z",
+          "last_seen": "2026-07-25T11:55:16.045Z"
+        },
+        {
+          "case_id": "CASE_85B2471DFB",
+          "evidence_id": "EVID_00009",
+          "value": "09:12",
+          "source_location": "whatsapp_chat_export.txt",
+          "confidence": 1.0,
+          "first_seen": "2026-07-25T11:55:16.623Z",
+          "last_seen": "2026-07-25T11:55:16.623Z"
         }
       ]
     },
@@ -107,12 +92,39 @@
       "occurrences": [
         {
           "case_id": "CASE_2CF24DBA5F",
-          "evidence_id": "EVID_00002",
+          "evidence_id": "EVID_00001",
           "value": "09:14",
           "source_location": "whatsapp_chat_export.txt",
           "confidence": 1.0,
-          "first_seen": "2026-07-25T12:53:07.254Z",
-          "last_seen": "2026-07-25T12:53:55.975Z"
+          "first_seen": "2026-07-25T11:55:14.860Z",
+          "last_seen": "2026-07-25T11:55:14.860Z"
+        },
+        {
+          "case_id": "CASE_8F43434664",
+          "evidence_id": "EVID_00004",
+          "value": "09:14",
+          "source_location": "whatsapp_chat_export.txt",
+          "confidence": 1.0,
+          "first_seen": "2026-07-25T11:55:15.498Z",
+          "last_seen": "2026-07-25T11:55:15.498Z"
+        },
+        {
+          "case_id": "CASE_F1278DD84F",
+          "evidence_id": "EVID_00007",
+          "value": "09:14",
+          "source_location": "whatsapp_chat_export.txt",
+          "confidence": 1.0,
+          "first_seen": "2026-07-25T11:55:16.045Z",
+          "last_seen": "2026-07-25T11:55:16.045Z"
+        },
+        {
+          "case_id": "CASE_85B2471DFB",
+          "evidence_id": "EVID_00009",
+          "value": "09:14",
+          "source_location": "whatsapp_chat_export.txt",
+          "confidence": 1.0,
+          "first_seen": "2026-07-25T11:55:16.623Z",
+          "last_seen": "2026-07-25T11:55:16.623Z"
         }
       ]
     },
@@ -122,138 +134,141 @@
       "occurrences": [
         {
           "case_id": "CASE_2CF24DBA5F",
-          "evidence_id": "EVID_00002",
+          "evidence_id": "EVID_00001",
           "value": "09:15",
           "source_location": "whatsapp_chat_export.txt",
           "confidence": 1.0,
-          "first_seen": "2026-07-25T12:53:07.254Z",
-          "last_seen": "2026-07-25T12:53:55.975Z"
+          "first_seen": "2026-07-25T11:55:14.860Z",
+          "last_seen": "2026-07-25T11:55:14.860Z"
+        },
+        {
+          "case_id": "CASE_8F43434664",
+          "evidence_id": "EVID_00004",
+          "value": "09:15",
+          "source_location": "whatsapp_chat_export.txt",
+          "confidence": 1.0,
+          "first_seen": "2026-07-25T11:55:15.498Z",
+          "last_seen": "2026-07-25T11:55:15.498Z"
+        },
+        {
+          "case_id": "CASE_F1278DD84F",
+          "evidence_id": "EVID_00007",
+          "value": "09:15",
+          "source_location": "whatsapp_chat_export.txt",
+          "confidence": 1.0,
+          "first_seen": "2026-07-25T11:55:16.045Z",
+          "last_seen": "2026-07-25T11:55:16.045Z"
+        },
+        {
+          "case_id": "CASE_85B2471DFB",
+          "evidence_id": "EVID_00009",
+          "value": "09:15",
+          "source_location": "whatsapp_chat_export.txt",
+          "confidence": 1.0,
+          "first_seen": "2026-07-25T11:55:16.623Z",
+          "last_seen": "2026-07-25T11:55:16.623Z"
         }
       ]
     },
-    "money\u001frs 2000": {
+    "money\u001fnpr 2000": {
       "entity_type": "money",
-      "normalized": "rs 2000",
+      "normalized": "npr 2000",
+      "occurrences": [
+        {
+          "case_id": "CASE_2CF24DBA5F",
+          "evidence_id": "EVID_00001",
+          "value": "Rs 2000",
+          "source_location": "whatsapp_chat_export.txt",
+          "confidence": 1.0,
+          "first_seen": "2026-07-25T11:55:14.860Z",
+          "last_seen": "2026-07-25T11:55:14.860Z"
+        },
+        {
+          "case_id": "CASE_2CF24DBA5F",
+          "evidence_id": "EVID_00002",
+          "value": "Rs 2,000",
+          "source_location": "scam_sms_screenshot.png",
+          "confidence": 0.9766,
+          "first_seen": "2026-07-25T11:55:14.860Z",
+          "last_seen": "2026-07-25T11:55:14.860Z"
+        },
+        {
+          "case_id": "CASE_8F43434664",
+          "evidence_id": "EVID_00004",
+          "value": "Rs 2000",
+          "source_location": "whatsapp_chat_export.txt",
+          "confidence": 1.0,
+          "first_seen": "2026-07-25T11:55:15.498Z",
+          "last_seen": "2026-07-25T11:55:15.498Z"
+        },
+        {
+          "case_id": "CASE_F1278DD84F",
+          "evidence_id": "EVID_00007",
+          "value": "Rs 2000",
+          "source_location": "whatsapp_chat_export.txt",
+          "confidence": 1.0,
+          "first_seen": "2026-07-25T11:55:16.045Z",
+          "last_seen": "2026-07-25T11:55:16.045Z"
+        },
+        {
+          "case_id": "CASE_F1278DD84F",
+          "evidence_id": "EVID_00008",
+          "value": "Rs 2,000",
+          "source_location": "scam_sms_screenshot.png",
+          "confidence": 0.9766,
+          "first_seen": "2026-07-25T11:55:16.045Z",
+          "last_seen": "2026-07-25T11:55:16.045Z"
+        },
+        {
+          "case_id": "CASE_85B2471DFB",
+          "evidence_id": "EVID_00009",
+          "value": "Rs 2000",
+          "source_location": "whatsapp_chat_export.txt",
+          "confidence": 1.0,
+          "first_seen": "2026-07-25T11:55:16.623Z",
+          "last_seen": "2026-07-25T11:55:16.623Z"
+        },
+        {
+          "case_id": "CASE_85B2471DFB",
+          "evidence_id": "EVID_00010",
+          "value": "Rs 2,000",
+          "source_location": "scam_sms_screenshot.png",
+          "confidence": 0.9766,
+          "first_seen": "2026-07-25T11:55:16.624Z",
+          "last_seen": "2026-07-25T11:55:16.624Z"
+        }
+      ]
+    },
+    "money\u001fnpr 500000": {
+      "entity_type": "money",
+      "normalized": "npr 500000",
       "occurrences": [
         {
           "case_id": "CASE_2CF24DBA5F",
           "evidence_id": "EVID_00002",
-          "value": "Rs 2000",
-          "source_location": "whatsapp_chat_export.txt",
-          "confidence": 1.0,
-          "first_seen": "2026-07-25T12:53:07.254Z",
-          "last_seen": "2026-07-25T12:53:55.975Z"
-        }
-      ]
-    },
-    "urls\u001fhttp://nabil-verify.example-scam.top/login": {
-      "entity_type": "urls",
-      "normalized": "http://nabil-verify.example-scam.top/login",
-      "occurrences": [
-        {
-          "case_id": "CASE_2CF24DBA5F",
-          "evidence_id": "EVID_00004",
-          "value": "http://nabil-verify.example-scam.top/login",
-          "source_location": "phishing_email_screenshot.png",
-          "confidence": 0.9859,
-          "first_seen": "2026-07-25T12:53:51.697Z",
-          "last_seen": "2026-07-25T12:53:55.975Z"
+          "value": "Rs 5,00,000",
+          "source_location": "scam_sms_screenshot.png",
+          "confidence": 0.9766,
+          "first_seen": "2026-07-25T11:55:14.860Z",
+          "last_seen": "2026-07-25T11:55:14.860Z"
         },
         {
-          "case_id": "CASE_8F43434664",
-          "evidence_id": "EVID_00006",
-          "value": "http://nabil-verify.example-scam.top/login",
-          "source_location": "phishing_email_screenshot.png",
-          "confidence": 0.9859,
-          "first_seen": "2026-07-25T12:56:04.545Z",
-          "last_seen": "2026-07-25T13:02:00.229Z"
-        }
-      ]
-    },
-    "emails\u001fsecurity@nabil-bank-alerts.com": {
-      "entity_type": "emails",
-      "normalized": "security@nabil-bank-alerts.com",
-      "occurrences": [
-        {
-          "case_id": "CASE_2CF24DBA5F",
-          "evidence_id": "EVID_00004",
-          "value": "security@nabil-bank-alerts.com",
-          "source_location": "phishing_email_screenshot.png",
-          "confidence": 0.9859,
-          "first_seen": "2026-07-25T12:53:51.697Z",
-          "last_seen": "2026-07-25T12:53:55.975Z"
+          "case_id": "CASE_F1278DD84F",
+          "evidence_id": "EVID_00008",
+          "value": "Rs 5,00,000",
+          "source_location": "scam_sms_screenshot.png",
+          "confidence": 0.9766,
+          "first_seen": "2026-07-25T11:55:16.045Z",
+          "last_seen": "2026-07-25T11:55:16.045Z"
         },
         {
-          "case_id": "CASE_8F43434664",
-          "evidence_id": "EVID_00006",
-          "value": "security@nabil-bank-alerts.com",
-          "source_location": "phishing_email_screenshot.png",
-          "confidence": 0.9859,
-          "first_seen": "2026-07-25T12:56:04.545Z",
-          "last_seen": "2026-07-25T13:02:00.229Z"
-        }
-      ]
-    },
-    "domains\u001fnabil-verify.example-scam.top": {
-      "entity_type": "domains",
-      "normalized": "nabil-verify.example-scam.top",
-      "occurrences": [
-        {
-          "case_id": "CASE_2CF24DBA5F",
-          "evidence_id": "EVID_00004",
-          "value": "nabil-verify.example-scam.top",
-          "source_location": "phishing_email_screenshot.png",
-          "confidence": 0.9859,
-          "first_seen": "2026-07-25T12:53:51.697Z",
-          "last_seen": "2026-07-25T12:53:55.975Z"
-        },
-        {
-          "case_id": "CASE_8F43434664",
-          "evidence_id": "EVID_00006",
-          "value": "nabil-verify.example-scam.top",
-          "source_location": "phishing_email_screenshot.png",
-          "confidence": 0.9859,
-          "first_seen": "2026-07-25T12:56:04.545Z",
-          "last_seen": "2026-07-25T13:02:00.229Z"
-        }
-      ]
-    },
-    "domains\u001fnabil-bank-alerts.com": {
-      "entity_type": "domains",
-      "normalized": "nabil-bank-alerts.com",
-      "occurrences": [
-        {
-          "case_id": "CASE_2CF24DBA5F",
-          "evidence_id": "EVID_00004",
-          "value": "nabil-bank-alerts.com",
-          "source_location": "phishing_email_screenshot.png",
-          "confidence": 0.9859,
-          "first_seen": "2026-07-25T12:53:51.697Z",
-          "last_seen": "2026-07-25T12:53:55.975Z"
-        },
-        {
-          "case_id": "CASE_8F43434664",
-          "evidence_id": "EVID_00006",
-          "value": "nabil-bank-alerts.com",
-          "source_location": "phishing_email_screenshot.png",
-          "confidence": 0.9859,
-          "first_seen": "2026-07-25T12:56:04.545Z",
-          "last_seen": "2026-07-25T13:02:00.229Z"
-        }
-      ]
-    },
-    "dates\u001f2026-01-03": {
-      "entity_type": "dates",
-      "normalized": "2026-01-03",
-      "occurrences": [
-        {
-          "case_id": "CASE_8F43434664",
-          "evidence_id": "EVID_00007",
-          "value": "2026-01-03",
-          "source_location": "bank_transactions.csv",
-          "confidence": 1.0,
-          "first_seen": "2026-07-25T12:56:12.337Z",
-          "last_seen": "2026-07-25T13:02:00.229Z"
+          "case_id": "CASE_85B2471DFB",
+          "evidence_id": "EVID_00010",
+          "value": "Rs 5,00,000",
+          "source_location": "scam_sms_screenshot.png",
+          "confidence": 0.9766,
+          "first_seen": "2026-07-25T11:55:16.623Z",
+          "last_seen": "2026-07-25T11:55:16.623Z"
         }
       ]
     }
