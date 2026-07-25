@@ -1,0 +1,15 @@
+{
+  "report_type": "graph_summary",
+  "report_version": 1,
+  "schema_version": "2.0",
+  "case_id": "CASE_F1278DD84F",
+  "generated_at": "2026-07-24T16:20:51.691Z",
+  "report": {
+    "case_id": "CASE_F1278DD84F",
+    "headline": "3 nodes and 3 edges across 1 component(s)",
+    "key_connectors": [],
+    "observations": [
+      "All entities and evidence form a single connected component - consistent with one coordinated activity."
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "report_type": "graph_statistics",
+  "report_version": 1,
+  "schema_version": "2.0",
+  "case_id": "CASE_8F43434664",
+  "generated_at": "2026-07-24T16:07:53.047Z",
+  "report": {
+    "case_id": "CASE_8F43434664",
+    "node_count": 4,
+    "edge_count": 6,
+    "nodes_by_type": {
+      "case": 1,
+      "evidence": 3
+    },
+    "edges_by_type": {
+      "contains": 3,
+      "temporal_relationship": 3
+    },
+    "density": 1.0,
+    "connected_components": 1,
+    "largest_component_size": 4,
+    "average_degree": 3.0,
+    "top_hubs": [
+      {
+        "node": "case:CASE_8F43434664",
+        "degree": "3"
+      },
+      {
+        "node": "evidence:EVID_00004",
+        "degree": "3"
+      },
+      {
+        "node": "evidence:EVID_00005",
+        "degree": "3"
+      },
+      {
+        "node": "evidence:EVID_00006",
+        "degree": "3"
+      }
+    ]
+  }
+}

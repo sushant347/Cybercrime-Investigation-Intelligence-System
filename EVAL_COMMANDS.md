@@ -5,6 +5,17 @@ Two virtualenvs are used: `.venv-platform` (engine + API) and `.venv-threat` (ML
 
 Legend: 🟢 works now · 🟡 demo runs now, real numbers need your gold · 🔴 needs data first.
 
+**Quick start — just want to see everything?**
+1. Run every computable table at once → `.venv-platform/bin/python run_all_evaluations.py`
+2. Read the already-generated results with sources → open **`EVALUATION_RESULTS.md`**
+3. Understand what "gold / ground truth" means → open **`EVALUATION.md`**
+
+**How each table works** (same 3 steps everywhere):
+`predict` (run the engine on evidence) → `ground truth` (a human writes the correct answer =
+the "gold" file) → `score` (a metric compares them). 6.3/6.7/6.8 already have their ground
+truth, so they give real numbers. 6.1/6.2/6.4/6.5 ship with a small **demo gold** so they run
+out of the box; swap in real gold for thesis numbers (each section shows both).
+
 ---
 
 ## Everything at once

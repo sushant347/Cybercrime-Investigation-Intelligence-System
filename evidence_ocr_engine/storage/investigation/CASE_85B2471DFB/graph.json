@@ -1,0 +1,60 @@
+{
+  "report_type": "graph",
+  "report_version": 1,
+  "schema_version": "2.0",
+  "case_id": "CASE_85B2471DFB",
+  "generated_at": "2026-07-24T16:20:56.663Z",
+  "report": {
+    "case_id": "CASE_85B2471DFB",
+    "directed": false,
+    "nodes": [
+      {
+        "id": "case:CASE_85B2471DFB",
+        "node_type": "case",
+        "label": "CASE_85B2471DFB",
+        "properties": {}
+      },
+      {
+        "id": "evidence:EVID_00009",
+        "node_type": "evidence",
+        "label": "EVID_00009",
+        "properties": {
+          "file_name": "whatsapp_chat_export.txt",
+          "upload_time": "2026-07-24T16:20:09.234Z"
+        }
+      },
+      {
+        "id": "evidence:EVID_00010",
+        "node_type": "evidence",
+        "label": "EVID_00010",
+        "properties": {
+          "file_name": "scam_sms_screenshot.png",
+          "upload_time": "2026-07-24T16:20:09.249Z"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "source": "case:CASE_85B2471DFB",
+        "target": "evidence:EVID_00009",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "explanation": "EVID_00009 belongs to CASE_85B2471DFB"
+      },
+      {
+        "source": "case:CASE_85B2471DFB",
+        "target": "evidence:EVID_00010",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "explanation": "EVID_00010 belongs to CASE_85B2471DFB"
+      },
+      {
+        "source": "evidence:EVID_00009",
+        "target": "evidence:EVID_00010",
+        "edge_type": "temporal_relationship",
+        "weight": 1.0,
+        "explanation": "Acquired 0.0h apart (window 48h)"
+      }
+    ]
+  }
+}
