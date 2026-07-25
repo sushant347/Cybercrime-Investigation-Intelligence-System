@@ -27,6 +27,7 @@ import type { GraphEdge, GraphNode } from "@/types";
 
 import {
   EDGE_STYLES,
+  edgeStyle,
   GraphCanvas,
   nodeShape,
   type LayoutMode,
@@ -298,48 +299,134 @@ export function GraphTab({ caseId }: { caseId: string }) {
                 </Stack>
               </Stack>
             )}
-            {selection?.kind === "node" && (
-              <Stack spacing={1}>
-                <Chip
-                  size="small"
-                  label={selection.node.node_type}
-                  sx={{
-                    alignSelf: "flex-start",
-                    bgcolor: `${nodeColor(selection.node.node_type)}33`,
-                    color: nodeColor(selection.node.node_type),
-                    fontWeight: 700,
-                  }}
-                />
-                <Typography variant="subtitle1" sx={{ wordBreak: "break-all", fontWeight: 700 }}>
-                  {selection.node.label || selection.node.id}
-                </Typography>
-                <Typography variant="caption" color="text.secondary" sx={{ wordBreak: "break-all" }}>
-                  {selection.node.id}
-                </Typography>
-                {selection.node.node_type === "evidence" && (
-                  <Button
-                    size="small"
-                    variant="outlined"
-                    startIcon={<OpenInNewIcon />}
-                    component={RouterLink}
-                    to={`/cases/${caseId}/evidence/${selection.node.label || selection.node.id.split(":").pop()}`}
-                    sx={{ alignSelf: "flex-start" }}
-                  >
-                    Open evidence
-                  </Button>
-                )}
-                {Object.entries(selection.node.properties).map(([key, value]) => (
-                  <Stack key={key} direction="row" spacing={1}>
-                    <Typography variant="body2" color="text.secondary" sx={{ minWidth: 90 }}>
-                      {key}
+            {selection?.kind === "node" &&
+              (() => {
+                // Same information the hover tooltip shows, but complete:
+                // every connection of this node, with the relationship type.
+                const nodeId = selection.node.id;
+                const connections = graph.edges
+                  .filter((e) => e.source === nodeId || e.target === nodeId)
+                  .map((e) => {
+                    const otherId = e.source === nodeId ? e.target : e.source;
+                    const other = graph.nodes.find((n) => n.id === otherId);
+                    return other ? { edge: e, other } : null;
+                  })
+                  .filter((c): c is { edge: GraphEdge; other: GraphNode } => c !== null);
+                return (
+                  <Stack spacing={1}>
+                    <Chip
+                      size="small"
+                      label={selection.node.node_type.replace(/_/g, " ")}
+                      sx={{
+                        alignSelf: "flex-start",
+                        bgcolor: `${nodeColor(selection.node.node_type)}33`,
+                        color: nodeColor(selection.node.node_type),
+                        fontWeight: 700,
+                      }}
+                    />
+                    <Typography
+                      variant="subtitle1"
+                      sx={{ wordBreak: "break-all", fontWeight: 700 }}
+                    >
+                      {selection.node.label || selection.node.id}
                     </Typography>
-                    <Typography variant="body2" sx={{ wordBreak: "break-all" }}>
-                      {value}
+                    <Typography
+                      variant="caption"
+                      color="text.secondary"
+                      sx={{ wordBreak: "break-all" }}
+                    >
+                      {selection.node.id} · {connections.length} connection
+                      {connections.length === 1 ? "" : "s"}
                     </Typography>
+                    {selection.node.node_type === "evidence" && (
+                      <Button
+                        size="small"
+                        variant="outlined"
+                        startIcon={<OpenInNewIcon />}
+                        component={RouterLink}
+                        to={`/cases/${caseId}/evidence/${selection.node.label || selection.node.id.split(":").pop()}`}
+                        sx={{ alignSelf: "flex-start" }}
+                      >
+                        Open evidence
+                      </Button>
+                    )}
+                    {Object.entries(selection.node.properties)
+                      .filter(([, value]) => value)
+                      .map(([key, value]) => (
+                        <Stack key={key} direction="row" spacing={1}>
+                          <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            sx={{ minWidth: 90, flexShrink: 0 }}
+                          >
+                            {key.replace(/_/g, " ")}
+                          </Typography>
+                          <Typography variant="body2" sx={{ wordBreak: "break-all" }}>
+                            {value}
+                          </Typography>
+                        </Stack>
+                      ))}
+                    {connections.length > 0 && (
+                      <>
+                        <Divider sx={{ my: 0.5 }} />
+                        <Typography variant="subtitle2">Connected to</Typography>
+                        <Stack spacing={0.75}>
+                          {connections.map(({ edge, other }, i) => (
+                            <Stack
+                              key={`${other.id}:${i}`}
+                              direction="row"
+                              spacing={1}
+                              alignItems="flex-start"
+                              onClick={() => setSelection({ kind: "node", node: other })}
+                              sx={{
+                                cursor: "pointer",
+                                borderRadius: 1,
+                                px: 0.75,
+                                py: 0.5,
+                                mx: -0.75,
+                                "&:hover": { bgcolor: "action.hover" },
+                              }}
+                            >
+                              <Box sx={{ pt: 0.4 }}>
+                                <ShapeSwatch type={other.node_type} />
+                              </Box>
+                              <Box sx={{ minWidth: 0 }}>
+                                <Typography
+                                  variant="body2"
+                                  sx={{ fontWeight: 600, wordBreak: "break-all" }}
+                                >
+                                  {other.label || other.id}
+                                </Typography>
+                                <Typography variant="caption" color="text.secondary">
+                                  <Box
+                                    component="span"
+                                    sx={{ color: edgeStyle(edge.edge_type).color }}
+                                  >
+                                    ●
+                                  </Box>{" "}
+                                  {edge.edge_type.replace(/_/g, " ")}
+                                  {edge.confidence !== undefined && edge.confidence !== null
+                                    ? ` · ${Math.round(edge.confidence * 100)}%`
+                                    : ""}
+                                </Typography>
+                                {edge.explanation && (
+                                  <Typography
+                                    variant="caption"
+                                    color="text.secondary"
+                                    sx={{ display: "block" }}
+                                  >
+                                    {edge.explanation}
+                                  </Typography>
+                                )}
+                              </Box>
+                            </Stack>
+                          ))}
+                        </Stack>
+                      </>
+                    )}
                   </Stack>
-                ))}
-              </Stack>
-            )}
+                );
+              })()}
             {selection?.kind === "edge" && (
               <Stack spacing={1}>
                 <Chip size="small" label={selection.edge.edge_type} color="primary" sx={{ alignSelf: "flex-start" }} />

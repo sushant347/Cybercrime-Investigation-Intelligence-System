@@ -1,7 +1,7 @@
 {
   "case_id": "CASE_F1278DD84F",
   "created_at": "2026-07-24T16:19:58.870Z",
-  "updated_at": "2026-07-24T16:20:09.230Z",
+  "updated_at": "2026-07-25T11:55:13.758Z",
   "evidence_count": 2,
   "evidence": [
     {
@@ -99,7 +99,7 @@
           "money": [
             {
               "value": "Rs 2000",
-              "normalized": "Rs 2000"
+              "normalized": "NPR 2000"
             }
           ],
           "otp": [],
@@ -147,7 +147,7 @@
           "ocr_corrections": [],
           "protected_entities": 9
         },
-        "processing_time_ms": 1.81
+        "processing_time_ms": 3.8
       },
       "enhancement": {
         "case_id": "CASE_F1278DD84F",
@@ -199,7 +199,7 @@
           "nepali_correction_rate": 0.0,
           "english_correction_rate": 0.0
         },
-        "processing_time_ms": 1.18
+        "processing_time_ms": 1.24
       },
       "semantic_correction": {
         "case_id": "CASE_F1278DD84F",
@@ -234,7 +234,7 @@
           "money": [
             {
               "value": "Rs 2000",
-              "normalized": "Rs 2000"
+              "normalized": "NPR 2000"
             }
           ]
         },
@@ -251,7 +251,7 @@
             "mixed"
           ]
         },
-        "processing_time_ms": 0.81
+        "processing_time_ms": 2.22
       }
     },
     {
@@ -470,11 +470,11 @@
           "money": [
             {
               "value": "Rs 5,00,000",
-              "normalized": "Rs 5,00,000"
+              "normalized": "NPR 500000"
             },
             {
               "value": "Rs 2,000",
-              "normalized": "Rs 2,000"
+              "normalized": "NPR 2000"
             }
           ],
           "otp": [],
@@ -521,7 +521,7 @@
           "ocr_corrections": [],
           "protected_entities": 2
         },
-        "processing_time_ms": 0.7
+        "processing_time_ms": 1.35
       },
       "enhancement": {
         "case_id": "CASE_F1278DD84F",
@@ -568,7 +568,7 @@
           "nepali_correction_rate": 0.0,
           "english_correction_rate": 0.0
         },
-        "processing_time_ms": 0.29
+        "processing_time_ms": 0.8
       },
       "semantic_correction": {
         "case_id": "CASE_F1278DD84F",
@@ -583,11 +583,11 @@
           "money": [
             {
               "value": "Rs 5,00,000",
-              "normalized": "Rs 5,00,000"
+              "normalized": "NPR 500000"
             },
             {
               "value": "Rs 2,000",
-              "normalized": "Rs 2,000"
+              "normalized": "NPR 2000"
             }
           ]
         },
@@ -603,7 +603,7 @@
             "english"
           ]
         },
-        "processing_time_ms": 0.33
+        "processing_time_ms": 0.92
       }
     }
   ]

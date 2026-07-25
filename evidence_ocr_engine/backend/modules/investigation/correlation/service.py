@@ -121,6 +121,12 @@ class CorrelationService:
         """
         items = list(evidence) if evidence is not None \
             else self._data.load_case_evidence(case_id)
+        # Rebuild this case's slice of the index from scratch. Upsert alone is
+        # keyed on the *normalized* value, so when a normalization rule changes
+        # (e.g. "Rs 2,000" and "Rs 2000" now both normalize to "NPR 2000") the
+        # old buckets would keep stale occurrences forever and cross-case
+        # matching would silently split identical entities across buckets.
+        self._index.remove_case(case_id)
         written = 0
         for context in items:
             location = context.file_name or context.evidence_id
