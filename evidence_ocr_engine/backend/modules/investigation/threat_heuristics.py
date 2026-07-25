@@ -58,6 +58,13 @@ OFFICIAL_DOMAINS: Dict[str, Tuple[str, ...]] = {
     "google": ("google.com", "google.com.np"),
 }
 
+#: Brands kept in :data:`OFFICIAL_DOMAINS` so their real domains are trusted,
+#: but never treated as *impersonated*. A mail provider's name inside a host is
+#: almost always OCR mangling an email address ("user21gmail.com" for
+#: "user21@gmail.com"), not a look-alike site - flagging those buried the real
+#: findings under noise.
+NOT_IMPERSONATION_BRANDS = frozenset({"gmail", "google"})
+
 #: TLDs with a well-documented abuse rate, heavily used by throwaway phishing
 #: infrastructure. Presence alone is not a verdict - it is one weighted signal.
 HIGH_RISK_TLDS = frozenset({
@@ -176,6 +183,8 @@ class HeuristicThreatIntelProvider:
         # --- brand impersonation ------------------------------------------
         host_words = re.sub(r"[^a-z0-9]+", "", host)
         for name in OFFICIAL_DOMAINS:
+            if name in NOT_IMPERSONATION_BRANDS:
+                continue
             if name in host_words:
                 brand = name
                 score += 55

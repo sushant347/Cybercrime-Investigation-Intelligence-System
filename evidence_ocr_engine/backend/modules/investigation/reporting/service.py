@@ -655,169 +655,122 @@ class InvestigationReportService:
     #: Where each payment rail's records actually live - so a recommendation
     #: names the institution to serve, not just "the provider".
     _RAIL_AUTHORITIES = {
-        "esewa_ids": ("eSewa Ltd (F1Soft)", "wallet KYC and transaction history"),
-        "khalti_ids": ("Khalti / Sparrow Pay Pvt Ltd",
-                       "wallet KYC and transaction history"),
-        "imepay_ids": ("IME Pay (IME Digital Solution)",
-                       "wallet KYC and transaction history"),
-        "bank_accounts": ("the account-holding bank",
-                          "account opening documents and statement of the "
-                          "transaction window"),
-        "card_numbers": ("the card issuer", "cardholder KYC and authorisation "
-                         "records"),
-        "eth_wallets": ("blockchain analysis", "on-chain fund tracing"),
-        "btc_wallets": ("blockchain analysis", "on-chain fund tracing"),
+        "esewa_ids": ("eSewa", "wallet KYC + transactions"),
+        "khalti_ids": ("Khalti", "wallet KYC + transactions"),
+        "imepay_ids": ("IME Pay", "wallet KYC + transactions"),
+        "bank_accounts": ("the bank", "account KYC + statements"),
+        "card_numbers": ("the card issuer", "cardholder KYC"),
+        "eth_wallets": ("a blockchain analyst", "on-chain tracing"),
+        "btc_wallets": ("a blockchain analyst", "on-chain tracing"),
     }
+
+    #: How a brand name is written in a report ("esewa" is a matcher key).
+    _BRAND_NAMES = {
+        "esewa": "eSewa", "khalti": "Khalti", "imepay": "IME Pay",
+        "connectips": "ConnectIPS", "fonepay": "Fonepay",
+        "nabil": "Nabil Bank", "nicasia": "NIC Asia Bank",
+        "globalime": "Global IME Bank", "machhapuchchhre": "Machhapuchchhre Bank",
+        "nepalbank": "Nepal Bank", "rastriyabanijya": "Rastriya Banijya Bank",
+        "nrb": "Nepal Rastra Bank", "ntc": "Nepal Telecom", "ncell": "Ncell",
+        "facebook": "Facebook", "instagram": "Instagram",
+        "whatsapp": "WhatsApp", "gmail": "Gmail", "google": "Google",
+    }
+
+    #: Hard cap on one action line. A recommendation an investigator cannot
+    #: read in a glance does not get acted on; detail lives in the sections
+    #: above, which this list points at.
+    _MAX_ACTION_CHARS = 150
 
     @classmethod
     def _recommendations(cls, campaigns, suspects, timeline, priority,
                          analytics=None) -> List[str]:
-        """Prioritised, findings-derived action items.
+        """One short, concrete action per line - nothing else.
 
-        Contract: every line names *what* to act on (the exact identifier),
-        *who* holds the records or capability, and *why* - citing the stored
-        finding it derives from. Ordering is triage order: preserve volatile
-        evidence first (takedowns kill the trail), then follow the money,
-        then identify the actor, then process hygiene. Nothing here is
-        boilerplate: a case with no flagged domain gets no takedown line.
+        Contract: each line is a single imperative sentence naming what to do
+        and to which identifier, capped at ~150 characters. No rationale, no
+        methodology, no repetition of the same instruction across lines: the
+        evidence for each action is in the report sections above it.
         """
         actions: List[str] = []
 
-        # -- 1. Active infrastructure: preserve before it disappears --------
-        # ONE action covering every flagged host. Emitting a line per host
-        # repeated the same instruction ("serve the registrar…") five times
-        # over, which reads as machine noise rather than a work plan: the
-        # instruction is stated once and the hosts are its targets.
+        # -- 1. Take down the infrastructure -------------------------------
         flagged = list(getattr(analytics, "threat_indicators", None) or [])
-        by_host: Dict[str, list] = {}
+        hosts: List[str] = []
         for indicator in flagged:
-            host = indicator.value.split("://")[-1].split("/")[0].split("?")[0]
-            if host:
-                by_host.setdefault(host, []).append(indicator)
-        if by_host:
-            targets = []
-            for host, group in sorted(
-                by_host.items(),
-                key=lambda kv: -max(i.risk_score for i in kv[1]),
-            )[:6]:
-                lead = max(group, key=lambda i: i.risk_score)
-                detail = [f"risk {lead.risk_score:.0f}/100"]
-                if lead.brand_impersonated:
-                    detail.append(f"impersonates {lead.brand_impersonated}")
-                # Add the top rule only when it says something the line does
-                # not already say: the brand-impersonation reason is exactly
-                # what "impersonates X" above already states.
-                extra = next(
-                    (r for r in lead.reasons
-                     if not (lead.brand_impersonated
-                             and lead.brand_impersonated in r
-                             and "brand" in r)),
-                    "",
-                )
-                if extra:
-                    detail.append(extra)
-                targets.append(f"{host} ({'; '.join(detail)})")
-            evidence_ids = sorted({e for g in by_host.values()
-                                   for i in g for e in i.evidence_ids})
+            host = _url_host(indicator.value)
+            if host and host not in hosts:
+                hosts.append(host)
+        if hosts:
+            shown = ", ".join(hosts[:3])
+            more = f" (+{len(hosts) - 3} more)" if len(hosts) > 3 else ""
             actions.append(
-                f"Preserve, then take down {len(by_host)} flagged host(s): "
-                + "; ".join(targets)
-                + ". Send the registrar and hosting provider a preservation "
-                "request *before* the takedown notice - a suspended domain "
-                "takes its logs with it. Evidence: "
-                + (", ".join(evidence_ids) or "n/a") + "."
+                f"Request registrar/host logs, then take down: {shown}{more}."
             )
         brands = sorted({i.brand_impersonated for i in flagged
                          if i.brand_impersonated})
         if brands:
-            actions.append(
-                f"Notify the impersonated brand(s): {', '.join(brands)}. Brand "
-                "owners run their own abuse channels and are usually the "
-                "fastest route to a takedown, and they can warn other customers."
-            )
+            named = ", ".join(cls._BRAND_NAMES.get(b, b.title())
+                              for b in brands[:3])
+            actions.append(f"Report the impersonation to {named}.")
 
-        # -- 2. Follow the money --------------------------------------------
+        # -- 2. Follow the money -------------------------------------------
         by_rail = dict(getattr(analytics, "wallet_statistics_by_rail", None) or {})
-        if by_rail:
-            requests = []
-            for rail, values in by_rail.items():
-                authority, records = cls._RAIL_AUTHORITIES.get(
-                    rail, ("the operating institution", "account records"))
-                ids = ", ".join(v.value for v in values[:4])
-                requests.append(f"{authority} - {records} for {ids}")
+        for rail, values in by_rail.items():
+            if not values:
+                continue
+            authority, records = cls._RAIL_AUTHORITIES.get(
+                rail, ("the operating institution", "account records"))
+            ids = ", ".join(v.value for v in values[:2])
+            extra = f" (+{len(values) - 2} more)" if len(values) > 2 else ""
             actions.append(
-                "Request account records for every payment identifier in the "
-                "case: " + "; ".join(requests)
-                + ". The receiving account's KYC identity is the most direct "
-                "route from the money to a person."
+                f"Ask {authority} for {records}: {ids}{extra}."
             )
         transaction_ids = (getattr(analytics, "top_entities", None) or {}
                            ).get("transaction_ids") or []
         if transaction_ids:
-            # Codes are stored lower-cased for de-duplication; they are printed
-            # on receipts in upper case and are quoted verbatim in requests.
-            codes = ", ".join(v.value.upper() for v in transaction_ids[:5])
-            actions.append(
-                f"Quote transaction reference(s) {codes} in each of those "
-                "requests. A provider can locate a transaction by its code far "
-                "faster than by account, and the code ties the victim's payment "
-                "to the recipient account in a single record."
-            )
+            codes = ", ".join(v.value.upper() for v in transaction_ids[:3])
+            actions.append(f"Quote transaction codes {codes} in those requests.")
 
         # -- 3. Identify the actor -------------------------------------------
-        anchors = [s for s in (getattr(suspects, "suspects", None) or [])[:3]
+        anchors = [s for s in (getattr(suspects, "suspects", None) or [])[:2]
                    if s.threat_flagged or s.confidence_score >= 60]
         if anchors:
-            described = "; ".join(
-                f"{s.identity_value} ({s.confidence_score:.0f}/100 across "
-                f"{s.evidence_count} item(s))" for s in anchors
-            )
-            actions.append(
-                f"Pursue subscriber/KYC records for the strongest identity "
-                f"anchor(s): {described}. These recur across the evidence, so "
-                "one subscriber record explains several items at once."
-            )
+            named = ", ".join(s.identity_value for s in anchors)
+            actions.append(f"Request subscriber/KYC records for {named}.")
         clustered = [c for c in (getattr(campaigns, "campaigns", None) or [])
                      if c.shared_domains]
         if clustered:
-            described = "; ".join(
-                f"{c.campaign_id} ({len(c.members)} items, "
-                f"{', '.join(c.shared_domains)})" for c in clustered[:3]
-            )
+            total = sum(len(c.members) for c in clustered)
             actions.append(
-                f"Treat the clustered evidence as one operation rather than "
-                f"separate incidents: {described}. Registrar and hosting "
-                "records should be requested once per cluster, not per item."
+                f"Charge the {total} clustered items as one campaign, not "
+                f"{total} separate incidents."
             )
 
-        # -- 4. Victim care & case handling ----------------------------------
+        # -- 4. Victim care & handling ----------------------------------------
+        if (getattr(analytics, "entity_statistics", None) or {}).get("otp"):
+            actions.append(
+                "An OTP was disclosed: have the victim reset credentials and "
+                "flag the account for takeover monitoring."
+            )
         critical = len(getattr(timeline, "critical_events", None) or [])
         if critical:
             actions.append(
-                f"Walk the {critical} critical timeline moment(s) - the "
-                "credential and payment events - through with the complainant. "
-                "They fix exactly when compromise and loss occurred and anchor "
-                "the victim-impact statement."
-            )
-        if (getattr(analytics, "entity_statistics", None) or {}).get("otp"):
-            actions.append(
-                "An OTP was disclosed to the perpetrator: have the victim reset "
-                "credentials now and ask the wallet/bank to flag the account "
-                "for account-takeover monitoring."
+                f"Confirm the {critical} critical timeline moment(s) with the "
+                "complainant for the impact statement."
             )
         if priority is not None:
-            actions.append(
-                f"Handling: priority {priority.get('priority_level', 'N/A')} "
-                f"({priority.get('priority_score', 'N/A')}/100). "
-                f"{priority.get('investigation_recommendation', '')}".strip()
-            )
+            level = priority.get("priority_level", "N/A")
+            score = priority.get("priority_score", "N/A")
+            actions.append(f"Handle at {level} priority ({score}/100).")
 
         # Presentation (numbering, bullets) belongs to the renderers - the
         # markdown writer prefixes "- " and the report view prefixes "N." so
-        # numbering here produced "1. 1. …".
+        # numbering here produced "1. 1. ...".
         deduped: List[str] = []
         for text in actions:
             cleaned = " ".join(text.split())
+            if len(cleaned) > cls._MAX_ACTION_CHARS:
+                cleaned = cleaned[: cls._MAX_ACTION_CHARS - 1].rsplit(" ", 1)[0] + "…"
             if cleaned and cleaned not in deduped:
                 deduped.append(cleaned)
         return deduped or [
@@ -865,7 +818,8 @@ class InvestigationReportService:
             f"# Forensic Investigation Report - {case_id}",
             "",
             f"Generated: {utc_now_iso()}  ",
-            "System: Cybercrime Investigation Intelligence System (CIIS), Phase 2  ",
+            "Produced by: Cybercrime Investigation Intelligence Engine (CIIS), "
+            "Phase 2  ",
             "Basis: every statement below references stored forensic findings; "
             "no content is generated outside computed results.",
             "",

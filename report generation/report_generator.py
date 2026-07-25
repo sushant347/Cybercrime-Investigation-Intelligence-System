@@ -1,7 +1,7 @@
 """
 Module 6 - Report Generator
 ====================================
-Cybercrime Investigation Intelligence System (CIIS)
+Cybercrime Investigation Intelligence Engine (CIIS)
 
 Consumes:
   - timeline.json from the Timeline Reconstruction engine (Module 5)

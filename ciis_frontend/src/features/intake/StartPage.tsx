@@ -79,7 +79,7 @@ export default function StartPage() {
         >
           <GppGoodIcon sx={{ fontSize: 44 }} />
         </Box>
-        <Typography variant="h4">Cybercrime Investigation Intelligence System</Typography>
+        <Typography variant="h4">Cybercrime Investigation Intelligence Engine</Typography>
         <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 560 }}>
           Digital evidence processing engine — acquire, analyse, and report on case evidence.
         </Typography>

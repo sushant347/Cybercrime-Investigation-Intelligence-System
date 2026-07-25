@@ -153,6 +153,7 @@ export function CaseOverviewTab({ caseData }: { caseData: CaseDetail }) {
   const priority = caseData.priority;
   const evidence = caseData.evidence ?? [];
   const counts = evidenceBreakdown(evidence);
+  const noted = evidence.filter((row) => (row.investigator_notes || "").trim());
   const { hasPermission } = useAuth();
   const [editOpen, setEditOpen] = useState(false);
 
@@ -282,13 +283,50 @@ export function CaseOverviewTab({ caseData }: { caseData: CaseDetail }) {
                 case_id: caseData.case_id,
                 case_reference: caseData.case_reference || "—",
                 title: caseData.title || "—",
-                investigator_notes: caseData.investigator_notes || "—",
                 status: caseData.status,
-                assigned_to: caseData.assigned_to ?? "Unassigned",
                 created_at: formatDateTime(caseData.created_at),
                 last_updated: formatDateTime(caseData.updated_at),
               }}
             />
+          </Card>
+
+          <Card>
+            <CardHeader
+              title="Investigator Notes"
+              subheader="Chain-of-custody notes recorded at upload"
+              titleTypographyProps={{ variant: "subtitle1" }}
+            />
+            <Divider />
+            <CardContent>
+              {/*
+                These notes belong to the *evidence item*, not the case: they
+                are typed in the upload dialog and stored on the custody row.
+                This panel used to render the case-level note instead - a field
+                only ever set when a case is created through the API - so every
+                note an investigator wrote at upload appeared to vanish.
+              */}
+              {noted.length === 0 ? (
+                <Typography variant="body2" color="text.secondary">
+                  No notes recorded. Notes typed in the upload dialog are stored
+                  against that evidence item and appear here.
+                </Typography>
+              ) : (
+                <Stack spacing={1.5}>
+                  {noted.map((row) => (
+                    <Box key={row.evidence_id}>
+                      <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        sx={{ fontFamily: '"JetBrains Mono", monospace' }}
+                      >
+                        {row.evidence_id} · {row.original_file_name}
+                      </Typography>
+                      <Typography variant="body2">{row.investigator_notes}</Typography>
+                    </Box>
+                  ))}
+                </Stack>
+              )}
+            </CardContent>
           </Card>
 
           <Card>
