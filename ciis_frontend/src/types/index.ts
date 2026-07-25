@@ -416,6 +416,34 @@ export interface CasePriority {
   computed_at: string;
 }
 
+// ------------------------------------------------------------------ admin
+/** One case as the administrator sees it (admins can enumerate every case). */
+export interface AdminCase {
+  case_id: string;
+  case_reference: string;
+  title: string;
+  created_at: string;
+  last_opened_at: string;
+  evidence_count: number;
+  status: string;
+  analysed: boolean;
+  linked_case_ids: string[];
+  priority_level: string;
+}
+
+/** What a case deletion actually removed and refreshed. */
+export interface AdminDeleteResult {
+  status: string;
+  case_id: string;
+  evidence_removed: number;
+  csv_rows_removed: Record<string, number>;
+  paths_deleted: string[];
+  cross_case_index_updated: boolean;
+  linked_cases: string[];
+  refreshed_cases: string[];
+  platform_records_removed: Record<string, number>;
+}
+
 // -------------------------------------------------------------- intake
 /** A case as recorded in the CSV case registry (no accounts, no database). */
 export interface RegisteredCase {

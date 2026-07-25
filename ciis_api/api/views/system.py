@@ -6,7 +6,7 @@ from pathlib import Path
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from accounts.permissions import require
+from ..permissions import require
 
 from .. import engine
 

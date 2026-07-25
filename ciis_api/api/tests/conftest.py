@@ -103,6 +103,11 @@ def engine_env(tmp_path, monkeypatch):
     # Run jobs synchronously so status is final when the request returns.
     monkeypatch.setattr(engine, "_executor", _InlineExecutor())
 
+    # Platform records live in CSV/JSON under the same temp storage; start clean.
+    from api import store
+
+    store.clear_all()
+
     yield engine
 
     for factory in (
@@ -115,7 +120,7 @@ def engine_env(tmp_path, monkeypatch):
 
 
 @pytest.fixture
-def api(db):
+def api():
     """DRF test client with DB access enabled."""
     from rest_framework.test import APIClient
 
