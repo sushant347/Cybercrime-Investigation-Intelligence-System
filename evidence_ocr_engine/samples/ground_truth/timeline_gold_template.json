@@ -1,0 +1,11 @@
+{
+  "_README": "For each case: 'order' = the TRUE chronological order of evidence ids; 'timestamps' = the TRUE ISO-8601 timestamp for each evidence id a human can date. Delete this _README key.",
+  "CASE_0021": {
+    "order": [],
+    "timestamps": {}
+  },
+  "CASE_0042": {
+    "order": [],
+    "timestamps": {}
+  }
+}

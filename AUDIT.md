@@ -5,6 +5,85 @@ undo it. Newest entry first.
 
 ---
 
+## 2026-07-25 — Evaluation-metrics remediation (Tables 6.1–6.8)
+
+**Branch:** `eval-metrics-remediation`
+**Restore point:** tag `checkpoint-pre-eval-metrics` (on `feature/correlation-addition`)
+
+### Why
+
+Aligning the thesis evaluation tables with what the code actually does — fix or
+build real infrastructure, never fabricate a number. Every code change ships
+with a test; ground-truth-blocked tables get harnesses, not invented results.
+
+### Phase 0 — re-verification (two real discrepancies caught)
+- `AllowAny` still set (`ciis_api/config/settings.py:106`) ✓; both prototypes
+  still unimported dead code ✓.
+- **Table 6.3 artifacts were absent** on this machine (`results/`, `checkpoints/`
+  gitignored, training never run here) — the user supplied them; now placed in
+  `threat_intelligence_system/results/` + `checkpoints/` (gitignored).
+- The thesis document is **external** to the repo, so table-text edits are given
+  as text to paste, not committed.
+
+### What changed / was built
+
+**Table 6.3 (verified, real):** `threat_intelligence_system/scripts/run_table_6_3.py`
+regenerates the table from `test_evaluations` in the supplied report (test set
+n=87,756); 6/8 checkpoints byte-verified to `run_id 20260712T090000Z`. Test:
+`tests/test_table_6_3.py`. Corrected citation: `full_retraining_report_*.json` /
+`full_retraining.py` (not `baseline_comparison_report.json` / `train_baselines.py`).
+
+**Table 6.8:**
+- Row 1 (JWT): decision **B** — reframed as open-by-design (no code change; text
+  supplied).
+- Row 4 (oversized upload): `test_upload_rejects_oversized` added to
+  `ciis_api/api/tests/test_evidence.py` (>50 MB → 400).
+- Row 3 (homoglyph): definitively **live** (features `security_features.py:47-48`
+  + rule engine `rule_engine.py:624` → `BrandIntelligenceEngine._detect_homoglyphs`),
+  but `MLThreatIntelProvider` surfaces only the final verdict → cite as
+  **component-level** (`tests/test_brand_intelligence.py`, 91 pass), not e2e.
+- Row 2 (tampering): already real (`tests/test_hash_service.py:34`).
+
+**Table 6.7 (real):** `evidence_ocr_engine/scripts/aggregate_processing_time.py`
+sums `duration_ms` per case; **avoids double-counting** the `pipeline` /
+`phase2_pipeline` umbrella rows (real CASE_2CF24DBA5F total = **8.0 s**, not the
+15.9 s a naive sum gives). Test: `tests/evaluation/test_processing_time.py`.
+Manual-workflow + report-correctness cells flagged not-code-derivable.
+
+**Tables 6.4 / 6.5 (infrastructure; numbers await gold):**
+- New timestamp-accuracy metric `evaluate_timestamp_accuracy` in `timeline_eval.py`
+  (MAE / median / within-tolerance / unresolved-rate; definition in the docstring
+  for approval).
+- `evaluation/gold_labels.py` (loaders) + `evaluation/correlation_baselines.py`
+  (exact-match, unweighted baselines) + gold templates in `samples/ground_truth/`.
+- Runners `scripts/run_table_6_4.py` / `run_table_6_5.py` target the **live**
+  services (not the deprecated engines); refuse to emit numbers from a template.
+- Tests: `tests/investigation/test_eval_infrastructure.py`.
+
+**Tables 6.1 / 6.2 (infrastructure; numbers await corpus):**
+- `entity_preservation_rate` added to `ocr_metrics.py` (+ test
+  `tests/evaluation/test_entity_preservation.py`).
+- `scripts/run_table_6_1.py` (3 OCR stages) refuses the example manifest;
+  `scripts/run_table_6_2.py` (regex / spaCy / full) flags spaCy as a new optional
+  dependency and skips cleanly when absent.
+- **Entity-type count:** extractor emits **28** types, not the thesis's "22" —
+  surfaced, not reconciled.
+
+### Verified
+Full engine suite passes (incl. all new eval tests); API evidence tests pass
+(after installing the declared `pytest-django`); threat `test_table_6_3` +
+`test_brand_intelligence` pass. No number was fabricated: every blocked table
+stops and states its blocker.
+
+### How to undo
+```bash
+git checkout feature/correlation-addition   # or: git checkout checkpoint-pre-eval-metrics
+```
+Additive: reverting the listed files removes the harnesses and leaves the
+engines unchanged.
+
+---
+
 ## 2026-07-24 — Cross-case entity correlation
 
 **Branch:** `feature/correlation-addition` (from `feature/roadmap-implementation`)

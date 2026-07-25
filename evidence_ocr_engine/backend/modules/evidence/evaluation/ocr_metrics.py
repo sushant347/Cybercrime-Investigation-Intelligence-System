@@ -218,3 +218,42 @@ def corpus_ocr_metrics(
         **({"params": norm_kwargs} if norm_kwargs else {}),
     }
     return result
+
+
+# ------------------------------------------------------- entity preservation
+def entity_preservation_rate(
+    gold_entities: Sequence[str], hypothesis_text: str, *, case_insensitive: bool = True
+) -> Dict[str, object]:
+    """Fraction of gold entity strings that survive verbatim in the hypothesis.
+
+    OCR is only useful downstream if the *entities* (phones, wallet ids, URLs,
+    OTPs, ...) come through intact — a low CER can still drop a single digit of a
+    wallet id and make it useless. This measures exactly that: of the entity
+    strings a human listed as present, how many appear as an exact substring of
+    the recognised text.
+
+    Args:
+        gold_entities: the true entity strings for one evidence item.
+        hypothesis_text: the OCR/pipeline text output for that item.
+        case_insensitive: compare case-insensitively (default True).
+
+    Returns:
+        ``{"total", "preserved", "rate", "missing"}`` — ``missing`` lists the
+        gold entities that did NOT survive, so failures are inspectable.
+    """
+    haystack = hypothesis_text.lower() if case_insensitive else hypothesis_text
+    preserved: List[str] = []
+    missing: List[str] = []
+    for entity in gold_entities:
+        needle = entity.lower() if case_insensitive else entity
+        if needle and needle in haystack:
+            preserved.append(entity)
+        else:
+            missing.append(entity)
+    total = len(gold_entities)
+    return {
+        "total": total,
+        "preserved": len(preserved),
+        "rate": round(len(preserved) / total, 4) if total else 0.0,
+        "missing": missing,
+    }
