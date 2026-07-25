@@ -113,7 +113,7 @@ class InvestigationReportService:
             "investigation_conclusion": self._conclusion(
                 items, correlation, campaigns, suspects, timeline),
             "recommendations": self._recommendations(
-                campaigns, suspects, timeline, priority),
+                campaigns, suspects, timeline, priority, analytics),
             "report_provenance": self._provenance(
                 case_id, items, report_id, generated_at),
             "appendix": self._appendix(items),
@@ -652,39 +652,144 @@ class InvestigationReportService:
             )
         return lines
 
-    @staticmethod
-    def _recommendations(campaigns, suspects, timeline, priority) -> List[str]:
-        recommendations: List[str] = []
+    #: Where each payment rail's records actually live - so a recommendation
+    #: names the institution to serve, not just "the provider".
+    _RAIL_AUTHORITIES = {
+        "esewa_ids": ("eSewa Ltd (F1Soft)", "wallet KYC and transaction history"),
+        "khalti_ids": ("Khalti / Sparrow Pay Pvt Ltd",
+                       "wallet KYC and transaction history"),
+        "imepay_ids": ("IME Pay (IME Digital Solution)",
+                       "wallet KYC and transaction history"),
+        "bank_accounts": ("the account-holding bank",
+                          "account opening documents and statement of the "
+                          "transaction window"),
+        "card_numbers": ("the card issuer", "cardholder KYC and authorisation "
+                         "records"),
+        "eth_wallets": ("blockchain analysis", "on-chain fund tracing"),
+        "btc_wallets": ("blockchain analysis", "on-chain fund tracing"),
+    }
+
+    @classmethod
+    def _recommendations(cls, campaigns, suspects, timeline, priority,
+                         analytics=None) -> List[str]:
+        """Prioritised, findings-derived action items.
+
+        Contract: every line names *what* to act on (the exact identifier),
+        *who* holds the records or capability, and *why* - citing the stored
+        finding it derives from. Ordering is triage order: preserve volatile
+        evidence first (takedowns kill the trail), then follow the money,
+        then identify the actor, then process hygiene. Nothing here is
+        boilerplate: a case with no flagged domain gets no takedown line.
+        """
+        urgent: List[str] = []      # volatile evidence & active harm
+        money: List[str] = []       # financial trail
+        actor: List[str] = []       # identification
+        process: List[str] = []     # case handling
+
+        # -- 1. Active infrastructure: preserve before it disappears --------
+        # One action per *host*, not per URL variant: three spellings of the
+        # same phishing domain are one takedown, and a recommendation list
+        # that repeats itself reads as machine noise rather than a work plan.
+        flagged = list(getattr(analytics, "threat_indicators", None) or [])
+        by_host: Dict[str, list] = {}
+        for indicator in flagged:
+            host = indicator.value.split("://")[-1].split("/")[0].split("?")[0]
+            by_host.setdefault(host, []).append(indicator)
+        for host, group in list(by_host.items())[:5]:
+            lead = max(group, key=lambda i: i.risk_score)
+            grounds = "; ".join(lead.reasons[:2]) if lead.reasons else \
+                f"verdict: {lead.verdict}"
+            impersonated = (f", impersonating {lead.brand_impersonated}"
+                            if lead.brand_impersonated else "")
+            evidence_ids = sorted({e for i in group for e in i.evidence_ids})
+            urls = sorted({i.value for i in group if i.value != host})
+            seen_as = f" Seen as: {', '.join(urls[:3])}." if urls else ""
+            urgent.append(
+                f"Preserve and take down '{host}' "
+                f"(risk {lead.risk_score:.0f}/100{impersonated}). "
+                f"Serve the registrar/host with a preservation request before "
+                f"takedown so logs survive. Grounds: {grounds}."
+                f"{seen_as} Appears in: {', '.join(evidence_ids) or 'n/a'}."
+            )
+        if flagged and any(i.brand_impersonated for i in flagged):
+            brands = sorted({i.brand_impersonated for i in flagged
+                             if i.brand_impersonated})
+            urgent.append(
+                f"Notify the impersonated brand(s) - {', '.join(brands)} - so "
+                "they can warn customers and issue their own takedown notices; "
+                "brand owners are typically the fastest takedown channel."
+            )
+
+        # -- 2. Follow the money --------------------------------------------
+        by_rail = dict(getattr(analytics, "wallet_statistics_by_rail", None) or {})
+        for rail, values in by_rail.items():
+            authority, records = cls._RAIL_AUTHORITIES.get(
+                rail, ("the operating institution", "account records"))
+            ids = ", ".join(f"'{v.value}'" for v in values[:4])
+            money.append(
+                f"Request {records} from {authority} for "
+                f"{rail.replace('_', ' ')}: {ids}. The receiving account's "
+                f"KYC identity is the most direct route to the perpetrator."
+            )
+        transaction_ids = (getattr(analytics, "top_entities", None) or {}
+                           ).get("transaction_ids") or []
+        if transaction_ids:
+            codes = ", ".join(f"'{v.value}'" for v in transaction_ids[:5])
+            money.append(
+                f"Cite transaction reference(s) {codes} in every records "
+                "request - providers can locate a transaction by code far "
+                "faster than by account, and the code binds victim payment to "
+                "recipient account in one record."
+            )
+
+        # -- 3. Identify the actor -------------------------------------------
         if suspects is not None:
             for s in suspects.suspects[:3]:
                 if s.threat_flagged or s.confidence_score >= 60:
-                    recommendations.append(
-                        f"Pursue subscriber/KYC records for "
-                        f"{s.identity_type[:-1] if s.identity_type.endswith('s') else s.identity_type} "
+                    singular = (s.identity_type[:-1]
+                                if s.identity_type.endswith("s")
+                                else s.identity_type)
+                    actor.append(
+                        f"Pursue subscriber/KYC records for {singular} "
                         f"'{s.identity_value}' (suspect confidence "
-                        f"{s.confidence_score:.0f}/100)."
+                        f"{s.confidence_score:.0f}/100, appears in "
+                        f"{s.evidence_count} evidence item(s))."
                     )
         if campaigns is not None:
             for c in campaigns.campaigns:
                 if c.shared_domains:
-                    recommendations.append(
-                        f"Request takedown/registrar data for campaign "
-                        f"{c.campaign_id} domain(s): "
-                        + ", ".join(c.shared_domains) + "."
+                    actor.append(
+                        f"Treat campaign {c.campaign_id} as one operation: "
+                        f"its {len(c.members)} evidence items share "
+                        f"{', '.join(c.shared_domains)}. Request registrar "
+                        "and hosting records once, for the whole cluster."
                     )
+
+        # -- 4. Process & victim care ----------------------------------------
         if timeline is not None and timeline.critical_events:
-            recommendations.append(
-                f"Prioritise the {len(timeline.critical_events)} critical "
-                "event(s) involving OTP/financial entities for victim-impact "
-                "assessment."
+            process.append(
+                f"Review the {len(timeline.critical_events)} critical "
+                "timeline event(s) (OTP/credential/payment moments) with the "
+                "complainant: they mark exactly when compromise and loss "
+                "occurred, and anchor the victim-impact statement."
+            )
+        otp_seen = bool((getattr(analytics, "entity_statistics", None) or {}
+                         ).get("otp"))
+        if otp_seen:
+            process.append(
+                "An OTP was shared with the perpetrator: advise the victim to "
+                "reset credentials and have the wallet/bank flag the account "
+                "for account-takeover monitoring immediately."
             )
         if priority is not None:
-            recommendations.append(
+            process.append(
                 f"Case priority: {priority.get('priority_level', 'N/A')} "
                 f"({priority.get('priority_score', 'N/A')}/100) - "
                 f"{priority.get('investigation_recommendation', '')}"
             )
-        return recommendations or [
+
+        ordered = urgent + money + actor + process
+        return [f"{i}. {text}" for i, text in enumerate(ordered, start=1)] or [
             "No specific action items derived; continue standard processing."
         ]
 

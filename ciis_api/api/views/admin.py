@@ -74,7 +74,7 @@ class AdminCaseListView(APIView):
                 "last_opened_at": reg.get("last_opened_at", ""),
                 "evidence_count": evidence_by_case.get(case_id, 0),
                 "status": meta.get("status") or CaseStatus.OPEN,
-                "analysed": engine.try_artifact(case_id, "report") is not None,
+                "analysed": engine.artifact_exists(case_id, "report"),
                 "linked_case_ids": linked,
                 "priority_level": (payload or {}).get("priority_level", ""),
             })

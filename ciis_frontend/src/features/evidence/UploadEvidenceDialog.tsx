@@ -34,6 +34,8 @@ import { formatBytes } from "@/lib/format";
 
 const ACCEPT = ".png,.jpg,.jpeg,.pdf,.txt,.csv,.docx";
 const POLL_MS = 2500;
+/** First check comes sooner: a small screenshot is often already done. */
+const FIRST_POLL_MS = 800;
 
 type ItemStatus = "waiting" | "uploading" | "processing" | "completed" | "failed";
 
@@ -163,6 +165,22 @@ export function UploadEvidenceDialog({
 
   const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
+  /**
+   * Upload everything first, then watch the jobs.
+   *
+   * This used to run the whole cycle per file: upload, then sit polling until
+   * the server had finished OCR, entity extraction, forensics *and* the
+   * timeline/graph rebuild before even sending the next file. Ten screenshots
+   * meant ten full round trips end to end, with the network idle for most of
+   * it — and because only one job was ever queued, the server rebuilt the
+   * case graph once per file instead of once for the batch.
+   *
+   * Submitting first means transfer overlaps with processing, and the server
+   * sees the whole burst at once (it coalesces the artifact rebuild to the
+   * last item). Processing itself is still serialised server-side by the
+   * engine's pipeline lock — that is a storage-safety constraint, not a
+   * latency one we can remove here.
+   */
   const runQueue = async () => {
     setRunning(true);
     // Snapshot indexes of everything still waiting (supports "add more, run again").
@@ -170,6 +188,8 @@ export function UploadEvidenceDialog({
       .map((it, i) => ({ it, i }))
       .filter(({ it }) => it.status === "waiting" || it.status === "failed");
 
+    // ---- phase 1: submit -------------------------------------------------
+    const jobs: { index: number; jobId: number }[] = [];
     for (const { it, i } of pending) {
       if (cancelled.current) break;
       patch(i, { status: "uploading", error: undefined });
@@ -178,30 +198,48 @@ export function UploadEvidenceDialog({
           ? await evidenceApi.submitUrl(caseId, it.url, notes)
           : await evidenceApi.upload(caseId, it.file!, notes);
         patch(i, { status: "processing" });
-        // Poll this job until it settles. Transient poll failures (dev-server
-        // restart, brief timeout) are retried, not treated as job failure.
-        let done = false;
-        while (!done && !cancelled.current) {
-          await sleep(POLL_MS);
-          try {
-            const latest = await evidenceApi.job(job.id);
-            if (latest.status === "completed") {
-              patch(i, { status: "completed", evidenceId: latest.evidence_id });
-              done = true;
-            } else if (latest.status === "failed") {
-              patch(i, { status: "failed", error: latest.error || "Processing failed." });
-              done = true;
-            }
-          } catch {
-            // keep polling — the job is still running server-side
-          }
-        }
-        // Evidence list updates after every file, not only at the end.
-        refreshCaseQueries();
+        jobs.push({ index: i, jobId: job.id });
       } catch (err) {
         patch(i, { status: "failed", error: apiErrorMessage(err) });
       }
     }
+
+    // ---- phase 2: watch --------------------------------------------------
+    const outstanding = new Map(jobs.map((j) => [j.jobId, j.index]));
+    let firstPoll = true;
+    while (outstanding.size > 0 && !cancelled.current) {
+      // Poll quickly once (small files often finish fast), then back off.
+      await sleep(firstPoll ? FIRST_POLL_MS : POLL_MS);
+      firstPoll = false;
+      const settled: number[] = [];
+      await Promise.all(
+        [...outstanding].map(async ([jobId, index]) => {
+          try {
+            const latest = await evidenceApi.job(jobId);
+            if (latest.status === "completed") {
+              patch(index, { status: "completed", evidenceId: latest.evidence_id });
+              settled.push(jobId);
+            } else if (latest.status === "failed") {
+              patch(index, {
+                status: "failed",
+                error: latest.error || "Processing failed.",
+              });
+              settled.push(jobId);
+            }
+          } catch {
+            // Transient poll failure (dev-server restart, brief timeout):
+            // keep watching — the job is still running server-side.
+          }
+        }),
+      );
+      if (settled.length) {
+        settled.forEach((id) => outstanding.delete(id));
+        // Reflect progress as items land, not only at the very end.
+        refreshCaseQueries();
+      }
+    }
+
+    refreshCaseQueries();
     if (!cancelled.current) setRunning(false);
   };
 

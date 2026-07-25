@@ -176,22 +176,28 @@ class ForensicPhase1Pipeline:
                     source_file=file_name, source_path=stored_path,
                 ),
             )
-            # --- Module 2: advanced preprocessing (working copy only) -----
+            # --- Modules 2+3: advanced preprocessing -> multi-OCR fusion --
+            #
+            # Both are skipped when no fusion engine is configured: the
+            # enhanced copy exists solely as fusion's input, so producing it
+            # would be pure cost. This is the single largest saving available
+            # on an interactive upload (each fusion engine re-OCRs the whole
+            # image the acquisition pipeline has already read).
             enhanced = image
-            if results.get("quality") is not None:
-                preprocessing_out = self._safe(
-                    "advanced_preprocessing", case_id, evidence_id, failures,
-                    lambda: self._preprocessing.enhance(image, results["quality"]),
+            if getattr(self._fusion, "enabled", True):
+                if results.get("quality") is not None:
+                    preprocessing_out = self._safe(
+                        "advanced_preprocessing", case_id, evidence_id, failures,
+                        lambda: self._preprocessing.enhance(image, results["quality"]),
+                    )
+                    if preprocessing_out is not None:
+                        enhanced, results["preprocessing"] = preprocessing_out
+                results["fusion"] = self._safe(
+                    "multi_ocr_fusion", case_id, evidence_id, failures,
+                    lambda: self._fusion.run(
+                        enhanced, evidence_id=evidence_id, case_id=case_id,
+                    ),
                 )
-                if preprocessing_out is not None:
-                    enhanced, results["preprocessing"] = preprocessing_out
-            # --- Module 3: multi-OCR fusion on the enhanced working copy --
-            results["fusion"] = self._safe(
-                "multi_ocr_fusion", case_id, evidence_id, failures,
-                lambda: self._fusion.run(
-                    enhanced, evidence_id=evidence_id, case_id=case_id,
-                ),
-            )
             # --- Module 5: logos (complements OCR) ------------------------
             ocr_lines = self._lines_for_logos(results.get("fusion"), legacy_result)
             results["logos"] = self._safe(

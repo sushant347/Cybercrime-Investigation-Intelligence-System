@@ -284,6 +284,60 @@ function ThreatCard({
   );
 }
 
+/**
+ * A "n of total" bar for count metrics (hash-verified, EXIF coverage).
+ *
+ * These were bare "0 / 8" text rows, visually inconsistent with the metric
+ * bars beside them and — worse — a zero looked like a failure even when zero
+ * is the expected value (screenshots have no EXIF). ``neutralWhenZero`` keeps
+ * the bar grey in that case instead of alarming red.
+ */
+function RatioBar({
+  label,
+  value,
+  total,
+  hint,
+  neutralWhenZero = false,
+}: {
+  label: string;
+  value: number;
+  total: number;
+  hint: string;
+  neutralWhenZero?: boolean;
+}) {
+  const pct = total > 0 ? (value / total) * 100 : 0;
+  const color =
+    value === 0 && neutralWhenZero
+      ? undefined // theme default: informational, not a warning
+      : pct >= 99
+        ? BRAND.low
+        : pct >= 50
+          ? BRAND.medium
+          : BRAND.high;
+  return (
+    <Box sx={{ mb: 1.5 }}>
+      <Stack direction="row" justifyContent="space-between" alignItems="baseline">
+        <Tooltip title={hint}>
+          <Typography variant="body2">{label}</Typography>
+        </Tooltip>
+        <Typography variant="body2" sx={{ fontWeight: 600 }}>
+          {value} / {total}
+        </Typography>
+      </Stack>
+      <LinearProgress
+        variant="determinate"
+        value={Math.min(100, pct)}
+        sx={{
+          height: 8,
+          borderRadius: 4,
+          mt: 0.5,
+          ...(color && { "& .MuiLinearProgress-bar": { bgcolor: color } }),
+        }}
+      />
+    </Box>
+  );
+}
+
 /** A labelled 0-100% style bar for a single quality metric. */
 function MetricBar({
   label,
@@ -549,18 +603,35 @@ export function AnalyticsTab({ caseId }: { caseId: string }) {
                 hint="The most suspicious single item (0-100). Lower is better."
                 invert
               />
-              <Stack direction="row" justifyContent="space-between" sx={{ mt: 2 }}>
-                <Typography variant="body2">Hash-verified items</Typography>
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                  {num(quality.hash_verified_count)} / {num(analytics.evidence_count)}
-                </Typography>
-              </Stack>
-              <Stack direction="row" justifyContent="space-between" sx={{ mt: 1 }}>
-                <Typography variant="body2">Items with EXIF metadata</Typography>
-                <Typography variant="body2" sx={{ fontWeight: 600 }}>
-                  {num(metadata.evidence_with_exif)} / {num(analytics.evidence_count)}
-                </Typography>
-              </Stack>
+              <Box sx={{ mt: 2 }}>
+                <RatioBar
+                  label="Hash-verified items"
+                  value={num(quality.hash_verified_count)}
+                  total={num(analytics.evidence_count)}
+                  hint="Items whose SHA-256 matched before and after acquisition — the chain-of-custody guarantee. This should always be full."
+                />
+                <RatioBar
+                  label="Items with EXIF metadata"
+                  value={num(metadata.evidence_with_exif)}
+                  total={num(analytics.evidence_count)}
+                  neutralWhenZero
+                  hint="Camera EXIF found inside the image file: device model, capture time, sometimes GPS. Screenshots, chat exports and PDFs carry none, so 0 is normal for screenshot-based evidence — it means no device provenance, not a defect."
+                />
+                <RatioBar
+                  label="Items with a metadata report"
+                  value={num(metadata.evidence_with_metadata_report)}
+                  total={num(analytics.evidence_count)}
+                  hint="Items the Phase-1 metadata module analysed at all. If this is 0, forensics never ran — re-run the analysis."
+                />
+              </Box>
+              {num(metadata.evidence_with_exif) === 0 &&
+                num(metadata.evidence_with_metadata_report) > 0 && (
+                  <Typography variant="caption" color="text.secondary" component="div">
+                    No EXIF found: this evidence is screenshots/documents, which
+                    never carry camera metadata. Device attribution must come
+                    from other sources (account records, device seizure).
+                  </Typography>
+                )}
             </Box>
           </Stack>
           {num(quality.mean_image_quality) === 0 &&

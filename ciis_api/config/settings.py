@@ -158,10 +158,13 @@ ENGINE_RUN_FULL_PIPELINE = os.environ.get("CIIS_RUN_FULL_PIPELINE", "1") == "1"
 # environment lacks the optional imaging dependencies.
 ENGINE_RUN_FORENSICS = os.environ.get("CIIS_RUN_FORENSICS", "1") == "1"
 
-# Extra OCR engines for the multi-OCR fusion module. Off by default: each is a
-# separate OCR stack (EasyOCR downloads model weights on first use) and would
-# add tens of seconds to an interactive upload for a report nothing currently
-# consumes. Turn on per deployment when fusion output is actually wanted.
+# OCR engines for the multi-OCR fusion module. All off by default: each one
+# performs a complete *second* OCR pass over an image the pipeline has already
+# read, and EasyOCR/Tesseract are separate stacks (EasyOCR downloads model
+# weights on first use). Nothing downstream consumes the fusion report today,
+# so running it doubled upload latency for output no screen displays. Turn the
+# engines on per deployment when fusion output is actually wanted.
+FORENSICS_FUSION_PADDLE = os.environ.get("CIIS_FUSION_PADDLE", "0") == "1"
 FORENSICS_FUSION_EASYOCR = os.environ.get("CIIS_FUSION_EASYOCR", "0") == "1"
 FORENSICS_FUSION_TESSERACT = os.environ.get("CIIS_FUSION_TESSERACT", "0") == "1"
 
