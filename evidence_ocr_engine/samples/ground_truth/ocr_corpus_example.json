@@ -1,0 +1,16 @@
+[
+  {
+    "id": "_README",
+    "reference": "ILLUSTRATIVE DEMO: 2 real sample images hand-transcribed for a working demo. NOT the 30-100 sample bilingual corpus a real Table 6.1 needs. Skipped by the runner (no image field)."
+  },
+  {
+    "id": "scam_sms",
+    "reference": "Messages\neSewa Alert You won Rs 5,00,000 lottery!\nSend Rs 2,000 processing fee to ID98XXXXXXXX\nClaim code: ESW-2026-77413",
+    "image": "samples/scam_sms_screenshot.png"
+  },
+  {
+    "id": "phishing_email",
+    "reference": "Nabil Bank - Secure Message\nFrom: security@nabil-bank-alerts.com\nSubject: URGENT - Your account has been suspended\nDear customer, unusual activity was detected.\nVerify now: http://nabil-verify.example-scam.top/login\nFailure to verify within 24 hours locks your account.",
+    "image": "samples/phishing_email_screenshot.png"
+  }
+]

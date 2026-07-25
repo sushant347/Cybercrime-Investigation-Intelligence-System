@@ -95,26 +95,53 @@ cd ..
 
 ---
 
-## 🔴 Table 6.1 — OCR (needs an annotated image corpus)
+## 🟡 Table 6.1 — OCR (demo runs now on real sample images)
+
+Demo (live OCR on 2 real sample images, illustrative labels):
 
 ```bash
 cd evidence_ocr_engine
-# smoke-test the harness on the bundled example (illustrative only):
-../.venv-platform/bin/python scripts/run_table_6_1.py --manifest samples/ground_truth/ocr_manifest_example.json --allow-example
-# real run once you have a corpus [{id, reference, image}]:
-../.venv-platform/bin/python scripts/run_table_6_1.py --manifest samples/ground_truth/ocr_corpus.json --gold-entities samples/ground_truth/preservation_entities.json
+../.venv-platform/bin/python scripts/run_table_6_1.py \
+    --manifest samples/ground_truth/ocr_corpus_example.json --allow-example
+cd ..
+```
+
+Real numbers — first build a 30–100 sample corpus (auto-scaffold the skeleton,
+then a human fills each `reference`):
+
+```bash
+cd evidence_ocr_engine
+../.venv-platform/bin/python scripts/scaffold_gold.py ocr --images-dir samples --out samples/ground_truth/ocr_corpus.json
+# edit ocr_corpus.json: type the exact visible text into each "reference"
+../.venv-platform/bin/python scripts/run_table_6_1.py --manifest samples/ground_truth/ocr_corpus.json
 cd ..
 ```
 
 ---
 
-## 🔴 Table 6.2 — Entity extraction (needs gold entities + texts)
+## 🟡 Table 6.2 — Entity extraction (demo runs now)
+
+Demo (regex vs full pipeline on the sample-image texts):
 
 ```bash
 cd evidence_ocr_engine
 ../.venv-platform/bin/python scripts/run_table_6_2.py \
-    --gold  samples/ground_truth/entities_gold.json \
-    --texts samples/ground_truth/texts.json
+    --gold  samples/ground_truth/entities_gold_example.json \
+    --texts samples/ground_truth/texts_example.json
+cd ..
+```
+
+Real numbers — scaffold from your corpus, a human fills the entity lists:
+
+```bash
+cd evidence_ocr_engine
+../.venv-platform/bin/python scripts/scaffold_gold.py entities \
+    --from-manifest samples/ground_truth/ocr_corpus.json \
+    --out-gold samples/ground_truth/entities_gold.json \
+    --out-texts samples/ground_truth/texts.json
+# edit entities_gold.json: list the true entities per type
+../.venv-platform/bin/python scripts/run_table_6_2.py \
+    --gold samples/ground_truth/entities_gold.json --texts samples/ground_truth/texts.json
 cd ..
 ```
 
@@ -150,6 +177,25 @@ cd ciis_api && ../.venv-platform/bin/python -m pytest api/tests/test_evidence.py
 Not implemented (future work) — no command.
 
 ---
+
+## Do I have to write these JSON files by hand?
+
+**The structure — no. The values — yes (that's the whole point).** Ground truth
+is the *human-decided correct answer*; auto-deriving it from the engine would be
+circular. So `scaffold_gold.py` auto-writes the JSON *skeleton* (all ids / image
+paths pre-filled) from the images and cases you already have — you only type the
+transcripts / entities / pairs:
+
+```bash
+cd evidence_ocr_engine
+../.venv-platform/bin/python scripts/scaffold_gold.py ocr         --images-dir samples --out samples/ground_truth/ocr_corpus.json
+../.venv-platform/bin/python scripts/scaffold_gold.py entities    --from-manifest samples/ground_truth/ocr_corpus.json --out-gold samples/ground_truth/entities_gold.json --out-texts samples/ground_truth/texts.json
+../.venv-platform/bin/python scripts/scaffold_gold.py correlation --out samples/ground_truth/correlation_gold.json
+../.venv-platform/bin/python scripts/scaffold_gold.py timeline    --out samples/ground_truth/timeline_gold.json
+cd ..
+```
+
+The `*_example.json` demo files are already-filled references you can copy from.
 
 ## Input formats (what each gold file needs)
 

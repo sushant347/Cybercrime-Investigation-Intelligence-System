@@ -123,13 +123,26 @@ def main() -> None:
             print(f"[{tag}]  ({target.name})")
             print(_run(PLATFORM_PY, OCR / "scripts" / script, "--gold", str(target), cwd=OCR))
 
-    banner("TABLES 6.1 / 6.2 — OCR & Entity extraction  [HARNESS · blocked on corpus]")
-    print("6.1 OCR (3 stages): scripts/run_table_6_1.py --manifest <corpus>.json")
-    print("6.2 Entities (regex/spaCy/full): scripts/run_table_6_2.py --gold <gold>.json --texts <texts>.json")
-    print("Blocked on a human-annotated 30-100 sample bilingual corpus "
-          "(see samples/ground_truth/README.md). spaCy is a new optional dependency.")
-    status["6.1 OCR"] = "BLOCKED (needs annotated corpus)"
-    status["6.2 Entity extraction"] = "BLOCKED (needs annotated corpus + spaCy)"
+    banner("TABLES 6.1 / 6.2 — OCR & Entity extraction  [live pipeline vs. gold]")
+    ents_gold, texts = GT / "entities_gold_example.json", GT / "texts_example.json"
+    if ents_gold.is_file() and texts.is_file():
+        print("[ILLUSTRATIVE demo gold — 2 hand-transcribed sample images, not thesis-grade]")
+        print(_run(PLATFORM_PY, OCR / "scripts" / "run_table_6_2.py",
+                   "--gold", str(ents_gold), "--texts", str(texts), cwd=OCR))
+        status["6.2 Entity extraction"] = "DEMO runs (example gold; needs corpus for the table)"
+    else:
+        print("6.2 Entities: scripts/run_table_6_2.py --gold <gold>.json --texts <texts>.json")
+        status["6.2 Entity extraction"] = "BLOCKED (needs annotated corpus + spaCy)"
+
+    if (GT / "ocr_corpus_example.json").is_file():
+        print("\n6.1 OCR (live OCR is slow — run separately to see real CER/WER):")
+        print("  cd evidence_ocr_engine && ../.venv-platform/bin/python scripts/run_table_6_1.py \\")
+        print("      --manifest samples/ground_truth/ocr_corpus_example.json --allow-example")
+        status["6.1 OCR"] = "DEMO available (run separately; live OCR)"
+    else:
+        status["6.1 OCR"] = "BLOCKED (needs annotated corpus)"
+    print("\nReal tables need a human-annotated 30-100 sample bilingual corpus "
+          "(samples/ground_truth/README.md). spaCy is a new optional dependency.")
 
     banner("STATUS SUMMARY")
     width = max(len(k) for k in status)
