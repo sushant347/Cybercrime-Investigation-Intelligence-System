@@ -9,6 +9,8 @@ import {
   Chip,
   Divider,
   Stack,
+  ToggleButton,
+  ToggleButtonGroup,
   Typography,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
@@ -19,11 +21,48 @@ import { investigationApi } from "@/api";
 import { EmptyState } from "@/components/common/EmptyState";
 import { DetailSkeleton } from "@/components/common/LoadingSkeleton";
 import { SearchField } from "@/components/common/SearchField";
-import { formatDateTime } from "@/lib/format";
+import { formatDateTime, titleCase } from "@/lib/format";
 import { nodeColor } from "@/theme/theme";
 import type { GraphEdge, GraphNode } from "@/types";
 
-import { EDGE_STYLES, GraphCanvas } from "./GraphCanvas";
+import {
+  EDGE_STYLES,
+  GraphCanvas,
+  nodeShape,
+  type LayoutMode,
+} from "./GraphCanvas";
+
+/** CSS clip-path previews mirroring the cytoscape node shapes. */
+const SHAPE_CSS: Record<string, string> = {
+  diamond: "polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)",
+  hexagon: "polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)",
+};
+
+function ShapeSwatch({ type }: { type: string }) {
+  const shape = nodeShape(type);
+  return (
+    <Box
+      sx={{
+        width: 15,
+        height: 15,
+        flexShrink: 0,
+        bgcolor: nodeColor(type),
+        borderRadius: shape === "ellipse" ? "50%" : shape === "round-rectangle" ? "3px" : 0,
+        clipPath: SHAPE_CSS[shape],
+      }}
+    />
+  );
+}
+
+const LAYOUT_LABELS: { value: LayoutMode; label: string; hint: string }[] = [
+  {
+    value: "structure",
+    label: "Structure",
+    hint: "Case at the centre, evidence around it, entities on the outer ring",
+  },
+  { value: "force", label: "Clusters", hint: "Force-directed: related items group together" },
+  { value: "circle", label: "Circle", hint: "All nodes on one ring — good for spotting hubs" },
+];
 
 export type Selection =
   | { kind: "node"; node: GraphNode }
@@ -39,6 +78,7 @@ export function GraphTab({ caseId }: { caseId: string }) {
   const [search, setSearch] = useState("");
   const [hiddenTypes, setHiddenTypes] = useState<Set<string>>(new Set());
   const [selection, setSelection] = useState<Selection>(null);
+  const [layout, setLayout] = useState<LayoutMode>("structure");
 
   const graphQuery = useQuery({
     queryKey: ["artifact", caseId, "graph"],
@@ -143,23 +183,19 @@ export function GraphTab({ caseId }: { caseId: string }) {
             placeholder="Search nodes (value, label, id)…"
             sx={{ minWidth: 240 }}
           />
-          <Stack direction="row" spacing={0.75} flexWrap="wrap" useFlexGap sx={{ flex: 1 }}>
-            {nodeTypes.map(([type, count]) => (
-              <Chip
-                key={type}
-                size="small"
-                label={`${type} (${count})`}
-                onClick={() => toggleType(type)}
-                variant={hiddenTypes.has(type) ? "outlined" : "filled"}
-                sx={{
-                  bgcolor: hiddenTypes.has(type) ? "transparent" : `${nodeColor(type)}33`,
-                  color: nodeColor(type),
-                  borderColor: nodeColor(type),
-                  fontWeight: 700,
-                }}
-              />
+          <ToggleButtonGroup
+            size="small"
+            exclusive
+            value={layout}
+            onChange={(_, next: LayoutMode | null) => next && setLayout(next)}
+          >
+            {LAYOUT_LABELS.map((option) => (
+              <ToggleButton key={option.value} value={option.value} title={option.hint}>
+                {option.label}
+              </ToggleButton>
             ))}
-          </Stack>
+          </ToggleButtonGroup>
+          <Box sx={{ flex: 1 }} />
           {stats && (
             <Typography variant="caption" color="text.secondary" sx={{ whiteSpace: "nowrap" }}>
               {stats.node_count} nodes · {stats.edge_count} edges ·{" "}
@@ -168,12 +204,52 @@ export function GraphTab({ caseId }: { caseId: string }) {
           )}
         </Stack>
         <Divider />
+
+        {/* Node legend — doubles as a filter: click a type to show/hide it. */}
+        <Box sx={{ px: 2, py: 1.5 }}>
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            sx={{ display: "block", mb: 1 }}
+          >
+            What you are looking at — each circle is one item the engine found.
+            Click a type to hide or show it.
+          </Typography>
+          <Stack direction="row" spacing={0.75} flexWrap="wrap" useFlexGap>
+            {nodeTypes.map(([type, count]) => {
+              const isHidden = hiddenTypes.has(type);
+              return (
+                <Chip
+                  key={type}
+                  size="small"
+                  icon={
+                    <Box sx={{ display: "flex", pl: 0.75 }}>
+                      <ShapeSwatch type={type} />
+                    </Box>
+                  }
+                  label={`${titleCase(type.replace(/_/g, " "))} (${count})`}
+                  onClick={() => toggleType(type)}
+                  variant={isHidden ? "outlined" : "filled"}
+                  sx={{
+                    bgcolor: isHidden ? "transparent" : `${nodeColor(type)}26`,
+                    color: isHidden ? "text.disabled" : nodeColor(type),
+                    borderColor: nodeColor(type),
+                    fontWeight: 700,
+                    textDecoration: isHidden ? "line-through" : undefined,
+                  }}
+                />
+              );
+            })}
+          </Stack>
+        </Box>
+        <Divider />
         <Stack direction={{ xs: "column", lg: "row" }}>
           <Box sx={{ flex: 1, minWidth: 0 }}>
             <GraphCanvas
               graph={graph}
               search={search}
               hiddenTypes={hiddenTypes}
+              layout={layout}
               onSelect={setSelection}
             />
           </Box>
@@ -189,10 +265,34 @@ export function GraphTab({ caseId }: { caseId: string }) {
             }}
           >
             {!selection && (
-              <Typography variant="body2" color="text.secondary">
-                Click a node or edge to inspect its engine-provided details. Scroll to zoom,
-                drag to pan.
-              </Typography>
+              <Stack spacing={1.25}>
+                <Typography variant="subtitle2">How to read this graph</Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Lines show how the engine connected things. A line between two
+                  pieces of evidence means they share something — the same phone
+                  number, wallet, amount, or a close acquisition time.
+                </Typography>
+                <Stack spacing={0.75}>
+                  {[
+                    ["Hover", "highlights an item and lists what it links to"],
+                    ["Click", "opens the engine's full details on that item"],
+                    ["Search", "finds a value and dims everything unrelated"],
+                    ["Scroll / drag", "zooms and pans; use the buttons to refit"],
+                  ].map(([action, meaning]) => (
+                    <Stack key={action} direction="row" spacing={1}>
+                      <Typography
+                        variant="body2"
+                        sx={{ fontWeight: 700, minWidth: 92, flexShrink: 0 }}
+                      >
+                        {action}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {meaning}
+                      </Typography>
+                    </Stack>
+                  ))}
+                </Stack>
+              </Stack>
             )}
             {selection?.kind === "node" && (
               <Stack spacing={1}>

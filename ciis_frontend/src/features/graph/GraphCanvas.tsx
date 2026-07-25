@@ -1,13 +1,22 @@
-import { Box, useTheme } from "@mui/material";
+import CenterFocusStrongIcon from "@mui/icons-material/CenterFocusStrong";
+import ZoomInIcon from "@mui/icons-material/ZoomIn";
+import ZoomOutIcon from "@mui/icons-material/ZoomOut";
+import { Box, IconButton, Paper, Stack, Tooltip, useTheme } from "@mui/material";
 import cytoscape, { type Core, type EdgeSingular, type NodeSingular } from "cytoscape";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 import { nodeColor } from "@/theme/theme";
 import type { RelationshipGraph } from "@/types";
 
 import type { Selection } from "./GraphTab";
 
-/** Visual language for engine edge types (shared with the legend in GraphTab). */
+/** Layout modes offered to the investigator. */
+export type LayoutMode = "structure" | "force" | "circle";
+
+/** Structural roles: everything else is an extracted-entity node. */
+export const STRUCTURAL_TYPES = ["case", "evidence", "timeline_event"];
+
+/** Visual language for engine edge types (legend is rendered in GraphTab). */
 export const EDGE_STYLES: Record<
   string,
   { color: string; style: "solid" | "dashed" | "dotted"; label: string }
@@ -26,6 +35,14 @@ export function edgeStyle(edgeType: string) {
   return EDGE_STYLES[edgeType] ?? FALLBACK_EDGE;
 }
 
+/** Node shape per role — shape carries meaning independently of colour. */
+export function nodeShape(type: string): string {
+  if (type === "case") return "diamond";
+  if (type === "evidence") return "round-rectangle";
+  if (type === "timeline_event") return "hexagon";
+  return "ellipse";
+}
+
 function esc(value: unknown): string {
   return String(value ?? "")
     .replace(/&/g, "&amp;")
@@ -33,21 +50,45 @@ function esc(value: unknown): string {
     .replace(/>/g, "&gt;");
 }
 
+function truncate(value: string, max: number): string {
+  return value.length <= max ? value : `${value.slice(0, max - 1)}…`;
+}
+
+/**
+ * Human-readable caption for a node.
+ * Evidence nodes are labelled by their file name (the thing an investigator
+ * recognises) rather than the internal id; entities show their value.
+ */
+function displayLabel(
+  type: string,
+  label: string,
+  id: string,
+  properties: Record<string, string>,
+): string {
+  const raw = label || id.split(":").slice(1).join(":") || id;
+  if (type === "case") return truncate(raw, 22);
+  if (type === "evidence") return truncate(properties.file_name || raw, 24);
+  return truncate(raw, 22);
+}
+
 /**
  * Cytoscape renderer for the engine's relationship graph.
- * Pure presentation: nodes/edges/weights come straight from the artifact.
- * Hovering a node highlights its neighbourhood and shows what it connects
- * to; hovering an edge shows the engine's explanation of the correlation.
+ *
+ * Pure presentation: every node, edge, weight and explanation comes from the
+ * stored artifact. The view adds only readability — semantic layout, shape/
+ * colour coding, neighbourhood focus on hover, and viewport controls.
  */
 export function GraphCanvas({
   graph,
   search,
   hiddenTypes,
+  layout,
   onSelect,
 }: {
   graph: RelationshipGraph;
   search: string;
   hiddenTypes: Set<string>;
+  layout: LayoutMode;
   onSelect: (selection: Selection) => void;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -55,16 +96,60 @@ export function GraphCanvas({
   const cyRef = useRef<Core | null>(null);
   const theme = useTheme();
 
-  // Build / rebuild the graph instance when the artifact changes.
+  /** Layout options per mode; all layouts are cytoscape built-ins. */
+  const layoutOptions = useCallback(
+    (mode: LayoutMode): cytoscape.LayoutOptions => {
+      if (mode === "structure") {
+        // Case at the centre, evidence around it, entities furthest out —
+        // mirrors how the investigation is actually structured.
+        return {
+          name: "concentric",
+          animate: false,
+          padding: 46,
+          minNodeSpacing: 34,
+          concentric: (node: NodeSingular) => {
+            const type = node.data("type") as string;
+            if (type === "case") return 3;
+            if (type === "evidence") return 2;
+            return 1;
+          },
+          levelWidth: () => 1,
+        } as cytoscape.LayoutOptions;
+      }
+      if (mode === "circle") {
+        return {
+          name: "circle",
+          animate: false,
+          padding: 46,
+          avoidOverlap: true,
+        } as cytoscape.LayoutOptions;
+      }
+      return {
+        name: "cose",
+        animate: false,
+        padding: 46,
+        nodeRepulsion: () => 14000,
+        idealEdgeLength: () => 95,
+      } as unknown as cytoscape.LayoutOptions;
+    },
+    [],
+  );
+
+  // Build / rebuild the graph instance when the artifact or theme changes.
   useEffect(() => {
     if (!containerRef.current) return;
 
-    // Node degree drives sizing so hub entities are visually prominent.
+    // Degree drives node size so hubs read as important at a glance.
     const degree = new Map<string, number>();
     graph.edges.forEach((e) => {
       degree.set(e.source, (degree.get(e.source) ?? 0) + 1);
       degree.set(e.target, (degree.get(e.target) ?? 0) + 1);
     });
+
+    const sizeFor = (type: string, deg: number) => {
+      const base = type === "case" ? 46 : type === "evidence" ? 38 : 26;
+      return base + Math.min(16, deg * 1.6);
+    };
 
     const cy = cytoscape({
       container: containerRef.current,
@@ -72,7 +157,12 @@ export function GraphCanvas({
         ...graph.nodes.map((node) => ({
           data: {
             id: node.id,
-            label: node.label || node.id.split(":").pop() || node.id,
+            label: displayLabel(
+              node.node_type,
+              node.label,
+              node.id,
+              node.properties ?? {},
+            ),
             type: node.node_type,
             degree: degree.get(node.id) ?? 0,
           },
@@ -92,37 +182,27 @@ export function GraphCanvas({
         {
           selector: "node",
           style: {
-            "background-color": (el: NodeSingular) => nodeColor(el.data("type") as string),
-            shape: (el: NodeSingular) => {
-              const t = el.data("type") as string;
-              if (t === "case") return "diamond";
-              if (t === "evidence") return "round-rectangle";
-              if (t === "timeline_event") return "hexagon";
-              return "ellipse";
-            },
+            "background-color": (el: NodeSingular) =>
+              nodeColor(el.data("type") as string),
+            shape: (el: NodeSingular) => nodeShape(el.data("type") as string),
             label: "data(label)",
-            "font-size": 10,
+            "font-size": (el: NodeSingular) =>
+              STRUCTURAL_TYPES.includes(el.data("type") as string) ? 11 : 9.5,
             "font-weight": (el: NodeSingular) =>
-              (el.data("type") as string) === "evidence" ? 700 : 400,
+              STRUCTURAL_TYPES.includes(el.data("type") as string) ? 700 : 500,
             color: theme.palette.text.primary,
             "text-valign": "bottom",
-            "text-margin-y": 5,
+            "text-margin-y": 6,
             "text-wrap": "ellipsis",
-            "text-max-width": "120px",
+            "text-max-width": "108px",
             "text-background-color": theme.palette.background.paper,
-            "text-background-opacity": 0.75,
-            "text-background-padding": "2px",
+            "text-background-opacity": 0.82,
+            "text-background-padding": "3px",
             "text-background-shape": "round-rectangle",
-            width: (el: NodeSingular) => {
-              const t = el.data("type") as string;
-              const base = t === "case" ? 34 : t === "evidence" ? 30 : 20;
-              return base + Math.min(14, (el.data("degree") as number) * 1.5);
-            },
-            height: (el: NodeSingular) => {
-              const t = el.data("type") as string;
-              const base = t === "case" ? 34 : t === "evidence" ? 30 : 20;
-              return base + Math.min(14, (el.data("degree") as number) * 1.5);
-            },
+            width: (el: NodeSingular) =>
+              sizeFor(el.data("type") as string, el.data("degree") as number),
+            height: (el: NodeSingular) =>
+              sizeFor(el.data("type") as string, el.data("degree") as number),
             "border-width": 2,
             "border-color": theme.palette.background.paper,
           },
@@ -131,28 +211,25 @@ export function GraphCanvas({
           selector: "edge",
           style: {
             width: (el: EdgeSingular) =>
-              Math.min(5, 1.25 + (el.data("weight") as number)),
-            "line-color": (el: EdgeSingular) => edgeStyle(el.data("type") as string).color,
-            "line-style": (el: EdgeSingular) => edgeStyle(el.data("type") as string).style,
+              Math.min(4.5, 1.2 + (el.data("weight") as number)),
+            "line-color": (el: EdgeSingular) =>
+              edgeStyle(el.data("type") as string).color,
+            "line-style": (el: EdgeSingular) =>
+              edgeStyle(el.data("type") as string).style,
             "curve-style": "bezier",
             "target-arrow-shape": graph.directed ? "triangle" : "none",
             "target-arrow-color": (el: EdgeSingular) =>
               edgeStyle(el.data("type") as string).color,
-            opacity: 0.7,
+            "arrow-scale": 0.85,
+            opacity: 0.68,
           },
         },
         {
           selector: ".highlighted",
           style: { "border-color": "#ffd666", "border-width": 4, "z-index": 10 },
         },
-        {
-          selector: ".hover-focus",
-          style: { opacity: 1, "z-index": 9 },
-        },
-        {
-          selector: ".dimmed",
-          style: { opacity: 0.1 },
-        },
+        { selector: ".hover-focus", style: { opacity: 1, "z-index": 9 } },
+        { selector: ".dimmed", style: { opacity: 0.08 } },
         {
           selector: ":selected",
           style: {
@@ -162,19 +239,12 @@ export function GraphCanvas({
           },
         },
       ],
-      layout: {
-        name: "cose",
-        animate: false,
-        padding: 40,
-        nodeRepulsion: () => 12000,
-        idealEdgeLength: () => 90,
-      },
+      layout: layoutOptions(layout),
       wheelSensitivity: 0.2,
-      // A sparse 4-node graph must not zoom into planet-sized circles.
-      maxZoom: 1.6,
-      minZoom: 0.15,
+      maxZoom: 2.5,
+      minZoom: 0.1,
     });
-    cy.fit(undefined, 40);
+    cy.fit(undefined, 46);
 
     cy.on("tap", "node", (event) => {
       const id = event.target.id() as string;
@@ -193,50 +263,83 @@ export function GraphCanvas({
     // ---------------------------------------------------------------- hover
     const tooltip = tooltipRef.current;
 
+    const placeTooltip = (x: number, y: number) => {
+      if (!tooltip || !containerRef.current) return;
+      const maxX = containerRef.current.clientWidth - tooltip.offsetWidth - 8;
+      const maxY = containerRef.current.clientHeight - tooltip.offsetHeight - 8;
+      tooltip.style.left = `${Math.max(8, Math.min(x + 16, Math.max(8, maxX)))}px`;
+      tooltip.style.top = `${Math.max(8, Math.min(y + 16, Math.max(8, maxY)))}px`;
+    };
+
     const showTooltip = (html: string, x: number, y: number) => {
       if (!tooltip) return;
       tooltip.innerHTML = html;
       tooltip.style.display = "block";
-      const rect = containerRef.current?.getBoundingClientRect();
-      const maxX = (rect?.width ?? 600) - tooltip.offsetWidth - 8;
-      const maxY = (rect?.height ?? 400) - tooltip.offsetHeight - 8;
-      tooltip.style.left = `${Math.max(8, Math.min(x + 14, maxX))}px`;
-      tooltip.style.top = `${Math.max(8, Math.min(y + 14, maxY))}px`;
+      placeTooltip(x, y);
     };
     const hideTooltip = () => {
       if (tooltip) tooltip.style.display = "none";
     };
 
     cy.on("mouseover", "node", (event) => {
-      const node = event.target as NodeSingular;
-      const id = node.id() as string;
-      // Emphasise the neighbourhood.
-      const hood = node.closedNeighborhood();
+      const nodeEl = event.target as NodeSingular;
+      const id = nodeEl.id() as string;
+      const source = graph.nodes.find((n) => n.id === id);
+      const hood = nodeEl.closedNeighborhood();
       cy.elements().not(hood).addClass("dimmed");
       hood.addClass("hover-focus");
 
-      // What this node connects to, grouped from the artifact itself.
       const links: string[] = [];
+      let hidden = 0;
       graph.edges.forEach((e) => {
         if (e.source !== id && e.target !== id) return;
         const otherId = e.source === id ? e.target : e.source;
         const other = graph.nodes.find((n) => n.id === otherId);
-        if (other && links.length < 6) {
+        if (!other) return;
+        if (links.length < 6) {
           links.push(
-            `<span style="color:${edgeStyle(e.edge_type).color}">●</span> ` +
-              `${esc(other.label || otherId)} <span style="opacity:.65">(${esc(
-                e.edge_type.replace(/_/g, " "),
-              )})</span>`,
+            `<div style="margin-top:2px"><span style="color:${
+              edgeStyle(e.edge_type).color
+            }">●</span> ${esc(
+              truncate(other.label || otherId, 30),
+            )} <span style="opacity:.6">${esc(
+              e.edge_type.replace(/_/g, " "),
+            )}</span></div>`,
           );
+        } else {
+          hidden += 1;
         }
       });
-      const extra = (node.degree(false) ?? 0) > 6 ? `<div style="opacity:.65">…and ${node.degree(false) - 6} more</div>` : "";
-      const type = String(node.data("type"));
+
+      const type = String(nodeEl.data("type"));
+      const props = source?.properties ?? {};
+      const propLines = Object.entries(props)
+        .filter(([, v]) => v)
+        .slice(0, 2)
+        .map(
+          ([k, v]) =>
+            `<div style="opacity:.7">${esc(k.replace(/_/g, " "))}: ${esc(
+              truncate(String(v), 34),
+            )}</div>`,
+        )
+        .join("");
+
       showTooltip(
-        `<div style="font-weight:700;margin-bottom:2px">${esc(node.data("label"))}</div>` +
-          `<div style="color:${nodeColor(type)};text-transform:uppercase;font-size:10px;letter-spacing:.05em;margin-bottom:4px">${esc(type.replace(/_/g, " "))} · ${node.degree(false)} connection(s)</div>` +
-          links.join("<br>") +
-          extra,
+        `<div style="font-weight:700;margin-bottom:2px;word-break:break-all">${esc(
+          source?.label ?? nodeEl.data("label"),
+        )}</div>` +
+          `<div style="color:${nodeColor(
+            type,
+          )};text-transform:uppercase;font-size:10px;letter-spacing:.05em;margin-bottom:4px">${esc(
+            type.replace(/_/g, " "),
+          )} · ${nodeEl.degree(false)} connection(s)</div>` +
+          propLines +
+          (links.length
+            ? `<div style="margin-top:5px;border-top:1px solid rgba(128,128,128,.25);padding-top:4px">${links.join(
+                "",
+              )}</div>`
+            : "") +
+          (hidden ? `<div style="opacity:.6;margin-top:2px">…and ${hidden} more</div>` : ""),
         event.renderedPosition.x,
         event.renderedPosition.y,
       );
@@ -246,16 +349,23 @@ export function GraphCanvas({
       const edgeEl = event.target as EdgeSingular;
       const edge = graph.edges[edgeEl.data("index") as number];
       if (!edge) return;
-      edgeEl.connectedNodes().addClass("hover-focus");
-      cy.elements().not(edgeEl.connectedNodes().union(edgeEl)).addClass("dimmed");
+      const focus = edgeEl.connectedNodes().union(edgeEl);
+      cy.elements().not(focus).addClass("dimmed");
+      focus.addClass("hover-focus");
+
       const src = graph.nodes.find((n) => n.id === edge.source);
       const dst = graph.nodes.find((n) => n.id === edge.target);
       const meta = edgeStyle(edge.edge_type);
       const confidence =
         edge.confidence ?? (edge.weight <= 1 ? edge.weight : undefined);
+
       showTooltip(
-        `<div style="color:${meta.color};text-transform:uppercase;font-size:10px;letter-spacing:.05em;font-weight:700;margin-bottom:2px">${esc(meta.label)}</div>` +
-          `<div style="font-weight:600;margin-bottom:4px">${esc(src?.label ?? edge.source)} ↔ ${esc(dst?.label ?? edge.target)}</div>` +
+        `<div style="color:${meta.color};text-transform:uppercase;font-size:10px;letter-spacing:.05em;font-weight:700;margin-bottom:3px">${esc(
+          meta.label,
+        )}</div>` +
+          `<div style="font-weight:600;margin-bottom:4px;word-break:break-all">${esc(
+            truncate(src?.label ?? edge.source, 26),
+          )} ↔ ${esc(truncate(dst?.label ?? edge.target, 26))}</div>` +
           (edge.explanation
             ? `<div style="margin-bottom:4px">${esc(edge.explanation)}</div>`
             : "") +
@@ -263,7 +373,7 @@ export function GraphCanvas({
             confidence !== undefined
               ? ` · confidence ${Math.round(confidence * 100)}%`
               : ""
-          }${edge.timestamp ? ` · ${esc(edge.timestamp).slice(0, 16)}` : ""}</div>`,
+          }${edge.timestamp ? ` · ${esc(String(edge.timestamp).slice(0, 16))}` : ""}</div>`,
         event.renderedPosition.x,
         event.renderedPosition.y,
       );
@@ -271,11 +381,7 @@ export function GraphCanvas({
 
     cy.on("mousemove", "node, edge", (event) => {
       if (tooltip && tooltip.style.display === "block") {
-        const rect = containerRef.current?.getBoundingClientRect();
-        const maxX = (rect?.width ?? 600) - tooltip.offsetWidth - 8;
-        const maxY = (rect?.height ?? 400) - tooltip.offsetHeight - 8;
-        tooltip.style.left = `${Math.max(8, Math.min(event.renderedPosition.x + 14, maxX))}px`;
-        tooltip.style.top = `${Math.max(8, Math.min(event.renderedPosition.y + 14, maxY))}px`;
+        placeTooltip(event.renderedPosition.x, event.renderedPosition.y);
       }
     });
 
@@ -291,6 +397,14 @@ export function GraphCanvas({
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [graph, theme.palette.mode]);
+
+  // Re-run the layout when the investigator switches mode.
+  useEffect(() => {
+    const cy = cyRef.current;
+    if (!cy) return;
+    cy.layout(layoutOptions(layout)).run();
+    cy.fit(undefined, 46);
+  }, [layout, layoutOptions]);
 
   // Search highlight + type filtering (visual only).
   useEffect(() => {
@@ -321,6 +435,13 @@ export function GraphCanvas({
     });
   }, [search, hiddenTypes]);
 
+  const zoomBy = (factor: number) => {
+    const cy = cyRef.current;
+    if (!cy) return;
+    cy.zoom({ level: cy.zoom() * factor, renderedPosition: { x: cy.width() / 2, y: cy.height() / 2 } });
+  };
+  const fitView = () => cyRef.current?.fit(undefined, 46);
+
   return (
     <Box sx={{ position: "relative" }}>
       <Box
@@ -332,6 +453,31 @@ export function GraphCanvas({
         }}
         aria-label="Relationship graph canvas"
       />
+
+      {/* Viewport controls */}
+      <Paper
+        variant="outlined"
+        sx={{ position: "absolute", top: 12, right: 12, zIndex: 5 }}
+      >
+        <Stack>
+          <Tooltip title="Zoom in" placement="left">
+            <IconButton size="small" onClick={() => zoomBy(1.3)}>
+              <ZoomInIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Zoom out" placement="left">
+            <IconButton size="small" onClick={() => zoomBy(1 / 1.3)}>
+              <ZoomOutIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Fit to view" placement="left">
+            <IconButton size="small" onClick={fitView}>
+              <CenterFocusStrongIcon fontSize="small" />
+            </IconButton>
+          </Tooltip>
+        </Stack>
+      </Paper>
+
       {/* Hover tooltip — populated only with escaped engine-artifact values. */}
       <Box
         ref={tooltipRef}
@@ -345,7 +491,10 @@ export function GraphCanvas({
           fontSize: "0.78rem",
           lineHeight: 1.5,
           pointerEvents: "none",
-          bgcolor: theme.palette.mode === "dark" ? "rgba(18,26,46,0.97)" : "rgba(255,255,255,0.98)",
+          bgcolor:
+            theme.palette.mode === "dark"
+              ? "rgba(18,26,46,0.97)"
+              : "rgba(255,255,255,0.98)",
           border: 1,
           borderColor: "divider",
           boxShadow: 6,

@@ -199,8 +199,13 @@ export function severityColor(value: string | undefined, theme: Theme): string {
   }
 }
 
-/** Node type -> color for the relationship graph (Module 6 legend). */
+/** Node type -> color for the relationship graph (Module 6 legend).
+ *  Structural roles (case/evidence/timeline event) and every entity type the
+ *  engine can emit need a distinct colour; anything unmapped falls back to
+ *  grey via `nodeColor`, which reads as "unclassified" in the legend. */
 export const NODE_COLORS: Record<string, string> = {
+  case: "#94a3b8",
+  timeline_event: "#22d3ee",
   evidence: "#3d7eff",
   phone: "#00c2a8",
   phones: "#00c2a8",
@@ -224,6 +229,18 @@ export const NODE_COLORS: Record<string, string> = {
   brands: "#73d13d",
   social_account: "#9254de",
   social_accounts: "#9254de",
+  // Temporal / monetary entities extracted from evidence text.
+  money: "#52c41a",
+  amount: "#52c41a",
+  amounts: "#52c41a",
+  date: "#f0a020",
+  dates: "#f0a020",
+  time: "#fbbf24",
+  times: "#fbbf24",
+  otp: "#ff7a45",
+  otps: "#ff7a45",
+  keyword: "#8c9bba",
+  keywords: "#8c9bba",
 };
 
 export const nodeColor = (type: string): string =>
