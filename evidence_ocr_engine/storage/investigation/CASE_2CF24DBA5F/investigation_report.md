@@ -1,13 +1,12 @@
 # Forensic Investigation Report - CASE_2CF24DBA5F
 
-Generated: 2026-07-25T14:24:15.351Z  
+Generated: 2026-07-25T15:02:04.154Z  
 System: Cybercrime Investigation Intelligence System (CIIS), Phase 2  
 Basis: every statement below references stored forensic findings; no content is generated outside computed results.
 
 ## Executive Summary
 
 - Case CASE_2CF24DBA5F contains 5 evidence item(s), each acquired under SHA-256 chain-of-custody verification.
-- This case is linked to 2 other case(s) through shared entities: CASE_F1278DD84F, CASE_85B2471DFB [cross_case_correlation.json].
 - The weighted correlation engine found 10 related evidence pair(s) out of 10 analysed [correlation_analysis.json].
 - The strongest suspect anchor is 'security@nabil-bank-alerts.com' (emails) with confidence 54/100 [suspect_assessment.json].
 - Observed attack progression: initial_contact -> financial_transaction -> post_attack -> social_engineering -> credential_theft [timeline_analysis.json].
@@ -112,35 +111,7 @@ Basis: every statement below references stored forensic findings; no content is 
 
 ## Cross-Case Correlation
 
-- **related case count**: 2
-- **related case ids**:
-  - CASE_F1278DD84F
-  - CASE_85B2471DFB
-- **links**:
-  - **other case id**: CASE_F1278DD84F
-  - **relationship strength**: WEAK
-  - **match confidence**: 0.1175
-  - **match reason**: Shares 1 entity(ies) with CASE_F1278DD84F: money npr 2000
-  - **matched entities**:
-    - **entity type**: money
-    - **value**: npr 2000
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00007
-      - EVID_00008
-  - **other case id**: CASE_85B2471DFB
-  - **relationship strength**: WEAK
-  - **match confidence**: 0.1175
-  - **match reason**: Shares 1 entity(ies) with CASE_85B2471DFB: money npr 2000
-  - **matched entities**:
-    - **entity type**: money
-    - **value**: npr 2000
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00009
-      - EVID_00010
+No cross-case correlations were found for this case.
 
 ## Campaign Analysis
 
@@ -354,20 +325,20 @@ Basis: every statement below references stored forensic findings; no content is 
 
 ## Report Provenance & Integrity
 
-- **report id**: RPT-2CF24DBA5F-A80EC7F3
-- **generated at**: 2026-07-25T14:24:15.349Z
+- **report id**: RPT-2CF24DBA5F-D9E0D0C0
+- **generated at**: 2026-07-25T15:02:04.152Z
 - **generator**: CIIS Phase-2 reporting module (template-over-data; no free-text generation)
 - **evidence set digest**: f8320f982f3c29e5b76842e5e4ffef335f82140f5388e98ff6a8c8f992f16825
 - **evidence set digest note**: SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.
 - **source artifact hashes**:
-  - **correlation analysis v6.json**: c7ef6e1ad89e06a4979d476c9dfc8aafd2e77719a9613e5d6bd72774eb26c151
-  - **cross case correlation v2.json**: 7cb712dfb3fcf95fed21eb714c0769b36c8725c05103dcd09df3373de24b6a90
-  - **campaign analysis.json**: 5f547bec256013858459f8280cf7b09a3daa80b8c1d36bd6002c9c2be98b2774
-  - **suspect assessment.json**: 01ad6c3d229e9792e79f13b71b4e25a611cb990b3f81836848c0df11d3719664
-  - **timeline analysis v6.json**: ee8a786ab67716b046160eb104ac2326692d864a21e94dd648668db8f7ba891e
-  - **analytics.json**: ba48ae16ed748f65c3d709d9f218585cbb89fc494f83a0b19ef3324c7b067717
-  - **case priority.json**: 722c3f976591167d4f873adf502213e283a2bb77d41bfdfebb325598a5b23745
-  - **graph v6.json**: 42a17e5f05d03d07d2a5f058d708facaf0773610da51178dd1e9079df384909c
+  - **correlation analysis.json**: 9951a1c19a68e7b0963ca66531a5eea8dc763142187562be0d14d4b78d16707b
+  - **cross case correlation.json**: 2a315dffd58ce1a34aa981649f549b456be868c4b5816ef07344f1ea6e0a525d
+  - **campaign analysis.json**: 49f6f109d73e0396cb54f796f77ae02f55c64b5adfd529c02d7d2350e7df93c2
+  - **suspect assessment.json**: 9a0df99efb53e53cc8b55500f65c8447bdfb729b948f2ba2b61b1a193b4c5c92
+  - **timeline analysis.json**: de86e51dfe3c4ab66eaf312129f1e00ad57c4fcdd8bcac81b8b78f7ea12284ef
+  - **analytics.json**: d5c07cf478ec9fcafcf1382cd58f7aedcab409a2efbf7f74d39a1ede3fc923b9
+  - **case priority.json**: f83955d4c372ae29a3d329f5e3dbee1fcb71cf88f959136ffac298755abd4d8c
+  - **graph.json**: af1d8c57cb55a7c7708795939ba92ae1172aa7b43159c1d8b03fa0bf539d4f07
 
 ## Appendix
 

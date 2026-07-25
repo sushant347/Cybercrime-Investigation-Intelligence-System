@@ -1,6 +1,6 @@
 # Forensic Investigation Report - CASE_4106C94201
 
-Generated: 2026-07-25T14:11:56.043Z  
+Generated: 2026-07-25T14:12:54.695Z  
 System: Cybercrime Investigation Intelligence System (CIIS), Phase 2  
 Basis: every statement below references stored forensic findings; no content is generated outside computed results.
 
@@ -89,46 +89,9 @@ No suspect anchors were derived from the evidence.
 
 ## Model Prediction Results
 
-- **indicators classified**: 2
-- **flagged malicious**: 2
+- **indicators classified**: 1
+- **flagged malicious**: 1
 - **predictions**:
-  - **indicator**: www.telegrammessage.com
-  - **evidence id**: EVID_00014
-  - **verdict**: malicious
-  - **risk score**: 82
-  - **confidence**: 0.82
-  - **risk level**: Critical
-  - **source**: ml:xgboost
-  - **model version**: 4.0.0
-  - **domain**: www.telegrammessage.com
-  - **trust score**: 10
-  - **brand impersonated**: telegram
-  - **official domain**: False
-  - **ssl status**: VALID
-  - **domain age days**: 42
-  - **registrar**: Spaceship, Inc.
-  - **spf present**: False
-  - **dmarc present**: False
-  - **ssl days left**: 51
-  - **hosting**: Cloudflare, Inc., Canada
-  - **ip address**: 104.21.88.199
-  - **reasons**:
-    - The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.
-    - AI model classified this URL as phishing with 100% confidence.
-    - The domain contains the brand name 'telegram' but is not the official domain -- possible brand impersonation.
-    - The URL does not use HTTPS, meaning data is transmitted without encryption.
-    - The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure.
-    - The domain contains 'telegram' but is not the official telegram.com domain — a common brand impersonation technique.
-  - **threat signals**:
-    - ✗ Impersonates known brand: telegram (found in domain)
-    - ✗ Plain HTTP protocol used (unencrypted connections)
-    - ✗ Recently registered domain (age 42 days)
-    - ✗ Missing SPF record (facilitates email spoofing)
-    - ✗ Missing DMARC record (facilitates email spoofing)
-  - **trust signals**:
-    - ✓ Valid SSL certificate
-    - ✓ Registered with trusted registrar (Spaceship, Inc.)
-    - ✓ Hosted on a trusted enterprise network (Cloudflare, Inc.)
   - **indicator**: https://www.telegrammessage.com/
   - **evidence id**: EVID_00014
   - **verdict**: malicious
@@ -218,20 +181,20 @@ No suspect anchors were derived from the evidence.
 
 ## Report Provenance & Integrity
 
-- **report id**: RPT-4106C94201-3C01ED2A
-- **generated at**: 2026-07-25T14:11:56.042Z
+- **report id**: RPT-4106C94201-9078601B
+- **generated at**: 2026-07-25T14:12:54.685Z
 - **generator**: CIIS Phase-2 reporting module (template-over-data; no free-text generation)
 - **evidence set digest**: 3bebac03c4a83c85e101c7e264d7e5ad4517ed7bc5c3fdff5820dd343991c5ad
 - **evidence set digest note**: SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.
 - **source artifact hashes**:
-  - **correlation analysis v2.json**: 4e5d8c6e098fb71330f3f57867a3094b69d02b52c52f15130452ede2259f20d1
+  - **correlation analysis v3.json**: 3c8bc986fe669b71997ec8ebcb49077f2d23bb3d4a1eda51dcfb38f1f6150406
   - **cross case correlation.json**: 037204937a4cff74d5de9ef621a3435c7db1332c1c518a22a5bd9f894fc3e680
-  - **campaign analysis.json**: 8ad8ada226020ebfc566a7a84d201fa88a26dbbcaf1d38567225b500de574450
-  - **suspect assessment.json**: 30dea2ffd2ef4f559e725fe5eab3a322b8464800f57b4fd72b9784e645482e94
-  - **timeline analysis v2.json**: 4e5c998552dd3248df04f1b1b0af1058999c61e500c2d9ae8e71728d6ae19f2d
-  - **analytics.json**: 31b84070ef8125c22348d8261c9028ee1cc19dfef9b26eaee10dc719f590184d
-  - **case priority.json**: ad7dad6273fa5b62036c4e3cb76cce7d9352f550d3882098f116f1237816ee42
-  - **graph v2.json**: 3197cac9bf13e3f9be04400b5970a4a6d72d008114ca4613d579f990fc116fd6
+  - **campaign analysis v2.json**: e0aabe435bc128dfaa671ed1d6cd4304889473fa0e5c79caa9d78480b30f4ead
+  - **suspect assessment v2.json**: ec1da792d58230213aa88fa419aa161fb68d460aecb13e986ae224316f91e0ad
+  - **timeline analysis v3.json**: 2320d3ad682bccab730ac3b6ee43cdff3e7a5c14cc9d71cf455fda1bac4302e1
+  - **analytics v2.json**: 06c68cf61e6c392d1055a96328f5dbfd6c37c03b6a1e1bc8d889625b42117199
+  - **case priority v2.json**: 28e1ad0105e7797569cf2a88edcdd6c892246f01d8db27e73284c046b061cd83
+  - **graph v3.json**: aee02f951b904f56057328a50e898cc79c2086b90e4c938ea0e98faa9f64d190
 
 ## Appendix
 

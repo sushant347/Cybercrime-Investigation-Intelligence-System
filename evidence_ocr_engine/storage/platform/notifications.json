@@ -110,26 +110,6 @@
     "read": false
   },
   {
-    "id": 21,
-    "created_at": "2026-07-25T14:41:23.913Z",
-    "type": "processing_complete",
-    "title": "Evidence EVID_00006 processed",
-    "message": "http_shared-scam-domain.test_pay.url processed for CASE_4CFDEC4197.",
-    "case_id": "CASE_4CFDEC4197",
-    "evidence_id": "EVID_00006",
-    "read": false
-  },
-  {
-    "id": 22,
-    "created_at": "2026-07-25T14:41:24.212Z",
-    "type": "report_generated",
-    "title": "Investigation analysis completed for CASE_4CFDEC4197",
-    "message": "All Phase-2 artifacts regenerated.",
-    "case_id": "CASE_4CFDEC4197",
-    "evidence_id": "",
-    "read": false
-  },
-  {
     "id": 23,
     "created_at": "2026-07-25T14:41:38.482Z",
     "type": "case_deleted",
@@ -152,6 +132,56 @@
   {
     "id": 25,
     "created_at": "2026-07-25T14:45:19.062Z",
+    "type": "report_generated",
+    "title": "Investigation analysis completed for CASE_2CF24DBA5F",
+    "message": "All Phase-2 artifacts regenerated.",
+    "case_id": "CASE_2CF24DBA5F",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 26,
+    "created_at": "2026-07-25T14:48:22.758Z",
+    "type": "report_generated",
+    "title": "Investigation analysis completed for CASE_2CF24DBA5F",
+    "message": "All Phase-2 artifacts regenerated.",
+    "case_id": "CASE_2CF24DBA5F",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 31,
+    "created_at": "2026-07-25T14:51:57.895Z",
+    "type": "report_generated",
+    "title": "Investigation analysis completed for CASE_2CF24DBA5F",
+    "message": "All Phase-2 artifacts regenerated.",
+    "case_id": "CASE_2CF24DBA5F",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 32,
+    "created_at": "2026-07-25T14:52:42.412Z",
+    "type": "case_deleted",
+    "title": "Case CASE_4CFDEC4197 deleted",
+    "message": "Removed by an administrator. Linked cases refreshed: none",
+    "case_id": "",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 33,
+    "created_at": "2026-07-25T14:52:47.485Z",
+    "type": "case_deleted",
+    "title": "Case CASE_8F43434664 deleted",
+    "message": "Removed by an administrator. Linked cases refreshed: CASE_2CF24DBA5F",
+    "case_id": "",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 34,
+    "created_at": "2026-07-25T15:02:04.231Z",
     "type": "report_generated",
     "title": "Investigation analysis completed for CASE_2CF24DBA5F",
     "message": "All Phase-2 artifacts regenerated.",

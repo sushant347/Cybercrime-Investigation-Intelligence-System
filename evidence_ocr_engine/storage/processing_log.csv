@@ -27,7 +27,3 @@ timestamp,case_id,evidence_id,stage,level,message,duration_ms
 2026-07-25T14:24:07.592Z,CASE_2CF24DBA5F,EVID_00005,ocr,INFO,plain-text evidence: 4 lines read directly,0.0
 2026-07-25T14:24:07.593Z,CASE_2CF24DBA5F,EVID_00005,hashing,INFO,post-processing hash VERIFIED,0.1
 2026-07-25T14:24:07.600Z,CASE_2CF24DBA5F,EVID_00005,pipeline,INFO,"completed: 1 page(s), avg confidence 1.00",7.8
-2026-07-25T14:41:19.994Z,CASE_4CFDEC4197,EVID_00006,upload,INFO,"acquired 'http_shared-scam-domain.test_pay.url' (35 B), sha256=08dcf69e8c1888d9...",1.8
-2026-07-25T14:41:19.995Z,CASE_4CFDEC4197,EVID_00006,ocr,INFO,URL evidence: 1 line(s) read directly (no OCR),0.0
-2026-07-25T14:41:19.995Z,CASE_4CFDEC4197,EVID_00006,hashing,INFO,post-processing hash VERIFIED,0.1
-2026-07-25T14:41:19.997Z,CASE_4CFDEC4197,EVID_00006,pipeline,INFO,"completed: 1 page(s), avg confidence 1.00",3.1

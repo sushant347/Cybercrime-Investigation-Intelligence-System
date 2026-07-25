@@ -1,14 +1,15 @@
 {
   "report_type": "investigation_report",
-  "report_version": 1,
+  "report_version": 2,
   "schema_version": "2.0",
   "case_id": "CASE_36BBE50ED9",
-  "generated_at": "2026-07-25T13:49:48.833Z",
+  "generated_at": "2026-07-25T13:52:24.397Z",
   "report": {
-    "report_id": "RPT-36BBE50ED9-309FABD4",
+    "report_id": "RPT-36BBE50ED9-868B9B4C",
     "sections": {
       "executive_summary": [
         "Case CASE_36BBE50ED9 contains 2 evidence item(s), each acquired under SHA-256 chain-of-custody verification.",
+        "This case is linked to 1 other case(s) through shared entities: CASE_9350872D71 [cross_case_correlation.json].",
         "The weighted correlation engine found 1 related evidence pair(s) out of 1 analysed [correlation_analysis.json].",
         "Observed attack progression: financial_transaction -> post_attack [timeline_analysis.json]."
       ],
@@ -73,7 +74,32 @@
           }
         ]
       },
-      "cross_case_correlation": "No cross-case correlations were found for this case.",
+      "cross_case_correlation": {
+        "related_case_count": 1,
+        "related_case_ids": [
+          "CASE_9350872D71"
+        ],
+        "links": [
+          {
+            "other_case_id": "CASE_9350872D71",
+            "relationship_strength": "WEAK",
+            "match_confidence": 0.1175,
+            "match_reason": "Shares 1 entity(ies) with CASE_9350872D71: money npr 250000",
+            "matched_entities": [
+              {
+                "entity_type": "money",
+                "value": "npr 250000",
+                "this_evidence_ids": [
+                  "EVID_00009"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00011"
+                ]
+              }
+            ]
+          }
+        ]
+      },
       "campaign_analysis": {
         "campaign_count": 0,
         "unclustered_evidence": [
@@ -171,14 +197,14 @@
         "Case priority: LOW (13.8/100) - Low urgency: archive-ready unless new evidence raises the correlation or threat picture."
       ],
       "report_provenance": {
-        "report_id": "RPT-36BBE50ED9-309FABD4",
-        "generated_at": "2026-07-25T13:49:48.829Z",
+        "report_id": "RPT-36BBE50ED9-868B9B4C",
+        "generated_at": "2026-07-25T13:52:24.394Z",
         "generator": "CIIS Phase-2 reporting module (template-over-data; no free-text generation)",
         "evidence_set_digest": "4ae6ecf18ac754c27899be758225d730e56c272281c639e9a7f5d0dccda2600c",
         "evidence_set_digest_note": "SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.",
         "source_artifact_hashes": {
           "correlation_analysis_v3.json": "07f2d6b71782322ce24dc77d2f2c949651eacfd80ed416e62c02fcf6237166eb",
-          "cross_case_correlation.json": "ba60e5cdc44b372956254459715fadf1c84fcacac8d1a980ff3f6d016b401df3",
+          "cross_case_correlation_v2.json": "821221364299d80f47081fb4b375fe2271df2c48654383a6b550b935524e899d",
           "campaign_analysis.json": "a741c38d16a6e83430586bce53349dd129389edcde638455fb97b0b1b8491cd3",
           "suspect_assessment.json": "f1196001c8590f39790a43cb042ac15ce2375a43279f79491bd75d498aca62de",
           "timeline_analysis_v3.json": "2556f16ce8463a51351be7d87f50c6763fe5f4fe4c681cd7551d7ae6efccfca9",

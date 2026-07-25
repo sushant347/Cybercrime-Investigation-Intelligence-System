@@ -84,30 +84,6 @@
     "finished_at": "2026-07-25T14:28:29.919Z"
   },
   {
-    "id": 8,
-    "created_at": "2026-07-25T14:41:19.990Z",
-    "job_type": "evidence_processing",
-    "status": "completed",
-    "case_id": "CASE_4CFDEC4197",
-    "evidence_id": "EVID_00006",
-    "detail": "Processed as EVID_00006; 2 entities extracted; timeline and graph refreshed",
-    "error": "",
-    "created_by": "",
-    "finished_at": "2026-07-25T14:41:23.913Z"
-  },
-  {
-    "id": 9,
-    "created_at": "2026-07-25T14:41:24.160Z",
-    "job_type": "case_analysis",
-    "status": "completed",
-    "case_id": "CASE_4CFDEC4197",
-    "evidence_id": "",
-    "detail": "failures=none",
-    "error": "",
-    "created_by": "",
-    "finished_at": "2026-07-25T14:41:24.211Z"
-  },
-  {
     "id": 10,
     "created_at": "2026-07-25T14:42:19.917Z",
     "job_type": "case_analysis",
@@ -130,5 +106,41 @@
     "error": "",
     "created_by": "",
     "finished_at": "2026-07-25T14:45:19.061Z"
+  },
+  {
+    "id": 12,
+    "created_at": "2026-07-25T14:48:12.200Z",
+    "job_type": "case_analysis",
+    "status": "completed",
+    "case_id": "CASE_2CF24DBA5F",
+    "evidence_id": "",
+    "detail": "failures=none",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-07-25T14:48:22.757Z"
+  },
+  {
+    "id": 17,
+    "created_at": "2026-07-25T14:51:57.728Z",
+    "job_type": "case_analysis",
+    "status": "completed",
+    "case_id": "CASE_2CF24DBA5F",
+    "evidence_id": "",
+    "detail": "failures=none",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-07-25T14:51:57.893Z"
+  },
+  {
+    "id": 18,
+    "created_at": "2026-07-25T15:01:50.409Z",
+    "job_type": "case_analysis",
+    "status": "completed",
+    "case_id": "CASE_2CF24DBA5F",
+    "evidence_id": "",
+    "detail": "failures=none",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-07-25T15:02:04.230Z"
   }
 ]
