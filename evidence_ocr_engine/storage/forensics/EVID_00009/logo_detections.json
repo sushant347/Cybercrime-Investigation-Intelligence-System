@@ -1,0 +1,64 @@
+{
+  "report_type": "logo_detections",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00009",
+  "case_id": "CASE_185915593C",
+  "generated_at": "2026-07-25T17:18:50.730Z",
+  "report": {
+    "evidence_id": "EVID_00009",
+    "case_id": "CASE_185915593C",
+    "source_file": "03_qr_code_flyer.png",
+    "brands_checked": [
+      "eSewa",
+      "Khalti",
+      "IME Pay",
+      "Facebook",
+      "Messenger",
+      "WhatsApp",
+      "Telegram",
+      "Gmail",
+      "Outlook",
+      "Google",
+      "Microsoft"
+    ],
+    "detections": [
+      {
+        "brand": "eSewa",
+        "confidence": 0.8457,
+        "bbox": [],
+        "detection_method": "ocr_keyword",
+        "detected_at": "2026-07-25T17:18:50.700Z",
+        "detail": "keyword 'esewa' in OCR line"
+      },
+      {
+        "brand": "Khalti",
+        "confidence": 0.8457,
+        "bbox": [],
+        "detection_method": "ocr_keyword",
+        "detected_at": "2026-07-25T17:18:50.705Z",
+        "detail": "keyword 'khalti' in OCR line"
+      },
+      {
+        "brand": "WhatsApp",
+        "confidence": 0.7428,
+        "bbox": [
+          0.0,
+          0.0,
+          600.0,
+          111.0
+        ],
+        "detection_method": "colour_signature",
+        "detected_at": "2026-07-25T17:18:50.717Z",
+        "detail": "brand-colour region 14.6% of frame"
+      }
+    ],
+    "detected_brands": [
+      "Khalti",
+      "WhatsApp",
+      "eSewa"
+    ],
+    "template_assets_available": false,
+    "analysis_time_ms": 30.2
+  }
+}

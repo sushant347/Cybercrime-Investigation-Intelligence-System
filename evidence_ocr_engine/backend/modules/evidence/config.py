@@ -65,6 +65,17 @@ class EvidenceConfig:
     #: different generation. Only "PP-OCRv5" is supported by this engine.
     ocr_version: str = "PP-OCRv5"
     ocr_timeout_seconds: float = 180.0
+    #: Largest image (in pixels) handed to PaddleOCR in a single call. Above
+    #: this the image is read as overlapping horizontal bands instead.
+    #: Paddle's cost grows much faster than linearly with pixel count - on
+    #: Apple Silicon a 1.6 MP screenshot took 245s where 0.5 MP takes ~17s -
+    #: and beyond roughly 2 MP it segfaults, killing the host process. This
+    #: budget keeps every call in the fast, stable region without downscaling
+    #: (which would shrink the text and cost accuracy).
+    ocr_max_pixels: int = 700_000
+    #: Vertical overlap between bands, so a text line sitting on a cut is
+    #: still read whole by one of them. Duplicates are merged afterwards.
+    ocr_band_overlap_px: int = 200
     #: OCR text lines below this confidence are kept but flagged in logs.
     low_confidence_threshold: float = 0.50
     #: Raise EmptyOCRError instead of storing an empty result.
@@ -117,6 +128,7 @@ class EvidenceConfig:
             max_file_size_bytes=int(float(os.environ.get("EVIDENCE_MAX_FILE_MB", "50")) * 1024 * 1024),
             ocr_timeout_seconds=float(os.environ.get("EVIDENCE_OCR_TIMEOUT", "180")),
             pdf_render_dpi=int(os.environ.get("EVIDENCE_PDF_DPI", "220")),
+            ocr_max_pixels=int(os.environ.get("EVIDENCE_OCR_MAX_PIXELS", "700000")),
         )
 
     def ensure_directories(self) -> None:

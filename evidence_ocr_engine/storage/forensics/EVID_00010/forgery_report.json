@@ -1,0 +1,67 @@
+{
+  "report_type": "forgery_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00010",
+  "case_id": "CASE_185915593C",
+  "generated_at": "2026-07-25T17:19:04.972Z",
+  "report": {
+    "evidence_id": "EVID_00010",
+    "case_id": "CASE_185915593C",
+    "source_file": "04_esewa_payment_screenshot.jpg",
+    "ela": {
+      "mean_difference": 0.073,
+      "max_difference": 6.333,
+      "hotspot_region_fraction": 0.0,
+      "suspicious": false
+    },
+    "compression": {
+      "blockiness": 0.582,
+      "grid_inconsistency": 0.487,
+      "estimated_recompressions": 0,
+      "suspicious": false
+    },
+    "metadata": {
+      "has_exif": false,
+      "software_tags": [],
+      "editing_software_detected": false,
+      "datetime_original": "",
+      "datetime_modified": "",
+      "datetime_mismatch": false,
+      "issues": [
+        "no EXIF metadata (normal for screenshots/social-media exports; removes one authenticity signal)"
+      ],
+      "suspicious": false
+    },
+    "copy_move": {
+      "keypoints_analyzed": 1200,
+      "self_matches": 925,
+      "consistent_offset_clusters": 2,
+      "largest_cluster_size": 11,
+      "suspicious": true
+    },
+    "noise": {
+      "block_count": 140,
+      "noise_mean": 0.199,
+      "noise_std": 0.329,
+      "inconsistency_ratio": 0.0,
+      "suspicious": false
+    },
+    "component_scores": {
+      "ela": 0.3,
+      "compression": 1.9,
+      "metadata": 0.0,
+      "copy_move": 72.0,
+      "noise": 0.0
+    },
+    "forgery_score": 14.9,
+    "forgery_risk": "LOW",
+    "authenticity_status": "LIKELY_AUTHENTIC",
+    "findings": [
+      "no EXIF metadata (normal for screenshots/social-media exports; removes one authenticity signal)",
+      "Copy-move indicator: 2 consistent offset cluster(s), largest 11 matches."
+    ],
+    "analysis_time_ms": 67.9,
+    "note": "Findings are investigative indicators only; evidence is never rejected."
+  }
+}

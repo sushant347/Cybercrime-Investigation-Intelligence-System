@@ -1,0 +1,47 @@
+{
+  "report_type": "quality_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00011",
+  "case_id": "CASE_185915593C",
+  "generated_at": "2026-07-25T17:20:06.462Z",
+  "report": {
+    "evidence_id": "EVID_00011",
+    "case_id": "CASE_185915593C",
+    "source_file": "05_khalti_receipt.jpg",
+    "metrics": {
+      "width": 640,
+      "height": 880,
+      "megapixels": 0.563,
+      "blur_laplacian_variance": 119.42421519886364,
+      "brightness_mean": 231.84381569602272,
+      "contrast_std": 58.42263335687973,
+      "noise_residual": 0.4516370738636364,
+      "skew_angle_deg": 0.0,
+      "compression_quality": 74.5171875,
+      "edge_density": 0.022517755681818182,
+      "text_like_components": 214
+    },
+    "sub_scores": {
+      "blur": 21.5,
+      "brightness": 100.0,
+      "contrast": 97.0,
+      "noise": 100.0,
+      "resolution": 52.0,
+      "skew": 100.0,
+      "compression": 74.5,
+      "readability": 62.1
+    },
+    "overall_score": 68.2,
+    "quality_grade": "GOOD",
+    "expected_ocr_accuracy": 84.1,
+    "readability_score": 62.1,
+    "recommended_operations": [
+      "edge_enhancement",
+      "super_resolution",
+      "perspective_correction"
+    ],
+    "notes": [],
+    "analysis_time_ms": 39.3
+  }
+}

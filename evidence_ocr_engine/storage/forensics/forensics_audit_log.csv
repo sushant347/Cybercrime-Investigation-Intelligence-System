@@ -1,0 +1,113 @@
+timestamp,case_id,evidence_id,module,action,level,message,duration_ms
+2026-07-25T16:24:18.076Z,CASE_EE8250FB76,EVID_00005,phase1_pipeline,started,INFO,file=08_complaint_letter.pdf image=False,0.0
+2026-07-25T16:24:18.083Z,CASE_EE8250FB76,EVID_00005,file_integrity,fingerprinted,INFO,sha256=fe644062bf75e62c... entropy=6.1851 magic=PDF document duplicate=False,5.5
+2026-07-25T16:24:18.086Z,CASE_EE8250FB76,EVID_00005,metadata_extraction,extracted,INFO,type=pdf notes=0 errors=0,1.2
+2026-07-25T16:24:18.088Z,CASE_EE8250FB76,EVID_00005,confidence_scoring,scored,INFO,score=100.0 level=VERY_HIGH components=3/6,0.0
+2026-07-25T16:24:18.088Z,CASE_EE8250FB76,EVID_00005,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'metadata'] failures=none",12.3
+2026-07-25T17:16:46.800Z,CASE_185915593C,EVID_00007,phase1_pipeline,started,INFO,file=01_sms_screenshot.jpg image=True,0.0
+2026-07-25T17:16:46.807Z,CASE_185915593C,EVID_00007,file_integrity,fingerprinted,INFO,sha256=905b21d603ca0a6f... entropy=7.4803 magic=JPEG image duplicate=False,5.1
+2026-07-25T17:16:46.809Z,CASE_185915593C,EVID_00007,metadata_extraction,extracted,INFO,type=image notes=1 errors=0,1.0
+2026-07-25T17:16:46.832Z,CASE_185915593C,EVID_00007,quality_assessment,assessed,INFO,score=62.4 grade=FAIR expected_ocr=79.4%,17.9
+2026-07-25T17:16:47.415Z,CASE_185915593C,EVID_00007,forgery_detection,analyzed,INFO,score=17.8 risk=LOW status=LIKELY_AUTHENTIC,581.7
+2026-07-25T17:16:47.418Z,CASE_185915593C,EVID_00007,advanced_preprocessing,op:perspective_correction,INFO,applied=False no dominant quadrilateral,2.5
+2026-07-25T17:16:47.422Z,CASE_185915593C,EVID_00007,advanced_preprocessing,op:super_resolution,INFO,applied=True lanczos_x1.40,4.0
+2026-07-25T17:16:47.425Z,CASE_185915593C,EVID_00007,advanced_preprocessing,op:edge_enhancement,INFO,applied=True unsharp_mask(amount=0.6),3.0
+2026-07-25T17:16:47.443Z,CASE_185915593C,EVID_00007,advanced_preprocessing,completed,INFO,2/3 operations applied,27.2
+2026-07-25T17:17:05.459Z,CASE_185915593C,EVID_00007,multi_ocr_fusion,engine:paddleocr,INFO,"15 lines, avg conf 0.94",18006.8
+2026-07-25T17:17:05.471Z,CASE_185915593C,EVID_00007,multi_ocr_fusion,engine:easyocr,WARNING,unavailable (library or binary not installed),0.0
+2026-07-25T17:17:05.472Z,CASE_185915593C,EVID_00007,multi_ocr_fusion,engine:tesseract,WARNING,unavailable (library or binary not installed),0.0
+2026-07-25T17:17:05.492Z,CASE_185915593C,EVID_00007,multi_ocr_fusion,completed,INFO,selected=paddleocr source=selected confidence=0.94,18030.5
+2026-07-25T17:17:05.519Z,CASE_185915593C,EVID_00007,logo_detection,detected,INFO,brands=['eSewa'],22.7
+2026-07-25T17:17:05.524Z,CASE_185915593C,EVID_00007,confidence_scoring,scored,INFO,score=85.6 level=VERY_HIGH components=6/6,0.0
+2026-07-25T17:17:05.524Z,CASE_185915593C,EVID_00007,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'forgery', 'fusion', 'logos', 'metadata', 'preprocessing', 'quality'] failures=none",18724.3
+2026-07-25T17:17:42.843Z,CASE_185915593C,EVID_00008,phase1_pipeline,started,INFO,file=02_messenger_chat.jpg image=True,0.0
+2026-07-25T17:17:42.862Z,CASE_185915593C,EVID_00008,file_integrity,fingerprinted,INFO,sha256=bb246839287ca1bc... entropy=7.2066 magic=JPEG image duplicate=False,10.2
+2026-07-25T17:17:42.873Z,CASE_185915593C,EVID_00008,metadata_extraction,extracted,INFO,type=image notes=1 errors=0,7.8
+2026-07-25T17:17:43.048Z,CASE_185915593C,EVID_00008,quality_assessment,assessed,INFO,score=66.5 grade=GOOD expected_ocr=83.0%,128.6
+2026-07-25T17:17:43.183Z,CASE_185915593C,EVID_00008,forgery_detection,analyzed,INFO,score=17.6 risk=LOW status=LIKELY_AUTHENTIC,133.1
+2026-07-25T17:17:43.188Z,CASE_185915593C,EVID_00008,advanced_preprocessing,op:perspective_correction,INFO,applied=False no dominant quadrilateral,4.2
+2026-07-25T17:17:43.194Z,CASE_185915593C,EVID_00008,advanced_preprocessing,op:edge_enhancement,INFO,applied=True unsharp_mask(amount=0.6),6.3
+2026-07-25T17:17:43.225Z,CASE_185915593C,EVID_00008,advanced_preprocessing,completed,INFO,1/2 operations applied,40.3
+2026-07-25T17:18:23.357Z,CASE_185915593C,EVID_00008,multi_ocr_fusion,engine:paddleocr,INFO,"25 lines, avg conf 0.95",40110.5
+2026-07-25T17:18:23.377Z,CASE_185915593C,EVID_00008,multi_ocr_fusion,engine:easyocr,WARNING,unavailable (library or binary not installed),0.0
+2026-07-25T17:18:23.379Z,CASE_185915593C,EVID_00008,multi_ocr_fusion,engine:tesseract,WARNING,unavailable (library or binary not installed),0.0
+2026-07-25T17:18:23.397Z,CASE_185915593C,EVID_00008,multi_ocr_fusion,completed,INFO,selected=paddleocr source=selected confidence=0.95,40159.1
+2026-07-25T17:18:23.489Z,CASE_185915593C,EVID_00008,logo_detection,detected,INFO,"brands=['Facebook', 'Gmail', 'Google', 'Messenger', 'Outlook', 'Telegram', 'eSewa']",85.2
+2026-07-25T17:18:23.497Z,CASE_185915593C,EVID_00008,confidence_scoring,scored,INFO,score=86.7 level=VERY_HIGH components=6/6,0.0
+2026-07-25T17:18:23.497Z,CASE_185915593C,EVID_00008,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'forgery', 'fusion', 'logos', 'metadata', 'preprocessing', 'quality'] failures=none",40657.2
+2026-07-25T17:18:41.758Z,CASE_185915593C,EVID_00009,phase1_pipeline,started,INFO,file=03_qr_code_flyer.png image=True,0.0
+2026-07-25T17:18:41.771Z,CASE_185915593C,EVID_00009,file_integrity,fingerprinted,INFO,sha256=6f712c8b0e4fb6c5... entropy=7.8927 magic=PNG image duplicate=False,4.9
+2026-07-25T17:18:41.794Z,CASE_185915593C,EVID_00009,metadata_extraction,extracted,INFO,type=image notes=1 errors=0,18.4
+2026-07-25T17:18:41.838Z,CASE_185915593C,EVID_00009,quality_assessment,assessed,INFO,score=90.3 grade=EXCELLENT expected_ocr=95.5%,32.8
+2026-07-25T17:18:41.909Z,CASE_185915593C,EVID_00009,forgery_detection,analyzed,INFO,score=8.6 risk=LOW status=LIKELY_AUTHENTIC,69.3
+2026-07-25T17:18:41.914Z,CASE_185915593C,EVID_00009,advanced_preprocessing,op:perspective_correction,INFO,applied=False no dominant quadrilateral,4.9
+2026-07-25T17:18:41.918Z,CASE_185915593C,EVID_00009,advanced_preprocessing,op:super_resolution,INFO,applied=True lanczos_x1.17,3.7
+2026-07-25T17:18:41.935Z,CASE_185915593C,EVID_00009,advanced_preprocessing,completed,INFO,1/2 operations applied,23.8
+2026-07-25T17:18:50.668Z,CASE_185915593C,EVID_00009,multi_ocr_fusion,engine:paddleocr,INFO,"6 lines, avg conf 0.99",8713.9
+2026-07-25T17:18:50.678Z,CASE_185915593C,EVID_00009,multi_ocr_fusion,engine:easyocr,WARNING,unavailable (library or binary not installed),0.0
+2026-07-25T17:18:50.679Z,CASE_185915593C,EVID_00009,multi_ocr_fusion,engine:tesseract,WARNING,unavailable (library or binary not installed),0.0
+2026-07-25T17:18:50.695Z,CASE_185915593C,EVID_00009,multi_ocr_fusion,completed,INFO,selected=paddleocr source=selected confidence=0.99,8747.9
+2026-07-25T17:18:50.731Z,CASE_185915593C,EVID_00009,logo_detection,detected,INFO,"brands=['Khalti', 'WhatsApp', 'eSewa']",30.2
+2026-07-25T17:18:50.735Z,CASE_185915593C,EVID_00009,confidence_scoring,scored,INFO,score=94.1 level=VERY_HIGH components=6/6,0.0
+2026-07-25T17:18:50.735Z,CASE_185915593C,EVID_00009,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'forgery', 'fusion', 'logos', 'metadata', 'preprocessing', 'quality'] failures=none",8979.0
+2026-07-25T17:19:04.825Z,CASE_185915593C,EVID_00010,phase1_pipeline,started,INFO,file=04_esewa_payment_screenshot.jpg image=True,0.0
+2026-07-25T17:19:04.837Z,CASE_185915593C,EVID_00010,file_integrity,fingerprinted,INFO,sha256=3a19295ff003a894... entropy=7.1983 magic=JPEG image duplicate=False,5.3
+2026-07-25T17:19:04.849Z,CASE_185915593C,EVID_00010,metadata_extraction,extracted,INFO,type=image notes=1 errors=0,7.7
+2026-07-25T17:19:04.902Z,CASE_185915593C,EVID_00010,quality_assessment,assessed,INFO,score=56.0 grade=FAIR expected_ocr=73.0%,40.6
+2026-07-25T17:19:04.972Z,CASE_185915593C,EVID_00010,forgery_detection,analyzed,INFO,score=14.9 risk=LOW status=LIKELY_AUTHENTIC,67.9
+2026-07-25T17:19:04.975Z,CASE_185915593C,EVID_00010,advanced_preprocessing,op:perspective_correction,INFO,applied=False no dominant quadrilateral,2.6
+2026-07-25T17:19:04.979Z,CASE_185915593C,EVID_00010,advanced_preprocessing,op:super_resolution,INFO,applied=True lanczos_x1.09,3.7
+2026-07-25T17:19:04.984Z,CASE_185915593C,EVID_00010,advanced_preprocessing,op:clahe,INFO,"applied=True clahe(clip=2.5, tiles=8)",4.9
+2026-07-25T17:19:04.987Z,CASE_185915593C,EVID_00010,advanced_preprocessing,op:edge_enhancement,INFO,applied=True unsharp_mask(amount=0.6),2.9
+2026-07-25T17:19:05.002Z,CASE_185915593C,EVID_00010,advanced_preprocessing,completed,INFO,3/4 operations applied,28.5
+2026-07-25T17:19:50.267Z,CASE_185915593C,EVID_00010,multi_ocr_fusion,engine:paddleocr,INFO,"18 lines, avg conf 0.91",45253.0
+2026-07-25T17:19:50.281Z,CASE_185915593C,EVID_00010,multi_ocr_fusion,engine:easyocr,WARNING,unavailable (library or binary not installed),0.0
+2026-07-25T17:19:50.282Z,CASE_185915593C,EVID_00010,multi_ocr_fusion,engine:tesseract,WARNING,unavailable (library or binary not installed),0.0
+2026-07-25T17:19:50.298Z,CASE_185915593C,EVID_00010,multi_ocr_fusion,completed,INFO,selected=paddleocr source=selected confidence=0.91,45283.0
+2026-07-25T17:19:50.348Z,CASE_185915593C,EVID_00010,logo_detection,detected,INFO,"brands=['Gmail', 'eSewa']",44.2
+2026-07-25T17:19:50.353Z,CASE_185915593C,EVID_00010,confidence_scoring,scored,INFO,score=84.4 level=VERY_HIGH components=6/6,0.0
+2026-07-25T17:19:50.353Z,CASE_185915593C,EVID_00010,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'forgery', 'fusion', 'logos', 'metadata', 'preprocessing', 'quality'] failures=none",45529.0
+2026-07-25T17:20:06.384Z,CASE_185915593C,EVID_00011,phase1_pipeline,started,INFO,file=05_khalti_receipt.jpg image=True,0.0
+2026-07-25T17:20:06.396Z,CASE_185915593C,EVID_00011,file_integrity,fingerprinted,INFO,sha256=54a62cd3ad10a85b... entropy=7.215 magic=JPEG image duplicate=False,5.1
+2026-07-25T17:20:06.414Z,CASE_185915593C,EVID_00011,metadata_extraction,extracted,INFO,type=image notes=1 errors=0,9.2
+2026-07-25T17:20:06.464Z,CASE_185915593C,EVID_00011,quality_assessment,assessed,INFO,score=68.2 grade=GOOD expected_ocr=84.1%,39.3
+2026-07-25T17:20:06.536Z,CASE_185915593C,EVID_00011,forgery_detection,analyzed,INFO,score=25.2 risk=MEDIUM status=INDETERMINATE,70.8
+2026-07-25T17:20:06.541Z,CASE_185915593C,EVID_00011,advanced_preprocessing,op:perspective_correction,INFO,applied=False no dominant quadrilateral,3.9
+2026-07-25T17:20:06.547Z,CASE_185915593C,EVID_00011,advanced_preprocessing,op:super_resolution,INFO,applied=True lanczos_x1.09,5.1
+2026-07-25T17:20:06.550Z,CASE_185915593C,EVID_00011,advanced_preprocessing,op:edge_enhancement,INFO,applied=True unsharp_mask(amount=0.6),2.9
+2026-07-25T17:20:06.564Z,CASE_185915593C,EVID_00011,advanced_preprocessing,completed,INFO,2/3 operations applied,26.0
+2026-07-25T17:20:21.139Z,CASE_185915593C,EVID_00011,multi_ocr_fusion,engine:paddleocr,INFO,"19 lines, avg conf 0.98",14566.9
+2026-07-25T17:20:21.147Z,CASE_185915593C,EVID_00011,multi_ocr_fusion,engine:easyocr,WARNING,unavailable (library or binary not installed),0.0
+2026-07-25T17:20:21.148Z,CASE_185915593C,EVID_00011,multi_ocr_fusion,engine:tesseract,WARNING,unavailable (library or binary not installed),0.0
+2026-07-25T17:20:21.158Z,CASE_185915593C,EVID_00011,multi_ocr_fusion,completed,INFO,selected=paddleocr source=selected confidence=0.98,14586.2
+2026-07-25T17:20:21.200Z,CASE_185915593C,EVID_00011,logo_detection,detected,INFO,"brands=['Khalti', 'eSewa']",39.2
+2026-07-25T17:20:21.203Z,CASE_185915593C,EVID_00011,confidence_scoring,scored,INFO,score=86.3 level=VERY_HIGH components=6/6,0.0
+2026-07-25T17:20:21.203Z,CASE_185915593C,EVID_00011,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'forgery', 'fusion', 'logos', 'metadata', 'preprocessing', 'quality'] failures=none",14820.3
+2026-07-25T17:20:36.135Z,CASE_185915593C,EVID_00012,phase1_pipeline,started,INFO,file=06_phishing_email_screenshot.jpg image=True,0.0
+2026-07-25T17:20:36.142Z,CASE_185915593C,EVID_00012,file_integrity,fingerprinted,INFO,sha256=b6ec522eddc05475... entropy=7.5089 magic=JPEG image duplicate=False,4.3
+2026-07-25T17:20:36.149Z,CASE_185915593C,EVID_00012,metadata_extraction,extracted,INFO,type=image notes=1 errors=0,4.1
+2026-07-25T17:20:36.186Z,CASE_185915593C,EVID_00012,quality_assessment,assessed,INFO,score=54.9 grade=FAIR expected_ocr=71.9%,24.3
+2026-07-25T17:20:36.243Z,CASE_185915593C,EVID_00012,forgery_detection,analyzed,INFO,score=19.0 risk=LOW status=LIKELY_AUTHENTIC,56.1
+2026-07-25T17:20:36.247Z,CASE_185915593C,EVID_00012,advanced_preprocessing,op:perspective_correction,INFO,applied=False no dominant quadrilateral,3.9
+2026-07-25T17:20:36.251Z,CASE_185915593C,EVID_00012,advanced_preprocessing,op:deskew,INFO,applied=True rotate(0.49deg),3.3
+2026-07-25T17:20:36.255Z,CASE_185915593C,EVID_00012,advanced_preprocessing,op:super_resolution,INFO,applied=True lanczos_x1.12,3.5
+2026-07-25T17:20:36.258Z,CASE_185915593C,EVID_00012,advanced_preprocessing,op:clahe,INFO,"applied=True clahe(clip=2.5, tiles=8)",3.5
+2026-07-25T17:20:36.261Z,CASE_185915593C,EVID_00012,advanced_preprocessing,op:edge_enhancement,INFO,applied=True unsharp_mask(amount=0.6),2.3
+2026-07-25T17:20:36.280Z,CASE_185915593C,EVID_00012,advanced_preprocessing,completed,INFO,4/5 operations applied,35.1
+2026-07-25T17:20:49.495Z,CASE_185915593C,EVID_00012,multi_ocr_fusion,engine:paddleocr,INFO,"17 lines, avg conf 0.96",13207.8
+2026-07-25T17:20:49.506Z,CASE_185915593C,EVID_00012,multi_ocr_fusion,engine:easyocr,WARNING,unavailable (library or binary not installed),0.0
+2026-07-25T17:20:49.507Z,CASE_185915593C,EVID_00012,multi_ocr_fusion,engine:tesseract,WARNING,unavailable (library or binary not installed),0.0
+2026-07-25T17:20:49.517Z,CASE_185915593C,EVID_00012,multi_ocr_fusion,completed,INFO,selected=paddleocr source=selected confidence=0.96,13227.7
+2026-07-25T17:20:49.547Z,CASE_185915593C,EVID_00012,logo_detection,detected,INFO,brands=['eSewa'],27.4
+2026-07-25T17:20:49.552Z,CASE_185915593C,EVID_00012,confidence_scoring,scored,INFO,score=84.4 level=VERY_HIGH components=6/6,0.0
+2026-07-25T17:20:49.552Z,CASE_185915593C,EVID_00012,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'forgery', 'fusion', 'logos', 'metadata', 'preprocessing', 'quality'] failures=none",13418.4
+2026-07-25T17:26:17.392Z,CASE_185915593C,EVID_00013,phase1_pipeline,started,INFO,file=07_bank_transfer_slip.pdf image=False,0.0
+2026-07-25T17:26:17.423Z,CASE_185915593C,EVID_00013,file_integrity,fingerprinted,INFO,sha256=6f1cc10ae55d554c... entropy=7.8274 magic=PDF document duplicate=True,17.4
+2026-07-25T17:26:17.644Z,CASE_185915593C,EVID_00013,metadata_extraction,extracted,INFO,type=pdf notes=0 errors=0,217.1
+2026-07-25T17:26:17.648Z,CASE_185915593C,EVID_00013,confidence_scoring,scored,INFO,score=100.0 level=VERY_HIGH components=3/6,0.0
+2026-07-25T17:26:17.648Z,CASE_185915593C,EVID_00013,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'metadata'] failures=none",258.6
+2026-07-25T17:26:20.609Z,CASE_185915593C,EVID_00014,phase1_pipeline,started,INFO,file=08_complaint_letter.pdf image=False,0.0
+2026-07-25T17:26:20.614Z,CASE_185915593C,EVID_00014,file_integrity,fingerprinted,INFO,sha256=fe644062bf75e62c... entropy=6.1851 magic=PDF document duplicate=True,0.5
+2026-07-25T17:26:20.618Z,CASE_185915593C,EVID_00014,metadata_extraction,extracted,INFO,type=pdf notes=0 errors=0,2.1
+2026-07-25T17:26:20.619Z,CASE_185915593C,EVID_00014,confidence_scoring,scored,INFO,score=100.0 level=VERY_HIGH components=3/6,0.0
+2026-07-25T17:26:20.619Z,CASE_185915593C,EVID_00014,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'metadata'] failures=none",10.6

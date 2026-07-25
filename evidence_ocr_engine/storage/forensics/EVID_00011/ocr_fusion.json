@@ -1,0 +1,89 @@
+{
+  "report_type": "ocr_fusion",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00011",
+  "case_id": "CASE_185915593C",
+  "generated_at": "2026-07-25T17:20:21.157Z",
+  "report": {
+    "evidence_id": "EVID_00011",
+    "case_id": "CASE_185915593C",
+    "page": 1,
+    "raw_text": "Khalti\nPayment Receipt\nAmount\nRs. 1,500.00\nSent To (Khalti ID)\n9801122334\nRecipient Name\nRabin Thapa\nSender (Khalti ID)\n9847011223\nTransaction Code\nKH-2026-0611-77245\nDate\n11 June 2026, 11:15 AM\nPurpose /Remarks\nPrize Release Processing Fee\nStatus\nSuccess\nNote: eSewa-cashback-offer.xyz claim ref DsN2026",
+    "paddle_text": "Khalti\nPayment Receipt\nAmount\nRs. 1,500.00\nSent To (Khalti ID)\n9801122334\nRecipient Name\nRabin Thapa\nSender (Khalti ID)\n9847011223\nTransaction Code\nKH-2026-0611-77245\nDate\n11 June 2026, 11:15 AM\nPurpose /Remarks\nPrize Release Processing Fee\nStatus\nSuccess\nNote: eSewa-cashback-offer.xyz claim ref DsN2026",
+    "easyocr_text": "",
+    "tesseract_text": "",
+    "merged_text": "",
+    "final_text": "Khalti\nPayment Receipt\nAmount\nRs. 1,500.00\nSent To (Khalti ID)\n9801122334\nRecipient Name\nRabin Thapa\nSender (Khalti ID)\n9847011223\nTransaction Code\nKH-2026-0611-77245\nDate\n11 June 2026, 11:15 AM\nPurpose /Remarks\nPrize Release Processing Fee\nStatus\nSuccess\nNote: eSewa-cashback-offer.xyz claim ref DsN2026",
+    "engine_runs": [
+      {
+        "engine": "paddleocr",
+        "available": true,
+        "succeeded": true,
+        "text": "Khalti\nPayment Receipt\nAmount\nRs. 1,500.00\nSent To (Khalti ID)\n9801122334\nRecipient Name\nRabin Thapa\nSender (Khalti ID)\n9847011223\nTransaction Code\nKH-2026-0611-77245\nDate\n11 June 2026, 11:15 AM\nPurpose /Remarks\nPrize Release Processing Fee\nStatus\nSuccess\nNote: eSewa-cashback-offer.xyz claim ref DsN2026",
+        "line_confidences": [
+          0.9572,
+          0.9884,
+          0.999,
+          0.9646,
+          0.9653,
+          0.9994,
+          0.9935,
+          0.9994,
+          0.9379,
+          0.9993,
+          0.9823,
+          0.9998,
+          0.9989,
+          0.9862,
+          0.9667,
+          0.9937,
+          0.9991,
+          0.9997,
+          0.9665
+        ],
+        "average_confidence": 0.984,
+        "line_count": 19,
+        "duration_ms": 14566.9,
+        "error": null
+      },
+      {
+        "engine": "easyocr",
+        "available": false,
+        "succeeded": false,
+        "text": "",
+        "line_confidences": [],
+        "average_confidence": 0.0,
+        "line_count": 0,
+        "duration_ms": 0.0,
+        "error": null
+      },
+      {
+        "engine": "tesseract",
+        "available": false,
+        "succeeded": false,
+        "text": "",
+        "line_confidences": [],
+        "average_confidence": 0.0,
+        "line_count": 0,
+        "duration_ms": 0.0,
+        "error": null
+      }
+    ],
+    "engine_confidences": {
+      "paddleocr": 0.984,
+      "easyocr": 0.0,
+      "tesseract": 0.0
+    },
+    "selection_scores": {
+      "paddleocr": 0.9912
+    },
+    "pairwise_agreement": {},
+    "selected_engine": "paddleocr",
+    "final_source": "selected",
+    "final_confidence": 0.984,
+    "merge_applied": false,
+    "merged_lines": [],
+    "total_time_ms": 14586.2
+  }
+}
