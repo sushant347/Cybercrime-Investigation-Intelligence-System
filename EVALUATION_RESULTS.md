@@ -10,7 +10,7 @@ the exact case(s)/image(s) its numbers came from. Reproduce any row via `EVAL_CO
 
 | Table | Status | Source of the numbers |
 |---|---|---|
-| 6.1 OCR | 🟡 demo (real OCR) | 2 sample images |
+| 6.1 OCR | 🟡 demo (real OCR) | 3 sample images (incl. 1 low-quality) |
 | 6.2 Entities | 🟡 demo | same 2 sample images |
 | 6.3 URL classification | 🟢 real | 87,756-row held-out test set |
 | 6.4 Correlation | 🟡 demo | 4 real storage cases |
@@ -21,18 +21,27 @@ the exact case(s)/image(s) its numbers came from. Reproduce any row via `EVAL_CO
 
 ## Table 6.1 — OCR (CER / WER / entity preservation)
 
-**Source:** `samples/ground_truth/ocr_corpus_example.json` — 2 images, hand-transcribed:
-`samples/scam_sms_screenshot.png`, `samples/phishing_email_screenshot.png`. Live PaddleOCR (PP-OCRv5).
+**Source:** `samples/ground_truth/ocr_corpus_example.json` — 3 sample images, hand-transcribed:
+`scam_sms_screenshot.png` + `phishing_email_screenshot.png` (clean) and
+`low_quality_scan_demo.png` (low-quality / rotated). Live PaddleOCR (PP-OCRv5).
 
 | Stage | CER | WER | Char-Acc | Entity-Preservation % | n |
 |---|---|---|---|---|---|
-| Raw | 0.0154 | 0.1961 | 0.9846 | 100.0 | 2 |
-| + Preprocessing | 0.0154 | 0.1961 | 0.9846 | 100.0 | 2 |
-| + Correction | 0.0154 | 0.1961 | 0.9846 | 100.0 | 2 |
+| Raw | 0.3444 | 0.4058 | 0.6556 | 100.0 | 3 |
+| + Preprocessing | 0.3444 | 0.4058 | 0.6556 | 100.0 | 3 |
+| + Correction | **0.3370** | 0.4058 | **0.6630** | 100.0 | 3 |
 
-_All three stages read the same here because the OCR output on these two clean images
-needed no cleaning/correction. Demo only (n=2, English); a real Table 6.1 needs a 30–100
-sample bilingual corpus._
+_The low-quality image dominates the average: PaddleOCR reads it **upside-down**
+(confidence **0.56** vs 0.98 for the clean images), pushing CER to 0.34. The
+**+ Correction** stage measurably improves it (CER 0.3444 → **0.3370**, char-accuracy
+0.6556 → 0.6630) by fixing some OCR errors — a difference that only appears once a
+degraded image is in the mix (on the two clean images all three stages are identical,
+because there is nothing to correct). Entity preservation stays 100% because the gold
+entities come from the two clean images. Demo only (n=3, mostly English); a real
+Table 6.1 needs a 30–100 sample bilingual corpus._
+
+**For comparison, the two clean images alone (n=2):** all three stages = CER 0.0154,
+char-accuracy 0.9846 — i.e. correction only helps when OCR actually made errors.
 
 ## Table 6.2 — Entity extraction (Precision / Recall / F1)
 
@@ -142,7 +151,8 @@ These cases are committed under `evidence_ocr_engine/storage/` for testing (remo
 | CASE_85B2471DFB | EVID_00009 | `samples/whatsapp_chat_export.txt` |
 | CASE_85B2471DFB | EVID_00010 | `samples/scam_sms_screenshot.png` |
 
-_6.3 uses none of these — it is the URL classifier's own 585k-row dataset. 6.1/6.2 use only
-`scam_sms_screenshot.png` and `phishing_email_screenshot.png`._
+_6.3 uses none of these — it is the URL classifier's own 585k-row dataset. 6.2 uses
+`scam_sms_screenshot.png` + `phishing_email_screenshot.png`; 6.1 uses those two plus
+`low_quality_scan_demo.png` (the degraded image that makes the correction stage's value visible)._
 
 Reproduce every table: see **`EVAL_COMMANDS.md`**.

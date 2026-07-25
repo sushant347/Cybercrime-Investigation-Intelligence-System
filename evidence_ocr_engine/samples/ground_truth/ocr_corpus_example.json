@@ -12,5 +12,11 @@
     "id": "phishing_email",
     "reference": "Nabil Bank - Secure Message\nFrom: security@nabil-bank-alerts.com\nSubject: URGENT - Your account has been suspended\nDear customer, unusual activity was detected.\nVerify now: http://nabil-verify.example-scam.top/login\nFailure to verify within 24 hours locks your account.",
     "image": "samples/phishing_email_screenshot.png"
+  },
+  {
+    "id": "low_quality",
+    "reference": "Your acc0unt has been suspended, contact SUPP0RT\nPlease 1ogin at http/nabil-verify.scam.top/verify\nsend details to supp0rt@fake-bank.com with 0TP c0de",
+    "image": "samples/low_quality_scan_demo.png",
+    "_ref_note": "Reference covers the legible English lines; two Devanagari header lines are present in the image but left untranscribed."
   }
 ]
