@@ -52,13 +52,14 @@ function evidenceBreakdown(evidence: EvidenceRow[]) {
 }
 
 /**
- * Edit dialog for the case's descriptive fields.
+ * Rename dialog.
  *
- * Title, description and tags live in the platform's case metadata and were
- * settable through the API from day one — but no screen ever offered an input
- * for them, so on every real case they rendered as "—" and looked broken.
- * (Investigator notes are different: those are entered per-evidence in the
- * upload dialog and belong to the evidence record.)
+ * Only the title is editable here. Description and tags were dropped from the
+ * case view: they are free-text platform metadata with no bearing on any
+ * forensic finding, they duplicated what the case reference and the evidence
+ * already convey, and in practice they sat empty on every case. Investigator
+ * notes are unaffected — those are entered per evidence item at upload and
+ * belong to the evidence record, not the case.
  */
 function EditDetailsDialog({
   caseData,
@@ -71,22 +72,13 @@ function EditDetailsDialog({
 }) {
   const queryClient = useQueryClient();
   const [title, setTitle] = useState(caseData.title ?? "");
-  const [description, setDescription] = useState(caseData.description ?? "");
-  const [tags, setTags] = useState(caseData.tags.join(", "));
   const [error, setError] = useState<string | null>(null);
 
   const save = useMutation({
-    mutationFn: () =>
-      casesApi.update(caseData.case_id, {
-        title: title.trim(),
-        description: description.trim(),
-        tags: tags
-          .split(",")
-          .map((t) => t.trim())
-          .filter(Boolean),
-      }),
+    mutationFn: () => casesApi.update(caseData.case_id, { title: title.trim() }),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ["case", caseData.case_id] });
+      void queryClient.invalidateQueries({ queryKey: ["cases"] });
       onClose();
     },
     onError: (err) => setError(apiErrorMessage(err)),
@@ -94,7 +86,7 @@ function EditDetailsDialog({
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-      <DialogTitle>Edit case details</DialogTitle>
+      <DialogTitle>Rename case</DialogTitle>
       <DialogContent>
         <Stack spacing={2} sx={{ mt: 1 }}>
           <TextField
@@ -102,22 +94,8 @@ function EditDetailsDialog({
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             fullWidth
-          />
-          <TextField
-            label="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            fullWidth
-            multiline
-            minRows={3}
-            helperText="What this case is about — complaint summary, context, scope."
-          />
-          <TextField
-            label="Tags"
-            value={tags}
-            onChange={(e) => setTags(e.target.value)}
-            fullWidth
-            helperText="Comma-separated, e.g. phishing, esewa, dashain-scam"
+            autoFocus
+            helperText="The case reference is fixed; this is the working title."
           />
           {error && <Alert severity="error">{error}</Alert>}
         </Stack>
@@ -290,7 +268,7 @@ export function CaseOverviewTab({ caseData }: { caseData: CaseDetail }) {
               titleTypographyProps={{ variant: "subtitle1" }}
               action={
                 hasPermission("case.manage") && (
-                  <Tooltip title="Edit title, description and tags">
+                  <Tooltip title="Rename this case">
                     <IconButton size="small" onClick={() => setEditOpen(true)}>
                       <EditIcon fontSize="small" />
                     </IconButton>
@@ -304,13 +282,11 @@ export function CaseOverviewTab({ caseData }: { caseData: CaseDetail }) {
                 case_id: caseData.case_id,
                 case_reference: caseData.case_reference || "—",
                 title: caseData.title || "—",
-                description: caseData.description || "—",
                 investigator_notes: caseData.investigator_notes || "—",
                 status: caseData.status,
                 assigned_to: caseData.assigned_to ?? "Unassigned",
                 created_at: formatDateTime(caseData.created_at),
                 last_updated: formatDateTime(caseData.updated_at),
-                tags: caseData.tags.join(", ") || "—",
               }}
             />
           </Card>

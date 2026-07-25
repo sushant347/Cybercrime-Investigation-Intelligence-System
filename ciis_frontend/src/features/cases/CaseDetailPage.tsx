@@ -6,7 +6,6 @@ import {
   Alert,
   Box,
   Button,
-  Chip,
   IconButton,
   MenuItem,
   Snackbar,
@@ -18,10 +17,10 @@ import {
   Typography,
 } from "@mui/material";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { casesApi, investigationApi } from "@/api";
+import { casesApi, evidenceApi, investigationApi } from "@/api";
 import { ErrorState } from "@/components/common/EmptyState";
 import { DetailSkeleton } from "@/components/common/LoadingSkeleton";
 import { StatusChip } from "@/components/common/StatusChip";
@@ -36,6 +35,9 @@ import { apiErrorMessage } from "@/lib/apiClient";
 import { formatDateTime } from "@/lib/format";
 
 import { CaseOverviewTab } from "./CaseOverviewTab";
+
+/** How often to check a running analysis job. */
+const ANALYSIS_POLL_MS = 2500;
 
 const TABS = [
   "overview",
@@ -55,6 +57,7 @@ export default function CaseDetailPage() {
   const queryClient = useQueryClient();
   const { hasPermission } = useAuth();
   const [toast, setToast] = useState<string | null>(null);
+  const [analysisJobId, setAnalysisJobId] = useState<number | null>(null);
 
   const activeTab: TabKey = TABS.includes(tab as TabKey) ? (tab as TabKey) : "overview";
 
@@ -67,19 +70,57 @@ export default function CaseDetailPage() {
   const analyzeMutation = useMutation({
     mutationFn: () => investigationApi.runAnalysis(caseId),
     onSuccess: (job) => {
-      setToast(`Analysis started (job #${job.id}) — the report appears when it finishes.`);
+      setToast(`Analysis started (job #${job.id}) — results appear when it finishes.`);
+      setAnalysisJobId(job.id);
       void queryClient.invalidateQueries({ queryKey: ["jobs"] });
-      // Show the report as it is produced: land on it, then refresh the
-      // artifacts once the engine has had a moment to write them.
       navigate(`/cases/${caseId}/reports`);
-      window.setTimeout(() => {
-        void queryClient.invalidateQueries({ queryKey: ["reports", caseId] });
-        void queryClient.invalidateQueries({ queryKey: ["report-latest", caseId] });
-        void queryClient.invalidateQueries({ queryKey: ["artifact", caseId] });
-      }, 4000);
     },
     onError: (err) => setToast(apiErrorMessage(err)),
   });
+
+  /**
+   * Watch the analysis job and refresh everything it produces when it lands.
+   *
+   * Previously this fired a blind 4-second timer and refreshed the report
+   * artifacts only — never ``["case", caseId]``, which is the payload that
+   * carries the priority verdict. Analysis takes longer than four seconds, so
+   * the one refresh happened before the engine had written anything and none
+   * followed. The priority therefore appeared only after the page was
+   * remounted (navigating away to admin and back), which is exactly the
+   * "priority doesn't come automatically" symptom.
+   */
+  const analysisJob = useQuery({
+    queryKey: ["job", analysisJobId],
+    queryFn: () => evidenceApi.job(analysisJobId as number),
+    enabled: analysisJobId !== null,
+    refetchInterval: (query) => {
+      const status = query.state.data?.status;
+      return status === "completed" || status === "failed" ? false : ANALYSIS_POLL_MS;
+    },
+  });
+
+  useEffect(() => {
+    const job = analysisJob.data;
+    if (!job || analysisJobId === null) return;
+    if (job.status === "completed") {
+      setAnalysisJobId(null);
+      setToast("Analysis complete — priority, findings and report updated.");
+      // The case payload (priority verdict), every Phase-2 artifact and the
+      // report list are all downstream of this job.
+      for (const key of [
+        ["case", caseId],
+        ["artifact", caseId],
+        ["reports", caseId],
+        ["report-latest", caseId],
+        ["cases"],
+      ]) {
+        void queryClient.invalidateQueries({ queryKey: key });
+      }
+    } else if (job.status === "failed") {
+      setAnalysisJobId(null);
+      setToast(`Analysis failed: ${job.error || "see the audit trail for details"}`);
+    }
+  }, [analysisJob.data, analysisJobId, caseId, queryClient]);
 
   const statusMutation = useMutation({
     mutationFn: (patch: Record<string, unknown>) => casesApi.update(caseId, patch),
@@ -139,9 +180,6 @@ export default function CaseDetailPage() {
                   </span>
                 </Tooltip>
               )}
-              {caseData.tags.map((t) => (
-                <Chip key={t} size="small" label={t} variant="outlined" />
-              ))}
             </Stack>
             <Typography variant="body2" color="text.secondary" noWrap>
               <Box component="span" sx={{ fontFamily: '"JetBrains Mono", monospace' }}>
