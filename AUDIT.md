@@ -69,6 +69,50 @@ Manual-workflow + report-correctness cells flagged not-code-derivable.
 - **Entity-type count:** extractor emits **28** types, not the thesis's "22" —
   surfaced, not reconciled.
 
+### Problems faced (and how they were resolved)
+
+1. **Table 6.3's data source did not exist on this machine.** The audit/guide
+   said the numbers were "already sitting in `results/`", but
+   `results/full_retraining_report_*.json` and `checkpoints/` are gitignored
+   (`.gitignore:46`) and training was never run here — so nothing was
+   verifiable locally. Phase 0 caught this; rather than paste the guide's prose
+   numbers (which would be trusting text over evidence), we **stopped and asked
+   the author to supply the files**, then verified every value against the real
+   JSON and byte-checked 6 of 8 checkpoints to `run_id 20260712T090000Z`.
+2. **The thesis document is not in the repo.** Phase 1 assumed a "report text"
+   to edit; the actual Tables 6.1–6.8 live in an external thesis. So the
+   citation fix and the 6.8 row-1 reframe are delivered as **text to paste**,
+   not code changes — and no in-repo "report" was invented to edit.
+3. **Processing-time double-counting (6.7).** The first aggregation summed every
+   `duration_ms` row and reported **15.9 s**. Inspection showed `pipeline`
+   (per-evidence) and `phase2_pipeline` (per-case) are **umbrella** rows whose
+   duration already includes their sub-stages — summing both double-counts. The
+   script was reworked to use the umbrella as the authoritative total (real
+   CASE_2CF24DBA5F = **8.0 s**), with leaves shown as an informational
+   breakdown only. A regression test locks this in.
+4. **`pytest-django` was missing from the platform venv.** The whole API test
+   suite errored at collection (DRF settings unconfigured) even for pre-existing
+   tests. It is declared in `ciis_api/requirements.txt` but was never installed
+   in `.venv-platform`; installing it fixed collection. (Not a code bug — an
+   environment gap.)
+5. **Homoglyph wiring was ambiguous (6.8 row 3).** Determining whether the live
+   path actually runs `_detect_homoglyphs` required tracing
+   `MLThreatIntelProvider → PhishingPredictor.predict → RuleEngine →
+   BrandIntelligenceEngine.analyze`. Conclusion: it **is** live (also as ML
+   features), but the provider only surfaces the final verdict — so we cite it
+   honestly at **component level**, not end-to-end, rather than over-claim.
+6. **Entity-type count mismatch.** The extractor emits **28** types, not the
+   thesis's "22". Surfaced explicitly (with the full list) instead of silently
+   reconciling either direction.
+7. **Everything else is genuinely blocked on human data.** 6.4/6.5 need gold
+   labels; 6.1/6.2 need a 30–100 sample bilingual corpus; 6.7's manual-workflow
+   cell needs a cited estimate. The harnesses were built and their math
+   unit-tested, but the runners **refuse to emit numbers from a template** — a
+   deliberate non-fabrication guard, proven with a synthetic-gold wiring test.
+8. **Minor:** zsh glob-expanded `grep --include=*.py` (fixed by quoting); the
+   timeline wiring test exposed a real finding — the engine falls back to
+   `upload_time`, so content-timestamp MAE will be large once real gold exists.
+
 ### Verified
 Full engine suite passes (incl. all new eval tests); API evidence tests pass
 (after installing the declared `pytest-django`); threat `test_table_6_3` +
