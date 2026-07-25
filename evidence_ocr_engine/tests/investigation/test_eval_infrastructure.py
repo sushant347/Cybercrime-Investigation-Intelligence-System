@@ -118,6 +118,20 @@ def test_example_gold_files_are_valid_and_not_templates():
     assert all(order for order in tl.order.values())
 
 
+def test_ocr_and_entity_demo_files_are_valid():
+    """The 6.1/6.2 demo files stay well-formed and reference real sample images."""
+    corpus = json.loads((GT / "ocr_corpus_example.json").read_text(encoding="utf-8"))
+    real = [i for i in corpus if not i["id"].startswith("_")]
+    assert {i["id"] for i in real} >= {"scam_sms", "phishing_email"}
+    for item in real:
+        assert item["reference"] and item["image"]
+        assert (GT.parents[1] / item["image"]).is_file()  # image actually exists
+    gold = json.loads((GT / "entities_gold_example.json").read_text(encoding="utf-8"))
+    assert gold["phishing_email"]["emails"] and gold["phishing_email"]["urls"]
+    texts = json.loads((GT / "texts_example.json").read_text(encoding="utf-8"))
+    assert set(texts) >= {"scam_sms", "phishing_email"}
+
+
 def test_bad_pair_shape_raises(tmp_path):
     p = tmp_path / "bad.json"
     p.write_text(json.dumps({"within_case": {"C": {"related_pairs": [["only_one"]]}}}))

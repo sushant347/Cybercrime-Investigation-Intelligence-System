@@ -1,11 +1,20 @@
 {
-  "EVID_EXAMPLE_1": {
-    "urls": ["http://nabil-verify.scam.top/login?id=99"],
-    "emails": ["support@fake-bank.com"],
-    "phones": ["+9779812345678"]
+  "_note": "ILLUSTRATIVE DEMO — entities a human read from the two sample images.",
+  "scam_sms": {
+    "money": [
+      "Rs 5,00,000",
+      "Rs 2,000"
+    ]
   },
-  "EVID_EXAMPLE_2": {
-    "urls": ["http://esewa-reward.example"],
-    "otp": ["4521"]
+  "phishing_email": {
+    "emails": [
+      "security@nabil-bank-alerts.com"
+    ],
+    "urls": [
+      "http://nabil-verify.example-scam.top/login"
+    ],
+    "domains": [
+      "nabil-verify.example-scam.top"
+    ]
   }
 }
