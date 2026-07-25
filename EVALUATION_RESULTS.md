@@ -73,7 +73,29 @@ held-out test set **n = 87,756** · deployed model **xgboost**. Not recomputed.
 | svm | 0.8839 | 0.9102 | 0.8968 | 0.8906 | 0.9479 | 0.9436 | 0.0898 |
 | naive_bayes | 0.8540 | 0.7573 | 0.8027 | 0.8056 | 0.8935 | 0.8716 | 0.2427 |
 
-Deployed **xgboost** confusion matrix (n=87,756): TN=40,819 · FP=1,101 · FN=743 · TP=45,093 · MCC=0.9579
+### Confusion matrix
+
+Deployed model **xgboost** (test set n = 87,756); rows = actual, columns = predicted:
+
+|  | Predicted: Legitimate | Predicted: Phishing |
+|---|---|---|
+| **Actual: Legitimate** | 40,819 (TN) | 1,101 (FP) |
+| **Actual: Phishing** | 743 (FN) | 45,093 (TP) |
+
+Derived: accuracy 0.9790 · precision 0.9762 · recall 0.9838 · FNR 0.0162 · MCC 0.9579.
+
+All 8 models (test set n = 87,756):
+
+| Model | TN | FP | FN | TP |
+|---|---|---|---|---|
+| **xgboost** | 40,819 | 1,101 | 743 | 45,093 |
+| lightgbm | 40,755 | 1,165 | 823 | 45,013 |
+| decision_tree | 40,678 | 1,242 | 1,259 | 44,577 |
+| random_forest | 40,563 | 1,357 | 887 | 44,949 |
+| extra_trees | 40,463 | 1,457 | 832 | 45,004 |
+| logistic_regression | 36,450 | 5,470 | 4,129 | 41,707 |
+| svm | 36,438 | 5,482 | 4,117 | 41,719 |
+| naive_bayes | 35,986 | 5,934 | 11,125 | 34,711 |
 
 ## Table 6.4 — Correlation (Precision / Recall / F1)
 
