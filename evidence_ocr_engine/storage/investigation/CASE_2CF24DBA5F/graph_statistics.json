@@ -1,56 +1,74 @@
 {
   "report_type": "graph_statistics",
-  "report_version": 1,
+  "report_version": 13,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-07-25T12:52:44.107Z",
+  "generated_at": "2026-07-25T15:02:04.143Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
-    "node_count": 7,
-    "edge_count": 6,
+    "node_count": 23,
+    "edge_count": 31,
     "nodes_by_type": {
       "case": 1,
-      "evidence": 1,
-      "port": 2,
-      "time": 2,
-      "timeline_event": 1
+      "evidence": 5,
+      "domain": 3,
+      "url": 2,
+      "money": 2,
+      "email": 1,
+      "date": 1,
+      "time": 3,
+      "timeline_event": 5
     },
     "edges_by_type": {
-      "contains": 1,
-      "shared_entity": 4,
-      "timeline_event": 1
+      "contains": 5,
+      "shared_entity": 12,
+      "threat_relationship": 3,
+      "timeline_event": 5,
+      "temporal_relationship": 6
     },
-    "density": 0.2857,
+    "density": 0.1225,
     "connected_components": 1,
-    "largest_component_size": 7,
-    "average_degree": 1.714,
+    "largest_component_size": 23,
+    "average_degree": 2.696,
     "top_hubs": [
       {
+        "node": "evidence:EVID_00003",
+        "degree": "12"
+      },
+      {
         "node": "evidence:EVID_00001",
+        "degree": "7"
+      },
+      {
+        "node": "evidence:EVID_00005",
+        "degree": "7"
+      },
+      {
+        "node": "evidence:EVID_00002",
         "degree": "6"
       },
       {
         "node": "case:CASE_2CF24DBA5F",
-        "degree": "1"
+        "degree": "5"
       },
       {
-        "node": "port:41",
-        "degree": "1"
+        "node": "evidence:EVID_00004",
+        "degree": "5"
       },
       {
-        "node": "port:43",
-        "degree": "1"
+        "node": "domain:nabil-bank-alerts.com",
+        "degree": "2"
       },
       {
-        "node": "time:11:43\n",
-        "degree": "1"
+        "node": "domain:nabil-verify.example-scam.top",
+        "degree": "2"
       },
       {
-        "node": "time:1:41 pm",
-        "degree": "1"
+        "node": "url:http://nabil-verify.example-scam.top/login",
+        "degree": "2"
       },
       {
-        "node": "timeline_event:CASE_2CF24DBA5F:EVID_00001",
+        "node": "domain:plasticostermoencogibles.pe",
         "degree": "1"
       }
     ]

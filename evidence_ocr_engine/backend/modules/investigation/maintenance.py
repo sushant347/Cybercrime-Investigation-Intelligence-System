@@ -13,6 +13,7 @@ deleting them, and never raises on a missing path.
 from __future__ import annotations
 
 import csv
+import json
 import shutil
 from pathlib import Path
 from typing import Dict, List
@@ -153,20 +154,60 @@ def _filter_csv_rows(path: Path, predicate) -> int:
 def linked_case_ids(
     investigation_config: InvestigationConfig, case_id: str
 ) -> List[str]:
-    """Cases currently cross-linked to ``case_id`` (read before deletion).
+    """Cases whose stored artifacts reference ``case_id`` (read before deletion).
 
-    These are the cases whose cross-case artifacts and reports must be
-    regenerated once ``case_id`` disappears, so no report keeps citing a case
-    that no longer exists.
+    These are the cases that must be regenerated once ``case_id`` disappears,
+    so no surviving artifact keeps citing a case that no longer exists.
+
+    The obvious implementation - read the doomed case's own cross-case report
+    and trust its ``related_case_ids`` - is not sufficient, and was the reason
+    deleted cases kept showing up elsewhere:
+
+    * that list is a **snapshot** taken when the doomed case was last analysed,
+      so a case that linked to it *afterwards* is missing from it;
+    * a case that was never analysed has no cross-case artifact at all, so the
+      list is empty and nothing gets refreshed;
+    * links are recorded per-case, so the relation is not symmetric on disk
+      even when it is symmetric in fact.
+
+    Instead this scans every case's stored cross-case and graph artifacts for
+    an actual reference to ``case_id``. That is authoritative by construction:
+    a case is refreshed precisely when something it stores names the case being
+    deleted. Only the latest version of each artifact is inspected - older
+    versions are immutable history and are deliberately left alone.
     """
     from .repository import InvestigationReportRepository
 
     repo = InvestigationReportRepository(investigation_config)
+    linked: List[str] = []
+
+    # Start from the doomed case's own view (cheap, and covers the common case
+    # where the other side has not been re-analysed since the link formed).
     document = repo.load_latest(case_id, investigation_config.cross_case_report_name)
-    if not document:
-        return []
-    related = (document.get("report") or {}).get("related_case_ids") or []
-    return [str(c) for c in related]
+    if document:
+        for other in (document.get("report") or {}).get("related_case_ids") or []:
+            if str(other) != case_id:
+                linked.append(str(other))
+
+    # Then the authoritative sweep: who actually stores a reference to us?
+    root = investigation_config.case_dir(case_id).parent
+    if root.is_dir():
+        for entry in sorted(root.iterdir()):
+            other = entry.name
+            if not entry.is_dir() or other == case_id or other in linked:
+                continue
+            for report_name in (investigation_config.cross_case_report_name,
+                                investigation_config.graph_report_name):
+                try:
+                    stored = repo.load_latest(other, report_name)
+                except Exception:  # noqa: BLE001 - a corrupt artifact is not fatal
+                    log.warning("could not read %s/%s while scanning for links",
+                                other, report_name)
+                    continue
+                if stored and case_id in json.dumps(stored):
+                    linked.append(other)
+                    break
+    return linked
 
 
 def evidence_processing_state(
@@ -382,6 +423,27 @@ def delete_case(
                 path, lambda r: r.get("case_id") != case_id
             )
 
+    # Sweep any entity rows left behind by an *earlier* delete that did not
+    # finish (or by storage edited outside the engine). Cross-case correlation
+    # reads entities.csv directly, so an orphan row here keeps a long-gone case
+    # alive in every other case's correlation, graph and report. Rows are only
+    # dropped when their case has no evidence at all - a live case is untouched.
+    if _guard(investigation_config.entities_csv):
+        live_cases = set()
+        if evidence_config.evidence_csv.is_file():
+            with open(evidence_config.evidence_csv, "r", newline="",
+                      encoding="utf-8") as handle:
+                live_cases = {(r.get("case_id") or "").strip()
+                              for r in csv.DictReader(handle)}
+        orphans = _filter_csv_rows(
+            investigation_config.entities_csv,
+            lambda r: (r.get("case_id") or "").strip() in live_cases,
+        )
+        if orphans:
+            log.warning("purged %d orphaned entity row(s) while deleting %s",
+                        orphans, case_id)
+            removed_rows["entities.csv (orphans)"] = orphans
+
     # OCR results are keyed by evidence, not case.
     if _guard(evidence_config.ocr_results_csv) and evidence_ids:
         removed_rows[evidence_config.ocr_results_csv.name] = _filter_csv_rows(
@@ -419,6 +481,7 @@ def delete_case(
     index = CrossCaseEntityIndex(
         investigation_config.entities_csv,
         legacy_index_path=investigation_config.cross_case_index_path,
+        evidence_csv=investigation_config.evidence_csv,
     )
     # The case's rows were already removed from entities.csv above, so this
     # just invalidates the cached view (the single file is the only store).

@@ -1,12 +1,42 @@
 {
   "report_type": "timeline_analysis",
-  "report_version": 1,
+  "report_version": 3,
   "schema_version": "2.0",
   "case_id": "CASE_36BBE50ED9",
-  "generated_at": "2026-07-25T13:49:38.335Z",
+  "generated_at": "2026-07-25T13:49:48.798Z",
   "report": {
     "case_id": "CASE_36BBE50ED9",
     "events": [
+      {
+        "timestamp": "2026-01-04T00:00:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00010",
+        "case_id": "CASE_36BBE50ED9",
+        "file_name": "bank_transactions.csv",
+        "description": "Evidence EVID_00010 (bank_transactions.csv); stages: financial_transaction",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00010"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00009",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          }
+        ],
+        "text_preview": "date,description,amount_npr,channel\n2026-01-04,IBFT transfer to 0071-XXXX-9912,-250000,mobile_banking\n2026-01-04,Balance",
+        "risk_signals": {},
+        "stages": [
+          "financial_transaction"
+        ],
+        "critical": false,
+        "critical_reasons": []
+      },
       {
         "timestamp": "2026-07-25T13:49:37.749000+00:00",
         "event_type": "evidence_event",
@@ -20,7 +50,15 @@
         "source_evidence_ids": [
           "EVID_00009"
         ],
-        "correlated_with": [],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00010",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          }
+        ],
         "text_preview": "POLICE REPORT - CYBER BUREAU\nComplaint No: CB-2026-0142\nVictim reports fraudulent bank transfer of Rs 250,000.\nANNEX A -",
         "risk_signals": {},
         "stages": [
@@ -37,15 +75,17 @@
       {
         "stage": "financial_transaction",
         "evidence_ids": [
+          "EVID_00010",
           "EVID_00009"
         ],
-        "first_seen": "2026-07-25T13:49:37.749000+00:00",
+        "first_seen": "2026-01-04T00:00:00+00:00",
         "last_seen": "2026-07-25T13:49:37.749000+00:00",
         "matched_keywords": [
           "bank",
+          "npr",
           "transfer"
         ],
-        "explanation": "Stage 'financial_transaction' is evidenced by keyword matches (bank, transfer) in EVID_00009."
+        "explanation": "Stage 'financial_transaction' is evidenced by keyword matches (bank, npr, transfer) in EVID_00010, EVID_00009."
       },
       {
         "stage": "post_attack",
@@ -69,40 +109,56 @@
     "progression_consistent": true,
     "milestones": [
       {
-        "timestamp": "2026-07-25T13:49:37.749000+00:00",
+        "timestamp": "2026-01-04T00:00:00+00:00",
         "event_type": "milestone",
-        "evidence_id": "EVID_00009",
+        "evidence_id": "EVID_00010",
         "case_id": "CASE_36BBE50ED9",
-        "file_name": "police_scan_report.pdf",
+        "file_name": "bank_transactions.csv",
         "description": "Investigation start - first reconstructed evidence event",
-        "time_source": "upload_time_fallback",
-        "confidence": "low",
+        "time_source": "content_date_only",
+        "confidence": "medium",
         "timestamp_inferred": true,
         "source_evidence_ids": [
-          "EVID_00009"
+          "EVID_00010"
         ],
-        "correlated_with": [],
-        "text_preview": "POLICE REPORT - CYBER BUREAU\nComplaint No: CB-2026-0142\nVictim reports fraudulent bank transfer of Rs 250,000.\nANNEX A -",
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00009",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          }
+        ],
+        "text_preview": "date,description,amount_npr,channel\n2026-01-04,IBFT transfer to 0071-XXXX-9912,-250000,mobile_banking\n2026-01-04,Balance",
         "risk_signals": {},
         "stages": [],
         "critical": false,
         "critical_reasons": []
       },
       {
-        "timestamp": "2026-07-25T13:49:37.749000+00:00",
+        "timestamp": "2026-01-04T00:00:00+00:00",
         "event_type": "milestone",
-        "evidence_id": "EVID_00009",
+        "evidence_id": "EVID_00010",
         "case_id": "CASE_36BBE50ED9",
-        "file_name": "police_scan_report.pdf",
-        "description": "First observation of stage 'financial_transaction' (EVID_00009)",
-        "time_source": "upload_time_fallback",
-        "confidence": "low",
+        "file_name": "bank_transactions.csv",
+        "description": "First observation of stage 'financial_transaction' (EVID_00010)",
+        "time_source": "content_date_only",
+        "confidence": "medium",
         "timestamp_inferred": true,
         "source_evidence_ids": [
-          "EVID_00009"
+          "EVID_00010"
         ],
-        "correlated_with": [],
-        "text_preview": "POLICE REPORT - CYBER BUREAU\nComplaint No: CB-2026-0142\nVictim reports fraudulent bank transfer of Rs 250,000.\nANNEX A -",
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00009",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          }
+        ],
+        "text_preview": "date,description,amount_npr,channel\n2026-01-04,IBFT transfer to 0071-XXXX-9912,-250000,mobile_banking\n2026-01-04,Balance",
         "risk_signals": {},
         "stages": [
           "financial_transaction"
@@ -123,7 +179,15 @@
         "source_evidence_ids": [
           "EVID_00009"
         ],
-        "correlated_with": [],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00010",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          }
+        ],
         "text_preview": "POLICE REPORT - CYBER BUREAU\nComplaint No: CB-2026-0142\nVictim reports fraudulent bank transfer of Rs 250,000.\nANNEX A -",
         "risk_signals": {},
         "stages": [
@@ -147,7 +211,15 @@
         "source_evidence_ids": [
           "EVID_00009"
         ],
-        "correlated_with": [],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00010",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          }
+        ],
         "text_preview": "POLICE REPORT - CYBER BUREAU\nComplaint No: CB-2026-0142\nVictim reports fraudulent bank transfer of Rs 250,000.\nANNEX A -",
         "risk_signals": {},
         "stages": [
@@ -160,16 +232,16 @@
         ]
       }
     ],
-    "summary": "1 event(s) spanning 0.0 hour(s); 0 timestamp(s) unresolved. Observed scam progression: financial_transaction -> post_attack.",
+    "summary": "2 event(s) spanning 4861.8 hour(s); 0 timestamp(s) unresolved. Observed scam progression: financial_transaction -> post_attack.",
     "statistics": {
-      "event_count": 1.0,
-      "resolved_event_count": 1.0,
+      "event_count": 2.0,
+      "resolved_event_count": 2.0,
       "unresolved_event_count": 0.0,
-      "inferred_event_count": 1.0,
+      "inferred_event_count": 2.0,
       "stage_count": 2.0,
       "critical_event_count": 1.0,
-      "timeline_span_hours": 0.0
+      "timeline_span_hours": 4861.83
     },
-    "analysis_time_ms": 1.1
+    "analysis_time_ms": 0.5
   }
 }
