@@ -1,7 +1,6 @@
 """Intake: reference -> stable case id, create-then-reopen semantics."""
 import pytest
 
-pytestmark = pytest.mark.django_db
 
 
 def test_intake_creates_case(api):

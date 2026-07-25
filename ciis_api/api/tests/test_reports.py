@@ -1,7 +1,6 @@
 """Report center: list + latest report after a full analysis run."""
 import pytest
 
-pytestmark = pytest.mark.django_db
 
 
 def test_reports_listed_after_analysis(uploaded_evidence, api):

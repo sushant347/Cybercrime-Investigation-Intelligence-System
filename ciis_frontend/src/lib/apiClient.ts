@@ -1,28 +1,29 @@
 /**
- * Axios instance with JWT auth and automatic token refresh.
- * All API access flows through this single client (API-layer rule).
+ * Axios instance for the CIIS API.
+ *
+ * There are no user accounts and no JWT: investigators use the engine
+ * anonymously. The one privileged surface is the **admin role**, unlocked with
+ * a shared password; its signed token is kept in sessionStorage and sent as
+ * `X-Admin-Token` on every request so admin endpoints authorise transparently.
  */
 import axios, { AxiosError, type InternalAxiosRequestConfig } from "axios";
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
-const TOKEN_KEY = "ciis.access";
-const REFRESH_KEY = "ciis.refresh";
+const ADMIN_TOKEN_KEY = "ciis.admin";
 
-export const tokenStore = {
-  get access(): string | null {
-    return sessionStorage.getItem(TOKEN_KEY);
+export const adminToken = {
+  get(): string | null {
+    return sessionStorage.getItem(ADMIN_TOKEN_KEY);
   },
-  get refresh(): string | null {
-    return sessionStorage.getItem(REFRESH_KEY);
-  },
-  set(access: string, refresh?: string): void {
-    sessionStorage.setItem(TOKEN_KEY, access);
-    if (refresh) sessionStorage.setItem(REFRESH_KEY, refresh);
+  set(token: string): void {
+    sessionStorage.setItem(ADMIN_TOKEN_KEY, token);
   },
   clear(): void {
-    sessionStorage.removeItem(TOKEN_KEY);
-    sessionStorage.removeItem(REFRESH_KEY);
+    sessionStorage.removeItem(ADMIN_TOKEN_KEY);
+  },
+  get isPresent(): boolean {
+    return !!sessionStorage.getItem(ADMIN_TOKEN_KEY);
   },
 };
 
@@ -32,47 +33,16 @@ export const apiClient = axios.create({
 });
 
 apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-  const token = tokenStore.access;
-  if (token) config.headers.Authorization = `Bearer ${token}`;
+  const token = adminToken.get();
+  if (token) config.headers["X-Admin-Token"] = token;
   return config;
 });
 
-let refreshing: Promise<string> | null = null;
-
-async function refreshAccessToken(): Promise<string> {
-  const refresh = tokenStore.refresh;
-  if (!refresh) throw new Error("No refresh token");
-  const { data } = await axios.post<{ access: string; refresh?: string }>(
-    `${BASE_URL}/api/auth/refresh/`,
-    { refresh },
-  );
-  tokenStore.set(data.access, data.refresh);
-  return data.access;
-}
-
-apiClient.interceptors.response.use(undefined, async (error: AxiosError) => {
-  const original = error.config as
-    | (InternalAxiosRequestConfig & { _retried?: boolean })
-    | undefined;
-  if (
-    error.response?.status === 401 &&
-    original &&
-    !original._retried &&
-    tokenStore.refresh &&
-    !original.url?.includes("/auth/")
-  ) {
-    original._retried = true;
-    try {
-      refreshing = refreshing ?? refreshAccessToken();
-      const access = await refreshing;
-      refreshing = null;
-      original.headers.Authorization = `Bearer ${access}`;
-      return apiClient(original);
-    } catch {
-      refreshing = null;
-      tokenStore.clear();
-      window.location.assign("/login");
-    }
+apiClient.interceptors.response.use(undefined, (error: AxiosError) => {
+  // An expired/invalid admin token should not leave the UI in a fake
+  // "signed in" state — drop it so the admin page asks for the password again.
+  if (error.response?.status === 403 && error.config?.url?.includes("/admin/")) {
+    adminToken.clear();
   }
   return Promise.reject(error);
 });
@@ -82,7 +52,7 @@ export function apiErrorMessage(error: unknown): string {
   if (axios.isAxiosError(error)) {
     const data = error.response?.data as { detail?: string } | undefined;
     if (data?.detail) return data.detail;
-    if (error.response?.status === 403) return "You do not have permission to do this.";
+    if (error.response?.status === 403) return "Admin access required.";
     if (error.code === "ERR_NETWORK") return "Cannot reach the CIIS API server.";
   }
   return "Something went wrong. Please try again.";

@@ -3,10 +3,10 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from accounts.permissions import require
+from ..permissions import require
 
 from .. import engine
-from ..models import ActivityLog
+from ..store import activity
 from ..pagination import DefaultPagination
 
 
@@ -37,14 +37,7 @@ class AuditLogView(APIView):
         entries = (
             _normalise(engine.processing_log(case_id), "evidence_pipeline")
             + _normalise(engine.investigation_audit(case_id), "investigation")
-            + _normalise(
-                list(
-                    ActivityLog.objects.filter(
-                        **({"case_id": case_id} if case_id else {})
-                    ).values()[:2000]
-                ),
-                "platform",
-            )
+            + _normalise(activity.list(case_id=case_id or "", limit=2000), "platform")
         )
         module = request.query_params.get("module")
         if module:

@@ -9,7 +9,6 @@ rather than an assumption.
 """
 import pytest
 
-pytestmark = pytest.mark.django_db
 
 _DENIED = {401, 403}
 

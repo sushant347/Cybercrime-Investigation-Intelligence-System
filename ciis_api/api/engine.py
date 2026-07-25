@@ -21,7 +21,6 @@ from pathlib import Path
 from typing import Any, Iterator, Optional
 
 from django.conf import settings
-from django.utils import timezone
 
 from .exceptions import EngineUnavailable
 
@@ -242,6 +241,70 @@ def reset_engine_storage() -> dict[str, Any]:
     return summary
 
 
+def delete_case_cascade(case_id: str) -> dict[str, Any]:
+    """Delete one case and re-analyse every case that was linked to it.
+
+    Admin action. Two halves:
+
+    1. **Purge** - the engine drops the case from every store it owns (registry,
+       evidence/entity/OCR/processing CSVs, OCR JSON, uploaded originals,
+       Phase-1 forensics, all Phase-2 artifacts, cross-case entity index).
+    2. **Re-analyse** - each case that was cross-linked to the deleted one gets
+       its cross-case correlation recomputed and its report regenerated, so no
+       surviving artifact still cites a case that no longer exists. The
+       correlation/timeline/graph of those cases are refreshed too, because the
+       report is rebuilt from their latest stored artifacts.
+    """
+    from backend.modules.investigation.maintenance import delete_case, linked_case_ids
+
+    ecfg, icfg = evidence_config(), investigation_config()
+    with _pipeline_lock:  # engine CSV storage is not concurrent-safe
+        # Read the links BEFORE the case disappears.
+        linked = linked_case_ids(icfg, case_id)
+        purge = delete_case(ecfg, icfg, case_id)
+        for cached in (evidence_config, investigation_config, report_repository,
+                       case_registry):
+            cached.cache_clear()
+
+    refreshed = _refresh_linked_cases(linked)
+    return {**purge, "linked_cases": linked, "refreshed_cases": refreshed}
+
+
+def _refresh_linked_cases(case_ids: list[str]) -> list[str]:
+    """Recompute cross-case correlation + report for each surviving case."""
+    if not case_ids:
+        return []
+    from backend.modules.investigation.audit import InvestigationAuditTrail
+    from backend.modules.investigation.correlation.service import CorrelationService
+    from backend.modules.investigation.data_access import CaseDataRepository
+    from backend.modules.investigation.reporting.service import (
+        InvestigationReportService,
+    )
+
+    icfg = investigation_config()
+    data = CaseDataRepository(icfg)
+    repo = report_repository()
+    audit = InvestigationAuditTrail(icfg)
+    correlation = CorrelationService(icfg, data, repo, audit)
+    reporting = InvestigationReportService(icfg, data, repo, audit)
+
+    refreshed: list[str] = []
+    with _pipeline_lock:
+        for other in case_ids:
+            if not data.case_exists(other):
+                continue  # that case is gone too
+            try:
+                cross = correlation.correlate_cross_case(other)
+                # Persist only when it actually changed, then rebuild the report
+                # from that case's latest stored artifacts.
+                if correlation.persist_cross_case(other, cross):
+                    reporting.regenerate_with_cross_case(other, cross)
+                refreshed.append(other)
+            except Exception:  # noqa: BLE001 - one bad case must not abort
+                log.exception("Could not refresh linked case %s", other)
+    return refreshed
+
+
 @lru_cache(maxsize=1)
 def _evidence_pipeline():
     """Phase-1 pipeline with the production OCR engine (heavy: lazy)."""
@@ -327,11 +390,11 @@ def submit_evidence_job(job_id: int, tmp_path: str, case_id: str,
     """Queue Phase-1 processing of an uploaded file (runs in a worker)."""
 
     def work() -> None:
-        from .models import BackgroundJob, Notification, NotificationType
+        from .store import jobs, notifications
+        from .constants import NotificationType
 
-        job = BackgroundJob.objects.get(pk=job_id)
-        job.status = "running"
-        job.save(update_fields=["status"])
+        jobs.update(job_id, status="running")
+        detail = ""
         try:
             with _pipeline_lock:  # engine CSV storage is not concurrent-safe
                 result = _evidence_pipeline().process_file(
@@ -345,23 +408,23 @@ def submit_evidence_job(job_id: int, tmp_path: str, case_id: str,
                 # Entities are now durable, so regenerate only the timeline and
                 # relationship graph.  Other Phase-2/report modules are not run.
                 live_artifacts = _refresh_timeline_graph(case_id)
-            job.status = "completed"
-            job.evidence_id = result.evidence_id
             entities = _entity_count(summary)
             if summary is None:
-                job.detail = f"Processed as {result.evidence_id} (OCR only)"
+                detail = f"Processed as {result.evidence_id} (OCR only)"
             elif entities is None:
-                job.detail = f"Processed as {result.evidence_id} (full pipeline)"
+                detail = f"Processed as {result.evidence_id} (full pipeline)"
             else:
-                job.detail = (
+                detail = (
                     f"Processed as {result.evidence_id}; "
                     f"{entities} entities extracted"
                 )
             if live_artifacts is not None:
-                job.detail += "; timeline and graph refreshed"
+                detail += "; timeline and graph refreshed"
             else:
-                job.detail += "; timeline/graph refresh pending"
-            Notification.broadcast(
+                detail += "; timeline/graph refresh pending"
+            jobs.finish(job_id, "completed", detail=detail,
+                        evidence_id=result.evidence_id)
+            notifications.broadcast(
                 type=NotificationType.PROCESSING_COMPLETE,
                 title=f"Evidence {result.evidence_id} processed",
                 message=f"{result.file_name} processed for {case_id}.",
@@ -369,16 +432,13 @@ def submit_evidence_job(job_id: int, tmp_path: str, case_id: str,
             )
         except Exception as exc:  # noqa: BLE001 - report, never crash worker
             log.exception("Evidence processing failed (job %s)", job_id)
-            job.status = "failed"
-            job.error = str(exc)
-            Notification.broadcast(
+            jobs.finish(job_id, "failed", error=str(exc))
+            notifications.broadcast(
                 type=NotificationType.SYSTEM_ERROR,
                 title="Evidence processing failed",
                 message=str(exc), case_id=case_id,
             )
         finally:
-            job.finished_at = timezone.now()
-            job.save()
             Path(tmp_path).unlink(missing_ok=True)
 
     _executor.submit(work)
@@ -412,11 +472,11 @@ def submit_analysis_job(job_id: int, case_id: str, username: str) -> None:
     """Queue the full Phase-2 pipeline for a case (runs in a worker)."""
 
     def work() -> None:
-        from .models import BackgroundJob, Notification, NotificationType
+        from .store import jobs, notifications
+        from .constants import NotificationType
 
-        job = BackgroundJob.objects.get(pk=job_id)
-        job.status = "running"
-        job.save(update_fields=["status"])
+        jobs.update(job_id, status="running")
+        detail = ""
         try:
             from backend.modules.investigation.pipeline import build_default_pipeline
 
@@ -425,9 +485,8 @@ def submit_analysis_job(job_id: int, case_id: str, username: str) -> None:
                     threat_intel=_threat_intel_provider()
                 ).analyze_case(case_id)
             failures = results.get("failures") or []
-            job.status = "completed"
-            job.detail = f"failures={failures or 'none'}"
-            Notification.broadcast(
+            jobs.finish(job_id, "completed", detail=f"failures={failures or 'none'}")
+            notifications.broadcast(
                 type=NotificationType.REPORT_GENERATED,
                 title=f"Investigation analysis completed for {case_id}",
                 message="All Phase-2 artifacts regenerated.", case_id=case_id,
@@ -435,23 +494,20 @@ def submit_analysis_job(job_id: int, case_id: str, username: str) -> None:
             _emit_priority_notification(case_id)
         except Exception as exc:  # noqa: BLE001
             log.exception("Case analysis failed (job %s)", job_id)
-            job.status = "failed"
-            job.error = str(exc)
-            Notification.broadcast(
+            jobs.finish(job_id, "failed", error=str(exc))
+            notifications.broadcast(
                 type=NotificationType.SYSTEM_ERROR,
                 title=f"Analysis failed for {case_id}",
                 message=str(exc), case_id=case_id,
             )
-        finally:
-            job.finished_at = timezone.now()
-            job.save()
 
     _executor.submit(work)
 
 
 def _emit_priority_notification(case_id: str) -> None:
     """High-priority alert sourced from the engine's own priority verdict."""
-    from .models import Notification, NotificationType
+    from .store import notifications
+    from .constants import NotificationType
 
     document = try_artifact(case_id, "priority")
     if not document:
@@ -465,7 +521,7 @@ def _emit_priority_notification(case_id: str) -> None:
     ).lower()
     if band in {"high", "critical", "urgent"}:
         score = payload.get("priority_score") or payload.get("score")
-        Notification.broadcast(
+        notifications.broadcast(
             type=NotificationType.HIGH_PRIORITY,
             title=f"{case_id} flagged {band.upper()} priority",
             message=f"Engine priority score: {score}.", case_id=case_id,
