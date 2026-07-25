@@ -49,7 +49,7 @@ export function Topbar() {
               color="text.secondary"
               sx={{ display: { xs: "none", sm: "block" }, lineHeight: 1.2 }}
             >
-              Cybercrime Investigation Intelligence System
+              Cybercrime Investigation Intelligence Engine
             </Typography>
           </Box>
         </Stack>

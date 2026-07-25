@@ -57,3 +57,14 @@ id,created_at,username,module,action,case_id,detail
 56,2026-07-25T16:08:12.892Z,,evidence,upload,CASE_7916EFB87E,08_complaint_letter.pdf
 57,2026-07-25T16:09:51.227Z,,investigation,run_analysis,CASE_7916EFB87E,
 58,2026-07-25T16:12:26.753Z,,admin,login,,
+59,2026-07-25T16:24:17.132Z,,admin,delete_case,CASE_7916EFB87E,deleted; refreshed 0 linked case(s)
+60,2026-07-25T16:25:18.953Z,,intake,created,CASE_75C28F98EB,Case Evidence
+61,2026-07-25T16:25:36.637Z,,evidence,upload,CASE_75C28F98EB,01_sms_screenshot.jpg
+62,2026-07-25T16:25:36.711Z,,evidence,upload,CASE_75C28F98EB,02_messenger_chat.jpg
+63,2026-07-25T16:25:36.795Z,,evidence,upload,CASE_75C28F98EB,03_qr_code_flyer.png
+64,2026-07-25T16:25:36.866Z,,evidence,upload,CASE_75C28F98EB,04_esewa_payment_screenshot.jpg
+65,2026-07-25T16:25:36.972Z,,evidence,upload,CASE_75C28F98EB,05_khalti_receipt.jpg
+66,2026-07-25T16:25:37.048Z,,evidence,upload,CASE_75C28F98EB,06_phishing_email_screenshot.jpg
+67,2026-07-25T16:25:37.125Z,,evidence,upload,CASE_75C28F98EB,07_bank_transfer_slip.pdf
+68,2026-07-25T16:25:37.234Z,,evidence,upload,CASE_75C28F98EB,08_complaint_letter.pdf
+69,2026-07-25T16:27:20.001Z,,investigation,run_analysis,CASE_75C28F98EB,

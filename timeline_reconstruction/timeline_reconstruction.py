@@ -1,7 +1,7 @@
 """
 Module 5 - Timeline Reconstruction
 ====================================
-Cybercrime Investigation Intelligence System (CIIS)
+Cybercrime Investigation Intelligence Engine (CIIS)
 
 Consumes:
   - Case JSON from the OCR/evidence engine (Module 2)

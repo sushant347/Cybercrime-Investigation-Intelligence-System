@@ -376,7 +376,7 @@ def render_pdf(
     story.append(Spacer(1, 8))
     sign = Table(
         [["Prepared by (system)", "Reviewed by (investigator)"],
-         ["Cybercrime Investigation Intelligence System\n"
+         ["Cybercrime Investigation Intelligence Engine\n"
           "Automated Phase-2 reporting module", ""],
          ["", ""],
          ["Date:", "Date:                    Signature:"]],
@@ -397,7 +397,7 @@ def render_pdf(
         leftMargin=18 * mm, rightMargin=18 * mm,
         topMargin=16 * mm, bottomMargin=20 * mm,
         title=f"CIIS Investigation Report {case_id}",
-        author="Cybercrime Investigation Intelligence System",
+        author="Cybercrime Investigation Intelligence Engine",
         subject=report_id,
     )
     document.build(story, canvasmaker=_NumberedCanvas)

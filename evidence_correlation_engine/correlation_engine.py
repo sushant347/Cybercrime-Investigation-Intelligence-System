@@ -1,7 +1,7 @@
 """
 Module 4 - Evidence Correlation Engine
 ========================================
-Cybercrime Investigation Intelligence System (CIIS)
+Cybercrime Investigation Intelligence Engine (CIIS)
 
 Consumes case JSON files produced by the OCR/evidence engine (Module 2) and
 the threat intelligence scores (Module 3), and links evidence items together

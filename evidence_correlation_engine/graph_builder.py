@@ -1,7 +1,7 @@
 """
 Module 4 (enhanced) - NetworkX Investigation Graph Builder
 ==========================================================
-Cybercrime Investigation Intelligence System (CIIS)
+Cybercrime Investigation Intelligence Engine (CIIS)
 
 This module introduces a `networkx.MultiDiGraph`-backed investigation graph as
 the backbone of the Evidence Correlation Engine. It sits in the pipeline

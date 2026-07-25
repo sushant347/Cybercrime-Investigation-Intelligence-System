@@ -102,7 +102,7 @@ export function SimpleReportView({ report }: { report: SimpleReport }) {
               variant="overline"
               sx={{ color: "text.secondary", letterSpacing: "0.08em" }}
             >
-              Cybercrime Investigation Intelligence System
+              Cybercrime Investigation Intelligence Engine
             </Typography>
             <Typography variant="h5" sx={{ fontWeight: 700, mt: 0.25 }}>
               Investigation Report
