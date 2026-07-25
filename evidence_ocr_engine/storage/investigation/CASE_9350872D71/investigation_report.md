@@ -1,20 +1,20 @@
 # Forensic Investigation Report - CASE_9350872D71
 
-Generated: 2026-07-25T13:52:24.247Z  
+Generated: 2026-07-25T13:56:14.979Z  
 System: Cybercrime Investigation Intelligence System (CIIS), Phase 2  
 Basis: every statement below references stored forensic findings; no content is generated outside computed results.
 
 ## Executive Summary
 
-- Case CASE_9350872D71 contains 2 evidence item(s), each acquired under SHA-256 chain-of-custody verification.
+- Case CASE_9350872D71 contains 3 evidence item(s), each acquired under SHA-256 chain-of-custody verification.
 - This case is linked to 1 other case(s) through shared entities: CASE_36BBE50ED9 [cross_case_correlation.json].
-- The weighted correlation engine found 1 related evidence pair(s) out of 1 analysed [correlation_analysis.json].
+- The weighted correlation engine found 3 related evidence pair(s) out of 3 analysed [correlation_analysis.json].
 - Observed attack progression: financial_transaction -> post_attack [timeline_analysis.json].
 
 ## Scope & Methodology
 
 - **objective**: Acquire, verify, correlate and reconstruct the digital evidence for this case, and derive investigative leads (suspect anchors, campaigns, cross-case links) strictly from stored, hash-verified artifacts.
-- **evidence scope**: 2 evidence item(s) acquired through the CIIS intake pipeline under SHA-256 chain-of-custody control.
+- **evidence scope**: 3 evidence item(s) acquired through the CIIS intake pipeline under SHA-256 chain-of-custody control.
 - **methodology**:
   - Phase 1 - Acquisition & OCR: PaddleOCR PP-OCRv5 text extraction with per-item confidence scoring; SHA-256 fingerprint recorded at intake and re-verified at read.
   - Phase 1 - Forensics: metadata/EXIF consistency, forgery signals, logo detection and evidence-confidence scoring stored per item under storage/forensics/.
@@ -28,12 +28,13 @@ Basis: every statement below references stored forensic findings; no content is 
 ## Case Overview
 
 - **case id**: CASE_9350872D71
-- **evidence count**: 2
+- **evidence count**: 3
 - **first evidence**: 2026-07-25T13:51:58.581Z
-- **last evidence**: 2026-07-25T13:52:01.149Z
+- **last evidence**: 2026-07-25T13:56:06.791Z
 - **file types**:
   - jpg
   - pdf
+  - url
 
 ## Evidence Summary
 
@@ -53,18 +54,34 @@ Basis: every statement below references stored forensic findings; no content is 
 - **ocr confidence**: 0.9686
 - **evidence confidence score**: not available
 - **entity count**: 0
+- **evidence id**: EVID_00013
+- **file name**: https_plasticostermoencogibles.pe_scss_css_scss_.url
+- **upload time**: 2026-07-25T13:56:06.791Z
+- **sha256**: fab44e99bd90f1ffe214d4d2bb6580e4c0d52f5fe930e773d96cf92ee820a2f5
+- **hash verified**: True
+- **ocr confidence**: 1.0
+- **evidence confidence score**: not available
+- **entity count**: 2
 
 ## Correlation Analysis
 
-- **pair count**: 1
-- **related pair count**: 1
+- **pair count**: 3
+- **related pair count**: 3
 - **strength distribution**:
-  - **WEAK**: 1
+  - **WEAK**: 3
 - **top relationships**:
   - **pair**: EVID_00011 <-> EVID_00012
   - **strength**: WEAK
   - **confidence**: 0.2212
   - **explanation**: EVID_00011 (police_scan_report.pdf) and EVID_00012 (romanchat.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40].
+  - **pair**: EVID_00011 <-> EVID_00013
+  - **strength**: WEAK
+  - **confidence**: 0.2212
+  - **explanation**: EVID_00011 (police_scan_report.pdf) and EVID_00013 (https_plasticostermoencogibles.pe_scss_css_scss_.url) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40].
+  - **pair**: EVID_00012 <-> EVID_00013
+  - **strength**: WEAK
+  - **confidence**: 0.2212
+  - **explanation**: EVID_00012 (romanchat.jpg) and EVID_00013 (https_plasticostermoencogibles.pe_scss_css_scss_.url) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40].
 
 ## Cross-Case Correlation
 
@@ -90,12 +107,13 @@ Basis: every statement below references stored forensic findings; no content is 
 - **unclustered evidence**:
   - EVID_00011
   - EVID_00012
+  - EVID_00013
 - **campaigns**:
   - none
 
 ## Timeline Analysis
 
-- **summary**: 2 event(s) spanning 0.0 hour(s); 0 timestamp(s) unresolved. Observed scam progression: financial_transaction -> post_attack.
+- **summary**: 3 event(s) spanning 0.1 hour(s); 0 timestamp(s) unresolved. Observed scam progression: financial_transaction -> post_attack.
 - **stage progression**:
   - financial_transaction
   - post_attack
@@ -131,8 +149,8 @@ No threat-intelligence provider was active during this analysis; indicator-level
 - **mean evidence confidence**: 0.0
 - **mean forgery score**: 0.0
 - **max forgery score**: 0.0
-- **mean ocr confidence**: 0.98
-- **hash verified count**: 2.0
+- **mean ocr confidence**: 0.99
+- **hash verified count**: 3.0
 
 ## Metadata Summary
 
@@ -141,24 +159,26 @@ No threat-intelligence provider was active during this analysis; indicator-level
 ## Investigation Statistics
 
 - **entity statistics**:
+  - **domains**: 1
   - **money**: 1
+  - **urls**: 1
 - **campaign statistics**:
   - **campaign count**: 0.0
   - **largest campaign size**: 0.0
   - **clustered evidence**: 0.0
-  - **unclustered evidence**: 2.0
+  - **unclustered evidence**: 3.0
   - **mean campaign confidence**: 0.0
 - **timeline statistics**:
-  - **event count**: 2.0
-  - **resolved event count**: 2.0
+  - **event count**: 3.0
+  - **resolved event count**: 3.0
   - **unresolved event count**: 0.0
-  - **inferred event count**: 2.0
+  - **inferred event count**: 3.0
   - **stage count**: 2.0
   - **critical event count**: 1.0
-  - **timeline span hours**: 0.0
+  - **timeline span hours**: 0.07
 - **correlation statistics**:
-  - **pair count**: 1.0
-  - **related pair count**: 1.0
+  - **pair count**: 3.0
+  - **related pair count**: 3.0
   - **mean confidence**: 0.2212
   - **max confidence**: 0.2212
 
@@ -168,8 +188,8 @@ No threat-intelligence provider was active during this analysis; indicator-level
 
 ## Investigation Conclusion
 
-- 2/2 evidence item(s) passed SHA-256 chain-of-custody verification.
-- The evidence set is internally connected (1 weighted relationship(s)), consistent with related activity rather than isolated incidents.
+- 3/3 evidence item(s) passed SHA-256 chain-of-custody verification.
+- The evidence set is internally connected (3 weighted relationship(s)), consistent with related activity rather than isolated incidents.
 
 ## Recommendations
 
@@ -178,20 +198,20 @@ No threat-intelligence provider was active during this analysis; indicator-level
 
 ## Report Provenance & Integrity
 
-- **report id**: RPT-9350872D71-AA6EDB3A
-- **generated at**: 2026-07-25T13:52:24.242Z
+- **report id**: RPT-9350872D71-C99DB01B
+- **generated at**: 2026-07-25T13:56:14.974Z
 - **generator**: CIIS Phase-2 reporting module (template-over-data; no free-text generation)
-- **evidence set digest**: d3cb154946a6e9a9f5402a1562adebe09a30db0c86156993cb20913b3f8f33b7
+- **evidence set digest**: df0581a5f3fdcd847a35bf227c9923bd7cf0c7e1561366e527f37941220bcb67
 - **evidence set digest note**: SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.
 - **source artifact hashes**:
-  - **correlation analysis v3.json**: 9f71c2ac2aaa377ae7467a39404d7ff158ead7a43c420aca148d2bf11c0acd0b
+  - **correlation analysis v5.json**: 188dbf18d875ca4e4d4168818158b1a79ac29d5273af7ee3277b3586c29afce9
   - **cross case correlation.json**: 4ce52bade5f8d6b4c6f6f75272414bf2d2544ec2ca13a20ad3391e3536423405
-  - **campaign analysis.json**: d4133aeda587132df2bf9f2522530d186cfc673bad20c3ac43f024beef62d811
-  - **suspect assessment.json**: cfdee972884dad660645bcec78ceb40a7eb0c91d9d495e930d713234a2923a42
-  - **timeline analysis v3.json**: 2df24804ea13fa3d9c75cef3264c5fc0ffd59ee58333d2bc6f0ef04928564a24
-  - **analytics.json**: f6ae8834f8d4fc80e957d93c216e96cc2b709089025fe9a9c43674c2de38b8a0
-  - **case priority.json**: 13b4dbf750bb87c3867d77acc8b771cab83ddecc400ebc9f57f7fbe0a840a932
-  - **graph v3.json**: a372e621d1243bace481fce762f83442d60de7f2d5bc7751e3b056ee7f6d7000
+  - **campaign analysis v2.json**: ebdd40290d7d16c01c98e79d73f9bd490720dd70774b94eea743fa9c6c2db119
+  - **suspect assessment v2.json**: 925cd6fa99d5e6afb0075618f44e3e576bb522deb715a748723d593330031dae
+  - **timeline analysis v5.json**: 5b01be646572254ca6f47d896a9f16f1c1d6db3cd379423ff814a16ee5631f5a
+  - **analytics v2.json**: d09c170131bbbf6fb60638f81b8de13b6ee9798edd0dab299445dbaf04c2550e
+  - **case priority v2.json**: ddce4cee31a21e213758f1f7747855b898aee50739cc6385aeb09139d0bf9561
+  - **graph v5.json**: 028ba5c1cc5c4473452e18b41a555a01c275650044598f0994396aa0ad3c860b
 
 ## Appendix
 
@@ -203,6 +223,10 @@ No threat-intelligence provider was active during this analysis; indicator-level
   - **evidence id**: EVID_00012
   - **sha256**: 0340d5863313f4cc0b9b40ed835a77a71b8304d2e08eb32f08a56ed93a6e0b10
   - **upload time**: 2026-07-25T13:52:01.149Z
+  - **status**: processed
+  - **evidence id**: EVID_00013
+  - **sha256**: fab44e99bd90f1ffe214d4d2bb6580e4c0d52f5fe930e773d96cf92ee820a2f5
+  - **upload time**: 2026-07-25T13:56:06.791Z
   - **status**: processed
 - **stored artifacts root**: storage/investigation/<CASE_ID>/
 - **phase1 artifacts root**: storage/forensics/<EVIDENCE_ID>/

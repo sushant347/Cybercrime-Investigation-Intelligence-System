@@ -51,3 +51,14 @@ id,created_at,username,module,action,case_id,detail
 50,2026-07-25T14:41:38.482Z,,admin,delete_case,CASE_4D7CD3FD4E,deleted; refreshed 1 linked case(s)
 51,2026-07-25T14:42:19.919Z,,investigation,run_analysis,CASE_2CF24DBA5F,
 52,2026-07-25T14:45:09.402Z,,investigation,run_analysis,CASE_2CF24DBA5F,
+53,2026-07-25T14:48:00.869Z,,admin,login,,
+54,2026-07-25T14:48:12.203Z,,investigation,run_analysis,CASE_2CF24DBA5F,
+55,2026-07-25T14:48:49.695Z,,intake,created,CASE_8F43434664,hi
+56,2026-07-25T14:49:11.449Z,,evidence,upload,CASE_8F43434664,police_scan_report.pdf
+57,2026-07-25T14:49:14.070Z,,evidence,upload,CASE_8F43434664,romanchat.jpg
+58,2026-07-25T14:49:30.575Z,,evidence,upload,CASE_8F43434664,const.jpg
+59,2026-07-25T14:49:59.001Z,,investigation,run_analysis,CASE_8F43434664,
+60,2026-07-25T14:51:57.731Z,,investigation,run_analysis,CASE_2CF24DBA5F,
+61,2026-07-25T14:52:42.411Z,,admin,delete_case,CASE_4CFDEC4197,deleted; refreshed 0 linked case(s)
+62,2026-07-25T14:52:47.484Z,,admin,delete_case,CASE_8F43434664,deleted; refreshed 1 linked case(s)
+63,2026-07-25T15:01:50.411Z,,investigation,run_analysis,CASE_2CF24DBA5F,

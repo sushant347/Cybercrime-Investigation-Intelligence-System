@@ -1,9 +1,9 @@
 {
   "report_type": "campaign_analysis",
-  "report_version": 1,
+  "report_version": 7,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-07-25T14:24:15.341Z",
+  "generated_at": "2026-07-25T15:02:04.145Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
     "campaign_count": 0,
