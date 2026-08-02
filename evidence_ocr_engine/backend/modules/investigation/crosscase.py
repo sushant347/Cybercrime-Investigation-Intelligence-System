@@ -60,13 +60,25 @@ class CrossCaseEntityIndex:
     Constructed with the path to the *entities CSV*. The legacy JSON index path
     may still be passed for cleanup purposes via ``legacy_index_path``.
 
-    When ``evidence_csv`` is supplied, occurrences belonging to a case that has
-    no evidence left are ignored. An entity row can outlive its case - a delete
-    that failed part-way, an externally edited CSV, a restored backup - and
-    without this guard a single orphaned row silently resurrects a deleted case
-    in every other case's cross-case correlation, graph and report. Filtering
-    at read time makes that whole class of failure impossible regardless of how
-    the row got orphaned, instead of relying on every writer to clean up.
+    When ``evidence_csv`` is supplied it is treated as **authoritative** for
+    which evidence exists and which case owns it, because it is the
+    chain-of-custody register; ``entities.csv`` is derived from it. Two classes
+    of stale row are therefore neutralised at read time:
+
+    * **Orphaned** - the entity's evidence item no longer exists (a delete that
+      failed part-way, an externally edited CSV, a restored backup). The row is
+      dropped, so a deleted item can never reappear in another case's
+      correlation, graph or report.
+    * **Mis-attributed** - the row names a different case than the register
+      does for that evidence id. This happens when an evidence id is reused
+      across cases, and it is the more dangerous of the two: correlation would
+      report the *wrong case* as the source of a shared entity. The occurrence
+      is re-attributed to the owning case from the register rather than being
+      discarded, so the entity still correlates - just against the correct case.
+
+    Enforcing this at read time makes the whole class of failure impossible
+    regardless of how the row got stale, instead of relying on every writer to
+    clean up after itself.
     """
 
     def __init__(self, entities_csv: Path,
@@ -98,21 +110,25 @@ class CrossCaseEntityIndex:
         """Cache key: both files matter, so deleting a case invalidates too."""
         return (self._file_stamp(self._path), self._file_stamp(self._evidence_path))
 
-    def _live_case_ids(self) -> Optional[set]:
-        """Cases that still have evidence, or None when not filtering.
+    def _live_evidence(self) -> Optional[Dict[str, str]]:
+        """``{evidence_id: owning_case_id}`` from the register, or ``None``.
 
-        Mirrors ``CaseDataRepository.case_exists``: a case is live exactly when
-        evidence.csv still has a row for it.
+        ``None`` means "do not filter" - returned when no register path was
+        supplied or the file is unreadable, so a transient I/O error degrades
+        to the old behaviour instead of silently reporting that every case is
+        gone.
         """
         if self._evidence_path is None:
             return None
         try:
             with open(self._evidence_path, "r", newline="", encoding="utf-8") as handle:
-                return {(row.get("case_id") or "").strip()
-                        for row in csv.DictReader(handle)}
+                return {
+                    (row.get("evidence_id") or "").strip():
+                        (row.get("case_id") or "").strip()
+                    for row in csv.DictReader(handle)
+                    if (row.get("evidence_id") or "").strip()
+                }
         except OSError:
-            # Unreadable evidence file: fall back to not filtering rather than
-            # silently reporting that every case is gone.
             return None
 
     def _ensure_loaded(self) -> None:
@@ -121,8 +137,9 @@ class CrossCaseEntityIndex:
         if stamp[0] is not None and stamp == self._stamp and self._buckets:
             return
         buckets: Dict[str, List[EntityOccurrence]] = {}
-        live = self._live_case_ids()
+        live = self._live_evidence()
         skipped = 0
+        reattributed = 0
         if stamp[0] is not None:
             try:
                 with open(self._path, "r", newline="", encoding="utf-8") as handle:
@@ -134,9 +151,17 @@ class CrossCaseEntityIndex:
                         evidence_id = (row.get("evidence_id") or "").strip()
                         if not (entity_type and normalized and case_id and evidence_id):
                             continue
-                        if live is not None and case_id not in live:
-                            skipped += 1   # orphaned row: its case is gone
-                            continue
+                        if live is not None:
+                            owner = live.get(evidence_id)
+                            if owner is None:
+                                skipped += 1        # evidence item is gone
+                                continue
+                            if owner != case_id:
+                                # The register wins: correlating this entity
+                                # against the case named in entities.csv would
+                                # cite the wrong case as its source.
+                                reattributed += 1
+                                case_id = owner
                         seen = row.get("extracted_at", "")
                         buckets.setdefault(bucket_key(entity_type, normalized), []).append(
                             EntityOccurrence(
@@ -154,8 +179,13 @@ class CrossCaseEntityIndex:
                 self._log.warning("entities.csv unreadable (%s): %s", self._path, exc)
         if skipped:
             self._log.warning(
-                "ignored %d entity row(s) whose case no longer has evidence; "
+                "ignored %d entity row(s) whose evidence item no longer exists; "
                 "run maintenance to purge them from %s", skipped, self._path.name)
+        if reattributed:
+            self._log.warning(
+                "re-attributed %d entity row(s) to the case named in the "
+                "chain-of-custody register; %s disagreed with evidence.csv",
+                reattributed, self._path.name)
         self._buckets = buckets
         self._stamp = stamp
         self._document_total = None   # recomputed lazily against the new load

@@ -162,10 +162,39 @@ class EvidenceRepository(BaseCSVRepository):
         self._prefix = config.evidence_id_prefix
 
     def next_evidence_id(self) -> str:
-        """Sequential evidence identifier: EVID_00001, EVID_00002, ..."""
-        return format_sequential_id(self._prefix, self.count() + 1, width=5)
+        """Next unused evidence identifier: EVID_00001, EVID_00002, ...
+
+        Derived from the highest id already in the register, **not** from the
+        row count. Counting breaks as soon as an item is deleted: the register
+        shrinks, so the next allocation reuses an id that is still referenced
+        by stored OCR JSON, entities and forensic reports - two different
+        exhibits sharing one chain-of-custody identity. Ids are therefore
+        monotonic and never reused, which is what a custody register requires.
+        """
+        highest = 0
+        for row in self.read_all():
+            raw = str(row.get("evidence_id", ""))
+            _, _, digits = raw.rpartition("_")
+            if digits.isdigit():
+                highest = max(highest, int(digits))
+        return format_sequential_id(self._prefix, highest + 1, width=5)
 
     def add(self, record: EvidenceRecord) -> None:
+        """Register the chain-of-custody row for a newly acquired item.
+
+        An evidence id must map to **exactly one** custody row. If a row for
+        this id somehow already exists (an interrupted or interleaved earlier
+        write), the existing row is updated in place instead of a second row
+        being appended - two rows for one exhibit is a custody defect, not a
+        cosmetic one.
+        """
+        if self.get(record.evidence_id) is not None:
+            self._log.warning(
+                "chain-of-custody row for %s already exists; updating in place "
+                "instead of appending a duplicate", record.evidence_id,
+            )
+            self.update(record)
+            return
         self.append({k: str(v) for k, v in asdict(record).items()})
         self._log.info("stored evidence row %s", record.evidence_id)
 
@@ -173,16 +202,36 @@ class EvidenceRepository(BaseCSVRepository):
         return next((r for r in self.read_all() if r["evidence_id"] == evidence_id), None)
 
     def update(self, record: EvidenceRecord) -> None:
-        """Replace the row matching ``record.evidence_id`` (atomic rewrite)."""
+        """Replace **every** row matching ``record.evidence_id`` with one row.
+
+        Collapsing all matches rather than only the first makes this write
+        self-healing: the register is an append-then-rewrite store, so an
+        interleaved write (a second process, a CLI run alongside the server,
+        an interrupted rewrite) can leave a stale ``uploaded`` row beside the
+        real one. Replacing only the first match would preserve that phantom
+        forever - it would show in the evidence table with an empty
+        post-processing hash, reading as "integrity not verified" even though
+        the exhibit is fine. Rewriting is atomic (temp file + rename).
+        """
         rows = self.read_all()
         payload = {k: str(v) for k, v in asdict(record).items()}
-        for index, row in enumerate(rows):
-            if row["evidence_id"] == record.evidence_id:
-                rows[index] = payload
-                break
-        else:
-            rows.append(payload)
-        self.overwrite_all(rows)
+        kept: List[Row] = []
+        replaced = False
+        for row in rows:
+            if row.get("evidence_id") != record.evidence_id:
+                kept.append(row)
+                continue
+            if replaced:
+                self._log.warning(
+                    "collapsed duplicate chain-of-custody row for %s "
+                    "(status=%r)", record.evidence_id, row.get("status", ""),
+                )
+                continue
+            kept.append(payload)
+            replaced = True
+        if not replaced:
+            kept.append(payload)
+        self.overwrite_all(kept)
 
 
 class OCRResultRepository(BaseCSVRepository):
