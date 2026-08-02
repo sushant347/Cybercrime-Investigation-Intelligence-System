@@ -4,7 +4,6 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import { AppBar, Box, IconButton, Stack, Toolbar, Tooltip, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
-import { NotificationBell } from "@/features/notifications/NotificationBell";
 import { useColorMode } from "@/theme/ColorModeProvider";
 
 /** Minimal header: identity and theme only - no navigation, no case list. */
@@ -53,8 +52,6 @@ export function Topbar() {
             </Typography>
           </Box>
         </Stack>
-
-        <NotificationBell />
 
         <Tooltip title={mode === "dark" ? "Switch to light mode" : "Switch to dark mode"}>
           <IconButton onClick={toggle} aria-label="Toggle theme">
