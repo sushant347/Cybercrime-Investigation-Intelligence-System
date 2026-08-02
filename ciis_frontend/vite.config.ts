@@ -8,6 +8,12 @@ export default defineConfig({
   resolve: {
     alias: { "@": path.resolve(__dirname, "src") },
   },
+  // An inline (empty) PostCSS config stops Vite searching parent directories
+  // for one. This project styles entirely through MUI and needs no PostCSS
+  // plugins, but the search walks all the way to the user's home directory —
+  // so an unrelated `postcss.config.mjs` there (a Tailwind one, say) gets
+  // picked up and fails the whole run with a missing-plugin error.
+  css: { postcss: {} },
   test: {
     globals: true,
     environment: "jsdom",

@@ -22,8 +22,10 @@ describe("apiErrorMessage", () => {
   });
 
   it("maps 403 to a permission message", () => {
+    // 403 is only reachable on the admin surface now that the engine itself is
+    // open access, so the message names the thing the user actually needs.
     const err = axiosErrorWith(403, {});
-    expect(apiErrorMessage(err)).toBe("You do not have permission to do this.");
+    expect(apiErrorMessage(err)).toBe("Admin access required.");
   });
 
   it("maps a network error to a reachability message", () => {
