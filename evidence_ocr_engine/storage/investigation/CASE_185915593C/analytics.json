@@ -1,9 +1,9 @@
 {
   "report_type": "analytics",
-  "report_version": 1,
+  "report_version": 2,
   "schema_version": "2.0",
   "case_id": "CASE_185915593C",
-  "generated_at": "2026-07-25T17:26:36.505Z",
+  "generated_at": "2026-08-02T14:26:09.926Z",
   "report": {
     "case_id": "CASE_185915593C",
     "evidence_count": 8,
@@ -197,46 +197,24 @@
     "threat_statistics": {
       "intel_available": 1.0,
       "indicators_checked": 7.0,
-      "malicious_indicators": 6.0,
+      "malicious_indicators": 5.0,
       "suspicious_indicators": 0.0,
-      "benign_indicators": 1.0,
+      "benign_indicators": 2.0,
       "evidence_with_threats": 4.0,
       "threat_evidence_ratio": 0.5
     },
     "threat_indicators": [
       {
-        "value": "https://esewa-cashback-offer.xyz/claim?ref=dsn2026",
-        "verdict": "malicious",
-        "source": "ml:xgboost",
-        "risk_score": 83.0,
-        "confidence": 0.83,
-        "brand_impersonated": "",
-        "reasons": [
-          "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
-          "AI model classified this URL as phishing with 100% confidence.",
-          "The top-level domain is frequently associated with phishing and spam campaigns (risk score: 0.7).",
-          "SSL status could not be verified.",
-          "The domain or URL has high character entropy, suggesting a randomly-generated string often used in phishing.",
-          "The URL contains suspicious keyword(s) associated with phishing."
-        ],
-        "evidence_ids": [
-          "EVID_00009"
-        ]
-      },
-      {
         "value": "esewa-cashback-offer.xyz",
         "verdict": "malicious",
-        "source": "ml:xgboost",
-        "risk_score": 81.0,
-        "confidence": 0.81,
-        "brand_impersonated": "",
+        "source": "heuristics",
+        "risk_score": 100.0,
+        "confidence": 1.0,
+        "brand_impersonated": "esewa",
         "reasons": [
-          "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
-          "AI model classified this URL as phishing with 100% confidence.",
-          "The top-level domain is frequently associated with phishing and spam campaigns (risk score: 0.7).",
-          "SSL status could not be verified.",
-          "The URL does not use HTTPS, meaning data is transmitted without encryption.",
-          "The URL contains suspicious keyword(s) associated with phishing."
+          "hostname contains the brand 'esewa' but is not an official esewa domain",
+          "registered under '.xyz', a TLD with a high abuse rate",
+          "reward/prize wording in the link: cashback, offer"
         ],
         "evidence_ids": [
           "EVID_00009",
@@ -247,36 +225,45 @@
       {
         "value": "https://esewa-cashback-offer.xyz/claim",
         "verdict": "malicious",
-        "source": "ml:xgboost",
-        "risk_score": 81.0,
-        "confidence": 0.81,
-        "brand_impersonated": "",
+        "source": "heuristics",
+        "risk_score": 100.0,
+        "confidence": 1.0,
+        "brand_impersonated": "esewa",
         "reasons": [
-          "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
-          "AI model classified this URL as phishing with 100% confidence.",
-          "The top-level domain is frequently associated with phishing and spam campaigns (risk score: 0.7).",
-          "SSL status could not be verified.",
-          "The URL contains suspicious keyword(s) associated with phishing.",
-          "The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure."
+          "hostname contains the brand 'esewa' but is not an official esewa domain",
+          "registered under '.xyz', a TLD with a high abuse rate",
+          "reward/prize wording in the link: cashback, claim, offer"
         ],
         "evidence_ids": [
           "EVID_00014"
         ]
       },
       {
+        "value": "https://esewa-cashback-offer.xyz/claim?ref=dsn2026",
+        "verdict": "malicious",
+        "source": "heuristics",
+        "risk_score": 100.0,
+        "confidence": 1.0,
+        "brand_impersonated": "esewa",
+        "reasons": [
+          "hostname contains the brand 'esewa' but is not an official esewa domain",
+          "registered under '.xyz', a TLD with a high abuse rate",
+          "reward/prize wording in the link: cashback, claim, offer"
+        ],
+        "evidence_ids": [
+          "EVID_00009"
+        ]
+      },
+      {
         "value": "esewa-verify-kyc.com",
         "verdict": "malicious",
-        "source": "ml:xgboost",
-        "risk_score": 79.0,
-        "confidence": 0.79,
-        "brand_impersonated": "",
+        "source": "heuristics",
+        "risk_score": 75.0,
+        "confidence": 0.75,
+        "brand_impersonated": "esewa",
         "reasons": [
-          "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
-          "AI model classified this URL as phishing with 100% confidence.",
-          "SSL status could not be verified.",
-          "The URL does not use HTTPS, meaning data is transmitted without encryption.",
-          "The URL contains suspicious keyword(s) associated with phishing.",
-          "The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure."
+          "hostname contains the brand 'esewa' but is not an official esewa domain",
+          "credential/verification wording in the link: kyc, verify"
         ],
         "evidence_ids": [
           "EVID_00014"
@@ -285,54 +272,31 @@
       {
         "value": "esewa.cashbacko90gmail.com",
         "verdict": "malicious",
-        "source": "ml:xgboost",
-        "risk_score": 79.0,
-        "confidence": 0.79,
-        "brand_impersonated": "",
+        "source": "heuristics",
+        "risk_score": 75.0,
+        "confidence": 0.75,
+        "brand_impersonated": "esewa",
         "reasons": [
-          "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
-          "AI model classified this URL as phishing with 100% confidence.",
-          "SSL status could not be verified.",
-          "The URL does not use HTTPS, meaning data is transmitted without encryption.",
-          "The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure.",
-          "Brand 'Google' referenced in hostname, but registrable domain 'cashbacko90gmail.com' does not belong to the official Google infrastructure."
-        ],
-        "evidence_ids": [
-          "EVID_00010"
-        ]
-      },
-      {
-        "value": "sunita.gurung216gmail.com",
-        "verdict": "malicious",
-        "source": "ml:xgboost",
-        "risk_score": 79.0,
-        "confidence": 0.79,
-        "brand_impersonated": "",
-        "reasons": [
-          "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
-          "AI model classified this URL as phishing with 100% confidence.",
-          "SSL status could not be verified.",
-          "The URL does not use HTTPS, meaning data is transmitted without encryption.",
-          "The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure.",
-          "Brand 'Google' referenced in hostname, but registrable domain 'gurung216gmail.com' does not belong to the official Google infrastructure."
+          "hostname contains the brand 'esewa' but is not an official esewa domain",
+          "reward/prize wording in the link: cashback"
         ],
         "evidence_ids": [
           "EVID_00010"
         ]
       }
     ],
-    "threat_source": "MLThreatIntelProvider+heuristics",
+    "threat_source": "heuristics",
     "brand_statistics": [
       {
         "value": "eSewa",
-        "count": 6
-      },
-      {
-        "value": "Gmail",
-        "count": 2
+        "count": 8
       },
       {
         "value": "Khalti",
+        "count": 3
+      },
+      {
+        "value": "Gmail",
         "count": 2
       },
       {
@@ -445,10 +409,10 @@
     },
     "campaign_statistics": {
       "campaign_count": 1.0,
-      "largest_campaign_size": 7.0,
-      "clustered_evidence": 7.0,
-      "unclustered_evidence": 1.0,
-      "mean_campaign_confidence": 0.6856
+      "largest_campaign_size": 6.0,
+      "clustered_evidence": 6.0,
+      "unclustered_evidence": 2.0,
+      "mean_campaign_confidence": 0.705
     },
     "timeline_statistics": {
       "event_count": 8.0,
@@ -460,9 +424,9 @@
       "timeline_span_hours": 1001.44
     },
     "evidence_quality_statistics": {
-      "mean_image_quality": 66.38,
+      "mean_image_quality": 65.17,
       "mean_evidence_confidence": 90.19,
-      "mean_forgery_score": 17.18,
+      "mean_forgery_score": 18.31,
       "max_forgery_score": 25.2,
       "mean_ocr_confidence": 0.91,
       "hash_verified_count": 8.0
@@ -470,9 +434,9 @@
     "correlation_statistics": {
       "pair_count": 28.0,
       "related_pair_count": 28.0,
-      "mean_confidence": 0.3903,
-      "max_confidence": 0.9725
+      "mean_confidence": 0.3747,
+      "max_confidence": 0.9582
     },
-    "analysis_time_ms": 20.5
+    "analysis_time_ms": 0.6
   }
 }

@@ -1,9 +1,9 @@
 {
   "report_type": "timeline_analysis",
-  "report_version": 9,
+  "report_version": 10,
   "schema_version": "2.0",
   "case_id": "CASE_185915593C",
-  "generated_at": "2026-07-25T17:26:36.461Z",
+  "generated_at": "2026-08-02T14:26:09.881Z",
   "report": {
     "case_id": "CASE_185915593C",
     "events": [
@@ -25,22 +25,22 @@
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.7837,
-            "confidence": 0.7837
+            "weight": 0.7273,
+            "confidence": 0.7273
           },
           {
             "linked_to": "EVID_00009",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5699,
-            "confidence": 0.5699
+            "weight": 0.5561,
+            "confidence": 0.5561
           },
           {
             "linked_to": "EVID_00011",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5563,
-            "confidence": 0.5563
+            "weight": 0.5172,
+            "confidence": 0.5172
           },
           {
             "linked_to": "EVID_00007",
@@ -102,29 +102,29 @@
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.9725,
-            "confidence": 0.9725
+            "weight": 0.9582,
+            "confidence": 0.9582
           },
           {
             "linked_to": "EVID_00009",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.6753,
-            "confidence": 0.6753
+            "weight": 0.6565,
+            "confidence": 0.6565
           },
           {
             "linked_to": "EVID_00012",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5563,
-            "confidence": 0.5563
+            "weight": 0.5172,
+            "confidence": 0.5172
           },
           {
             "linked_to": "EVID_00013",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5563,
-            "confidence": 0.5563
+            "weight": 0.5172,
+            "confidence": 0.5172
           },
           {
             "linked_to": "EVID_00007",
@@ -249,15 +249,15 @@
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.8514,
-            "confidence": 0.8514
+            "weight": 0.8111,
+            "confidence": 0.8111
           },
           {
             "linked_to": "EVID_00010",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.3127,
-            "confidence": 0.3127
+            "weight": 0.2444,
+            "confidence": 0.2444
           },
           {
             "linked_to": "EVID_00007",
@@ -325,22 +325,22 @@
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.7135,
-            "confidence": 0.7135
+            "weight": 0.6654,
+            "confidence": 0.6654
           },
           {
             "linked_to": "EVID_00011",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.6753,
-            "confidence": 0.6753
+            "weight": 0.6565,
+            "confidence": 0.6565
           },
           {
             "linked_to": "EVID_00013",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5699,
-            "confidence": 0.5699
+            "weight": 0.5561,
+            "confidence": 0.5561
           },
           {
             "linked_to": "EVID_00007",
@@ -401,15 +401,15 @@
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.6204,
-            "confidence": 0.6204
+            "weight": 0.5606,
+            "confidence": 0.5606
           },
           {
             "linked_to": "EVID_00008",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.3127,
-            "confidence": 0.3127
+            "weight": 0.2444,
+            "confidence": 0.2444
           },
           {
             "linked_to": "EVID_00007",
@@ -477,15 +477,15 @@
             "linked_to": "EVID_00011",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5563,
-            "confidence": 0.5563
+            "weight": 0.5172,
+            "confidence": 0.5172
           },
           {
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5563,
-            "confidence": 0.5563
+            "weight": 0.5172,
+            "confidence": 0.5172
           },
           {
             "linked_to": "EVID_00007",
@@ -552,43 +552,43 @@
             "linked_to": "EVID_00011",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.9725,
-            "confidence": 0.9725
+            "weight": 0.9582,
+            "confidence": 0.9582
           },
           {
             "linked_to": "EVID_00008",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.8514,
-            "confidence": 0.8514
+            "weight": 0.8111,
+            "confidence": 0.8111
           },
           {
             "linked_to": "EVID_00013",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.7837,
-            "confidence": 0.7837
+            "weight": 0.7273,
+            "confidence": 0.7273
           },
           {
             "linked_to": "EVID_00009",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.7135,
-            "confidence": 0.7135
+            "weight": 0.6654,
+            "confidence": 0.6654
           },
           {
             "linked_to": "EVID_00010",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.6204,
-            "confidence": 0.6204
+            "weight": 0.5606,
+            "confidence": 0.5606
           },
           {
             "linked_to": "EVID_00012",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5563,
-            "confidence": 0.5563
+            "weight": 0.5172,
+            "confidence": 0.5172
           },
           {
             "linked_to": "EVID_00007",
@@ -717,22 +717,22 @@
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.7837,
-            "confidence": 0.7837
+            "weight": 0.7273,
+            "confidence": 0.7273
           },
           {
             "linked_to": "EVID_00009",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5699,
-            "confidence": 0.5699
+            "weight": 0.5561,
+            "confidence": 0.5561
           },
           {
             "linked_to": "EVID_00011",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5563,
-            "confidence": 0.5563
+            "weight": 0.5172,
+            "confidence": 0.5172
           },
           {
             "linked_to": "EVID_00007",
@@ -787,22 +787,22 @@
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.7837,
-            "confidence": 0.7837
+            "weight": 0.7273,
+            "confidence": 0.7273
           },
           {
             "linked_to": "EVID_00009",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5699,
-            "confidence": 0.5699
+            "weight": 0.5561,
+            "confidence": 0.5561
           },
           {
             "linked_to": "EVID_00011",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5563,
-            "confidence": 0.5563
+            "weight": 0.5172,
+            "confidence": 0.5172
           },
           {
             "linked_to": "EVID_00007",
@@ -859,22 +859,22 @@
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.7837,
-            "confidence": 0.7837
+            "weight": 0.7273,
+            "confidence": 0.7273
           },
           {
             "linked_to": "EVID_00009",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5699,
-            "confidence": 0.5699
+            "weight": 0.5561,
+            "confidence": 0.5561
           },
           {
             "linked_to": "EVID_00011",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5563,
-            "confidence": 0.5563
+            "weight": 0.5172,
+            "confidence": 0.5172
           },
           {
             "linked_to": "EVID_00007",
@@ -931,15 +931,15 @@
             "linked_to": "EVID_00011",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5563,
-            "confidence": 0.5563
+            "weight": 0.5172,
+            "confidence": 0.5172
           },
           {
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5563,
-            "confidence": 0.5563
+            "weight": 0.5172,
+            "confidence": 0.5172
           },
           {
             "linked_to": "EVID_00007",
@@ -1003,43 +1003,43 @@
             "linked_to": "EVID_00011",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.9725,
-            "confidence": 0.9725
+            "weight": 0.9582,
+            "confidence": 0.9582
           },
           {
             "linked_to": "EVID_00008",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.8514,
-            "confidence": 0.8514
+            "weight": 0.8111,
+            "confidence": 0.8111
           },
           {
             "linked_to": "EVID_00013",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.7837,
-            "confidence": 0.7837
+            "weight": 0.7273,
+            "confidence": 0.7273
           },
           {
             "linked_to": "EVID_00009",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.7135,
-            "confidence": 0.7135
+            "weight": 0.6654,
+            "confidence": 0.6654
           },
           {
             "linked_to": "EVID_00010",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.6204,
-            "confidence": 0.6204
+            "weight": 0.5606,
+            "confidence": 0.5606
           },
           {
             "linked_to": "EVID_00012",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5563,
-            "confidence": 0.5563
+            "weight": 0.5172,
+            "confidence": 0.5172
           },
           {
             "linked_to": "EVID_00007",
@@ -1077,22 +1077,22 @@
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.7837,
-            "confidence": 0.7837
+            "weight": 0.7273,
+            "confidence": 0.7273
           },
           {
             "linked_to": "EVID_00009",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5699,
-            "confidence": 0.5699
+            "weight": 0.5561,
+            "confidence": 0.5561
           },
           {
             "linked_to": "EVID_00011",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5563,
-            "confidence": 0.5563
+            "weight": 0.5172,
+            "confidence": 0.5172
           },
           {
             "linked_to": "EVID_00007",
@@ -1154,29 +1154,29 @@
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.9725,
-            "confidence": 0.9725
+            "weight": 0.9582,
+            "confidence": 0.9582
           },
           {
             "linked_to": "EVID_00009",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.6753,
-            "confidence": 0.6753
+            "weight": 0.6565,
+            "confidence": 0.6565
           },
           {
             "linked_to": "EVID_00012",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5563,
-            "confidence": 0.5563
+            "weight": 0.5172,
+            "confidence": 0.5172
           },
           {
             "linked_to": "EVID_00013",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5563,
-            "confidence": 0.5563
+            "weight": 0.5172,
+            "confidence": 0.5172
           },
           {
             "linked_to": "EVID_00007",
@@ -1231,15 +1231,15 @@
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.8514,
-            "confidence": 0.8514
+            "weight": 0.8111,
+            "confidence": 0.8111
           },
           {
             "linked_to": "EVID_00010",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.3127,
-            "confidence": 0.3127
+            "weight": 0.2444,
+            "confidence": 0.2444
           },
           {
             "linked_to": "EVID_00007",
@@ -1307,22 +1307,22 @@
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.7135,
-            "confidence": 0.7135
+            "weight": 0.6654,
+            "confidence": 0.6654
           },
           {
             "linked_to": "EVID_00011",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.6753,
-            "confidence": 0.6753
+            "weight": 0.6565,
+            "confidence": 0.6565
           },
           {
             "linked_to": "EVID_00013",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5699,
-            "confidence": 0.5699
+            "weight": 0.5561,
+            "confidence": 0.5561
           },
           {
             "linked_to": "EVID_00007",
@@ -1383,15 +1383,15 @@
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.6204,
-            "confidence": 0.6204
+            "weight": 0.5606,
+            "confidence": 0.5606
           },
           {
             "linked_to": "EVID_00008",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.3127,
-            "confidence": 0.3127
+            "weight": 0.2444,
+            "confidence": 0.2444
           },
           {
             "linked_to": "EVID_00007",
@@ -1459,15 +1459,15 @@
             "linked_to": "EVID_00011",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5563,
-            "confidence": 0.5563
+            "weight": 0.5172,
+            "confidence": 0.5172
           },
           {
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5563,
-            "confidence": 0.5563
+            "weight": 0.5172,
+            "confidence": 0.5172
           },
           {
             "linked_to": "EVID_00007",
@@ -1534,43 +1534,43 @@
             "linked_to": "EVID_00011",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.9725,
-            "confidence": 0.9725
+            "weight": 0.9582,
+            "confidence": 0.9582
           },
           {
             "linked_to": "EVID_00008",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.8514,
-            "confidence": 0.8514
+            "weight": 0.8111,
+            "confidence": 0.8111
           },
           {
             "linked_to": "EVID_00013",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.7837,
-            "confidence": 0.7837
+            "weight": 0.7273,
+            "confidence": 0.7273
           },
           {
             "linked_to": "EVID_00009",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.7135,
-            "confidence": 0.7135
+            "weight": 0.6654,
+            "confidence": 0.6654
           },
           {
             "linked_to": "EVID_00010",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.6204,
-            "confidence": 0.6204
+            "weight": 0.5606,
+            "confidence": 0.5606
           },
           {
             "linked_to": "EVID_00012",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5563,
-            "confidence": 0.5563
+            "weight": 0.5172,
+            "confidence": 0.5172
           },
           {
             "linked_to": "EVID_00007",
@@ -1608,6 +1608,6 @@
       "critical_event_count": 7.0,
       "timeline_span_hours": 1001.44
     },
-    "analysis_time_ms": 1.0
+    "analysis_time_ms": 1.9
   }
 }

@@ -198,5 +198,165 @@
     "case_id": "CASE_185915593C",
     "evidence_id": "",
     "read": false
+  },
+  {
+    "id": 25,
+    "created_at": "2026-07-25T17:26:26.243Z",
+    "type": "case_deleted",
+    "title": "Case CASE_65F90B0F47 deleted",
+    "message": "Removed by an administrator. Linked cases refreshed: CASE_7916EFB87E",
+    "case_id": "",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 26,
+    "created_at": "2026-07-26T00:51:14.079Z",
+    "type": "case_deleted",
+    "title": "Case CASE_C4D280733C deleted",
+    "message": "Removed by an administrator. Linked cases refreshed: CASE_7916EFB87E",
+    "case_id": "",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 27,
+    "created_at": "2026-07-26T01:21:50.501Z",
+    "type": "case_deleted",
+    "title": "Case CASE_C4D280733C deleted",
+    "message": "Removed by an administrator. Linked cases refreshed: CASE_7916EFB87E",
+    "case_id": "",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 28,
+    "created_at": "2026-07-26T01:42:34.030Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00015 processed",
+    "message": "01_sms_screenshot.jpg processed for CASE_C4D280733C.",
+    "case_id": "CASE_C4D280733C",
+    "evidence_id": "EVID_00015",
+    "read": false
+  },
+  {
+    "id": 29,
+    "created_at": "2026-07-26T01:42:47.504Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00016 processed",
+    "message": "02_messenger_chat.jpg processed for CASE_C4D280733C.",
+    "case_id": "CASE_C4D280733C",
+    "evidence_id": "EVID_00016",
+    "read": false
+  },
+  {
+    "id": 30,
+    "created_at": "2026-07-26T01:42:53.229Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00017 processed",
+    "message": "03_qr_code_flyer.png processed for CASE_C4D280733C.",
+    "case_id": "CASE_C4D280733C",
+    "evidence_id": "EVID_00017",
+    "read": false
+  },
+  {
+    "id": 31,
+    "created_at": "2026-07-26T01:43:00.760Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00018 processed",
+    "message": "04_esewa_payment_screenshot.jpg processed for CASE_C4D280733C.",
+    "case_id": "CASE_C4D280733C",
+    "evidence_id": "EVID_00018",
+    "read": false
+  },
+  {
+    "id": 32,
+    "created_at": "2026-07-26T01:43:07.844Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00019 processed",
+    "message": "05_khalti_receipt.jpg processed for CASE_C4D280733C.",
+    "case_id": "CASE_C4D280733C",
+    "evidence_id": "EVID_00019",
+    "read": false
+  },
+  {
+    "id": 33,
+    "created_at": "2026-07-26T01:43:15.452Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00020 processed",
+    "message": "06_phishing_email_screenshot.jpg processed for CASE_C4D280733C.",
+    "case_id": "CASE_C4D280733C",
+    "evidence_id": "EVID_00020",
+    "read": false
+  },
+  {
+    "id": 34,
+    "created_at": "2026-07-26T01:43:23.463Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00021 processed",
+    "message": "07_bank_transfer_slip.pdf processed for CASE_C4D280733C.",
+    "case_id": "CASE_C4D280733C",
+    "evidence_id": "EVID_00021",
+    "read": false
+  },
+  {
+    "id": 35,
+    "created_at": "2026-07-26T01:43:24.009Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00022 processed",
+    "message": "08_complaint_letter.pdf processed for CASE_C4D280733C.",
+    "case_id": "CASE_C4D280733C",
+    "evidence_id": "EVID_00022",
+    "read": false
+  },
+  {
+    "id": 36,
+    "created_at": "2026-07-26T01:43:24.430Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00023 processed",
+    "message": "bank_transactions.csv processed for CASE_C4D280733C.",
+    "case_id": "CASE_C4D280733C",
+    "evidence_id": "EVID_00023",
+    "read": false
+  },
+  {
+    "id": 37,
+    "created_at": "2026-07-26T01:43:30.404Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00024 processed",
+    "message": "phishing_email_screenshot.png processed for CASE_C4D280733C.",
+    "case_id": "CASE_C4D280733C",
+    "evidence_id": "EVID_00024",
+    "read": false
+  },
+  {
+    "id": 38,
+    "created_at": "2026-07-26T01:43:38.609Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00025 processed",
+    "message": "romanchat.jpg processed for CASE_C4D280733C.",
+    "case_id": "CASE_C4D280733C",
+    "evidence_id": "EVID_00025",
+    "read": false
+  },
+  {
+    "id": 39,
+    "created_at": "2026-07-26T01:43:46.931Z",
+    "type": "report_generated",
+    "title": "Investigation analysis completed for CASE_C4D280733C",
+    "message": "All Phase-2 artifacts regenerated.",
+    "case_id": "CASE_C4D280733C",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 40,
+    "created_at": "2026-07-26T01:43:46.960Z",
+    "type": "high_priority",
+    "title": "CASE_C4D280733C flagged CRITICAL priority",
+    "message": "Engine priority score: 75.6.",
+    "case_id": "CASE_C4D280733C",
+    "evidence_id": "",
+    "read": false
   }
 ]

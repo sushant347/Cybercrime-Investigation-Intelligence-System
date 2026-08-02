@@ -1,9 +1,9 @@
 {
   "report_type": "cross_case_correlation",
-  "report_version": 8,
+  "report_version": 9,
   "schema_version": "2.0",
   "case_id": "CASE_185915593C",
-  "generated_at": "2026-07-25T17:26:22.716Z",
+  "generated_at": "2026-08-02T14:26:09.409Z",
   "report": {
     "case_id": "CASE_185915593C",
     "related_case_ids": [
@@ -13,27 +13,17 @@
     "links": [
       {
         "other_case_id": "CASE_EE8250FB76",
-        "match_confidence": 0.9999,
+        "match_confidence": 0.9997,
         "relationship_strength": "VERY_STRONG",
         "matched_entities": [
           {
             "entity_type": "bank_accounts",
             "value": "05019012345678",
             "weight": 1.0,
+            "specificity": 1.0,
+            "document_frequency": 2,
+            "specificity_reason": "'05019012345678' is distinctive (seen in 2 of 10 evidence items in the corpus); specificity 1.00",
             "this_evidence_ids": [
-              "EVID_00014"
-            ],
-            "other_evidence_ids": [
-              "EVID_00005"
-            ]
-          },
-          {
-            "entity_type": "domains",
-            "value": "esewa-cashback-offer.xyz",
-            "weight": 0.6,
-            "this_evidence_ids": [
-              "EVID_00009",
-              "EVID_00011",
               "EVID_00014"
             ],
             "other_evidence_ids": [
@@ -44,19 +34,10 @@
             "entity_type": "domains",
             "value": "esewa-verify-kyc.com",
             "weight": 0.6,
+            "specificity": 1.0,
+            "document_frequency": 2,
+            "specificity_reason": "'esewa-verify-kyc.com' is distinctive (seen in 2 of 10 evidence items in the corpus); specificity 1.00",
             "this_evidence_ids": [
-              "EVID_00014"
-            ],
-            "other_evidence_ids": [
-              "EVID_00005"
-            ]
-          },
-          {
-            "entity_type": "domains",
-            "value": "gmail.com",
-            "weight": 0.6,
-            "this_evidence_ids": [
-              "EVID_00008",
               "EVID_00014"
             ],
             "other_evidence_ids": [
@@ -67,19 +48,10 @@
             "entity_type": "emails",
             "value": "esewa.cashback99@gmail.com",
             "weight": 0.85,
+            "specificity": 1.0,
+            "document_frequency": 2,
+            "specificity_reason": "'esewa.cashback99@gmail.com' is distinctive (seen in 2 of 10 evidence items in the corpus); specificity 1.00",
             "this_evidence_ids": [
-              "EVID_00014"
-            ],
-            "other_evidence_ids": [
-              "EVID_00005"
-            ]
-          },
-          {
-            "entity_type": "emails",
-            "value": "sunita.gurung21@gmail.com",
-            "weight": 0.85,
-            "this_evidence_ids": [
-              "EVID_00008",
               "EVID_00014"
             ],
             "other_evidence_ids": [
@@ -90,6 +62,9 @@
             "entity_type": "emails",
             "value": "support@esewa-verify-kyc.com",
             "weight": 0.85,
+            "specificity": 1.0,
+            "document_frequency": 2,
+            "specificity_reason": "'support@esewa-verify-kyc.com' is distinctive (seen in 2 of 10 evidence items in the corpus); specificity 1.00",
             "this_evidence_ids": [
               "EVID_00014"
             ],
@@ -101,7 +76,53 @@
             "entity_type": "esewa_ids",
             "value": "esewa.cashback99@gmail.com",
             "weight": 1.0,
+            "specificity": 1.0,
+            "document_frequency": 2,
+            "specificity_reason": "'esewa.cashback99@gmail.com' is distinctive (seen in 2 of 10 evidence items in the corpus); specificity 1.00",
             "this_evidence_ids": [
+              "EVID_00014"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          },
+          {
+            "entity_type": "transaction_ids",
+            "value": "case_2026_0088",
+            "weight": 0.95,
+            "specificity": 1.0,
+            "document_frequency": 2,
+            "specificity_reason": "'case_2026_0088' is distinctive (seen in 2 of 10 evidence items in the corpus); specificity 1.00",
+            "this_evidence_ids": [
+              "EVID_00014"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          },
+          {
+            "entity_type": "urls",
+            "value": "https://esewa-cashback-offer.xyz/claim",
+            "weight": 0.75,
+            "specificity": 1.0,
+            "document_frequency": 2,
+            "specificity_reason": "'https://esewa-cashback-offer.xyz/claim' is distinctive (seen in 2 of 10 evidence items in the corpus); specificity 1.00",
+            "this_evidence_ids": [
+              "EVID_00014"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          },
+          {
+            "entity_type": "emails",
+            "value": "sunita.gurung21@gmail.com",
+            "weight": 0.85,
+            "specificity": 0.9129,
+            "document_frequency": 3,
+            "specificity_reason": "'sunita.gurung21@gmail.com' is moderately common (seen in 3 of 10 evidence items in the corpus); specificity 0.91",
+            "this_evidence_ids": [
+              "EVID_00008",
               "EVID_00014"
             ],
             "other_evidence_ids": [
@@ -112,6 +133,9 @@
             "entity_type": "esewa_ids",
             "value": "sunita.gurung21@gmail.com",
             "weight": 1.0,
+            "specificity": 0.9129,
+            "document_frequency": 3,
+            "specificity_reason": "'sunita.gurung21@gmail.com' is moderately common (seen in 3 of 10 evidence items in the corpus); specificity 0.91",
             "this_evidence_ids": [
               "EVID_00008",
               "EVID_00014"
@@ -124,6 +148,9 @@
             "entity_type": "khalti_ids",
             "value": "+9779801122334",
             "weight": 1.0,
+            "specificity": 0.9129,
+            "document_frequency": 3,
+            "specificity_reason": "'+9779801122334' is moderately common (seen in 3 of 10 evidence items in the corpus); specificity 0.91",
             "this_evidence_ids": [
               "EVID_00011",
               "EVID_00014"
@@ -133,23 +160,13 @@
             ]
           },
           {
-            "entity_type": "money",
-            "value": "npr 1500",
-            "weight": 0.2,
+            "entity_type": "transaction_ids",
+            "value": "0119.0625.987456",
+            "weight": 0.95,
+            "specificity": 0.9129,
+            "document_frequency": 3,
+            "specificity_reason": "'0119.0625.987456' is moderately common (seen in 3 of 10 evidence items in the corpus); specificity 0.91",
             "this_evidence_ids": [
-              "EVID_00011",
-              "EVID_00014"
-            ],
-            "other_evidence_ids": [
-              "EVID_00005"
-            ]
-          },
-          {
-            "entity_type": "money",
-            "value": "npr 200",
-            "weight": 0.2,
-            "this_evidence_ids": [
-              "EVID_00008",
               "EVID_00010",
               "EVID_00014"
             ],
@@ -158,9 +175,27 @@
             ]
           },
           {
-            "entity_type": "money",
-            "value": "npr 25000",
-            "weight": 0.2,
+            "entity_type": "transaction_ids",
+            "value": "kh-2026-0611-77245",
+            "weight": 0.95,
+            "specificity": 0.9129,
+            "document_frequency": 3,
+            "specificity_reason": "'kh-2026-0611-77245' is moderately common (seen in 3 of 10 evidence items in the corpus); specificity 0.91",
+            "this_evidence_ids": [
+              "EVID_00011",
+              "EVID_00014"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          },
+          {
+            "entity_type": "transaction_ids",
+            "value": "mbl-2026-441829",
+            "weight": 0.95,
+            "specificity": 0.9129,
+            "document_frequency": 3,
+            "specificity_reason": "'mbl-2026-441829' is moderately common (seen in 3 of 10 evidence items in the corpus); specificity 0.91",
             "this_evidence_ids": [
               "EVID_00013",
               "EVID_00014"
@@ -170,11 +205,30 @@
             ]
           },
           {
-            "entity_type": "money",
-            "value": "npr 5000",
-            "weight": 0.2,
+            "entity_type": "domains",
+            "value": "gmail.com",
+            "weight": 0.6,
+            "specificity": 0.8827,
+            "document_frequency": 3,
+            "specificity_reason": "'gmail.com' is moderately common (seen in 3 of 10 evidence items in the corpus); specificity 0.88",
+            "this_evidence_ids": [
+              "EVID_00008",
+              "EVID_00014"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          },
+          {
+            "entity_type": "domains",
+            "value": "esewa-cashback-offer.xyz",
+            "weight": 0.6,
+            "specificity": 0.8499,
+            "document_frequency": 4,
+            "specificity_reason": "'esewa-cashback-offer.xyz' is moderately common (seen in 4 of 10 evidence items in the corpus); specificity 0.85",
             "this_evidence_ids": [
               "EVID_00009",
+              "EVID_00011",
               "EVID_00014"
             ],
             "other_evidence_ids": [
@@ -185,6 +239,9 @@
             "entity_type": "phones",
             "value": "+9779801122334",
             "weight": 0.9,
+            "specificity": 0.8499,
+            "document_frequency": 4,
+            "specificity_reason": "'+9779801122334' is moderately common (seen in 4 of 10 evidence items in the corpus); specificity 0.85",
             "this_evidence_ids": [
               "EVID_00011",
               "EVID_00012",
@@ -198,6 +255,9 @@
             "entity_type": "phones",
             "value": "+9779847011223",
             "weight": 0.9,
+            "specificity": 0.8499,
+            "document_frequency": 4,
+            "specificity_reason": "'+9779847011223' is moderately common (seen in 4 of 10 evidence items in the corpus); specificity 0.85",
             "this_evidence_ids": [
               "EVID_00011",
               "EVID_00013",
@@ -208,10 +268,29 @@
             ]
           },
           {
-            "entity_type": "transaction_ids",
-            "value": "0119.0625.987456",
-            "weight": 0.95,
+            "entity_type": "money",
+            "value": "npr 1500",
+            "weight": 0.2,
+            "specificity": 0.3036,
+            "document_frequency": 3,
+            "specificity_reason": "'npr 1500' is moderately common (seen in 3 of 10 evidence items in the corpus); specificity 0.30",
             "this_evidence_ids": [
+              "EVID_00011",
+              "EVID_00014"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          },
+          {
+            "entity_type": "money",
+            "value": "npr 200",
+            "weight": 0.2,
+            "specificity": 0.2416,
+            "document_frequency": 4,
+            "specificity_reason": "'npr 200' is moderately common (seen in 4 of 10 evidence items in the corpus); specificity 0.24",
+            "this_evidence_ids": [
+              "EVID_00008",
               "EVID_00010",
               "EVID_00014"
             ],
@@ -220,32 +299,12 @@
             ]
           },
           {
-            "entity_type": "transaction_ids",
-            "value": "case_2026_0088",
-            "weight": 0.95,
-            "this_evidence_ids": [
-              "EVID_00014"
-            ],
-            "other_evidence_ids": [
-              "EVID_00005"
-            ]
-          },
-          {
-            "entity_type": "transaction_ids",
-            "value": "kh-2026-0611-77245",
-            "weight": 0.95,
-            "this_evidence_ids": [
-              "EVID_00011",
-              "EVID_00014"
-            ],
-            "other_evidence_ids": [
-              "EVID_00005"
-            ]
-          },
-          {
-            "entity_type": "transaction_ids",
-            "value": "mbl-2026-441829",
-            "weight": 0.95,
+            "entity_type": "money",
+            "value": "npr 25000",
+            "weight": 0.2,
+            "specificity": 0.235,
+            "document_frequency": 3,
+            "specificity_reason": "'npr 25000' is moderately common (seen in 3 of 10 evidence items in the corpus); specificity 0.23",
             "this_evidence_ids": [
               "EVID_00013",
               "EVID_00014"
@@ -255,10 +314,14 @@
             ]
           },
           {
-            "entity_type": "urls",
-            "value": "https://esewa-cashback-offer.xyz/claim",
-            "weight": 0.75,
+            "entity_type": "money",
+            "value": "npr 5000",
+            "weight": 0.2,
+            "specificity": 0.208,
+            "document_frequency": 3,
+            "specificity_reason": "'npr 5000' is moderately common (seen in 3 of 10 evidence items in the corpus); specificity 0.21",
             "this_evidence_ids": [
+              "EVID_00009",
               "EVID_00014"
             ],
             "other_evidence_ids": [
@@ -278,9 +341,9 @@
         "other_evidence_ids": [
           "EVID_00005"
         ],
-        "match_reason": "Shares 21 entity(ies) with CASE_EE8250FB76: bank account 05019012345678, domain esewa-cashback-offer.xyz, domain esewa-verify-kyc.com (+18 more)"
+        "match_reason": "Shares 21 entity(ies) with CASE_EE8250FB76: bank account 05019012345678, domain esewa-verify-kyc.com, email esewa.cashback99@gmail.com (+18 more). 17 of these are distinctive; the other 4 are common across the corpus and were discounted"
       }
     ],
-    "analysis_time_ms": 1.0
+    "analysis_time_ms": 21.2
   }
 }

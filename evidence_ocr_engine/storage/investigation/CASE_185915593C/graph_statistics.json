@@ -1,13 +1,13 @@
 {
   "report_type": "graph_statistics",
-  "report_version": 9,
+  "report_version": 10,
   "schema_version": "2.0",
   "case_id": "CASE_185915593C",
-  "generated_at": "2026-07-25T17:26:36.471Z",
+  "generated_at": "2026-08-02T14:26:09.905Z",
   "report": {
     "case_id": "CASE_185915593C",
     "node_count": 65,
-    "edge_count": 152,
+    "edge_count": 151,
     "nodes_by_type": {
       "case": 2,
       "evidence": 9,
@@ -26,18 +26,18 @@
     },
     "edges_by_type": {
       "contains": 9,
-      "shared_entity": 73,
-      "threat_relationship": 9,
+      "shared_entity": 76,
+      "threat_relationship": 8,
       "timeline_event": 8,
       "cross_case_relationship": 1,
       "cross_case_entity_match": 21,
       "temporal_relationship": 21,
-      "behavioral_relationship": 10
+      "behavioral_relationship": 7
     },
-    "density": 0.0731,
+    "density": 0.0726,
     "connected_components": 1,
     "largest_component_size": 65,
-    "average_degree": 4.677,
+    "average_degree": 4.646,
     "top_hubs": [
       {
         "node": "evidence:EVID_00014",
@@ -45,7 +45,7 @@
       },
       {
         "node": "evidence:EVID_00011",
-        "degree": "25"
+        "degree": "23"
       },
       {
         "node": "evidence:EVID_00005",
@@ -61,15 +61,15 @@
       },
       {
         "node": "evidence:EVID_00010",
-        "degree": "17"
-      },
-      {
-        "node": "evidence:EVID_00012",
-        "degree": "13"
+        "degree": "16"
       },
       {
         "node": "evidence:EVID_00013",
-        "degree": "13"
+        "degree": "14"
+      },
+      {
+        "node": "evidence:EVID_00012",
+        "degree": "11"
       },
       {
         "node": "case:CASE_185915593C",
