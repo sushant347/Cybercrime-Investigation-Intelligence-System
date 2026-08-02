@@ -24,4 +24,28 @@ class ApiConfig(AppConfig):
         if os.environ.get("RUN_MAIN") == "true" or "RUN_MAIN" not in os.environ:
             from . import engine
 
+            self._close_orphaned_jobs()
             engine.warm_start()
+
+    @staticmethod
+    def _close_orphaned_jobs() -> None:
+        """Retire jobs abandoned by a previous process (see ``Jobs.reconcile_orphaned``).
+
+        Failure-isolated: the platform store lives under the engine's storage
+        directory, which may not be readable yet in an odd deployment, and a
+        bookkeeping problem must not stop the API from serving.
+        """
+        import logging
+
+        try:
+            from .store import jobs
+
+            closed = jobs.reconcile_orphaned()
+            if closed:
+                logging.getLogger("ciis.engine").warning(
+                    "closed %d job(s) abandoned by a previous process", closed
+                )
+        except Exception:  # noqa: BLE001
+            logging.getLogger("ciis.engine").exception(
+                "could not reconcile abandoned jobs"
+            )
