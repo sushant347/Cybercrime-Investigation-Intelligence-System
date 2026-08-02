@@ -182,6 +182,17 @@ export interface BackgroundJob {
 }
 
 // -------------------------------------------------- Phase-2: correlation
+/** Why one shared value counted as much (or as little) as it did. */
+export interface SharedValueDetail {
+  value: string;
+  /** Multiplier on the type weight; 1.0 = fingerprint-like, near 0 = corpus noise. */
+  specificity: number;
+  /** Distinct evidence items corpus-wide carrying this value. */
+  document_frequency: number;
+  corpus_size: number;
+  reason: string;
+}
+
 export interface CorrelationFactor {
   factor: string;
   weight: number;
@@ -189,6 +200,10 @@ export interface CorrelationFactor {
   contribution: number;
   supporting_evidence: string[];
   reason: string;
+  /** Per-value breakdown; empty for non-entity factors (hash, proximity). */
+  value_details?: SharedValueDetail[];
+  /** Specificity-weighted match count actually behind the contribution. */
+  effective_matches?: number;
 }
 
 export interface EvidencePairCorrelation {
@@ -218,6 +233,11 @@ export interface CrossCaseEntityMatch {
   entity_type: string;
   value: string;
   weight: number;
+  /** How identifying this value is corpus-wide; scales the weight. */
+  specificity?: number;
+  /** Distinct evidence items across all cases carrying this value. */
+  document_frequency?: number;
+  specificity_reason?: string;
   this_evidence_ids: string[];
   other_evidence_ids: string[];
 }
