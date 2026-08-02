@@ -115,6 +115,26 @@ class InvestigationConfig:
     )
     #: Max counted matches per factor (prevents one spammy entity dominating).
     correlation_factor_cap: int = 3
+
+    # ------------------------------------- Module 1: value-level specificity
+    #: Weight a shared entity by how identifying the *value* is, not just its
+    #: type. Without this, "both items mention NPR 2,000" scores exactly like
+    #: "both items mention the same wallet address", and every case in a corpus
+    #: correlates with every other on round amounts alone. See
+    #: ``correlation/specificity.py`` for the model.
+    correlation_specificity_enabled: bool = True
+    #: Lowest multiplier any shared value can be reduced to. Not zero: a match
+    #: on a ubiquitous value is still a fact worth showing in the report, it
+    #: just must not carry the relationship on its own.
+    correlation_specificity_floor: float = 0.02
+    #: Corpus size at which the learned rarity estimate and the intrinsic
+    #: prior are trusted equally. Below it the prior dominates, which is what
+    #: keeps a fresh deployment (or a brand-new wallet address) sensible.
+    correlation_corpus_prior_strength: float = 12.0
+    #: Information content, in bits, at which a value counts as fully
+    #: identifying on its own. ~40 bits is a 12-digit account number or a
+    #: 9-character alphanumeric handle.
+    correlation_intrinsic_bits_full: float = 40.0
     #: Hours within which two evidence items are "temporally close".
     timeline_proximity_hours: float = 48.0
     #: Weight sum -> confidence via  1 - exp(-weight / normaliser).

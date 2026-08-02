@@ -3,6 +3,7 @@ import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
+  Box,
   Card,
   CardContent,
   CardHeader,
@@ -26,6 +27,7 @@ import { EmptyState } from "@/components/common/EmptyState";
 import { DetailSkeleton } from "@/components/common/LoadingSkeleton";
 import { StatusChip } from "@/components/common/StatusChip";
 import { formatDateTime } from "@/lib/format";
+import { BRAND } from "@/theme/theme";
 
 /**
  * Module 5 - Investigation View.
@@ -159,22 +161,66 @@ export function InvestigationTab({ caseId }: { caseId: string }) {
                             <TableCell>Factor</TableCell>
                             <TableCell>Matches</TableCell>
                             <TableCell>Weight</TableCell>
+                            <Tooltip title="How identifying the matched values are. 1.00 means the value appears almost nowhere else in the corpus; a low figure means it is common, so it barely supports a link.">
+                              <TableCell>Specificity</TableCell>
+                            </Tooltip>
                             <TableCell>Contribution</TableCell>
                             <TableCell>Reason</TableCell>
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {pair.factors.map((factor) => (
-                            <TableRow key={factor.factor}>
-                              <TableCell sx={{ textTransform: "capitalize" }}>
-                                {factor.factor.replace(/_/g, " ")}
-                              </TableCell>
-                              <TableCell>{factor.matches}</TableCell>
-                              <TableCell>{factor.weight}</TableCell>
-                              <TableCell>{factor.contribution.toFixed(2)}</TableCell>
-                              <TableCell>{factor.reason}</TableCell>
-                            </TableRow>
-                          ))}
+                          {pair.factors.map((factor) => {
+                            const details = factor.value_details ?? [];
+                            // Mean specificity of the values actually counted;
+                            // non-entity factors (hash, proximity) have none.
+                            const specificity = details.length
+                              ? details.reduce((sum, d) => sum + d.specificity, 0) /
+                                details.length
+                              : null;
+                            return (
+                              <TableRow key={factor.factor}>
+                                <TableCell sx={{ textTransform: "capitalize" }}>
+                                  {factor.factor.replace(/_/g, " ")}
+                                </TableCell>
+                                <TableCell>{factor.matches}</TableCell>
+                                <TableCell>{factor.weight}</TableCell>
+                                <TableCell>
+                                  {specificity === null ? (
+                                    "—"
+                                  ) : (
+                                    <Tooltip
+                                      title={
+                                        <Stack spacing={0.5}>
+                                          {details.map((d) => (
+                                            <Typography key={d.value} variant="caption">
+                                              {d.reason}
+                                            </Typography>
+                                          ))}
+                                        </Stack>
+                                      }
+                                    >
+                                      <Box
+                                        component="span"
+                                        sx={{
+                                          fontWeight: 700,
+                                          color:
+                                            specificity >= 0.7
+                                              ? BRAND.low
+                                              : specificity >= 0.4
+                                                ? BRAND.high
+                                                : BRAND.critical,
+                                        }}
+                                      >
+                                        {specificity.toFixed(2)}
+                                      </Box>
+                                    </Tooltip>
+                                  )}
+                                </TableCell>
+                                <TableCell>{factor.contribution.toFixed(2)}</TableCell>
+                                <TableCell>{factor.reason}</TableCell>
+                              </TableRow>
+                            );
+                          })}
                         </TableBody>
                       </Table>
                     )}
@@ -239,23 +285,47 @@ export function InvestigationTab({ caseId }: { caseId: string }) {
                         <TableRow>
                           <TableCell>Entity</TableCell>
                           <TableCell>Shared value</TableCell>
+                          <Tooltip title="How identifying this value is across every case. A low figure means it is common everywhere, so it barely supports the link.">
+                            <TableCell>Specificity</TableCell>
+                          </Tooltip>
                           <TableCell>This case</TableCell>
                           <TableCell>{link.other_case_id}</TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {link.matched_entities.map((match) => (
-                          <TableRow key={`${match.entity_type}-${match.value}`}>
-                            <TableCell sx={{ textTransform: "capitalize" }}>
-                              {match.entity_type.replace(/_/g, " ")}
-                            </TableCell>
-                            <TableCell sx={{ fontFamily: '"JetBrains Mono", monospace' }}>
-                              {match.value}
-                            </TableCell>
-                            <TableCell>{match.this_evidence_ids.join(", ")}</TableCell>
-                            <TableCell>{match.other_evidence_ids.join(", ")}</TableCell>
-                          </TableRow>
-                        ))}
+                        {link.matched_entities.map((match) => {
+                          const specificity = match.specificity ?? 1;
+                          return (
+                            <TableRow key={`${match.entity_type}-${match.value}`}>
+                              <TableCell sx={{ textTransform: "capitalize" }}>
+                                {match.entity_type.replace(/_/g, " ")}
+                              </TableCell>
+                              <TableCell sx={{ fontFamily: '"JetBrains Mono", monospace' }}>
+                                {match.value}
+                              </TableCell>
+                              <TableCell>
+                                <Tooltip title={match.specificity_reason ?? ""}>
+                                  <Box
+                                    component="span"
+                                    sx={{
+                                      fontWeight: 700,
+                                      color:
+                                        specificity >= 0.7
+                                          ? BRAND.low
+                                          : specificity >= 0.4
+                                            ? BRAND.high
+                                            : BRAND.critical,
+                                    }}
+                                  >
+                                    {specificity.toFixed(2)}
+                                  </Box>
+                                </Tooltip>
+                              </TableCell>
+                              <TableCell>{match.this_evidence_ids.join(", ")}</TableCell>
+                              <TableCell>{match.other_evidence_ids.join(", ")}</TableCell>
+                            </TableRow>
+                          );
+                        })}
                       </TableBody>
                     </Table>
                   </Stack>

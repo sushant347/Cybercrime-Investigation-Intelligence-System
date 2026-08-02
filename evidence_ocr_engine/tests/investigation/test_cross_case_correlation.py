@@ -212,8 +212,14 @@ def test_wallet_identifier_links_cross_case(ecfg, icfg):
     assert cross.links[0].relationship_strength in {"MEDIUM", "STRONG", "VERY_STRONG"}
 
 
-def test_shared_money_links_weakly(ecfg, icfg):
-    """A shared amount still links (the manual-test case), but only WEAKly."""
+def test_shared_round_amount_does_not_link_cases(ecfg, icfg):
+    """A common round amount is not evidence that two cases are connected.
+
+    "Rs 2000" is one of a handful of amounts that appear in most scam cases,
+    so a shared occurrence says essentially nothing. It used to be enough to
+    declare a cross-case link, which named unrelated cases in each other's
+    reports and pulled them into each other's re-analysis.
+    """
     _seed_case(ecfg, icfg, "CASE_1", [("EA", "2026-07-01T10:00:00Z")],
                [("EA", "money", "Rs 2000", "Rs 2000")])
     _seed_case(ecfg, icfg, "CASE_2", [("EB", "2026-07-02T10:00:00Z")],
@@ -222,8 +228,48 @@ def test_shared_money_links_weakly(ecfg, icfg):
     pipe.analyze_case("CASE_1")
     cross = pipe.analyze_case("CASE_2")["cross_case"]
 
+    assert cross.link_count == 0
+
+
+def test_shared_distinctive_amount_still_links(ecfg, icfg):
+    """An unusual amount is a real signal and must survive the discount.
+
+    The fix must not amount to "ignore money": an oddly specific figure two
+    cases both record is exactly the kind of detail that ties a victim's
+    transfer to a scammer's receipt.
+    """
+    _seed_case(ecfg, icfg, "CASE_1", [("EA", "2026-07-01T10:00:00Z")],
+               [("EA", "money", "Rs 17432.55", "Rs 17432.55")])
+    _seed_case(ecfg, icfg, "CASE_2", [("EB", "2026-07-02T10:00:00Z")],
+               [("EB", "money", "Rs 17432.55", "Rs 17432.55")])
+    pipe = build_default_pipeline(ecfg, icfg)
+    pipe.analyze_case("CASE_1")
+    cross = pipe.analyze_case("CASE_2")["cross_case"]
+
     assert cross.link_count == 1
-    assert cross.links[0].relationship_strength == "WEAK"
+    match = cross.links[0].matched_entities[0]
+    assert match.specificity > 0.6, match.specificity_reason
+
+
+def test_shared_identifier_outweighs_shared_amount(ecfg, icfg):
+    """A shared phone must dominate a shared round amount, not tie with it."""
+    _seed_case(ecfg, icfg, "CASE_1", [("EA", "2026-07-01T10:00:00Z")],
+               [("EA", "phones", "9812345678", "9812345678")])
+    _seed_case(ecfg, icfg, "CASE_2", [("EB", "2026-07-02T10:00:00Z")],
+               [("EB", "phones", "9812345678", "9812345678")])
+    _seed_case(ecfg, icfg, "CASE_3", [("EC", "2026-07-03T10:00:00Z")],
+               [("EC", "money", "Rs 2000", "Rs 2000")])
+    _seed_case(ecfg, icfg, "CASE_4", [("ED", "2026-07-04T10:00:00Z")],
+               [("ED", "money", "Rs 2000", "Rs 2000")])
+    pipe = build_default_pipeline(ecfg, icfg)
+    for case_id in ("CASE_1", "CASE_3", "CASE_4"):
+        pipe.analyze_case(case_id)
+    phone_link = pipe.analyze_case("CASE_2")["cross_case"]
+    amount_link = pipe.analyze_case("CASE_4")["cross_case"]
+
+    assert phone_link.link_count == 1
+    assert phone_link.links[0].relationship_strength in ("MEDIUM", "STRONG", "VERY_STRONG")
+    assert amount_link.link_count == 0
 
 
 def test_duplicate_processing_is_idempotent(ecfg, icfg):

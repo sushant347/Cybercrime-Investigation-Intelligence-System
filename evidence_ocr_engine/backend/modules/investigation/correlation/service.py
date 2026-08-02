@@ -6,7 +6,25 @@ every evidence pair inside a case the engine evaluates twelve factor types
 device & image metadata, file hashes, timeline proximity, threat-intel
 corroboration), producing a weight, a bounded confidence, a relationship
 level and a complete narrative explanation with the concrete supporting
-values. No machine learning - deterministic weighted scoring only.
+values.
+
+Scoring is  type weight x value specificity, summed over shared values and
+squashed into a bounded confidence. The type weight says how identifying a
+*kind* of entity is; the specificity - learned from the corpus, see
+``specificity.py`` - says how identifying *this particular value* is. Without
+the second term, "both items mention NPR 2,000" scored exactly like "both
+items mention the same wallet address", which linked essentially every case
+in a corpus to every other one on round amounts alone.
+
+On the absence of a supervised model: correlation has no ground truth to
+train against. Nobody has labelled which evidence pairs are genuinely related,
+and manufacturing those labels would produce a classifier whose confident
+output means nothing. The learning that *is* justified by the available data
+is unsupervised - estimating how common each value is across the corpus - and
+that is what runs here. A supervised ranker would become appropriate once
+investigators have confirmed or rejected enough links for those decisions to
+serve as labels; the per-factor breakdown persisted in every artifact is
+already the feature vector such a model would consume.
 """
 
 from __future__ import annotations
@@ -29,7 +47,9 @@ from .models import (
     CrossCaseEntityMatch,
     CrossCaseLink,
     EvidencePairCorrelation,
+    SharedValueDetail,
 )
+from .specificity import EntitySpecificityModel
 
 MODULE = "correlation"
 CROSS_CASE_MODULE = "cross_case_correlation"
@@ -57,6 +77,9 @@ class CorrelationService:
             # row can never resurrect a deleted case in cross-correlation.
             evidence_csv=config.evidence_csv,
         )
+        # Reads corpus statistics straight off the index above, so rarity is
+        # always judged against the same entity view correlation matches on.
+        self._specificity = EntitySpecificityModel(config, self._index)
 
     # ------------------------------------------------------------------ public
 
@@ -174,11 +197,26 @@ class CorrelationService:
                 slot["other"].add(occ.evidence_id)
 
         links: List[CrossCaseLink] = []
+        dropped = 0
         for other_case_id, matches in grouped.items():
             if len(matches) < self._cfg.cross_case_min_shared_entities:
                 continue
-            links.append(self._build_cross_case_link(other_case_id, matches))
+            link = self._build_cross_case_link(other_case_id, matches)
+            # A link resting entirely on values the whole corpus shares is not
+            # a link. Reporting it named an unrelated case in this one's report
+            # and dragged its own analysis into that case's re-analysis, so the
+            # noise propagated. The shared values are still visible in the
+            # correlation artifact - they are simply not grounds for a link.
+            if link.relationship_strength == "NO_RELATIONSHIP":
+                dropped += 1
+                continue
+            links.append(link)
         links.sort(key=lambda link: link.match_confidence, reverse=True)
+        if dropped:
+            self._log.info(
+                "cross-case: dropped %d candidate link(s) for %s supported only "
+                "by corpus-wide values", dropped, case_id,
+            )
 
         return CrossCaseCorrelation(
             case_id=case_id,
@@ -221,22 +259,38 @@ class CorrelationService:
         matched_entities: List[CrossCaseEntityMatch] = []
         this_ids: set = set()
         other_ids: set = set()
-        # Weighted sum with a per-type cap, mirroring within-case scoring.
+
+        # Specificity-weighted sum with a per-type cap, mirroring within-case
+        # scoring. Ordering by specificity matters here for the same reason it
+        # does within a case: two cases that share one scammer wallet and four
+        # round amounts must be linked on the wallet, and the cap must not
+        # spend itself on the amounts.
+        scored = sorted(
+            (
+                (key, sides, self._specificity.specificity(key[0], key[1]))
+                for key, sides in matches.items()
+            ),
+            key=lambda item: (-item[2].specificity, item[0]),
+        )
+
         per_type_count: Dict[str, int] = {}
         weight_sum = 0.0
-        for (entity_type, normalized), sides in sorted(matches.items()):
+        for (entity_type, normalized), sides, score in scored:
             weight = cfg.correlation_weights.get(entity_type, 0.0)
             matched_entities.append(CrossCaseEntityMatch(
                 entity_type=entity_type,
                 value=normalized,
                 weight=weight,
+                specificity=score.specificity,
+                document_frequency=score.document_frequency,
+                specificity_reason=score.reason,
                 this_evidence_ids=sorted(sides["this"]),
                 other_evidence_ids=sorted(sides["other"]),
             ))
             this_ids.update(sides["this"])
             other_ids.update(sides["other"])
             if per_type_count.get(entity_type, 0) < cfg.correlation_factor_cap:
-                weight_sum += weight
+                weight_sum += weight * score.specificity
                 per_type_count[entity_type] = per_type_count.get(entity_type, 0) + 1
 
         confidence = round(
@@ -256,15 +310,31 @@ class CorrelationService:
     def _cross_case_reason(
         other_case_id: str, matched: List[CrossCaseEntityMatch]
     ) -> str:
+        # `matched` is ordered most-identifying first, so the values named here
+        # are the ones actually carrying the link, not an alphabetical sample.
         shown = ", ".join(
             f"{m.entity_type.replace('_', ' ').rstrip('s')} {m.value}"
             for m in matched[:3]
         )
         extra = f" (+{len(matched) - 3} more)" if len(matched) > 3 else ""
-        return (
+        reason = (
             f"Shares {len(matched)} entity(ies) with {other_case_id}: "
             f"{shown}{extra}"
         )
+        carrying = [m for m in matched if m.specificity >= 0.5]
+        if not carrying:
+            return (
+                reason
+                + ". Every shared value is common across the corpus, so this "
+                "link rests on weak grounds."
+            )
+        weak = len(matched) - len(carrying)
+        if weak:
+            reason += (
+                f". {len(carrying)} of these are distinctive; the other {weak} "
+                "are common across the corpus and were discounted"
+            )
+        return reason
 
     def correlate_pair(
         self, a: EvidenceContext, b: EvidenceContext
@@ -312,11 +382,54 @@ class CorrelationService:
         shared = sorted(values_a & values_b)
         if not shared:
             return None
-        return self._factor(
-            entity_type, len(shared), shared,
-            f"Both items reference the same {entity_type.replace('_', ' ')}: "
-            f"{', '.join(shared[:3])}"
-            + (f" (+{len(shared) - 3} more)" if len(shared) > 3 else ""),
+
+        cfg = self._cfg
+        # Score the most identifying values first, so the per-factor cap keeps
+        # the strongest evidence rather than whatever sorted first
+        # alphabetically - a case sharing one rare wallet and five round
+        # amounts must be scored on the wallet.
+        scored = sorted(
+            (self._specificity.specificity(entity_type, value) for value in shared),
+            key=lambda s: s.specificity,
+            reverse=True,
+        )
+        counted = scored[: cfg.correlation_factor_cap]
+        effective = sum(score.specificity for score in counted)
+
+        weight = cfg.correlation_weights.get(entity_type, 0.0)
+        label = entity_type.replace("_", " ")
+        discounted = [s for s in counted if s.is_common]
+
+        headline = (
+            f"Both items reference the same {label}: "
+            f"{', '.join(s.value for s in counted[:3])}"
+            + (f" (+{len(shared) - len(counted[:3])} more)"
+               if len(shared) > len(counted[:3]) else "")
+        )
+        if discounted:
+            headline += (
+                f" - but {len(discounted)} of these are common across the "
+                f"corpus and were discounted"
+            )
+
+        return CorrelationFactor(
+            factor=entity_type,
+            weight=weight,
+            matches=len(counted),
+            contribution=round(weight * effective, 4),
+            supporting_evidence=[s.value for s in scored[: cfg.correlation_factor_cap * 2]],
+            reason=headline,
+            effective_matches=round(effective, 4),
+            value_details=[
+                SharedValueDetail(
+                    value=s.value,
+                    specificity=s.specificity,
+                    document_frequency=s.document_frequency,
+                    corpus_size=s.corpus_size,
+                    reason=s.reason,
+                )
+                for s in counted
+            ],
         )
 
     def _file_hash_factor(self, a: EvidenceContext, b: EvidenceContext
@@ -384,6 +497,13 @@ class CorrelationService:
 
     def _factor(self, name: str, matches: int, supporting: List[str],
                 reason: str) -> CorrelationFactor:
+        """Non-entity factors: hash identity, metadata, proximity, intel.
+
+        These carry no per-value rarity because they are not drawn from the
+        entity corpus - a matching SHA-256 is unique by construction, and a
+        proximity window is an observation rather than a value - so the
+        specificity-weighted count is simply the counted matches.
+        """
         cfg = self._cfg
         weight = cfg.correlation_weights.get(name, 0.0)
         counted = min(matches, cfg.correlation_factor_cap)
@@ -394,6 +514,7 @@ class CorrelationService:
             contribution=round(weight * counted, 4),
             supporting_evidence=supporting[: cfg.correlation_factor_cap * 2],
             reason=reason,
+            effective_matches=float(counted),
         )
 
     def _flagged_indicators(self, context: EvidenceContext) -> List[str]:

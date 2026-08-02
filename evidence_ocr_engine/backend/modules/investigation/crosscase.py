@@ -79,6 +79,8 @@ class CrossCaseEntityIndex:
         self._lock = threading.Lock()
         self._buckets: Dict[str, List[EntityOccurrence]] = {}
         self._stamp: Optional[Tuple[Optional[Tuple[float, int]], ...]] = None
+        #: Corpus size, computed once per load (see ``total_documents``).
+        self._document_total: Optional[int] = None
 
     # ------------------------------------------------------------------ load
 
@@ -156,6 +158,7 @@ class CrossCaseEntityIndex:
                 "run maintenance to purge them from %s", skipped, self._path.name)
         self._buckets = buckets
         self._stamp = stamp
+        self._document_total = None   # recomputed lazily against the new load
 
     # ------------------------------------------------------------------- read
 
@@ -187,6 +190,37 @@ class CrossCaseEntityIndex:
             self._ensure_loaded()
             return sum(len(v) for v in self._buckets.values())
 
+    # ------------------------------------------------------ corpus statistics
+    #
+    # Correlation weights a shared value by how rare it is, which needs two
+    # counts over the whole corpus. Both are derived from the index that is
+    # already in memory, so they cost a dict lookup rather than a file read.
+
+    def document_frequency(self, entity_type: str, normalized: str) -> int:
+        """Distinct evidence items carrying this value, corpus-wide.
+
+        Counts *items*, not occurrences: a value repeated twelve times inside
+        one screenshot is one item's worth of evidence, and counting the
+        repeats would make a value look widespread on the strength of a single
+        noisy OCR pass.
+        """
+        with self._lock:
+            self._ensure_loaded()
+            occurrences = self._buckets.get(bucket_key(entity_type, normalized), [])
+            return len({occ.evidence_id for occ in occurrences})
+
+    def total_documents(self) -> int:
+        """Distinct evidence items that contributed any entity at all."""
+        with self._lock:
+            self._ensure_loaded()
+            if self._document_total is None:
+                self._document_total = len({
+                    occ.evidence_id
+                    for occurrences in self._buckets.values()
+                    for occ in occurrences
+                })
+            return self._document_total
+
     # ------------------------------------------------------------------ write
     #
     # There is nothing to write: entities.csv is owned by the cleaning stage.
@@ -197,6 +231,7 @@ class CrossCaseEntityIndex:
         with self._lock:
             self._stamp = None
             self._buckets = {}
+            self._document_total = None
 
     def save(self) -> None:
         """No-op: the single entity file is written by the cleaning stage."""

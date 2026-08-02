@@ -7,18 +7,48 @@ from typing import Dict, List
 from pydantic import BaseModel, Field
 
 
+class SharedValueDetail(BaseModel):
+    """Why one shared value counted as much (or as little) as it did."""
+
+    value: str
+    specificity: float = Field(
+        ge=0.0, le=1.0,
+        description="Multiplier applied to the type weight; 1.0 = fingerprint-like",
+    )
+    document_frequency: int = Field(
+        default=0, ge=0,
+        description="Distinct evidence items in the corpus carrying this value",
+    )
+    corpus_size: int = Field(
+        default=0, ge=0, description="Distinct evidence items in the corpus"
+    )
+    reason: str = ""
+
+
 class CorrelationFactor(BaseModel):
     """One weighted factor contributing to an evidence-pair correlation."""
 
     factor: str = Field(description="e.g. 'phones', 'file_hash', 'timeline_proximity'")
     weight: float = Field(ge=0.0, description="Configured factor weight")
     matches: int = Field(ge=0, description="Number of counted matches (capped)")
-    contribution: float = Field(ge=0.0, description="weight x counted matches")
+    contribution: float = Field(ge=0.0, description="weight x summed specificity")
     supporting_evidence: List[str] = Field(
         default_factory=list,
         description="The concrete shared values / observations behind the match",
     )
     reason: str = Field(description="Human-readable justification")
+    #: Per-value breakdown for entity factors. Empty for factors that are not
+    #: value-based (file hash, timeline proximity, ...). Additive and optional,
+    #: so correlation artifacts stored before this existed still validate.
+    value_details: List[SharedValueDetail] = Field(default_factory=list)
+    #: Summed specificity of the counted values. Equals ``matches`` when every
+    #: shared value is fingerprint-like, and approaches zero when they are all
+    #: corpus-wide noise - the number that separates a real link from
+    #: "both mention a round amount".
+    effective_matches: float = Field(
+        default=0.0, ge=0.0,
+        description="Specificity-weighted match count behind the contribution",
+    )
 
 
 class EvidencePairCorrelation(BaseModel):
@@ -64,6 +94,15 @@ class CrossCaseEntityMatch(BaseModel):
     entity_type: str
     value: str = Field(description="Normalized value that matched across cases")
     weight: float = Field(ge=0.0, description="Configured weight of this entity type")
+    specificity: float = Field(
+        default=1.0, ge=0.0, le=1.0,
+        description="How identifying this value is corpus-wide; scales the weight",
+    )
+    document_frequency: int = Field(
+        default=0, ge=0,
+        description="Distinct evidence items across all cases carrying this value",
+    )
+    specificity_reason: str = ""
     this_evidence_ids: List[str] = Field(
         default_factory=list, description="Evidence in the subject case carrying it"
     )
