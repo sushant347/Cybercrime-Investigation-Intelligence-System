@@ -104,20 +104,35 @@ class InvestigationReportRepository:
 
     def list_versions(self, case_id: str, report_name: str,
                       suffix: str = ".json") -> List[Path]:
-        """All stored versions of one report, oldest first."""
+        """All stored versions of one report, oldest first.
+
+        The un-suffixed canonical file is always ordered **last**, because
+        under single-file storage it is by definition the most recent save.
+        Ranking it by name (as version 1) was a live defect: :meth:`save`
+        writes the canonical file and then *best-effort* deletes the older
+        ``_vN`` artifacts, and that delete can legitimately fail - a sync
+        client, an antivirus scanner or a read-only mount can hold the file.
+        Any surviving ``_v5`` then outranked the file just written, so
+        :meth:`load_latest` served a stale report forever: an investigator
+        could be shown cross-case links to cases that had since been deleted,
+        while the correct, freshly computed artifact sat unread beside it.
+        Ordering by role rather than by file name makes a failed cleanup
+        cosmetic instead of correctness-affecting.
+        """
         directory = self._cfg.case_dir(case_id)
         if not directory.is_dir():
             return []
+        canonical: List[Path] = []
         found: List[tuple[int, Path]] = []
         for path in directory.glob(f"{report_name}*{suffix}"):
             stem = path.name[: -len(suffix)]
             if stem == report_name:
-                found.append((1, path))
+                canonical.append(path)
             else:
                 match = _VERSION_RE.search(stem)
                 if match and stem == f"{report_name}_v{match.group(1)}":
                     found.append((int(match.group(1)), path))
-        return [path for _, path in sorted(found)]
+        return [path for _, path in sorted(found)] + canonical
 
     # ---------------------------------------------------------------- internal
 
@@ -139,12 +154,17 @@ class InvestigationReportRepository:
             match = _VERSION_RE.search(stem)
             highest = max(highest, int(match.group(1)) if match else 1)
         if suffix == ".json":
-            try:
-                with open(existing[-1], "r", encoding="utf-8") as handle:
-                    stored = int(json.load(handle).get("report_version", 0) or 0)
-                highest = max(highest, stored)
-            except (OSError, json.JSONDecodeError, TypeError, ValueError):
-                pass  # unreadable/old artifact: the file-name count still applies
+            # Read the counter out of every readable artifact, not just the
+            # last one: the canonical file now sorts last, but a stale ``_vN``
+            # left behind by a failed cleanup may still carry a higher counter,
+            # and the counter must never go backwards across saves.
+            for path in existing:
+                try:
+                    with open(path, "r", encoding="utf-8") as handle:
+                        stored = int(json.load(handle).get("report_version", 0) or 0)
+                    highest = max(highest, stored)
+                except (OSError, json.JSONDecodeError, TypeError, ValueError):
+                    continue  # unreadable/old artifact: file-name count applies
         return highest + 1
 
     def _discard_superseded(self, case_id: str, report_name: str, suffix: str,
