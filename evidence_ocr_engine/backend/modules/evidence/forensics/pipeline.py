@@ -323,8 +323,15 @@ def build_default_pipeline(
 
     audit = ForensicAuditTrail(fcfg)
     repository = ForensicReportRepository(fcfg)
-    engines: List[OCREngineAdapter] = fusion_engines if fusion_engines is not None else []
-    if not engines:
+    # An explicit list - including an EMPTY one - is the caller's decision and
+    # is honoured as given. Only when the argument is omitted entirely do the
+    # config defaults apply. Treating `[]` as "unconfigured" meant a caller that
+    # had deliberately switched fusion off still got the default engines back,
+    # and so still paid for a complete second OCR pass over every image.
+    if fusion_engines is not None:
+        engines: List[OCREngineAdapter] = list(fusion_engines)
+    else:
+        engines = []
         if fcfg.fusion_enable_paddle:
             engines.append(PaddleOCRAdapter(ecfg, engine=ocr_engine))
         if fcfg.fusion_enable_easyocr:
