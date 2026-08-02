@@ -1,0 +1,76 @@
+{
+  "report_type": "ocr_fusion",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00009",
+  "case_id": "CASE_185915593C",
+  "generated_at": "2026-07-25T17:18:50.693Z",
+  "report": {
+    "evidence_id": "EVID_00009",
+    "case_id": "CASE_185915593C",
+    "page": 1,
+    "raw_text": "DASHAIN CASHBACK OFFER\nScan & Claim NPR 5000 Cashback\nScan garera claim garnuhos!\nOffer valid for eSewa/Khalti users only.\nRef: DSN2026 I Valid till: stock lasts\nhttps://esewa-cashback-offer.xyz/claim?ref=DsN2026",
+    "paddle_text": "DASHAIN CASHBACK OFFER\nScan & Claim NPR 5000 Cashback\nScan garera claim garnuhos!\nOffer valid for eSewa/Khalti users only.\nRef: DSN2026 I Valid till: stock lasts\nhttps://esewa-cashback-offer.xyz/claim?ref=DsN2026",
+    "easyocr_text": "",
+    "tesseract_text": "",
+    "merged_text": "",
+    "final_text": "DASHAIN CASHBACK OFFER\nScan & Claim NPR 5000 Cashback\nScan garera claim garnuhos!\nOffer valid for eSewa/Khalti users only.\nRef: DSN2026 I Valid till: stock lasts\nhttps://esewa-cashback-offer.xyz/claim?ref=DsN2026",
+    "engine_runs": [
+      {
+        "engine": "paddleocr",
+        "available": true,
+        "succeeded": true,
+        "text": "DASHAIN CASHBACK OFFER\nScan & Claim NPR 5000 Cashback\nScan garera claim garnuhos!\nOffer valid for eSewa/Khalti users only.\nRef: DSN2026 I Valid till: stock lasts\nhttps://esewa-cashback-offer.xyz/claim?ref=DsN2026",
+        "line_confidences": [
+          0.994,
+          0.9676,
+          0.9992,
+          0.9901,
+          0.9733,
+          0.9901
+        ],
+        "average_confidence": 0.9857,
+        "line_count": 6,
+        "duration_ms": 8713.9,
+        "error": null
+      },
+      {
+        "engine": "easyocr",
+        "available": false,
+        "succeeded": false,
+        "text": "",
+        "line_confidences": [],
+        "average_confidence": 0.0,
+        "line_count": 0,
+        "duration_ms": 0.0,
+        "error": null
+      },
+      {
+        "engine": "tesseract",
+        "available": false,
+        "succeeded": false,
+        "text": "",
+        "line_confidences": [],
+        "average_confidence": 0.0,
+        "line_count": 0,
+        "duration_ms": 0.0,
+        "error": null
+      }
+    ],
+    "engine_confidences": {
+      "paddleocr": 0.9857,
+      "easyocr": 0.0,
+      "tesseract": 0.0
+    },
+    "selection_scores": {
+      "paddleocr": 0.9921
+    },
+    "pairwise_agreement": {},
+    "selected_engine": "paddleocr",
+    "final_source": "selected",
+    "final_confidence": 0.9857,
+    "merge_applied": false,
+    "merged_lines": [],
+    "total_time_ms": 8747.9
+  }
+}

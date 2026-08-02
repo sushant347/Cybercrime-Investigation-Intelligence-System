@@ -1,0 +1,49 @@
+{
+  "report_type": "quality_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00012",
+  "case_id": "CASE_185915593C",
+  "generated_at": "2026-07-25T17:20:36.184Z",
+  "report": {
+    "evidence_id": "EVID_00012",
+    "case_id": "CASE_185915593C",
+    "source_file": "06_phishing_email_screenshot.jpg",
+    "metrics": {
+      "width": 760,
+      "height": 620,
+      "megapixels": 0.471,
+      "blur_laplacian_variance": 54.697843803056024,
+      "brightness_mean": 245.33660441426147,
+      "contrast_std": 21.948133114541445,
+      "noise_residual": 0.49461799660441425,
+      "skew_angle_deg": 0.49179720878601074,
+      "compression_quality": 74.5171875,
+      "edge_density": 0.046799660441426146,
+      "text_like_components": 268
+    },
+    "sub_scores": {
+      "blur": 8.2,
+      "brightness": 95.2,
+      "contrast": 26.8,
+      "noise": 100.0,
+      "resolution": 49.3,
+      "skew": 99.0,
+      "compression": 74.5,
+      "readability": 68.3
+    },
+    "overall_score": 54.9,
+    "quality_grade": "FAIR",
+    "expected_ocr_accuracy": 71.9,
+    "readability_score": 68.3,
+    "recommended_operations": [
+      "clahe",
+      "deskew",
+      "edge_enhancement",
+      "super_resolution",
+      "perspective_correction"
+    ],
+    "notes": [],
+    "analysis_time_ms": 24.3
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "report_type": "file_fingerprint",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00009",
+  "case_id": "CASE_185915593C",
+  "generated_at": "2026-07-25T17:18:41.768Z",
+  "report": {
+    "evidence_id": "EVID_00009",
+    "case_id": "CASE_185915593C",
+    "source_file": "EVID_00009__4a5c4214__03_qr_code_flyer.png",
+    "md5": "bbd162dafca012d85498f7723b7e1919",
+    "sha1": "2d7dc5e078809ee36c7647a626bd58c9195c2223",
+    "sha256": "6f712c8b0e4fb6c50d156a1bf002713b4bbd60bf7db0a9cf7fbe3ea04b2cbdf9",
+    "sha512": "105575fe58b7026c277e3b51ac272d7973d1bf39e6506fbda2ea98bf019a01147ee5ee32ae290c34c1189a336b61d9ebe1fe8ea1aa1f51dc08b4168f4891c0ee",
+    "crc32": "9e060c88",
+    "file_size_bytes": 34318,
+    "entropy_bits_per_byte": 7.8927,
+    "high_entropy": true,
+    "magic_number_hex": "89504e470d0a1a0a",
+    "magic_format": "PNG image",
+    "declared_extension": ".png",
+    "mime_type": "image/png",
+    "extension_matches_magic": true,
+    "sha256_matches_acquisition": true,
+    "duplicates": [],
+    "is_duplicate": false,
+    "analysis_time_ms": 4.9
+  }
+}

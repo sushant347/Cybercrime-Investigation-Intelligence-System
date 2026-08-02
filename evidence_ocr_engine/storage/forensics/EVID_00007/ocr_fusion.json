@@ -1,0 +1,85 @@
+{
+  "report_type": "ocr_fusion",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00007",
+  "case_id": "CASE_185915593C",
+  "generated_at": "2026-07-25T17:17:05.490Z",
+  "report": {
+    "evidence_id": "EVID_00007",
+    "case_id": "CASE_185915593C",
+    "page": 1,
+    "raw_text": "9:42AM\n7\neSewa\nTday 41 Am\neSewa Dashain Dhamaka Offeri\nCongratulations! Your number is selected\nfor NPR 5,000 cashback lucky draw.\nTapaiko eSewa ID confirm garna ra\ncashback claim garma tala ko link ma\nclick gamuhos:\nhttps://esewa-cashback-offer.xyz/claim\noffer 24 hours matra. Yo message\n00000at 00000 0000000000.\n-eSewa CustomerSupport Team\nText Message",
+    "paddle_text": "9:42AM\n7\neSewa\nTday 41 Am\neSewa Dashain Dhamaka Offeri\nCongratulations! Your number is selected\nfor NPR 5,000 cashback lucky draw.\nTapaiko eSewa ID confirm garna ra\ncashback claim garma tala ko link ma\nclick gamuhos:\nhttps://esewa-cashback-offer.xyz/claim\noffer 24 hours matra. Yo message\n00000at 00000 0000000000.\n-eSewa CustomerSupport Team\nText Message",
+    "easyocr_text": "",
+    "tesseract_text": "",
+    "merged_text": "",
+    "final_text": "9:42AM\n7\neSewa\nTday 41 Am\neSewa Dashain Dhamaka Offeri\nCongratulations! Your number is selected\nfor NPR 5,000 cashback lucky draw.\nTapaiko eSewa ID confirm garna ra\ncashback claim garma tala ko link ma\nclick gamuhos:\nhttps://esewa-cashback-offer.xyz/claim\noffer 24 hours matra. Yo message\n00000at 00000 0000000000.\n-eSewa CustomerSupport Team\nText Message",
+    "engine_runs": [
+      {
+        "engine": "paddleocr",
+        "available": true,
+        "succeeded": true,
+        "text": "9:42AM\n7\neSewa\nTday 41 Am\neSewa Dashain Dhamaka Offeri\nCongratulations! Your number is selected\nfor NPR 5,000 cashback lucky draw.\nTapaiko eSewa ID confirm garna ra\ncashback claim garma tala ko link ma\nclick gamuhos:\nhttps://esewa-cashback-offer.xyz/claim\noffer 24 hours matra. Yo message\n00000at 00000 0000000000.\n-eSewa CustomerSupport Team\nText Message",
+        "line_confidences": [
+          0.9487,
+          0.9617,
+          0.9997,
+          0.6376,
+          0.9694,
+          0.9804,
+          0.9685,
+          0.9674,
+          0.9781,
+          0.9874,
+          0.9574,
+          0.9848,
+          0.7982,
+          0.9622,
+          0.9231
+        ],
+        "average_confidence": 0.935,
+        "line_count": 15,
+        "duration_ms": 18006.8,
+        "error": null
+      },
+      {
+        "engine": "easyocr",
+        "available": false,
+        "succeeded": false,
+        "text": "",
+        "line_confidences": [],
+        "average_confidence": 0.0,
+        "line_count": 0,
+        "duration_ms": 0.0,
+        "error": null
+      },
+      {
+        "engine": "tesseract",
+        "available": false,
+        "succeeded": false,
+        "text": "",
+        "line_confidences": [],
+        "average_confidence": 0.0,
+        "line_count": 0,
+        "duration_ms": 0.0,
+        "error": null
+      }
+    ],
+    "engine_confidences": {
+      "paddleocr": 0.935,
+      "easyocr": 0.0,
+      "tesseract": 0.0
+    },
+    "selection_scores": {
+      "paddleocr": 0.9643
+    },
+    "pairwise_agreement": {},
+    "selected_engine": "paddleocr",
+    "final_source": "selected",
+    "final_confidence": 0.935,
+    "merge_applied": false,
+    "merged_lines": [],
+    "total_time_ms": 18030.5
+  }
+}

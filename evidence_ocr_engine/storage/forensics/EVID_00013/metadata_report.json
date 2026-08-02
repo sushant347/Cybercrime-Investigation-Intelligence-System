@@ -1,0 +1,36 @@
+{
+  "report_type": "metadata_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00013",
+  "case_id": "CASE_185915593C",
+  "generated_at": "2026-07-25T17:26:17.643Z",
+  "report": {
+    "evidence_id": "EVID_00013",
+    "case_id": "CASE_185915593C",
+    "source_file": "EVID_00013__f45f620d__07_bank_transfer_slip.pdf",
+    "file_type": "pdf",
+    "filesystem": {
+      "file_size_bytes": 108986,
+      "created": "2026-07-25T17:20:51.466706+00:00",
+      "modified": "2026-07-25T17:20:51.457801+00:00",
+      "accessed": "2026-07-25T17:20:54.288239+00:00"
+    },
+    "image": null,
+    "pdf": {
+      "author": "",
+      "producer": "",
+      "creator": "",
+      "title": "07_bank_transfer_slip",
+      "subject": "",
+      "creation_date": "D:20260725120625Z",
+      "modification_date": "D:20260725120625Z",
+      "page_count": 1,
+      "encrypted": false
+    },
+    "office": null,
+    "consistency_notes": [],
+    "extraction_errors": [],
+    "analysis_time_ms": 217.1
+  }
+}

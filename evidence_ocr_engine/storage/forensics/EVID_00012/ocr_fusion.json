@@ -1,0 +1,87 @@
+{
+  "report_type": "ocr_fusion",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00012",
+  "case_id": "CASE_185915593C",
+  "generated_at": "2026-07-25T17:20:49.515Z",
+  "report": {
+    "evidence_id": "EVID_00012",
+    "case_id": "CASE_185915593C",
+    "page": 1,
+    "raw_text": "Inbox\nFromceSewa Omicial Support <suppontgesewa-verify kyc.com>\nTo:sunita.gurung21Ogmall.com\nSubject:URGENT: Your eSewa KYC wil be suspended in 24 hours\nDear Valued Customer,\nOurrecords show your eSewaKycverification is incomplete.\nYour account and Dashain Cashback reward (Npr5,ooo) will be\nsuspended within 24 hours unless you verify immediately\nClick below to complete verihication:\nhttps:llesewa-cashback-offer.xyz/cisim\nYou may also contact our verification agent directly at\n+977-9801122334 for urgent assistance.\nPlease do not share this email or the link with anyone for\nyour account's security.\nRegards,\neSewaVerificationTeam\n(This is an automated message)",
+    "paddle_text": "Inbox\nFromceSewa Omicial Support <suppontgesewa-verify kyc.com>\nTo:sunita.gurung21Ogmall.com\nSubject:URGENT: Your eSewa KYC wil be suspended in 24 hours\nDear Valued Customer,\nOurrecords show your eSewaKycverification is incomplete.\nYour account and Dashain Cashback reward (Npr5,ooo) will be\nsuspended within 24 hours unless you verify immediately\nClick below to complete verihication:\nhttps:llesewa-cashback-offer.xyz/cisim\nYou may also contact our verification agent directly at\n+977-9801122334 for urgent assistance.\nPlease do not share this email or the link with anyone for\nyour account's security.\nRegards,\neSewaVerificationTeam\n(This is an automated message)",
+    "easyocr_text": "",
+    "tesseract_text": "",
+    "merged_text": "",
+    "final_text": "Inbox\nFromceSewa Omicial Support <suppontgesewa-verify kyc.com>\nTo:sunita.gurung21Ogmall.com\nSubject:URGENT: Your eSewa KYC wil be suspended in 24 hours\nDear Valued Customer,\nOurrecords show your eSewaKycverification is incomplete.\nYour account and Dashain Cashback reward (Npr5,ooo) will be\nsuspended within 24 hours unless you verify immediately\nClick below to complete verihication:\nhttps:llesewa-cashback-offer.xyz/cisim\nYou may also contact our verification agent directly at\n+977-9801122334 for urgent assistance.\nPlease do not share this email or the link with anyone for\nyour account's security.\nRegards,\neSewaVerificationTeam\n(This is an automated message)",
+    "engine_runs": [
+      {
+        "engine": "paddleocr",
+        "available": true,
+        "succeeded": true,
+        "text": "Inbox\nFromceSewa Omicial Support <suppontgesewa-verify kyc.com>\nTo:sunita.gurung21Ogmall.com\nSubject:URGENT: Your eSewa KYC wil be suspended in 24 hours\nDear Valued Customer,\nOurrecords show your eSewaKycverification is incomplete.\nYour account and Dashain Cashback reward (Npr5,ooo) will be\nsuspended within 24 hours unless you verify immediately\nClick below to complete verihication:\nhttps:llesewa-cashback-offer.xyz/cisim\nYou may also contact our verification agent directly at\n+977-9801122334 for urgent assistance.\nPlease do not share this email or the link with anyone for\nyour account's security.\nRegards,\neSewaVerificationTeam\n(This is an automated message)",
+        "line_confidences": [
+          0.9941,
+          0.8993,
+          0.8986,
+          0.976,
+          0.9902,
+          0.9584,
+          0.949,
+          0.9744,
+          0.9372,
+          0.951,
+          0.9712,
+          0.9826,
+          0.9639,
+          0.9504,
+          0.9985,
+          0.9798,
+          0.9856
+        ],
+        "average_confidence": 0.9624,
+        "line_count": 17,
+        "duration_ms": 13207.8,
+        "error": null
+      },
+      {
+        "engine": "easyocr",
+        "available": false,
+        "succeeded": false,
+        "text": "",
+        "line_confidences": [],
+        "average_confidence": 0.0,
+        "line_count": 0,
+        "duration_ms": 0.0,
+        "error": null
+      },
+      {
+        "engine": "tesseract",
+        "available": false,
+        "succeeded": false,
+        "text": "",
+        "line_confidences": [],
+        "average_confidence": 0.0,
+        "line_count": 0,
+        "duration_ms": 0.0,
+        "error": null
+      }
+    ],
+    "engine_confidences": {
+      "paddleocr": 0.9624,
+      "easyocr": 0.0,
+      "tesseract": 0.0
+    },
+    "selection_scores": {
+      "paddleocr": 0.9793
+    },
+    "pairwise_agreement": {},
+    "selected_engine": "paddleocr",
+    "final_source": "selected",
+    "final_confidence": 0.9624,
+    "merge_applied": false,
+    "merged_lines": [],
+    "total_time_ms": 13227.7
+  }
+}

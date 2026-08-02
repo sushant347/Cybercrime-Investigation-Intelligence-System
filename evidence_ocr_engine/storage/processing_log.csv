@@ -18,62 +18,55 @@ timestamp,case_id,evidence_id,stage,level,message,duration_ms
 2026-07-25T12:53:51.639Z,CASE_2CF24DBA5F,EVID_00004,ocr,INFO,page 1: 6 lines via paddleocr-v5,4557.2
 2026-07-25T12:53:51.641Z,CASE_2CF24DBA5F,EVID_00004,hashing,INFO,post-processing hash VERIFIED,0.3
 2026-07-25T12:53:51.648Z,CASE_2CF24DBA5F,EVID_00004,pipeline,INFO,"completed: 1 page(s), avg confidence 0.99",4637.2
-2026-07-25T12:55:29.489Z,CASE_8F43434664,EVID_00005,upload,INFO,"acquired 'romanchat.jpg' (32.5 KB), sha256=0340d5863313f4cc...",2.7
-2026-07-25T12:55:29.545Z,CASE_8F43434664,EVID_00005,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, resolution_enhancement, border_removal+whitespace_trim",49.1
-2026-07-25T12:55:38.563Z,CASE_8F43434664,EVID_00005,ocr,INFO,page 1: 13 lines via paddleocr-v5,9017.0
-2026-07-25T12:55:38.568Z,CASE_8F43434664,EVID_00005,hashing,INFO,post-processing hash VERIFIED,3.0
-2026-07-25T12:55:38.582Z,CASE_8F43434664,EVID_00005,pipeline,INFO,"completed: 1 page(s), avg confidence 0.97",9083.5
-2026-07-25T12:55:59.643Z,CASE_8F43434664,EVID_00006,upload,INFO,"acquired 'phishing_email_screenshot.png' (11.5 KB), sha256=8ef0f27a84960b65...",4.2
-2026-07-25T12:55:59.668Z,CASE_8F43434664,EVID_00006,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, resolution_enhancement, border_removal+whitespace_trim",19.1
-2026-07-25T12:56:04.514Z,CASE_8F43434664,EVID_00006,ocr,INFO,page 1: 6 lines via paddleocr-v5,4846.2
-2026-07-25T12:56:04.515Z,CASE_8F43434664,EVID_00006,hashing,INFO,post-processing hash VERIFIED,0.3
-2026-07-25T12:56:04.520Z,CASE_8F43434664,EVID_00006,pipeline,INFO,"completed: 1 page(s), avg confidence 0.99",4878.6
-2026-07-25T12:56:12.285Z,CASE_8F43434664,EVID_00007,upload,INFO,"acquired 'bank_transactions.csv' (184 B), sha256=fbc5fcf7403a5aa8...",7.6
-2026-07-25T12:56:12.286Z,CASE_8F43434664,EVID_00007,ocr,INFO,plain-text evidence: 4 lines read directly,0.0
-2026-07-25T12:56:12.288Z,CASE_8F43434664,EVID_00007,hashing,INFO,post-processing hash VERIFIED,0.7
-2026-07-25T12:56:12.298Z,CASE_8F43434664,EVID_00007,pipeline,INFO,"completed: 1 page(s), avg confidence 1.00",13.1
 2026-07-25T13:19:15.999Z,CASE_TEST,EVID_TEST,ocr,INFO,page 1: 3 lines from PDF text layer (no OCR needed),0.0
 2026-07-25T13:19:16.000Z,CASE_TEST,EVID_TEST,ocr,INFO,page 2: 3 lines from PDF text layer (no OCR needed),0.0
 2026-07-25T13:19:37.478Z,C,E,preprocessing,INFO,"page 1: convert_rgb, exif_orientation",89.7
 2026-07-25T13:20:10.772Z,C,E,preprocessing,INFO,"page 1: convert_rgb, exif_orientation",76.1
 2026-07-25T13:20:42.070Z,C,E,preprocessing,INFO,"page 1: convert_rgb, exif_orientation",78.0
-2026-07-25T17:04:35.222Z,CASE_7916EFB87E,EVID_00009,upload,INFO,"acquired '01_sms_screenshot.jpg' (19.4 KB), sha256=905b21d603ca0a6f...",47.1
-2026-07-25T17:04:35.322Z,CASE_7916EFB87E,EVID_00009,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, resolution_enhancement, sharpen, border_removal+whitespace_trim, adaptive_threshold",84.0
-2026-07-25T17:04:52.275Z,CASE_7916EFB87E,EVID_00009,ocr,INFO,page 1: 14 lines via paddleocr-v5,16948.6
-2026-07-25T17:04:52.294Z,CASE_7916EFB87E,EVID_00009,hashing,INFO,post-processing hash VERIFIED,5.9
-2026-07-25T17:04:52.334Z,CASE_7916EFB87E,EVID_00009,pipeline,INFO,"completed: 1 page(s), avg confidence 0.75",17147.8
-2026-07-25T17:04:58.612Z,CASE_7916EFB87E,EVID_00010,upload,INFO,"acquired '02_messenger_chat.jpg' (63.3 KB), sha256=bb246839287ca1bc...",43.3
-2026-07-25T17:04:58.982Z,CASE_7916EFB87E,EVID_00010,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, sharpen, border_removal+whitespace_trim",350.6
-2026-07-25T17:05:06.117Z,CASE_7916EFB87E,EVID_00010,ocr,INFO,page 1: 25 lines via paddleocr-v5,7132.2
-2026-07-25T17:05:06.144Z,CASE_7916EFB87E,EVID_00010,hashing,INFO,post-processing hash VERIFIED,2.2
-2026-07-25T17:05:06.192Z,CASE_7916EFB87E,EVID_00010,pipeline,INFO,"completed: 1 page(s), avg confidence 0.94",7602.8
-2026-07-25T17:05:15.187Z,CASE_7916EFB87E,EVID_00011,upload,INFO,"acquired '03_qr_code_flyer.png' (33.5 KB), sha256=6f712c8b0e4fb6c5...",60.8
-2026-07-25T17:05:15.283Z,CASE_7916EFB87E,EVID_00011,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, resolution_enhancement, border_removal+whitespace_trim",85.1
-2026-07-25T17:05:19.265Z,CASE_7916EFB87E,EVID_00011,ocr,INFO,page 1: 6 lines via paddleocr-v5,3980.0
-2026-07-25T17:05:19.268Z,CASE_7916EFB87E,EVID_00011,hashing,INFO,post-processing hash VERIFIED,2.0
-2026-07-25T17:05:19.324Z,CASE_7916EFB87E,EVID_00011,pipeline,INFO,"completed: 1 page(s), avg confidence 0.98",4175.5
-2026-07-25T17:05:22.858Z,CASE_7916EFB87E,EVID_00012,upload,INFO,"acquired '04_esewa_payment_screenshot.jpg' (21.5 KB), sha256=3a19295ff003a894...",47.7
-2026-07-25T17:05:23.281Z,CASE_7916EFB87E,EVID_00012,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, clahe, sharpen",410.4
-2026-07-25T17:05:26.902Z,CASE_7916EFB87E,EVID_00012,ocr,INFO,page 1: 18 lines via paddleocr-v5,3619.5
-2026-07-25T17:05:26.906Z,CASE_7916EFB87E,EVID_00012,hashing,INFO,post-processing hash VERIFIED,2.1
-2026-07-25T17:05:26.985Z,CASE_7916EFB87E,EVID_00012,pipeline,INFO,"completed: 1 page(s), avg confidence 0.91",4132.3
-2026-07-25T17:05:31.877Z,CASE_7916EFB87E,EVID_00013,upload,INFO,"acquired '05_khalti_receipt.jpg' (23.2 KB), sha256=54a62cd3ad10a85b...",55.5
-2026-07-25T17:05:31.959Z,CASE_7916EFB87E,EVID_00013,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, resolution_enhancement, sharpen, border_removal+whitespace_trim",70.9
-2026-07-25T17:05:35.921Z,CASE_7916EFB87E,EVID_00013,ocr,INFO,page 1: 19 lines via paddleocr-v5,3960.2
-2026-07-25T17:05:35.924Z,CASE_7916EFB87E,EVID_00013,hashing,INFO,post-processing hash VERIFIED,1.9
-2026-07-25T17:05:35.982Z,CASE_7916EFB87E,EVID_00013,pipeline,INFO,"completed: 1 page(s), avg confidence 0.99",4140.9
-2026-07-25T17:05:40.993Z,CASE_7916EFB87E,EVID_00014,upload,INFO,"acquired '06_phishing_email_screenshot.jpg' (25.3 KB), sha256=b6ec522eddc05475...",42.5
-2026-07-25T17:05:41.095Z,CASE_7916EFB87E,EVID_00014,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, resolution_enhancement, deskew(0.49deg), clahe, sharpen, border_removal+whitespace_trim, adaptive_threshold",93.3
-2026-07-25T17:05:45.862Z,CASE_7916EFB87E,EVID_00014,ocr,INFO,page 1: 17 lines via paddleocr-v5,4765.1
-2026-07-25T17:05:45.866Z,CASE_7916EFB87E,EVID_00014,hashing,INFO,post-processing hash VERIFIED,1.6
-2026-07-25T17:05:45.938Z,CASE_7916EFB87E,EVID_00014,pipeline,INFO,"completed: 1 page(s), avg confidence 0.87",4942.4
-2026-07-25T17:05:51.290Z,CASE_7916EFB87E,EVID_00015,upload,INFO,"acquired '07_bank_transfer_slip.pdf' (106.4 KB), sha256=6f1cc10ae55d554c...",58.1
-2026-07-25T17:05:51.840Z,CASE_7916EFB87E,EVID_00015,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, perspective_correction, deskew(-0.69deg), clahe, sharpen",276.8
-2026-07-25T17:06:00.868Z,CASE_7916EFB87E,EVID_00015,ocr,INFO,page 1: 28 lines via paddleocr-v5,9025.9
-2026-07-25T17:06:00.894Z,CASE_7916EFB87E,EVID_00015,hashing,INFO,post-processing hash VERIFIED,2.2
-2026-07-25T17:06:00.967Z,CASE_7916EFB87E,EVID_00015,pipeline,INFO,"completed: 1 page(s), avg confidence 0.99",9690.2
-2026-07-25T17:06:01.397Z,CASE_7916EFB87E,EVID_00016,upload,INFO,"acquired '08_complaint_letter.pdf' (3.7 KB), sha256=fe644062bf75e62c...",14.6
-2026-07-25T17:06:01.426Z,CASE_7916EFB87E,EVID_00016,ocr,INFO,page 1: 34 lines from PDF text layer (no OCR needed),0.0
-2026-07-25T17:06:01.427Z,CASE_7916EFB87E,EVID_00016,ocr,INFO,page 2: 4 lines from PDF text layer (no OCR needed),0.0
-2026-07-25T17:06:01.430Z,CASE_7916EFB87E,EVID_00016,hashing,INFO,post-processing hash VERIFIED,2.1
-2026-07-25T17:06:01.511Z,CASE_7916EFB87E,EVID_00016,pipeline,INFO,"completed: 2 page(s), avg confidence 1.00",92.8
+2026-07-25T16:24:17.561Z,CASE_EE8250FB76,EVID_00005,upload,INFO,"acquired '08_complaint_letter.pdf' (3.7 KB), sha256=fe644062bf75e62c...",15.1
+2026-07-25T16:24:17.839Z,CASE_EE8250FB76,EVID_00005,ocr,INFO,page 1: 34 lines from PDF text layer (no OCR needed),0.0
+2026-07-25T16:24:17.840Z,CASE_EE8250FB76,EVID_00005,ocr,INFO,page 2: 4 lines from PDF text layer (no OCR needed),0.0
+2026-07-25T16:24:17.841Z,CASE_EE8250FB76,EVID_00005,hashing,INFO,post-processing hash VERIFIED,0.5
+2026-07-25T16:24:17.854Z,CASE_EE8250FB76,EVID_00005,pipeline,INFO,"completed: 2 page(s), avg confidence 1.00",296.7
+2026-07-25T16:24:18.092Z,CASE_EE8250FB76,EVID_00006,upload,INFO,"acquired '07_bank_transfer_slip.pdf' (106.4 KB), sha256=6f1cc10ae55d554c...",2.8
+2026-07-25T16:24:18.468Z,CASE_EE8250FB76,EVID_00006,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, perspective_correction, deskew(-0.69deg), clahe, sharpen",328.2
+2026-07-25T17:16:30.234Z,CASE_185915593C,EVID_00007,upload,INFO,"acquired '01_sms_screenshot.jpg' (19.4 KB), sha256=905b21d603ca0a6f...",1.3
+2026-07-25T17:16:30.286Z,CASE_185915593C,EVID_00007,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, resolution_enhancement, sharpen, border_removal+whitespace_trim, adaptive_threshold",42.3
+2026-07-25T17:16:46.649Z,CASE_185915593C,EVID_00007,ocr,INFO,page 1: 15 lines via paddleocr-v5,16363.9
+2026-07-25T17:16:46.654Z,CASE_185915593C,EVID_00007,hashing,INFO,post-processing hash VERIFIED,3.8
+2026-07-25T17:16:46.662Z,CASE_185915593C,EVID_00007,pipeline,INFO,"completed: 1 page(s), avg confidence 0.60",16423.8
+2026-07-25T17:17:07.920Z,CASE_185915593C,EVID_00008,upload,INFO,"acquired '02_messenger_chat.jpg' (63.3 KB), sha256=bb246839287ca1bc...",5.0
+2026-07-25T17:17:08.088Z,CASE_185915593C,EVID_00008,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, sharpen, border_removal+whitespace_trim",129.6
+2026-07-25T17:17:42.694Z,CASE_185915593C,EVID_00008,ocr,INFO,page 1: 26 lines via paddleocr-v5,34602.3
+2026-07-25T17:17:42.718Z,CASE_185915593C,EVID_00008,hashing,INFO,post-processing hash VERIFIED,9.4
+2026-07-25T17:17:42.753Z,CASE_185915593C,EVID_00008,pipeline,INFO,"completed: 1 page(s), avg confidence 0.93",34808.8
+2026-07-25T17:18:32.459Z,CASE_185915593C,EVID_00009,upload,INFO,"acquired '03_qr_code_flyer.png' (33.5 KB), sha256=6f712c8b0e4fb6c5...",2.1
+2026-07-25T17:18:32.496Z,CASE_185915593C,EVID_00009,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, resolution_enhancement, border_removal+whitespace_trim",31.4
+2026-07-25T17:18:41.637Z,CASE_185915593C,EVID_00009,ocr,INFO,page 1: 6 lines via paddleocr-v5,9138.4
+2026-07-25T17:18:41.658Z,CASE_185915593C,EVID_00009,hashing,INFO,post-processing hash VERIFIED,9.0
+2026-07-25T17:18:41.699Z,CASE_185915593C,EVID_00009,pipeline,INFO,"completed: 1 page(s), avg confidence 0.98",9206.4
+2026-07-25T17:18:54.477Z,CASE_185915593C,EVID_00010,upload,INFO,"acquired '04_esewa_payment_screenshot.jpg' (21.5 KB), sha256=3a19295ff003a894...",6.9
+2026-07-25T17:18:54.683Z,CASE_185915593C,EVID_00010,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, clahe, sharpen",200.7
+2026-07-25T17:19:04.732Z,CASE_185915593C,EVID_00010,ocr,INFO,page 1: 18 lines via paddleocr-v5,10048.6
+2026-07-25T17:19:04.743Z,CASE_185915593C,EVID_00010,hashing,INFO,post-processing hash VERIFIED,7.6
+2026-07-25T17:19:04.771Z,CASE_185915593C,EVID_00010,pipeline,INFO,"completed: 1 page(s), avg confidence 0.91",10276.0
+2026-07-25T17:19:57.040Z,CASE_185915593C,EVID_00011,upload,INFO,"acquired '05_khalti_receipt.jpg' (23.2 KB), sha256=54a62cd3ad10a85b...",5.1
+2026-07-25T17:19:57.103Z,CASE_185915593C,EVID_00011,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, resolution_enhancement, sharpen, border_removal+whitespace_trim",53.5
+2026-07-25T17:20:06.270Z,CASE_185915593C,EVID_00011,ocr,INFO,page 1: 19 lines via paddleocr-v5,9165.3
+2026-07-25T17:20:06.286Z,CASE_185915593C,EVID_00011,hashing,INFO,post-processing hash VERIFIED,9.7
+2026-07-25T17:20:06.315Z,CASE_185915593C,EVID_00011,pipeline,INFO,"completed: 1 page(s), avg confidence 0.99",9254.5
+2026-07-25T17:20:21.991Z,CASE_185915593C,EVID_00012,upload,INFO,"acquired '06_phishing_email_screenshot.jpg' (25.3 KB), sha256=b6ec522eddc05475...",12.0
+2026-07-25T17:20:22.065Z,CASE_185915593C,EVID_00012,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, resolution_enhancement, deskew(0.49deg), clahe, sharpen, border_removal+whitespace_trim, adaptive_threshold",63.9
+2026-07-25T17:20:36.044Z,CASE_185915593C,EVID_00012,ocr,INFO,page 1: 17 lines via paddleocr-v5,13978.3
+2026-07-25T17:20:36.056Z,CASE_185915593C,EVID_00012,hashing,INFO,post-processing hash VERIFIED,6.1
+2026-07-25T17:20:36.084Z,CASE_185915593C,EVID_00012,pipeline,INFO,"completed: 1 page(s), avg confidence 0.86",14081.2
+2026-07-25T17:20:51.467Z,CASE_185915593C,EVID_00013,upload,INFO,"acquired '07_bank_transfer_slip.pdf' (106.4 KB), sha256=6f1cc10ae55d554c...",5.4
+2026-07-25T17:20:52.955Z,CASE_185915593C,EVID_00013,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, perspective_correction, deskew(-0.69deg), clahe, sharpen",98.4
+2026-07-25T17:26:17.062Z,CASE_185915593C,EVID_00013,ocr,INFO,page 1: 32 lines via paddleocr-v5,324095.5
+2026-07-25T17:26:17.140Z,CASE_185915593C,EVID_00013,hashing,INFO,post-processing hash VERIFIED,11.8
+2026-07-25T17:26:17.220Z,CASE_185915593C,EVID_00013,pipeline,INFO,"completed: 1 page(s), avg confidence 0.99",325692.3
+2026-07-25T17:26:20.455Z,CASE_185915593C,EVID_00014,upload,INFO,"acquired '08_complaint_letter.pdf' (3.7 KB), sha256=fe644062bf75e62c...",4.2
+2026-07-25T17:26:20.522Z,CASE_185915593C,EVID_00014,ocr,INFO,page 1: 34 lines from PDF text layer (no OCR needed),0.0
+2026-07-25T17:26:20.522Z,CASE_185915593C,EVID_00014,ocr,INFO,page 2: 4 lines from PDF text layer (no OCR needed),0.0
+2026-07-25T17:26:20.523Z,CASE_185915593C,EVID_00014,hashing,INFO,post-processing hash VERIFIED,0.2
+2026-07-25T17:26:20.535Z,CASE_185915593C,EVID_00014,pipeline,INFO,"completed: 2 page(s), avg confidence 1.00",73.0

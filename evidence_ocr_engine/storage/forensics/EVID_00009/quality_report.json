@@ -1,0 +1,46 @@
+{
+  "report_type": "quality_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00009",
+  "case_id": "CASE_185915593C",
+  "generated_at": "2026-07-25T17:18:41.837Z",
+  "report": {
+    "evidence_id": "EVID_00009",
+    "case_id": "CASE_185915593C",
+    "source_file": "03_qr_code_flyer.png",
+    "metrics": {
+      "width": 600,
+      "height": 750,
+      "megapixels": 0.45,
+      "blur_laplacian_variance": 2913.1950755555554,
+      "brightness_mean": 198.36898666666667,
+      "contrast_std": 93.1515463458208,
+      "noise_residual": 1.0509266666666666,
+      "skew_angle_deg": 0.0,
+      "compression_quality": 100.0,
+      "edge_density": 0.04311555555555555,
+      "text_like_components": 173
+    },
+    "sub_scores": {
+      "blur": 100.0,
+      "brightness": 100.0,
+      "contrast": 100.0,
+      "noise": 100.0,
+      "resolution": 46.7,
+      "skew": 100.0,
+      "compression": 100.0,
+      "readability": 77.5
+    },
+    "overall_score": 90.3,
+    "quality_grade": "EXCELLENT",
+    "expected_ocr_accuracy": 95.5,
+    "readability_score": 77.5,
+    "recommended_operations": [
+      "super_resolution",
+      "perspective_correction"
+    ],
+    "notes": [],
+    "analysis_time_ms": 32.8
+  }
+}

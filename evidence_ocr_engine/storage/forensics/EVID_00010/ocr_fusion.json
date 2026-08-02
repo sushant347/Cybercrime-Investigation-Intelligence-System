@@ -1,0 +1,88 @@
+{
+  "report_type": "ocr_fusion",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00010",
+  "case_id": "CASE_185915593C",
+  "generated_at": "2026-07-25T17:19:50.296Z",
+  "report": {
+    "evidence_id": "EVID_00010",
+    "case_id": "CASE_185915593C",
+    "page": 1,
+    "raw_text": "eSewa\nPayment Successful\nRs.200.00\nTansactianD\n0119.0625.987456\nDate 4 Time\n2026-06-1110:42AM\nPaidTe\nesewa.cashbacko90gmail.com\nPurpose\nCashback Verification Fee\nAenads\nDashain Offer Claim - DSN2026\nfrom eSew D\nsunita.gurung21@gmail.com\nSatus\nCOMPLETE\nDone",
+    "paddle_text": "eSewa\nPayment Successful\nRs.200.00\nTansactianD\n0119.0625.987456\nDate 4 Time\n2026-06-1110:42AM\nPaidTe\nesewa.cashbacko90gmail.com\nPurpose\nCashback Verification Fee\nAenads\nDashain Offer Claim - DSN2026\nfrom eSew D\nsunita.gurung21@gmail.com\nSatus\nCOMPLETE\nDone",
+    "easyocr_text": "",
+    "tesseract_text": "",
+    "merged_text": "",
+    "final_text": "eSewa\nPayment Successful\nRs.200.00\nTansactianD\n0119.0625.987456\nDate 4 Time\n2026-06-1110:42AM\nPaidTe\nesewa.cashbacko90gmail.com\nPurpose\nCashback Verification Fee\nAenads\nDashain Offer Claim - DSN2026\nfrom eSew D\nsunita.gurung21@gmail.com\nSatus\nCOMPLETE\nDone",
+    "engine_runs": [
+      {
+        "engine": "paddleocr",
+        "available": true,
+        "succeeded": true,
+        "text": "eSewa\nPayment Successful\nRs.200.00\nTansactianD\n0119.0625.987456\nDate 4 Time\n2026-06-1110:42AM\nPaidTe\nesewa.cashbacko90gmail.com\nPurpose\nCashback Verification Fee\nAenads\nDashain Offer Claim - DSN2026\nfrom eSew D\nsunita.gurung21@gmail.com\nSatus\nCOMPLETE\nDone",
+        "line_confidences": [
+          0.9971,
+          0.9986,
+          0.9686,
+          0.7141,
+          0.9926,
+          0.7796,
+          0.999,
+          0.8715,
+          0.9164,
+          0.9076,
+          0.9601,
+          0.6462,
+          0.9486,
+          0.823,
+          0.9664,
+          0.9053,
+          0.9996,
+          0.9839
+        ],
+        "average_confidence": 0.9099,
+        "line_count": 18,
+        "duration_ms": 45253.0,
+        "error": null
+      },
+      {
+        "engine": "easyocr",
+        "available": false,
+        "succeeded": false,
+        "text": "",
+        "line_confidences": [],
+        "average_confidence": 0.0,
+        "line_count": 0,
+        "duration_ms": 0.0,
+        "error": null
+      },
+      {
+        "engine": "tesseract",
+        "available": false,
+        "succeeded": false,
+        "text": "",
+        "line_confidences": [],
+        "average_confidence": 0.0,
+        "line_count": 0,
+        "duration_ms": 0.0,
+        "error": null
+      }
+    ],
+    "engine_confidences": {
+      "paddleocr": 0.9099,
+      "easyocr": 0.0,
+      "tesseract": 0.0
+    },
+    "selection_scores": {
+      "paddleocr": 0.9504
+    },
+    "pairwise_agreement": {},
+    "selected_engine": "paddleocr",
+    "final_source": "selected",
+    "final_confidence": 0.9099,
+    "merge_applied": false,
+    "merged_lines": [],
+    "total_time_ms": 45283.0
+  }
+}

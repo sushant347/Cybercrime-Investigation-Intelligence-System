@@ -1,0 +1,48 @@
+{
+  "report_type": "quality_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00008",
+  "case_id": "CASE_185915593C",
+  "generated_at": "2026-07-25T17:17:43.047Z",
+  "report": {
+    "evidence_id": "EVID_00008",
+    "case_id": "CASE_185915593C",
+    "source_file": "02_messenger_chat.jpg",
+    "metrics": {
+      "width": 720,
+      "height": 2183,
+      "megapixels": 1.572,
+      "blur_laplacian_variance": 27.214418231791115,
+      "brightness_mean": 133.73981778388557,
+      "contrast_std": 108.0406441445577,
+      "noise_residual": 0.2388812541354914,
+      "skew_angle_deg": 0.0,
+      "compression_quality": 74.5171875,
+      "edge_density": 0.02553443273782257,
+      "text_like_components": 497
+    },
+    "sub_scores": {
+      "blur": 2.5,
+      "brightness": 100.0,
+      "contrast": 100.0,
+      "noise": 100.0,
+      "resolution": 62.7,
+      "skew": 100.0,
+      "compression": 74.5,
+      "readability": 71.3
+    },
+    "overall_score": 66.5,
+    "quality_grade": "GOOD",
+    "expected_ocr_accuracy": 83.0,
+    "readability_score": 71.3,
+    "recommended_operations": [
+      "edge_enhancement",
+      "perspective_correction"
+    ],
+    "notes": [
+      "Severe blur detected - OCR output may be unreliable."
+    ],
+    "analysis_time_ms": 128.6
+  }
+}
