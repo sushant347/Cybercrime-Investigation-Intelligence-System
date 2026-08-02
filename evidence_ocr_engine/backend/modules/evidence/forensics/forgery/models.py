@@ -59,8 +59,13 @@ class NoiseFinding(BaseModel):
     block_count: int = 0
     noise_mean: float = 0.0
     noise_std: float = 0.0
+    # Defaults to 0.0 like every sibling: an image too small to yield four
+    # noise blocks reports "no inconsistency measured", it does not fail. A
+    # bare Field() made this required, so that path raised a validation error
+    # and lost the whole forgery report for the item.
     inconsistency_ratio: float = Field(
-        ge=0.0, description="std/mean of per-block noise; high => inconsistent"
+        default=0.0, ge=0.0,
+        description="std/mean of per-block noise; high => inconsistent",
     )
     suspicious: bool = False
 
