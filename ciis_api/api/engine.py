@@ -864,6 +864,47 @@ def _emit_priority_notification(case_id: str) -> None:
         )
 
 
+# ------------------------------------------------------------------- warm-up
+_warmed = threading.Event()
+
+
+def warm_start() -> None:
+    """Build the expensive singletons ahead of the first upload.
+
+    ``PaddleOCRService`` loads three models on construction and the semantic
+    orchestrator loads its dictionaries; together that is the bulk of the wait
+    on the first piece of evidence processed after a restart. Nothing about it
+    is upload-specific, so it does not belong on the investigator's clock.
+
+    Runs once, on a daemon thread, and is failure-isolated: a warm-up that
+    cannot complete (missing optional dependency, no model cache) must leave
+    the server perfectly usable — the lazy ``lru_cache`` path still applies,
+    it just pays the cost later, exactly as before.
+    """
+    if not getattr(settings, "ENGINE_WARM_START", True):
+        return
+    if _warmed.is_set():
+        return
+    _warmed.set()
+
+    def preload() -> None:
+        import time
+
+        started = time.perf_counter()
+        for name, build in (("OCR engine", _ocr_engine),
+                            ("evidence pipeline", _evidence_pipeline),
+                            ("text/entity chain", _evidence_orchestrator)):
+            try:
+                build()
+            except Exception:  # noqa: BLE001 - warm-up is an optimisation only
+                log.exception("warm-up of the %s failed; it will load on demand",
+                              name)
+        log.info("engine warm-up finished in %.1fs",
+                 time.perf_counter() - started)
+
+    threading.Thread(target=preload, name="ciis-warmup", daemon=True).start()
+
+
 # ------------------------------------------------------------------- helpers
 def engine_health() -> dict[str, Any]:
     cfg = evidence_config()

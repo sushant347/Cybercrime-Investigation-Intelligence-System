@@ -191,3 +191,13 @@ ML_THREAT_INTEL_MODEL = os.environ.get("CIIS_THREAT_INTEL_MODEL", "xgboost")
 # per *distinct* URL (results are memoized) and each connector fails soft, so
 # an offline host still gets the ML verdict, just without the network facts.
 ML_THREAT_INTEL_LIVE = os.environ.get("CIIS_THREAT_INTEL_LIVE", "1") == "1"
+
+# Build the OCR engine and the post-OCR text chain in a background thread at
+# startup, instead of on the first upload. Constructing PaddleOCR loads its
+# detection/recognition/orientation models, which is tens of seconds of work
+# that used to land inside the first investigator's upload - while they watched
+# a spinner - and made the whole product feel slow exactly once per restart,
+# every restart. Warming it concurrently with the server coming up moves that
+# cost to a moment when nobody is waiting. Set to "0" for fast test runs and
+# short-lived management commands.
+ENGINE_WARM_START = os.environ.get("CIIS_WARM_START", "1") == "1"
