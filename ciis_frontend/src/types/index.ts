@@ -152,6 +152,16 @@ export interface EvidenceDeleteResult {
   artifacts_refreshed?: boolean;
 }
 
+/** One completed (or in-flight) step of a background job, as the engine ran it. */
+export interface JobStage {
+  key: string;
+  label: string;
+  started_at: string;
+  /** Null while this step is still running. */
+  finished_at: string | null;
+  duration_ms: number | null;
+}
+
 export interface BackgroundJob {
   id: number;
   job_type: "evidence_processing" | "case_analysis";
@@ -163,6 +173,12 @@ export interface BackgroundJob {
   created_by: string;
   created_at: string;
   finished_at: string | null;
+  /** Step the engine is on right now (empty once the job settles). */
+  stage: string;
+  stage_label: string;
+  /** Live sub-detail, e.g. "OCR page 2 of 5". */
+  stage_note: string;
+  stages: JobStage[];
 }
 
 // -------------------------------------------------- Phase-2: correlation

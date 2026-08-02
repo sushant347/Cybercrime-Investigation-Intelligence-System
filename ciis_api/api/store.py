@@ -35,6 +35,18 @@ def utc_now() -> str:
     return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.%f")[:-3] + "Z"
 
 
+def _elapsed_ms(start: Optional[str], end: str) -> Optional[int]:
+    """Milliseconds between two :func:`utc_now` stamps, or ``None`` if unusable."""
+    if not start:
+        return None
+    try:
+        began = datetime.strptime(start, "%Y-%m-%dT%H:%M:%S.%fZ")
+        ended = datetime.strptime(end, "%Y-%m-%dT%H:%M:%S.%fZ")
+    except (TypeError, ValueError):
+        return None
+    return max(0, int((ended - began).total_seconds() * 1000))
+
+
 def _storage_root() -> Path:
     """``<engine storage>/platform`` — resolved lazily so tests can repoint it."""
     from . import engine  # local import: avoids a cycle at module load
@@ -160,7 +172,41 @@ class Jobs(JsonCollection):
               created_by: str = "") -> Dict[str, Any]:
         return self.create(job_type=job_type, status="queued", case_id=case_id,
                            evidence_id="", detail=detail, error="",
-                           created_by=created_by, finished_at=None)
+                           created_by=created_by, finished_at=None,
+                           stage="", stage_label="", stage_note="",
+                           stages=[])
+
+    def stage(self, job_id: int, key: str, label: str,
+              note: str = "") -> Optional[Dict[str, Any]]:
+        """Record that the worker has entered processing step ``key``.
+
+        The previous step is closed off with its measured wall-clock duration,
+        so the finished job carries a real per-stage timing breakdown instead
+        of one opaque total. ``note`` is the live sub-detail (page 2 of 5, the
+        OCR engine in use, ...) and is not retained once the step completes.
+        """
+        with self._lock:
+            rows = self._read()
+            for row in rows:
+                if int(row.get("id", 0)) != int(job_id):
+                    continue
+                now = utc_now()
+                history = list(row.get("stages") or [])
+                if history and history[-1].get("finished_at") is None:
+                    previous = history[-1]
+                    previous["finished_at"] = now
+                    previous["duration_ms"] = _elapsed_ms(
+                        previous.get("started_at"), now
+                    )
+                history.append({
+                    "key": key, "label": label,
+                    "started_at": now, "finished_at": None, "duration_ms": None,
+                })
+                row.update(stage=key, stage_label=label, stage_note=note,
+                           stages=history)
+                self._write(rows)
+                return row
+            return None
 
     def list(self, case_id: str = "", job_type: str = "",
              limit: Optional[int] = None) -> List[Dict[str, Any]]:
@@ -176,14 +222,33 @@ class Jobs(JsonCollection):
 
     def finish(self, job_id: int, status: str, detail: str = "",
                error: str = "", evidence_id: str = "") -> Optional[Dict[str, Any]]:
-        fields: Dict[str, Any] = {"status": status, "finished_at": utc_now()}
+        now = utc_now()
+        fields: Dict[str, Any] = {"status": status, "finished_at": now,
+                                  "stage": "", "stage_label": "", "stage_note": ""}
         if detail:
             fields["detail"] = detail
         if error:
             fields["error"] = error
         if evidence_id:
             fields["evidence_id"] = evidence_id
-        return self.update(job_id, **fields)
+        with self._lock:
+            rows = self._read()
+            for row in rows:
+                if int(row.get("id", 0)) != int(job_id):
+                    continue
+                # Close the step that was still open, so the timing breakdown
+                # covers the whole run — including a step that ended in failure.
+                history = list(row.get("stages") or [])
+                if history and history[-1].get("finished_at") is None:
+                    history[-1]["finished_at"] = now
+                    history[-1]["duration_ms"] = _elapsed_ms(
+                        history[-1].get("started_at"), now
+                    )
+                    fields["stages"] = history
+                row.update(fields)
+                self._write(rows)
+                return row
+            return None
 
     def delete_case(self, case_id: str) -> int:
         with self._lock:

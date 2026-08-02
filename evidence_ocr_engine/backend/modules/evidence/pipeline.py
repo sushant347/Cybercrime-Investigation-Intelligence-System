@@ -14,7 +14,7 @@ from __future__ import annotations
 
 import time
 from pathlib import Path
-from typing import List, Optional
+from typing import Callable, List, Optional
 
 from .config import EvidenceConfig
 from .csv_storage import (
@@ -33,6 +33,31 @@ from .preprocessing import ImagePreprocessor, load_image
 from .schemas import EvidenceOCRResult, PageResult
 from .upload import EvidenceUploader
 from .utils import EmptyOCRError, EvidenceError, file_extension, utc_now_iso
+
+
+#: Called as ``(stage_key, human_note)`` when the pipeline enters a step.
+#: Purely observational - a caller uses it to report live progress, and the
+#: pipeline's own behaviour never depends on it.
+StageCallback = Callable[[str, str], None]
+
+
+def _stage_reporter(callback: Optional[StageCallback]) -> StageCallback:
+    """Wrap a progress observer so reporting can never break processing.
+
+    Progress reporting is cosmetic; evidence acquisition is not. A caller whose
+    observer writes to a file or a socket must not be able to lose captured
+    evidence because that write failed, so every call is swallowed.
+    """
+    if callback is None:
+        return lambda _key, _note="": None
+
+    def report(key: str, note: str = "") -> None:
+        try:
+            callback(key, note)
+        except Exception:  # noqa: BLE001 - progress must never be load-bearing
+            pass
+
+    return report
 
 
 class EvidencePipeline:
@@ -77,6 +102,7 @@ class EvidencePipeline:
         case_id: Optional[str] = None,
         notes: str = "",
         case_title: str = "",
+        on_stage: Optional[StageCallback] = None,
     ) -> EvidenceOCRResult:
         """Acquire and OCR one evidence file, returning the structured result.
 
@@ -86,19 +112,24 @@ class EvidencePipeline:
                 a new case is created automatically.
             notes: Investigator notes for the evidence row (empty by default).
             case_title: Title used only when a new case is created.
+            on_stage: Optional observer notified as each step begins, so a
+                caller can report live progress. Never affects processing.
 
         Returns:
             :class:`EvidenceOCRResult` - also persisted to CSV and case JSON.
         """
         started = time.perf_counter()
+        report = _stage_reporter(on_stage)
+
+        report("acquire", "copying file, computing SHA-256")
         case_id = self._resolve_case(case_id, case_title)
         record = self._uploader.upload(source, case_id, notes)
         stored = self._uploader.stored_path(record)
 
         try:
-            pages = self._extract_pages(stored, record)
+            pages = self._extract_pages(stored, record, report)
             self._check_empty(pages, record)
-            result = self._finalise(record, pages, started)
+            result = self._finalise(record, pages, started, report)
             return result
         except EvidenceError:
             self._mark_failed(record)
@@ -113,18 +144,25 @@ class EvidencePipeline:
 
     # ------------------------------------------------------- extraction stages
 
-    def _extract_pages(self, stored: Path, record: EvidenceRecord) -> List[OCRPageResult]:
+    def _extract_pages(self, stored: Path, record: EvidenceRecord,
+                       report: Optional[StageCallback] = None) -> List[OCRPageResult]:
         """Dispatch to the correct extractor based on evidence type."""
+        report = _stage_reporter(report)
         extension = record.file_extension
         if extension in self._cfg.image_extensions:
+            report("extract", f"running {self._ocr.name} on the image")
             return [self._ocr_image_page(load_image(stored), 1, record)]
         if extension == ".pdf":
-            return self._extract_pdf(stored, record)
+            report("extract", "reading PDF text layer")
+            return self._extract_pdf(stored, record, report)
         if extension in self._cfg.text_extensions:
+            report("extract", "reading text content")
             return [self._extract_plain_text(stored, record)]
         if extension == ".docx":
+            report("extract", "reading DOCX paragraphs")
             return [self._extract_docx(stored, record)]
         if extension == ".url":
+            report("extract", "reading submitted link")
             return [self._extract_url(stored, record)]
         raise EvidenceError(f"No extractor for '{extension}'")  # defensive; upload validates
 
@@ -152,7 +190,8 @@ class EvidencePipeline:
             preprocessing_steps=steps,
         )
 
-    def _extract_pdf(self, stored: Path, record: EvidenceRecord) -> List[OCRPageResult]:
+    def _extract_pdf(self, stored: Path, record: EvidenceRecord,
+                     report: Optional[StageCallback] = None) -> List[OCRPageResult]:
         """Hybrid PDF extraction: embedded text first, OCR only when needed.
 
         A digital PDF carries its text verbatim, so reading that text layer is
@@ -161,6 +200,7 @@ class EvidencePipeline:
         images) fall back to render + OCR, so scanned evidence still works.
         Page order is preserved either way.
         """
+        report = _stage_reporter(report)
         text_pages: dict[int, str] = {}
         try:
             for page_number, text in self._pdf.iter_page_text(stored):
@@ -189,9 +229,17 @@ class EvidencePipeline:
         # Scanned pages (and the whole file if the text layer was unreadable).
         if needs_ocr or not text_pages:
             wanted = set(needs_ocr)
+            total = len(wanted) or None
+            done = 0
             for page_number, image in self._pdf.iter_page_images(stored):
                 if text_pages and page_number not in wanted:
                     continue
+                done += 1
+                report(
+                    "extract",
+                    f"OCR page {page_number}"
+                    + (f" ({done} of {total} scanned)" if total else ""),
+                )
                 pages.append(self._ocr_image_page(image, page_number, record))
 
         pages.sort(key=lambda p: p.page_number)  # guarantee page order on merge
@@ -272,11 +320,14 @@ class EvidencePipeline:
             raise EmptyOCRError(message)
 
     def _finalise(
-        self, record: EvidenceRecord, pages: List[OCRPageResult], started: float
+        self, record: EvidenceRecord, pages: List[OCRPageResult], started: float,
+        report: Optional[StageCallback] = None,
     ) -> EvidenceOCRResult:
         """Post-processing hash verification, then persist CSV + JSON."""
+        report = _stage_reporter(report)
         stored = self._uploader.stored_path(record)
 
+        report("verify", "re-hashing to confirm the file is unaltered")
         # Forensic integrity: re-hash after processing; must match pre-hash.
         with StageTimer(self._log, "hash-verify") as hash_timer:
             sha_after = self._hash.sha256_file(stored)
@@ -293,6 +344,7 @@ class EvidencePipeline:
         )
         self._evidence.update(record)
 
+        report("store", "writing chain-of-custody and OCR records")
         total_ms = round((time.perf_counter() - started) * 1000.0, 1)
         result = EvidenceOCRResult(
             case_id=record.case_id,

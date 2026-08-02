@@ -42,6 +42,17 @@ def _int(value, default=0) -> int:
 
 
 def job_payload(row: dict) -> dict:
+    stages = [
+        {
+            "key": s.get("key", ""),
+            "label": s.get("label", ""),
+            "started_at": s.get("started_at", ""),
+            "finished_at": s.get("finished_at") or None,
+            "duration_ms": s.get("duration_ms"),
+        }
+        for s in (row.get("stages") or [])
+        if isinstance(s, dict)
+    ]
     return {
         "id": _int(row.get("id")),
         "job_type": row.get("job_type", ""),
@@ -53,6 +64,12 @@ def job_payload(row: dict) -> dict:
         "created_by": row.get("created_by", "") or "",
         "created_at": row.get("created_at", ""),
         "finished_at": row.get("finished_at") or None,
+        # Live processing state: what the engine is doing right now, plus the
+        # measured timing of every step it has already completed.
+        "stage": row.get("stage", "") or "",
+        "stage_label": row.get("stage_label", "") or "",
+        "stage_note": row.get("stage_note", "") or "",
+        "stages": stages,
     }
 
 

@@ -100,14 +100,56 @@ def get_case(case_id: str) -> Optional[dict[str, str]]:
     return next((c for c in list_cases() if c.get("case_id") == case_id), None)
 
 
+#: How far an evidence row has progressed. Used to pick the surviving row when
+#: the register briefly holds more than one row for the same id.
+_EVIDENCE_STATUS_RANK = {"processed": 3, "failed": 2, "uploaded": 1}
+
+
+def _collapse_evidence_rows(rows: list[dict[str, str]]) -> list[dict[str, str]]:
+    """Return one row per evidence id, keeping the most-progressed one.
+
+    The chain-of-custody register is append-then-rewrite, so an interleaved
+    write can leave a stale ``uploaded`` row (empty ``sha256_after``,
+    ``hash_verified`` unset) beside the real ``processed`` row. Serving both
+    shows the investigator a phantom duplicate that reads as "integrity not
+    verified" and cannot be deleted, because the deletion gate keys on the
+    *id* - which is processed - not on the row.
+
+    The engine now self-heals on the next write (``EvidenceRepository.update``
+    collapses duplicates), but the read path must not display a phantom in the
+    meantime. First occurrence wins ties, so display order is stable.
+    """
+    best: dict[str, dict[str, str]] = {}
+    order: list[str] = []
+    for row in rows:
+        key = row.get("evidence_id", "")
+        current = best.get(key)
+        if current is None:
+            best[key] = row
+            order.append(key)
+            continue
+        if (_EVIDENCE_STATUS_RANK.get(row.get("status", ""), 0)
+                > _EVIDENCE_STATUS_RANK.get(current.get("status", ""), 0)):
+            best[key] = row
+    return [best[key] for key in order]
+
+
 def list_evidence(case_id: str | None = None) -> list[dict[str, str]]:
     rows = _read_csv(evidence_config().evidence_csv)
-    return [r for r in rows if case_id is None or r.get("case_id") == case_id]
+    return _collapse_evidence_rows(
+        [r for r in rows if case_id is None or r.get("case_id") == case_id]
+    )
 
 
 def get_evidence(evidence_id: str) -> Optional[dict[str, str]]:
     rows = _read_csv(evidence_config().evidence_csv)
-    return next((r for r in rows if r.get("evidence_id") == evidence_id), None)
+    matches = [r for r in rows if r.get("evidence_id") == evidence_id]
+    if not matches:
+        return None
+    return max(
+        matches,
+        key=lambda r: _EVIDENCE_STATUS_RANK.get(r.get("status", ""), 0),
+    )
 
 
 def processing_log(case_id: str | None = None) -> list[dict[str, str]]:
@@ -596,15 +638,20 @@ def submit_evidence_job(job_id: int, tmp_path: str, case_id: str,
 
     def work() -> None:
         from .store import jobs, notifications
-        from .constants import NotificationType
+        from .constants import EvidenceStage, NotificationType
 
         jobs.update(job_id, status="running")
         detail = ""
         still_pending: Optional[int] = None   # set once this item is accounted for
+
+        def report(key: str, note: str = "") -> None:
+            """Publish the engine's real step onto the job the UI is polling."""
+            jobs.stage(job_id, key, EvidenceStage.LABELS.get(key, key), note)
+
         try:
             with _pipeline_lock:  # engine CSV storage is not concurrent-safe
                 result = _evidence_pipeline().process_file(
-                    tmp_path, case_id=case_id, notes=notes
+                    tmp_path, case_id=case_id, notes=notes, on_stage=report,
                 )
                 # Full Phase-1 chain: cleaning -> enhancement -> semantic ->
                 # entity extraction, for THIS item only (previously the whole
@@ -612,11 +659,14 @@ def submit_evidence_job(job_id: int, tmp_path: str, case_id: str,
                 # because these stages append to shared CSVs (entities.csv,
                 # keyword_*.csv). Best-effort: a failure here does not discard
                 # the OCR result.
+                report(EvidenceStage.ENRICH, "cleaning text, extracting entities")
                 summary = _enrich_evidence(case_id, result.evidence_id)
                 # Phase-1 forensics on the stored original: integrity, EXIF /
                 # metadata, image quality, forgery indicators, brand logos and
                 # the composite evidence-confidence score. Runs inside the same
                 # lock (it appends to the forensic CSV registers).
+                report(EvidenceStage.FORENSICS,
+                       "metadata, quality, forgery and logo checks")
                 forensics = _run_forensics(result.evidence_id)
                 # Entities are durable now, so only the timeline and graph need
                 # regenerating — and only once per *burst*. Rebuilding them per
@@ -625,9 +675,12 @@ def submit_evidence_job(job_id: int, tmp_path: str, case_id: str,
                 # is what made multi-file uploads crawl. When more uploads for
                 # this case are still queued, the last one to finish does it.
                 still_pending = _upload_finished(case_id)
-                live_artifacts = (
-                    _refresh_timeline_graph(case_id) if still_pending == 0 else None
-                )
+                if still_pending == 0:
+                    report(EvidenceStage.CORRELATE,
+                           "rebuilding correlation, timeline and graph")
+                    live_artifacts = _refresh_timeline_graph(case_id)
+                else:
+                    live_artifacts = None
             entities = _entity_count(summary)
             if summary is None:
                 detail = f"Processed as {result.evidence_id} (OCR only)"
