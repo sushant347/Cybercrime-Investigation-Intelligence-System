@@ -1,0 +1,477 @@
+{
+  "report_type": "investigation_report",
+  "report_version": 1,
+  "schema_version": "2.0",
+  "case_id": "CASE_EE8250FB76",
+  "generated_at": "2026-07-25T17:26:36.787Z",
+  "report": {
+    "report_id": "RPT-EE8250FB76-7BBFA0D7",
+    "sections": {
+      "executive_summary": [
+        "Case CASE_EE8250FB76 contains 2 evidence item(s), each acquired under SHA-256 chain-of-custody verification.",
+        "This case is linked to 1 other case(s) through shared entities: CASE_185915593C [cross_case_correlation.json]."
+      ],
+      "scope_and_methodology": {
+        "objective": "Acquire, verify, correlate and reconstruct the digital evidence for this case, and derive investigative leads (suspect anchors, campaigns, cross-case links) strictly from stored, hash-verified artifacts.",
+        "evidence_scope": "2 evidence item(s) acquired through the CIIS intake pipeline under SHA-256 chain-of-custody control.",
+        "methodology": [
+          "Phase 1 - Acquisition & OCR: PaddleOCR PP-OCRv5 text extraction with per-item confidence scoring; SHA-256 fingerprint recorded at intake and re-verified at read.",
+          "Phase 1 - Forensics: metadata/EXIF consistency, forgery signals, logo detection and evidence-confidence scoring stored per item under storage/forensics/.",
+          "Phase 2 - Correlation: weighted entity-overlap engine scoring every evidence pair; results in correlation_analysis.json.",
+          "Phase 2 - Cross-case: shared-entity matching against every other analysed case (cross_case_correlation.json).",
+          "Phase 2 - Campaigns / Suspects / Timeline: clustering, anchor derivation and event reconstruction over the correlated evidence set.",
+          "Threat intelligence: URL/domain indicators scored by the configured provider (static indicator file, or the trained phishing classifier when CIIS_ML_THREAT_INTEL=1); per-indicator results in 'Model Prediction Results'.",
+          "Reporting: this document is assembled exclusively from the stored outputs above; it contains no free-text generation."
+        ],
+        "reproducibility": "Re-running the analysis against the same stored evidence reproduces every figure herein; artifacts are versioned and never overwritten."
+      },
+      "case_overview": {
+        "case_id": "CASE_EE8250FB76",
+        "evidence_count": 2,
+        "first_evidence": "2026-07-25T16:24:17.560Z",
+        "last_evidence": "2026-07-25T16:24:18.091Z",
+        "file_types": [
+          "pdf"
+        ]
+      },
+      "evidence_summary": [
+        {
+          "evidence_id": "EVID_00005",
+          "file_name": "08_complaint_letter.pdf",
+          "upload_time": "2026-07-25T16:24:17.560Z",
+          "sha256": "fe644062bf75e62c8ae13ec24c7e0461491a5610095a50546c4fa757d98e866f",
+          "hash_verified": true,
+          "ocr_confidence": 1.0,
+          "evidence_confidence_score": 100.0,
+          "entity_count": 25
+        },
+        {
+          "evidence_id": "EVID_00006",
+          "file_name": "07_bank_transfer_slip.pdf",
+          "upload_time": "2026-07-25T16:24:18.091Z",
+          "sha256": "6f1cc10ae55d554c751ee1cbf688924c8962c5faebe87be8c457d077d6bc63c2",
+          "hash_verified": false,
+          "ocr_confidence": 0.0,
+          "evidence_confidence_score": "not available",
+          "entity_count": 0
+        }
+      ],
+      "correlation_analysis": "Correlation analysis not available for this case.",
+      "cross_case_correlation": {
+        "related_case_count": 1,
+        "related_case_ids": [
+          "CASE_185915593C"
+        ],
+        "links": [
+          {
+            "other_case_id": "CASE_185915593C",
+            "relationship_strength": "VERY_STRONG",
+            "match_confidence": 0.9999,
+            "match_reason": "Shares 21 entity(ies) with CASE_185915593C: bank account 05019012345678, domain esewa-cashback-offer.xyz, domain esewa-verify-kyc.com (+18 more)",
+            "matched_entities": [
+              {
+                "entity_type": "bank_accounts",
+                "value": "05019012345678",
+                "this_evidence_ids": [
+                  "EVID_00005"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "domains",
+                "value": "esewa-cashback-offer.xyz",
+                "this_evidence_ids": [
+                  "EVID_00005"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00009",
+                  "EVID_00011",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "domains",
+                "value": "esewa-verify-kyc.com",
+                "this_evidence_ids": [
+                  "EVID_00005"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "domains",
+                "value": "gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00005"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00008",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "emails",
+                "value": "esewa.cashback99@gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00005"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "emails",
+                "value": "sunita.gurung21@gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00005"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00008",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "emails",
+                "value": "support@esewa-verify-kyc.com",
+                "this_evidence_ids": [
+                  "EVID_00005"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "esewa_ids",
+                "value": "esewa.cashback99@gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00005"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "esewa_ids",
+                "value": "sunita.gurung21@gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00005"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00008",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "khalti_ids",
+                "value": "+9779801122334",
+                "this_evidence_ids": [
+                  "EVID_00005"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00011",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "money",
+                "value": "npr 1500",
+                "this_evidence_ids": [
+                  "EVID_00005"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00011",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "money",
+                "value": "npr 200",
+                "this_evidence_ids": [
+                  "EVID_00005"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00008",
+                  "EVID_00010",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "money",
+                "value": "npr 25000",
+                "this_evidence_ids": [
+                  "EVID_00005"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00013",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "money",
+                "value": "npr 5000",
+                "this_evidence_ids": [
+                  "EVID_00005"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00009",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "phones",
+                "value": "+9779801122334",
+                "this_evidence_ids": [
+                  "EVID_00005"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00011",
+                  "EVID_00012",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "phones",
+                "value": "+9779847011223",
+                "this_evidence_ids": [
+                  "EVID_00005"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00011",
+                  "EVID_00013",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "transaction_ids",
+                "value": "0119.0625.987456",
+                "this_evidence_ids": [
+                  "EVID_00005"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00010",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "transaction_ids",
+                "value": "case_2026_0088",
+                "this_evidence_ids": [
+                  "EVID_00005"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "transaction_ids",
+                "value": "kh-2026-0611-77245",
+                "this_evidence_ids": [
+                  "EVID_00005"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00011",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "transaction_ids",
+                "value": "mbl-2026-441829",
+                "this_evidence_ids": [
+                  "EVID_00005"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00013",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "urls",
+                "value": "https://esewa-cashback-offer.xyz/claim",
+                "this_evidence_ids": [
+                  "EVID_00005"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00014"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "campaign_analysis": "Campaign analysis not available for this case.",
+      "timeline_analysis": "Timeline analysis not available for this case.",
+      "suspect_assessment": "No suspect anchors were derived from the evidence.",
+      "threat_intelligence_summary": "Threat statistics not available.",
+      "model_predictions": {
+        "indicators_classified": 3,
+        "flagged_malicious": 2,
+        "predictions": [
+          {
+            "indicator": "https://esewa-cashback-offer.xyz/claim",
+            "evidence_id": "EVID_00005",
+            "verdict": "malicious",
+            "risk_score": 81,
+            "confidence": 0.81,
+            "risk_level": "Critical",
+            "source": "ml:xgboost",
+            "model_version": "4.0.0",
+            "domain": "esewa-cashback-offer.xyz",
+            "trust_score": 35,
+            "official_domain": false,
+            "ssl_status": "UNKNOWN",
+            "spf_present": false,
+            "dmarc_present": false,
+            "reasons": [
+              "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
+              "AI model classified this URL as phishing with 100% confidence.",
+              "The top-level domain is frequently associated with phishing and spam campaigns (risk score: 0.7).",
+              "SSL status could not be verified.",
+              "The URL contains suspicious keyword(s) associated with phishing.",
+              "The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure."
+            ],
+            "threat_signals": [
+              "✗ Missing SPF record (facilitates email spoofing)",
+              "✗ Missing DMARC record (facilitates email spoofing)",
+              "✗ High-abuse top-level domain",
+              "✗ Phishing-associated keyword(s) in URL"
+            ]
+          },
+          {
+            "indicator": "esewa-verify-kyc.com",
+            "evidence_id": "EVID_00005",
+            "verdict": "malicious",
+            "risk_score": 79,
+            "confidence": 0.79,
+            "risk_level": "High",
+            "source": "ml:xgboost",
+            "model_version": "4.0.0",
+            "domain": "esewa-verify-kyc.com",
+            "trust_score": 50,
+            "official_domain": false,
+            "ssl_status": "UNKNOWN",
+            "spf_present": false,
+            "dmarc_present": false,
+            "reasons": [
+              "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
+              "AI model classified this URL as phishing with 100% confidence.",
+              "SSL status could not be verified.",
+              "The URL does not use HTTPS, meaning data is transmitted without encryption.",
+              "The URL contains suspicious keyword(s) associated with phishing.",
+              "The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure."
+            ],
+            "threat_signals": [
+              "✗ Plain HTTP protocol used (unencrypted connections)",
+              "✗ Missing SPF record (facilitates email spoofing)",
+              "✗ Missing DMARC record (facilitates email spoofing)",
+              "✗ Phishing-associated keyword(s) in URL"
+            ]
+          },
+          {
+            "indicator": "gmail.com",
+            "evidence_id": "EVID_00005",
+            "verdict": "benign",
+            "risk_score": 20,
+            "confidence": 0.8,
+            "risk_level": "Low",
+            "source": "ml:xgboost",
+            "model_version": "4.0.0",
+            "domain": "gmail.com",
+            "trust_score": 100,
+            "brand_impersonated": "google",
+            "official_domain": true,
+            "ssl_status": "VALID",
+            "domain_age_days": 11304,
+            "registrar": "MarkMonitor, Inc.",
+            "spf_present": true,
+            "dmarc_present": true,
+            "ssl_days_left": 57,
+            "hosting": "Google LLC, United States",
+            "ip_address": "192.178.174.83",
+            "reasons": [
+              "The hybrid decision engine confirmed this URL is legitimate based on trusted signals and ML model agreement.",
+              "The URL does not use HTTPS, meaning data is transmitted without encryption."
+            ],
+            "threat_signals": [
+              "✗ Plain HTTP protocol used (unencrypted connections)"
+            ],
+            "trust_signals": [
+              "✓ Official registered domain of trusted brand: google",
+              "✓ Valid SSL certificate",
+              "✓ HTTPS Strict-Transport-Security (HSTS) active",
+              "✓ Established domain age (30.9 years old)",
+              "✓ Registered with trusted registrar (MarkMonitor, Inc.)",
+              "✓ SPF email authentication configured"
+            ]
+          }
+        ]
+      },
+      "evidence_quality_summary": {
+        "hash_verified_count": 1
+      },
+      "metadata_summary": [
+        {
+          "evidence_id": "EVID_00005",
+          "has_exif": false,
+          "device": "",
+          "software": "",
+          "consistency_notes": []
+        }
+      ],
+      "investigation_statistics": "Analytics not available.",
+      "confidence_analysis": [
+        {
+          "evidence_id": "EVID_00005",
+          "score": 100.0,
+          "level": "VERY_HIGH",
+          "explanation": "Evidence confidence is 100.0/100 (VERY_HIGH), derived from 3 verified dimension(s). Strongest signal: hash_verification (100/100). Weakest signal: metadata (100/100)."
+        }
+      ],
+      "investigation_conclusion": [
+        "1/2 evidence item(s) passed SHA-256 chain-of-custody verification."
+      ],
+      "recommendations": [
+        "No specific action items derived; continue standard processing."
+      ],
+      "report_provenance": {
+        "report_id": "RPT-EE8250FB76-7BBFA0D7",
+        "generated_at": "2026-07-25T17:26:36.786Z",
+        "generator": "CIIS Phase-2 reporting module (template-over-data; no free-text generation)",
+        "evidence_set_digest": "0f6afe626b2e5e1c4bb70b2efae2d8aea52ca3d8d38b481532cc8e4ff88c3ff6",
+        "evidence_set_digest_note": "SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.",
+        "source_artifact_hashes": {
+          "cross_case_correlation.json": "01ce932a6ed2e65406f905490d9a7897c203f208268411261779ad758f304b91"
+        }
+      },
+      "appendix": {
+        "chain_of_custody": [
+          {
+            "evidence_id": "EVID_00005",
+            "sha256": "fe644062bf75e62c8ae13ec24c7e0461491a5610095a50546c4fa757d98e866f",
+            "upload_time": "2026-07-25T16:24:17.560Z",
+            "status": "processed"
+          },
+          {
+            "evidence_id": "EVID_00006",
+            "sha256": "6f1cc10ae55d554c751ee1cbf688924c8962c5faebe87be8c457d077d6bc63c2",
+            "upload_time": "2026-07-25T16:24:18.091Z",
+            "status": "uploaded"
+          }
+        ],
+        "stored_artifacts_root": "storage/investigation/<CASE_ID>/",
+        "phase1_artifacts_root": "storage/forensics/<EVIDENCE_ID>/"
+      }
+    },
+    "generated_from": {
+      "correlation": false,
+      "cross_case": true,
+      "campaigns": false,
+      "suspects": false,
+      "timeline": false,
+      "analytics": false,
+      "priority": false
+    }
+  }
+}

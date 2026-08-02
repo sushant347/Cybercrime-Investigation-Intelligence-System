@@ -1,0 +1,120 @@
+{
+  "report_type": "logo_detections",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00008",
+  "case_id": "CASE_185915593C",
+  "generated_at": "2026-07-25T17:18:23.486Z",
+  "report": {
+    "evidence_id": "EVID_00008",
+    "case_id": "CASE_185915593C",
+    "source_file": "02_messenger_chat.jpg",
+    "brands_checked": [
+      "eSewa",
+      "Khalti",
+      "IME Pay",
+      "Facebook",
+      "Messenger",
+      "WhatsApp",
+      "Telegram",
+      "Gmail",
+      "Outlook",
+      "Google",
+      "Microsoft"
+    ],
+    "detections": [
+      {
+        "brand": "eSewa",
+        "confidence": 0.8336,
+        "bbox": [],
+        "detection_method": "ocr_keyword",
+        "detected_at": "2026-07-25T17:18:23.402Z",
+        "detail": "keyword 'esewa' in OCR line"
+      },
+      {
+        "brand": "Facebook",
+        "confidence": 0.5204,
+        "bbox": [
+          0.0,
+          0.0,
+          720.0,
+          78.0
+        ],
+        "detection_method": "colour_signature",
+        "detected_at": "2026-07-25T17:18:23.441Z",
+        "detail": "brand-colour region 3.5% of frame"
+      },
+      {
+        "brand": "Messenger",
+        "confidence": 0.5014,
+        "bbox": [
+          0.0,
+          0.0,
+          720.0,
+          77.0
+        ],
+        "detection_method": "colour_signature",
+        "detected_at": "2026-07-25T17:18:23.446Z",
+        "detail": "brand-colour region 2.6% of frame"
+      },
+      {
+        "brand": "Telegram",
+        "confidence": 0.5094,
+        "bbox": [
+          0.0,
+          0.0,
+          720.0,
+          80.0
+        ],
+        "detection_method": "colour_signature",
+        "detected_at": "2026-07-25T17:18:23.460Z",
+        "detail": "brand-colour region 3.0% of frame"
+      },
+      {
+        "brand": "Gmail",
+        "confidence": 0.8336,
+        "bbox": [],
+        "detection_method": "ocr_keyword",
+        "detected_at": "2026-07-25T17:18:23.461Z",
+        "detail": "keyword 'gmail' in OCR line"
+      },
+      {
+        "brand": "Outlook",
+        "confidence": 0.5214,
+        "bbox": [
+          0.0,
+          0.0,
+          720.0,
+          79.0
+        ],
+        "detection_method": "colour_signature",
+        "detected_at": "2026-07-25T17:18:23.473Z",
+        "detail": "brand-colour region 3.6% of frame"
+      },
+      {
+        "brand": "Google",
+        "confidence": 0.5015,
+        "bbox": [
+          0.0,
+          0.0,
+          720.0,
+          77.0
+        ],
+        "detection_method": "colour_signature",
+        "detected_at": "2026-07-25T17:18:23.479Z",
+        "detail": "brand-colour region 2.6% of frame"
+      }
+    ],
+    "detected_brands": [
+      "Facebook",
+      "Gmail",
+      "Google",
+      "Messenger",
+      "Outlook",
+      "Telegram",
+      "eSewa"
+    ],
+    "template_assets_available": false,
+    "analysis_time_ms": 85.2
+  }
+}

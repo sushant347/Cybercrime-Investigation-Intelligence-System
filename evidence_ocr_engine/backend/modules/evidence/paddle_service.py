@@ -89,17 +89,31 @@ class PaddleOCRService(BaseOCR):
         self._get_engine()
 
     def recognize(self, image: np.ndarray) -> List[OCRLine]:
-        """Recognise text with a hard timeout, returning verbatim lines."""
-        engine = self._get_engine()
-        with ThreadPoolExecutor(max_workers=1) as pool:
-            future = pool.submit(self._predict, engine, image)
-            try:
-                lines = future.result(timeout=self._cfg.ocr_timeout_seconds)
-            except FutureTimeoutError as exc:
-                future.cancel()
-                raise OCRTimeoutError(
-                    f"PaddleOCR exceeded {self._cfg.ocr_timeout_seconds:.0f}s timeout"
-                ) from exc
+        """Recognise text with a hard timeout, returning verbatim lines.
+
+        Large images are OCR'd as overlapping horizontal bands rather than in
+        one call. Paddle's cost grows sharply faster than linearly with pixel
+        count, and past roughly 2 MP it segfaults outright on some builds
+        (notably Apple Silicon), taking the whole host process down. Splitting
+        keeps every call inside the safe, fast region *at full resolution* -
+        downscaling instead would shrink the text and cost accuracy.
+        """
+        bands = self._split_for_ocr(image)
+        if len(bands) == 1:
+            lines = self._recognize_one(image)
+        else:
+            self._log.info(
+                "image %dx%d (%.2f MP) exceeds the %.2f MP OCR budget; "
+                "reading it as %d overlapping bands",
+                image.shape[1], image.shape[0],
+                (image.shape[0] * image.shape[1]) / 1e6,
+                self._cfg.ocr_max_pixels / 1e6, len(bands),
+            )
+            collected: List[OCRLine] = []
+            for top, band in bands:
+                for line in self._recognize_one(band):
+                    collected.append(self._offset_line(line, top))
+            lines = self._deduplicate(collected)
         for line in lines:
             if line.confidence < self._cfg.low_confidence_threshold:
                 self._log.warning(
@@ -107,7 +121,113 @@ class PaddleOCRService(BaseOCR):
                 )
         return lines
 
+    # ------------------------------------------------------------- tiling
+
+    def _split_for_ocr(self, image: np.ndarray) -> List[tuple]:
+        """Split into ``(top_offset, band)`` pairs that each fit the budget.
+
+        Returns a single ``(0, image)`` pair when the image already fits, so
+        the common case (a screenshot) is completely unaffected. Bands overlap
+        so a text line falling on a cut is still read whole by one of them.
+        """
+        height, width = image.shape[:2]
+        budget = max(1, int(self._cfg.ocr_max_pixels))
+        if height * width <= budget or height < 2:
+            return [(0, image)]
+        # Size the bands so that each one *including its overlap* fits the
+        # budget. Sizing before adding overlap pushes every band back over the
+        # limit, and because the cost curve is steep that is not a small miss:
+        # it measured 266s instead of 85s on a 2 MP page.
+        rows_per_band = max(1, budget // max(1, width))
+        overlap = min(self._cfg.ocr_band_overlap_px, max(0, (rows_per_band - 1) // 2))
+        step = max(1, rows_per_band - 2 * overlap)
+        band_count = int(np.ceil(height / step))
+        bands: List[tuple] = []
+        for index in range(band_count):
+            top = max(0, index * step - (overlap if index else 0))
+            bottom = min(height, (index + 1) * step + overlap)
+            if bottom - top <= 0:
+                continue
+            bands.append((top, np.ascontiguousarray(image[top:bottom])))
+            if bottom >= height:
+                break
+        return bands or [(0, image)]
+
+    @staticmethod
+    def _offset_line(line: OCRLine, top: int) -> OCRLine:
+        """Translate a band-local box back into whole-image coordinates."""
+        if not line.bbox or not top:
+            return line
+        return OCRLine(
+            text=line.text,
+            confidence=line.confidence,
+            bbox=[[x, y + top] for x, y in line.bbox],
+        )
+
+    @staticmethod
+    def _centre(line: OCRLine) -> Optional[tuple]:
+        """Centre point of a line's box, or ``None`` when it has no box."""
+        if not line.bbox:
+            return None
+        xs = [point[0] for point in line.bbox]
+        ys = [point[1] for point in line.bbox]
+        return (sum(xs) / len(xs), sum(ys) / len(ys))
+
+    def _deduplicate(self, lines: List[OCRLine]) -> List[OCRLine]:
+        """Drop lines the overlap made us read twice, keeping the best read.
+
+        Matching is by *position*, not text: a line inside the overlap is read
+        by both bands and the two reads are rarely byte-identical ("Active now"
+        vs "Actve now"), so keying on text would let both through and duplicate
+        the content. Its coordinates, though, agree to within a few pixels.
+
+        Positions are compared by proximity rather than bucketed, because two
+        nearly-identical coordinates can fall either side of a bucket boundary
+        (310 and 312 do) and the duplicate then survives. The line count is in
+        the tens, so the pairwise scan costs nothing.
+
+        Order is preserved top-to-bottom, so the reconstructed text still reads
+        in document order.
+        """
+        x_tolerance, y_tolerance = 24.0, 16.0
+        kept: List[OCRLine] = []
+        centres: List[Optional[tuple]] = []
+        for line in lines:
+            centre = self._centre(line)
+            match = -1
+            if centre is not None:
+                for index, other in enumerate(centres):
+                    if (other is not None
+                            and abs(other[0] - centre[0]) <= x_tolerance
+                            and abs(other[1] - centre[1]) <= y_tolerance):
+                        match = index
+                        break
+            if match < 0:
+                kept.append(line)
+                centres.append(centre)
+            elif line.confidence > kept[match].confidence:
+                kept[match] = line          # keep the better of the two reads
+                centres[match] = centre
+
+        def _top(line: OCRLine) -> float:
+            return min((point[1] for point in line.bbox), default=0.0)
+
+        return sorted(kept, key=_top)
+
     # ---------------------------------------------------------------- internal
+
+    def _recognize_one(self, image: np.ndarray) -> List[OCRLine]:
+        """One engine call, guarded by the configured hard timeout."""
+        engine = self._get_engine()
+        with ThreadPoolExecutor(max_workers=1) as pool:
+            future = pool.submit(self._predict, engine, image)
+            try:
+                return future.result(timeout=self._cfg.ocr_timeout_seconds)
+            except FutureTimeoutError as exc:
+                future.cancel()
+                raise OCRTimeoutError(
+                    f"PaddleOCR exceeded {self._cfg.ocr_timeout_seconds:.0f}s timeout"
+                ) from exc
 
     def _resolve_lang(self, lang: str) -> str:
         """Translate common aliases to official PaddleOCR language codes."""
