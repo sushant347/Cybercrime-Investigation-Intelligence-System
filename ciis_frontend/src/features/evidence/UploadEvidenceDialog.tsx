@@ -17,8 +17,6 @@ import {
   LinearProgress,
   List,
   ListItem,
-  ListItemIcon,
-  ListItemText,
   Stack,
   Tab,
   Tabs,
@@ -31,11 +29,15 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { evidenceApi } from "@/api";
 import { apiErrorMessage } from "@/lib/apiClient";
 import { formatBytes } from "@/lib/format";
+import type { JobStage } from "@/types";
+
+import { ProcessingStages } from "./ProcessingStages";
 
 const ACCEPT = ".png,.jpg,.jpeg,.pdf,.txt,.csv,.docx";
-const POLL_MS = 2500;
+/** Fast enough that each engine step is actually visible as it happens. */
+const POLL_MS = 1100;
 /** First check comes sooner: a small screenshot is often already done. */
-const FIRST_POLL_MS = 800;
+const FIRST_POLL_MS = 500;
 
 type ItemStatus = "waiting" | "uploading" | "processing" | "completed" | "failed";
 
@@ -56,6 +58,10 @@ interface QueueItem {
   status: ItemStatus;
   evidenceId?: string;
   error?: string;
+  /** Live engine step for this item, mirrored from its job. */
+  stage?: string;
+  stageNote?: string;
+  stages?: JobStage[];
 }
 
 /**
@@ -216,15 +222,29 @@ export function UploadEvidenceDialog({
         [...outstanding].map(async ([jobId, index]) => {
           try {
             const latest = await evidenceApi.job(jobId);
+            // Mirror the engine's real step onto the row on every poll, so the
+            // investigator watches the work rather than an opaque spinner.
+            const progress = {
+              stage: latest.stage,
+              stageNote: latest.stage_note,
+              stages: latest.stages ?? [],
+            };
             if (latest.status === "completed") {
-              patch(index, { status: "completed", evidenceId: latest.evidence_id });
+              patch(index, {
+                ...progress,
+                status: "completed",
+                evidenceId: latest.evidence_id,
+              });
               settled.push(jobId);
             } else if (latest.status === "failed") {
               patch(index, {
+                ...progress,
                 status: "failed",
                 error: latest.error || "Processing failed.",
               });
               settled.push(jobId);
+            } else {
+              patch(index, progress);
             }
           } catch {
             // Transient poll failure (dev-server restart, brief timeout):
@@ -268,9 +288,10 @@ export function UploadEvidenceDialog({
       case "waiting":
         return it.url ? "Link — ready to submit" : formatBytes(it.file!.size);
       case "uploading":
-        return "Uploading…";
+        return "Transferring to the engine…";
       case "processing":
-        return it.url ? "Reading link + entity extraction…" : "OCR + entity extraction…";
+        // The per-step bar below carries the live detail; don't repeat it here.
+        return it.url ? "Link submitted — processing" : "In the engine";
       case "completed":
         return it.evidenceId ? `Processed as ${it.evidenceId}` : "Processed";
       case "failed":
@@ -377,30 +398,54 @@ export function UploadEvidenceDialog({
 
           {items.length > 0 && (
             <List dense disablePadding sx={{ border: 1, borderColor: "divider", borderRadius: 2 }}>
-              {items.map((it, i) => (
-                <ListItem
-                  key={it.key}
-                  divider={i < items.length - 1}
-                  secondaryAction={
-                    !running && it.status === "waiting" ? (
-                      <IconButton edge="end" size="small" onClick={() => removeItem(i)}>
-                        <CloseIcon fontSize="small" />
-                      </IconButton>
-                    ) : undefined
-                  }
-                >
-                  <ListItemIcon sx={{ minWidth: 34 }}>{statusIcon(it.status)}</ListItemIcon>
-                  <ListItemText
-                    primary={it.label}
-                    secondary={statusText(it)}
-                    primaryTypographyProps={{ variant: "body2", noWrap: true }}
-                    secondaryTypographyProps={{
-                      variant: "caption",
-                      color: it.status === "failed" ? "error" : "text.secondary",
-                    }}
-                  />
-                </ListItem>
-              ))}
+              {items.map((it, i) => {
+                const showStages =
+                  it.status === "processing" ||
+                  it.status === "completed" ||
+                  (it.status === "failed" && (it.stages?.length ?? 0) > 0);
+                return (
+                  <ListItem
+                    key={it.key}
+                    divider={i < items.length - 1}
+                    alignItems="flex-start"
+                    sx={{ display: "block", py: 1.25 }}
+                    secondaryAction={
+                      !running && it.status === "waiting" ? (
+                        <IconButton edge="end" size="small" onClick={() => removeItem(i)}>
+                          <CloseIcon fontSize="small" />
+                        </IconButton>
+                      ) : undefined
+                    }
+                  >
+                    <Stack direction="row" spacing={1} alignItems="flex-start">
+                      <Box sx={{ pt: 0.25 }}>{statusIcon(it.status)}</Box>
+                      <Box sx={{ minWidth: 0, flex: 1 }}>
+                        <Typography variant="body2" noWrap title={it.label}>
+                          {it.label}
+                        </Typography>
+                        <Typography
+                          variant="caption"
+                          color={it.status === "failed" ? "error" : "text.secondary"}
+                          sx={{ display: "block", overflowWrap: "anywhere" }}
+                        >
+                          {statusText(it)}
+                        </Typography>
+                        {showStages && (
+                          <Box sx={{ mt: 1 }}>
+                            <ProcessingStages
+                              current={it.stage ?? ""}
+                              note={it.stageNote}
+                              stages={it.stages ?? []}
+                              done={it.status === "completed"}
+                              failed={it.status === "failed"}
+                            />
+                          </Box>
+                        )}
+                      </Box>
+                    </Stack>
+                  </ListItem>
+                );
+              })}
             </List>
           )}
 
@@ -408,13 +453,12 @@ export function UploadEvidenceDialog({
             <Stack spacing={1}>
               <LinearProgress
                 variant="determinate"
-                value={items.length ? (completedCount + failedCount) / items.length * 100 : 0}
+                value={items.length ? ((completedCount + failedCount) / items.length) * 100 : 0}
               />
               <Typography variant="caption" color="text.secondary" align="center">
-                Processing {completedCount + failedCount + 1 > items.length
-                  ? items.length
-                  : completedCount + failedCount + 1} of {items.length} — each file runs
-                acquisition, hashing, OCR, and entity extraction. Large images take longer.
+                {completedCount + failedCount} of {items.length} finished. Hover any step above
+                to see what it does; the engine processes one item at a time so the case
+                records stay consistent.
               </Typography>
             </Stack>
           )}
