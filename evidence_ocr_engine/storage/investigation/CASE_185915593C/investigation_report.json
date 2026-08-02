@@ -1,18 +1,18 @@
 {
   "report_type": "investigation_report",
-  "report_version": 1,
+  "report_version": 3,
   "schema_version": "2.0",
   "case_id": "CASE_185915593C",
-  "generated_at": "2026-07-25T17:26:36.521Z",
+  "generated_at": "2026-08-02T14:26:10.119Z",
   "report": {
-    "report_id": "RPT-185915593C-FF5F30AC",
+    "report_id": "RPT-185915593C-F9FFEAA4",
     "sections": {
       "executive_summary": [
         "Case CASE_185915593C contains 8 evidence item(s), each acquired under SHA-256 chain-of-custody verification.",
         "This case is linked to 1 other case(s) through shared entities: CASE_EE8250FB76 [cross_case_correlation.json].",
         "The weighted correlation engine found 28 related evidence pair(s) out of 28 analysed [correlation_analysis.json].",
-        "1 coordinated campaign(s) were identified; the largest (CAMP_CASE_185915593C_01) groups 7 item(s) [campaign_analysis.json].",
-        "The strongest suspect anchor is '+9779801122334' (khalti_ids) with confidence 79/100 [suspect_assessment.json].",
+        "1 coordinated campaign(s) were identified; the largest (CAMP_CASE_185915593C_01) groups 6 item(s) [campaign_analysis.json].",
+        "The strongest suspect anchor is '+9779801122334' (khalti_ids) with confidence 78/100 [suspect_assessment.json].",
         "Observed attack progression: initial_contact -> financial_transaction -> social_engineering -> post_attack [timeline_analysis.json]."
       ],
       "scope_and_methodology": {
@@ -127,40 +127,40 @@
         "related_pair_count": 28,
         "strength_distribution": {
           "VERY_STRONG": 2,
-          "STRONG": 8,
-          "MEDIUM": 1,
-          "WEAK": 17
+          "STRONG": 5,
+          "MEDIUM": 3,
+          "WEAK": 18
         },
         "top_relationships": [
           {
             "pair": "EVID_00011 <-> EVID_00014",
             "strength": "VERY_STRONG",
-            "confidence": 0.9725,
-            "explanation": "EVID_00011 (05_khalti_receipt.jpg) and EVID_00014 (08_complaint_letter.pdf) show a very strong relationship (confidence 0.97) based on 7 independent factor(s). Both items reference the same phones: +9779801122334, +9779847011223 [weight 1.80]. Both items reference the same khalti ids: +9779801122334 [weight 1.00]. Both items reference the same transaction ids: kh-2026-0611-77245 [weight 0.95]. Both items reference the same domains: esewa-cashback-offer.xyz [weight 0.60]. Both items reference the same money: npr 1500 [weight 0.20]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]. Threat intelligence flags the same malicious indicator(s) in both items: esewa-cashback-offer.xyz [weight 0.80]."
+            "confidence": 0.9582,
+            "explanation": "EVID_00011 (05_khalti_receipt.jpg) and EVID_00014 (08_complaint_letter.pdf) show a very strong relationship (confidence 0.96) based on 7 independent factor(s). Both items reference the same phones: +9779801122334, +9779847011223 [weight 1.53]. Both items reference the same khalti ids: +9779801122334 [weight 0.91]. Both items reference the same transaction ids: kh-2026-0611-77245 [weight 0.87]. Both items reference the same domains: esewa-cashback-offer.xyz [weight 0.51]. Both items reference the same money: npr 1500 [weight 0.06]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]. Threat intelligence flags the same malicious indicator(s) in both items: esewa-cashback-offer.xyz [weight 0.80]."
           },
           {
             "pair": "EVID_00008 <-> EVID_00014",
             "strength": "VERY_STRONG",
-            "confidence": 0.8514,
-            "explanation": "EVID_00008 (02_messenger_chat.jpg) and EVID_00014 (08_complaint_letter.pdf) show a very strong relationship (confidence 0.85) based on 5 independent factor(s). Both items reference the same emails: sunita.gurung21@gmail.com [weight 0.85]. Both items reference the same esewa ids: sunita.gurung21@gmail.com [weight 1.00]. Both items reference the same domains: gmail.com [weight 0.60]. Both items reference the same money: npr 200 [weight 0.20]. Acquired 0.2 hours apart (within the 48h proximity window) [weight 0.40]."
+            "confidence": 0.8111,
+            "explanation": "EVID_00008 (02_messenger_chat.jpg) and EVID_00014 (08_complaint_letter.pdf) show a very strong relationship (confidence 0.81) based on 5 independent factor(s). Both items reference the same emails: sunita.gurung21@gmail.com [weight 0.78]. Both items reference the same esewa ids: sunita.gurung21@gmail.com [weight 0.91]. Both items reference the same domains: gmail.com [weight 0.53]. Both items reference the same money: npr 200 [weight 0.05]. Acquired 0.2 hours apart (within the 48h proximity window) [weight 0.40]."
           },
           {
             "pair": "EVID_00013 <-> EVID_00014",
             "strength": "STRONG",
-            "confidence": 0.7837,
-            "explanation": "EVID_00013 (07_bank_transfer_slip.pdf) and EVID_00014 (08_complaint_letter.pdf) show a strong relationship (confidence 0.78) based on 4 independent factor(s). Both items reference the same phones: +9779847011223 [weight 0.90]. Both items reference the same transaction ids: mbl-2026-441829 [weight 0.95]. Both items reference the same money: npr 25000 [weight 0.20]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
+            "confidence": 0.7273,
+            "explanation": "EVID_00013 (07_bank_transfer_slip.pdf) and EVID_00014 (08_complaint_letter.pdf) show a strong relationship (confidence 0.73) based on 4 independent factor(s). Both items reference the same phones: +9779847011223 [weight 0.76]. Both items reference the same transaction ids: mbl-2026-441829 [weight 0.87]. Both items reference the same money: npr 25000 [weight 0.05]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
           },
           {
             "pair": "EVID_00009 <-> EVID_00014",
             "strength": "STRONG",
-            "confidence": 0.7135,
-            "explanation": "EVID_00009 (03_qr_code_flyer.png) and EVID_00014 (08_complaint_letter.pdf) show a strong relationship (confidence 0.71) based on 4 independent factor(s). Both items reference the same domains: esewa-cashback-offer.xyz [weight 0.60]. Both items reference the same money: npr 5000 [weight 0.20]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]. Threat intelligence flags the same malicious indicator(s) in both items: esewa-cashback-offer.xyz [weight 0.80]."
+            "confidence": 0.6654,
+            "explanation": "EVID_00009 (03_qr_code_flyer.png) and EVID_00014 (08_complaint_letter.pdf) show a strong relationship (confidence 0.67) based on 4 independent factor(s). Both items reference the same domains: esewa-cashback-offer.xyz [weight 0.51]. Both items reference the same money: npr 5000 [weight 0.04]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]. Threat intelligence flags the same malicious indicator(s) in both items: esewa-cashback-offer.xyz [weight 0.80]."
           },
           {
             "pair": "EVID_00009 <-> EVID_00011",
             "strength": "STRONG",
-            "confidence": 0.6753,
-            "explanation": "EVID_00009 (03_qr_code_flyer.png) and EVID_00011 (05_khalti_receipt.jpg) show a strong relationship (confidence 0.68) based on 3 independent factor(s). Both items reference the same domains: esewa-cashback-offer.xyz [weight 0.60]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]. Threat intelligence flags the same malicious indicator(s) in both items: esewa-cashback-offer.xyz [weight 0.80]."
+            "confidence": 0.6565,
+            "explanation": "EVID_00009 (03_qr_code_flyer.png) and EVID_00011 (05_khalti_receipt.jpg) show a strong relationship (confidence 0.66) based on 3 independent factor(s). Both items reference the same domains: esewa-cashback-offer.xyz [weight 0.51]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]. Threat intelligence flags the same malicious indicator(s) in both items: esewa-cashback-offer.xyz [weight 0.80]."
           }
         ]
       },
@@ -173,25 +173,13 @@
           {
             "other_case_id": "CASE_EE8250FB76",
             "relationship_strength": "VERY_STRONG",
-            "match_confidence": 0.9999,
-            "match_reason": "Shares 21 entity(ies) with CASE_EE8250FB76: bank account 05019012345678, domain esewa-cashback-offer.xyz, domain esewa-verify-kyc.com (+18 more)",
+            "match_confidence": 0.9997,
+            "match_reason": "Shares 21 entity(ies) with CASE_EE8250FB76: bank account 05019012345678, domain esewa-verify-kyc.com, email esewa.cashback99@gmail.com (+18 more). 17 of these are distinctive; the other 4 are common across the corpus and were discounted",
             "matched_entities": [
               {
                 "entity_type": "bank_accounts",
                 "value": "05019012345678",
                 "this_evidence_ids": [
-                  "EVID_00014"
-                ],
-                "other_evidence_ids": [
-                  "EVID_00005"
-                ]
-              },
-              {
-                "entity_type": "domains",
-                "value": "esewa-cashback-offer.xyz",
-                "this_evidence_ids": [
-                  "EVID_00009",
-                  "EVID_00011",
                   "EVID_00014"
                 ],
                 "other_evidence_ids": [
@@ -209,31 +197,9 @@
                 ]
               },
               {
-                "entity_type": "domains",
-                "value": "gmail.com",
-                "this_evidence_ids": [
-                  "EVID_00008",
-                  "EVID_00014"
-                ],
-                "other_evidence_ids": [
-                  "EVID_00005"
-                ]
-              },
-              {
                 "entity_type": "emails",
                 "value": "esewa.cashback99@gmail.com",
                 "this_evidence_ids": [
-                  "EVID_00014"
-                ],
-                "other_evidence_ids": [
-                  "EVID_00005"
-                ]
-              },
-              {
-                "entity_type": "emails",
-                "value": "sunita.gurung21@gmail.com",
-                "this_evidence_ids": [
-                  "EVID_00008",
                   "EVID_00014"
                 ],
                 "other_evidence_ids": [
@@ -261,6 +227,37 @@
                 ]
               },
               {
+                "entity_type": "transaction_ids",
+                "value": "case_2026_0088",
+                "this_evidence_ids": [
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "urls",
+                "value": "https://esewa-cashback-offer.xyz/claim",
+                "this_evidence_ids": [
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "emails",
+                "value": "sunita.gurung21@gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00008",
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
                 "entity_type": "esewa_ids",
                 "value": "sunita.gurung21@gmail.com",
                 "this_evidence_ids": [
@@ -276,6 +273,86 @@
                 "value": "+9779801122334",
                 "this_evidence_ids": [
                   "EVID_00011",
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "transaction_ids",
+                "value": "0119.0625.987456",
+                "this_evidence_ids": [
+                  "EVID_00010",
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "transaction_ids",
+                "value": "kh-2026-0611-77245",
+                "this_evidence_ids": [
+                  "EVID_00011",
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "transaction_ids",
+                "value": "mbl-2026-441829",
+                "this_evidence_ids": [
+                  "EVID_00013",
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "domains",
+                "value": "gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00008",
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "domains",
+                "value": "esewa-cashback-offer.xyz",
+                "this_evidence_ids": [
+                  "EVID_00009",
+                  "EVID_00011",
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "phones",
+                "value": "+9779801122334",
+                "this_evidence_ids": [
+                  "EVID_00011",
+                  "EVID_00012",
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "phones",
+                "value": "+9779847011223",
+                "this_evidence_ids": [
+                  "EVID_00011",
+                  "EVID_00013",
                   "EVID_00014"
                 ],
                 "other_evidence_ids": [
@@ -326,83 +403,6 @@
                 "other_evidence_ids": [
                   "EVID_00005"
                 ]
-              },
-              {
-                "entity_type": "phones",
-                "value": "+9779801122334",
-                "this_evidence_ids": [
-                  "EVID_00011",
-                  "EVID_00012",
-                  "EVID_00014"
-                ],
-                "other_evidence_ids": [
-                  "EVID_00005"
-                ]
-              },
-              {
-                "entity_type": "phones",
-                "value": "+9779847011223",
-                "this_evidence_ids": [
-                  "EVID_00011",
-                  "EVID_00013",
-                  "EVID_00014"
-                ],
-                "other_evidence_ids": [
-                  "EVID_00005"
-                ]
-              },
-              {
-                "entity_type": "transaction_ids",
-                "value": "0119.0625.987456",
-                "this_evidence_ids": [
-                  "EVID_00010",
-                  "EVID_00014"
-                ],
-                "other_evidence_ids": [
-                  "EVID_00005"
-                ]
-              },
-              {
-                "entity_type": "transaction_ids",
-                "value": "case_2026_0088",
-                "this_evidence_ids": [
-                  "EVID_00014"
-                ],
-                "other_evidence_ids": [
-                  "EVID_00005"
-                ]
-              },
-              {
-                "entity_type": "transaction_ids",
-                "value": "kh-2026-0611-77245",
-                "this_evidence_ids": [
-                  "EVID_00011",
-                  "EVID_00014"
-                ],
-                "other_evidence_ids": [
-                  "EVID_00005"
-                ]
-              },
-              {
-                "entity_type": "transaction_ids",
-                "value": "mbl-2026-441829",
-                "this_evidence_ids": [
-                  "EVID_00013",
-                  "EVID_00014"
-                ],
-                "other_evidence_ids": [
-                  "EVID_00005"
-                ]
-              },
-              {
-                "entity_type": "urls",
-                "value": "https://esewa-cashback-offer.xyz/claim",
-                "this_evidence_ids": [
-                  "EVID_00014"
-                ],
-                "other_evidence_ids": [
-                  "EVID_00005"
-                ]
               }
             ]
           }
@@ -411,7 +411,8 @@
       "campaign_analysis": {
         "campaign_count": 1,
         "unclustered_evidence": [
-          "EVID_00007"
+          "EVID_00007",
+          "EVID_00012"
         ],
         "campaigns": [
           {
@@ -421,19 +422,18 @@
               "EVID_00009",
               "EVID_00010",
               "EVID_00011",
-              "EVID_00012",
               "EVID_00013",
               "EVID_00014"
             ],
-            "confidence": 0.6856,
+            "confidence": 0.705,
             "signature": [
               "domains:esewa-cashback-offer.xyz",
               "money:npr 200",
-              "phones:+9779801122334",
               "phones:+9779847011223",
-              "dates:11 june 2026"
+              "dates:11 june 2026",
+              "domains:gmail.com"
             ],
-            "summary": "Campaign CAMP_CASE_185915593C_01 groups 7 evidence item(s) with mean link confidence 0.69. Shared indicators: domains:esewa-cashback-offer.xyz, money:npr 200, phones:+9779801122334, phones:+9779847011223, dates:11 june 2026. Impersonated/used brands: esewa, gmail, khalti. Active 2026-07-25T17:17:07.920Z to 2026-07-25T17:26:20.455Z."
+            "summary": "Campaign CAMP_CASE_185915593C_01 groups 6 evidence item(s) with mean link confidence 0.70. Shared indicators: domains:esewa-cashback-offer.xyz, money:npr 200, phones:+9779847011223, dates:11 june 2026, domains:gmail.com. Impersonated/used brands: esewa, gmail, khalti. Active 2026-07-25T17:17:07.920Z to 2026-07-25T17:26:20.455Z."
           }
         ]
       },
@@ -535,19 +535,19 @@
         {
           "suspect_id": "SUSPECT_CASE_185915593C_09",
           "identity": "khalti_ids:+9779801122334",
-          "confidence_score": 78.6,
+          "confidence_score": 78.4,
           "confidence_level": "HIGH",
           "risk_level": "HIGH",
           "evidence_ids": [
             "EVID_00011",
             "EVID_00014"
           ],
-          "explanation": "Suspect anchor '+9779801122334' (khalti_ids) scores 78.6/100 (HIGH, risk HIGH) across 2 evidence item(s): EVID_00011, EVID_00014. Identity strength: 100/100 (weight 0.25) - '+9779801122334' is a khalti_id - identity weight 100/100 for this anchor type. Evidence count: 50/100 (weight 0.20) - appears in 2 of 8 evidence item(s). Evidence confidence: 93/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 93/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'esewa-cashback-offer.xyz' in EVID_00011. Correlation strength: 97/100 (weight 0.15) - its 2 evidence items are inter-linked with mean correlation confidence 0.97 (strongest: VERY_STRONG). Timeline span: 0/100 (weight 0.10) - activity spans 0.0 day(s) across its evidence set. Co-occurring identity entities: phones:+9779801122334, phones:+9779847011223."
+          "explanation": "Suspect anchor '+9779801122334' (khalti_ids) scores 78.4/100 (HIGH, risk HIGH) across 2 evidence item(s): EVID_00011, EVID_00014. Identity strength: 100/100 (weight 0.25) - '+9779801122334' is a khalti_id - identity weight 100/100 for this anchor type. Evidence count: 50/100 (weight 0.20) - appears in 2 of 8 evidence item(s). Evidence confidence: 93/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 93/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'esewa-cashback-offer.xyz' in EVID_00011. Correlation strength: 96/100 (weight 0.15) - its 2 evidence items are inter-linked with mean correlation confidence 0.96 (strongest: VERY_STRONG). Timeline span: 0/100 (weight 0.10) - activity spans 0.0 day(s) across its evidence set. Co-occurring identity entities: phones:+9779801122334, phones:+9779847011223."
         },
         {
           "suspect_id": "SUSPECT_CASE_185915593C_12",
           "identity": "phones:+9779847011223",
-          "confidence_score": 77.1,
+          "confidence_score": 76.6,
           "confidence_level": "HIGH",
           "risk_level": "HIGH",
           "evidence_ids": [
@@ -555,24 +555,24 @@
             "EVID_00013",
             "EVID_00014"
           ],
-          "explanation": "Suspect anchor '+9779847011223' (phones) scores 77.1/100 (HIGH, risk HIGH) across 3 evidence item(s): EVID_00011, EVID_00013, EVID_00014. Identity strength: 85/100 (weight 0.25) - '+9779847011223' is a phone - identity weight 85/100 for this anchor type. Evidence count: 75/100 (weight 0.20) - appears in 3 of 8 evidence item(s). Evidence confidence: 95/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 95/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'esewa-cashback-offer.xyz' in EVID_00011. Correlation strength: 77/100 (weight 0.15) - its 3 evidence items are inter-linked with mean correlation confidence 0.77 (strongest: VERY_STRONG). Timeline span: 0/100 (weight 0.10) - activity spans 0.0 day(s) across its evidence set. Co-occurring identity entities: khalti_ids:+9779801122334, phones:+9779801122334."
+          "explanation": "Suspect anchor '+9779847011223' (phones) scores 76.6/100 (HIGH, risk HIGH) across 3 evidence item(s): EVID_00011, EVID_00013, EVID_00014. Identity strength: 85/100 (weight 0.25) - '+9779847011223' is a phone - identity weight 85/100 for this anchor type. Evidence count: 75/100 (weight 0.20) - appears in 3 of 8 evidence item(s). Evidence confidence: 95/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 95/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'esewa-cashback-offer.xyz' in EVID_00011. Correlation strength: 73/100 (weight 0.15) - its 3 evidence items are inter-linked with mean correlation confidence 0.73 (strongest: VERY_STRONG). Timeline span: 0/100 (weight 0.10) - activity spans 0.0 day(s) across its evidence set. Co-occurring identity entities: khalti_ids:+9779801122334, phones:+9779801122334."
         },
         {
           "suspect_id": "SUSPECT_CASE_185915593C_08",
           "identity": "esewa_ids:sunita.gurung21@gmail.com",
-          "confidence_score": 76.8,
+          "confidence_score": 76.2,
           "confidence_level": "HIGH",
           "risk_level": "HIGH",
           "evidence_ids": [
             "EVID_00008",
             "EVID_00014"
           ],
-          "explanation": "Suspect anchor 'sunita.gurung21@gmail.com' (esewa_ids) scores 76.8/100 (HIGH, risk HIGH) across 2 evidence item(s): EVID_00008, EVID_00014. Identity strength: 100/100 (weight 0.25) - 'sunita.gurung21@gmail.com' is a esewa_id - identity weight 100/100 for this anchor type. Evidence count: 50/100 (weight 0.20) - appears in 2 of 8 evidence item(s). Evidence confidence: 93/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 93/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00014. Correlation strength: 85/100 (weight 0.15) - its 2 evidence items are inter-linked with mean correlation confidence 0.85 (strongest: VERY_STRONG). Timeline span: 0/100 (weight 0.10) - activity spans 0.0 day(s) across its evidence set. Co-occurring identity entities: emails:sunita.gurung21@gmail.com."
+          "explanation": "Suspect anchor 'sunita.gurung21@gmail.com' (esewa_ids) scores 76.2/100 (HIGH, risk HIGH) across 2 evidence item(s): EVID_00008, EVID_00014. Identity strength: 100/100 (weight 0.25) - 'sunita.gurung21@gmail.com' is a esewa_id - identity weight 100/100 for this anchor type. Evidence count: 50/100 (weight 0.20) - appears in 2 of 8 evidence item(s). Evidence confidence: 93/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 93/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00014. Correlation strength: 81/100 (weight 0.15) - its 2 evidence items are inter-linked with mean correlation confidence 0.81 (strongest: VERY_STRONG). Timeline span: 0/100 (weight 0.10) - activity spans 0.0 day(s) across its evidence set. Co-occurring identity entities: emails:sunita.gurung21@gmail.com."
         },
         {
           "suspect_id": "SUSPECT_CASE_185915593C_11",
           "identity": "phones:+9779801122334",
-          "confidence_score": 75.2,
+          "confidence_score": 74.8,
           "confidence_level": "HIGH",
           "risk_level": "HIGH",
           "evidence_ids": [
@@ -580,19 +580,19 @@
             "EVID_00012",
             "EVID_00014"
           ],
-          "explanation": "Suspect anchor '+9779801122334' (phones) scores 75.2/100 (HIGH, risk HIGH) across 3 evidence item(s): EVID_00011, EVID_00012, EVID_00014. Identity strength: 85/100 (weight 0.25) - '+9779801122334' is a phone - identity weight 85/100 for this anchor type. Evidence count: 75/100 (weight 0.20) - appears in 3 of 8 evidence item(s). Evidence confidence: 90/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 90/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'esewa-cashback-offer.xyz' in EVID_00011. Correlation strength: 70/100 (weight 0.15) - its 3 evidence items are inter-linked with mean correlation confidence 0.70 (strongest: VERY_STRONG). Timeline span: 0/100 (weight 0.10) - activity spans 0.0 day(s) across its evidence set. Co-occurring identity entities: khalti_ids:+9779801122334, phones:+9779847011223."
+          "explanation": "Suspect anchor '+9779801122334' (phones) scores 74.8/100 (HIGH, risk HIGH) across 3 evidence item(s): EVID_00011, EVID_00012, EVID_00014. Identity strength: 85/100 (weight 0.25) - '+9779801122334' is a phone - identity weight 85/100 for this anchor type. Evidence count: 75/100 (weight 0.20) - appears in 3 of 8 evidence item(s). Evidence confidence: 90/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 90/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'esewa-cashback-offer.xyz' in EVID_00011. Correlation strength: 66/100 (weight 0.15) - its 3 evidence items are inter-linked with mean correlation confidence 0.66 (strongest: VERY_STRONG). Timeline span: 0/100 (weight 0.10) - activity spans 0.0 day(s) across its evidence set. Co-occurring identity entities: khalti_ids:+9779801122334, phones:+9779847011223."
         },
         {
           "suspect_id": "SUSPECT_CASE_185915593C_05",
           "identity": "emails:sunita.gurung21@gmail.com",
-          "confidence_score": 70.5,
+          "confidence_score": 69.9,
           "confidence_level": "HIGH",
           "risk_level": "HIGH",
           "evidence_ids": [
             "EVID_00008",
             "EVID_00014"
           ],
-          "explanation": "Suspect anchor 'sunita.gurung21@gmail.com' (emails) scores 70.5/100 (HIGH, risk HIGH) across 2 evidence item(s): EVID_00008, EVID_00014. Identity strength: 75/100 (weight 0.25) - 'sunita.gurung21@gmail.com' is a email - identity weight 75/100 for this anchor type. Evidence count: 50/100 (weight 0.20) - appears in 2 of 8 evidence item(s). Evidence confidence: 93/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 93/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00014. Correlation strength: 85/100 (weight 0.15) - its 2 evidence items are inter-linked with mean correlation confidence 0.85 (strongest: VERY_STRONG). Timeline span: 0/100 (weight 0.10) - activity spans 0.0 day(s) across its evidence set. Co-occurring identity entities: esewa_ids:sunita.gurung21@gmail.com."
+          "explanation": "Suspect anchor 'sunita.gurung21@gmail.com' (emails) scores 69.9/100 (HIGH, risk HIGH) across 2 evidence item(s): EVID_00008, EVID_00014. Identity strength: 75/100 (weight 0.25) - 'sunita.gurung21@gmail.com' is a email - identity weight 75/100 for this anchor type. Evidence count: 50/100 (weight 0.20) - appears in 2 of 8 evidence item(s). Evidence confidence: 93/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 93/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00014. Correlation strength: 81/100 (weight 0.15) - its 2 evidence items are inter-linked with mean correlation confidence 0.81 (strongest: VERY_STRONG). Timeline span: 0/100 (weight 0.10) - activity spans 0.0 day(s) across its evidence set. Co-occurring identity entities: esewa_ids:sunita.gurung21@gmail.com."
         },
         {
           "suspect_id": "SUSPECT_CASE_185915593C_02",
@@ -653,178 +653,123 @@
       "threat_intelligence_summary": {
         "intel_available": 1.0,
         "indicators_checked": 7.0,
-        "malicious_indicators": 6.0,
+        "malicious_indicators": 5.0,
         "suspicious_indicators": 0.0,
-        "benign_indicators": 1.0,
+        "benign_indicators": 2.0,
         "evidence_with_threats": 4.0,
         "threat_evidence_ratio": 0.5
       },
       "model_predictions": {
         "indicators_classified": 5,
-        "flagged_malicious": 4,
+        "flagged_malicious": 3,
         "predictions": [
           {
             "indicator": "https://esewa-cashback-offer.xyz/claim?ref=DsN2026",
             "evidence_id": "EVID_00009",
             "verdict": "malicious",
-            "risk_score": 83,
-            "confidence": 0.83,
-            "risk_level": "Critical",
-            "source": "ml:xgboost",
-            "model_version": "4.0.0",
+            "risk_score": 100,
+            "confidence": 1.0,
+            "risk_level": "malicious",
+            "source": "heuristics",
+            "model_version": "",
             "domain": "esewa-cashback-offer.xyz",
-            "trust_score": 20,
+            "brand_impersonated": "esewa",
             "official_domain": false,
-            "ssl_status": "UNKNOWN",
-            "spf_present": false,
-            "dmarc_present": false,
             "reasons": [
-              "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
-              "AI model classified this URL as phishing with 100% confidence.",
-              "The top-level domain is frequently associated with phishing and spam campaigns (risk score: 0.7).",
-              "SSL status could not be verified.",
-              "The domain or URL has high character entropy, suggesting a randomly-generated string often used in phishing.",
-              "The URL contains suspicious keyword(s) associated with phishing."
+              "hostname contains the brand 'esewa' but is not an official esewa domain",
+              "registered under '.xyz', a TLD with a high abuse rate",
+              "reward/prize wording in the link: cashback, claim, offer"
             ],
             "threat_signals": [
-              "✗ Missing SPF record (facilitates email spoofing)",
-              "✗ Missing DMARC record (facilitates email spoofing)",
-              "✗ High-abuse top-level domain",
-              "✗ High character entropy (suspicious random string)",
-              "✗ Phishing-associated keyword(s) in URL"
+              "hostname contains the brand 'esewa' but is not an official esewa domain",
+              "registered under '.xyz', a TLD with a high abuse rate",
+              "reward/prize wording in the link: cashback, claim, offer"
             ]
           },
           {
             "indicator": "esewa.cashbacko90gmail.com",
             "evidence_id": "EVID_00010",
             "verdict": "malicious",
-            "risk_score": 79,
-            "confidence": 0.79,
-            "risk_level": "High",
-            "source": "ml:xgboost",
-            "model_version": "4.0.0",
+            "risk_score": 75,
+            "confidence": 0.75,
+            "risk_level": "malicious",
+            "source": "heuristics",
+            "model_version": "",
             "domain": "esewa.cashbacko90gmail.com",
-            "trust_score": 50,
+            "brand_impersonated": "esewa",
             "official_domain": false,
-            "ssl_status": "UNKNOWN",
-            "spf_present": false,
-            "dmarc_present": false,
             "reasons": [
-              "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
-              "AI model classified this URL as phishing with 100% confidence.",
-              "SSL status could not be verified.",
-              "The URL does not use HTTPS, meaning data is transmitted without encryption.",
-              "The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure.",
-              "Brand 'Google' referenced in hostname, but registrable domain 'cashbacko90gmail.com' does not belong to the official Google infrastructure."
+              "hostname contains the brand 'esewa' but is not an official esewa domain",
+              "reward/prize wording in the link: cashback"
             ],
             "threat_signals": [
-              "✗ Plain HTTP protocol used (unencrypted connections)",
-              "✗ Missing SPF record (facilitates email spoofing)",
-              "✗ Missing DMARC record (facilitates email spoofing)"
-            ]
-          },
-          {
-            "indicator": "sunita.gurung216gmail.com",
-            "evidence_id": "EVID_00010",
-            "verdict": "malicious",
-            "risk_score": 79,
-            "confidence": 0.79,
-            "risk_level": "High",
-            "source": "ml:xgboost",
-            "model_version": "4.0.0",
-            "domain": "sunita.gurung216gmail.com",
-            "trust_score": 50,
-            "official_domain": false,
-            "ssl_status": "UNKNOWN",
-            "spf_present": false,
-            "dmarc_present": false,
-            "reasons": [
-              "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
-              "AI model classified this URL as phishing with 100% confidence.",
-              "SSL status could not be verified.",
-              "The URL does not use HTTPS, meaning data is transmitted without encryption.",
-              "The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure.",
-              "Brand 'Google' referenced in hostname, but registrable domain 'gurung216gmail.com' does not belong to the official Google infrastructure."
-            ],
-            "threat_signals": [
-              "✗ Plain HTTP protocol used (unencrypted connections)",
-              "✗ Missing SPF record (facilitates email spoofing)",
-              "✗ Missing DMARC record (facilitates email spoofing)"
+              "hostname contains the brand 'esewa' but is not an official esewa domain",
+              "reward/prize wording in the link: cashback"
             ]
           },
           {
             "indicator": "esewa-verify-kyc.com",
             "evidence_id": "EVID_00014",
             "verdict": "malicious",
-            "risk_score": 79,
-            "confidence": 0.79,
-            "risk_level": "High",
-            "source": "ml:xgboost",
-            "model_version": "4.0.0",
+            "risk_score": 75,
+            "confidence": 0.75,
+            "risk_level": "malicious",
+            "source": "heuristics",
+            "model_version": "",
             "domain": "esewa-verify-kyc.com",
-            "trust_score": 50,
+            "brand_impersonated": "esewa",
             "official_domain": false,
-            "ssl_status": "UNKNOWN",
-            "spf_present": false,
-            "dmarc_present": false,
             "reasons": [
-              "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
-              "AI model classified this URL as phishing with 100% confidence.",
-              "SSL status could not be verified.",
-              "The URL does not use HTTPS, meaning data is transmitted without encryption.",
-              "The URL contains suspicious keyword(s) associated with phishing.",
-              "The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure."
+              "hostname contains the brand 'esewa' but is not an official esewa domain",
+              "credential/verification wording in the link: kyc, verify"
             ],
             "threat_signals": [
-              "✗ Plain HTTP protocol used (unencrypted connections)",
-              "✗ Missing SPF record (facilitates email spoofing)",
-              "✗ Missing DMARC record (facilitates email spoofing)",
-              "✗ Phishing-associated keyword(s) in URL"
+              "hostname contains the brand 'esewa' but is not an official esewa domain",
+              "credential/verification wording in the link: kyc, verify"
             ]
           },
           {
             "indicator": "gmail.com",
             "evidence_id": "EVID_00008",
             "verdict": "benign",
-            "risk_score": 20,
-            "confidence": 0.8,
-            "risk_level": "Low",
-            "source": "ml:xgboost",
-            "model_version": "4.0.0",
+            "risk_score": 0,
+            "confidence": 0.0,
+            "risk_level": "benign",
+            "source": "heuristics",
+            "model_version": "",
             "domain": "gmail.com",
-            "trust_score": 100,
-            "brand_impersonated": "google",
             "official_domain": true,
-            "ssl_status": "VALID",
-            "domain_age_days": 11304,
-            "registrar": "MarkMonitor, Inc.",
-            "spf_present": true,
-            "dmarc_present": true,
-            "ssl_days_left": 57,
-            "hosting": "Google LLC, United States",
-            "ip_address": "192.178.174.83",
             "reasons": [
-              "The hybrid decision engine confirmed this URL is legitimate based on trusted signals and ML model agreement.",
-              "The URL does not use HTTPS, meaning data is transmitted without encryption."
-            ],
-            "threat_signals": [
-              "✗ Plain HTTP protocol used (unencrypted connections)"
+              "gmail.com is an official gmail domain"
             ],
             "trust_signals": [
-              "✓ Official registered domain of trusted brand: google",
-              "✓ Valid SSL certificate",
-              "✓ HTTPS Strict-Transport-Security (HSTS) active",
-              "✓ Established domain age (30.9 years old)",
-              "✓ Registered with trusted registrar (MarkMonitor, Inc.)",
-              "✓ SPF email authentication configured"
+              "gmail.com is an official gmail domain"
+            ]
+          },
+          {
+            "indicator": "sunita.gurung216gmail.com",
+            "evidence_id": "EVID_00010",
+            "verdict": "benign",
+            "risk_score": 0,
+            "confidence": 0.0,
+            "risk_level": "benign",
+            "source": "heuristics",
+            "model_version": "",
+            "domain": "sunita.gurung216gmail.com",
+            "official_domain": false,
+            "reasons": [
+              "no risk signal matched"
+            ],
+            "trust_signals": [
+              "no risk signal matched"
             ]
           }
         ]
       },
       "evidence_quality_summary": {
-        "mean_image_quality": 66.38,
+        "mean_image_quality": 65.17,
         "mean_evidence_confidence": 90.19,
-        "mean_forgery_score": 17.18,
+        "mean_forgery_score": 18.31,
         "max_forgery_score": 25.2,
         "mean_ocr_confidence": 0.91,
         "hash_verified_count": 8.0
@@ -915,10 +860,10 @@
         },
         "campaign_statistics": {
           "campaign_count": 1.0,
-          "largest_campaign_size": 7.0,
-          "clustered_evidence": 7.0,
-          "unclustered_evidence": 1.0,
-          "mean_campaign_confidence": 0.6856
+          "largest_campaign_size": 6.0,
+          "clustered_evidence": 6.0,
+          "unclustered_evidence": 2.0,
+          "mean_campaign_confidence": 0.705
         },
         "timeline_statistics": {
           "event_count": 8.0,
@@ -932,8 +877,8 @@
         "correlation_statistics": {
           "pair_count": 28.0,
           "related_pair_count": 28.0,
-          "mean_confidence": 0.3903,
-          "max_confidence": 0.9725
+          "mean_confidence": 0.3747,
+          "max_confidence": 0.9582
         }
       },
       "confidence_analysis": [
@@ -990,40 +935,36 @@
         "8/8 evidence item(s) passed SHA-256 chain-of-custody verification.",
         "The evidence set is internally connected (28 weighted relationship(s)), consistent with related activity rather than isolated incidents.",
         "1 campaign cluster(s) indicate coordinated operation.",
-        "Investigation should focus on anchor '+9779801122334' (79/100 confidence).",
+        "Investigation should focus on anchor '+9779801122334' (78/100 confidence).",
         "Observed stage order deviates from the canonical scam sequence; evidence acquisition order should be reviewed."
       ],
       "recommendations": [
-        "1. Preserve and take down 'esewa-cashback-offer.xyz' (risk 83/100). Serve the registrar/host with a preservation request before takedown so logs survive. Grounds: The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.; AI model classified this URL as phishing with 100% confidence.. Seen as: https://esewa-cashback-offer.xyz/claim, https://esewa-cashback-offer.xyz/claim?ref=dsn2026. Appears in: EVID_00009, EVID_00011, EVID_00014.",
-        "2. Preserve and take down 'esewa-verify-kyc.com' (risk 79/100). Serve the registrar/host with a preservation request before takedown so logs survive. Grounds: The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.; AI model classified this URL as phishing with 100% confidence.. Appears in: EVID_00014.",
-        "3. Preserve and take down 'esewa.cashbacko90gmail.com' (risk 79/100). Serve the registrar/host with a preservation request before takedown so logs survive. Grounds: The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.; AI model classified this URL as phishing with 100% confidence.. Appears in: EVID_00010.",
-        "4. Preserve and take down 'sunita.gurung216gmail.com' (risk 79/100). Serve the registrar/host with a preservation request before takedown so logs survive. Grounds: The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.; AI model classified this URL as phishing with 100% confidence.. Appears in: EVID_00010.",
-        "5. Request wallet KYC and transaction history from eSewa Ltd (F1Soft) for esewa ids: 'sunita.gurung21@gmail.com', 'esewa.cashback99@gmail.com'. The receiving account's KYC identity is the most direct route to the perpetrator.",
-        "6. Request wallet KYC and transaction history from Khalti / Sparrow Pay Pvt Ltd for khalti ids: '+9779801122334', '+9779847011223'. The receiving account's KYC identity is the most direct route to the perpetrator.",
-        "7. Request account opening documents and statement of the transaction window from the account-holding bank for bank accounts: '05010198765432', '9847011223', '05019012345678'. The receiving account's KYC identity is the most direct route to the perpetrator.",
-        "8. Cite transaction reference(s) 'dsn2026', '0119.0625.987456', 'kh-2026-0611-77245', 'mbl-2026-441829', '0sn2026' in every records request - providers can locate a transaction by code far faster than by account, and the code binds victim payment to recipient account in one record.",
-        "9. Pursue subscriber/KYC records for khalti_id '+9779801122334' (suspect confidence 79/100, appears in 2 evidence item(s)).",
-        "10. Pursue subscriber/KYC records for phone '+9779847011223' (suspect confidence 77/100, appears in 3 evidence item(s)).",
-        "11. Pursue subscriber/KYC records for esewa_id 'sunita.gurung21@gmail.com' (suspect confidence 77/100, appears in 2 evidence item(s)).",
-        "12. Treat campaign CAMP_CASE_185915593C_01 as one operation: its 7 evidence items share esewa-cashback-offer.xyz, gmail.com. Request registrar and hosting records once, for the whole cluster.",
-        "13. Review the 7 critical timeline event(s) (OTP/credential/payment moments) with the complainant: they mark exactly when compromise and loss occurred, and anchor the victim-impact statement.",
-        "14. Case priority: CRITICAL (76.4/100) - Immediate escalation recommended: assign a lead investigator and initiate legal preservation requests now."
+        "Get the fake website(s) shut down: esewa-cashback-offer.xyz, esewa-verify-kyc.com (+1 more). Ask the hosting company to save its records first.",
+        "Tell eSewa their name is being used in this scam, so they can warn other customers.",
+        "Ask eSewa who owns these wallets (KYC) and their payment history: sunita.gurung21@gmail.com, esewa.cashback99@gmail.com.",
+        "Ask Khalti who owns these wallets (KYC) and their payment history: +9779801122334, +9779847011223.",
+        "Ask the bank who owns these accounts and their statements: 05010198765432, 9847011223 (+1 more).",
+        "Include these payment reference numbers in those requests so the transfers are easy to find: DSN2026, 0119.0625.987456, KH-2026-0611-77245.",
+        "Ask the phone/wallet company who is registered to +9779801122334, +9779847011223 - it appears again and again across this evidence.",
+        "Treat 6 of the items as one scam operation rather than 6 separate incidents - they share the same website.",
+        "Go through the 7 key moment(s) - when money moved and codes were shared - with the victim, and record what they lost.",
+        "Act on this case first (rated 76 out of 100)."
       ],
       "report_provenance": {
-        "report_id": "RPT-185915593C-FF5F30AC",
-        "generated_at": "2026-07-25T17:26:36.514Z",
+        "report_id": "RPT-185915593C-F9FFEAA4",
+        "generated_at": "2026-08-02T14:26:09.941Z",
         "generator": "CIIS Phase-2 reporting module (template-over-data; no free-text generation)",
         "evidence_set_digest": "623b9e5e28815e86892679dc56e1ac545ea1fddc4590023db83275c6bf9c8b61",
         "evidence_set_digest_note": "SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.",
         "source_artifact_hashes": {
-          "correlation_analysis.json": "e5c197af794ab9e2f06158bd25ad68b8321acd074c9679a243c343cd13ca6345",
-          "cross_case_correlation.json": "4dc1da64d8bd825e2a5e59c2c841944aede48605ca04e673c0011e9b5aea3107",
-          "campaign_analysis.json": "b8935a9c3f964079be1775288da979e57f32437332f8c637dac3a91eb0288d47",
-          "suspect_assessment.json": "7288232a02d9c8fb599819875821cb3a5a27b577d870c831b19705a1fa2cedfd",
-          "timeline_analysis.json": "6819edf5b28462117f82f6cdbc04200af6fe6a84f5fb86d769a6e6c6bd705287",
-          "analytics.json": "39545ae349448877b077b6653e6dfe77c759e5ca6bf6f09f2592f3654768700d",
-          "case_priority.json": "3e5605a59283c3f975a8e266e222a1a2ef2de3aa74adc8d2b49afbbebd19c593",
-          "graph.json": "90901996c2a2845e37aad18e1051523d7c03192036cd700e7270fcff7a7455f6"
+          "correlation_analysis.json": "4155b11fdef420257a0a0dcd45763e4db8a86f5ad8e31ff9137a5e45ce3d1d51",
+          "cross_case_correlation.json": "6c8cbdab6be9648cf3032751b970704e2ff3e344ea2cca1d0556888bbc7ac14d",
+          "campaign_analysis.json": "e26ff8f213288bcdcc0496c2640fcecb356a16efc41a5d1abb87072f58d9077d",
+          "suspect_assessment.json": "9d07e8a9d09b75c24566f224f62e173620d4693e5b5635aba88539f5297068fc",
+          "timeline_analysis.json": "d8f9e09de06f3bffa07c9bcfc5ff38d3b2e1a1cc99bdb711024c6fde4ffb1edd",
+          "analytics.json": "ea39d001a6aa0a5564157edd4d4376fd9b0872792576cecad46ca91401dad0e3",
+          "case_priority.json": "5581713288fdc89a0a7f70c279cd7eafe00d2b3909cbdb7ca382211bbc88eeef",
+          "graph.json": "0879dda60dcdcfac7e2c4aecec094063aedf4dfb920c54cfecda9597be7710ec"
         }
       },
       "appendix": {

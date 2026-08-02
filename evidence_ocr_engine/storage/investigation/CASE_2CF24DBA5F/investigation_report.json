@@ -1,21 +1,20 @@
 {
   "report_type": "investigation_report",
-  "report_version": 9,
+  "report_version": 6,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-07-25T15:02:04.157Z",
+  "generated_at": "2026-08-02T14:26:08.737Z",
   "report": {
-    "report_id": "RPT-2CF24DBA5F-D9E0D0C0",
+    "report_id": "RPT-2CF24DBA5F-EE5F9A2D",
     "sections": {
       "executive_summary": [
-        "Case CASE_2CF24DBA5F contains 5 evidence item(s), each acquired under SHA-256 chain-of-custody verification.",
-        "The weighted correlation engine found 10 related evidence pair(s) out of 10 analysed [correlation_analysis.json].",
-        "The strongest suspect anchor is 'security@nabil-bank-alerts.com' (emails) with confidence 54/100 [suspect_assessment.json].",
-        "Observed attack progression: initial_contact -> financial_transaction -> post_attack -> social_engineering -> credential_theft [timeline_analysis.json]."
+        "Case CASE_2CF24DBA5F contains 4 evidence item(s), each acquired under SHA-256 chain-of-custody verification.",
+        "The weighted correlation engine found 6 related evidence pair(s) out of 6 analysed [correlation_analysis.json].",
+        "Observed attack progression: financial_transaction -> post_attack -> initial_contact -> social_engineering -> credential_theft [timeline_analysis.json]."
       ],
       "scope_and_methodology": {
         "objective": "Acquire, verify, correlate and reconstruct the digital evidence for this case, and derive investigative leads (suspect anchors, campaigns, cross-case links) strictly from stored, hash-verified artifacts.",
-        "evidence_scope": "5 evidence item(s) acquired through the CIIS intake pipeline under SHA-256 chain-of-custody control.",
+        "evidence_scope": "4 evidence item(s) acquired through the CIIS intake pipeline under SHA-256 chain-of-custody control.",
         "methodology": [
           "Phase 1 - Acquisition & OCR: PaddleOCR PP-OCRv5 text extraction with per-item confidence scoring; SHA-256 fingerprint recorded at intake and re-verified at read.",
           "Phase 1 - Forensics: metadata/EXIF consistency, forgery signals, logo detection and evidence-confidence scoring stored per item under storage/forensics/.",
@@ -29,105 +28,93 @@
       },
       "case_overview": {
         "case_id": "CASE_2CF24DBA5F",
-        "evidence_count": 5,
-        "first_evidence": "2026-07-25T14:22:38.355Z",
-        "last_evidence": "2026-07-25T14:24:07.592Z",
+        "evidence_count": 4,
+        "first_evidence": "2026-07-25T12:50:00.695Z",
+        "last_evidence": "2026-07-25T12:53:47.011Z",
         "file_types": [
           "jpg",
-          "pdf",
           "png",
-          "txt",
-          "url"
+          "txt"
         ]
       },
       "evidence_summary": [
         {
           "evidence_id": "EVID_00001",
-          "file_name": "https_plasticostermoencogibles.pe_scss_css_scss_.url",
-          "upload_time": "2026-07-25T14:22:38.355Z",
-          "sha256": "fab44e99bd90f1ffe214d4d2bb6580e4c0d52f5fe930e773d96cf92ee820a2f5",
+          "file_name": "yeti.jpg",
+          "upload_time": "2026-07-25T12:50:00.695Z",
+          "sha256": "8f2e60ea6fc0eeffd209e28eb29228797104b60a2505934fc3d42642c100ea79",
           "hash_verified": true,
           "ocr_confidence": 1.0,
-          "evidence_confidence_score": "not available",
-          "entity_count": 2
+          "evidence_confidence_score": 77.5,
+          "entity_count": 5
         },
         {
           "evidence_id": "EVID_00002",
-          "file_name": "police_scan_report.pdf",
-          "upload_time": "2026-07-25T14:23:23.722Z",
-          "sha256": "63b677916b711ece64fc71292577dfb70a2385c2de817cd0200f86d777b0b350",
-          "hash_verified": true,
-          "ocr_confidence": 1.0,
-          "evidence_confidence_score": "not available",
-          "entity_count": 1
-        },
-        {
-          "evidence_id": "EVID_00003",
-          "file_name": "phishing_email_screenshot.png",
-          "upload_time": "2026-07-25T14:23:26.295Z",
-          "sha256": "8ef0f27a84960b656d9051892e36096ce56fe9f30eb9a935d4d4330a002b9b7f",
-          "hash_verified": true,
-          "ocr_confidence": 0.9859,
-          "evidence_confidence_score": "not available",
-          "entity_count": 4
-        },
-        {
-          "evidence_id": "EVID_00004",
-          "file_name": "const.jpg",
-          "upload_time": "2026-07-25T14:23:41.798Z",
-          "sha256": "d07bcc76b5d280385a06f106c083edc33bff69e82ac63fddf8c433f6b4a5fc02",
-          "hash_verified": true,
-          "ocr_confidence": 0.9014,
-          "evidence_confidence_score": "not available",
-          "entity_count": 0
-        },
-        {
-          "evidence_id": "EVID_00005",
           "file_name": "whatsapp_chat_export.txt",
-          "upload_time": "2026-07-25T14:24:07.592Z",
+          "upload_time": "2026-07-25T12:53:07.182Z",
           "sha256": "c7ab347cfbd2b80c944c85b3442f3b2c400da1d3b92962f9ded8598e1e06cfb2",
           "hash_verified": true,
           "ocr_confidence": 1.0,
-          "evidence_confidence_score": "not available",
-          "entity_count": 5
+          "evidence_confidence_score": 82.5,
+          "entity_count": 2
+        },
+        {
+          "evidence_id": "EVID_00003",
+          "file_name": "romanchat.jpg",
+          "upload_time": "2026-07-25T12:53:23.174Z",
+          "sha256": "0340d5863313f4cc0b9b40ed835a77a71b8304d2e08eb32f08a56ed93a6e0b10",
+          "hash_verified": true,
+          "ocr_confidence": 0.9859,
+          "evidence_confidence_score": 77.5,
+          "entity_count": 0
+        },
+        {
+          "evidence_id": "EVID_00004",
+          "file_name": "phishing_email_screenshot.png",
+          "upload_time": "2026-07-25T12:53:47.011Z",
+          "sha256": "8ef0f27a84960b656d9051892e36096ce56fe9f30eb9a935d4d4330a002b9b7f",
+          "hash_verified": true,
+          "ocr_confidence": 0.9014,
+          "evidence_confidence_score": 77.5,
+          "entity_count": 0
         }
       ],
       "correlation_analysis": {
-        "pair_count": 10,
-        "related_pair_count": 10,
+        "pair_count": 6,
+        "related_pair_count": 6,
         "strength_distribution": {
-          "WEAK": 10
+          "WEAK": 6
         },
         "top_relationships": [
           {
             "pair": "EVID_00001 <-> EVID_00002",
             "strength": "WEAK",
-            "confidence": 0.2212,
-            "explanation": "EVID_00001 (https_plasticostermoencogibles.pe_scss_css_scss_.url) and EVID_00002 (police_scan_report.pdf) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+            "confidence": 0.2431,
+            "explanation": "EVID_00001 (yeti.jpg) and EVID_00002 (whatsapp_chat_export.txt) show a weak relationship (confidence 0.24) based on 2 independent factor(s). Both items reference the same money: npr 2000 [weight 0.05]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
           },
           {
             "pair": "EVID_00001 <-> EVID_00003",
             "strength": "WEAK",
             "confidence": 0.2212,
-            "explanation": "EVID_00001 (https_plasticostermoencogibles.pe_scss_css_scss_.url) and EVID_00003 (phishing_email_screenshot.png) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+            "explanation": "EVID_00001 (yeti.jpg) and EVID_00003 (romanchat.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
           },
           {
             "pair": "EVID_00001 <-> EVID_00004",
             "strength": "WEAK",
             "confidence": 0.2212,
-            "explanation": "EVID_00001 (https_plasticostermoencogibles.pe_scss_css_scss_.url) and EVID_00004 (const.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
-          },
-          {
-            "pair": "EVID_00001 <-> EVID_00005",
-            "strength": "WEAK",
-            "confidence": 0.2212,
-            "explanation": "EVID_00001 (https_plasticostermoencogibles.pe_scss_css_scss_.url) and EVID_00005 (whatsapp_chat_export.txt) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+            "explanation": "EVID_00001 (yeti.jpg) and EVID_00004 (phishing_email_screenshot.png) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
           },
           {
             "pair": "EVID_00002 <-> EVID_00003",
             "strength": "WEAK",
             "confidence": 0.2212,
-            "explanation": "EVID_00002 (police_scan_report.pdf) and EVID_00003 (phishing_email_screenshot.png) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+            "explanation": "EVID_00002 (whatsapp_chat_export.txt) and EVID_00003 (romanchat.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+          },
+          {
+            "pair": "EVID_00002 <-> EVID_00004",
+            "strength": "WEAK",
+            "confidence": 0.2212,
+            "explanation": "EVID_00002 (whatsapp_chat_export.txt) and EVID_00004 (phishing_email_screenshot.png) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
           }
         ]
       },
@@ -138,17 +125,16 @@
           "EVID_00001",
           "EVID_00002",
           "EVID_00003",
-          "EVID_00004",
-          "EVID_00005"
+          "EVID_00004"
         ],
         "campaigns": []
       },
       "timeline_analysis": {
-        "summary": "5 event(s) spanning 4853.2 hour(s); 0 timestamp(s) unresolved. Observed scam progression: initial_contact -> financial_transaction -> post_attack -> social_engineering -> credential_theft.",
+        "summary": "4 event(s) spanning 4851.7 hour(s); 0 timestamp(s) unresolved. Observed scam progression: financial_transaction -> post_attack -> initial_contact -> social_engineering -> credential_theft.",
         "stage_progression": [
-          "initial_contact",
           "financial_transaction",
           "post_attack",
+          "initial_contact",
           "social_engineering",
           "credential_theft"
         ],
@@ -159,271 +145,203 @@
             "description": "Investigation start - first reconstructed evidence event"
           },
           {
-            "timestamp": "2026-01-04T09:12:00+00:00",
-            "description": "First observation of stage 'initial_contact' (EVID_00005)"
+            "timestamp": "2026-07-25T12:53:07.182000+00:00",
+            "description": "First observation of stage 'financial_transaction' (EVID_00002)"
           },
           {
-            "timestamp": "2026-01-04T09:12:00+00:00",
-            "description": "First observation of stage 'financial_transaction' (EVID_00005)"
-          },
-          {
-            "timestamp": "2026-07-25T14:23:23.722000+00:00",
+            "timestamp": "2026-07-25T12:53:07.182000+00:00",
             "description": "First observation of stage 'post_attack' (EVID_00002)"
           },
           {
-            "timestamp": "2026-07-25T14:23:26.295000+00:00",
+            "timestamp": "2026-07-25T12:53:23.174000+00:00",
+            "description": "First observation of stage 'initial_contact' (EVID_00003)"
+          },
+          {
+            "timestamp": "2026-07-25T12:53:23.174000+00:00",
             "description": "First observation of stage 'social_engineering' (EVID_00003)"
           },
           {
-            "timestamp": "2026-07-25T14:23:26.295000+00:00",
+            "timestamp": "2026-07-25T12:53:23.174000+00:00",
             "description": "First observation of stage 'credential_theft' (EVID_00003)"
           }
         ],
         "critical_events": [
           {
             "timestamp": "2026-01-04T09:12:00+00:00",
-            "evidence_id": "EVID_00005",
+            "evidence_id": "EVID_00001",
             "reasons": [
               "contains money entity/entities: NPR 2000"
             ]
           },
           {
-            "timestamp": "2026-07-25T14:23:23.722000+00:00",
+            "timestamp": "2026-07-25T12:53:07.182000+00:00",
             "evidence_id": "EVID_00002",
             "reasons": [
-              "contains money entity/entities: NPR 250000"
+              "contains money entity/entities: NPR 2000, NPR 500000"
             ]
           }
         ]
       },
-      "suspect_assessment": [
-        {
-          "suspect_id": "SUSPECT_CASE_2CF24DBA5F_01",
-          "identity": "emails:security@nabil-bank-alerts.com",
-          "confidence_score": 53.8,
-          "confidence_level": "MODERATE",
-          "risk_level": "MEDIUM",
-          "evidence_ids": [
-            "EVID_00003"
-          ],
-          "explanation": "Suspect anchor 'security@nabil-bank-alerts.com' (emails) scores 53.8/100 (MODERATE, risk MEDIUM) across 1 evidence item(s): EVID_00003. Identity strength: 75/100 (weight 0.25) - 'security@nabil-bank-alerts.com' is a email - identity weight 75/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 5 evidence item(s). Evidence confidence: 50/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 50/100 (no Phase-1 scores stored; neutral 50 assumed). Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'http://nabil-verify.example-scam.top/login' in EVID_00003. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 day(s) across its evidence set."
-        }
-      ],
+      "suspect_assessment": "No suspect anchors were derived from the evidence.",
       "threat_intelligence_summary": {
         "intel_available": 1.0,
-        "indicators_checked": 5.0,
-        "malicious_indicators": 3.0,
-        "evidence_with_threats": 1.0,
-        "threat_evidence_ratio": 0.2
+        "indicators_checked": 0.0,
+        "malicious_indicators": 0.0,
+        "suspicious_indicators": 0.0,
+        "benign_indicators": 0.0,
+        "evidence_with_threats": 0.0,
+        "threat_evidence_ratio": 0.0
       },
-      "model_predictions": {
-        "indicators_classified": 3,
-        "flagged_malicious": 2,
-        "predictions": [
-          {
-            "indicator": "http://nabil-verify.example-scam.top/login",
-            "evidence_id": "EVID_00003",
-            "verdict": "malicious",
-            "risk_score": 81,
-            "confidence": 0.81,
-            "risk_level": "Critical",
-            "source": "ml:xgboost",
-            "model_version": "4.0.0",
-            "domain": "nabil-verify.example-scam.top",
-            "trust_score": 35,
-            "official_domain": false,
-            "ssl_status": "UNKNOWN",
-            "spf_present": false,
-            "dmarc_present": false,
-            "reasons": [
-              "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
-              "AI model classified this URL as phishing with 100% confidence.",
-              "The top-level domain is frequently associated with phishing and spam campaigns (risk score: 0.7).",
-              "SSL status could not be verified.",
-              "The URL does not use HTTPS, meaning data is transmitted without encryption.",
-              "The URL contains suspicious keyword(s) associated with phishing."
-            ],
-            "threat_signals": [
-              "✗ Plain HTTP protocol used (unencrypted connections)",
-              "✗ Missing SPF record (facilitates email spoofing)",
-              "✗ Missing DMARC record (facilitates email spoofing)",
-              "✗ High-abuse top-level domain",
-              "✗ Phishing-associated keyword(s) in URL"
-            ]
-          },
-          {
-            "indicator": "nabil-bank-alerts.com",
-            "evidence_id": "EVID_00003",
-            "verdict": "malicious",
-            "risk_score": 79,
-            "confidence": 0.79,
-            "risk_level": "High",
-            "source": "ml:xgboost",
-            "model_version": "4.0.0",
-            "domain": "nabil-bank-alerts.com",
-            "trust_score": 50,
-            "official_domain": false,
-            "ssl_status": "UNKNOWN",
-            "spf_present": false,
-            "dmarc_present": false,
-            "reasons": [
-              "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
-              "AI model classified this URL as phishing with 100% confidence.",
-              "SSL status could not be verified.",
-              "The URL does not use HTTPS, meaning data is transmitted without encryption.",
-              "The URL contains suspicious keyword(s) associated with phishing.",
-              "The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure."
-            ],
-            "threat_signals": [
-              "✗ Plain HTTP protocol used (unencrypted connections)",
-              "✗ Missing SPF record (facilitates email spoofing)",
-              "✗ Missing DMARC record (facilitates email spoofing)",
-              "✗ Phishing-associated keyword(s) in URL"
-            ]
-          },
-          {
-            "indicator": "https://plasticostermoencogibles.pe/scss/css/scss/",
-            "evidence_id": "EVID_00001",
-            "verdict": "suspicious",
-            "risk_score": 42,
-            "confidence": 0.94,
-            "risk_level": "Medium",
-            "source": "ml:xgboost",
-            "model_version": "4.0.0",
-            "domain": "plasticostermoencogibles.pe",
-            "trust_score": 75,
-            "official_domain": false,
-            "ssl_status": "VALID",
-            "registrar": "Yachay Telecomunicaciones",
-            "spf_present": true,
-            "dmarc_present": false,
-            "ssl_days_left": 35,
-            "hosting": "DEFT.COM, United States",
-            "ip_address": "75.102.22.119",
-            "reasons": [
-              "The hybrid decision engine flagged this URL as suspicious due to mixed signals between the ML model, active rules, and threat intelligence.",
-              "AI model classified this URL as phishing with 100% confidence.",
-              "The domain is missing DMARC email-authentication record(s), which legitimate organisations typically configure."
-            ],
-            "threat_signals": [
-              "✗ Missing DMARC record (facilitates email spoofing)"
-            ],
-            "trust_signals": [
-              "✓ Valid SSL certificate",
-              "✓ Registered with trusted registrar (Yachay Telecomunicaciones)",
-              "✓ SPF email authentication configured"
-            ]
-          }
-        ]
-      },
+      "model_predictions": "The active threat-intelligence provider returned no classification for any URL/domain indicator in this case's evidence.",
       "evidence_quality_summary": {
         "mean_image_quality": 0.0,
-        "mean_evidence_confidence": 0.0,
+        "mean_evidence_confidence": 78.75,
         "mean_forgery_score": 0.0,
         "max_forgery_score": 0.0,
-        "mean_ocr_confidence": 0.98,
-        "hash_verified_count": 5.0
+        "mean_ocr_confidence": 0.97,
+        "hash_verified_count": 4.0
       },
       "metadata_summary": [
         {
-          "note": "No Phase-1 metadata reports stored for this case."
+          "evidence_id": "EVID_00001",
+          "has_exif": false,
+          "device": "",
+          "software": "",
+          "consistency_notes": [
+            "Image carries no EXIF metadata (typical for screenshots and messaging-app exports; one less authenticity signal)."
+          ]
+        },
+        {
+          "evidence_id": "EVID_00002",
+          "has_exif": false,
+          "device": "",
+          "software": "",
+          "consistency_notes": []
+        },
+        {
+          "evidence_id": "EVID_00003",
+          "has_exif": false,
+          "device": "",
+          "software": "",
+          "consistency_notes": [
+            "Image carries no EXIF metadata (typical for screenshots and messaging-app exports; one less authenticity signal)."
+          ]
+        },
+        {
+          "evidence_id": "EVID_00004",
+          "has_exif": false,
+          "device": "",
+          "software": "",
+          "consistency_notes": [
+            "Image carries no EXIF metadata (typical for screenshots and messaging-app exports; one less authenticity signal)."
+          ]
         }
       ],
       "investigation_statistics": {
         "entity_statistics": {
           "dates": 1,
-          "domains": 3,
-          "emails": 1,
-          "money": 2,
-          "times": 3,
-          "urls": 2
+          "money": 3,
+          "times": 3
         },
         "campaign_statistics": {
           "campaign_count": 0.0,
           "largest_campaign_size": 0.0,
           "clustered_evidence": 0.0,
-          "unclustered_evidence": 5.0,
+          "unclustered_evidence": 4.0,
           "mean_campaign_confidence": 0.0
         },
         "timeline_statistics": {
-          "event_count": 5.0,
-          "resolved_event_count": 5.0,
+          "event_count": 4.0,
+          "resolved_event_count": 4.0,
           "unresolved_event_count": 0.0,
-          "inferred_event_count": 4.0,
+          "inferred_event_count": 3.0,
           "stage_count": 5.0,
           "critical_event_count": 2.0,
-          "timeline_span_hours": 4853.19
+          "timeline_span_hours": 4851.7
         },
         "correlation_statistics": {
-          "pair_count": 10.0,
-          "related_pair_count": 10.0,
-          "mean_confidence": 0.2212,
-          "max_confidence": 0.2212
+          "pair_count": 6.0,
+          "related_pair_count": 6.0,
+          "mean_confidence": 0.2248,
+          "max_confidence": 0.2431
         }
       },
       "confidence_analysis": [
         {
-          "note": "No Phase-1 confidence scores stored for this case."
+          "evidence_id": "EVID_00001",
+          "score": 77.5,
+          "level": "HIGH",
+          "explanation": "Evidence confidence is 77.5/100 (HIGH), derived from 3 verified dimension(s). Strongest signal: hash_verification (100/100). Weakest signal: processing (30/100)."
+        },
+        {
+          "evidence_id": "EVID_00002",
+          "score": 82.5,
+          "level": "VERY_HIGH",
+          "explanation": "Evidence confidence is 82.5/100 (VERY_HIGH), derived from 3 verified dimension(s). Strongest signal: hash_verification (100/100). Weakest signal: processing (30/100)."
+        },
+        {
+          "evidence_id": "EVID_00003",
+          "score": 77.5,
+          "level": "HIGH",
+          "explanation": "Evidence confidence is 77.5/100 (HIGH), derived from 3 verified dimension(s). Strongest signal: hash_verification (100/100). Weakest signal: processing (30/100)."
+        },
+        {
+          "evidence_id": "EVID_00004",
+          "score": 77.5,
+          "level": "HIGH",
+          "explanation": "Evidence confidence is 77.5/100 (HIGH), derived from 3 verified dimension(s). Strongest signal: hash_verification (100/100). Weakest signal: processing (30/100)."
         }
       ],
       "investigation_conclusion": [
-        "5/5 evidence item(s) passed SHA-256 chain-of-custody verification.",
-        "The evidence set is internally connected (10 weighted relationship(s)), consistent with related activity rather than isolated incidents.",
-        "Investigation should focus on anchor 'security@nabil-bank-alerts.com' (54/100 confidence).",
+        "4/4 evidence item(s) passed SHA-256 chain-of-custody verification.",
+        "The evidence set is internally connected (6 weighted relationship(s)), consistent with related activity rather than isolated incidents.",
         "Observed stage order deviates from the canonical scam sequence; evidence acquisition order should be reviewed."
       ],
       "recommendations": [
-        "Pursue subscriber/KYC records for email 'security@nabil-bank-alerts.com' (suspect confidence 54/100).",
-        "Prioritise the 2 critical event(s) involving OTP/financial entities for victim-impact assessment.",
-        "Case priority: LOW (21.6/100) - Low urgency: archive-ready unless new evidence raises the correlation or threat picture."
+        "Go through the 2 key moment(s) - when money moved and codes were shared - with the victim, and record what they lost.",
+        "Low urgency - handle after the others (rated 29 out of 100)."
       ],
       "report_provenance": {
-        "report_id": "RPT-2CF24DBA5F-D9E0D0C0",
-        "generated_at": "2026-07-25T15:02:04.152Z",
+        "report_id": "RPT-2CF24DBA5F-EE5F9A2D",
+        "generated_at": "2026-08-02T14:26:08.577Z",
         "generator": "CIIS Phase-2 reporting module (template-over-data; no free-text generation)",
-        "evidence_set_digest": "f8320f982f3c29e5b76842e5e4ffef335f82140f5388e98ff6a8c8f992f16825",
+        "evidence_set_digest": "845d2580a93c7505d88a3b735dd3a956db233d26f779d05f4a85f60abfe82c3f",
         "evidence_set_digest_note": "SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.",
         "source_artifact_hashes": {
-          "correlation_analysis.json": "9951a1c19a68e7b0963ca66531a5eea8dc763142187562be0d14d4b78d16707b",
-          "cross_case_correlation.json": "2a315dffd58ce1a34aa981649f549b456be868c4b5816ef07344f1ea6e0a525d",
-          "campaign_analysis.json": "49f6f109d73e0396cb54f796f77ae02f55c64b5adfd529c02d7d2350e7df93c2",
-          "suspect_assessment.json": "9a0df99efb53e53cc8b55500f65c8447bdfb729b948f2ba2b61b1a193b4c5c92",
-          "timeline_analysis.json": "de86e51dfe3c4ab66eaf312129f1e00ad57c4fcdd8bcac81b8b78f7ea12284ef",
-          "analytics.json": "d5c07cf478ec9fcafcf1382cd58f7aedcab409a2efbf7f74d39a1ede3fc923b9",
-          "case_priority.json": "f83955d4c372ae29a3d329f5e3dbee1fcb71cf88f959136ffac298755abd4d8c",
-          "graph.json": "af1d8c57cb55a7c7708795939ba92ae1172aa7b43159c1d8b03fa0bf539d4f07"
+          "correlation_analysis.json": "9d3d4c721739bf09a59482ed218dddb9479cae1b00b3f1a9841e6dc5efb0a5b7",
+          "cross_case_correlation.json": "6c4b7e022465546d0555c8cb462748c5b6c81a0b9a0b5bdb505f7587bf91bc63",
+          "campaign_analysis.json": "bafd96b8a7a84730a6548bdc2d9c44e959b3f0940035566e2ce11fcd20eb2009",
+          "suspect_assessment.json": "546313af8c6a556e6ed9edd3cbf8db06474af9d683cc1ed6eb9bc6d26a4508a8",
+          "timeline_analysis.json": "879178d918c40f554dc69b6d0f129cad6107c1275f4f6961bd57c9668eaf3108",
+          "analytics.json": "34d087d42294b4d4b8ae464fb80ae7c56484720e479b865312a0089c3065a5ca",
+          "case_priority.json": "f30cd476a0d3d058a919ba12443715445cad4e6a5587b85c2bf371b4bff961d8",
+          "graph.json": "6478030850e022f70aabbe86ad1dc987508916865c7aab03093a42c99b0c0a12"
         }
       },
       "appendix": {
         "chain_of_custody": [
           {
             "evidence_id": "EVID_00001",
-            "sha256": "fab44e99bd90f1ffe214d4d2bb6580e4c0d52f5fe930e773d96cf92ee820a2f5",
-            "upload_time": "2026-07-25T14:22:38.355Z",
+            "sha256": "8f2e60ea6fc0eeffd209e28eb29228797104b60a2505934fc3d42642c100ea79",
+            "upload_time": "2026-07-25T12:50:00.695Z",
             "status": "processed"
           },
           {
             "evidence_id": "EVID_00002",
-            "sha256": "63b677916b711ece64fc71292577dfb70a2385c2de817cd0200f86d777b0b350",
-            "upload_time": "2026-07-25T14:23:23.722Z",
+            "sha256": "c7ab347cfbd2b80c944c85b3442f3b2c400da1d3b92962f9ded8598e1e06cfb2",
+            "upload_time": "2026-07-25T12:53:07.182Z",
             "status": "processed"
           },
           {
             "evidence_id": "EVID_00003",
-            "sha256": "8ef0f27a84960b656d9051892e36096ce56fe9f30eb9a935d4d4330a002b9b7f",
-            "upload_time": "2026-07-25T14:23:26.295Z",
+            "sha256": "0340d5863313f4cc0b9b40ed835a77a71b8304d2e08eb32f08a56ed93a6e0b10",
+            "upload_time": "2026-07-25T12:53:23.174Z",
             "status": "processed"
           },
           {
             "evidence_id": "EVID_00004",
-            "sha256": "d07bcc76b5d280385a06f106c083edc33bff69e82ac63fddf8c433f6b4a5fc02",
-            "upload_time": "2026-07-25T14:23:41.798Z",
-            "status": "processed"
-          },
-          {
-            "evidence_id": "EVID_00005",
-            "sha256": "c7ab347cfbd2b80c944c85b3442f3b2c400da1d3b92962f9ded8598e1e06cfb2",
-            "upload_time": "2026-07-25T14:24:07.592Z",
+            "sha256": "8ef0f27a84960b656d9051892e36096ce56fe9f30eb9a935d4d4330a002b9b7f",
+            "upload_time": "2026-07-25T12:53:47.011Z",
             "status": "processed"
           }
         ],
