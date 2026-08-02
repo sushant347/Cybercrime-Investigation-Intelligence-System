@@ -208,6 +208,49 @@ class Jobs(JsonCollection):
                 return row
             return None
 
+    def reconcile_orphaned(self) -> int:
+        """Fail jobs left mid-flight by a process that is no longer running.
+
+        Jobs execute on an in-process thread pool, so a job still marked
+        queued or running at startup has no worker and never will - the
+        process that owned it is gone. Left alone they sit in the dashboard
+        as permanently "running", which is worse than a visible failure: an
+        investigator cannot tell a genuinely busy engine from a dead one, and
+        the evidence they uploaded looks like it is still being worked on.
+
+        This is not hypothetical - a crash during a large scanned PDF left
+        seven such rows, one running and six queued behind it.
+
+        Returns how many rows were closed. Safe to call only at startup,
+        before any new work is submitted.
+        """
+        with self._lock:
+            rows = self._read()
+            now = utc_now()
+            closed = 0
+            for row in rows:
+                if row.get("status") not in ("queued", "running"):
+                    continue
+                history = list(row.get("stages") or [])
+                if history and history[-1].get("finished_at") is None:
+                    history[-1]["finished_at"] = now
+                    history[-1]["duration_ms"] = _elapsed_ms(
+                        history[-1].get("started_at"), now
+                    )
+                row.update(
+                    status="failed",
+                    finished_at=now,
+                    error=(
+                        "Processing was interrupted - the engine restarted "
+                        "before this item finished. Upload it again to retry."
+                    ),
+                    stage="", stage_label="", stage_note="", stages=history,
+                )
+                closed += 1
+            if closed:
+                self._write(rows)
+            return closed
+
     def list(self, case_id: str = "", job_type: str = "",
              limit: Optional[int] = None) -> List[Dict[str, Any]]:
         rows = [r for r in self.all()
