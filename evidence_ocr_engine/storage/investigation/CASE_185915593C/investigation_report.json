@@ -1,15 +1,15 @@
 {
   "report_type": "investigation_report",
-  "report_version": 3,
+  "report_version": 4,
   "schema_version": "2.0",
   "case_id": "CASE_185915593C",
-  "generated_at": "2026-08-02T14:26:10.119Z",
+  "generated_at": "2026-08-03T14:03:41.846Z",
   "report": {
-    "report_id": "RPT-185915593C-F9FFEAA4",
+    "report_id": "RPT-185915593C-03FD9369",
     "sections": {
       "executive_summary": [
         "Case CASE_185915593C contains 8 evidence item(s), each acquired under SHA-256 chain-of-custody verification.",
-        "This case is linked to 1 other case(s) through shared entities: CASE_EE8250FB76 [cross_case_correlation.json].",
+        "This case is linked to 2 other case(s) through shared entities: CASE_1A1BF573F3, CASE_EE8250FB76 [cross_case_correlation.json].",
         "The weighted correlation engine found 28 related evidence pair(s) out of 28 analysed [correlation_analysis.json].",
         "1 coordinated campaign(s) were identified; the largest (CAMP_CASE_185915593C_01) groups 6 item(s) [campaign_analysis.json].",
         "The strongest suspect anchor is '+9779801122334' (khalti_ids) with confidence 78/100 [suspect_assessment.json].",
@@ -165,15 +165,353 @@
         ]
       },
       "cross_case_correlation": {
-        "related_case_count": 1,
+        "related_case_count": 2,
         "related_case_ids": [
+          "CASE_1A1BF573F3",
           "CASE_EE8250FB76"
         ],
         "links": [
           {
+            "other_case_id": "CASE_1A1BF573F3",
+            "relationship_strength": "VERY_STRONG",
+            "match_confidence": 1.0,
+            "match_reason": "Shares 29 entity(ies) with CASE_1A1BF573F3: bank account 05010198765432, domain esewa.cashbacko90gmail.com, domain sunita.gurung216gmail.com (+26 more). 25 of these are distinctive; the other 4 are common across the corpus and were discounted",
+            "matched_entities": [
+              {
+                "entity_type": "bank_accounts",
+                "value": "05010198765432",
+                "this_evidence_ids": [
+                  "EVID_00013"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00021"
+                ]
+              },
+              {
+                "entity_type": "domains",
+                "value": "esewa.cashbacko90gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00010"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00018"
+                ]
+              },
+              {
+                "entity_type": "domains",
+                "value": "sunita.gurung216gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00010"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00018"
+                ]
+              },
+              {
+                "entity_type": "khalti_ids",
+                "value": "+9779847011223",
+                "this_evidence_ids": [
+                  "EVID_00011"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00019"
+                ]
+              },
+              {
+                "entity_type": "urls",
+                "value": "https://esewa-cashback-offer.xyz/claim?ref=dsn2026",
+                "this_evidence_ids": [
+                  "EVID_00009"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00017"
+                ]
+              },
+              {
+                "entity_type": "bank_accounts",
+                "value": "9847011223",
+                "this_evidence_ids": [
+                  "EVID_00013"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00021"
+                ]
+              },
+              {
+                "entity_type": "phones",
+                "value": "0198765432",
+                "this_evidence_ids": [
+                  "EVID_00013"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00021"
+                ]
+              },
+              {
+                "entity_type": "bank_accounts",
+                "value": "05019012345678",
+                "this_evidence_ids": [
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00022"
+                ]
+              },
+              {
+                "entity_type": "domains",
+                "value": "esewa-verify-kyc.com",
+                "this_evidence_ids": [
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00022"
+                ]
+              },
+              {
+                "entity_type": "emails",
+                "value": "esewa.cashback99@gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00022"
+                ]
+              },
+              {
+                "entity_type": "emails",
+                "value": "support@esewa-verify-kyc.com",
+                "this_evidence_ids": [
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00022"
+                ]
+              },
+              {
+                "entity_type": "esewa_ids",
+                "value": "esewa.cashback99@gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00022"
+                ]
+              },
+              {
+                "entity_type": "transaction_ids",
+                "value": "case_2026_0088",
+                "this_evidence_ids": [
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00022"
+                ]
+              },
+              {
+                "entity_type": "urls",
+                "value": "https://esewa-cashback-offer.xyz/claim",
+                "this_evidence_ids": [
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00022"
+                ]
+              },
+              {
+                "entity_type": "emails",
+                "value": "sunita.gurung21@gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00008",
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00016",
+                  "EVID_00022"
+                ]
+              },
+              {
+                "entity_type": "esewa_ids",
+                "value": "sunita.gurung21@gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00008",
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00016",
+                  "EVID_00022"
+                ]
+              },
+              {
+                "entity_type": "khalti_ids",
+                "value": "+9779801122334",
+                "this_evidence_ids": [
+                  "EVID_00011",
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00019",
+                  "EVID_00022"
+                ]
+              },
+              {
+                "entity_type": "transaction_ids",
+                "value": "0119.0625.987456",
+                "this_evidence_ids": [
+                  "EVID_00010",
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00018",
+                  "EVID_00022"
+                ]
+              },
+              {
+                "entity_type": "transaction_ids",
+                "value": "kh-2026-0611-77245",
+                "this_evidence_ids": [
+                  "EVID_00011",
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00019",
+                  "EVID_00022"
+                ]
+              },
+              {
+                "entity_type": "transaction_ids",
+                "value": "mbl-2026-441829",
+                "this_evidence_ids": [
+                  "EVID_00013",
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00021",
+                  "EVID_00022"
+                ]
+              },
+              {
+                "entity_type": "domains",
+                "value": "gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00008",
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00016",
+                  "EVID_00022"
+                ]
+              },
+              {
+                "entity_type": "transaction_ids",
+                "value": "dsn2026",
+                "this_evidence_ids": [
+                  "EVID_00009",
+                  "EVID_00013"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00017",
+                  "EVID_00019",
+                  "EVID_00021"
+                ]
+              },
+              {
+                "entity_type": "domains",
+                "value": "esewa-cashback-offer.xyz",
+                "this_evidence_ids": [
+                  "EVID_00009",
+                  "EVID_00011",
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00017",
+                  "EVID_00019",
+                  "EVID_00022"
+                ]
+              },
+              {
+                "entity_type": "phones",
+                "value": "+9779801122334",
+                "this_evidence_ids": [
+                  "EVID_00011",
+                  "EVID_00012",
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00019",
+                  "EVID_00020",
+                  "EVID_00022"
+                ]
+              },
+              {
+                "entity_type": "phones",
+                "value": "+9779847011223",
+                "this_evidence_ids": [
+                  "EVID_00011",
+                  "EVID_00013",
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00019",
+                  "EVID_00021",
+                  "EVID_00022"
+                ]
+              },
+              {
+                "entity_type": "money",
+                "value": "npr 1500",
+                "this_evidence_ids": [
+                  "EVID_00011",
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00019",
+                  "EVID_00022"
+                ]
+              },
+              {
+                "entity_type": "money",
+                "value": "npr 25000",
+                "this_evidence_ids": [
+                  "EVID_00013",
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00021",
+                  "EVID_00022"
+                ]
+              },
+              {
+                "entity_type": "money",
+                "value": "npr 200",
+                "this_evidence_ids": [
+                  "EVID_00008",
+                  "EVID_00010",
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00016",
+                  "EVID_00018",
+                  "EVID_00022"
+                ]
+              },
+              {
+                "entity_type": "money",
+                "value": "npr 5000",
+                "this_evidence_ids": [
+                  "EVID_00009",
+                  "EVID_00014"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00017",
+                  "EVID_00022"
+                ]
+              }
+            ]
+          },
+          {
             "other_case_id": "CASE_EE8250FB76",
             "relationship_strength": "VERY_STRONG",
-            "match_confidence": 0.9997,
+            "match_confidence": 0.9992,
             "match_reason": "Shares 21 entity(ies) with CASE_EE8250FB76: bank account 05019012345678, domain esewa-verify-kyc.com, email esewa.cashback99@gmail.com (+18 more). 17 of these are distinctive; the other 4 are common across the corpus and were discounted",
             "matched_entities": [
               {
@@ -372,10 +710,9 @@
               },
               {
                 "entity_type": "money",
-                "value": "npr 200",
+                "value": "npr 25000",
                 "this_evidence_ids": [
-                  "EVID_00008",
-                  "EVID_00010",
+                  "EVID_00013",
                   "EVID_00014"
                 ],
                 "other_evidence_ids": [
@@ -384,9 +721,10 @@
               },
               {
                 "entity_type": "money",
-                "value": "npr 25000",
+                "value": "npr 200",
                 "this_evidence_ids": [
-                  "EVID_00013",
+                  "EVID_00008",
+                  "EVID_00010",
                   "EVID_00014"
                 ],
                 "other_evidence_ids": [
@@ -951,14 +1289,14 @@
         "Act on this case first (rated 76 out of 100)."
       ],
       "report_provenance": {
-        "report_id": "RPT-185915593C-F9FFEAA4",
-        "generated_at": "2026-08-02T14:26:09.941Z",
+        "report_id": "RPT-185915593C-03FD9369",
+        "generated_at": "2026-08-03T14:03:41.770Z",
         "generator": "CIIS Phase-2 reporting module (template-over-data; no free-text generation)",
         "evidence_set_digest": "623b9e5e28815e86892679dc56e1ac545ea1fddc4590023db83275c6bf9c8b61",
         "evidence_set_digest_note": "SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.",
         "source_artifact_hashes": {
           "correlation_analysis.json": "4155b11fdef420257a0a0dcd45763e4db8a86f5ad8e31ff9137a5e45ce3d1d51",
-          "cross_case_correlation.json": "6c8cbdab6be9648cf3032751b970704e2ff3e344ea2cca1d0556888bbc7ac14d",
+          "cross_case_correlation.json": "a3de5c0ae11832b7d0b5650d47ba850bec9418345cc408d55fd372517fd0de83",
           "campaign_analysis.json": "e26ff8f213288bcdcc0496c2640fcecb356a16efc41a5d1abb87072f58d9077d",
           "suspect_assessment.json": "9d07e8a9d09b75c24566f224f62e173620d4693e5b5635aba88539f5297068fc",
           "timeline_analysis.json": "d8f9e09de06f3bffa07c9bcfc5ff38d3b2e1a1cc99bdb711024c6fde4ffb1edd",

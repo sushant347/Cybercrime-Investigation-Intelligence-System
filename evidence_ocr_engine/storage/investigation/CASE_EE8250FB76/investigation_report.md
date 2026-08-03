@@ -1,13 +1,13 @@
 # Forensic Investigation Report - CASE_EE8250FB76
 
-Generated: 2026-08-02T14:26:09.089Z  
+Generated: 2026-08-03T14:03:42.881Z  
 Produced by: Cybercrime Investigation Intelligence Engine (CIIS), Phase 2  
 Basis: every statement below references stored forensic findings; no content is generated outside computed results.
 
 ## Executive Summary
 
 - Case CASE_EE8250FB76 contains 2 evidence item(s), each acquired under SHA-256 chain-of-custody verification.
-- This case is linked to 1 other case(s) through shared entities: CASE_185915593C [cross_case_correlation.json].
+- This case is linked to 2 other case(s) through shared entities: CASE_185915593C, CASE_1A1BF573F3 [cross_case_correlation.json].
 - The weighted correlation engine found 1 related evidence pair(s) out of 1 analysed [correlation_analysis.json].
 - The strongest suspect anchor is '05019012345678' (bank_accounts) with confidence 68/100 [suspect_assessment.json].
 - Observed attack progression: initial_contact -> social_engineering -> financial_transaction -> post_attack [timeline_analysis.json].
@@ -68,13 +68,14 @@ Basis: every statement below references stored forensic findings; no content is 
 
 ## Cross-Case Correlation
 
-- **related case count**: 1
+- **related case count**: 2
 - **related case ids**:
   - CASE_185915593C
+  - CASE_1A1BF573F3
 - **links**:
   - **other case id**: CASE_185915593C
   - **relationship strength**: VERY_STRONG
-  - **match confidence**: 0.9997
+  - **match confidence**: 0.9992
   - **match reason**: Shares 21 entity(ies) with CASE_185915593C: bank account 05019012345678, domain esewa-verify-kyc.com, email esewa.cashback99@gmail.com (+18 more). 17 of these are distinctive; the other 4 are common across the corpus and were discounted
   - **matched entities**:
     - **entity type**: bank_accounts
@@ -200,6 +201,13 @@ Basis: every statement below references stored forensic findings; no content is 
       - EVID_00011
       - EVID_00014
     - **entity type**: money
+    - **value**: npr 25000
+    - **this evidence ids**:
+      - EVID_00005
+    - **other evidence ids**:
+      - EVID_00013
+      - EVID_00014
+    - **entity type**: money
     - **value**: npr 200
     - **this evidence ids**:
       - EVID_00005
@@ -208,19 +216,161 @@ Basis: every statement below references stored forensic findings; no content is 
       - EVID_00010
       - EVID_00014
     - **entity type**: money
-    - **value**: npr 25000
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00013
-      - EVID_00014
-    - **entity type**: money
     - **value**: npr 5000
     - **this evidence ids**:
       - EVID_00005
     - **other evidence ids**:
       - EVID_00009
       - EVID_00014
+  - **other case id**: CASE_1A1BF573F3
+  - **relationship strength**: VERY_STRONG
+  - **match confidence**: 0.9992
+  - **match reason**: Shares 21 entity(ies) with CASE_1A1BF573F3: bank account 05019012345678, domain esewa-verify-kyc.com, email esewa.cashback99@gmail.com (+18 more). 17 of these are distinctive; the other 4 are common across the corpus and were discounted
+  - **matched entities**:
+    - **entity type**: bank_accounts
+    - **value**: 05019012345678
+    - **this evidence ids**:
+      - EVID_00005
+    - **other evidence ids**:
+      - EVID_00022
+    - **entity type**: domains
+    - **value**: esewa-verify-kyc.com
+    - **this evidence ids**:
+      - EVID_00005
+    - **other evidence ids**:
+      - EVID_00022
+    - **entity type**: emails
+    - **value**: esewa.cashback99@gmail.com
+    - **this evidence ids**:
+      - EVID_00005
+    - **other evidence ids**:
+      - EVID_00022
+    - **entity type**: emails
+    - **value**: support@esewa-verify-kyc.com
+    - **this evidence ids**:
+      - EVID_00005
+    - **other evidence ids**:
+      - EVID_00022
+    - **entity type**: esewa_ids
+    - **value**: esewa.cashback99@gmail.com
+    - **this evidence ids**:
+      - EVID_00005
+    - **other evidence ids**:
+      - EVID_00022
+    - **entity type**: transaction_ids
+    - **value**: case_2026_0088
+    - **this evidence ids**:
+      - EVID_00005
+    - **other evidence ids**:
+      - EVID_00022
+    - **entity type**: urls
+    - **value**: https://esewa-cashback-offer.xyz/claim
+    - **this evidence ids**:
+      - EVID_00005
+    - **other evidence ids**:
+      - EVID_00022
+    - **entity type**: emails
+    - **value**: sunita.gurung21@gmail.com
+    - **this evidence ids**:
+      - EVID_00005
+    - **other evidence ids**:
+      - EVID_00016
+      - EVID_00022
+    - **entity type**: esewa_ids
+    - **value**: sunita.gurung21@gmail.com
+    - **this evidence ids**:
+      - EVID_00005
+    - **other evidence ids**:
+      - EVID_00016
+      - EVID_00022
+    - **entity type**: khalti_ids
+    - **value**: +9779801122334
+    - **this evidence ids**:
+      - EVID_00005
+    - **other evidence ids**:
+      - EVID_00019
+      - EVID_00022
+    - **entity type**: transaction_ids
+    - **value**: 0119.0625.987456
+    - **this evidence ids**:
+      - EVID_00005
+    - **other evidence ids**:
+      - EVID_00018
+      - EVID_00022
+    - **entity type**: transaction_ids
+    - **value**: kh-2026-0611-77245
+    - **this evidence ids**:
+      - EVID_00005
+    - **other evidence ids**:
+      - EVID_00019
+      - EVID_00022
+    - **entity type**: transaction_ids
+    - **value**: mbl-2026-441829
+    - **this evidence ids**:
+      - EVID_00005
+    - **other evidence ids**:
+      - EVID_00021
+      - EVID_00022
+    - **entity type**: domains
+    - **value**: gmail.com
+    - **this evidence ids**:
+      - EVID_00005
+    - **other evidence ids**:
+      - EVID_00016
+      - EVID_00022
+    - **entity type**: domains
+    - **value**: esewa-cashback-offer.xyz
+    - **this evidence ids**:
+      - EVID_00005
+    - **other evidence ids**:
+      - EVID_00017
+      - EVID_00019
+      - EVID_00022
+    - **entity type**: phones
+    - **value**: +9779801122334
+    - **this evidence ids**:
+      - EVID_00005
+    - **other evidence ids**:
+      - EVID_00019
+      - EVID_00020
+      - EVID_00022
+    - **entity type**: phones
+    - **value**: +9779847011223
+    - **this evidence ids**:
+      - EVID_00005
+    - **other evidence ids**:
+      - EVID_00019
+      - EVID_00021
+      - EVID_00022
+    - **entity type**: money
+    - **value**: npr 1500
+    - **this evidence ids**:
+      - EVID_00005
+    - **other evidence ids**:
+      - EVID_00019
+      - EVID_00022
+    - **entity type**: money
+    - **value**: npr 25000
+    - **this evidence ids**:
+      - EVID_00005
+    - **other evidence ids**:
+      - EVID_00021
+      - EVID_00022
+    - **entity type**: money
+    - **value**: npr 200
+    - **this evidence ids**:
+      - EVID_00005
+    - **other evidence ids**:
+      - EVID_00016
+      - EVID_00018
+      - EVID_00022
+    - **entity type**: money
+    - **value**: npr 5000
+    - **this evidence ids**:
+      - EVID_00005
+    - **other evidence ids**:
+      - EVID_00017
+      - EVID_00022
 
 ## Campaign Analysis
 
@@ -480,14 +630,14 @@ Basis: every statement below references stored forensic findings; no content is 
 
 ## Report Provenance & Integrity
 
-- **report id**: RPT-EE8250FB76-61F2885B
-- **generated at**: 2026-08-02T14:26:08.933Z
+- **report id**: RPT-EE8250FB76-A1AC4EB3
+- **generated at**: 2026-08-03T14:03:42.835Z
 - **generator**: CIIS Phase-2 reporting module (template-over-data; no free-text generation)
 - **evidence set digest**: 0f6afe626b2e5e1c4bb70b2efae2d8aea52ca3d8d38b481532cc8e4ff88c3ff6
 - **evidence set digest note**: SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.
 - **source artifact hashes**:
   - **correlation analysis.json**: c5cc18e0db8bd76c5efd2ed48c4705934f9457d09c2c89de0e9cb896a82fe82f
-  - **cross case correlation.json**: 8a7c46905b787f74736fc0e93d8f2f54ee4b2e1a7705db46184e91944622bc6a
+  - **cross case correlation.json**: 7ccd6fd108bab05021466359183bd2e8c4a35a4b4dda6fb2d66ebeaab14ad29c
   - **campaign analysis.json**: 205da30e024e2a03804de657ce946ebc3b28d4eee7a7cc821cb0c3ff64141dbd
   - **suspect assessment.json**: 3667b84188e3b1bba52ef7c900cde55219358f9ddcd512d996e05641c8685640
   - **timeline analysis.json**: 09dabae8fb12c2e20cf0da87130123afc2fba1185dce2ec8ec35146564a074c7

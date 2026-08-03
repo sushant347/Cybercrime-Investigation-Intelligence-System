@@ -168,3 +168,23 @@ timestamp,case_id,module,action,level,message,duration_ms
 2026-08-02T14:26:09.940Z,CASE_185915593C,prioritization,prioritized,INFO,score=76.2 level=CRITICAL indicators=3,0.0
 2026-08-02T14:26:10.520Z,CASE_185915593C,reporting,generated,INFO,19 sections,151.9
 2026-08-02T14:26:10.524Z,CASE_185915593C,phase2_pipeline,completed,INFO,"modules_ok=['analytics', 'campaigns', 'correlation', 'cross_case', 'graph', 'priority', 'report', 'suspects', 'timeline'] failures=none",669.3
+2026-08-03T14:01:02.754Z,CASE_1A1BF573F3,correlation,analyzed,INFO,"55/55 related pairs, strongest=EVID_00019|EVID_00022",17.7
+2026-08-03T14:01:02.772Z,CASE_1A1BF573F3,cross_case_correlation,linked,INFO,"2 related case(s): CASE_185915593C, CASE_EE8250FB76",7.5
+2026-08-03T14:01:02.802Z,CASE_1A1BF573F3,timeline,analyzed,INFO,"11 event(s), resolved=11, inferred=11",11.9
+2026-08-03T14:01:02.838Z,CASE_1A1BF573F3,graph,built,INFO,"83 nodes, 226 edges, 1 component(s)",6.2
+2026-08-03T14:01:02.840Z,CASE_1A1BF573F3,phase2_pipeline,timeline_graph_refreshed,INFO,"11 evidence item(s), 11 event(s), 83 graph node(s)",0.0
+2026-08-03T14:03:39.381Z,CASE_1A1BF573F3,phase2_pipeline,started,INFO,11 evidence item(s),0.0
+2026-08-03T14:03:39.466Z,CASE_1A1BF573F3,correlation,analyzed,INFO,"55/55 related pairs, strongest=EVID_00019|EVID_00022",49.3
+2026-08-03T14:03:39.524Z,CASE_1A1BF573F3,timeline,analyzed,INFO,"11 event(s), resolved=11, inferred=11",1.7
+2026-08-03T14:03:39.622Z,CASE_1A1BF573F3,graph,built,INFO,"83 nodes, 226 edges, 1 component(s)",6.4
+2026-08-03T14:03:39.633Z,CASE_1A1BF573F3,campaigns,clustered,INFO,"1 campaign(s), 6 unclustered item(s)",0.6
+2026-08-03T14:03:39.652Z,CASE_1A1BF573F3,suspects,assessed,INFO,"14 suspect anchor(s), top=SUSPECT_CASE_1A1BF573F3_10",2.2
+2026-08-03T14:03:39.683Z,CASE_1A1BF573F3,analytics,generated,INFO,63 entities across 11 type(s),0.8
+2026-08-03T14:03:39.690Z,CASE_1A1BF573F3,prioritization,prioritized,INFO,score=74.8 level=HIGH indicators=3,0.0
+2026-08-03T14:03:40.623Z,CASE_1A1BF573F3,reporting,generated,INFO,19 sections,135.1
+2026-08-03T14:03:41.650Z,CASE_185915593C,cross_case_correlation,linked,INFO,"2 related case(s): CASE_1A1BF573F3, CASE_EE8250FB76",996.5
+2026-08-03T14:03:42.630Z,CASE_185915593C,reporting,generated,INFO,19 sections,58.7
+2026-08-03T14:03:42.728Z,CASE_EE8250FB76,cross_case_correlation,linked,INFO,"2 related case(s): CASE_185915593C, CASE_1A1BF573F3",67.4
+2026-08-03T14:03:43.362Z,CASE_EE8250FB76,reporting,generated,INFO,19 sections,49.5
+2026-08-03T14:03:43.363Z,CASE_1A1BF573F3,phase2_pipeline,cross_case_propagated,INFO,"updated 2 linked case(s): CASE_185915593C, CASE_EE8250FB76",0.0
+2026-08-03T14:03:43.364Z,CASE_1A1BF573F3,phase2_pipeline,completed,INFO,"modules_ok=['analytics', 'campaigns', 'correlation', 'cross_case', 'graph', 'priority', 'report', 'suspects', 'timeline'] failures=none",3990.3

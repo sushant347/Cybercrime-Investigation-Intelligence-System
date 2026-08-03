@@ -1,13 +1,13 @@
 # Forensic Investigation Report - CASE_185915593C
 
-Generated: 2026-08-02T14:26:10.091Z  
+Generated: 2026-08-03T14:03:41.822Z  
 Produced by: Cybercrime Investigation Intelligence Engine (CIIS), Phase 2  
 Basis: every statement below references stored forensic findings; no content is generated outside computed results.
 
 ## Executive Summary
 
 - Case CASE_185915593C contains 8 evidence item(s), each acquired under SHA-256 chain-of-custody verification.
-- This case is linked to 1 other case(s) through shared entities: CASE_EE8250FB76 [cross_case_correlation.json].
+- This case is linked to 2 other case(s) through shared entities: CASE_1A1BF573F3, CASE_EE8250FB76 [cross_case_correlation.json].
 - The weighted correlation engine found 28 related evidence pair(s) out of 28 analysed [correlation_analysis.json].
 - 1 coordinated campaign(s) were identified; the largest (CAMP_CASE_185915593C_01) groups 6 item(s) [campaign_analysis.json].
 - The strongest suspect anchor is '+9779801122334' (khalti_ids) with confidence 78/100 [suspect_assessment.json].
@@ -138,13 +138,232 @@ Basis: every statement below references stored forensic findings; no content is 
 
 ## Cross-Case Correlation
 
-- **related case count**: 1
+- **related case count**: 2
 - **related case ids**:
+  - CASE_1A1BF573F3
   - CASE_EE8250FB76
 - **links**:
+  - **other case id**: CASE_1A1BF573F3
+  - **relationship strength**: VERY_STRONG
+  - **match confidence**: 1.0
+  - **match reason**: Shares 29 entity(ies) with CASE_1A1BF573F3: bank account 05010198765432, domain esewa.cashbacko90gmail.com, domain sunita.gurung216gmail.com (+26 more). 25 of these are distinctive; the other 4 are common across the corpus and were discounted
+  - **matched entities**:
+    - **entity type**: bank_accounts
+    - **value**: 05010198765432
+    - **this evidence ids**:
+      - EVID_00013
+    - **other evidence ids**:
+      - EVID_00021
+    - **entity type**: domains
+    - **value**: esewa.cashbacko90gmail.com
+    - **this evidence ids**:
+      - EVID_00010
+    - **other evidence ids**:
+      - EVID_00018
+    - **entity type**: domains
+    - **value**: sunita.gurung216gmail.com
+    - **this evidence ids**:
+      - EVID_00010
+    - **other evidence ids**:
+      - EVID_00018
+    - **entity type**: khalti_ids
+    - **value**: +9779847011223
+    - **this evidence ids**:
+      - EVID_00011
+    - **other evidence ids**:
+      - EVID_00019
+    - **entity type**: urls
+    - **value**: https://esewa-cashback-offer.xyz/claim?ref=dsn2026
+    - **this evidence ids**:
+      - EVID_00009
+    - **other evidence ids**:
+      - EVID_00017
+    - **entity type**: bank_accounts
+    - **value**: 9847011223
+    - **this evidence ids**:
+      - EVID_00013
+    - **other evidence ids**:
+      - EVID_00021
+    - **entity type**: phones
+    - **value**: 0198765432
+    - **this evidence ids**:
+      - EVID_00013
+    - **other evidence ids**:
+      - EVID_00021
+    - **entity type**: bank_accounts
+    - **value**: 05019012345678
+    - **this evidence ids**:
+      - EVID_00014
+    - **other evidence ids**:
+      - EVID_00022
+    - **entity type**: domains
+    - **value**: esewa-verify-kyc.com
+    - **this evidence ids**:
+      - EVID_00014
+    - **other evidence ids**:
+      - EVID_00022
+    - **entity type**: emails
+    - **value**: esewa.cashback99@gmail.com
+    - **this evidence ids**:
+      - EVID_00014
+    - **other evidence ids**:
+      - EVID_00022
+    - **entity type**: emails
+    - **value**: support@esewa-verify-kyc.com
+    - **this evidence ids**:
+      - EVID_00014
+    - **other evidence ids**:
+      - EVID_00022
+    - **entity type**: esewa_ids
+    - **value**: esewa.cashback99@gmail.com
+    - **this evidence ids**:
+      - EVID_00014
+    - **other evidence ids**:
+      - EVID_00022
+    - **entity type**: transaction_ids
+    - **value**: case_2026_0088
+    - **this evidence ids**:
+      - EVID_00014
+    - **other evidence ids**:
+      - EVID_00022
+    - **entity type**: urls
+    - **value**: https://esewa-cashback-offer.xyz/claim
+    - **this evidence ids**:
+      - EVID_00014
+    - **other evidence ids**:
+      - EVID_00022
+    - **entity type**: emails
+    - **value**: sunita.gurung21@gmail.com
+    - **this evidence ids**:
+      - EVID_00008
+      - EVID_00014
+    - **other evidence ids**:
+      - EVID_00016
+      - EVID_00022
+    - **entity type**: esewa_ids
+    - **value**: sunita.gurung21@gmail.com
+    - **this evidence ids**:
+      - EVID_00008
+      - EVID_00014
+    - **other evidence ids**:
+      - EVID_00016
+      - EVID_00022
+    - **entity type**: khalti_ids
+    - **value**: +9779801122334
+    - **this evidence ids**:
+      - EVID_00011
+      - EVID_00014
+    - **other evidence ids**:
+      - EVID_00019
+      - EVID_00022
+    - **entity type**: transaction_ids
+    - **value**: 0119.0625.987456
+    - **this evidence ids**:
+      - EVID_00010
+      - EVID_00014
+    - **other evidence ids**:
+      - EVID_00018
+      - EVID_00022
+    - **entity type**: transaction_ids
+    - **value**: kh-2026-0611-77245
+    - **this evidence ids**:
+      - EVID_00011
+      - EVID_00014
+    - **other evidence ids**:
+      - EVID_00019
+      - EVID_00022
+    - **entity type**: transaction_ids
+    - **value**: mbl-2026-441829
+    - **this evidence ids**:
+      - EVID_00013
+      - EVID_00014
+    - **other evidence ids**:
+      - EVID_00021
+      - EVID_00022
+    - **entity type**: domains
+    - **value**: gmail.com
+    - **this evidence ids**:
+      - EVID_00008
+      - EVID_00014
+    - **other evidence ids**:
+      - EVID_00016
+      - EVID_00022
+    - **entity type**: transaction_ids
+    - **value**: dsn2026
+    - **this evidence ids**:
+      - EVID_00009
+      - EVID_00013
+    - **other evidence ids**:
+      - EVID_00017
+      - EVID_00019
+      - EVID_00021
+    - **entity type**: domains
+    - **value**: esewa-cashback-offer.xyz
+    - **this evidence ids**:
+      - EVID_00009
+      - EVID_00011
+      - EVID_00014
+    - **other evidence ids**:
+      - EVID_00017
+      - EVID_00019
+      - EVID_00022
+    - **entity type**: phones
+    - **value**: +9779801122334
+    - **this evidence ids**:
+      - EVID_00011
+      - EVID_00012
+      - EVID_00014
+    - **other evidence ids**:
+      - EVID_00019
+      - EVID_00020
+      - EVID_00022
+    - **entity type**: phones
+    - **value**: +9779847011223
+    - **this evidence ids**:
+      - EVID_00011
+      - EVID_00013
+      - EVID_00014
+    - **other evidence ids**:
+      - EVID_00019
+      - EVID_00021
+      - EVID_00022
+    - **entity type**: money
+    - **value**: npr 1500
+    - **this evidence ids**:
+      - EVID_00011
+      - EVID_00014
+    - **other evidence ids**:
+      - EVID_00019
+      - EVID_00022
+    - **entity type**: money
+    - **value**: npr 25000
+    - **this evidence ids**:
+      - EVID_00013
+      - EVID_00014
+    - **other evidence ids**:
+      - EVID_00021
+      - EVID_00022
+    - **entity type**: money
+    - **value**: npr 200
+    - **this evidence ids**:
+      - EVID_00008
+      - EVID_00010
+      - EVID_00014
+    - **other evidence ids**:
+      - EVID_00016
+      - EVID_00018
+      - EVID_00022
+    - **entity type**: money
+    - **value**: npr 5000
+    - **this evidence ids**:
+      - EVID_00009
+      - EVID_00014
+    - **other evidence ids**:
+      - EVID_00017
+      - EVID_00022
   - **other case id**: CASE_EE8250FB76
   - **relationship strength**: VERY_STRONG
-  - **match confidence**: 0.9997
+  - **match confidence**: 0.9992
   - **match reason**: Shares 21 entity(ies) with CASE_EE8250FB76: bank account 05019012345678, domain esewa-verify-kyc.com, email esewa.cashback99@gmail.com (+18 more). 17 of these are distinctive; the other 4 are common across the corpus and were discounted
   - **matched entities**:
     - **entity type**: bank_accounts
@@ -270,17 +489,17 @@ Basis: every statement below references stored forensic findings; no content is 
     - **other evidence ids**:
       - EVID_00005
     - **entity type**: money
-    - **value**: npr 200
+    - **value**: npr 25000
     - **this evidence ids**:
-      - EVID_00008
-      - EVID_00010
+      - EVID_00013
       - EVID_00014
     - **other evidence ids**:
       - EVID_00005
     - **entity type**: money
-    - **value**: npr 25000
+    - **value**: npr 200
     - **this evidence ids**:
-      - EVID_00013
+      - EVID_00008
+      - EVID_00010
       - EVID_00014
     - **other evidence ids**:
       - EVID_00005
@@ -716,14 +935,14 @@ Basis: every statement below references stored forensic findings; no content is 
 
 ## Report Provenance & Integrity
 
-- **report id**: RPT-185915593C-F9FFEAA4
-- **generated at**: 2026-08-02T14:26:09.941Z
+- **report id**: RPT-185915593C-03FD9369
+- **generated at**: 2026-08-03T14:03:41.770Z
 - **generator**: CIIS Phase-2 reporting module (template-over-data; no free-text generation)
 - **evidence set digest**: 623b9e5e28815e86892679dc56e1ac545ea1fddc4590023db83275c6bf9c8b61
 - **evidence set digest note**: SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.
 - **source artifact hashes**:
   - **correlation analysis.json**: 4155b11fdef420257a0a0dcd45763e4db8a86f5ad8e31ff9137a5e45ce3d1d51
-  - **cross case correlation.json**: 6c8cbdab6be9648cf3032751b970704e2ff3e344ea2cca1d0556888bbc7ac14d
+  - **cross case correlation.json**: a3de5c0ae11832b7d0b5650d47ba850bec9418345cc408d55fd372517fd0de83
   - **campaign analysis.json**: e26ff8f213288bcdcc0496c2640fcecb356a16efc41a5d1abb87072f58d9077d
   - **suspect assessment.json**: 9d07e8a9d09b75c24566f224f62e173620d4693e5b5635aba88539f5297068fc
   - **timeline analysis.json**: d8f9e09de06f3bffa07c9bcfc5ff38d3b2e1a1cc99bdb711024c6fde4ffb1edd

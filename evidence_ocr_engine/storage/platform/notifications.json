@@ -358,5 +358,135 @@
     "case_id": "CASE_C4D280733C",
     "evidence_id": "",
     "read": false
+  },
+  {
+    "id": 41,
+    "created_at": "2026-08-03T14:00:03.410Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00015 processed",
+    "message": "01_sms_screenshot.jpg processed for CASE_1A1BF573F3.",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "EVID_00015",
+    "read": false
+  },
+  {
+    "id": 42,
+    "created_at": "2026-08-03T14:00:14.820Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00016 processed",
+    "message": "02_messenger_chat.jpg processed for CASE_1A1BF573F3.",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "EVID_00016",
+    "read": false
+  },
+  {
+    "id": 43,
+    "created_at": "2026-08-03T14:00:18.247Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00017 processed",
+    "message": "03_qr_code_flyer.png processed for CASE_1A1BF573F3.",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "EVID_00017",
+    "read": false
+  },
+  {
+    "id": 44,
+    "created_at": "2026-08-03T14:00:22.413Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00018 processed",
+    "message": "04_esewa_payment_screenshot.jpg processed for CASE_1A1BF573F3.",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "EVID_00018",
+    "read": false
+  },
+  {
+    "id": 45,
+    "created_at": "2026-08-03T14:00:26.359Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00019 processed",
+    "message": "05_khalti_receipt.jpg processed for CASE_1A1BF573F3.",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "EVID_00019",
+    "read": false
+  },
+  {
+    "id": 46,
+    "created_at": "2026-08-03T14:00:31.209Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00020 processed",
+    "message": "06_phishing_email_screenshot.jpg processed for CASE_1A1BF573F3.",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "EVID_00020",
+    "read": false
+  },
+  {
+    "id": 47,
+    "created_at": "2026-08-03T14:00:53.752Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00021 processed",
+    "message": "07_bank_transfer_slip.pdf processed for CASE_1A1BF573F3.",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "EVID_00021",
+    "read": false
+  },
+  {
+    "id": 48,
+    "created_at": "2026-08-03T14:00:54.526Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00022 processed",
+    "message": "08_complaint_letter.pdf processed for CASE_1A1BF573F3.",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "EVID_00022",
+    "read": false
+  },
+  {
+    "id": 49,
+    "created_at": "2026-08-03T14:00:55.176Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00023 processed",
+    "message": "bank_transactions.csv processed for CASE_1A1BF573F3.",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "EVID_00023",
+    "read": false
+  },
+  {
+    "id": 50,
+    "created_at": "2026-08-03T14:00:57.546Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00024 processed",
+    "message": "phishing_email_screenshot.png processed for CASE_1A1BF573F3.",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "EVID_00024",
+    "read": false
+  },
+  {
+    "id": 51,
+    "created_at": "2026-08-03T14:01:02.870Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00025 processed",
+    "message": "romanchat.jpg processed for CASE_1A1BF573F3.",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "EVID_00025",
+    "read": false
+  },
+  {
+    "id": 52,
+    "created_at": "2026-08-03T14:03:43.392Z",
+    "type": "report_generated",
+    "title": "Investigation analysis completed for CASE_1A1BF573F3",
+    "message": "All Phase-2 artifacts regenerated.",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 53,
+    "created_at": "2026-08-03T14:03:43.416Z",
+    "type": "high_priority",
+    "title": "CASE_1A1BF573F3 flagged HIGH priority",
+    "message": "Engine priority score: 74.8.",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "",
+    "read": false
   }
 ]
