@@ -1,17 +1,41 @@
 """CIIS API settings.
 
-Thin presentation layer over the Phase 1/2 forensic engines.
-The engines are NEVER modified - they are imported read-only from
-``ENGINE_ROOT`` (see ``api/engine.py``).
+Thin presentation layer over the forensic engines. The engines are NEVER
+modified - they are imported read-only from the roots below (see
+``api/engine.py``, which is the only module that touches them).
+
+Engine layout::
+
+    ENGINE_ROOT       evidence_ocr_engine          OCR / evidence extraction
+    CORRELATION_ROOT  evidence_correlation_engine  analysis (the brain)
+    TIMELINE_ROOT     timeline_reconstruction      timestamp reconstruction
+
+The correlation engine depends on the OCR engine (it reads its storage tree)
+and loads the timeline engine's algorithm; the OCR engine depends on neither.
 """
 from pathlib import Path
 import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Root of the completed forensic engine (Phase 1 + Phase 2).
+# Root of the OCR / evidence-extraction engine (Phase 1).
 ENGINE_ROOT = Path(
     os.environ.get("CIIS_ENGINE_ROOT", BASE_DIR.parent / "evidence_ocr_engine")
+).resolve()
+
+# Root of the correlation engine (Phase 2) - the analytical core.
+CORRELATION_ROOT = Path(
+    os.environ.get(
+        "CIIS_CORRELATION_ROOT", BASE_DIR.parent / "evidence_correlation_engine"
+    )
+).resolve()
+
+# Root of the standalone timeline-reconstruction engine, loaded by the
+# correlation engine's timeline adapter.
+TIMELINE_ROOT = Path(
+    os.environ.get(
+        "CIIS_TIMELINE_ROOT", BASE_DIR.parent / "timeline_reconstruction"
+    )
 ).resolve()
 
 SECRET_KEY = os.environ.get(

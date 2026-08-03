@@ -1,7 +1,8 @@
-"""Read-only bridge to the completed Phase 1/2 forensic engines.
+"""Read-only bridge to the forensic engines.
 
-This module is the ONLY place the platform touches the engine. It imports
-the engine packages from ``settings.ENGINE_ROOT`` and exposes:
+This module is the ONLY place the platform touches the engines. It imports
+them from ``settings.ENGINE_ROOT`` (OCR) and ``settings.CORRELATION_ROOT``
+(analysis) and exposes:
 
 * CSV/JSON storage readers (cases, evidence, OCR results, forensics)
 * Phase-2 artifact loaders (``storage/investigation/<CASE_ID>/*.json``)
@@ -27,12 +28,16 @@ from .exceptions import EngineUnavailable
 log = logging.getLogger("ciis.engine")
 
 # --------------------------------------------------------------------- import
-if str(settings.ENGINE_ROOT) not in sys.path:
-    sys.path.insert(0, str(settings.ENGINE_ROOT))
+# Both engine roots go on the path before either is imported. The correlation
+# engine also bootstraps the OCR root itself (it reads that storage tree), so
+# order here is not load-bearing - but keeping OCR first matches the data flow.
+for _root in (settings.ENGINE_ROOT, settings.CORRELATION_ROOT):
+    if str(_root) not in sys.path:
+        sys.path.insert(0, str(_root))
 
 from backend.modules.evidence.config import EvidenceConfig  # noqa: E402
-from backend.modules.investigation.config import InvestigationConfig  # noqa: E402
-from backend.modules.investigation.repository import (  # noqa: E402
+from ciis_correlation.core.config import InvestigationConfig  # noqa: E402
+from ciis_correlation.core.repository import (  # noqa: E402
     InvestigationReportRepository,
 )
 
@@ -319,7 +324,7 @@ def reset_engine_storage() -> dict[str, Any]:
     OCR JSON, Phase-1 forensics, all Phase-2 artifacts, and the persistent
     cross-case entity index. Django workflow rows are cleared by the caller.
     """
-    from backend.modules.investigation.maintenance import reset_all
+    from ciis_correlation.core.maintenance import reset_all
 
     with _pipeline_lock:  # serialize against any in-flight engine write
         summary = reset_all(evidence_config(), investigation_config())
@@ -344,7 +349,7 @@ def delete_case_cascade(case_id: str) -> dict[str, Any]:
        correlation/timeline/graph of those cases are refreshed too, because the
        report is rebuilt from their latest stored artifacts.
     """
-    from backend.modules.investigation.maintenance import delete_case, linked_case_ids
+    from ciis_correlation.core.maintenance import delete_case, linked_case_ids
 
     ecfg, icfg = evidence_config(), investigation_config()
     with _pipeline_lock:  # engine CSV storage is not concurrent-safe
@@ -361,7 +366,7 @@ def delete_case_cascade(case_id: str) -> dict[str, Any]:
 
 def evidence_state(evidence_id: str) -> dict[str, Any]:
     """Whether an evidence item produced any findings yet (deletion gate)."""
-    from backend.modules.investigation.maintenance import evidence_processing_state
+    from ciis_correlation.core.maintenance import evidence_processing_state
 
     return evidence_processing_state(
         evidence_config(), investigation_config(), evidence_id
@@ -377,7 +382,7 @@ def delete_evidence_item(case_id: str, evidence_id: str) -> dict[str, Any]:
     after its record had been removed - a discrepancy that is much worse in a
     chain-of-custody product than a slow delete.
     """
-    from backend.modules.investigation.maintenance import delete_evidence
+    from ciis_correlation.core.maintenance import delete_evidence
 
     with _pipeline_lock:  # engine CSV storage is not concurrent-safe
         summary = delete_evidence(
@@ -414,10 +419,10 @@ def _refresh_linked_cases(case_ids: list[str]) -> list[str]:
     """
     if not case_ids:
         return []
-    from backend.modules.investigation.audit import InvestigationAuditTrail
-    from backend.modules.investigation.data_access import CaseDataRepository
-    from backend.modules.investigation.pipeline import build_default_pipeline
-    from backend.modules.investigation.reporting.service import (
+    from ciis_correlation.core.audit import InvestigationAuditTrail
+    from ciis_correlation.core.data_access import CaseDataRepository
+    from ciis_correlation.pipeline import build_default_pipeline
+    from ciis_correlation.reporting.service import (
         InvestigationReportService,
     )
 
@@ -599,7 +604,7 @@ def _entity_count(summary: Optional[dict[str, Any]]) -> Optional[int]:
 def _refresh_timeline_graph(case_id: str) -> Optional[dict[str, Any]]:
     """Regenerate live artifacts after OCR/entity enrichment, failure-isolated."""
     try:
-        from backend.modules.investigation.pipeline import build_default_pipeline
+        from ciis_correlation.pipeline import build_default_pipeline
 
         return build_default_pipeline(
             threat_intel=_threat_intel_provider()
@@ -741,8 +746,8 @@ def _threat_intel_provider():
     because the indicator file is not shipped and the ML dependencies live in a
     separate virtualenv.
     """
-    from backend.modules.investigation.data_access import ThreatIntelProvider
-    from backend.modules.investigation.threat_heuristics import (
+    from ciis_correlation.core.data_access import ThreatIntelProvider
+    from ciis_correlation.threat.heuristics import (
         ChainedThreatIntelProvider,
         HeuristicThreatIntelProvider,
     )
@@ -750,7 +755,7 @@ def _threat_intel_provider():
     providers = [ThreatIntelProvider(investigation_config().threat_intel_json)]
 
     if getattr(settings, "ML_THREAT_INTEL_ENABLED", False):
-        from backend.modules.investigation.ml_threat_intel import MLThreatIntelProvider
+        from ciis_correlation.threat.ml_provider import MLThreatIntelProvider
 
         ml = MLThreatIntelProvider(
             settings.ML_THREAT_INTEL_ROOT,
@@ -805,7 +810,7 @@ def submit_analysis_job(job_id: int, case_id: str, username: str) -> None:
         jobs.update(job_id, status="running")
         detail = ""
         try:
-            from backend.modules.investigation.pipeline import build_default_pipeline
+            from ciis_correlation.pipeline import build_default_pipeline
 
             with _pipeline_lock:
                 # Evidence captured before forensics ran on upload has no
