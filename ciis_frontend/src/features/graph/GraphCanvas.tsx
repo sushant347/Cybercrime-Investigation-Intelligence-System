@@ -15,6 +15,7 @@ import { nodeColor } from "@/theme/theme";
 import type { RelationshipGraph } from "@/types";
 
 import type { Selection } from "./GraphTab";
+import { STRUCTURAL_TYPES, type NodeSignals } from "./relevance";
 
 // Registered once per module load. cytoscape.use() is safe to call more
 // than once (Vite HMR re-evaluates this module on edit) - it just
@@ -24,9 +25,6 @@ cytoscape.use(fcose);
 /** Layout modes offered to the investigator. */
 export type LayoutMode = "structure" | "force" | "circle";
 
-/** Structural roles: everything else is an extracted-entity node. */
-export const STRUCTURAL_TYPES = ["case", "evidence", "timeline_event"];
-
 /**
  * Node sizing model. Kept at module scope (rather than inline in the
  * cytoscape style) so layout code and style code read the same numbers.
@@ -34,6 +32,14 @@ export const STRUCTURAL_TYPES = ["case", "evidence", "timeline_event"];
 const NODE_BASE_SIZE: Record<string, number> = { case: 46, evidence: 38 };
 const NODE_BASE_SIZE_DEFAULT = 26; // entities
 const NODE_DEGREE_BONUS_MAX = 16; // matches Math.min(16, degree * 1.6)
+
+/**
+ * Past this many drawn nodes every entity label at once becomes a grey wall,
+ * so only the case skeleton and the leads stay labelled until the
+ * investigator zooms in past ZOOM_LABEL_ALL or hovers.
+ */
+const CROWDED_NODE_COUNT = 45;
+const ZOOM_LABEL_ALL = 1.15;
 
 /** Cytoscape node size: base-by-role, growing slightly with connectivity
  *  so hub entities read as important, capped so a busy node never dwarfs
@@ -43,7 +49,14 @@ function sizeFor(type: string, degree: number): number {
   return base + Math.min(NODE_DEGREE_BONUS_MAX, degree * 1.6);
 }
 
-/** Visual language for engine edge types (legend is rendered in GraphTab). */
+/**
+ * Visual language for engine edge types (legend is rendered in GraphTab).
+ *
+ * Every relation the correlation engine can emit needs an entry: an
+ * unmapped type falls through to a plain grey line that appears in no
+ * legend, which is how `cross_case_entity_match` — nearly half the edges on
+ * a linked case — used to render as anonymous grey.
+ */
 export const EDGE_STYLES: Record<
   string,
   { color: string; style: "solid" | "dashed" | "dotted"; label: string }
@@ -53,7 +66,19 @@ export const EDGE_STYLES: Record<
   temporal_relationship: { color: "#ff9f43", style: "dashed", label: "Close in time" },
   behavioral_relationship: { color: "#3d7eff", style: "dotted", label: "Correlated behaviour" },
   threat_relationship: { color: "#ff4d4f", style: "solid", label: "Threat-flagged entity" },
+  cross_case_entity_match: {
+    color: "#a970ff",
+    style: "dashed",
+    label: "Same entity in another case",
+  },
+  cross_case_relationship: {
+    color: "#c084fc",
+    style: "dashed",
+    label: "Linked to another case",
+  },
   cross_case: { color: "#a970ff", style: "dashed", label: "Link to another case" },
+  timeline_event: { color: "#22d3ee", style: "dotted", label: "Timeline event" },
+  linked_to: { color: "#64748b", style: "solid", label: "Related" },
 };
 
 const FALLBACK_EDGE = { color: "#64748b", style: "solid" as const, label: "Relationship" };
@@ -104,17 +129,22 @@ function displayLabel(
  * Pure presentation: every node, edge, weight and explanation comes from the
  * stored artifact. The view adds only readability — semantic layout, shape/
  * colour coding, neighbourhood focus on hover, and viewport controls.
+ *
+ * The `graph` it receives is already the filtered view (see `relevance.ts`),
+ * so filtering rebuilds the instance and re-runs the layout over the real
+ * node set. Hiding nodes with `display: none` after layout, as this used to
+ * do, left the holes where they had been.
  */
 export function GraphCanvas({
   graph,
+  signals,
   search,
-  hiddenTypes,
   layout,
   onSelect,
 }: {
   graph: RelationshipGraph;
+  signals: Map<string, NodeSignals>;
   search: string;
-  hiddenTypes: Set<string>;
   layout: LayoutMode;
   onSelect: (selection: Selection) => void;
 }) {
@@ -123,23 +153,28 @@ export function GraphCanvas({
   const cyRef = useRef<Core | null>(null);
   const theme = useTheme();
 
-  /** Layout options per mode. */
+  /** Layout options per mode, tuned for the node count actually drawn. */
   const layoutOptions = useCallback(
-    (mode: LayoutMode): cytoscape.LayoutOptions => {
+    (mode: LayoutMode, count: number): cytoscape.LayoutOptions => {
       if (mode === "structure") {
         // Case at the centre, evidence around it, entities furthest out —
-        // mirrors how the investigation is actually structured.
+        // mirrors how the investigation is actually structured. Spacing grows
+        // with the node count: a fixed 34px gap that reads well at 20 nodes
+        // packs 120 nodes into an unreadable band.
         return {
           name: "concentric",
           animate: false,
           padding: 46,
-          minNodeSpacing: 34,
+          minNodeSpacing: count > 90 ? 14 : count > 45 ? 22 : 34,
+          spacingFactor: count > 90 ? 0.85 : 1,
           concentric: (node: NodeSingular) => {
             const type = node.data("type") as string;
             if (type === "case") return 3;
             if (type === "evidence") return 2;
             return 1;
           },
+          // More rings once the outer ring would be overcrowded: entities
+          // split by connectivity so hubs sit inside their own leaves.
           levelWidth: () => 1,
         } as cytoscape.LayoutOptions;
       }
@@ -149,6 +184,11 @@ export function GraphCanvas({
           animate: false,
           padding: 46,
           avoidOverlap: true,
+          // Ordering by role keeps evidence together on the ring instead of
+          // interleaved with entities, which is the only way a single ring
+          // stays interpretable past ~40 nodes.
+          sort: (a: NodeSingular, b: NodeSingular) =>
+            (b.data("degree") as number) - (a.data("degree") as number),
         } as cytoscape.LayoutOptions;
       }
       // "force": fcose, not cytoscape's built-in cose. cose has no overlap
@@ -158,6 +198,11 @@ export function GraphCanvas({
       // sitting on top of them. randomize:false makes the initial
       // placement (BFS-based, not random) deterministic and reproducible
       // across reloads instead of shuffling every time.
+      //
+      // Repulsion and edge length scale down as the graph grows, otherwise a
+      // 140-node case is flung so far apart that fitting it makes every node
+      // a dot.
+      const big = count > 70;
       return {
         name: "fcose",
         animate: false,
@@ -166,41 +211,64 @@ export function GraphCanvas({
         padding: 46,
         nodeDimensionsIncludeLabels: true,
         packComponents: true,
-        nodeRepulsion: () => 9000,
-        idealEdgeLength: () => 100,
-        nodeSeparation: 90,
+        quality: big ? "default" : "proof",
+        nodeRepulsion: () => (big ? 5500 : 9000),
+        idealEdgeLength: () => (big ? 70 : 100),
+        nodeSeparation: big ? 55 : 90,
+        gravity: big ? 0.4 : 0.25,
       } as unknown as cytoscape.LayoutOptions;
     },
     [],
   );
 
-  // Build / rebuild the graph instance when the artifact or theme changes.
+  // Build / rebuild the graph instance when the (already filtered) artifact
+  // or the theme changes.
   useEffect(() => {
     if (!containerRef.current) return;
 
-    // Degree drives node size so hubs read as important at a glance.
+    // Degree drives node size so hubs read as important at a glance. It is
+    // recomputed from the *drawn* edges: a node's importance in this view is
+    // what this view shows, not what the full artifact holds.
     const degree = new Map<string, number>();
     graph.edges.forEach((e) => {
       degree.set(e.source, (degree.get(e.source) ?? 0) + 1);
       degree.set(e.target, (degree.get(e.target) ?? 0) + 1);
     });
 
+    const crowded = graph.nodes.length > CROWDED_NODE_COUNT;
+
     const cy = cytoscape({
       container: containerRef.current,
       elements: [
-        ...graph.nodes.map((node) => ({
-          data: {
-            id: node.id,
-            label: displayLabel(
-              node.node_type,
-              node.label,
-              node.id,
-              node.properties ?? {},
-            ),
-            type: node.node_type,
-            degree: degree.get(node.id) ?? 0,
-          },
-        })),
+        ...graph.nodes.map((node) => {
+          const sig = signals.get(node.id);
+          const structural = (STRUCTURAL_TYPES as readonly string[]).includes(
+            node.node_type,
+          );
+          return {
+            data: {
+              id: node.id,
+              label: displayLabel(
+                node.node_type,
+                node.label,
+                node.id,
+                node.properties ?? {},
+              ),
+              type: node.node_type,
+              degree: degree.get(node.id) ?? 0,
+            },
+            // Labels that survive a crowded canvas: the case skeleton, and
+            // entities the engine gave a reason to care about.
+            classes:
+              !crowded ||
+              structural ||
+              (sig?.evidenceReach ?? 0) >= 2 ||
+              sig?.threat ||
+              sig?.crossCase
+                ? "show-label"
+                : "",
+          };
+        }),
         ...graph.edges.map((edge, i) => ({
           data: {
             id: `e${i}`,
@@ -219,11 +287,7 @@ export function GraphCanvas({
             "background-color": (el: NodeSingular) =>
               nodeColor(el.data("type") as string),
             shape: (el: NodeSingular) => nodeShape(el.data("type") as string),
-            label: "data(label)",
-            "font-size": (el: NodeSingular) =>
-              STRUCTURAL_TYPES.includes(el.data("type") as string) ? 11 : 9.5,
-            "font-weight": (el: NodeSingular) =>
-              STRUCTURAL_TYPES.includes(el.data("type") as string) ? 700 : 500,
+            label: "",
             color: theme.palette.text.primary,
             "text-valign": "bottom",
             "text-margin-y": 6,
@@ -242,6 +306,27 @@ export function GraphCanvas({
           },
         },
         {
+          // Labels are opt-in per node so a dense case is readable; the
+          // zoom handler below adds this class to everything once the
+          // investigator is close enough for the text to fit.
+          selector: "node.show-label",
+          style: {
+            label: "data(label)",
+            "font-size": (el: NodeSingular) =>
+              (STRUCTURAL_TYPES as readonly string[]).includes(
+                el.data("type") as string,
+              )
+                ? 11
+                : 9.5,
+            "font-weight": (el: NodeSingular) =>
+              (STRUCTURAL_TYPES as readonly string[]).includes(
+                el.data("type") as string,
+              )
+                ? 700
+                : 500,
+          },
+        },
+        {
           selector: "edge",
           style: {
             width: (el: EdgeSingular) =>
@@ -255,15 +340,20 @@ export function GraphCanvas({
             "target-arrow-color": (el: EdgeSingular) =>
               edgeStyle(el.data("type") as string).color,
             "arrow-scale": 0.85,
-            opacity: 0.68,
+            // Thinner and fainter as the graph grows, so the lines read as
+            // texture behind the nodes rather than competing with them.
+            opacity: crowded ? 0.4 : 0.68,
           },
         },
         {
           selector: ".highlighted",
           style: { "border-color": "#ffd666", "border-width": 4, "z-index": 10 },
         },
-        { selector: ".hover-focus", style: { opacity: 1, "z-index": 9 } },
-        { selector: ".dimmed", style: { opacity: 0.08 } },
+        {
+          selector: ".hover-focus",
+          style: { opacity: 1, "z-index": 9, label: "data(label)" },
+        },
+        { selector: ".dimmed", style: { opacity: 0.08, label: "" } },
         {
           selector: ":selected",
           style: {
@@ -273,10 +363,16 @@ export function GraphCanvas({
           },
         },
       ],
-      layout: layoutOptions(layout),
+      layout: layoutOptions(layout, graph.nodes.length),
       wheelSensitivity: 0.2,
       maxZoom: 2.5,
       minZoom: 0.1,
+      // Rendering hints that keep panning a 140-node case smooth. Both are
+      // no-ops on a small graph because the thresholds are never crossed.
+      hideEdgesOnViewport: crowded,
+      textureOnViewport: crowded,
+      motionBlur: false,
+      pixelRatio: crowded ? 1 : "auto",
     });
     cy.fit(undefined, 46);
 
@@ -293,6 +389,23 @@ export function GraphCanvas({
     cy.on("tap", (event) => {
       if (event.target === cy) onSelect(null);
     });
+
+    // Zooming in is a request for detail: reveal every label once the text
+    // has room, and fall back to the curated set on the way out.
+    if (crowded) {
+      cy.on("zoom", () => {
+        const all = cy.zoom() >= ZOOM_LABEL_ALL;
+        cy.batch(() => {
+          cy.nodes().forEach((n) => {
+            if (all) n.addClass("show-label");
+            else if (!n.scratch("_keepLabel")) n.removeClass("show-label");
+          });
+        });
+      });
+      cy.nodes(".show-label").forEach((n) => {
+        n.scratch("_keepLabel", true);
+      });
+    }
 
     // ---------------------------------------------------------------- hover
     const tooltip = tooltipRef.current;
@@ -358,6 +471,12 @@ export function GraphCanvas({
         )
         .join("");
 
+      const sig = signals.get(id);
+      const reachLine =
+        sig && sig.evidenceReach >= 2
+          ? `<div style="opacity:.75;margin-bottom:3px">Links ${sig.evidenceReach} pieces of evidence</div>`
+          : "";
+
       showTooltip(
         `<div style="font-weight:700;margin-bottom:2px;word-break:break-all">${esc(
           source?.label ?? nodeEl.data("label"),
@@ -367,13 +486,16 @@ export function GraphCanvas({
           )};text-transform:uppercase;font-size:10px;letter-spacing:.05em;margin-bottom:4px">${esc(
             type.replace(/_/g, " "),
           )} · ${nodeEl.degree(false)} connection(s)</div>` +
+          reachLine +
           propLines +
           (links.length
             ? `<div style="margin-top:5px;border-top:1px solid rgba(128,128,128,.25);padding-top:4px">${links.join(
                 "",
               )}</div>`
             : "") +
-          (hidden ? `<div style="opacity:.6;margin-top:2px">…and ${hidden} more</div>` : ""),
+          (hidden
+            ? `<div style="opacity:.6;margin-top:2px">…and ${hidden} more — click to see all</div>`
+            : ""),
         event.renderedPosition.x,
         event.renderedPosition.y,
       );
@@ -430,44 +552,46 @@ export function GraphCanvas({
       cyRef.current = null;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [graph, theme.palette.mode]);
+  }, [graph, signals, theme.palette.mode]);
 
   // Re-run the layout when the investigator switches mode.
   useEffect(() => {
     const cy = cyRef.current;
     if (!cy) return;
-    cy.layout(layoutOptions(layout)).run();
+    cy.layout(layoutOptions(layout, cy.nodes().length)).run();
     cy.fit(undefined, 46);
   }, [layout, layoutOptions]);
 
-  // Search highlight + type filtering (visual only).
+  // Search highlight (visual only — type filtering happens upstream so the
+  // layout is computed over the nodes actually drawn).
   useEffect(() => {
     const cy = cyRef.current;
     if (!cy) return;
     cy.batch(() => {
       cy.elements().removeClass("highlighted dimmed");
 
-      cy.nodes().forEach((node) => {
-        const hidden = hiddenTypes.has(node.data("type") as string);
-        node.style("display", hidden ? "none" : "element");
-      });
-
       const q = search.trim().toLowerCase();
-      if (q) {
-        const matches = cy.nodes().filter((node) => {
-          const label = String(node.data("label") ?? "").toLowerCase();
-          const id = String(node.id()).toLowerCase();
-          return label.includes(q) || id.includes(q);
-        });
-        if (matches.length > 0) {
-          cy.elements().addClass("dimmed");
-          matches.removeClass("dimmed").addClass("highlighted");
-          matches.connectedEdges().removeClass("dimmed");
-          matches.connectedEdges().connectedNodes().removeClass("dimmed");
-        }
-      }
+      if (!q) return;
+      const matches = cy.nodes().filter((node) => {
+        const label = String(node.data("label") ?? "").toLowerCase();
+        const id = String(node.id()).toLowerCase();
+        return label.includes(q) || id.includes(q);
+      });
+      if (matches.length === 0) return;
+      cy.elements().addClass("dimmed");
+      matches.removeClass("dimmed").addClass("highlighted show-label");
+      matches.connectedEdges().removeClass("dimmed");
+      matches.connectedEdges().connectedNodes().removeClass("dimmed").addClass("show-label");
     });
-  }, [search, hiddenTypes]);
+
+    // Bring the hits into view: on a large case the match is usually off
+    // screen, and a highlight nobody can see is not a search result.
+    const q = search.trim();
+    if (q) {
+      const matches = cy.nodes(".highlighted");
+      if (matches.length > 0) cy.animate({ fit: { eles: matches.closedNeighborhood(), padding: 80 }, duration: 250 });
+    }
+  }, [search]);
 
   const zoomBy = (factor: number) => {
     const cy = cyRef.current;

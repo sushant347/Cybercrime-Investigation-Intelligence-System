@@ -8,9 +8,12 @@ import {
   CardContent,
   Chip,
   Divider,
+  FormControlLabel,
   Stack,
+  Switch,
   ToggleButton,
   ToggleButtonGroup,
+  Tooltip,
   Typography,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
@@ -32,6 +35,12 @@ import {
   nodeShape,
   type LayoutMode,
 } from "./GraphCanvas";
+import {
+  buildGraphView,
+  DENSITY_LABELS,
+  whyRelevant,
+  type Density,
+} from "./relevance";
 
 /** CSS clip-path previews mirroring the cytoscape node shapes. */
 const SHAPE_CSS: Record<string, string> = {
@@ -64,9 +73,9 @@ const LAYOUT_LABELS: { value: LayoutMode; label: string; hint: string }[] = [
   {
     value: "force",
     label: "Clusters",
-    hint: "Force-directed with overlap avoidance (fcose) — related items group together",
+    hint: "Force-directed with overlap avoidance (fcose) — related items group together. Best on a large case.",
   },
-  { value: "circle", label: "Circle", hint: "All nodes on one ring — good for spotting hubs" },
+  { value: "circle", label: "Circle", hint: "All nodes on one ring, busiest first — good for spotting hubs" },
 ];
 
 export type Selection =
@@ -76,14 +85,21 @@ export type Selection =
 
 /**
  * Module 6 - Relationship graph viewer.
- * Renders the engine-generated graph artifact verbatim: no layout-side
- * inference, no computed relationships - pure visualization.
+ *
+ * Renders the engine-generated graph artifact: no layout-side inference, no
+ * computed relationships. What the view *does* decide is how much of the
+ * artifact to draw at once — see `relevance.ts`. A fifty-upload case holds
+ * several hundred nodes, and drawing all of them produces a picture that
+ * hides the two or three entities the case actually turns on. Everything held
+ * back is counted and reported, and one control puts it all back.
  */
 export function GraphTab({ caseId }: { caseId: string }) {
   const [search, setSearch] = useState("");
   const [hiddenTypes, setHiddenTypes] = useState<Set<string>>(new Set());
   const [selection, setSelection] = useState<Selection>(null);
   const [layout, setLayout] = useState<LayoutMode>("structure");
+  const [density, setDensity] = useState<Density>("standard");
+  const [showUploadBatch, setShowUploadBatch] = useState(false);
 
   const graphQuery = useQuery({
     queryKey: ["artifact", caseId, "graph"],
@@ -103,15 +119,46 @@ export function GraphTab({ caseId }: { caseId: string }) {
 
   const graph = graphQuery.data?.report;
 
+  /** The subset actually drawn, plus the accounting of what was held back. */
+  const view = useMemo(
+    () =>
+      graph
+        ? buildGraphView(graph, {
+            density,
+            hiddenTypes,
+            includeUploadBatch: showUploadBatch,
+          })
+        : null,
+    [graph, density, hiddenTypes, showUploadBatch],
+  );
+
+  /**
+   * The artifact-shaped object handed to the canvas. Memoised deliberately:
+   * the canvas rebuilds its cytoscape instance and re-runs the layout
+   * whenever this identity changes, so a fresh object literal here would
+   * tear the whole graph down and lay it out again on every keystroke in the
+   * search box.
+   */
+  const canvasGraph = useMemo(
+    () => (graph && view ? { ...graph, nodes: view.nodes, edges: view.edges } : null),
+    [graph, view],
+  );
+
+  /** Legend counts: drawn vs. present in the artifact, per type. */
   const nodeTypes = useMemo(() => {
-    const counts = new Map<string, number>();
-    graph?.nodes.forEach((n) => counts.set(n.node_type, (counts.get(n.node_type) ?? 0) + 1));
-    return [...counts.entries()].sort((a, b) => b[1] - a[1]);
-  }, [graph]);
+    if (!graph) return [];
+    const total = new Map<string, number>();
+    graph.nodes.forEach((n) => total.set(n.node_type, (total.get(n.node_type) ?? 0) + 1));
+    const drawn = new Map<string, number>();
+    view?.nodes.forEach((n) => drawn.set(n.node_type, (drawn.get(n.node_type) ?? 0) + 1));
+    return [...total.entries()]
+      .map(([type, count]) => ({ type, count, drawn: drawn.get(type) ?? 0 }))
+      .sort((a, b) => b.count - a.count);
+  }, [graph, view]);
 
   const edgeTypesPresent = useMemo(
-    () => new Set(graph?.edges.map((e) => e.edge_type) ?? []),
-    [graph],
+    () => new Set(view?.edges.map((e) => e.edge_type) ?? []),
+    [view],
   );
 
   /** Structural node types; anything else is an extracted-entity node. */
@@ -128,7 +175,7 @@ export function GraphTab({ caseId }: { caseId: string }) {
   );
 
   if (graphQuery.isPending) return <DetailSkeleton />;
-  if (!graph) {
+  if (!graph || !view || !canvasGraph) {
     return (
       <EmptyState
         icon={<HubIcon />}
@@ -149,6 +196,21 @@ export function GraphTab({ caseId }: { caseId: string }) {
 
   const summary = summaryQuery.data?.report;
   const stats = statsQuery.data?.report;
+
+  /** Plain-English account of everything the view is holding back. */
+  const heldBack: string[] = [];
+  if (view.hidden.singleMention)
+    heldBack.push(
+      `${view.hidden.singleMention} entities mentioned in only one piece of evidence`,
+    );
+  if (view.hidden.lowIdentity)
+    heldBack.push(`${view.hidden.lowIdentity} one-off dates, times and amounts`);
+  if (view.hidden.mirrored)
+    heldBack.push(`${view.hidden.mirrored} timeline events (see the Timeline tab)`);
+  if (view.hidden.byTypeFilter)
+    heldBack.push(`${view.hidden.byTypeFilter} hidden by the type filters above`);
+  if (view.hidden.overBudget)
+    heldBack.push(`${view.hidden.overBudget} beyond the readable limit for one screen`);
 
   return (
     <Stack spacing={2}>
@@ -188,26 +250,86 @@ export function GraphTab({ caseId }: { caseId: string }) {
             placeholder="Search nodes (value, label, id)…"
             sx={{ minWidth: 240 }}
           />
-          <ToggleButtonGroup
-            size="small"
-            exclusive
-            value={layout}
-            onChange={(_, next: LayoutMode | null) => next && setLayout(next)}
-          >
-            {LAYOUT_LABELS.map((option) => (
-              <ToggleButton key={option.value} value={option.value} title={option.hint}>
-                {option.label}
-              </ToggleButton>
-            ))}
-          </ToggleButtonGroup>
+          <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap" useFlexGap>
+            {/* How much of the artifact to draw. */}
+            <ToggleButtonGroup
+              size="small"
+              exclusive
+              value={density}
+              aria-label="Level of detail"
+              onChange={(_, next: Density | null) => next && setDensity(next)}
+            >
+              {DENSITY_LABELS.map((option) => (
+                <ToggleButton key={option.value} value={option.value} title={option.hint}>
+                  {option.label}
+                </ToggleButton>
+              ))}
+            </ToggleButtonGroup>
+            <ToggleButtonGroup
+              size="small"
+              exclusive
+              value={layout}
+              aria-label="Layout"
+              onChange={(_, next: LayoutMode | null) => next && setLayout(next)}
+            >
+              {LAYOUT_LABELS.map((option) => (
+                <ToggleButton key={option.value} value={option.value} title={option.hint}>
+                  {option.label}
+                </ToggleButton>
+              ))}
+            </ToggleButtonGroup>
+          </Stack>
           <Box sx={{ flex: 1 }} />
-          {stats && (
-            <Typography variant="caption" color="text.secondary" sx={{ whiteSpace: "nowrap" }}>
-              {stats.node_count} nodes · {stats.edge_count} edges ·{" "}
-              {stats.connected_components} component(s)
-            </Typography>
+          <Typography variant="caption" color="text.secondary" sx={{ whiteSpace: "nowrap" }}>
+            Showing {view.nodes.length} of {view.totals.nodes} items ·{" "}
+            {view.edges.length} of {view.totals.edges} links
+            {stats ? ` · ${stats.connected_components} component(s)` : ""}
+          </Typography>
+        </Stack>
+        <Divider />
+
+        {/* What is being held back, and how to get it back. */}
+        <Stack
+          direction={{ xs: "column", md: "row" }}
+          spacing={1}
+          alignItems={{ md: "center" }}
+          sx={{ px: 2, py: 1.25 }}
+        >
+          <Typography variant="caption" color="text.secondary" sx={{ flex: 1 }}>
+            {heldBack.length === 0
+              ? "Drawing everything the engine stored for this case."
+              : `Not drawn: ${heldBack.join("; ")}. Switch to “Everything” to include them.`}
+          </Typography>
+          {view.uploadBatchEdges > 0 && (
+            <Tooltip title="These links only mean two files were uploaded in the same batch — an artifact of how the evidence was collected, not of the crime. They grow with every upload and are the main cause of a tangled graph.">
+              <FormControlLabel
+                sx={{ mr: 0 }}
+                control={
+                  <Switch
+                    size="small"
+                    checked={showUploadBatch}
+                    onChange={(e) => setShowUploadBatch(e.target.checked)}
+                    inputProps={{ "aria-label": "Show links between files uploaded together" }}
+                  />
+                }
+                label={
+                  <Typography variant="caption" color="text.secondary">
+                    Show {view.uploadBatchEdges} “uploaded together” links
+                  </Typography>
+                }
+              />
+            </Tooltip>
           )}
         </Stack>
+
+        {view.capped && (
+          <Alert severity="info" sx={{ mx: 2, mb: 1.5 }}>
+            This case is larger than one screen can show clearly, so the{" "}
+            {view.hidden.overBudget} least-connected items are held back. Search
+            for a value to jump straight to it, or narrow the type filters below.
+          </Alert>
+        )}
+
         <Divider />
 
         {/* Node legend — doubles as a filter: click a type to show/hide it. */}
@@ -217,11 +339,12 @@ export function GraphTab({ caseId }: { caseId: string }) {
             color="text.secondary"
             sx={{ display: "block", mb: 1 }}
           >
-            What you are looking at — each circle is one item the engine found.
-            Click a type to hide or show it.
+            What you are looking at — each shape is one item the engine found.
+            Click a type to hide or show it. A count like “5 of 9” means four are
+            held back at this level of detail.
           </Typography>
           <Stack direction="row" spacing={0.75} flexWrap="wrap" useFlexGap>
-            {nodeTypes.map(([type, count]) => {
+            {nodeTypes.map(({ type, count, drawn }) => {
               const isHidden = hiddenTypes.has(type);
               return (
                 <Chip
@@ -232,7 +355,9 @@ export function GraphTab({ caseId }: { caseId: string }) {
                       <ShapeSwatch type={type} />
                     </Box>
                   }
-                  label={`${titleCase(type.replace(/_/g, " "))} (${count})`}
+                  label={`${titleCase(type.replace(/_/g, " "))} (${
+                    drawn === count ? count : `${drawn} of ${count}`
+                  })`}
                   onClick={() => toggleType(type)}
                   variant={isHidden ? "outlined" : "filled"}
                   sx={{
@@ -240,6 +365,7 @@ export function GraphTab({ caseId }: { caseId: string }) {
                     color: isHidden ? "text.disabled" : nodeColor(type),
                     borderColor: nodeColor(type),
                     fontWeight: 700,
+                    opacity: !isHidden && drawn === 0 ? 0.45 : 1,
                     textDecoration: isHidden ? "line-through" : undefined,
                   }}
                 />
@@ -250,13 +376,22 @@ export function GraphTab({ caseId }: { caseId: string }) {
         <Divider />
         <Stack direction={{ xs: "column", lg: "row" }}>
           <Box sx={{ flex: 1, minWidth: 0 }}>
-            <GraphCanvas
-              graph={graph}
-              search={search}
-              hiddenTypes={hiddenTypes}
-              layout={layout}
-              onSelect={setSelection}
-            />
+            {view.nodes.length === 0 ? (
+              <Box sx={{ height: 560, display: "grid", placeItems: "center", p: 4 }}>
+                <Typography variant="body2" color="text.secondary" align="center">
+                  Every item is hidden by the current filters. Turn a type back on
+                  above, or switch the level of detail to “Everything”.
+                </Typography>
+              </Box>
+            ) : (
+              <GraphCanvas
+                graph={canvasGraph}
+                signals={view.signals}
+                search={search}
+                layout={layout}
+                onSelect={setSelection}
+              />
+            )}
           </Box>
           <Box
             sx={{
@@ -277,12 +412,18 @@ export function GraphTab({ caseId }: { caseId: string }) {
                   pieces of evidence means they share something — the same phone
                   number, wallet, amount, or a close acquisition time.
                 </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  By default the canvas draws the items that <b>link evidence
+                  together</b>. Something mentioned in a single document is a
+                  detail of that document, and lives on its evidence page.
+                </Typography>
                 <Stack spacing={0.75}>
                   {[
                     ["Hover", "highlights an item and lists what it links to"],
                     ["Click", "opens the engine's full details on that item"],
-                    ["Search", "finds a value and dims everything unrelated"],
-                    ["Scroll / drag", "zooms and pans; use the buttons to refit"],
+                    ["Search", "finds a value, zooms to it and dims the rest"],
+                    ["Detail", "Leads / Standard / Everything changes how much is drawn"],
+                    ["Scroll / drag", "zooms and pans; zoom in to reveal every label"],
                   ].map(([action, meaning]) => (
                     <Stack key={action} direction="row" spacing={1}>
                       <Typography
@@ -301,8 +442,9 @@ export function GraphTab({ caseId }: { caseId: string }) {
             )}
             {selection?.kind === "node" &&
               (() => {
-                // Same information the hover tooltip shows, but complete:
-                // every connection of this node, with the relationship type.
+                // The complete record for this node, drawn from the *full*
+                // artifact rather than the filtered view: the canvas may be
+                // showing a summary, but the detail panel never should.
                 const nodeId = selection.node.id;
                 const connections = graph.edges
                   .filter((e) => e.source === nodeId || e.target === nodeId)
@@ -312,6 +454,10 @@ export function GraphTab({ caseId }: { caseId: string }) {
                     return other ? { edge: e, other } : null;
                   })
                   .filter((c): c is { edge: GraphEdge; other: GraphNode } => c !== null);
+                const why = whyRelevant(
+                  view.signals.get(nodeId),
+                  selection.node.node_type,
+                );
                 return (
                   <Stack spacing={1}>
                     <Chip
@@ -330,6 +476,11 @@ export function GraphTab({ caseId }: { caseId: string }) {
                     >
                       {selection.node.label || selection.node.id}
                     </Typography>
+                    {why && (
+                      <Typography variant="body2" color="text.secondary">
+                        {why}
+                      </Typography>
+                    )}
                     <Typography
                       variant="caption"
                       color="text.secondary"
@@ -472,7 +623,7 @@ export function GraphTab({ caseId }: { caseId: string }) {
           </Box>
         </Stack>
         <Divider />
-        {/* Edge legend — only the relationship types present in this graph. */}
+        {/* Edge legend — only the relationship types actually drawn. */}
         <Stack
           direction="row"
           spacing={2}

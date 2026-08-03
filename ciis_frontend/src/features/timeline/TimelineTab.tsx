@@ -28,6 +28,7 @@ import { BRAND } from "@/theme/theme";
 import type { TimelineEvent } from "@/types";
 
 import { TimelineChart } from "./TimelineChart";
+import { eventTitle, isGeneratedDescription } from "./eventText";
 import { stageMeta } from "./stages";
 
 /**
@@ -352,7 +353,7 @@ export function TimelineTab({ caseId }: { caseId: string }) {
                           {event.evidence_id ? ` · ${event.evidence_id}` : ""}
                         </Typography>
                         <Typography variant="body2" sx={{ overflowWrap: "anywhere" }}>
-                          {event.description}
+                          {eventTitle(event)}
                         </Typography>
                         <Stack direction="row" spacing={0.5} sx={{ mt: 0.5 }} flexWrap="wrap" useFlexGap>
                           {event.critical && (
@@ -468,6 +469,15 @@ function EventDetail({ event }: { event: TimelineEvent }) {
         <Typography variant="body2" sx={{ overflowWrap: "anywhere" }}>
           {event.description}
         </Typography>
+        {/* The engine writes this line from the evidence id, file name and
+            stage list when it has no narrative to give. Saying so is more
+            use than letting the reader wonder what they are missing. */}
+        {isGeneratedDescription(event) && (
+          <Typography variant="caption" color="text.disabled">
+            The engine recorded no narrative for this event — the line above is
+            assembled from the fields shown here.
+          </Typography>
+        )}
       </Box>
 
       {event.stages.length > 0 && (

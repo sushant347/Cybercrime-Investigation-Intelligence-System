@@ -1,4 +1,5 @@
 import { fireEvent, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { renderWithProviders } from "@/test/testUtils";
@@ -38,13 +39,17 @@ const event = (over: Partial<TimelineEvent>): TimelineEvent => ({
   ...over,
 });
 
-const draw = (events: TimelineEvent[], milestones = new Set<string>()) =>
+const draw = (
+  events: TimelineEvent[],
+  milestones = new Set<string>(),
+  onSelect: (event: TimelineEvent) => void = () => {},
+) =>
   renderWithProviders(
     <TimelineChart
       events={events}
       milestoneKeys={milestones}
       selected={null}
-      onSelect={() => {}}
+      onSelect={onSelect}
     />,
   );
 
@@ -155,5 +160,158 @@ describe("TimelineChart", () => {
       new Set([`${stamp}|Money sent`]),
     );
     expect(markers(container)[0].querySelector("rect[transform^='rotate(45']")).toBeTruthy();
+  });
+});
+
+/** Echoes carry a smaller hit area; `markers()` therefore counts only solids. */
+const echoes = (container: HTMLElement) =>
+  [...container.querySelectorAll('svg g[data-marker="echo"]')];
+
+describe("TimelineChart multi-stage events", () => {
+  it("draws one solid marker per event, whatever it evidences", () => {
+    const { container } = draw([
+      event({
+        stages: ["initial_contact", "social_engineering", "financial_transaction"],
+        description: "One document evidencing three stages",
+      }),
+    ]);
+
+    // Three lanes, because all three stages are evidenced...
+    expect(laneLabels(container)).toEqual([
+      "Initial Contact",
+      "Social Engineering",
+      "Money Movement",
+    ]);
+    // ...but one event is one marker. It used to be drawn three times, which
+    // made every lane count and the total both wrong.
+    expect(markers(container)).toHaveLength(1);
+    expect(echoes(container)).toHaveLength(2);
+  });
+
+  it("puts the marker in the stage the event enters the story at", () => {
+    const { container } = draw([
+      event({ stages: ["financial_transaction", "initial_contact"] }),
+    ]);
+    // Lane 0 is Initial Contact; the solid marker belongs to it.
+    const solid = markers(container)[0];
+    const lanes = [...container.querySelectorAll("svg g")];
+    expect(lanes.indexOf(solid)).toBeGreaterThan(-1);
+    expect(solid.getAttribute("data-marker")).toBe("primary");
+    expect(echoes(container)).toHaveLength(1);
+  });
+
+  it("says how many events merely evidence a stage, without counting them twice", () => {
+    const { container } = draw([
+      event({ stages: ["initial_contact", "credential_theft"] }),
+      event({ timestamp: "2026-01-01T11:00:00Z", stages: ["initial_contact"] }),
+    ]);
+    expect(container.textContent).toContain("2 events");
+    expect(container.textContent).toContain("no events start here · 1 also evidence this");
+  });
+
+  it("draws a full marker in every stage when asked to", async () => {
+    const user = userEvent.setup();
+    const { container } = draw([
+      event({ stages: ["initial_contact", "social_engineering", "financial_transaction"] }),
+    ]);
+
+    await user.click(screen.getByRole("checkbox", { name: /draw in every stage/i }));
+
+    expect(markers(container)).toHaveLength(3);
+    expect(echoes(container)).toHaveLength(0);
+  });
+});
+
+describe("TimelineChart time axis", () => {
+  /** A stray dated document months before the burst that is the real attack. */
+  const skewed = [
+    event({ timestamp: "2026-01-01T00:00:00Z", stages: ["initial_contact"] }),
+    event({ timestamp: "2026-06-01T00:00:00Z", stages: ["initial_contact"] }),
+    event({ timestamp: "2026-06-01T00:01:00Z", stages: ["initial_contact"] }),
+    event({ timestamp: "2026-06-01T00:02:00Z", stages: ["initial_contact"] }),
+  ];
+
+  it("collapses dead stretches and labels the time skipped", () => {
+    const { container } = draw(skewed);
+    expect(container.textContent).toContain("5 months");
+    expect(container.textContent).toMatch(/Shaded bands are stretches with no events/);
+  });
+
+  it("separates a burst that a linear axis would stack in one pixel", () => {
+    const { container } = draw(skewed);
+    const xs = markers(container)
+      .map((g) => Number(g.querySelector("circle")?.getAttribute("cx") ?? 0))
+      .sort((a, b) => a - b);
+    expect(xs).toHaveLength(4);
+    // The three events a minute apart must be visibly apart, not merged.
+    expect(xs[3] - xs[1]).toBeGreaterThan(40);
+  });
+
+  it("goes back to a true-to-scale axis on request", async () => {
+    const user = userEvent.setup();
+    const { container } = draw(skewed);
+
+    expect(markers(container)).toHaveLength(4);
+
+    await user.click(screen.getByRole("checkbox", { name: /compress quiet periods/i }));
+
+    expect(container.textContent).not.toMatch(/Shaded bands are stretches with no events/);
+    // Un-compressed, the one-minute burst collapses into a single marker —
+    // which is exactly the picture the compressed axis exists to avoid.
+    expect(markers(container).length).toBeLessThan(4);
+  });
+});
+
+describe("TimelineChart hover card", () => {
+  const cluster = Array.from({ length: 7 }, (_, i) =>
+    event({ stages: ["initial_contact"], description: `Event number ${i + 1}` }),
+  );
+
+  it("shows every event under the marker, not the first few", () => {
+    const { container } = draw(cluster);
+    fireEvent.mouseEnter(markers(container)[0]);
+
+    expect(screen.getByText("7 events at this moment")).toBeInTheDocument();
+    for (let i = 1; i <= 7; i += 1) {
+      expect(screen.getByText(`Event number ${i}`)).toBeInTheDocument();
+    }
+    // The old card stopped at four and offered "+3 more" with no way to see them.
+    expect(screen.queryByText(/more — click the marker/)).not.toBeInTheDocument();
+  });
+
+  it("stays open while the pointer travels into it", () => {
+    const { container } = draw(cluster);
+    const marker = markers(container)[0];
+
+    fireEvent.mouseEnter(marker);
+    fireEvent.mouseLeave(marker);
+    // A grace period keeps it alive across the gap between marker and card.
+    const card = screen.getByText("7 events at this moment");
+    fireEvent.mouseEnter(card.parentElement!);
+    expect(screen.getByText("Event number 5")).toBeInTheDocument();
+  });
+
+  it("opens the event that was clicked, not the first in the cluster", () => {
+    const onSelect = vi.fn();
+    const { container } = draw(cluster, new Set(), onSelect);
+
+    fireEvent.mouseEnter(markers(container)[0]);
+    fireEvent.click(screen.getByText("Event number 5"));
+
+    expect(onSelect).toHaveBeenCalledWith(
+      expect.objectContaining({ description: "Event number 5" }),
+    );
+  });
+
+  it("reads the engine's boilerplate description as the file it came from", () => {
+    const { container } = draw([
+      event({
+        stages: ["initial_contact"],
+        evidence_id: "EVID_00023",
+        description: "Evidence EVID_00023 (bank_transactions.csv); stages: financial_transaction",
+      }),
+    ]);
+    fireEvent.mouseEnter(markers(container)[0]);
+    expect(screen.getByText("bank_transactions.csv")).toBeInTheDocument();
   });
 });
