@@ -6,7 +6,7 @@ this one "legacy … untouched":
 
 | This module | Integrated replacement (authoritative) |
 |---|---|
-| `report_generator.py` | `evidence_ocr_engine/backend/modules/investigation/reporting/service.py` |
+| `report_generator.py` | `evidence_correlation_engine/ciis_correlation/reporting/service.py` |
 
 The live API (`ciis_api`) and the engine import **only** from
 `evidence_ocr_engine`; nothing imports this directory. It is retained for

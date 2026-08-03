@@ -915,6 +915,8 @@ def engine_health() -> dict[str, Any]:
     cfg = evidence_config()
     return {
         "engine_root": str(settings.ENGINE_ROOT),
+        "correlation_root": str(settings.CORRELATION_ROOT),
+        "timeline_root": str(settings.TIMELINE_ROOT),
         "storage_ok": cfg.storage_dir.is_dir(),
         "cases_csv": cfg.cases_csv.is_file(),
         "evidence_csv": cfg.evidence_csv.is_file(),
