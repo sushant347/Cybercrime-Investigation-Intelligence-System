@@ -1,9 +1,9 @@
 {
   "report_type": "analytics",
-  "report_version": 6,
+  "report_version": 7,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-08-04T05:29:50.676Z",
+  "generated_at": "2026-08-04T07:03:58.502Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
     "evidence_count": 4,
@@ -98,6 +98,6 @@
       "mean_confidence": 0.2268,
       "max_confidence": 0.2545
     },
-    "analysis_time_ms": 0.4
+    "analysis_time_ms": 0.3
   }
 }

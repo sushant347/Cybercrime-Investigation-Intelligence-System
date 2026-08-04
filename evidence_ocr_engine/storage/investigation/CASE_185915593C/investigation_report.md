@@ -1,6 +1,6 @@
 # Forensic Investigation Report - CASE_185915593C
 
-Generated: 2026-08-04T05:29:52.440Z  
+Generated: 2026-08-04T07:04:00.294Z  
 Produced by: Cybercrime Investigation Intelligence Engine (CIIS), Phase 2  
 Basis: every statement below references stored forensic findings; no content is generated outside computed results.
 
@@ -920,6 +920,52 @@ Basis: every statement below references stored forensic findings; no content is 
 - Investigation should focus on anchor '+9779801122334' (78/100 confidence).
 - Observed stage order deviates from the canonical scam sequence; evidence acquisition order should be reviewed.
 
+## Statutory Basis
+
+The findings engage 3 provisions of the Electronic Transactions Act, 2063 (2008): s.52, s.47, s.53. Each is listed with the finding that engaged it and the evidence behind that finding.
+
+**Statute:** Electronic Transactions Act, 2063 (2008)  
+**Jurisdiction:** Nepal
+
+### Section 52 — To commit computer fraud
+
+*Section 52, Electronic Transactions Act, 2063 (2008)*
+
+**Conduct.** Acquiring a financial benefit by fraud through a computer, including from the payment of any bill, the balance of another person's account, or an ATM card. The amount obtained is recoverable.
+
+**Penalty.** fine not exceeding one hundred thousand Rupees or imprisonment not exceeding two years or both
+
+**Why this is engaged.** 13 payment identifiers (0119.0625.987456, 0501-0198765432 and 0501-9012345678) appear alongside 9 money values (NPR 1,500, NPR 200 and NPR 25,000) in the same case, evidencing a financial benefit moving through a payment rail.
+
+**Evidence.** EVID_00008, EVID_00009, EVID_00010, EVID_00011, EVID_00013, EVID_00014
+
+### Section 47 — Publication of illegal materials in electronic form
+
+*Section 47, Electronic Transactions Act, 2063 (2008)*
+
+**Conduct.** Publishing or displaying material in electronic media, including on the internet, which is prohibited by prevailing law or is contrary to public morality or decent behaviour.
+
+**Penalty.** fine not exceeding one hundred thousand Rupees or imprisonment not exceeding five years or both
+
+**Why this is engaged.** threat intelligence flagged 5 indicators in this case; the evidence carries 8 web addresses (eSewa-cashback-offer.xyz and esewa-cashback-offer.xyz), i.e. material published in electronic form.
+
+**Evidence.** EVID_00008, EVID_00009, EVID_00010, EVID_00011, EVID_00014
+
+### Section 53 — Punishment to the person who abets to commit computer related offence
+
+*Section 53, Electronic Transactions Act, 2063 (2008)*
+
+**Conduct.** Abetting another to commit an offence under the Act, or attempting or being involved in a conspiracy to commit one.
+
+**Penalty.** fine not exceeding fifty thousand Rupees or imprisonment not exceeding six months or both, depending on the degree of the offence
+
+**Why this is engaged.** campaign CAMP_CASE_185915593C_01 groups 5 evidence items by shared indicators, which evidences coordinated activity rather than a single isolated act.
+
+**Evidence.** EVID_00008, EVID_00009, EVID_00011, EVID_00013, EVID_00014
+
+> This is an automated mapping from technical findings to statutory provisions, provided to assist the investigating officer. It is not legal advice and not a charging decision. A provision is listed because the evidence contains the features described, not because an offence has been proved: intent, authorisation and identity are matters for investigation. Provisions of the Act not listed here were not assessed.
+
+
 ## Recommendations
 
 - Get the fake websites shut down: esewa-cashback-offer.xyz, esewa-verify-kyc.com (+1 more). Ask the hosting company to save its records first.
@@ -935,20 +981,20 @@ Basis: every statement below references stored forensic findings; no content is 
 
 ## Report Provenance & Integrity
 
-- **report id**: RPT-185915593C-CD4784C3
-- **generated at**: 2026-08-04T05:29:52.304Z
+- **report id**: RPT-185915593C-6D6D55DD
+- **generated at**: 2026-08-04T07:04:00.171Z
 - **generator**: CIIS Phase-2 reporting module (template-over-data; no free-text generation)
 - **evidence set digest**: 623b9e5e28815e86892679dc56e1ac545ea1fddc4590023db83275c6bf9c8b61
 - **evidence set digest note**: SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.
 - **source artifact hashes**:
-  - **correlation analysis.json**: 82ad71a13298ad64ed2b88fab7e5b99814c87f5a37715c469d3b64aa0506435a
+  - **correlation analysis.json**: db674e9536b02a7d9ce016fa9bc68943a5c9494784547fc4de69c59e194d6dc3
   - **cross case correlation.json**: c732a2bfe3c5b97e8f15edc5d141b146245e3c2ce435f0ac7d4425c7210854ee
-  - **campaign analysis.json**: 7ff4996238396d9888d0bf59943a92008b4c6c02d5c97d8a7d500c1e1430f664
-  - **suspect assessment.json**: 1bf92cf417806212302c427966cb2cce5d263245e571f8866705aa9eb8ff1619
-  - **timeline analysis.json**: 66a3818bdcf7606f219656578ea98e9ff73c2756c2302e57bc3962278d514566
-  - **analytics.json**: 892a6f6f565e098b2b0dab024a68fd4624f044fba1ecf1d7c96a7c4c2d358543
-  - **case priority.json**: faf5f550fb04b392ca61b03a5ce246297f3e5808fbc00a9a41d8bd25865771e1
-  - **graph.json**: 5aef7e418862605f7f67bc1f2b8886e74a06003f4af46aad5a4b36b8afb5670d
+  - **campaign analysis.json**: 07f159626079533790352bb642a530b7674e612a361788024fff4df4a3ed337a
+  - **suspect assessment.json**: 3d00988a9675015a676dcca2b4b04d4dd6c15e8cb9006afb937bb9806ec6d1d8
+  - **timeline analysis.json**: 8849927bb15263b9247de54ebb9c39cb6821d58fae27984659bffa13e6e08362
+  - **analytics.json**: 6feaf8eb6edddcf74724343142cc4b1ef8df8120611cfb43d9bc4cf0079c0e11
+  - **case priority.json**: 1c4a93a89742ac12dfccea1c82f3fce50dff7a70f7479b45aa39ceecdc3a17f3
+  - **graph.json**: 6fe2c8fa0422e00f25ba634cd0cc609264ed69d7667a0e7921347c12a22ebcbe
 
 ## Appendix
 

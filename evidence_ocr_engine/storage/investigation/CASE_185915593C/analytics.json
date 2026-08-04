@@ -1,9 +1,9 @@
 {
   "report_type": "analytics",
-  "report_version": 8,
+  "report_version": 11,
   "schema_version": "2.0",
   "case_id": "CASE_185915593C",
-  "generated_at": "2026-08-04T05:29:52.258Z",
+  "generated_at": "2026-08-04T07:04:00.122Z",
   "report": {
     "case_id": "CASE_185915593C",
     "evidence_count": 8,
@@ -437,6 +437,6 @@
       "mean_confidence": 0.3621,
       "max_confidence": 0.9389
     },
-    "analysis_time_ms": 0.7
+    "analysis_time_ms": 0.9
   }
 }

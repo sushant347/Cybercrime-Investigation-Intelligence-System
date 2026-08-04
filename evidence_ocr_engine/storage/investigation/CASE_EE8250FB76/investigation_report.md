@@ -1,6 +1,6 @@
 # Forensic Investigation Report - CASE_EE8250FB76
 
-Generated: 2026-08-04T05:29:51.422Z  
+Generated: 2026-08-04T07:03:59.199Z  
 Produced by: Cybercrime Investigation Intelligence Engine (CIIS), Phase 2  
 Basis: every statement below references stored forensic findings; no content is generated outside computed results.
 
@@ -616,6 +616,40 @@ Basis: every statement below references stored forensic findings; no content is 
 - The evidence set is internally connected (1 weighted relationship), consistent with related activity rather than isolated incidents.
 - Investigation should focus on anchor '05019012345678' (68/100 confidence).
 
+## Statutory Basis
+
+The findings engage 2 provisions of the Electronic Transactions Act, 2063 (2008): s.52, s.47. Each is listed with the finding that engaged it and the evidence behind that finding.
+
+**Statute:** Electronic Transactions Act, 2063 (2008)  
+**Jurisdiction:** Nepal
+
+### Section 52 — To commit computer fraud
+
+*Section 52, Electronic Transactions Act, 2063 (2008)*
+
+**Conduct.** Acquiring a financial benefit by fraud through a computer, including from the payment of any bill, the balance of another person's account, or an ATM card. The amount obtained is recoverable.
+
+**Penalty.** fine not exceeding one hundred thousand Rupees or imprisonment not exceeding two years or both
+
+**Why this is engaged.** 8 payment identifiers (0119.0625.987456, 0501-9012345678 and 9801122334) appear alongside 4 money values (NPR 1,500, NPR 200 and NPR 25,000) in the same case, evidencing a financial benefit moving through a payment rail.
+
+**Evidence.** EVID_00005
+
+### Section 47 — Publication of illegal materials in electronic form
+
+*Section 47, Electronic Transactions Act, 2063 (2008)*
+
+**Conduct.** Publishing or displaying material in electronic media, including on the internet, which is prohibited by prevailing law or is contrary to public morality or decent behaviour.
+
+**Penalty.** fine not exceeding one hundred thousand Rupees or imprisonment not exceeding five years or both
+
+**Why this is engaged.** threat intelligence flagged 3 indicators in this case; the evidence carries 4 web addresses (esewa-cashback-offer.xyz and esewa-verify-kyc.com), i.e. material published in electronic form.
+
+**Evidence.** EVID_00005
+
+> This is an automated mapping from technical findings to statutory provisions, provided to assist the investigating officer. It is not legal advice and not a charging decision. A provision is listed because the evidence contains the features described, not because an offence has been proved: intent, authorisation and identity are matters for investigation. Provisions of the Act not listed here were not assessed.
+
+
 ## Recommendations
 
 - Get the fake websites shut down: esewa-cashback-offer.xyz, esewa-verify-kyc.com. Ask the hosting company to save its records first.
@@ -630,20 +664,20 @@ Basis: every statement below references stored forensic findings; no content is 
 
 ## Report Provenance & Integrity
 
-- **report id**: RPT-EE8250FB76-86F4937B
-- **generated at**: 2026-08-04T05:29:51.294Z
+- **report id**: RPT-EE8250FB76-7E003BF3
+- **generated at**: 2026-08-04T07:03:59.076Z
 - **generator**: CIIS Phase-2 reporting module (template-over-data; no free-text generation)
 - **evidence set digest**: 0f6afe626b2e5e1c4bb70b2efae2d8aea52ca3d8d38b481532cc8e4ff88c3ff6
 - **evidence set digest note**: SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.
 - **source artifact hashes**:
-  - **correlation analysis.json**: 763ce67d40d7b1f5a43f6c0a7cc8d8569b66d6510eea1d8658fde27291854ccd
+  - **correlation analysis.json**: 7dafed8e541ac92c9000300b0cad2bc52abae345979fb6b9419a82a8a7afb987
   - **cross case correlation.json**: eb69d4047d8579e0bc5f6954ea3d2fb83b3f633333637e84c7f0eefd53b6e690
-  - **campaign analysis.json**: ff9faff39845004f69aaa6dba02a5ea0f2ebde07fc1d262905124c58de774bdb
-  - **suspect assessment.json**: ca909a85ca3b6500a62d8aa27b4bd464b8211857f5817fae252c452b3a8ea7ea
-  - **timeline analysis.json**: fe7c9a401e4fccbf3970c64f86785f0448b92cdcd3e791fcbc005ebe406e2ad1
-  - **analytics.json**: 424a78728ca5fe709bb68e51e9967a59e7d3d4873696fce8fc96c6d9f84b67d6
-  - **case priority.json**: 1d9b6b1493c87b19609ab2f830a0e27219d7f80f680b2e1fe174af20b56be3c0
-  - **graph.json**: a2a08d0c6e88fdda1a4c49392ada0ca4866e4096736e4815f6ae984cd1287323
+  - **campaign analysis.json**: 84e92f44fa3000f6b98e73d7eda1df4c7c9052931cd60948bbbc82bb9274e819
+  - **suspect assessment.json**: bc86e6d85d8ff82cd18a73689f2f605a9b24d2f9c0a296166020108d39445620
+  - **timeline analysis.json**: 3d46a43933d0a57f0fb0befbdb34a5d4508e1e36b690d4b4acfed59cd81d3d9f
+  - **analytics.json**: 945695c5e190c4e4b5bc52caa8bbf806c1c817dbda7ac1672672999eb73d40e6
+  - **case priority.json**: b7cbaf9332f6ac357021f7d87e1eef8cf76dad33e10d5cc9c1c785956f611e12
+  - **graph.json**: 71428577c28c5306f45ab0bfefd4ef0d1f96d0bc37bd0b0c57d26ab87fbde36b
 
 ## Appendix
 

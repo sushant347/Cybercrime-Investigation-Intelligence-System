@@ -1,9 +1,9 @@
 {
   "report_type": "case_statistics",
-  "report_version": 8,
+  "report_version": 11,
   "schema_version": "2.0",
   "case_id": "CASE_185915593C",
-  "generated_at": "2026-08-04T05:29:52.276Z",
+  "generated_at": "2026-08-04T07:04:00.143Z",
   "report": {
     "case_id": "CASE_185915593C",
     "evidence_count": 8,

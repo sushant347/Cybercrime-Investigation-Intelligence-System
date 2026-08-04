@@ -1,6 +1,6 @@
 # Forensic Investigation Report - CASE_2CF24DBA5F
 
-Generated: 2026-08-04T05:29:50.850Z  
+Generated: 2026-08-04T07:03:58.701Z  
 Produced by: Cybercrime Investigation Intelligence Engine (CIIS), Phase 2  
 Basis: every statement below references stored forensic findings; no content is generated outside computed results.
 
@@ -251,6 +251,28 @@ The active threat-intelligence provider returned no classification for any URL/d
 - The evidence set is internally connected (6 weighted relationships), consistent with related activity rather than isolated incidents.
 - Observed stage order deviates from the canonical scam sequence; evidence acquisition order should be reviewed.
 
+## Statutory Basis
+
+The findings engage 1 provision of the Electronic Transactions Act, 2063 (2008): s.45. Each is listed with the finding that engaged it and the evidence behind that finding.
+
+**Statute:** Electronic Transactions Act, 2063 (2008)  
+**Jurisdiction:** Nepal
+
+### Section 45 — Unauthorized Access in Computer Materials
+
+*Section 45, Electronic Transactions Act, 2063 (2008)*
+
+**Conduct.** Accessing any programme, information or data of a computer without the authorisation of its owner, or beyond the scope of an authorisation held.
+
+**Penalty.** fine not exceeding two hundred thousand Rupees or imprisonment not exceeding three years or both
+
+**Why this is engaged.** credential material appears in 1 evidence item (login), indicating access to an account was sought or obtained.
+
+**Evidence.** EVID_00003
+
+> This is an automated mapping from technical findings to statutory provisions, provided to assist the investigating officer. It is not legal advice and not a charging decision. A provision is listed because the evidence contains the features described, not because an offence has been proved: intent, authorisation and identity are matters for investigation. Provisions of the Act not listed here were not assessed.
+
+
 ## Recommendations
 
 - Go through the 2 key moments - when money moved and codes were shared - with the victim, and record what they lost.
@@ -258,20 +280,20 @@ The active threat-intelligence provider returned no classification for any URL/d
 
 ## Report Provenance & Integrity
 
-- **report id**: RPT-2CF24DBA5F-12CFF9FC
-- **generated at**: 2026-08-04T05:29:50.726Z
+- **report id**: RPT-2CF24DBA5F-A6C8E385
+- **generated at**: 2026-08-04T07:03:58.570Z
 - **generator**: CIIS Phase-2 reporting module (template-over-data; no free-text generation)
 - **evidence set digest**: 845d2580a93c7505d88a3b735dd3a956db233d26f779d05f4a85f60abfe82c3f
 - **evidence set digest note**: SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.
 - **source artifact hashes**:
-  - **correlation analysis.json**: 3b4dfea120ca21d01e15888ab11f16d98a992574e7e70f2f83700f3133e34d8e
+  - **correlation analysis.json**: 7124d6081fc3e10b8738ba854abe66417451aa3e70fb89702178de6794b6a29b
   - **cross case correlation.json**: 6c4b7e022465546d0555c8cb462748c5b6c81a0b9a0b5bdb505f7587bf91bc63
-  - **campaign analysis.json**: 9de713497ccdbdfa2b534f69b0f7da170c0e7bf285cc89f0b917f1f0bb0c5288
-  - **suspect assessment.json**: 752497ea636208cb1e52fbd5eb3207e5fe83f6f05123bf4a23525a67fcbb2704
-  - **timeline analysis.json**: d4189177894610f13490b7e0a6946df2e6d9546e1c4b86af855ba02679eeec1d
-  - **analytics.json**: c27afb6394098d874f9fb7e6c758574bc0111ac66747bc37f8a1adf62e59054d
-  - **case priority.json**: d9776374b6775e023cfeb282e4e71ec308ea387cf71a5b828cccae79b7e13ab5
-  - **graph.json**: 063b55866d7bb07325f3101d13c1be188a04c1e42cfb2c0a41168f17898b107e
+  - **campaign analysis.json**: d82aea0848d9cb10c321b681540d7911af231c82451b61c7ecab362bed0facfd
+  - **suspect assessment.json**: 704a9ad1027996590c5197192adeece334221bf11f3c17fc2386cd64e597aa1f
+  - **timeline analysis.json**: d7c02734f86deecede80c12dcc57d259ff3c4f6b0b46c31f48d7296ce4f2ac54
+  - **analytics.json**: 8b335e08036613aff5bb58e70d45830d6df187e9abc1930d01e7e3a761da3cff
+  - **case priority.json**: 05bb8d153f0f0149f3e3f65f68c15c93e8ca99701fa5ab94b979f8b42cd6e372
+  - **graph.json**: f3b11b87197f743896014f968378d1f404d328ec96ed46415a86a39fbffef2f2
 
 ## Appendix
 

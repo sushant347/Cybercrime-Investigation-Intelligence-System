@@ -1,11 +1,11 @@
 {
   "report_type": "investigation_report",
-  "report_version": 10,
+  "report_version": 13,
   "schema_version": "2.0",
   "case_id": "CASE_185915593C",
-  "generated_at": "2026-08-04T05:29:52.465Z",
+  "generated_at": "2026-08-04T07:04:00.296Z",
   "report": {
-    "report_id": "RPT-185915593C-CD4784C3",
+    "report_id": "RPT-185915593C-6D6D55DD",
     "sections": {
       "executive_summary": [
         "Case CASE_185915593C contains 8 evidence items, each acquired under SHA-256 chain-of-custody verification.",
@@ -1276,6 +1276,62 @@
         "Investigation should focus on anchor '+9779801122334' (78/100 confidence).",
         "Observed stage order deviates from the canonical scam sequence; evidence acquisition order should be reviewed."
       ],
+      "legal_basis": {
+        "case_id": "CASE_185915593C",
+        "statute": "Electronic Transactions Act, 2063 (2008)",
+        "jurisdiction": "Nepal",
+        "provisions": [
+          {
+            "section": "52",
+            "title": "To commit computer fraud",
+            "citation": "Section 52, Electronic Transactions Act, 2063 (2008)",
+            "conduct": "Acquiring a financial benefit by fraud through a computer, including from the payment of any bill, the balance of another person's account, or an ATM card. The amount obtained is recoverable.",
+            "penalty": "fine not exceeding one hundred thousand Rupees or imprisonment not exceeding two years or both",
+            "basis": "13 payment identifiers (0119.0625.987456, 0501-0198765432 and 0501-9012345678) appear alongside 9 money values (NPR 1,500, NPR 200 and NPR 25,000) in the same case, evidencing a financial benefit moving through a payment rail.",
+            "evidence_ids": [
+              "EVID_00008",
+              "EVID_00009",
+              "EVID_00010",
+              "EVID_00011",
+              "EVID_00013",
+              "EVID_00014"
+            ]
+          },
+          {
+            "section": "47",
+            "title": "Publication of illegal materials in electronic form",
+            "citation": "Section 47, Electronic Transactions Act, 2063 (2008)",
+            "conduct": "Publishing or displaying material in electronic media, including on the internet, which is prohibited by prevailing law or is contrary to public morality or decent behaviour.",
+            "penalty": "fine not exceeding one hundred thousand Rupees or imprisonment not exceeding five years or both",
+            "basis": "threat intelligence flagged 5 indicators in this case; the evidence carries 8 web addresses (eSewa-cashback-offer.xyz and esewa-cashback-offer.xyz), i.e. material published in electronic form.",
+            "evidence_ids": [
+              "EVID_00008",
+              "EVID_00009",
+              "EVID_00010",
+              "EVID_00011",
+              "EVID_00014"
+            ]
+          },
+          {
+            "section": "53",
+            "title": "Punishment to the person who abets to commit computer related offence",
+            "citation": "Section 53, Electronic Transactions Act, 2063 (2008)",
+            "conduct": "Abetting another to commit an offence under the Act, or attempting or being involved in a conspiracy to commit one.",
+            "penalty": "fine not exceeding fifty thousand Rupees or imprisonment not exceeding six months or both, depending on the degree of the offence",
+            "basis": "campaign CAMP_CASE_185915593C_01 groups 5 evidence items by shared indicators, which evidences coordinated activity rather than a single isolated act.",
+            "evidence_ids": [
+              "EVID_00008",
+              "EVID_00009",
+              "EVID_00011",
+              "EVID_00013",
+              "EVID_00014"
+            ]
+          }
+        ],
+        "caveat": "This is an automated mapping from technical findings to statutory provisions, provided to assist the investigating officer. It is not legal advice and not a charging decision. A provision is listed because the evidence contains the features described, not because an offence has been proved: intent, authorisation and identity are matters for investigation. Provisions of the Act not listed here were not assessed.",
+        "summary": "The findings engage 3 provisions of the Electronic Transactions Act, 2063 (2008): s.52, s.47, s.53. Each is listed with the finding that engaged it and the evidence behind that finding.",
+        "analysis_time_ms": 0.3
+      },
       "recommendations": [
         "Get the fake websites shut down: esewa-cashback-offer.xyz, esewa-verify-kyc.com (+1 more). Ask the hosting company to save its records first.",
         "Tell eSewa their name is being used in this scam, so they can warn other customers.",
@@ -1289,20 +1345,20 @@
         "Act on this case first (rated 76 out of 100)."
       ],
       "report_provenance": {
-        "report_id": "RPT-185915593C-CD4784C3",
-        "generated_at": "2026-08-04T05:29:52.304Z",
+        "report_id": "RPT-185915593C-6D6D55DD",
+        "generated_at": "2026-08-04T07:04:00.171Z",
         "generator": "CIIS Phase-2 reporting module (template-over-data; no free-text generation)",
         "evidence_set_digest": "623b9e5e28815e86892679dc56e1ac545ea1fddc4590023db83275c6bf9c8b61",
         "evidence_set_digest_note": "SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.",
         "source_artifact_hashes": {
-          "correlation_analysis.json": "82ad71a13298ad64ed2b88fab7e5b99814c87f5a37715c469d3b64aa0506435a",
+          "correlation_analysis.json": "db674e9536b02a7d9ce016fa9bc68943a5c9494784547fc4de69c59e194d6dc3",
           "cross_case_correlation.json": "c732a2bfe3c5b97e8f15edc5d141b146245e3c2ce435f0ac7d4425c7210854ee",
-          "campaign_analysis.json": "7ff4996238396d9888d0bf59943a92008b4c6c02d5c97d8a7d500c1e1430f664",
-          "suspect_assessment.json": "1bf92cf417806212302c427966cb2cce5d263245e571f8866705aa9eb8ff1619",
-          "timeline_analysis.json": "66a3818bdcf7606f219656578ea98e9ff73c2756c2302e57bc3962278d514566",
-          "analytics.json": "892a6f6f565e098b2b0dab024a68fd4624f044fba1ecf1d7c96a7c4c2d358543",
-          "case_priority.json": "faf5f550fb04b392ca61b03a5ce246297f3e5808fbc00a9a41d8bd25865771e1",
-          "graph.json": "5aef7e418862605f7f67bc1f2b8886e74a06003f4af46aad5a4b36b8afb5670d"
+          "campaign_analysis.json": "07f159626079533790352bb642a530b7674e612a361788024fff4df4a3ed337a",
+          "suspect_assessment.json": "3d00988a9675015a676dcca2b4b04d4dd6c15e8cb9006afb937bb9806ec6d1d8",
+          "timeline_analysis.json": "8849927bb15263b9247de54ebb9c39cb6821d58fae27984659bffa13e6e08362",
+          "analytics.json": "6feaf8eb6edddcf74724343142cc4b1ef8df8120611cfb43d9bc4cf0079c0e11",
+          "case_priority.json": "1c4a93a89742ac12dfccea1c82f3fce50dff7a70f7479b45aa39ceecdc3a17f3",
+          "graph.json": "6fe2c8fa0422e00f25ba634cd0cc609264ed69d7667a0e7921347c12a22ebcbe"
         }
       },
       "appendix": {
