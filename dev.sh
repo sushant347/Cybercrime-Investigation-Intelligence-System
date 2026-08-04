@@ -36,20 +36,17 @@
 #   ./dev.sh help       this text
 #
 # WHAT "THE FULL PROJECT" IS
-#   The Django API (ciis_api) is the hub. It imports two engine roots
+#   The Django API (ciis_api) is the hub. It imports three engine roots
 #   IN-PROCESS via api/engine.py, so starting the API starts them too:
 #       - evidence_ocr_engine          OCR / evidence extraction
-#       - evidence_correlation_engine  analysis: correlation, graph, campaigns,
-#                                      suspects, timeline, analytics, reports
-#   The correlation engine is the analytical core. It reads the OCR engine's
-#   storage tree read-only, and loads two standalone algorithm modules itself:
-#       - timeline_reconstruction      timestamp resolution + ordering
-#       - threat_intelligence_system   phishing-URL classifier (optional)
+#       - evidence_correlation_engine  correlation, cross-case, campaigns,
+#                                      suspects
+#       - timeline_report_engine       timeline, graph, analytics, priority,
+#                                      reports (owns the pipeline root)
+#   They form a straight chain, each importing only the one before it:
+#       frontend -> API -> OCR -> correlation -> timeline+report
 #   `up` therefore launches: API (+ those engines) + the React/Vite frontend,
 #   with the full pipeline enabled (CIIS_RUN_FULL_PIPELINE=1).
-#
-#   ("report generation/" at the repo root is a retired prototype that nothing
-#   imports; reports come from the correlation engine's reporting module.)
 #
 #   The threat_intelligence_system is the ONE engine that cannot share the
 #   platform venv: paddlepaddle (OCR) needs numpy<2 while the threat ML stack
@@ -376,6 +373,8 @@ run_tests() {
     ( cd evidence_ocr_engine && "$ppy" -m pytest -q ) || failed=1
     log "correlation engine tests (pytest)"
     ( cd evidence_correlation_engine && "$ppy" -m pytest -q ) || failed=1
+    log "timeline & report engine tests (pytest)"
+    ( cd timeline_report_engine && "$ppy" -m pytest -q ) || failed=1
   else
     warn "Skipping Python tests - run ./dev.sh setup first."
   fi

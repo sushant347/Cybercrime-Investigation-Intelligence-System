@@ -4,14 +4,15 @@ Thin presentation layer over the forensic engines. The engines are NEVER
 modified - they are imported read-only from the roots below (see
 ``api/engine.py``, which is the only module that touches them).
 
-Engine layout::
+Engine layout (a straight chain, each stage importing only the one before)::
 
-    ENGINE_ROOT       evidence_ocr_engine          OCR / evidence extraction
-    CORRELATION_ROOT  evidence_correlation_engine  analysis (the brain)
-    TIMELINE_ROOT     timeline_reconstruction      timestamp reconstruction
+    ENGINE_ROOT             evidence_ocr_engine          OCR / evidence
+    CORRELATION_ROOT        evidence_correlation_engine  relationships
+    TIMELINE_REPORT_ROOT    timeline_report_engine       timeline + output
 
-The correlation engine depends on the OCR engine (it reads its storage tree)
-and loads the timeline engine's algorithm; the OCR engine depends on neither.
+The threat engine (``threat_intelligence_system``) plugs into the correlation
+stage through a lazily-imported provider and needs no root here: it lives in
+its own virtualenv and is reached by path only when ML scoring is enabled.
 """
 from pathlib import Path
 import os
@@ -30,11 +31,11 @@ CORRELATION_ROOT = Path(
     )
 ).resolve()
 
-# Root of the standalone timeline-reconstruction engine, loaded by the
-# correlation engine's timeline adapter.
-TIMELINE_ROOT = Path(
+# Root of the timeline & report engine - the terminal stage, which owns the
+# pipeline composition root the API drives.
+TIMELINE_REPORT_ROOT = Path(
     os.environ.get(
-        "CIIS_TIMELINE_ROOT", BASE_DIR.parent / "timeline_reconstruction"
+        "CIIS_TIMELINE_REPORT_ROOT", BASE_DIR.parent / "timeline_report_engine"
     )
 ).resolve()
 

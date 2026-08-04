@@ -7,7 +7,7 @@
 * :mod:`.maintenance`  - storage reset, case and evidence deletion
 
 Services receive these by dependency injection from
-:func:`ciis_correlation.pipeline.build_default_pipeline`; nothing here reaches
+:func:`ciis_timeline_report.pipeline.build_default_pipeline`; nothing here reaches
 back into an analytical module.
 """
 

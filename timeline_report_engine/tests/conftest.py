@@ -1,7 +1,8 @@
-"""Fixtures for the correlation engine test suite.
+"""Fixtures for the timeline & report engine test suite.
 
-The synthetic case itself is built by :mod:`ciis_correlation.testing`, which
-the timeline & report engine's suite uses too - one definition, no drift.
+Identical fixture surface to the correlation engine's suite, built from the
+same :mod:`ciis_correlation.testing` synthetic case, so a test that moves
+between the two engines needs no rewriting.
 """
 
 from __future__ import annotations
@@ -10,14 +11,18 @@ from pathlib import Path
 
 import pytest
 
-# Importing the package first is what puts the upstream OCR engine on
-# sys.path (see ciis_correlation/__init__.py), so it must precede any
-# ``backend.modules.evidence`` import below.
-from ciis_correlation.core.audit import InvestigationAuditTrail
-from ciis_correlation.core.config import InvestigationConfig
-from ciis_correlation.core.data_access import CaseDataRepository
-from ciis_correlation.core.repository import InvestigationReportRepository
-from ciis_correlation.testing import CASE, seed_case
+# Importing this package chains the bootstrap that puts the correlation engine
+# and, through it, the OCR engine on sys.path - so it must precede the imports
+# below.
+import ciis_timeline_report  # noqa: F401
+
+from ciis_correlation.core.audit import InvestigationAuditTrail  # noqa: E402
+from ciis_correlation.core.config import InvestigationConfig  # noqa: E402
+from ciis_correlation.core.data_access import CaseDataRepository  # noqa: E402
+from ciis_correlation.core.repository import (  # noqa: E402
+    InvestigationReportRepository,
+)
+from ciis_correlation.testing import CASE, seed_case  # noqa: E402
 
 from backend.modules.evidence.config import EvidenceConfig  # noqa: E402
 

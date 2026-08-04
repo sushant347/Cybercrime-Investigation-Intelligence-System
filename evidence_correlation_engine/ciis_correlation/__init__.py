@@ -1,29 +1,26 @@
-"""CIIS Module 2 - Evidence Correlation Engine.
+"""CIIS Module 3 - Evidence Correlation Engine.
 
-The analytical core of the platform. Everything that reasons *about* evidence -
-rather than extracting it - lives here:
+Relationship intelligence: what connects to what, and how strongly. Everything
+here answers that question and nothing else - turning the answers into
+investigator-facing output is the timeline & report engine's job.
 
 * :mod:`.correlation`    - weighted, explainable evidence-pair correlation
 * :mod:`.crosscase`      - cross-case entity lookup over ``entities.csv``
-* :mod:`.graph`          - evidence relationship graph
 * :mod:`.campaigns`      - scam campaign clustering over strong correlations
 * :mod:`.suspects`       - suspect confidence assessment
-* :mod:`.analytics`      - case analytics and statistics
-* :mod:`.prioritization` - case priority scoring
-* :mod:`.reporting`      - investigation report generation (MD / JSON / PDF)
+* :mod:`.threat`         - threat-intelligence providers (heuristics + ML)
 * :mod:`.evaluation`     - accuracy measurement against gold labels
-* :mod:`.pipeline`       - case orchestrator and composition root
 
 Shared infrastructure lives in :mod:`.core` (configuration, the read-only
 storage gateway, the versioned artifact repository, the audit trail and
-storage maintenance).
+storage maintenance). The downstream engine reuses it rather than duplicating
+it, so there is exactly one definition of how a case is read and written.
 
 Module boundaries
 -----------------
-This engine sits downstream of the OCR engine and upstream of the timeline
-engine::
+This engine is the middle stage of the chain::
 
-    evidence_ocr_engine  ->  evidence_correlation_engine  ->  timeline_reconstruction
+    evidence_ocr_engine  ->  evidence_correlation_engine  ->  timeline_report_engine
                                         ^
                             threat_intelligence_system
 

@@ -114,11 +114,11 @@ def test_cascade_rebuilds_the_graph_not_just_the_cross_case_artifact(monkeypatch
 
     monkeypatch.setattr(engine, "_threat_intel_provider", lambda: None)
     monkeypatch.setattr(
-        "ciis_correlation.pipeline.build_default_pipeline",
+        "ciis_timeline_report.pipeline.build_default_pipeline",
         lambda **kw: _FakePipeline(),
     )
     monkeypatch.setattr(
-        "ciis_correlation.reporting.service.InvestigationReportService",
+        "ciis_timeline_report.reporting.service.InvestigationReportService",
         _FakeReporting,
     )
     monkeypatch.setattr(

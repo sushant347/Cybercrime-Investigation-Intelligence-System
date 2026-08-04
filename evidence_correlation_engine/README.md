@@ -1,139 +1,109 @@
-# Evidence Correlation Engine — the analytical core of CIIS
+# Evidence Correlation Engine
 
-Everything that reasons *about* evidence, rather than extracting it. No
-machine learning in the scoring path — every score is deterministic,
-weighted, and carries a complete explanation.
+Relationship intelligence: what connects to what, and how strongly. Given a
+case's extracted evidence, this engine decides which items are related, which
+cases are related, which items form a campaign, and which identities look like
+suspects — each with a written justification.
+
+No machine learning in the scoring path. Every weight is deterministic and
+every score decomposes into named factors with the concrete values behind them.
 
 ## Where this sits
 
 ```
-evidence_ocr_engine  ──►  evidence_correlation_engine  ──►  reports / API
-   OCR, entities              (this engine)
+evidence_ocr_engine  ──►  evidence_correlation_engine  ──►  timeline_report_engine
                                     ▲
-                    timeline_reconstruction (algorithm)
-                    threat_intelligence_system (optional ML)
+                    threat_intelligence_system (optional)
 ```
 
-This engine reads the OCR engine's storage tree **read-only** and imports
-exactly two symbols from it (`EvidenceConfig`, `get_logger`). The OCR engine
-imports nothing from here, so the dependency graph is acyclic. Importing
-`ciis_correlation` puts the OCR engine on `sys.path` automatically;
-`CIIS_ENGINE_ROOT` overrides its location.
+It reads the OCR engine's storage tree **read-only** and imports exactly two
+symbols from it (`EvidenceConfig`, `get_logger`). The OCR engine imports
+nothing from here. Importing `ciis_correlation` puts the OCR engine on
+`sys.path` automatically; `CIIS_ENGINE_ROOT` overrides its location.
 
-## Architecture
-
-Clean Architecture, DI throughout, Repository Pattern, configuration-driven
-(`core/config.py`; `INVESTIGATION_*` env overrides; zero hardcoded values in
-services).
+## Layout
 
 ```
 ciis_correlation/
-├── core/               shared infrastructure
-│   ├── config.py         InvestigationConfig (weights, bands, stages, paths)
-│   ├── data_access.py    CaseDataRepository — READ-ONLY gateway over the
-│   │                     OCR engine's storage + ThreatIntelProvider
-│   ├── repository.py     Versioned case artifacts (never overwrites)
+├── core/               shared infrastructure, reused by the downstream engine
+│   ├── config.py         InvestigationConfig — weights, bands, stages, paths
+│   ├── data_access.py    CaseDataRepository — READ-ONLY gateway over storage
+│   ├── repository.py     versioned case artifacts (never overwrites)
 │   ├── audit.py          investigation_audit_log.csv (every module, every run)
 │   └── maintenance.py    storage reset, case / evidence deletion
-├── pipeline.py         InvestigationPipeline + build_default_pipeline()
-├── correlation/        M1 explainable weighted correlation (12 factors)
-├── crosscase.py           cross-case entity lookup over entities.csv
-├── graph/              M2 typed relationship graph (12 node / 5+1 edge types)
-├── campaigns/          M3 connected-component campaign clustering
-├── suspects/           M4 identity-anchor suspect scoring (6 components)
-├── timeline/           M5 adapter over the standalone timeline engine
-├── analytics/          M6 case/entity/threat/quality statistics
-├── reporting/          M7 finding-referenced forensic report (MD/JSON/PDF)
-├── prioritization/     M8 weighted case priority
+├── correlation/        weighted 12-factor evidence-pair correlation
+├── crosscase.py        cross-case entity lookup over entities.csv
+├── campaigns/          connected-component campaign clustering
+├── suspects/           identity-anchor suspect scoring (6 components)
 ├── threat/             threat-intel providers (heuristics + optional ML)
-└── evaluation/         accuracy measurement against gold labels
+├── evaluation/         accuracy measurement against gold labels
+└── testing.py          synthetic case shared by both engines' test suites
 ```
 
-Each module = `models.py` (Pydantic contracts) + `service.py`. Inputs come
-only through the data gateway; outputs go only through the versioned
-repository.
+Each analytical module is `models.py` (Pydantic contracts) + `service.py`.
+Inputs come only through the data gateway; outputs go only through the
+versioned repository.
 
-Two modules are **adapters** over standalone engines, not reimplementations:
-`timeline/` loads `timeline_reconstruction/timeline_reconstruction.py` and
-`threat/ml_provider.py` lazily loads `threat_intelligence_system`. Each owns
-translation, persistence and audit; the standalone module owns the algorithm.
+`core/` is deliberately shared with `timeline_report_engine` rather than
+duplicated, so there is exactly one definition of how a case is read, written
+and audited.
 
-## Tests
+## Scoring
 
-```
-cd evidence_correlation_engine && python -m pytest -q
-```
-
-141 tests over a synthetic case (`tests/conftest.py`) — no OCR dependency.
-
-## Data flow
+Correlation weight is `type weight × value specificity`, summed over shared
+values and squashed into a bounded confidence:
 
 ```
-existing storage (read-only)                storage/investigation/<CASE_ID>/
-  evidence.csv ─┐                             correlation_analysis.json  (M1)
-  entities.csv ─┤                             graph.json                 (M2)
-  json/CASE.json├─ CaseDataRepository ──► M1 ─ graph_statistics.json      (M2)
-  forensics/…  ─┤        │                │    graph_summary.json         (M2)
-  threat intel ─┘        │                ├─► M2, M3, M4                 
-                         ├─► M5 timeline  │    campaign_analysis.json     (M3)
-                         └─► M6 analytics ◄┘   suspect_assessment.json    (M4)
-                              │                timeline_analysis.json     (M5)
-                              ▼                analytics.json + 2 more    (M6)
-                         M8 priority ─► M7 report                        
-                                               investigation_report.md/json (M7)
-                                               case_priority.json         (M8)
+confidence = 1 − exp(−weight / 1.6)
+
+NO_RELATIONSHIP < 0.05 ≤ WEAK < 0.30 ≤ MEDIUM < 0.55 ≤ STRONG < 0.80 ≤ VERY_STRONG
 ```
 
-Modules are failure-isolated: one broken analysis is audited as ERROR and
-the rest continue. Re-analysis produces `_v2`, `_v3`… — nothing is replaced.
+The type weight says how identifying a *kind* of entity is; the specificity —
+learned unsupervised from the corpus in `correlation/specificity.py` — says how
+identifying *this particular value* is. Without the second term, "both items
+mention NPR 2,000" scored exactly like "both items share a wallet address",
+which linked essentially every case to every other on round amounts alone.
 
-## Explainability contract
+Correlation has no ground truth to train against, so nothing here is
+supervised. The per-factor breakdown persisted in every artifact is already the
+feature vector a supervised ranker would consume, once investigators have
+confirmed or rejected enough links to serve as labels.
 
-Every correlation pair lists its factors, weights, matched values and a
-narrative; every campaign membership names the exact links that placed it;
-every suspect and priority score decomposes into weighted components with
-per-component justification; every graph edge carries an explanation; the
-Module-7 report is templated exclusively over computed values (missing
-inputs render "not available" — hallucination is structurally impossible).
+## Threat intelligence
 
-## Relationship levels & bands (config-driven)
+Three providers, chained, each optional:
 
-Correlation confidence = `1 − exp(−weight/1.6)` →
-NO_RELATIONSHIP < 0.05 ≤ WEAK < 0.30 ≤ MEDIUM < 0.55 ≤ STRONG < 0.80 ≤ VERY_STRONG.
-Campaigns cluster pairs ≥ 0.55. Priority: LOW < 30 ≤ MEDIUM < 55 ≤ HIGH < 75 ≤ CRITICAL.
-
-## Threat intelligence input
-
-Optional file `storage/investigation/threat_intel_indicators.json`:
+1. `threat/heuristics.py` — offline, explainable URL/domain heuristics
+2. `threat/ml_provider.py` — lazy adapter over `threat_intelligence_system`
+3. a static indicator file at `storage/investigation/threat_intel_indicators.json`
 
 ```json
 {"indicators": {"scam-domain.top": {"verdict": "malicious", "source": "PhishTank"}}}
 ```
 
-Absent file ⇒ the factor is skipped and reported as unavailable (never
-treated as "no threat"). The existing threat_intelligence_system can export
-into this format without any coupling.
+When none is available the factor is reported as *unavailable*, never as
+"no threat found".
 
-## API / usage
+## Tests
 
-```python
-from ciis_correlation.pipeline import build_default_pipeline
-
-pipeline = build_default_pipeline()          # composition root (DI)
-results = pipeline.analyze_case("CASE_0042") # all 8 modules
-results["priority"].priority_level           # e.g. "HIGH"
+```bash
+python -m pytest -q      # 93 tests
 ```
 
-CLI:
+Runs against a synthetic case (`ciis_correlation/testing.py`) — no OCR
+dependency, no fixtures on disk.
+
+```bash
+python scripts/run_table_6_4.py    # correlation accuracy vs gold labels
+```
+
+## Output
+
+Artifacts land in `storage/investigation/<CASE_ID>/`, versioned rather than
+overwritten:
 
 ```
-python investigation_cli.py analyze CASE_0042   # or --all
-python investigation_cli.py priority CASE_0042
-python investigation_cli.py report CASE_0042
+correlation_analysis.json   cross_case_correlation.json
+campaign_analysis.json      suspect_assessment.json
 ```
-
-## Dependencies
-
-None beyond the existing stack (pydantic; pure-Python graph algorithms — no
-networkx). Phase-3 dashboard can consume every JSON artefact as-is;
-`graph.json` is deliberately visualization-independent.

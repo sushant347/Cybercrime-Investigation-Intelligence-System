@@ -1,8 +1,8 @@
 """Read-only bridge to the forensic engines.
 
 This module is the ONLY place the platform touches the engines. It imports
-them from ``settings.ENGINE_ROOT`` (OCR) and ``settings.CORRELATION_ROOT``
-(analysis) and exposes:
+them from the three engine roots in settings (OCR, correlation, timeline+report)
+and exposes:
 
 * CSV/JSON storage readers (cases, evidence, OCR results, forensics)
 * Phase-2 artifact loaders (``storage/investigation/<CASE_ID>/*.json``)
@@ -28,10 +28,11 @@ from .exceptions import EngineUnavailable
 log = logging.getLogger("ciis.engine")
 
 # --------------------------------------------------------------------- import
-# Both engine roots go on the path before either is imported. The correlation
-# engine also bootstraps the OCR root itself (it reads that storage tree), so
-# order here is not load-bearing - but keeping OCR first matches the data flow.
-for _root in (settings.ENGINE_ROOT, settings.CORRELATION_ROOT):
+# All three engine roots go on the path before any of them is imported. Each
+# engine also bootstraps the one upstream of it, so order here is not
+# load-bearing - but listing them in pipeline order matches the data flow.
+for _root in (settings.ENGINE_ROOT, settings.CORRELATION_ROOT,
+              settings.TIMELINE_REPORT_ROOT):
     if str(_root) not in sys.path:
         sys.path.insert(0, str(_root))
 
@@ -421,8 +422,8 @@ def _refresh_linked_cases(case_ids: list[str]) -> list[str]:
         return []
     from ciis_correlation.core.audit import InvestigationAuditTrail
     from ciis_correlation.core.data_access import CaseDataRepository
-    from ciis_correlation.pipeline import build_default_pipeline
-    from ciis_correlation.reporting.service import (
+    from ciis_timeline_report.pipeline import build_default_pipeline
+    from ciis_timeline_report.reporting.service import (
         InvestigationReportService,
     )
 
@@ -604,7 +605,7 @@ def _entity_count(summary: Optional[dict[str, Any]]) -> Optional[int]:
 def _refresh_timeline_graph(case_id: str) -> Optional[dict[str, Any]]:
     """Regenerate live artifacts after OCR/entity enrichment, failure-isolated."""
     try:
-        from ciis_correlation.pipeline import build_default_pipeline
+        from ciis_timeline_report.pipeline import build_default_pipeline
 
         return build_default_pipeline(
             threat_intel=_threat_intel_provider()
@@ -810,7 +811,7 @@ def submit_analysis_job(job_id: int, case_id: str, username: str) -> None:
         jobs.update(job_id, status="running")
         detail = ""
         try:
-            from ciis_correlation.pipeline import build_default_pipeline
+            from ciis_timeline_report.pipeline import build_default_pipeline
 
             with _pipeline_lock:
                 # Evidence captured before forensics ran on upload has no
@@ -916,7 +917,7 @@ def engine_health() -> dict[str, Any]:
     return {
         "engine_root": str(settings.ENGINE_ROOT),
         "correlation_root": str(settings.CORRELATION_ROOT),
-        "timeline_root": str(settings.TIMELINE_ROOT),
+        "timeline_report_root": str(settings.TIMELINE_REPORT_ROOT),
         "storage_ok": cfg.storage_dir.is_dir(),
         "cases_csv": cfg.cases_csv.is_file(),
         "evidence_csv": cfg.evidence_csv.is_file(),

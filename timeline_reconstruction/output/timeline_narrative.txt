@@ -1,7 +1,0 @@
-[2026-07-06T11:00:00+00:00] unrelated_family_group_chat.jpg (evidence EVID_00106) (confidence: low) -- correlated with: EVID_00107
-[2026-07-06T14:30:00+00:00] unrelated_meeting_reminder.jpg (evidence EVID_00107) (confidence: low) -- correlated with: EVID_00106
-[2026-07-08T20:15:00+00:00] victim1_messenger_chat.jpg (evidence EVID_00101) (confidence: low) -- correlated with: EVID_00104, EVID_00102, EVID_00103, EVID_00105 -- risk signals: urgency, financial, credential
-[2026-07-08T20:58:00+00:00] victim1_esewa_screenshot.jpg (evidence EVID_00102) (confidence: medium) -- correlated with: EVID_00101, EVID_00103, EVID_00105, EVID_00104 -- risk signals: financial
-[2026-07-09T09:40:00+00:00] victim1_telegram_followup.jpg (evidence EVID_00103) (confidence: low) -- correlated with: EVID_00101, EVID_00102, EVID_00104, EVID_00105 -- risk signals: urgency, threat
-[2026-07-09T14:15:00+00:00] victim2_whatsapp_chat.jpg (evidence EVID_00104) (confidence: medium) -- correlated with: EVID_00101, EVID_00102, EVID_00103, EVID_00105 -- risk signals: urgency, financial
-[2026-07-09T14:55:00+00:00] victim2_bank_transfer.jpg (evidence EVID_00105) -- correlated with: EVID_00101, EVID_00102, EVID_00103, EVID_00104 -- risk signals: financial

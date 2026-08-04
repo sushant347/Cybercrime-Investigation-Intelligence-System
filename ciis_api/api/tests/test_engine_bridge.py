@@ -81,7 +81,7 @@ def test_entity_count_helper():
 
 
 def test_live_timeline_graph_refresh_uses_focused_pipeline(monkeypatch, api):
-    from ciis_correlation import pipeline as pipeline_module
+    from ciis_timeline_report import pipeline as pipeline_module
     from api import engine
 
     called = []
