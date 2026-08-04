@@ -843,6 +843,106 @@ Statement of Limitations, signature block, end-of-report marker.
 
 ---
 
+### 6.6 Statutory basis — mapping findings to the law
+
+`timeline_report_engine/ciis_timeline_report/legal/`
+
+A technical report tells an officer what the evidence shows. It does not tell
+them which law that engages, and in practice that translation gets done from
+memory by whoever writes the file — inconsistently, and invisibly. This module
+makes it explicit and reviewable.
+
+It maps stored findings onto the **Electronic Transactions Act, 2063 (2008)**
+of Nepal, transcribed from the text in [`docs/legal/`](docs/legal/).
+
+| Section | Offence | Engaged when |
+|---|---|---|
+| **52** | To commit computer fraud | payment-rail identifiers (wallet, bank account, card, transaction id) appear with a money value |
+| **47** | Publication of illegal materials in electronic form | threat intelligence flags a URL or domain present in the evidence |
+| **45** | Unauthorized access in computer materials | credential material (OTP, password, PIN, CVV, login) appears as an entity or in the text |
+| **53** | Abetment / conspiracy | a campaign cluster groups two or more evidence items |
+| **55** | Offence committed outside Nepal | the case shares identifiers with another case |
+
+Each entry carries the section number, the heading as enacted and the penalty
+**as written** — never paraphrased into a different figure — plus the concrete
+finding that engaged it and the evidence ids behind that finding.
+
+**The design constraint that matters.** The module reports that the evidence
+contains the features a provision describes. It never asserts an offence.
+Intent, authorisation and identity are matters for investigation, and a caveat
+saying so travels with the output wherever it renders — Markdown, JSON, PDF and
+the on-screen report. A test asserts that no generated sentence contains
+"is guilty", "has committed", "proves that" or "must be charged"; a sentence
+that read as a finding of guilt would make the whole section inadmissible.
+
+Two further properties, both tested:
+
+- **Silence is not exoneration.** With nothing engaged, the summary says so
+  explicitly: *"This is not a conclusion that no offence occurred — it means the
+  specific features this engine looks for are absent from the evidence held."*
+- **One failing rule does not cost the section.** Each rule is isolated; a
+  broken one is logged and the other four still run.
+
+Worked example, `CASE_185915593C` — the findings engage **s.52, s.47 and s.53**.
+s.45 correctly did *not* fire: that case has no OTP entity and no credential
+words in any evidence text. The law is separated from the trigger in
+`provisions.py` for exactly this reason — the statute is fixed text that must
+not drift, while the trigger is this engine's editorial judgement and is open
+to challenge.
+
+**Scope limit.** Only the five provisions above are assessed. Others in the Act,
+and the subordinate instruments in `docs/legal/` (the Rules 2064, the National
+Cyber Security Policy 2023, the NRB guidelines, the IP statutes relevant to
+brand impersonation), are **not** modelled. The Nepali-language texts are
+authoritative where they differ from the English translation the engine
+transcribes, so any citation should be checked against the original before it
+is relied on in a filing.
+
+---
+
+## 6A. On sentiment analysis — why it was not added
+
+This was raised as a candidate feature and rejected. The reasoning is recorded
+because "why isn't there an NLP component?" is a fair question to be asked.
+
+**Sentiment is the wrong instrument for this problem.** Generic sentiment
+classifies text as positive, negative or neutral. Essentially every scam
+message in the corpus is negative or neutral, so the output barely varies —
+a 278M-parameter model added to learn a near-constant.
+
+Three further objections, specific to this system:
+
+1. **It would breach the scoring-path rule.** Everything that produces a number
+   here decomposes into named factors with written justifications. A
+   transformer sentiment score cannot be explained to a magistrate. Feeding it
+   into correlation or priority would undo the property that makes the reports
+   defensible.
+2. **The explainable version already exists.** `timeline_stage_keywords`
+   classifies `social_engineering` on `("urgent", "verify", "suspended",
+   "blocked", "immediately", "warning", "last chance", "expire")` — manipulation
+   detection that can be justified line by line.
+3. **There is no data to fine-tune on.** That needs on the order of 2,000–5,000
+   labelled examples; the corpus is 25 evidence items and 152 entities, OCR'd
+   from mixed Nepali/Devanagari with recognition errors, where sentiment models
+   are trained on clean text.
+
+**What would be worth building instead**, if an NLP component is wanted:
+*social-engineering tactic classification* — multi-label over urgency,
+authority, fear, scarcity and reward, because one message carries several at
+once. That is intent classification, not sentiment, and it answers a question
+an investigator can act on: which manipulation technique was used. The honest
+path would be `xlm-roberta-base` (already in the registry, already handles
+Devanagari), labels bootstrapped by weak supervision from the existing stage
+keywords and then hand-corrected, the same 70/15/15 seed-42 split, and — the
+critical constraint — emitted as an advisory field and a report section, never
+as an input to a correlation weight, suspect score or priority.
+
+**What was built instead.** The material supplied for this was not sentiment
+data; it was the Nepali cyber-law corpus. That turned out to be worth far more,
+and became §6.6.
+
+---
+
 ## 7. Storage and API
 
 One tree, owned by the OCR engine, read strictly read-only by everything
