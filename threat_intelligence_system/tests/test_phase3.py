@@ -360,6 +360,20 @@ class TestPredictorPhase3Outputs:
 
     def test_shap_features_populated_for_xgboost(self, predictor) -> None:
         result = predictor.predict("https://secure-login-update.top/account/verify")
+
+        # SHAP explains a trained booster's decision. Without a checkpoint the
+        # predictor falls back to a feature heuristic, which has no decision to
+        # attribute, so there is nothing here to assert. Trained checkpoints are
+        # ~323 MB and deliberately not in the repository, making this the normal
+        # state on a clean clone and in CI.
+        #
+        # Checked after predict(), not before: the model loads lazily on first
+        # use, so `_model` is still None until then and an earlier check would
+        # skip unconditionally - silently retiring the test everywhere.
+        model = getattr(predictor, "_model", None)
+        if model is None or not model.is_trained:
+            pytest.skip("no trained checkpoint -- predictor is on the heuristic path")
+
         if result.metadata.get("rule_engine", {}).get("is_definite_phishing"):
             pytest.skip("rule short-circuit -- SHAP intentionally skipped")
         assert result.top_shap_features
