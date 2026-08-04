@@ -1,9 +1,9 @@
 {
   "report_type": "entity_statistics",
-  "report_version": 7,
+  "report_version": 8,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-08-04T07:03:58.544Z",
+  "generated_at": "2026-08-04T08:00:29.124Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
     "entity_statistics": {

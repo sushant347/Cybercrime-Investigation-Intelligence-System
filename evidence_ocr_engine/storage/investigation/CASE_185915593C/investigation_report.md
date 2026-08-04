@@ -1,6 +1,6 @@
 # Forensic Investigation Report - CASE_185915593C
 
-Generated: 2026-08-04T07:04:00.294Z  
+Generated: 2026-08-04T08:00:30.899Z  
 Produced by: Cybercrime Investigation Intelligence Engine (CIIS), Phase 2  
 Basis: every statement below references stored forensic findings; no content is generated outside computed results.
 
@@ -925,7 +925,10 @@ Basis: every statement below references stored forensic findings; no content is 
 The findings engage 3 provisions of the Electronic Transactions Act, 2063 (2008): s.52, s.47, s.53. Each is listed with the finding that engaged it and the evidence behind that finding.
 
 **Statute:** Electronic Transactions Act, 2063 (2008)  
+**ऐन:** विद्युतीय (इलेक्ट्रोनिक) कारोबार ऐन, २०६३  
 **Jurisdiction:** Nepal
+
+*Cited from the English text of the Act. The Nepali text is authoritative where the two differ; verify any provision against विद्युतीय (इलेक्ट्रोनिक) कारोबार ऐन, २०६३ before relying on it in a filing.*
 
 ### Section 52 — To commit computer fraud
 
@@ -981,20 +984,20 @@ The findings engage 3 provisions of the Electronic Transactions Act, 2063 (2008)
 
 ## Report Provenance & Integrity
 
-- **report id**: RPT-185915593C-6D6D55DD
-- **generated at**: 2026-08-04T07:04:00.171Z
+- **report id**: RPT-185915593C-E31D2634
+- **generated at**: 2026-08-04T08:00:30.774Z
 - **generator**: CIIS Phase-2 reporting module (template-over-data; no free-text generation)
 - **evidence set digest**: 623b9e5e28815e86892679dc56e1ac545ea1fddc4590023db83275c6bf9c8b61
 - **evidence set digest note**: SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.
 - **source artifact hashes**:
-  - **correlation analysis.json**: db674e9536b02a7d9ce016fa9bc68943a5c9494784547fc4de69c59e194d6dc3
+  - **correlation analysis.json**: 16166a29885384e7929b2ae157be42fd324faab55ad035677cd10cdc4ccc601b
   - **cross case correlation.json**: c732a2bfe3c5b97e8f15edc5d141b146245e3c2ce435f0ac7d4425c7210854ee
-  - **campaign analysis.json**: 07f159626079533790352bb642a530b7674e612a361788024fff4df4a3ed337a
-  - **suspect assessment.json**: 3d00988a9675015a676dcca2b4b04d4dd6c15e8cb9006afb937bb9806ec6d1d8
-  - **timeline analysis.json**: 8849927bb15263b9247de54ebb9c39cb6821d58fae27984659bffa13e6e08362
-  - **analytics.json**: 6feaf8eb6edddcf74724343142cc4b1ef8df8120611cfb43d9bc4cf0079c0e11
-  - **case priority.json**: 1c4a93a89742ac12dfccea1c82f3fce50dff7a70f7479b45aa39ceecdc3a17f3
-  - **graph.json**: 6fe2c8fa0422e00f25ba634cd0cc609264ed69d7667a0e7921347c12a22ebcbe
+  - **campaign analysis.json**: 03f065e9efdb24e17ee82bc2ca82b30ff9fee93af20ab6d2f9925f24e092a79b
+  - **suspect assessment.json**: c466a4227e49ef2888b5f5a9405e5edaa81d4b4f17a41deb182c7eb484c505b3
+  - **timeline analysis.json**: 6a56ee7a066bd882e368a70b0823f2fea1c5af39ec38fae3392bf3369846030b
+  - **analytics.json**: b775c1ba402c6d95065b556adad3130f9490b55bb50d169f74ed521c2de00c97
+  - **case priority.json**: 28c4403127829c0ec38395eb9f3dd75a7104dbb69f95dae8e28ad309985e5c2b
+  - **graph.json**: bc37d0f52fe69919f83c0868eb5ba3b812ff97fd2e62537bef9eedb41657878a
 
 ## Appendix
 

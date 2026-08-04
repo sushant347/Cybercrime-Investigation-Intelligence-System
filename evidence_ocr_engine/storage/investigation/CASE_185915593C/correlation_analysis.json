@@ -1,9 +1,9 @@
 {
   "report_type": "correlation_analysis",
-  "report_version": 19,
+  "report_version": 22,
   "schema_version": "2.0",
   "case_id": "CASE_185915593C",
-  "generated_at": "2026-08-04T07:04:00.025Z",
+  "generated_at": "2026-08-04T08:00:30.618Z",
   "report": {
     "case_id": "CASE_185915593C",
     "evidence_ids": [
@@ -1236,6 +1236,6 @@
       "WEAK": 18
     },
     "strongest_pair": "EVID_00011|EVID_00014",
-    "analysis_time_ms": 4.0
+    "analysis_time_ms": 5.4
   }
 }

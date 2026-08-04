@@ -985,5 +985,37 @@
     "stage_label": "",
     "stage_note": "",
     "stages": []
+  },
+  {
+    "id": 36,
+    "created_at": "2026-08-04T07:42:29.099Z",
+    "job_type": "case_analysis",
+    "status": "completed",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "",
+    "detail": "failures=none",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-04T07:42:31.919Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": []
+  },
+  {
+    "id": 37,
+    "created_at": "2026-08-04T07:53:16.459Z",
+    "job_type": "case_analysis",
+    "status": "completed",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "",
+    "detail": "failures=none",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-04T07:53:18.239Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": []
   }
 ]

@@ -85,3 +85,6 @@ id,created_at,username,module,action,case_id,detail
 84,2026-08-04T05:01:22.963Z,,admin,login,,
 85,2026-08-04T05:01:39.816Z,,investigation,run_analysis,CASE_1A1BF573F3,
 86,2026-08-04T05:02:02.554Z,,reports,download,CASE_1A1BF573F3,investigation_report.pdf
+87,2026-08-04T07:42:19.674Z,,admin,login,,
+88,2026-08-04T07:42:29.107Z,,investigation,run_analysis,CASE_1A1BF573F3,
+89,2026-08-04T07:53:16.486Z,,investigation,run_analysis,CASE_1A1BF573F3,
