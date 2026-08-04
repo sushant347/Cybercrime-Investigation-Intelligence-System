@@ -43,6 +43,8 @@ class CorrelationGold:
 
     within_case: Dict[str, List[Pair]] = field(default_factory=dict)
     cross_case: List[Pair] = field(default_factory=list)
+    #: True when the source file declares itself demo data.
+    illustrative: bool = False
 
     def is_template(self) -> bool:
         """True if no real labels have been filled in yet."""
@@ -55,9 +57,32 @@ class TimelineGold:
 
     order: Dict[str, List[str]] = field(default_factory=dict)
     timestamps: Dict[str, Dict[str, str]] = field(default_factory=dict)
+    #: True when the source file declares itself demo data.
+    illustrative: bool = False
 
     def is_template(self) -> bool:
         return not any(self.order.values())
+
+
+#: Marker the shipped sample gold files carry in their ``_note``. These files
+#: are filled with plausible values so the harnesses run end to end out of the
+#: box - which means ``is_template()`` is False for them and every runner will
+#: happily produce numbers. Those numbers are not measurements of anything.
+_ILLUSTRATIVE_MARKERS = ("ILLUSTRATIVE DEMO", "not thesis-grade")
+
+
+def is_illustrative(raw: dict) -> bool:
+    """True when a gold file declares itself demo data rather than measurement.
+
+    Emptiness is already caught by ``is_template()``. This catches the more
+    dangerous case: gold that is *filled in* but was never human-verified, and
+    whose output is therefore indistinguishable from a real result unless
+    something says so.
+    """
+    note = " ".join(
+        str(value) for key, value in raw.items() if str(key).startswith("_")
+    )
+    return any(marker.lower() in note.lower() for marker in _ILLUSTRATIVE_MARKERS)
 
 
 def _pairs(raw: object, where: str) -> List[Pair]:
@@ -83,7 +108,8 @@ def load_correlation_gold(path: str | Path) -> CorrelationGold:
                                  f"within_case.{case_id}.related_pairs")
     cross = _pairs((data.get("cross_case", {}) or {}).get("related_pairs", []),
                    "cross_case.related_pairs")
-    return CorrelationGold(within_case=within, cross_case=cross)
+    return CorrelationGold(within_case=within, cross_case=cross,
+                           illustrative=is_illustrative(data))
 
 
 def load_timeline_gold(path: str | Path) -> TimelineGold:
@@ -103,4 +129,5 @@ def load_timeline_gold(path: str | Path) -> TimelineGold:
         if not isinstance(ts, dict):
             raise ValueError(f"{case_id}.timestamps must be an object")
         timestamps[case_id] = {str(k): str(v) for k, v in ts.items()}
-    return TimelineGold(order=order, timestamps=timestamps)
+    return TimelineGold(order=order, timestamps=timestamps,
+                        illustrative=is_illustrative(data))

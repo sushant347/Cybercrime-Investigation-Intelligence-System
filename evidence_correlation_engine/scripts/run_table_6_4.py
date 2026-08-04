@@ -52,6 +52,20 @@ def _services():
     return icfg, data, CorrelationService(icfg, data, repo, audit)
 
 
+def _provenance_banner(gold) -> None:
+    """Stamp demo-sourced numbers so they cannot be quoted as measurements."""
+    if not getattr(gold, "illustrative", False):
+        return
+    line = "=" * 74
+    print(line)
+    print("  ILLUSTRATIVE GOLD - THESE NUMBERS ARE NOT A MEASUREMENT")
+    print("  The gold file declares itself demo data. It exists so this")
+    print("  harness runs end to end, not to evaluate the engine. Replace it")
+    print("  with human-verified labels before quoting any figure below.")
+    print(line)
+    print()
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Table 6.4 correlation evaluation.")
     parser.add_argument("--gold", required=True, help="correlation gold JSON")
@@ -64,6 +78,8 @@ def main() -> None:
         print("evidence-id pairs, then re-run. No numbers are produced from a")
         print("template — that would be fabrication.")
         return
+
+    _provenance_banner(gold)
 
     icfg, data, correlation = _services()
     header = f"{'Case':<16}{'Method':<22}{'Prec':>8}{'Rec':>8}{'F1':>8}{'TP':>5}{'FP':>5}{'FN':>5}"

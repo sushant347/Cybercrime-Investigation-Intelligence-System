@@ -46,6 +46,20 @@ def _services():
     return data, TimelineService(icfg, data, repo, audit)
 
 
+def _provenance_banner(gold) -> None:
+    """Stamp demo-sourced numbers so they cannot be quoted as measurements."""
+    if not getattr(gold, "illustrative", False):
+        return
+    line = "=" * 74
+    print(line)
+    print("  ILLUSTRATIVE GOLD - THESE NUMBERS ARE NOT A MEASUREMENT")
+    print("  The gold file declares itself demo data. It exists so this")
+    print("  harness runs end to end, not to evaluate the engine. Replace it")
+    print("  with human-verified labels before quoting any figure below.")
+    print(line)
+    print()
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Table 6.5 timeline evaluation.")
     parser.add_argument("--gold", required=True, help="timeline gold JSON")
@@ -57,6 +71,8 @@ def main() -> None:
         print("Fill 'order' and 'timestamps' in", args.gold, "then re-run.")
         print("No numbers are produced from a template.")
         return
+
+    _provenance_banner(gold)
 
     data, timeline = _services()
     print("Table 6.5 — Timeline (live four-tier engine vs. upload-time baseline)")
