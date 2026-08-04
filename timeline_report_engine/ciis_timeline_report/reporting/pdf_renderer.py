@@ -229,6 +229,16 @@ def render_pdf(
         "mono": ParagraphStyle(
             "r_mono", parent=base["Normal"], fontName="Courier", fontSize=7.5,
             leading=10.5, textColor=colors.HexColor("#374151")),
+        "h3": ParagraphStyle(
+            "r_h3", parent=base["Heading3"], fontName="Helvetica-Bold",
+            fontSize=9.5, leading=13, textColor=colors.HexColor("#111827"),
+            spaceBefore=6, spaceAfter=1),
+        "caveat": ParagraphStyle(
+            "r_caveat", parent=base["Normal"], fontSize=8, leading=11.5,
+            textColor=colors.HexColor("#374151"),
+            backColor=colors.HexColor("#f8fafc"),
+            borderWidth=0.6, borderColor=colors.HexColor(RULE),
+            borderPadding=6, spaceBefore=4),
         "end": ParagraphStyle(
             "r_end", parent=base["Normal"], fontSize=8, leading=11,
             alignment=TA_CENTER, textColor=colors.HexColor(MUTED)),
@@ -422,6 +432,53 @@ def render_pdf(
             emit(remainder)
         return True
 
+    def emit_legal_basis(section: Any) -> bool:
+        """Statutory basis: each provision as a titled block, not a bullet dump.
+
+        The distinction between one section of the Act and the next is the whole
+        point of this part of the report, so it gets headings and a boxed
+        caveat rather than the generic key/value rendering.
+        """
+        if not isinstance(section, dict) or "provisions" not in section:
+            return False
+
+        if section.get("summary"):
+            story.append(Paragraph(esc(section["summary"]), styles["body"]))
+            story.append(Spacer(1, 4))
+        story.append(Paragraph(
+            f"<b>Statute:</b> {esc(section.get('statute', 'not available'))} "
+            f"&nbsp;·&nbsp; <b>Jurisdiction:</b> "
+            f"{esc(section.get('jurisdiction', 'not available'))}",
+            styles["subtitle"]))
+        story.append(Spacer(1, 6))
+
+        for provision in section.get("provisions") or []:
+            block: List[Any] = [
+                Paragraph(
+                    f"Section {esc(provision['section'])} &ndash; "
+                    f"{esc(provision['title'])}", styles["h3"]),
+                Paragraph(esc(provision["citation"]), styles["subtitle"]),
+                Spacer(1, 3),
+                Paragraph(f"<b>Conduct.</b> {esc(provision['conduct'])}",
+                          styles["body"]),
+                Paragraph(f"<b>Penalty.</b> {esc(provision['penalty'])}",
+                          styles["body"]),
+                Paragraph(f"<b>Why this is engaged.</b> {esc(provision['basis'])}",
+                          styles["body"]),
+            ]
+            if provision.get("evidence_ids"):
+                block.append(Paragraph(
+                    f"<b>Evidence.</b> {esc(', '.join(provision['evidence_ids']))}",
+                    styles["subtitle"]))
+            block.append(Spacer(1, 8))
+            # A provision split across a page break reads as two half-findings.
+            story.append(KeepTogether(block))
+
+        if section.get("caveat"):
+            story.append(Spacer(1, 2))
+            story.append(Paragraph(esc(section["caveat"]), styles["caveat"]))
+        return True
+
     # ------------------------------------------------------------- body build
     #
     # Sections are numbered so the report can be cited precisely — "see 6.2"
@@ -439,6 +496,8 @@ def render_pdf(
         if key == "evidence_summary" and emit_evidence_table(value):
             continue
         if key == "model_predictions" and emit_predictions_table(value):
+            continue
+        if key == "legal_basis" and emit_legal_basis(value):
             continue
         if key == "report_provenance" and isinstance(value, dict):
             hashes = value.get("source_artifact_hashes") or {}

@@ -63,6 +63,10 @@ SECTION_ORDER: List[tuple] = [
     ("investigation_statistics", "Investigation Statistics"),
     ("confidence_analysis", "Confidence Analysis"),
     ("investigation_conclusion", "Investigation Conclusion"),
+    # Statutory basis sits between the conclusion and the actions: it reads as
+    # "this is what the evidence shows, this is the law it engages, this is
+    # what to do next", which is the order an investigating officer works in.
+    ("legal_basis", "Statutory Basis"),
     ("recommendations", "Recommendations"),
     ("report_provenance", "Report Provenance & Integrity"),
     ("appendix", "Appendix"),
@@ -151,6 +155,8 @@ class InvestigationReportService:
             "confidence_analysis": lambda: self._confidence_section(items),
             "investigation_conclusion": lambda: self._conclusion(
                 items, correlation, campaigns, suspects, timeline),
+            "legal_basis": lambda: self._legal_section(
+                case_id, items, campaigns, cross_case, analytics),
             "recommendations": lambda: self._recommendations(
                 campaigns, suspects, timeline, priority, analytics),
             "report_provenance": lambda: self._provenance(
@@ -660,6 +666,22 @@ class InvestigationReportService:
                 })
         return rows or [{"note": "No Phase-1 confidence scores stored for this case."}]
 
+    def _legal_section(self, case_id, items, campaigns, cross_case,
+                       analytics) -> Dict[str, Any]:
+        """Which provisions of the Electronic Transactions Act the findings engage.
+
+        Built here rather than in the pipeline because it is derived purely from
+        findings the report already holds - no new storage, no new artifact, and
+        nothing to keep in sync.
+        """
+        from ..legal.service import LegalBasisService
+
+        assessment = LegalBasisService(self._cfg, self._audit).assess(
+            case_id, items, campaigns=campaigns, cross_case=cross_case,
+            analytics=analytics,
+        )
+        return assessment.model_dump()
+
     @staticmethod
     def _conclusion(items, correlation, campaigns, suspects, timeline) -> List[str]:
         lines: List[str] = []
@@ -881,9 +903,51 @@ class InvestigationReportService:
         for key, title in titles.items():
             out.append(f"## {title}")
             out.append("")
-            out.extend(_to_markdown(sections.get(key)))
+            if key == "legal_basis":
+                out.extend(_legal_markdown(sections.get(key)))
+            else:
+                out.extend(_to_markdown(sections.get(key)))
             out.append("")
         return "\n".join(out)
+
+
+def _legal_markdown(section: Any) -> List[str]:
+    """Statutory basis as prose, not as a flattened key/value dump.
+
+    The generic renderer emits every provision's fields as sibling bullets, so
+    a reader cannot see where one section of the Act ends and the next begins -
+    which is exactly the distinction that matters here.
+    """
+    if not isinstance(section, dict):
+        return _to_markdown(section)
+
+    out: List[str] = []
+    if section.get("summary"):
+        out += [section["summary"], ""]
+    out += [
+        f"**Statute:** {section.get('statute', 'not available')}  ",
+        f"**Jurisdiction:** {section.get('jurisdiction', 'not available')}",
+        "",
+    ]
+    for provision in section.get("provisions") or []:
+        out.append(f"### Section {provision['section']} — {provision['title']}")
+        out += [
+            "",
+            f"*{provision['citation']}*",
+            "",
+            f"**Conduct.** {provision['conduct']}",
+            "",
+            f"**Penalty.** {provision['penalty']}",
+            "",
+            f"**Why this is engaged.** {provision['basis']}",
+        ]
+        if provision.get("evidence_ids"):
+            out.append("")
+            out.append(f"**Evidence.** {', '.join(provision['evidence_ids'])}")
+        out.append("")
+    if section.get("caveat"):
+        out += [f"> {section['caveat']}", ""]
+    return out
 
 
 def _to_markdown(value: Any, indent: int = 0) -> List[str]:

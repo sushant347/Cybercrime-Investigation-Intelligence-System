@@ -674,10 +674,33 @@ export interface InvestigationReport {
     investigation_statistics: Record<string, Record<string, number>>;
     confidence_analysis: unknown[];
     investigation_conclusion: string[];
+    legal_basis?: ReportLegalBasisSection | string;
     recommendations: string[];
     appendix: Record<string, unknown>;
   };
   generated_from: Record<string, boolean>;
+}
+
+/** One provision of the Act the findings engage, with the finding behind it. */
+export interface ReportEngagedProvision {
+  section: string;
+  title: string;
+  citation: string;
+  conduct: string;
+  penalty: string;
+  /** The concrete finding that engaged it — never an assertion of guilt. */
+  basis: string;
+  evidence_ids: string[];
+}
+
+export interface ReportLegalBasisSection {
+  case_id: string;
+  statute: string;
+  jurisdiction: string;
+  provisions: ReportEngagedProvision[];
+  /** Must be displayed wherever provisions are displayed. */
+  caveat: string;
+  summary: string;
 }
 
 // --------------------------------------------------------------- audit

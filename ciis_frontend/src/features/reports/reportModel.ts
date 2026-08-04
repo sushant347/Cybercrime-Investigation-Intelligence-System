@@ -13,6 +13,7 @@ import type {
   ArtifactDocument,
   CasePriority,
   InvestigationReport,
+  ReportLegalBasisSection,
   ReportModelPrediction,
 } from "@/types";
 
@@ -107,6 +108,7 @@ export interface SimpleReport {
   methodology: string[];
   progression: string[];
   nextSteps: string[];
+  legalBasis: ReportLegalBasisSection | null;
   provenance: ProvenanceInfo | null;
 }
 
@@ -417,6 +419,7 @@ export function buildSimpleReport(
     methodology: scope?.methodology ?? [],
     progression: (timeline?.stage_progression ?? []).map(titleCaseStage),
     nextSteps: sections.recommendations ?? [],
+    legalBasis: structured<ReportLegalBasisSection>(sections.legal_basis),
     provenance: provenanceSection
       ? {
           reportId: provenanceSection.report_id,

@@ -401,6 +401,80 @@ export function SimpleReportView({ report }: { report: SimpleReport }) {
         </Section>
       )}
 
+      {report.legalBasis && (
+        <Section number={next()} title="Statutory Basis">
+          <Typography variant="body2" sx={{ mb: 2 }}>
+            {report.legalBasis.summary}
+          </Typography>
+
+          <Stack spacing={2}>
+            {report.legalBasis.provisions.map((provision) => (
+              <Box
+                key={provision.section}
+                sx={{
+                  border: 1,
+                  borderColor: "divider",
+                  borderLeft: 3,
+                  borderLeftColor: ACCENT,
+                  borderRadius: 1,
+                  p: 2,
+                }}
+              >
+                <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                  Section {provision.section} — {provision.title}
+                </Typography>
+                <Typography variant="caption" color="text.secondary">
+                  {provision.citation}
+                </Typography>
+
+                <Typography variant="body2" sx={{ mt: 1.5 }}>
+                  <strong>Conduct.</strong> {provision.conduct}
+                </Typography>
+                <Typography variant="body2" sx={{ mt: 0.5 }}>
+                  <strong>Penalty.</strong> {provision.penalty}
+                </Typography>
+                {/* The basis is the whole point: it is why this provision is
+                    listed at all, and it is what an officer checks first. */}
+                <Typography variant="body2" sx={{ mt: 0.5 }}>
+                  <strong>Why this is engaged.</strong> {provision.basis}
+                </Typography>
+
+                {provision.evidence_ids.length > 0 && (
+                  <Stack
+                    direction="row"
+                    spacing={0.5}
+                    flexWrap="wrap"
+                    useFlexGap
+                    sx={{ mt: 1.5 }}
+                  >
+                    {provision.evidence_ids.map((id) => (
+                      <Chip key={id} label={id} size="small" variant="outlined" />
+                    ))}
+                  </Stack>
+                )}
+              </Box>
+            ))}
+          </Stack>
+
+          {/* Never rendered separately from the provisions above: the caveat is
+              what stops the list being read as a charging decision. */}
+          <Typography
+            variant="caption"
+            component="p"
+            sx={{
+              mt: 2,
+              p: 1.5,
+              borderRadius: 1,
+              bgcolor: "action.hover",
+              color: "text.secondary",
+              lineHeight: 1.6,
+            }}
+          >
+            {report.legalBasis.caveat}
+          </Typography>
+        </Section>
+      )}
+
       {report.nextSteps.length > 0 && (
         <Section number={next()} title="Recommendations">
           <Stack spacing={1}>
