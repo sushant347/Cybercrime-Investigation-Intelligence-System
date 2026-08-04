@@ -969,5 +969,21 @@
     "stage_label": "",
     "stage_note": "",
     "stages": []
+  },
+  {
+    "id": 35,
+    "created_at": "2026-08-04T05:01:39.808Z",
+    "job_type": "case_analysis",
+    "status": "completed",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "",
+    "detail": "failures=none",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-04T05:01:42.154Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": []
   }
 ]

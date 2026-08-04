@@ -1,6 +1,6 @@
 # Forensic Investigation Report - CASE_EE8250FB76
 
-Generated: 2026-08-03T14:03:42.881Z  
+Generated: 2026-08-04T05:01:18.755Z  
 Produced by: Cybercrime Investigation Intelligence Engine (CIIS), Phase 2  
 Basis: every statement below references stored forensic findings; no content is generated outside computed results.
 
@@ -53,6 +53,36 @@ Basis: every statement below references stored forensic findings; no content is 
 - **ocr confidence**: 0.0
 - **evidence confidence score**: not available
 - **entity count**: 0
+
+## Timeline Analysis
+
+- **summary**: 2 event(s) spanning 0.0 hour(s); 0 timestamp(s) unresolved. Observed scam progression: initial_contact -> social_engineering -> financial_transaction -> post_attack.
+- **stage progression**:
+  - initial_contact
+  - social_engineering
+  - financial_transaction
+  - post_attack
+- **progression consistent**: True
+- **milestones**:
+  - **timestamp**: 2026-07-25T16:24:17.560000+00:00
+  - **description**: Investigation start - first reconstructed evidence event
+  - **timestamp**: 2026-07-25T16:24:17.560000+00:00
+  - **description**: First observation of stage 'initial_contact' (EVID_00005)
+  - **timestamp**: 2026-07-25T16:24:17.560000+00:00
+  - **description**: First observation of stage 'social_engineering' (EVID_00005)
+  - **timestamp**: 2026-07-25T16:24:17.560000+00:00
+  - **description**: First observation of stage 'financial_transaction' (EVID_00005)
+  - **timestamp**: 2026-07-25T16:24:17.560000+00:00
+  - **description**: First observation of stage 'post_attack' (EVID_00005)
+- **critical events**:
+  - **timestamp**: 2026-07-25T16:24:17.560000+00:00
+  - **evidence id**: EVID_00005
+  - **reasons**:
+    - contains money entity/entities: NPR 1500, NPR 200, NPR 25000
+    - contains esewa_ids entity/entities: esewa.cashback99@gmail.com, sunita.gurung21@gmail.com
+    - contains khalti_ids entity/entities: +9779801122334
+    - contains bank_accounts entity/entities: 05019012345678
+    - contains transaction_ids entity/entities: 0119.0625.987456, CASE_2026_0088, KH-2026-0611-77245
 
 ## Correlation Analysis
 
@@ -381,36 +411,6 @@ Basis: every statement below references stored forensic findings; no content is 
 - **campaigns**:
   - none
 
-## Timeline Analysis
-
-- **summary**: 2 event(s) spanning 0.0 hour(s); 0 timestamp(s) unresolved. Observed scam progression: initial_contact -> social_engineering -> financial_transaction -> post_attack.
-- **stage progression**:
-  - initial_contact
-  - social_engineering
-  - financial_transaction
-  - post_attack
-- **progression consistent**: True
-- **milestones**:
-  - **timestamp**: 2026-07-25T16:24:17.560000+00:00
-  - **description**: Investigation start - first reconstructed evidence event
-  - **timestamp**: 2026-07-25T16:24:17.560000+00:00
-  - **description**: First observation of stage 'initial_contact' (EVID_00005)
-  - **timestamp**: 2026-07-25T16:24:17.560000+00:00
-  - **description**: First observation of stage 'social_engineering' (EVID_00005)
-  - **timestamp**: 2026-07-25T16:24:17.560000+00:00
-  - **description**: First observation of stage 'financial_transaction' (EVID_00005)
-  - **timestamp**: 2026-07-25T16:24:17.560000+00:00
-  - **description**: First observation of stage 'post_attack' (EVID_00005)
-- **critical events**:
-  - **timestamp**: 2026-07-25T16:24:17.560000+00:00
-  - **evidence id**: EVID_00005
-  - **reasons**:
-    - contains money entity/entities: NPR 1500, NPR 200, NPR 25000
-    - contains esewa_ids entity/entities: esewa.cashback99@gmail.com, sunita.gurung21@gmail.com
-    - contains khalti_ids entity/entities: +9779801122334
-    - contains bank_accounts entity/entities: 05019012345678
-    - contains transaction_ids entity/entities: 0119.0625.987456, CASE_2026_0088, KH-2026-0611-77245
-
 ## Suspect Assessment
 
 - **suspect id**: SUSPECT_CASE_EE8250FB76_01
@@ -630,20 +630,20 @@ Basis: every statement below references stored forensic findings; no content is 
 
 ## Report Provenance & Integrity
 
-- **report id**: RPT-EE8250FB76-A1AC4EB3
-- **generated at**: 2026-08-03T14:03:42.835Z
+- **report id**: RPT-EE8250FB76-11EE178A
+- **generated at**: 2026-08-04T05:01:18.606Z
 - **generator**: CIIS Phase-2 reporting module (template-over-data; no free-text generation)
 - **evidence set digest**: 0f6afe626b2e5e1c4bb70b2efae2d8aea52ca3d8d38b481532cc8e4ff88c3ff6
 - **evidence set digest note**: SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.
 - **source artifact hashes**:
-  - **correlation analysis.json**: c5cc18e0db8bd76c5efd2ed48c4705934f9457d09c2c89de0e9cb896a82fe82f
-  - **cross case correlation.json**: 7ccd6fd108bab05021466359183bd2e8c4a35a4b4dda6fb2d66ebeaab14ad29c
-  - **campaign analysis.json**: 205da30e024e2a03804de657ce946ebc3b28d4eee7a7cc821cb0c3ff64141dbd
-  - **suspect assessment.json**: 3667b84188e3b1bba52ef7c900cde55219358f9ddcd512d996e05641c8685640
-  - **timeline analysis.json**: 09dabae8fb12c2e20cf0da87130123afc2fba1185dce2ec8ec35146564a074c7
-  - **analytics.json**: 357ce696fc543374ab61f7e72eb5c23c2f9a7aef5966fd862ef2b4321225f5f3
-  - **case priority.json**: 622f9b8e8b4fe3644e2690b6f9fadc6aee9c60c9dc56f8138e4ce8c16d52ade4
-  - **graph.json**: 31c8e355ac1109ab408822678db4e5a1782ac3a6228bb4bdb8808f2da7e7eeef
+  - **correlation analysis.json**: 48b6ea1e80b2e1ef8a4323beda6ef1e172d53f2e08642b46995981576d4630de
+  - **cross case correlation.json**: eb69d4047d8579e0bc5f6954ea3d2fb83b3f633333637e84c7f0eefd53b6e690
+  - **campaign analysis.json**: 27d89311f8580da19391dc8116e45bfe64e3b31d5647fb9e3370669d434a31b1
+  - **suspect assessment.json**: 5b866e77e3e7a2a64b63a2adb18ae22c07908f92ce7253533229d98c9f81f751
+  - **timeline analysis.json**: 3d5df23707fe7d37d4a745d542d169da5892b355b086d912091822240946e56f
+  - **analytics.json**: fa163ef6c2b213ea78429f1ea21cab6510f3ed78a3ccff8c310e1a4f6e11bbee
+  - **case priority.json**: 69872e1502f883922b0cf4e6084e8e719052cedb0b28189e78602c49baaf4999
+  - **graph.json**: be179b64de84278f4270fee3040c23007eea7b3e6ec2779e09fdd9bc970c7121
 
 ## Appendix
 

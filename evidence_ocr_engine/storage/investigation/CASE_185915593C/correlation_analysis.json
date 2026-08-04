@@ -1,9 +1,9 @@
 {
   "report_type": "correlation_analysis",
-  "report_version": 10,
+  "report_version": 12,
   "schema_version": "2.0",
   "case_id": "CASE_185915593C",
-  "generated_at": "2026-08-02T14:26:09.868Z",
+  "generated_at": "2026-08-04T05:01:19.202Z",
   "report": {
     "case_id": "CASE_185915593C",
     "evidence_ids": [
@@ -22,15 +22,15 @@
       {
         "evidence_a": "EVID_00011",
         "evidence_b": "EVID_00014",
-        "correlation_weight": 5.0806,
-        "correlation_confidence": 0.9582,
+        "correlation_weight": 4.4715,
+        "correlation_confidence": 0.9389,
         "relationship_strength": "VERY_STRONG",
         "factors": [
           {
             "factor": "phones",
             "weight": 0.9,
             "matches": 2,
-            "contribution": 1.5298,
+            "contribution": 1.2589,
             "supporting_evidence": [
               "+9779801122334",
               "+9779847011223"
@@ -39,26 +39,26 @@
             "value_details": [
               {
                 "value": "+9779801122334",
-                "specificity": 0.8499,
-                "document_frequency": 4,
-                "corpus_size": 10,
-                "reason": "'+9779801122334' is moderately common (seen in 4 of 10 evidence items in the corpus); specificity 0.85"
+                "specificity": 0.6994,
+                "document_frequency": 7,
+                "corpus_size": 19,
+                "reason": "'+9779801122334' is moderately common (seen in 7 of 19 evidence items in the corpus); specificity 0.70"
               },
               {
                 "value": "+9779847011223",
-                "specificity": 0.8499,
-                "document_frequency": 4,
-                "corpus_size": 10,
-                "reason": "'+9779847011223' is moderately common (seen in 4 of 10 evidence items in the corpus); specificity 0.85"
+                "specificity": 0.6994,
+                "document_frequency": 7,
+                "corpus_size": 19,
+                "reason": "'+9779847011223' is moderately common (seen in 7 of 19 evidence items in the corpus); specificity 0.70"
               }
             ],
-            "effective_matches": 1.6998
+            "effective_matches": 1.3988
           },
           {
             "factor": "khalti_ids",
             "weight": 1.0,
             "matches": 1,
-            "contribution": 0.9129,
+            "contribution": 0.7803,
             "supporting_evidence": [
               "+9779801122334"
             ],
@@ -66,19 +66,19 @@
             "value_details": [
               {
                 "value": "+9779801122334",
-                "specificity": 0.9129,
-                "document_frequency": 3,
-                "corpus_size": 10,
-                "reason": "'+9779801122334' is moderately common (seen in 3 of 10 evidence items in the corpus); specificity 0.91"
+                "specificity": 0.7803,
+                "document_frequency": 5,
+                "corpus_size": 19,
+                "reason": "'+9779801122334' is moderately common (seen in 5 of 19 evidence items in the corpus); specificity 0.78"
               }
             ],
-            "effective_matches": 0.9129
+            "effective_matches": 0.7803
           },
           {
             "factor": "transaction_ids",
             "weight": 0.95,
             "matches": 1,
-            "contribution": 0.8673,
+            "contribution": 0.7413,
             "supporting_evidence": [
               "kh-2026-0611-77245"
             ],
@@ -86,19 +86,19 @@
             "value_details": [
               {
                 "value": "kh-2026-0611-77245",
-                "specificity": 0.9129,
-                "document_frequency": 3,
-                "corpus_size": 10,
-                "reason": "'kh-2026-0611-77245' is moderately common (seen in 3 of 10 evidence items in the corpus); specificity 0.91"
+                "specificity": 0.7803,
+                "document_frequency": 5,
+                "corpus_size": 19,
+                "reason": "'kh-2026-0611-77245' is moderately common (seen in 5 of 19 evidence items in the corpus); specificity 0.78"
               }
             ],
-            "effective_matches": 0.9129
+            "effective_matches": 0.7803
           },
           {
             "factor": "domains",
             "weight": 0.6,
             "matches": 1,
-            "contribution": 0.5099,
+            "contribution": 0.4196,
             "supporting_evidence": [
               "esewa-cashback-offer.xyz"
             ],
@@ -106,19 +106,19 @@
             "value_details": [
               {
                 "value": "esewa-cashback-offer.xyz",
-                "specificity": 0.8499,
-                "document_frequency": 4,
-                "corpus_size": 10,
-                "reason": "'esewa-cashback-offer.xyz' is moderately common (seen in 4 of 10 evidence items in the corpus); specificity 0.85"
+                "specificity": 0.6994,
+                "document_frequency": 7,
+                "corpus_size": 19,
+                "reason": "'esewa-cashback-offer.xyz' is moderately common (seen in 7 of 19 evidence items in the corpus); specificity 0.70"
               }
             ],
-            "effective_matches": 0.8499
+            "effective_matches": 0.6994
           },
           {
             "factor": "money",
             "weight": 0.2,
             "matches": 1,
-            "contribution": 0.0607,
+            "contribution": 0.0714,
             "supporting_evidence": [
               "npr 1500"
             ],
@@ -126,13 +126,13 @@
             "value_details": [
               {
                 "value": "npr 1500",
-                "specificity": 0.3036,
-                "document_frequency": 3,
-                "corpus_size": 10,
-                "reason": "'npr 1500' is moderately common (seen in 3 of 10 evidence items in the corpus); specificity 0.30"
+                "specificity": 0.3572,
+                "document_frequency": 5,
+                "corpus_size": 19,
+                "reason": "'npr 1500' is moderately common (seen in 5 of 19 evidence items in the corpus); specificity 0.36"
               }
             ],
-            "effective_matches": 0.3036
+            "effective_matches": 0.3572
           },
           {
             "factor": "timeline_proximity",
@@ -168,20 +168,20 @@
           "Acquired 0.1 hours apart (within the 48h proximity window)",
           "Threat intelligence flags the same malicious indicator(s) in both items: esewa-cashback-offer.xyz"
         ],
-        "explanation": "EVID_00011 (05_khalti_receipt.jpg) and EVID_00014 (08_complaint_letter.pdf) show a very strong relationship (confidence 0.96) based on 7 independent factor(s). Both items reference the same phones: +9779801122334, +9779847011223 [weight 1.53]. Both items reference the same khalti ids: +9779801122334 [weight 0.91]. Both items reference the same transaction ids: kh-2026-0611-77245 [weight 0.87]. Both items reference the same domains: esewa-cashback-offer.xyz [weight 0.51]. Both items reference the same money: npr 1500 [weight 0.06]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]. Threat intelligence flags the same malicious indicator(s) in both items: esewa-cashback-offer.xyz [weight 0.80]."
+        "explanation": "EVID_00011 (05_khalti_receipt.jpg) and EVID_00014 (08_complaint_letter.pdf) show a very strong relationship (confidence 0.94) based on 7 independent factor(s). Both items reference the same phones: +9779801122334, +9779847011223 [weight 1.26]. Both items reference the same khalti ids: +9779801122334 [weight 0.78]. Both items reference the same transaction ids: kh-2026-0611-77245 [weight 0.74]. Both items reference the same domains: esewa-cashback-offer.xyz [weight 0.42]. Both items reference the same money: npr 1500 [weight 0.07]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]. Threat intelligence flags the same malicious indicator(s) in both items: esewa-cashback-offer.xyz [weight 0.80]."
       },
       {
         "evidence_a": "EVID_00008",
         "evidence_b": "EVID_00014",
-        "correlation_weight": 2.6668,
-        "correlation_confidence": 0.8111,
-        "relationship_strength": "VERY_STRONG",
+        "correlation_weight": 2.358,
+        "correlation_confidence": 0.7709,
+        "relationship_strength": "STRONG",
         "factors": [
           {
             "factor": "emails",
             "weight": 0.85,
             "matches": 1,
-            "contribution": 0.776,
+            "contribution": 0.6633,
             "supporting_evidence": [
               "sunita.gurung21@gmail.com"
             ],
@@ -189,19 +189,19 @@
             "value_details": [
               {
                 "value": "sunita.gurung21@gmail.com",
-                "specificity": 0.9129,
-                "document_frequency": 3,
-                "corpus_size": 10,
-                "reason": "'sunita.gurung21@gmail.com' is moderately common (seen in 3 of 10 evidence items in the corpus); specificity 0.91"
+                "specificity": 0.7803,
+                "document_frequency": 5,
+                "corpus_size": 19,
+                "reason": "'sunita.gurung21@gmail.com' is moderately common (seen in 5 of 19 evidence items in the corpus); specificity 0.78"
               }
             ],
-            "effective_matches": 0.9129
+            "effective_matches": 0.7803
           },
           {
             "factor": "esewa_ids",
             "weight": 1.0,
             "matches": 1,
-            "contribution": 0.9129,
+            "contribution": 0.7803,
             "supporting_evidence": [
               "sunita.gurung21@gmail.com"
             ],
@@ -209,19 +209,19 @@
             "value_details": [
               {
                 "value": "sunita.gurung21@gmail.com",
-                "specificity": 0.9129,
-                "document_frequency": 3,
-                "corpus_size": 10,
-                "reason": "'sunita.gurung21@gmail.com' is moderately common (seen in 3 of 10 evidence items in the corpus); specificity 0.91"
+                "specificity": 0.7803,
+                "document_frequency": 5,
+                "corpus_size": 19,
+                "reason": "'sunita.gurung21@gmail.com' is moderately common (seen in 5 of 19 evidence items in the corpus); specificity 0.78"
               }
             ],
-            "effective_matches": 0.9129
+            "effective_matches": 0.7803
           },
           {
             "factor": "domains",
             "weight": 0.6,
             "matches": 1,
-            "contribution": 0.5296,
+            "contribution": 0.4571,
             "supporting_evidence": [
               "gmail.com"
             ],
@@ -229,19 +229,19 @@
             "value_details": [
               {
                 "value": "gmail.com",
-                "specificity": 0.8827,
-                "document_frequency": 3,
-                "corpus_size": 10,
-                "reason": "'gmail.com' is moderately common (seen in 3 of 10 evidence items in the corpus); specificity 0.88"
+                "specificity": 0.7618,
+                "document_frequency": 5,
+                "corpus_size": 19,
+                "reason": "'gmail.com' is moderately common (seen in 5 of 19 evidence items in the corpus); specificity 0.76"
               }
             ],
-            "effective_matches": 0.8827
+            "effective_matches": 0.7618
           },
           {
             "factor": "money",
             "weight": 0.2,
             "matches": 1,
-            "contribution": 0.0483,
+            "contribution": 0.0573,
             "supporting_evidence": [
               "npr 200"
             ],
@@ -249,13 +249,13 @@
             "value_details": [
               {
                 "value": "npr 200",
-                "specificity": 0.2416,
-                "document_frequency": 4,
-                "corpus_size": 10,
-                "reason": "'npr 200' is moderately common (seen in 4 of 10 evidence items in the corpus); specificity 0.24"
+                "specificity": 0.2865,
+                "document_frequency": 7,
+                "corpus_size": 19,
+                "reason": "'npr 200' is moderately common (seen in 7 of 19 evidence items in the corpus); specificity 0.29"
               }
             ],
-            "effective_matches": 0.2416
+            "effective_matches": 0.2865
           },
           {
             "factor": "timeline_proximity",
@@ -277,20 +277,20 @@
           "Both items reference the same money: npr 200",
           "Acquired 0.2 hours apart (within the 48h proximity window)"
         ],
-        "explanation": "EVID_00008 (02_messenger_chat.jpg) and EVID_00014 (08_complaint_letter.pdf) show a very strong relationship (confidence 0.81) based on 5 independent factor(s). Both items reference the same emails: sunita.gurung21@gmail.com [weight 0.78]. Both items reference the same esewa ids: sunita.gurung21@gmail.com [weight 0.91]. Both items reference the same domains: gmail.com [weight 0.53]. Both items reference the same money: npr 200 [weight 0.05]. Acquired 0.2 hours apart (within the 48h proximity window) [weight 0.40]."
+        "explanation": "EVID_00008 (02_messenger_chat.jpg) and EVID_00014 (08_complaint_letter.pdf) show a strong relationship (confidence 0.77) based on 5 independent factor(s). Both items reference the same emails: sunita.gurung21@gmail.com [weight 0.66]. Both items reference the same esewa ids: sunita.gurung21@gmail.com [weight 0.78]. Both items reference the same domains: gmail.com [weight 0.46]. Both items reference the same money: npr 200 [weight 0.06]. Acquired 0.2 hours apart (within the 48h proximity window) [weight 0.40]."
       },
       {
         "evidence_a": "EVID_00013",
         "evidence_b": "EVID_00014",
-        "correlation_weight": 2.0792,
-        "correlation_confidence": 0.7273,
+        "correlation_weight": 1.8304,
+        "correlation_confidence": 0.6815,
         "relationship_strength": "STRONG",
         "factors": [
           {
             "factor": "phones",
             "weight": 0.9,
             "matches": 1,
-            "contribution": 0.7649,
+            "contribution": 0.6295,
             "supporting_evidence": [
               "+9779847011223"
             ],
@@ -298,19 +298,19 @@
             "value_details": [
               {
                 "value": "+9779847011223",
-                "specificity": 0.8499,
-                "document_frequency": 4,
-                "corpus_size": 10,
-                "reason": "'+9779847011223' is moderately common (seen in 4 of 10 evidence items in the corpus); specificity 0.85"
+                "specificity": 0.6994,
+                "document_frequency": 7,
+                "corpus_size": 19,
+                "reason": "'+9779847011223' is moderately common (seen in 7 of 19 evidence items in the corpus); specificity 0.70"
               }
             ],
-            "effective_matches": 0.8499
+            "effective_matches": 0.6994
           },
           {
             "factor": "transaction_ids",
             "weight": 0.95,
             "matches": 1,
-            "contribution": 0.8673,
+            "contribution": 0.7413,
             "supporting_evidence": [
               "mbl-2026-441829"
             ],
@@ -318,19 +318,19 @@
             "value_details": [
               {
                 "value": "mbl-2026-441829",
-                "specificity": 0.9129,
-                "document_frequency": 3,
-                "corpus_size": 10,
-                "reason": "'mbl-2026-441829' is moderately common (seen in 3 of 10 evidence items in the corpus); specificity 0.91"
+                "specificity": 0.7803,
+                "document_frequency": 5,
+                "corpus_size": 19,
+                "reason": "'mbl-2026-441829' is moderately common (seen in 5 of 19 evidence items in the corpus); specificity 0.78"
               }
             ],
-            "effective_matches": 0.9129
+            "effective_matches": 0.7803
           },
           {
             "factor": "money",
             "weight": 0.2,
             "matches": 1,
-            "contribution": 0.047,
+            "contribution": 0.0596,
             "supporting_evidence": [
               "npr 25000"
             ],
@@ -338,13 +338,13 @@
             "value_details": [
               {
                 "value": "npr 25000",
-                "specificity": 0.235,
-                "document_frequency": 3,
-                "corpus_size": 10,
-                "reason": "'npr 25000' is moderately common (seen in 3 of 10 evidence items in the corpus); specificity 0.23"
+                "specificity": 0.2978,
+                "document_frequency": 5,
+                "corpus_size": 19,
+                "reason": "'npr 25000' is moderately common (seen in 5 of 19 evidence items in the corpus); specificity 0.30"
               }
             ],
-            "effective_matches": 0.235
+            "effective_matches": 0.2978
           },
           {
             "factor": "timeline_proximity",
@@ -365,20 +365,20 @@
           "Both items reference the same money: npr 25000",
           "Acquired 0.1 hours apart (within the 48h proximity window)"
         ],
-        "explanation": "EVID_00013 (07_bank_transfer_slip.pdf) and EVID_00014 (08_complaint_letter.pdf) show a strong relationship (confidence 0.73) based on 4 independent factor(s). Both items reference the same phones: +9779847011223 [weight 0.76]. Both items reference the same transaction ids: mbl-2026-441829 [weight 0.87]. Both items reference the same money: npr 25000 [weight 0.05]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
+        "explanation": "EVID_00013 (07_bank_transfer_slip.pdf) and EVID_00014 (08_complaint_letter.pdf) show a strong relationship (confidence 0.68) based on 4 independent factor(s). Both items reference the same phones: +9779847011223 [weight 0.63]. Both items reference the same transaction ids: mbl-2026-441829 [weight 0.74]. Both items reference the same money: npr 25000 [weight 0.06]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
       },
       {
         "evidence_a": "EVID_00009",
         "evidence_b": "EVID_00014",
-        "correlation_weight": 1.7515,
-        "correlation_confidence": 0.6654,
+        "correlation_weight": 1.6742,
+        "correlation_confidence": 0.6488,
         "relationship_strength": "STRONG",
         "factors": [
           {
             "factor": "domains",
             "weight": 0.6,
             "matches": 1,
-            "contribution": 0.5099,
+            "contribution": 0.4196,
             "supporting_evidence": [
               "esewa-cashback-offer.xyz"
             ],
@@ -386,19 +386,19 @@
             "value_details": [
               {
                 "value": "esewa-cashback-offer.xyz",
-                "specificity": 0.8499,
-                "document_frequency": 4,
-                "corpus_size": 10,
-                "reason": "'esewa-cashback-offer.xyz' is moderately common (seen in 4 of 10 evidence items in the corpus); specificity 0.85"
+                "specificity": 0.6994,
+                "document_frequency": 7,
+                "corpus_size": 19,
+                "reason": "'esewa-cashback-offer.xyz' is moderately common (seen in 7 of 19 evidence items in the corpus); specificity 0.70"
               }
             ],
-            "effective_matches": 0.8499
+            "effective_matches": 0.6994
           },
           {
             "factor": "money",
             "weight": 0.2,
             "matches": 1,
-            "contribution": 0.0416,
+            "contribution": 0.0546,
             "supporting_evidence": [
               "npr 5000"
             ],
@@ -406,13 +406,13 @@
             "value_details": [
               {
                 "value": "npr 5000",
-                "specificity": 0.208,
-                "document_frequency": 3,
-                "corpus_size": 10,
-                "reason": "'npr 5000' is moderately common (seen in 3 of 10 evidence items in the corpus); specificity 0.21"
+                "specificity": 0.2732,
+                "document_frequency": 5,
+                "corpus_size": 19,
+                "reason": "'npr 5000' is moderately common (seen in 5 of 19 evidence items in the corpus); specificity 0.27"
               }
             ],
-            "effective_matches": 0.208
+            "effective_matches": 0.2732
           },
           {
             "factor": "timeline_proximity",
@@ -445,20 +445,20 @@
           "Acquired 0.1 hours apart (within the 48h proximity window)",
           "Threat intelligence flags the same malicious indicator(s) in both items: esewa-cashback-offer.xyz"
         ],
-        "explanation": "EVID_00009 (03_qr_code_flyer.png) and EVID_00014 (08_complaint_letter.pdf) show a strong relationship (confidence 0.67) based on 4 independent factor(s). Both items reference the same domains: esewa-cashback-offer.xyz [weight 0.51]. Both items reference the same money: npr 5000 [weight 0.04]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]. Threat intelligence flags the same malicious indicator(s) in both items: esewa-cashback-offer.xyz [weight 0.80]."
+        "explanation": "EVID_00009 (03_qr_code_flyer.png) and EVID_00014 (08_complaint_letter.pdf) show a strong relationship (confidence 0.65) based on 4 independent factor(s). Both items reference the same domains: esewa-cashback-offer.xyz [weight 0.42]. Both items reference the same money: npr 5000 [weight 0.05]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]. Threat intelligence flags the same malicious indicator(s) in both items: esewa-cashback-offer.xyz [weight 0.80]."
       },
       {
         "evidence_a": "EVID_00009",
         "evidence_b": "EVID_00011",
-        "correlation_weight": 1.7099,
-        "correlation_confidence": 0.6565,
+        "correlation_weight": 1.6196,
+        "correlation_confidence": 0.6366,
         "relationship_strength": "STRONG",
         "factors": [
           {
             "factor": "domains",
             "weight": 0.6,
             "matches": 1,
-            "contribution": 0.5099,
+            "contribution": 0.4196,
             "supporting_evidence": [
               "esewa-cashback-offer.xyz"
             ],
@@ -466,13 +466,13 @@
             "value_details": [
               {
                 "value": "esewa-cashback-offer.xyz",
-                "specificity": 0.8499,
-                "document_frequency": 4,
-                "corpus_size": 10,
-                "reason": "'esewa-cashback-offer.xyz' is moderately common (seen in 4 of 10 evidence items in the corpus); specificity 0.85"
+                "specificity": 0.6994,
+                "document_frequency": 7,
+                "corpus_size": 19,
+                "reason": "'esewa-cashback-offer.xyz' is moderately common (seen in 7 of 19 evidence items in the corpus); specificity 0.70"
               }
             ],
-            "effective_matches": 0.8499
+            "effective_matches": 0.6994
           },
           {
             "factor": "timeline_proximity",
@@ -504,20 +504,20 @@
           "Acquired 0.0 hours apart (within the 48h proximity window)",
           "Threat intelligence flags the same malicious indicator(s) in both items: esewa-cashback-offer.xyz"
         ],
-        "explanation": "EVID_00009 (03_qr_code_flyer.png) and EVID_00011 (05_khalti_receipt.jpg) show a strong relationship (confidence 0.66) based on 3 independent factor(s). Both items reference the same domains: esewa-cashback-offer.xyz [weight 0.51]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]. Threat intelligence flags the same malicious indicator(s) in both items: esewa-cashback-offer.xyz [weight 0.80]."
+        "explanation": "EVID_00009 (03_qr_code_flyer.png) and EVID_00011 (05_khalti_receipt.jpg) show a strong relationship (confidence 0.64) based on 3 independent factor(s). Both items reference the same domains: esewa-cashback-offer.xyz [weight 0.42]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]. Threat intelligence flags the same malicious indicator(s) in both items: esewa-cashback-offer.xyz [weight 0.80]."
       },
       {
         "evidence_a": "EVID_00010",
         "evidence_b": "EVID_00014",
-        "correlation_weight": 1.3156,
-        "correlation_confidence": 0.5606,
-        "relationship_strength": "STRONG",
+        "correlation_weight": 1.1986,
+        "correlation_confidence": 0.5272,
+        "relationship_strength": "MEDIUM",
         "factors": [
           {
             "factor": "transaction_ids",
             "weight": 0.95,
             "matches": 1,
-            "contribution": 0.8673,
+            "contribution": 0.7413,
             "supporting_evidence": [
               "0119.0625.987456"
             ],
@@ -525,19 +525,19 @@
             "value_details": [
               {
                 "value": "0119.0625.987456",
-                "specificity": 0.9129,
-                "document_frequency": 3,
-                "corpus_size": 10,
-                "reason": "'0119.0625.987456' is moderately common (seen in 3 of 10 evidence items in the corpus); specificity 0.91"
+                "specificity": 0.7803,
+                "document_frequency": 5,
+                "corpus_size": 19,
+                "reason": "'0119.0625.987456' is moderately common (seen in 5 of 19 evidence items in the corpus); specificity 0.78"
               }
             ],
-            "effective_matches": 0.9129
+            "effective_matches": 0.7803
           },
           {
             "factor": "money",
             "weight": 0.2,
             "matches": 1,
-            "contribution": 0.0483,
+            "contribution": 0.0573,
             "supporting_evidence": [
               "npr 200"
             ],
@@ -545,13 +545,13 @@
             "value_details": [
               {
                 "value": "npr 200",
-                "specificity": 0.2416,
-                "document_frequency": 4,
-                "corpus_size": 10,
-                "reason": "'npr 200' is moderately common (seen in 4 of 10 evidence items in the corpus); specificity 0.24"
+                "specificity": 0.2865,
+                "document_frequency": 7,
+                "corpus_size": 19,
+                "reason": "'npr 200' is moderately common (seen in 7 of 19 evidence items in the corpus); specificity 0.29"
               }
             ],
-            "effective_matches": 0.2416
+            "effective_matches": 0.2865
           },
           {
             "factor": "timeline_proximity",
@@ -571,20 +571,20 @@
           "Both items reference the same money: npr 200",
           "Acquired 0.1 hours apart (within the 48h proximity window)"
         ],
-        "explanation": "EVID_00010 (04_esewa_payment_screenshot.jpg) and EVID_00014 (08_complaint_letter.pdf) show a strong relationship (confidence 0.56) based on 3 independent factor(s). Both items reference the same transaction ids: 0119.0625.987456 [weight 0.87]. Both items reference the same money: npr 200 [weight 0.05]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
+        "explanation": "EVID_00010 (04_esewa_payment_screenshot.jpg) and EVID_00014 (08_complaint_letter.pdf) show a medium relationship (confidence 0.53) based on 3 independent factor(s). Both items reference the same transaction ids: 0119.0625.987456 [weight 0.74]. Both items reference the same money: npr 200 [weight 0.06]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
       },
       {
         "evidence_a": "EVID_00009",
         "evidence_b": "EVID_00013",
-        "correlation_weight": 1.2996,
-        "correlation_confidence": 0.5561,
-        "relationship_strength": "STRONG",
+        "correlation_weight": 1.1131,
+        "correlation_confidence": 0.5013,
+        "relationship_strength": "MEDIUM",
         "factors": [
           {
             "factor": "transaction_ids",
             "weight": 0.95,
             "matches": 1,
-            "contribution": 0.8996,
+            "contribution": 0.7131,
             "supporting_evidence": [
               "dsn2026"
             ],
@@ -592,13 +592,13 @@
             "value_details": [
               {
                 "value": "dsn2026",
-                "specificity": 0.9469,
-                "document_frequency": 2,
-                "corpus_size": 10,
-                "reason": "'dsn2026' is distinctive (seen in 2 of 10 evidence items in the corpus); specificity 0.95"
+                "specificity": 0.7506,
+                "document_frequency": 5,
+                "corpus_size": 19,
+                "reason": "'dsn2026' is moderately common (seen in 5 of 19 evidence items in the corpus); specificity 0.75"
               }
             ],
-            "effective_matches": 0.9469
+            "effective_matches": 0.7506
           },
           {
             "factor": "timeline_proximity",
@@ -617,20 +617,20 @@
           "Both items reference the same transaction ids: dsn2026",
           "Acquired 0.0 hours apart (within the 48h proximity window)"
         ],
-        "explanation": "EVID_00009 (03_qr_code_flyer.png) and EVID_00013 (07_bank_transfer_slip.pdf) show a strong relationship (confidence 0.56) based on 2 independent factor(s). Both items reference the same transaction ids: dsn2026 [weight 0.90]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+        "explanation": "EVID_00009 (03_qr_code_flyer.png) and EVID_00013 (07_bank_transfer_slip.pdf) show a medium relationship (confidence 0.50) based on 2 independent factor(s). Both items reference the same transaction ids: dsn2026 [weight 0.71]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
       },
       {
         "evidence_a": "EVID_00011",
         "evidence_b": "EVID_00012",
-        "correlation_weight": 1.1649,
-        "correlation_confidence": 0.5172,
+        "correlation_weight": 1.0295,
+        "correlation_confidence": 0.4745,
         "relationship_strength": "MEDIUM",
         "factors": [
           {
             "factor": "phones",
             "weight": 0.9,
             "matches": 1,
-            "contribution": 0.7649,
+            "contribution": 0.6295,
             "supporting_evidence": [
               "+9779801122334"
             ],
@@ -638,13 +638,13 @@
             "value_details": [
               {
                 "value": "+9779801122334",
-                "specificity": 0.8499,
-                "document_frequency": 4,
-                "corpus_size": 10,
-                "reason": "'+9779801122334' is moderately common (seen in 4 of 10 evidence items in the corpus); specificity 0.85"
+                "specificity": 0.6994,
+                "document_frequency": 7,
+                "corpus_size": 19,
+                "reason": "'+9779801122334' is moderately common (seen in 7 of 19 evidence items in the corpus); specificity 0.70"
               }
             ],
-            "effective_matches": 0.8499
+            "effective_matches": 0.6994
           },
           {
             "factor": "timeline_proximity",
@@ -663,20 +663,20 @@
           "Both items reference the same phones: +9779801122334",
           "Acquired 0.0 hours apart (within the 48h proximity window)"
         ],
-        "explanation": "EVID_00011 (05_khalti_receipt.jpg) and EVID_00012 (06_phishing_email_screenshot.jpg) show a medium relationship (confidence 0.52) based on 2 independent factor(s). Both items reference the same phones: +9779801122334 [weight 0.76]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+        "explanation": "EVID_00011 (05_khalti_receipt.jpg) and EVID_00012 (06_phishing_email_screenshot.jpg) show a medium relationship (confidence 0.47) based on 2 independent factor(s). Both items reference the same phones: +9779801122334 [weight 0.63]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
       },
       {
         "evidence_a": "EVID_00011",
         "evidence_b": "EVID_00013",
-        "correlation_weight": 1.1649,
-        "correlation_confidence": 0.5172,
+        "correlation_weight": 1.0295,
+        "correlation_confidence": 0.4745,
         "relationship_strength": "MEDIUM",
         "factors": [
           {
             "factor": "phones",
             "weight": 0.9,
             "matches": 1,
-            "contribution": 0.7649,
+            "contribution": 0.6295,
             "supporting_evidence": [
               "+9779847011223"
             ],
@@ -684,13 +684,13 @@
             "value_details": [
               {
                 "value": "+9779847011223",
-                "specificity": 0.8499,
-                "document_frequency": 4,
-                "corpus_size": 10,
-                "reason": "'+9779847011223' is moderately common (seen in 4 of 10 evidence items in the corpus); specificity 0.85"
+                "specificity": 0.6994,
+                "document_frequency": 7,
+                "corpus_size": 19,
+                "reason": "'+9779847011223' is moderately common (seen in 7 of 19 evidence items in the corpus); specificity 0.70"
               }
             ],
-            "effective_matches": 0.8499
+            "effective_matches": 0.6994
           },
           {
             "factor": "timeline_proximity",
@@ -709,20 +709,20 @@
           "Both items reference the same phones: +9779847011223",
           "Acquired 0.0 hours apart (within the 48h proximity window)"
         ],
-        "explanation": "EVID_00011 (05_khalti_receipt.jpg) and EVID_00013 (07_bank_transfer_slip.pdf) show a medium relationship (confidence 0.52) based on 2 independent factor(s). Both items reference the same phones: +9779847011223 [weight 0.76]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+        "explanation": "EVID_00011 (05_khalti_receipt.jpg) and EVID_00013 (07_bank_transfer_slip.pdf) show a medium relationship (confidence 0.47) based on 2 independent factor(s). Both items reference the same phones: +9779847011223 [weight 0.63]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
       },
       {
         "evidence_a": "EVID_00012",
         "evidence_b": "EVID_00014",
-        "correlation_weight": 1.1649,
-        "correlation_confidence": 0.5172,
+        "correlation_weight": 1.0295,
+        "correlation_confidence": 0.4745,
         "relationship_strength": "MEDIUM",
         "factors": [
           {
             "factor": "phones",
             "weight": 0.9,
             "matches": 1,
-            "contribution": 0.7649,
+            "contribution": 0.6295,
             "supporting_evidence": [
               "+9779801122334"
             ],
@@ -730,13 +730,13 @@
             "value_details": [
               {
                 "value": "+9779801122334",
-                "specificity": 0.8499,
-                "document_frequency": 4,
-                "corpus_size": 10,
-                "reason": "'+9779801122334' is moderately common (seen in 4 of 10 evidence items in the corpus); specificity 0.85"
+                "specificity": 0.6994,
+                "document_frequency": 7,
+                "corpus_size": 19,
+                "reason": "'+9779801122334' is moderately common (seen in 7 of 19 evidence items in the corpus); specificity 0.70"
               }
             ],
-            "effective_matches": 0.8499
+            "effective_matches": 0.6994
           },
           {
             "factor": "timeline_proximity",
@@ -755,20 +755,20 @@
           "Both items reference the same phones: +9779801122334",
           "Acquired 0.1 hours apart (within the 48h proximity window)"
         ],
-        "explanation": "EVID_00012 (06_phishing_email_screenshot.jpg) and EVID_00014 (08_complaint_letter.pdf) show a medium relationship (confidence 0.52) based on 2 independent factor(s). Both items reference the same phones: +9779801122334 [weight 0.76]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
+        "explanation": "EVID_00012 (06_phishing_email_screenshot.jpg) and EVID_00014 (08_complaint_letter.pdf) show a medium relationship (confidence 0.47) based on 2 independent factor(s). Both items reference the same phones: +9779801122334 [weight 0.63]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
       },
       {
         "evidence_a": "EVID_00008",
         "evidence_b": "EVID_00010",
-        "correlation_weight": 0.4483,
-        "correlation_confidence": 0.2444,
+        "correlation_weight": 0.4573,
+        "correlation_confidence": 0.2486,
         "relationship_strength": "WEAK",
         "factors": [
           {
             "factor": "money",
             "weight": 0.2,
             "matches": 1,
-            "contribution": 0.0483,
+            "contribution": 0.0573,
             "supporting_evidence": [
               "npr 200"
             ],
@@ -776,13 +776,13 @@
             "value_details": [
               {
                 "value": "npr 200",
-                "specificity": 0.2416,
-                "document_frequency": 4,
-                "corpus_size": 10,
-                "reason": "'npr 200' is moderately common (seen in 4 of 10 evidence items in the corpus); specificity 0.24"
+                "specificity": 0.2865,
+                "document_frequency": 7,
+                "corpus_size": 19,
+                "reason": "'npr 200' is moderately common (seen in 7 of 19 evidence items in the corpus); specificity 0.29"
               }
             ],
-            "effective_matches": 0.2416
+            "effective_matches": 0.2865
           },
           {
             "factor": "timeline_proximity",
@@ -801,7 +801,7 @@
           "Both items reference the same money: npr 200",
           "Acquired 0.0 hours apart (within the 48h proximity window)"
         ],
-        "explanation": "EVID_00008 (02_messenger_chat.jpg) and EVID_00010 (04_esewa_payment_screenshot.jpg) show a weak relationship (confidence 0.24) based on 2 independent factor(s). Both items reference the same money: npr 200 [weight 0.05]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+        "explanation": "EVID_00008 (02_messenger_chat.jpg) and EVID_00010 (04_esewa_payment_screenshot.jpg) show a weak relationship (confidence 0.25) based on 2 independent factor(s). Both items reference the same money: npr 200 [weight 0.06]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
       },
       {
         "evidence_a": "EVID_00007",
@@ -1230,12 +1230,12 @@
       }
     ],
     "strength_distribution": {
-      "VERY_STRONG": 2,
-      "STRONG": 5,
-      "MEDIUM": 3,
+      "VERY_STRONG": 1,
+      "STRONG": 4,
+      "MEDIUM": 5,
       "WEAK": 18
     },
     "strongest_pair": "EVID_00011|EVID_00014",
-    "analysis_time_ms": 6.2
+    "analysis_time_ms": 4.0
   }
 }

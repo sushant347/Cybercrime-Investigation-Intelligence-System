@@ -1,9 +1,9 @@
 {
   "report_type": "timeline_analysis",
-  "report_version": 15,
+  "report_version": 16,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-08-02T14:26:08.530Z",
+  "generated_at": "2026-08-04T05:01:18.212Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
     "events": [
@@ -25,8 +25,8 @@
             "linked_to": "EVID_00002",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.2431,
-            "confidence": 0.2431
+            "weight": 0.2545,
+            "confidence": 0.2545
           },
           {
             "linked_to": "EVID_00003",
@@ -69,8 +69,8 @@
             "linked_to": "EVID_00001",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.2431,
-            "confidence": 0.2431
+            "weight": 0.2545,
+            "confidence": 0.2545
           },
           {
             "linked_to": "EVID_00003",
@@ -283,8 +283,8 @@
             "linked_to": "EVID_00002",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.2431,
-            "confidence": 0.2431
+            "weight": 0.2545,
+            "confidence": 0.2545
           },
           {
             "linked_to": "EVID_00003",
@@ -325,8 +325,8 @@
             "linked_to": "EVID_00001",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.2431,
-            "confidence": 0.2431
+            "weight": 0.2545,
+            "confidence": 0.2545
           },
           {
             "linked_to": "EVID_00003",
@@ -369,8 +369,8 @@
             "linked_to": "EVID_00001",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.2431,
-            "confidence": 0.2431
+            "weight": 0.2545,
+            "confidence": 0.2545
           },
           {
             "linked_to": "EVID_00003",
@@ -547,8 +547,8 @@
             "linked_to": "EVID_00002",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.2431,
-            "confidence": 0.2431
+            "weight": 0.2545,
+            "confidence": 0.2545
           },
           {
             "linked_to": "EVID_00003",
@@ -591,8 +591,8 @@
             "linked_to": "EVID_00001",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.2431,
-            "confidence": 0.2431
+            "weight": 0.2545,
+            "confidence": 0.2545
           },
           {
             "linked_to": "EVID_00003",
@@ -631,6 +631,6 @@
       "critical_event_count": 2.0,
       "timeline_span_hours": 4851.7
     },
-    "analysis_time_ms": 10.3
+    "analysis_time_ms": 3.9
   }
 }

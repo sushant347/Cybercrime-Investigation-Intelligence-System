@@ -1,6 +1,6 @@
 # Forensic Investigation Report - CASE_2CF24DBA5F
 
-Generated: 2026-08-02T14:26:08.735Z  
+Generated: 2026-08-04T05:01:18.402Z  
 Produced by: Cybercrime Investigation Intelligence Engine (CIIS), Phase 2  
 Basis: every statement below references stored forensic findings; no content is generated outside computed results.
 
@@ -70,49 +70,6 @@ Basis: every statement below references stored forensic findings; no content is 
 - **evidence confidence score**: 77.5
 - **entity count**: 0
 
-## Correlation Analysis
-
-- **pair count**: 6
-- **related pair count**: 6
-- **strength distribution**:
-  - **WEAK**: 6
-- **top relationships**:
-  - **pair**: EVID_00001 <-> EVID_00002
-  - **strength**: WEAK
-  - **confidence**: 0.2431
-  - **explanation**: EVID_00001 (yeti.jpg) and EVID_00002 (whatsapp_chat_export.txt) show a weak relationship (confidence 0.24) based on 2 independent factor(s). Both items reference the same money: npr 2000 [weight 0.05]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40].
-  - **pair**: EVID_00001 <-> EVID_00003
-  - **strength**: WEAK
-  - **confidence**: 0.2212
-  - **explanation**: EVID_00001 (yeti.jpg) and EVID_00003 (romanchat.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40].
-  - **pair**: EVID_00001 <-> EVID_00004
-  - **strength**: WEAK
-  - **confidence**: 0.2212
-  - **explanation**: EVID_00001 (yeti.jpg) and EVID_00004 (phishing_email_screenshot.png) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40].
-  - **pair**: EVID_00002 <-> EVID_00003
-  - **strength**: WEAK
-  - **confidence**: 0.2212
-  - **explanation**: EVID_00002 (whatsapp_chat_export.txt) and EVID_00003 (romanchat.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40].
-  - **pair**: EVID_00002 <-> EVID_00004
-  - **strength**: WEAK
-  - **confidence**: 0.2212
-  - **explanation**: EVID_00002 (whatsapp_chat_export.txt) and EVID_00004 (phishing_email_screenshot.png) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40].
-
-## Cross-Case Correlation
-
-No cross-case correlations were found for this case.
-
-## Campaign Analysis
-
-- **campaign count**: 0
-- **unclustered evidence**:
-  - EVID_00001
-  - EVID_00002
-  - EVID_00003
-  - EVID_00004
-- **campaigns**:
-  - none
-
 ## Timeline Analysis
 
 - **summary**: 4 event(s) spanning 4851.7 hour(s); 0 timestamp(s) unresolved. Observed scam progression: financial_transaction -> post_attack -> initial_contact -> social_engineering -> credential_theft.
@@ -145,6 +102,49 @@ No cross-case correlations were found for this case.
   - **evidence id**: EVID_00002
   - **reasons**:
     - contains money entity/entities: NPR 2000, NPR 500000
+
+## Correlation Analysis
+
+- **pair count**: 6
+- **related pair count**: 6
+- **strength distribution**:
+  - **WEAK**: 6
+- **top relationships**:
+  - **pair**: EVID_00001 <-> EVID_00002
+  - **strength**: WEAK
+  - **confidence**: 0.2545
+  - **explanation**: EVID_00001 (yeti.jpg) and EVID_00002 (whatsapp_chat_export.txt) show a weak relationship (confidence 0.25) based on 2 independent factor(s). Both items reference the same money: npr 2000 [weight 0.07]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40].
+  - **pair**: EVID_00001 <-> EVID_00003
+  - **strength**: WEAK
+  - **confidence**: 0.2212
+  - **explanation**: EVID_00001 (yeti.jpg) and EVID_00003 (romanchat.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40].
+  - **pair**: EVID_00001 <-> EVID_00004
+  - **strength**: WEAK
+  - **confidence**: 0.2212
+  - **explanation**: EVID_00001 (yeti.jpg) and EVID_00004 (phishing_email_screenshot.png) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40].
+  - **pair**: EVID_00002 <-> EVID_00003
+  - **strength**: WEAK
+  - **confidence**: 0.2212
+  - **explanation**: EVID_00002 (whatsapp_chat_export.txt) and EVID_00003 (romanchat.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40].
+  - **pair**: EVID_00002 <-> EVID_00004
+  - **strength**: WEAK
+  - **confidence**: 0.2212
+  - **explanation**: EVID_00002 (whatsapp_chat_export.txt) and EVID_00004 (phishing_email_screenshot.png) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40].
+
+## Cross-Case Correlation
+
+No cross-case correlations were found for this case.
+
+## Campaign Analysis
+
+- **campaign count**: 0
+- **unclustered evidence**:
+  - EVID_00001
+  - EVID_00002
+  - EVID_00003
+  - EVID_00004
+- **campaigns**:
+  - none
 
 ## Suspect Assessment
 
@@ -223,8 +223,8 @@ The active threat-intelligence provider returned no classification for any URL/d
 - **correlation statistics**:
   - **pair count**: 6.0
   - **related pair count**: 6.0
-  - **mean confidence**: 0.2248
-  - **max confidence**: 0.2431
+  - **mean confidence**: 0.2268
+  - **max confidence**: 0.2545
 
 ## Confidence Analysis
 
@@ -254,24 +254,24 @@ The active threat-intelligence provider returned no classification for any URL/d
 ## Recommendations
 
 - Go through the 2 key moment(s) - when money moved and codes were shared - with the victim, and record what they lost.
-- Low urgency - handle after the others (rated 29 out of 100).
+- Low urgency - handle after the others (rated 30 out of 100).
 
 ## Report Provenance & Integrity
 
-- **report id**: RPT-2CF24DBA5F-EE5F9A2D
-- **generated at**: 2026-08-02T14:26:08.577Z
+- **report id**: RPT-2CF24DBA5F-66B5A567
+- **generated at**: 2026-08-04T05:01:18.254Z
 - **generator**: CIIS Phase-2 reporting module (template-over-data; no free-text generation)
 - **evidence set digest**: 845d2580a93c7505d88a3b735dd3a956db233d26f779d05f4a85f60abfe82c3f
 - **evidence set digest note**: SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.
 - **source artifact hashes**:
-  - **correlation analysis.json**: 9d3d4c721739bf09a59482ed218dddb9479cae1b00b3f1a9841e6dc5efb0a5b7
+  - **correlation analysis.json**: cc5e1d2eb49d80b1d5a70b56bc83728abd9d0a57b87529a84cf72b4f5faca3ec
   - **cross case correlation.json**: 6c4b7e022465546d0555c8cb462748c5b6c81a0b9a0b5bdb505f7587bf91bc63
-  - **campaign analysis.json**: bafd96b8a7a84730a6548bdc2d9c44e959b3f0940035566e2ce11fcd20eb2009
-  - **suspect assessment.json**: 546313af8c6a556e6ed9edd3cbf8db06474af9d683cc1ed6eb9bc6d26a4508a8
-  - **timeline analysis.json**: 879178d918c40f554dc69b6d0f129cad6107c1275f4f6961bd57c9668eaf3108
-  - **analytics.json**: 34d087d42294b4d4b8ae464fb80ae7c56484720e479b865312a0089c3065a5ca
-  - **case priority.json**: f30cd476a0d3d058a919ba12443715445cad4e6a5587b85c2bf371b4bff961d8
-  - **graph.json**: 6478030850e022f70aabbe86ad1dc987508916865c7aab03093a42c99b0c0a12
+  - **campaign analysis.json**: ad5036a5f3c88d54f08b0e6086f76cc11ef4e483f065c856053308faec8fe407
+  - **suspect assessment.json**: 0256411e08eb8ffd35297b82ca1e42bf5c6a97af101aea3f80361834c3877318
+  - **timeline analysis.json**: 179cd809b68c744b7fcab263660408fed03fafa3b70afe0548858d1a4d1dfd1b
+  - **analytics.json**: 4a56a40bb9e06d84335d6458852cba7ef619761a2b276c96c81c771a6b6a4a57
+  - **case priority.json**: 3d2f3da5a60872c40e1f5e609be386f579802dc3f4c54ae8d94251383458273f
+  - **graph.json**: b3e048ad459b27e50663f1e399d6f2ebbbc1a0152ac8b8326dd7b99d942a63d6
 
 ## Appendix
 

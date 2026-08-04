@@ -1,9 +1,9 @@
 {
   "report_type": "analytics",
-  "report_version": 2,
+  "report_version": 4,
   "schema_version": "2.0",
   "case_id": "CASE_185915593C",
-  "generated_at": "2026-08-02T14:26:09.926Z",
+  "generated_at": "2026-08-04T05:01:19.348Z",
   "report": {
     "case_id": "CASE_185915593C",
     "evidence_count": 8,
@@ -409,10 +409,10 @@
     },
     "campaign_statistics": {
       "campaign_count": 1.0,
-      "largest_campaign_size": 6.0,
-      "clustered_evidence": 6.0,
-      "unclustered_evidence": 2.0,
-      "mean_campaign_confidence": 0.705
+      "largest_campaign_size": 5.0,
+      "clustered_evidence": 5.0,
+      "unclustered_evidence": 3.0,
+      "mean_campaign_confidence": 0.7353
     },
     "timeline_statistics": {
       "event_count": 8.0,
@@ -434,8 +434,8 @@
     "correlation_statistics": {
       "pair_count": 28.0,
       "related_pair_count": 28.0,
-      "mean_confidence": 0.3747,
-      "max_confidence": 0.9582
+      "mean_confidence": 0.3621,
+      "max_confidence": 0.9389
     },
     "analysis_time_ms": 0.6
   }

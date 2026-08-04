@@ -1,9 +1,9 @@
 {
   "report_type": "case_statistics",
-  "report_version": 4,
+  "report_version": 5,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-08-02T14:26:08.566Z",
+  "generated_at": "2026-08-04T05:01:18.243Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
     "evidence_count": 4,
@@ -43,8 +43,8 @@
     "correlation_statistics": {
       "pair_count": 6.0,
       "related_pair_count": 6.0,
-      "mean_confidence": 0.2248,
-      "max_confidence": 0.2431
+      "mean_confidence": 0.2268,
+      "max_confidence": 0.2545
     },
     "metadata_statistics": {
       "evidence_with_metadata_report": 4.0,

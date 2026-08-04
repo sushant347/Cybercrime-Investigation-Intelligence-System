@@ -1,16 +1,16 @@
 {
   "report_type": "graph_statistics",
-  "report_version": 10,
+  "report_version": 12,
   "schema_version": "2.0",
   "case_id": "CASE_185915593C",
-  "generated_at": "2026-08-02T14:26:09.905Z",
+  "generated_at": "2026-08-04T05:01:19.306Z",
   "report": {
     "case_id": "CASE_185915593C",
-    "node_count": 65,
-    "edge_count": 151,
+    "node_count": 73,
+    "edge_count": 206,
     "nodes_by_type": {
-      "case": 2,
-      "evidence": 9,
+      "case": 3,
+      "evidence": 16,
       "brand": 9,
       "domain": 5,
       "email": 3,
@@ -25,27 +25,31 @@
       "timeline_event": 8
     },
     "edges_by_type": {
-      "contains": 9,
+      "contains": 16,
       "shared_entity": 76,
       "threat_relationship": 8,
       "timeline_event": 8,
-      "cross_case_relationship": 1,
-      "cross_case_entity_match": 21,
+      "cross_case_relationship": 2,
+      "cross_case_entity_match": 70,
       "temporal_relationship": 21,
-      "behavioral_relationship": 7
+      "behavioral_relationship": 5
     },
-    "density": 0.0726,
+    "density": 0.0784,
     "connected_components": 1,
-    "largest_component_size": 65,
-    "average_degree": 4.646,
+    "largest_component_size": 73,
+    "average_degree": 5.644,
     "top_hubs": [
       {
         "node": "evidence:EVID_00014",
-        "degree": "43"
+        "degree": "42"
       },
       {
         "node": "evidence:EVID_00011",
         "degree": "23"
+      },
+      {
+        "node": "evidence:EVID_00022",
+        "degree": "22"
       },
       {
         "node": "evidence:EVID_00005",
@@ -57,15 +61,15 @@
       },
       {
         "node": "evidence:EVID_00009",
-        "degree": "20"
+        "degree": "19"
       },
       {
         "node": "evidence:EVID_00010",
-        "degree": "16"
+        "degree": "15"
       },
       {
         "node": "evidence:EVID_00013",
-        "degree": "14"
+        "degree": "13"
       },
       {
         "node": "evidence:EVID_00012",
@@ -73,11 +77,7 @@
       },
       {
         "node": "case:CASE_185915593C",
-        "degree": "9"
-      },
-      {
-        "node": "evidence:EVID_00007",
-        "degree": "9"
+        "degree": "10"
       }
     ]
   }
