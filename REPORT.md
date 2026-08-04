@@ -173,39 +173,256 @@ Also relevant:
 - `max_training_rows = 0` — no cap by default.
 - `tranco_sample_size = 300,000` — legitimate-URL sample size.
 
-### 4.2 Models and hyperparameters
+### 4.2 The training corpus
 
-`src/models/baseline_models.py`. All use `random_state=42`.
+Reference run `20260712T090000Z`
+(`results/TRAINING_IMPROVEMENTS_REPORT.md`):
 
-| Model | Key hyperparameters |
+| | |
 |---|---|
-| Logistic Regression | `C`, `max_iter`, `solver` (line 356-367) |
-| Random Forest | `n_estimators=200`, `max_depth=30`, `max_features`, `n_jobs=-1` |
-| Decision Tree | `max_depth=20`, `min_samples_split`, `min_samples_leaf` |
-| Extra Trees | `n_estimators=200`, `max_depth=30`, `min_samples_split=5`, `min_samples_leaf=2`, `max_features="sqrt"` |
-| XGBoost | lazily imported (`_import_xgboost`, line 41) |
+| Total URLs | **585,040** (305,573 phishing / 279,467 legitimate) |
+| Train | 409,528 |
+| Validation | 87,756 |
+| Test | 87,756 |
+| Split | stratified 70/15/15, seed 42 |
+| Sources | the four usable datasets in `sample/` |
 
-### 4.3 Calibration — why raw probabilities are not used
+Class balance is 52/48, so the `balance_max_ratio = 1.5` downsampling guard
+never fires on this corpus. Feature extraction is chunk-streamed
+(`EXTRACTION_CHUNK_SIZE = 50000`) into a preallocated float32 matrix, so memory
+is bounded regardless of corpus size.
 
-`src/scoring/calibrator.py`. A model that outputs 0.9 does not necessarily mean
-90% of such URLs are phishing; tree ensembles in particular are systematically
-over-confident. `ConfidenceCalibrator` corrects this post-hoc.
+### 4.3 How the model is trained
 
-Default method: **Platt scaling** — `f(p) = sigmoid(A·p + B)`, fitted by
-logistic regression on held-out predictions. Alternatives implemented:
-`isotonic`, `temperature`, `identity`.
+Eight candidates are trained and compared on identical splits, then one is
+promoted. The pipeline is `FullRetrainingPipeline.run()`
+(`src/training/full_retraining.py`), stages:
 
-**Fitted on the validation split**, falling back to train if validation is
-unavailable (`baseline_models.py:119-131`). Fitting a calibrator on the
-training set the model already saw is the classic mistake — the model is
-over-confident *on that data by construction*, so the calibrator learns nothing.
-If calibration fails the code degrades to `identity` rather than shipping a
-wrongly-scaled probability.
+```
+discover datasets → clean → merge → stratified 70/15/15 split
+  → extract features (chunk-streamed)
+  → tune          (Optuna TPE, resumable SQLite studies)
+  → train         (all 8 candidates, full 409,528-row training split)
+  → cross-validate(stratified 5-fold, mean ± std)
+  → evaluate      (held-out test, touched once)
+  → auto-recalibrate
+  → error analysis + reports
+```
+
+Every stage constant:
+
+| Constant | Value | Source |
+|---|---|---|
+| `CV_FOLDS` | 5 | `settings.py:155` |
+| `CV_SAMPLE_SIZE` | 0 = full split (run used 100,000; SVM 60,000) | `settings.py:159` |
+| `OPTUNA_TRIALS` | 25 | `settings.py:163` |
+| `TUNING_SAMPLE_SIZE` | 0 = full (run used 60,000 stratified) | `settings.py:167` |
+| `EARLY_STOPPING_ROUNDS` | 30 | `settings.py:171` |
+| `EXTRACTION_CHUNK_SIZE` | 50,000 | `settings.py:175` |
+| ECE improvement threshold for auto-recalibration | 0.002 | `calibration_analysis.py:110` |
+| Seed | 42, end to end | `settings.py:94` |
+
+**Selection rule, stated in the pipeline:** *F1 → ROC-AUC → Recall → Precision;
+never accuracy alone.* Accuracy is excluded deliberately — on a 52/48 corpus it
+is a weak discriminator, and on any imbalanced slice it rewards predicting the
+majority.
+
+### 4.4 Regularisation — the alpha values
+
+XGBoost carries two regularisation terms. Its objective is
+
+```
+L = Σ l(ŷᵢ, yᵢ)  +  Σ_k [ γ·T_k  +  ½·λ·‖w_k‖²  +  α·‖w_k‖₁ ]
+                        ↑          ↑                ↑
+                    leaf count   L2 (reg_lambda)  L1 (reg_alpha)
+```
+
+- **α (`reg_alpha`, L1)** drives individual leaf weights to exactly zero —
+  sparsity, so uninformative features drop out of the model entirely.
+- **λ (`reg_lambda`, L2)** shrinks all leaf weights smoothly toward zero —
+  variance reduction without elimination.
+- **γ (`gamma`)** is the minimum loss reduction required to split at all —
+  pre-pruning.
+
+Three different (α, λ) pairs exist in the codebase, for three different
+purposes. This is worth being precise about:
+
+| Context | α (L1) | λ (L2) | Other | Source |
+|---|---|---|---|---|
+| Class default | 0.1 | 1.0 | depth 8, lr 0.1, 300 est, γ 0.1, min_child_weight 3 | `baseline_models.py:547` |
+| Optuna best trial | **0.0160** | 0.4504 | depth 11, lr 0.0862, 186 est (early-stopped), subsample 0.693, colsample 0.918, γ 0.0545, min_child_weight 5 | `results/best_hyperparameters.json` |
+| Production v3 checkpoint | **0.5** | 2.0 | depth 7, lr 0.07, 500 est, subsample 0.9, colsample 0.7, min_child_weight 5, γ 0.0 | `results/final_model_v3_report.json` |
+
+**Why production regularises ten times harder than Optuna suggested.** The
+untuned baseline showed XGBoost with train accuracy 0.9832 against validation
+0.7850 — a **0.198 generalisation gap**, the worst of any candidate except the
+decision tree. Optuna optimises the tuning objective, which rewards fitting the
+tuning sample; it pushed α down to 0.016 and depth up to 11. The production
+checkpoint goes the other way — α 0.5, λ 2.0, depth 7 — trading a little
+tuning-set score for a model that generalises. That is the correct trade for a
+system whose output is quoted in a report.
+
+LightGBM's tuned α is 1.037 — an order of magnitude above XGBoost's — because
+its leaf-wise growth overfits more aggressively and needs heavier L1 to
+compensate.
+
+### 4.5 Why XGBoost, and why not the others
+
+The honest answer is that **XGBoost did not dominate**. It was chosen on a
+specific, defensible margin. Here is the whole evidence chain.
+
+**Stage 1 — untuned baseline** (`results/baseline_comparison_report.json`,
+small early corpus). XGBoost *lost*:
+
+| Model | Train acc | Val acc | Val F1 | Val AUC | Gap |
+|---|---|---|---|---|---|
+| extra_trees | 0.9262 | **0.8200** | **0.8266** | **0.9065** | 0.106 |
+| random_forest | 0.9478 | 0.8130 | 0.8168 | 0.8996 | 0.135 |
+| xgboost | 0.9832 | 0.7850 | 0.7869 | 0.8844 | **0.198** |
+| lightgbm | 0.9794 | 0.7850 | 0.7844 | 0.8925 | 0.194 |
+| decision_tree | 0.9484 | 0.7490 | 0.7426 | 0.7806 | 0.199 |
+| logistic_regression | 0.7308 | 0.7420 | 0.7557 | 0.8040 | −0.011 |
+| svm | 0.7316 | 0.7380 | 0.7505 | 0.8053 | −0.006 |
+| naive_bayes | 0.6410 | 0.6200 | 0.6870 | 0.6935 | 0.021 |
+
+Untuned, XGBoost was fourth. Had selection stopped here, Extra Trees would have
+shipped. What this table really shows is that the boosters were **badly
+regularised**, not weak — a 0.198 gap is a tuning failure, not a ceiling.
+
+**Stage 2 — 5-fold stratified cross-validation** (full corpus, 100k sample).
+After tuning, the ranking inverts and the top two converge:
+
+| Model | F1 (mean ± std) | ROC-AUC | MCC |
+|---|---|---|---|
+| lightgbm | **0.9771 ± 0.0009** | 0.9967 | 0.9519 |
+| xgboost | 0.9768 ± 0.0010 | 0.9966 | 0.9514 |
+| random_forest | 0.9738 ± 0.0011 | 0.9957 | 0.9449 |
+| extra_trees | 0.9715 ± 0.0011 | 0.9949 | 0.9400 |
+| decision_tree | 0.9642 ± 0.0013 | 0.9707 | 0.9255 |
+| logistic_regression | 0.8995 ± 0.0028 | 0.9497 | 0.7865 |
+| svm | 0.8983 ± 0.0024 | 0.9489 | 0.7841 |
+| naive_bayes | 0.8199 ± 0.0050 | 0.8935 | 0.6407 |
+
+LightGBM leads by **0.0003 — a third of one standard deviation.** These two are
+statistically indistinguishable. Optuna agrees: best trial F1 0.9769 (LightGBM)
+vs 0.9759 (XGBoost). On tuning evidence alone, LightGBM is marginally ahead.
+
+**Stage 3 — held-out test, 87,756 URLs, touched once.** This is the only
+untouched measurement, and it is where XGBoost wins:
+
+| Model | F1 | ROC-AUC | MCC | FPR | **FNR** |
+|---|---|---|---|---|---|
+| **xgboost** ★ | **0.9800** | 0.9973 | 0.9579 | 0.0263 | **0.0162** |
+| lightgbm | 0.9784 | 0.9968 | 0.9546 | 0.0278 | 0.0180 |
+| random_forest | 0.9756 | 0.9959 | 0.9488 | 0.0324 | 0.0194 |
+| extra_trees | 0.9752 | 0.9958 | 0.9478 | 0.0348 | 0.0182 |
+| decision_tree | 0.9727 | 0.9824 | 0.9429 | 0.0296 | 0.0275 |
+| logistic_regression | 0.8968 | 0.9475 | 0.7809 | 0.1305 | 0.0901 |
+| svm | 0.8968 | 0.9479 | 0.7809 | 0.1308 | 0.0898 |
+| naive_bayes | 0.8027 | 0.8935 | 0.6168 | 0.1416 | 0.2427 |
+
+#### The reasons that are not F1
+
+**1. False-negative rate — the metric that actually matters here.**
+XGBoost 1.62% vs LightGBM 1.80%. A false negative is a phishing URL reported as
+safe: the investigator is told there is nothing there, and the malicious
+indicator never enters the correlation graph, the timeline or the report. A
+false positive merely costs a check. On 87,756 URLs that 0.18 pp difference is
+~158 additional missed phishing URLs. **This asymmetry, not F1, is the
+operational argument.**
+
+**2. Native SHAP without an optional dependency.**
+`src/explainability/shap_explainer.py` uses `shap.TreeExplainer` when the `shap`
+package is present, and falls back to **XGBoost's own `pred_contribs`** when it
+is not — the same exact-SHAP algorithm, computed by the booster itself. Every
+prediction ships its top-10 contributing features. LightGBM has no equivalent
+fallback wired here, so choosing it would make explanations depend on an
+optional third-party package.
+
+For a forensic system this is close to decisive. A verdict an investigator
+cannot decompose into "which features drove this, and by how much" is not
+usable as evidence. Model choice was constrained by explainability before
+accuracy entered the argument.
+
+**3. Calibration behaves better.** With isotonic regression on the production
+XGBoost, ECE and MCE both reach 0.00000 (§4.6). Platt on the same model left an
+MCE of 0.209 — a 21-point maximum calibration error in some probability bin.
+
+**4. Regularisation is more controllable.** XGBoost exposes α, λ and γ as
+independent levers, which is what allowed the production checkpoint to be pulled
+back to α 0.5 / λ 2.0 / depth 7 to close the overfitting gap. LightGBM's
+leaf-wise growth needed α 1.037 to achieve comparable control.
+
+#### Why each rejected model was rejected
+
+| Model | Reason beyond score |
+|---|---|
+| **LightGBM** | Statistically tied on CV, but lost on the held-out set and on FNR, and has no dependency-free SHAP path. Retained as a candidate — it is 0.0016 F1 away and would be the immediate fallback. |
+| **Extra Trees** | Won the *untuned* comparison, which is why it was kept in the pool. After tuning it sits 0.0048 F1 and 0.2 pp FNR behind, with no probability-calibration advantage. |
+| **Random Forest** | Consistently third among ensembles. Bagging cannot exploit residual structure the way boosting does; the gap is systematic, not noise. |
+| **Decision Tree** | 0.199 train/val gap — memorises. Its 2.75% FNR is 70% worse than XGBoost's. Interpretability, its usual selling point, is redundant when SHAP is available on the ensemble. |
+| **Logistic Regression** | **13.05% FPR.** Linear in feature space; phishing URL structure is full of interactions (short domain age *and* suspicious TLD *and* no SPF) that a linear boundary cannot represent. |
+| **SVM** | Statistically identical to logistic regression (F1 0.8968 both), at far greater training cost — needs an 80k subsample where boosters train on the full 409,528 rows. Pays a large cost for nothing. |
+| **Naive Bayes** | **24.27% FNR** — misses a quarter of all phishing. Its feature-independence assumption is flatly false here: URL length, entropy and TLD are strongly correlated. Included only as a floor. |
+
+**Summary.** XGBoost is not the best model by a comfortable margin; it is the
+best model by ~0.0016 F1 and 0.18 pp FNR over LightGBM, and it was preferred
+because it wins on the untouched test set, on the error direction that matters,
+and on explainability. That is a defensible basis for selection. Claiming it
+dominated the field would not be.
+
+### 4.6 Calibration — why raw probabilities are not used
+
+`src/scoring/calibrator.py`. A model that outputs 0.9 does not mean 90% of such
+URLs are phishing; tree ensembles are systematically over-confident because each
+leaf reports a purity, not a posterior. `ConfidenceCalibrator` corrects this
+post-hoc.
+
+Four methods implemented:
+
+| Method | Form | Fits |
+|---|---|---|
+| `platt` (class default) | `f(p) = sigmoid(A·p + B)` | 2 parameters |
+| `isotonic` | monotone step function | non-parametric |
+| `temperature` | `f(p) = sigmoid(logit(p)/T)` | 1 parameter |
+| `identity` | `f(p) = p` | none |
+
+**Fitted on the validation split**, falling back to train only if validation is
+unavailable (`baseline_models.py:119-131`). Fitting on the training set is the
+classic error: the model is over-confident *on that data by construction*, so
+the calibrator sees no miscalibration to correct. If fitting fails the code
+degrades to `identity` rather than shipping a wrongly-scaled probability.
+
+**Measured on the production model** (`TRAINING_IMPROVEMENTS_REPORT.md` §5):
+
+| Calibrator | Brier ↓ | ECE ↓ | MCE ↓ |
+|---|---|---|---|
+| uncalibrated | 0.01517 | 0.00333 | 0.06338 |
+| platt (previous) | 0.01598 | 0.00357 | **0.20943** |
+| temperature | 0.01514 | 0.00111 | 0.05186 |
+| **isotonic (applied)** | **0.01499** | **0.00000** | **0.00000** |
+
+Read this carefully: **Platt was worse than no calibration at all** on this
+model — Brier 0.01598 vs 0.01517, and an MCE of 0.209 meaning some probability
+bin was off by 21 points. Platt assumes a sigmoidal distortion; XGBoost's
+distortion here is not sigmoidal, so the two-parameter fit cannot represent it.
+Isotonic, being non-parametric, can.
+
+The pipeline switched the production calibrator from Platt to isotonic
+**automatically**, because the ECE improvement exceeded the
+`min_improvement = 0.002` threshold (`calibration_analysis.py:110`), and re-saved
+the checkpoint in the same format — the predictor needed no change.
+
+- **ECE** (Expected Calibration Error) — average gap between confidence and
+  accuracy, weighted by bin population. The typical case.
+- **MCE** (Maximum Calibration Error) — the worst bin. The one that matters for
+  a forensic report, because it bounds how wrong any single quoted confidence
+  can be.
 
 This is what makes reported confidence meaningful: among URLs scored 0.8, about
-80% should be phishing. Measured by ECE/MCE.
+80% are phishing.
 
-### 4.4 Decision fusion
+### 4.7 Decision fusion
 
 The final verdict is not the classifier alone. `config/settings.yaml`:
 
@@ -527,7 +744,35 @@ hardcoded value**.
 **Why 70/15/15 and not 80/20?**
 Because calibration needs its own data. An 80/20 split gives you nowhere
 untouched to fit the calibrator, and fitting it on training data teaches it
-nothing (§4.3). The test 15% is touched once.
+nothing (§4.6). The test 15% is touched once.
+
+**Why XGBoost when LightGBM scored higher in cross-validation?**
+It scored higher by 0.0003 F1 — a third of one standard deviation, i.e. tied.
+XGBoost wins where it counts: the held-out test set touched once (F1 0.9800 vs
+0.9784), and false-negative rate (1.62% vs 1.80%). Add the dependency-free SHAP
+path and it is the defensible choice. It is not a dominant one, and §4.5 says so.
+
+**What if the examiner rejects that margin?**
+Then LightGBM is the answer, and swapping is a one-line change
+(`PhishingPredictor(model_type="lightgbm")`) — both checkpoints are trained and
+tuned. The architecture does not depend on which won.
+
+**Why is production α = 0.5 when Optuna said 0.016?**
+Optuna optimises the tuning objective, which rewards fitting the tuning sample.
+The untuned baseline showed XGBoost with a 0.198 train/validation gap. The
+production checkpoint deliberately over-regularises (α 0.5, λ 2.0, depth 7 vs
+Optuna's 0.016 / 0.45 / depth 11), trading tuning-set score for generalisation.
+§4.4.
+
+**Why isotonic and not Platt, when Platt is the class default?**
+Because measurement overruled the default. On this model Platt was *worse than
+no calibration* (Brier 0.01598 vs 0.01517) with an MCE of 0.209. Platt assumes a
+sigmoidal distortion; this one is not sigmoidal. The pipeline detected the
+improvement and switched automatically. §4.6.
+
+**Why exclude accuracy from model selection?**
+On a 52/48 corpus accuracy barely discriminates, and on any imbalanced slice it
+rewards predicting the majority. The rule is F1 → ROC-AUC → Recall → Precision.
 
 **Is the report reproducible?**
 Deterministic given the same storage state — verified by the A/B run. Volatile
