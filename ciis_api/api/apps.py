@@ -19,6 +19,14 @@ class ApiConfig(AppConfig):
           never touches PaddleOCR; warming would load the real models anyway,
           on a thread, for tests that will not use them.
         """
+        # Registering the deployment checks must happen even under pytest, so
+        # the suite can assert on them; they do no work until `check` runs.
+        # Imported for its @register side effects, hence import_module rather
+        # than a plain import that would read as an unused name.
+        import importlib
+
+        importlib.import_module(".checks", __package__)
+
         if "pytest" in sys.modules:
             return
         if os.environ.get("RUN_MAIN") == "true" or "RUN_MAIN" not in os.environ:

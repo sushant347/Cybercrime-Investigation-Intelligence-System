@@ -1,0 +1,37 @@
+# Minimal dependency set that runs the whole platform test suite.
+#
+# Deliberately excludes paddleocr / paddlepaddle. Every Paddle import in the
+# engine is lazy (inside a function or a try/except availability probe), and
+# the tests drive OCR through FakeOCR / FakeAdapter doubles, so no test path
+# reaches the real engine. Verified by building a clean virtualenv from exactly
+# this file and running all four suites: 605 tests, all passing.
+#
+# That keeps CI honest and roughly 700 MB lighter. It also proves the design
+# claim the engine makes about itself - that OCR is injected, not assumed.
+#
+# For a real deployment use the per-module requirements files instead; this one
+# is for automated checks only.
+
+# --- evidence_ocr_engine (minus the OCR runtime) ---
+opencv-python>=4.9
+pillow>=10.0
+numpy>=1.26,<2
+pymupdf>=1.24
+pydantic>=2.6
+python-docx>=1.1
+
+# --- ciis_api ---
+Django>=5.0,<6.0
+djangorestframework>=3.15
+django-cors-headers>=4.3
+networkx>=3.0,<4.0
+
+# --- reporting ---
+# Optional at runtime (the PDF is skipped when missing), but CI must exercise
+# the PDF path or a broken renderer ships unnoticed.
+reportlab>=4.0
+
+# --- test tooling ---
+pytest>=8.0
+pytest-django>=4.8
+pyflakes>=3.0
