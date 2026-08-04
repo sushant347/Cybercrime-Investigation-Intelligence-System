@@ -170,3 +170,27 @@ def test_a_failing_rule_does_not_lose_the_whole_section(service, monkeypatch):
     result = service.assess(CASE, items)
     assert "52" not in sections(result)      # the broken rule
     assert "45" in sections(result)          # the others still ran
+
+
+# ------------------------------------------------------- bilingual rendering
+
+def test_the_act_is_named_in_nepali_for_a_nepali_filing(service):
+    """A report filed in Nepal should name the instrument as law names it."""
+    result = service.assess(CASE, [evidence("E1")])
+    assert result.statute_nepali == "विद्युतीय (इलेक्ट्रोनिक) कारोबार ऐन, २०६३"
+    assert "authoritative" in result.language_note, (
+        "the report must say which language text governs"
+    )
+
+
+def test_the_pdf_never_prints_unrenderable_devanagari():
+    """Standard-14 fonts draw Devanagari as boxes, not as nothing.
+
+    The Nepali title once printed as 'IIIIIIIII (IIIIIIIIIIII)' in the PDF,
+    which on a legal document reads as corruption. The renderer must detect
+    that and substitute text it can actually draw.
+    """
+    from ciis_timeline_report.reporting.pdf_renderer import renderable
+
+    assert renderable("Electronic Transactions Act, 2063 (2008)")
+    assert not renderable("विद्युतीय (इलेक्ट्रोनिक) कारोबार ऐन, २०६३")

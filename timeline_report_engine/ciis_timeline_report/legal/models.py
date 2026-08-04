@@ -26,7 +26,11 @@ class LegalBasisAssessment(BaseModel):
 
     case_id: str
     statute: str
-    jurisdiction: str
+    #: The Act as named in Nepali law, for filings in Nepali.
+    statute_nepali: str = ""
+    jurisdiction: str = ""
+    #: Which language text the citations were taken from, and which governs.
+    language_note: str = ""
     provisions: List[EngagedProvision] = Field(default_factory=list)
     #: Mandatory wording; see ``provisions.ASSESSMENT_CAVEAT``.
     caveat: str = ""

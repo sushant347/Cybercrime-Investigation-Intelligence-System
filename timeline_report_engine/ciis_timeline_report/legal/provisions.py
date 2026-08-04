@@ -1,6 +1,7 @@
 """Statutory provisions of the Electronic Transactions Act, 2063 (2008), Nepal.
 
-Transcribed from the Act as published (``docs/legal/`` holds the source PDFs).
+Transcribed from the Act as published (``samples/legal_corpus/`` holds the
+source PDFs and a manifest recording which of them a machine can read).
 Only the provisions this engine can reason about from stored findings are
 listed - the Act contains many more, and their absence here means "not
 automatically assessed", never "not applicable".
@@ -39,7 +40,25 @@ class StatutoryProvision:
 
 
 ACT_SHORT_NAME = "Electronic Transactions Act, 2063 (2008)"
+
+#: The Act's title in Nepali. Reproduced so a report filed with a Nepali court
+#: or police unit names the instrument as it is named in law.
+#:
+#: Taken from the filename of the Nepali gazette copy in
+#: ``samples/legal_corpus/``, which is proper Unicode - the *contents* of that
+#: PDF are typeset in a legacy Preeti/PCSNEPALI font and extract as Latin
+#: nonsense, so nothing else in this file can be sourced from the Nepali text.
+#: Section headings therefore appear in English only; see the corpus manifest.
+ACT_NEPALI_NAME = "विद्युतीय (इलेक्ट्रोनिक) कारोबार ऐन, २०६३"
+
 ACT_JURISDICTION = "Nepal"
+
+#: Where the Nepali text sits relative to the English one, in law.
+ACT_LANGUAGE_NOTE = (
+    "Cited from the English text of the Act. The Nepali text is authoritative "
+    "where the two differ; verify any provision against "
+    f"{ACT_NEPALI_NAME} before relying on it in a filing."
+)
 
 #: Provisions assessed automatically. Ordered by how directly a typical
 #: online-fraud case engages them.

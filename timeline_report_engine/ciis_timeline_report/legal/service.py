@@ -35,6 +35,8 @@ from ciis_correlation.core.text import count_of, joined
 from .models import EngagedProvision, LegalBasisAssessment
 from .provisions import (
     ACT_JURISDICTION,
+    ACT_LANGUAGE_NOTE,
+    ACT_NEPALI_NAME,
     ACT_SHORT_NAME,
     ASSESSMENT_CAVEAT,
     PROVISIONS,
@@ -107,7 +109,9 @@ class LegalBasisService:
         assessment = LegalBasisAssessment(
             case_id=case_id,
             statute=ACT_SHORT_NAME,
+            statute_nepali=ACT_NEPALI_NAME,
             jurisdiction=ACT_JURISDICTION,
+            language_note=ACT_LANGUAGE_NOTE,
             provisions=engaged,
             caveat=ASSESSMENT_CAVEAT,
             summary=self._summary(engaged),

@@ -853,7 +853,7 @@ memory by whoever writes the file — inconsistently, and invisibly. This module
 makes it explicit and reviewable.
 
 It maps stored findings onto the **Electronic Transactions Act, 2063 (2008)**
-of Nepal, transcribed from the text in [`docs/legal/`](docs/legal/).
+of Nepal, transcribed from the text in [`samples/legal_corpus/`](samples/legal_corpus/).
 
 | Section | Offence | Engaged when |
 |---|---|---|
@@ -891,12 +891,36 @@ not drift, while the trigger is this engine's editorial judgement and is open
 to challenge.
 
 **Scope limit.** Only the five provisions above are assessed. Others in the Act,
-and the subordinate instruments in `docs/legal/` (the Rules 2064, the National
-Cyber Security Policy 2023, the NRB guidelines, the IP statutes relevant to
-brand impersonation), are **not** modelled. The Nepali-language texts are
-authoritative where they differ from the English translation the engine
-transcribes, so any citation should be checked against the original before it
-is relied on in a filing.
+and the subordinate instruments in `samples/legal_corpus/` (the Rules 2064, the
+National Cyber Security Policy 2023, the NRB guidelines, the IP statutes
+relevant to brand impersonation), are **not** modelled.
+
+**On the corpus, precisely.** Nothing is trained on it. Five provisions of one
+Act were transcribed by hand — section number, heading as enacted, penalty as
+written. The defensible claim is that the module is *grounded in the primary
+legislation and every citation is checkable against the source in the
+repository*, which is stronger than "trained on" because it can be verified by
+opening `provisions.py` beside the Act.
+
+**The Nepali texts cannot be machine-read.** Both Nepali originals are typeset
+in legacy `Preeti` / `PCSNEPALI` fonts: they display as Devanagari but the bytes
+are Latin, so the Act's own title extracts as `ljB'tLo sf/f]af/ P]g`. A Preeti
+transliteration table exists and is deliberately not used — applying one to
+statutory text nobody here can proof-read would produce citations that look
+right and are wrong, which is the failure this system exists to prevent.
+
+What *is* taken from the Nepali material is the Act's title,
+`विद्युतीय (इलेक्ट्रोनिक) कारोबार ऐन, २०६३`, sourced from the gazette copy's
+filename (proper Unicode), plus a standing note in every report that the
+citations come from the English text and the Nepali governs where they differ.
+Section headings are English-only until a Nepali reader verifies a
+transliteration — that is a person problem, not a code problem.
+
+The PDF prints the Latin note rather than the Devanagari title: its standard-14
+fonts draw Devanagari as placeholder boxes, and it once emitted
+`IIIIIIIII (IIIIIIIIIIII)`, which on a legal document reads as corruption. The
+Markdown and JSON exports carry the Nepali in full. `samples/legal_corpus/manifest.json`
+records the extractability verdict for every document.
 
 ---
 

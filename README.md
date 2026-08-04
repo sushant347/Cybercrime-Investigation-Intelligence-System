@@ -55,6 +55,24 @@ Each engine imports only the one before it, so the dependency graph is acyclic.
 | `ciis_api` | REST API, permissions, background jobs | — |
 | `ciis_frontend` | Investigator UI | — |
 
+## Reference data
+
+| Path | What it is |
+|---|---|
+| `sample/` | Phishing-URL datasets the threat engine trains on (585,040 URLs across four files) |
+| `samples/legal_corpus/` | Nepali cyber-law and policy instruments — see [README](samples/legal_corpus/README.md) |
+| `evidence_ocr_engine/samples/ground_truth/` | Gold labels for the accuracy harnesses |
+
+`sample/` and `samples/` are different things and one letter apart: the first is
+ML training data scanned by the threat engine's dataset discovery, the second is
+legal source material read by nobody at runtime.
+
+The legal corpus is **not** training data. Five provisions of the Electronic
+Transactions Act, 2063 were transcribed by hand into the statutory module; no
+model is fitted to any of it. `samples/legal_corpus/manifest.json` records, per
+document, whether a machine can read it at all — two of the Nepali originals are
+in legacy Preeti fonts and cannot be extracted.
+
 ## Analysis flow in detail
 
 Stage 1 is triggered per uploaded file. Stages 3–4 run as one case analysis,

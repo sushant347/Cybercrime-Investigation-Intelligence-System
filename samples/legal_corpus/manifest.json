@@ -1,0 +1,265 @@
+{
+  "generated_at": "2026-08-04T07:53:30+00:00",
+  "purpose": "Primary legal sources for the statutory-basis module. The engine transcribes provisions from these; it does not train on them and no model of any kind is fitted to this corpus.",
+  "statute_in_use": {
+    "english": "Electronic Transactions Act, 2063 (2008)",
+    "nepali": "विद्युतीय (इलेक्ट्रोनिक) कारोबार ऐन, २०६३",
+    "jurisdiction": "Nepal",
+    "note": "The Nepali text is authoritative where it differs from the English translation. The engine transcribes from the English because the Nepali PDF is in a legacy font and cannot be extracted reliably - see machine_readable below."
+  },
+  "counts": {
+    "documents": 16,
+    "machine_readable": 14,
+    "legacy_font_nepali": 2,
+    "consumed_by_code": 1
+  },
+  "documents": [
+    {
+      "file": "2.1 Electronic Transactions Rules 2064 (2007).pdf",
+      "pages": 36,
+      "size_bytes": 605890,
+      "script": "latin",
+      "machine_readable": true,
+      "devanagari_ratio": 0.0,
+      "fonts": [
+        "Times-Bold",
+        "Times-Roman"
+      ],
+      "note": "extracts cleanly",
+      "used_by": "reference only - not consumed by code"
+    },
+    {
+      "file": "2.1 The Electronic Transactions Act, 2063 (2008).pdf",
+      "pages": 36,
+      "size_bytes": 154932,
+      "script": "latin",
+      "machine_readable": true,
+      "devanagari_ratio": 0.0,
+      "fonts": [
+        "Helvetica",
+        "Times-Bold",
+        "Times-Roman"
+      ],
+      "note": "extracts cleanly",
+      "used_by": "ciis_timeline_report.legal.provisions - sections 45, 47, 52, 53, 55 transcribed by hand (number, heading, penalty)"
+    },
+    {
+      "file": "2.1 विद्युतीय (इलेक्ट्रोनिक) कारोबार ऐन, २०६३ (नेपाली).pdf",
+      "pages": 26,
+      "size_bytes": 147213,
+      "script": "nepali (legacy font)",
+      "machine_readable": false,
+      "devanagari_ratio": 0.0,
+      "fonts": [
+        "PCSNEPALI",
+        "Preeti",
+        "Times-Roman"
+      ],
+      "note": "typeset in PCSNEPALI, Preeti; extracts as Latin, not Devanagari",
+      "used_by": "reference only - not consumed by code"
+    },
+    {
+      "file": "2.1 विद्युतीय कारोवार नियमावली, २०६४ (पहिलो सैशोधन सहित).pdf",
+      "pages": 29,
+      "size_bytes": 669960,
+      "script": "nepali (legacy font)",
+      "machine_readable": false,
+      "devanagari_ratio": 1.669,
+      "fonts": [
+        "Calibri",
+        "Calibri,Bold",
+        "FONTASY_ HIMALI_ TT",
+        "Kalimati",
+        "Mangal",
+        "Preeti",
+        "Times New Roman"
+      ],
+      "note": "typeset in FONTASY_ HIMALI_ TT, Preeti; extracts as Latin, not Devanagari",
+      "used_by": "reference only - not consumed by code"
+    },
+    {
+      "file": "4.1 National Cyber Security Policy, 2023.pdf",
+      "pages": 18,
+      "size_bytes": 262836,
+      "script": "latin",
+      "machine_readable": true,
+      "devanagari_ratio": 0.0,
+      "fonts": [
+        "Arial-BoldMT",
+        "ArialMT",
+        "TimesNewRomanPS-BoldItalicMT",
+        "TimesNewRomanPS-BoldMT",
+        "TimesNewRomanPSMT"
+      ],
+      "note": "extracts cleanly",
+      "used_by": "reference only - not consumed by code"
+    },
+    {
+      "file": "4.3 Cyber Security Byelaw, 2077 (2020).docx",
+      "pages": null,
+      "size_bytes": 16124,
+      "script": "unknown (docx)",
+      "machine_readable": true,
+      "note": "Word document; not inspected by this script",
+      "used_by": "reference only - not consumed by code"
+    },
+    {
+      "file": "4.3 Cyber-Security-Bylaw-2077-2020.pdf",
+      "pages": 24,
+      "size_bytes": 1517126,
+      "script": "latin",
+      "machine_readable": true,
+      "devanagari_ratio": 0.0,
+      "fonts": [
+        "F1",
+        "F2",
+        "F3",
+        "F4",
+        "F5"
+      ],
+      "note": "extracts cleanly",
+      "used_by": "reference only - not consumed by code"
+    },
+    {
+      "file": "4.4 4.6 Information security audit and compliance.docx",
+      "pages": null,
+      "size_bytes": 14306,
+      "script": "unknown (docx)",
+      "machine_readable": true,
+      "note": "Word document; not inspected by this script",
+      "used_by": "reference only - not consumed by code"
+    },
+    {
+      "file": "4.5 NRB Cyber-Resilience-Guidelines-2023.pdf",
+      "pages": 66,
+      "size_bytes": 870684,
+      "script": "latin",
+      "machine_readable": true,
+      "devanagari_ratio": 0.0,
+      "fonts": [
+        "Helvetica",
+        "SegoeUI",
+        "TimesNewRomanPS-BoldMT",
+        "TimesNewRomanPSMT"
+      ],
+      "note": "extracts cleanly",
+      "used_by": "reference only - not consumed by code"
+    },
+    {
+      "file": "4.6 Computer Security Incident Response Teams (CSIRTs).pdf",
+      "pages": 34,
+      "size_bytes": 439154,
+      "script": "latin",
+      "machine_readable": true,
+      "devanagari_ratio": 0.0,
+      "fonts": [
+        "ChronicleTextG1-Italic",
+        "ChronicleTextG1-Roman",
+        "FuturaPT-Book",
+        "FuturaPT-Demi",
+        "Platform-Bold"
+      ],
+      "note": "extracts cleanly",
+      "used_by": "reference only - not consumed by code"
+    },
+    {
+      "file": "7.2 The Copyright Act, 2059 (2002).pdf",
+      "pages": 20,
+      "size_bytes": 77683,
+      "script": "latin",
+      "machine_readable": true,
+      "devanagari_ratio": 0.0,
+      "fonts": [
+        "Helvetica",
+        "Times-Bold",
+        "Times-Roman"
+      ],
+      "note": "extracts cleanly",
+      "used_by": "reference only - not consumed by code"
+    },
+    {
+      "file": "7.3 The Patent, Design and Trade Mark Act, 2022 (1965).pdf",
+      "pages": 23,
+      "size_bytes": 103155,
+      "script": "latin",
+      "machine_readable": true,
+      "devanagari_ratio": 0.0,
+      "fonts": [
+        "Symbol",
+        "Times-Bold",
+        "Times-Roman",
+        "Wingdings"
+      ],
+      "note": "extracts cleanly",
+      "used_by": "reference only - not consumed by code"
+    },
+    {
+      "file": "8.6 Nepal-Broadband-Policy-2071-EN.pdf",
+      "pages": 16,
+      "size_bytes": 350064,
+      "script": "latin",
+      "machine_readable": true,
+      "devanagari_ratio": 0.0,
+      "fonts": [
+        "Arial",
+        "Calibri",
+        "Garamond",
+        "Garamond,Bold",
+        "Times New Roman"
+      ],
+      "note": "extracts cleanly",
+      "used_by": "reference only - not consumed by code"
+    },
+    {
+      "file": "ADGM-Legal recognition of electronic records and digital signatures.pdf",
+      "pages": 13,
+      "size_bytes": 560230,
+      "script": "latin",
+      "machine_readable": true,
+      "devanagari_ratio": 0.0,
+      "fonts": [
+        "Arial-BoldMT",
+        "ArialMT",
+        "Calibri",
+        "TimesNewRomanPSMT"
+      ],
+      "note": "extracts cleanly",
+      "used_by": "reference only - not consumed by code"
+    },
+    {
+      "file": "investigation-report-Esewa Scam (1).pdf",
+      "pages": 23,
+      "size_bytes": 50192,
+      "script": "latin",
+      "machine_readable": true,
+      "devanagari_ratio": 0.0,
+      "fonts": [
+        "Courier",
+        "Helvetica",
+        "Helvetica-Bold"
+      ],
+      "note": "extracts cleanly",
+      "used_by": "reference only - not consumed by code"
+    },
+    {
+      "file": "सरकारी सूchana prabidhi pranaliko prayogkartaka lagi jari garieko cyber security Advisory.pdf",
+      "pages": 8,
+      "size_bytes": 867687,
+      "script": "nepali (unicode)",
+      "machine_readable": true,
+      "devanagari_ratio": 0.939,
+      "fonts": [
+        "Arial",
+        "Arial Unicode MS",
+        "Arial,Bold",
+        "Calibri",
+        "Calibri,Bold",
+        "Kalimati",
+        "Times New Roman",
+        "Times New Roman,Bold"
+      ],
+      "note": "extracts as Unicode Devanagari, though some conjuncts are lossy",
+      "used_by": "reference only - not consumed by code"
+    }
+  ]
+}

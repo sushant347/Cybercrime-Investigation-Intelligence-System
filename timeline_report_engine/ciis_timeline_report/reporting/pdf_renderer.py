@@ -75,6 +75,27 @@ def _esc(value: Any) -> str:
             .replace(">", "&gt;"))
 
 
+def renderable(text: str) -> bool:
+    """True when the standard-14 fonts can actually draw this string.
+
+    Those fonts cover Latin-1 and nothing else. Devanagari passed to them is
+    not rejected - it is silently drawn as placeholder boxes, so the Nepali
+    title of the Act came out as ``IIIIIIIII (IIIIIIIIIIII)``. On a legal
+    document that reads as corruption, which is worse than not printing it.
+
+    Embedding a Devanagari face (Noto Sans Devanagari, OFL) would fix it
+    properly and is the right eventual answer. Falling back to a font that
+    merely happens to be installed on the machine doing the rendering is not:
+    the same report would then look different depending on where it was
+    produced, which is exactly what an evidentiary artifact must not do.
+    """
+    try:
+        text.encode("latin-1")
+        return True
+    except UnicodeEncodeError:
+        return False
+
+
 def _prediction_facts(row: Dict[str, Any]) -> List[str]:
     """Short 'label: value' facts behind a URL verdict, in reading order.
 
@@ -447,9 +468,23 @@ def render_pdf(
             story.append(Spacer(1, 4))
         story.append(Paragraph(
             f"<b>Statute:</b> {esc(section.get('statute', 'not available'))} "
-            f"&nbsp;·&nbsp; <b>Jurisdiction:</b> "
+            f"&nbsp;|&nbsp; <b>Jurisdiction:</b> "
             f"{esc(section.get('jurisdiction', 'not available'))}",
             styles["subtitle"]))
+        # Which language text governs is not a footnote in a filing. The note
+        # names the Act in Devanagari, which this PDF cannot draw, so the
+        # printed form points at the sources instead of showing boxes. The
+        # Markdown and JSON exports carry the Nepali title in full.
+        note = section.get("language_note")
+        if note and not renderable(note):
+            note = ("Cited from the English text of the Act. The Nepali text is "
+                    "authoritative where the two differ; verify any provision "
+                    "against the Nepali gazette copy in samples/legal_corpus/ "
+                    "before relying on it in a filing. (The Nepali title is "
+                    "given in the Markdown and JSON versions of this report; "
+                    "this PDF uses a Latin-only font set.)")
+        if note:
+            story.append(Paragraph(esc(note), styles["subtitle"]))
         story.append(Spacer(1, 6))
 
         for provision in section.get("provisions") or []:

@@ -926,9 +926,15 @@ def _legal_markdown(section: Any) -> List[str]:
         out += [section["summary"], ""]
     out += [
         f"**Statute:** {section.get('statute', 'not available')}  ",
+    ]
+    if section.get("statute_nepali"):
+        out.append(f"**ऐन:** {section['statute_nepali']}  ")
+    out += [
         f"**Jurisdiction:** {section.get('jurisdiction', 'not available')}",
         "",
     ]
+    if section.get("language_note"):
+        out += [f"*{section['language_note']}*", ""]
     for provision in section.get("provisions") or []:
         out.append(f"### Section {provision['section']} — {provision['title']}")
         out += [
