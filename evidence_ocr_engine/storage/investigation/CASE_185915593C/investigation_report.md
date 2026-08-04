@@ -1,6 +1,6 @@
 # Forensic Investigation Report - CASE_185915593C
 
-Generated: 2026-08-04T08:00:30.899Z  
+Generated: 2026-08-04T08:17:42.096Z  
 Produced by: Cybercrime Investigation Intelligence Engine (CIIS), Phase 2  
 Basis: every statement below references stored forensic findings; no content is generated outside computed results.
 
@@ -922,7 +922,7 @@ Basis: every statement below references stored forensic findings; no content is 
 
 ## Statutory Basis
 
-The findings engage 3 provisions of the Electronic Transactions Act, 2063 (2008): s.52, s.47, s.53. Each is listed with the finding that engaged it and the evidence behind that finding.
+The findings engage 6 provisions of the Electronic Transactions Act, 2063 (2008): s.52, s.47, s.53, s.54, s.19, s.56. Each is listed with the finding that engaged it and the evidence behind that finding.
 
 **Statute:** Electronic Transactions Act, 2063 (2008)  
 **ऐन:** विद्युतीय (इलेक्ट्रोनिक) कारोबार ऐन, २०६३  
@@ -966,6 +966,40 @@ The findings engage 3 provisions of the Electronic Transactions Act, 2063 (2008)
 
 **Evidence.** EVID_00008, EVID_00009, EVID_00011, EVID_00013, EVID_00014
 
+### Section 54 — Punishment to the Accomplice
+
+*Section 54, Electronic Transactions Act, 2063 (2008)*
+
+**Conduct.** Assisting another to commit an offence under the Act, or acting as an accomplice by any means.
+
+**Penalty.** one half of the punishment for which the principal is liable
+
+**Why this is engaged.** campaign CAMP_CASE_185915593C_01 evidences coordination across 5 evidence items. Where more than one person acted, anyone who assisted is liable to one half of the principal's punishment.
+
+**Evidence.** EVID_00008, EVID_00009, EVID_00011, EVID_00013, EVID_00014
+
+### Section 19 — Punishment for illegal use of trade-marks
+
+*Section 19, Patent, Design and Trade Mark Act, 2022 (1965)*
+
+**Conduct.** Using a trade-mark that is not registered to the user, using one whose registration has been cancelled, or otherwise using a registered mark without authority (s.18B).
+
+**Penalty.** fine not exceeding one hundred thousand Rupees, and confiscation of articles and goods connected with the offence, as per its gravity
+
+**Why this is engaged.** brand marks were detected in the evidence (Facebook, Gmail, Google and 6 more) across 8 evidence items. Where the material was not published by the mark's owner, its use is unauthorised. Registration and authority are matters of record to be confirmed.
+
+**Evidence.** EVID_00007, EVID_00008, EVID_00009, EVID_00010, EVID_00011, EVID_00012, EVID_00013, EVID_00014
+
+### Section 56 — Confiscation
+
+*Section 56, Electronic Transactions Act, 2063 (2008)*
+
+**Conduct.** Any computer, computer system, disk, software or accessory device used to commit an offence relating to computer under the Act is liable to confiscation.
+
+**Penalty.** confiscation of the computer, computer system, disks, software or other accessory devices used
+
+**Why this is engaged.** the findings engage 4 provisions of the Act (s.47, s.52, s.53 and 1 more). Any computer, device or storage medium used to commit those acts falls within the confiscation power and should be identified for seizure.
+
 > This is an automated mapping from technical findings to statutory provisions, provided to assist the investigating officer. It is not legal advice and not a charging decision. A provision is listed because the evidence contains the features described, not because an offence has been proved: intent, authorisation and identity are matters for investigation. Provisions of the Act not listed here were not assessed.
 
 
@@ -984,20 +1018,20 @@ The findings engage 3 provisions of the Electronic Transactions Act, 2063 (2008)
 
 ## Report Provenance & Integrity
 
-- **report id**: RPT-185915593C-E31D2634
-- **generated at**: 2026-08-04T08:00:30.774Z
+- **report id**: RPT-185915593C-FC9E6AA7
+- **generated at**: 2026-08-04T08:17:41.962Z
 - **generator**: CIIS Phase-2 reporting module (template-over-data; no free-text generation)
 - **evidence set digest**: 623b9e5e28815e86892679dc56e1ac545ea1fddc4590023db83275c6bf9c8b61
 - **evidence set digest note**: SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.
 - **source artifact hashes**:
-  - **correlation analysis.json**: 16166a29885384e7929b2ae157be42fd324faab55ad035677cd10cdc4ccc601b
+  - **correlation analysis.json**: e54500d4afbe2e08798c6bcc637caed97286563b37cd8a4418623282d9bc4671
   - **cross case correlation.json**: c732a2bfe3c5b97e8f15edc5d141b146245e3c2ce435f0ac7d4425c7210854ee
-  - **campaign analysis.json**: 03f065e9efdb24e17ee82bc2ca82b30ff9fee93af20ab6d2f9925f24e092a79b
-  - **suspect assessment.json**: c466a4227e49ef2888b5f5a9405e5edaa81d4b4f17a41deb182c7eb484c505b3
-  - **timeline analysis.json**: 6a56ee7a066bd882e368a70b0823f2fea1c5af39ec38fae3392bf3369846030b
-  - **analytics.json**: b775c1ba402c6d95065b556adad3130f9490b55bb50d169f74ed521c2de00c97
-  - **case priority.json**: 28c4403127829c0ec38395eb9f3dd75a7104dbb69f95dae8e28ad309985e5c2b
-  - **graph.json**: bc37d0f52fe69919f83c0868eb5ba3b812ff97fd2e62537bef9eedb41657878a
+  - **campaign analysis.json**: fca63a5948fc0e9c595f1738255307d7de7e3b2ceea30ddceff94fdb5d72915f
+  - **suspect assessment.json**: 56cdf6330e8e6b7962f906899b675186adedc4284ba98518f7973ee58a850402
+  - **timeline analysis.json**: 50adb56dc3dd1ad0212e4eda4bf9e4b8d7eb19b44d8f9b9cd30c5cc90a56e788
+  - **analytics.json**: 52fbf770752a094dcb85c2ced4172a39a49042a6951becd410c67cc2bd7a88d8
+  - **case priority.json**: 4ffdd96e4aeab1d81d5f69c1dad4ef0958e330231bd42e78d0caed4b0cc60362
+  - **graph.json**: b597eac3c3b052dfd18d22027136927a1d26e27124a0ea58cd371e0fa2c72c96
 
 ## Appendix
 

@@ -33,10 +33,13 @@ class StatutoryProvision:
     conduct: str
     #: Why this engine considers the finding relevant. Editorial, not statutory.
     trigger: str
+    #: Which statute the section belongs to. Defaults to the Act most of these
+    #: come from, so existing entries did not have to be rewritten.
+    statute: str = "Electronic Transactions Act, 2063 (2008)"
 
     @property
     def citation(self) -> str:
-        return f"Section {self.section}, Electronic Transactions Act, 2063 (2008)"
+        return f"Section {self.section}, {self.statute}"
 
 
 ACT_SHORT_NAME = "Electronic Transactions Act, 2063 (2008)"
@@ -145,7 +148,133 @@ PROVISIONS: Tuple[StatutoryProvision, ...] = (
             "suggest the acts were not confined to a single locality"
         ),
     ),
+    StatutoryProvision(
+        section="46",
+        title="Damage to any Computer and Information System",
+        penalty=(
+            "fine not exceeding two thousand Rupees and imprisonment not "
+            "exceeding three years or both"
+        ),
+        conduct=(
+            "Knowingly and with mala fide intention destroying, damaging, "
+            "deleting, altering or disrupting information of any computer "
+            "source, or diminishing its value and utility."
+        ),
+        trigger=(
+            "the complainant's own account describes losing access to an "
+            "account - being blocked, locked out or deleted"
+        ),
+    ),
+    StatutoryProvision(
+        section="54",
+        title="Punishment to the Accomplice",
+        penalty="one half of the punishment for which the principal is liable",
+        conduct=(
+            "Assisting another to commit an offence under the Act, or acting "
+            "as an accomplice by any means."
+        ),
+        trigger=(
+            "coordinated activity is evidenced, so liability may extend beyond "
+            "the principal to anyone who assisted"
+        ),
+    ),
+    StatutoryProvision(
+        section="56",
+        title="Confiscation",
+        penalty=(
+            "confiscation of the computer, computer system, disks, software or "
+            "other accessory devices used"
+        ),
+        conduct=(
+            "Any computer, computer system, disk, software or accessory device "
+            "used to commit an offence relating to computer under the Act is "
+            "liable to confiscation."
+        ),
+        trigger=(
+            "at least one offence provision of the Act is engaged, so the "
+            "devices used to commit it fall within the confiscation power"
+        ),
+    ),
 )
+
+# ---------------------------------------------------------------------------
+# Intellectual property
+#
+# Brand impersonation is the defining feature of the payment-wallet scams this
+# system was built for: a page that says eSewa, carrying eSewa's mark, that
+# eSewa did not publish. That is an offence under the Electronic Transactions
+# Act (s.47, publication) *and* under trade-mark law, and the two are
+# prosecuted separately. Leaving the second out meant an officer holding a
+# clear case of mark misuse was never told so.
+# ---------------------------------------------------------------------------
+
+TRADEMARK_ACT = "Patent, Design and Trade Mark Act, 2022 (1965)"
+COPYRIGHT_ACT = "Copyright Act, 2059 (2002)"
+
+IP_PROVISIONS: Tuple[StatutoryProvision, ...] = (
+    StatutoryProvision(
+        statute=TRADEMARK_ACT,
+        section="19",
+        title="Punishment for illegal use of trade-marks",
+        penalty=(
+            "fine not exceeding one hundred thousand Rupees, and confiscation "
+            "of articles and goods connected with the offence, as per its gravity"
+        ),
+        conduct=(
+            "Using a trade-mark that is not registered to the user, using one "
+            "whose registration has been cancelled, or otherwise using a "
+            "registered mark without authority (s.18B)."
+        ),
+        trigger=(
+            "logo or brand detection identifies a registered brand's mark in "
+            "evidence that the brand did not publish"
+        ),
+    ),
+    StatutoryProvision(
+        statute=COPYRIGHT_ACT,
+        section="27",
+        title="Punishment on infringement of protected right",
+        penalty=(
+            "fine of ten thousand to one hundred thousand Rupees or "
+            "imprisonment not exceeding six months or both; higher on repeat. "
+            "Materials reproduced or distributed, and devices used to reproduce "
+            "them, shall be seized"
+        ),
+        conduct=(
+            "Infringing a protected right under s.25 - reproducing a work, or "
+            "advertising or publicising by copying a work, without the "
+            "authorisation of the author or copyright owner."
+        ),
+        trigger=(
+            "a brand's visual assets were matched against reference artwork, "
+            "i.e. the work was copied rather than merely named. DORMANT BY "
+            "DEFAULT: this needs template matching, which only runs once an "
+            "investigator places reference logos in "
+            "storage/forensics/logo_templates/<brand>/. Without them the "
+            "detector reports keyword and colour matches only, which evidence "
+            "use of the mark (trade-mark s.19) but not reproduction of the work."
+        ),
+    ),
+)
+
+#: Every provision the engine can assess, across all statutes.
+ALL_PROVISIONS: Tuple[StatutoryProvision, ...] = PROVISIONS + IP_PROVISIONS
+
+#: Offence sections of the Electronic Transactions Act that are deliberately
+#: *not* assessed, and why. Recorded so their absence reads as a scoping
+#: decision rather than an oversight - and so anyone extending this module can
+#: see which gaps need a new signal rather than a new rule.
+UNASSESSED_ETA_SECTIONS = {
+    "44": "no signal - nothing in the evidence indicates source-code tampering",
+    "48": ("requires a person holding authorised access who divulged it; the "
+           "evidence does not establish authorisation"),
+    "49": "concerns false statements to a Certifying Authority about digital signatures",
+    "50": "concerns operating as an unlicensed Certifying Authority",
+    "51": "concerns failure to submit statements to the Controller",
+    "57": ("requires identifying a corporate body; no organisation entity is "
+           "extracted from evidence"),
+    "58": "residual penalty for violations with no specific punishment",
+}
 
 #: Wording that must accompany any automated statutory assessment. The engine
 #: identifies which provisions the *findings* engage; whether an offence is

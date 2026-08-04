@@ -1,6 +1,6 @@
 # Forensic Investigation Report - CASE_2CF24DBA5F
 
-Generated: 2026-08-04T08:00:29.282Z  
+Generated: 2026-08-04T08:17:40.444Z  
 Produced by: Cybercrime Investigation Intelligence Engine (CIIS), Phase 2  
 Basis: every statement below references stored forensic findings; no content is generated outside computed results.
 
@@ -253,7 +253,7 @@ The active threat-intelligence provider returned no classification for any URL/d
 
 ## Statutory Basis
 
-The findings engage 1 provision of the Electronic Transactions Act, 2063 (2008): s.45. Each is listed with the finding that engaged it and the evidence behind that finding.
+The findings engage 2 provisions of the Electronic Transactions Act, 2063 (2008): s.45, s.56. Each is listed with the finding that engaged it and the evidence behind that finding.
 
 **Statute:** Electronic Transactions Act, 2063 (2008)  
 **ऐन:** विद्युतीय (इलेक्ट्रोनिक) कारोबार ऐन, २०६३  
@@ -273,6 +273,16 @@ The findings engage 1 provision of the Electronic Transactions Act, 2063 (2008):
 
 **Evidence.** EVID_00003
 
+### Section 56 — Confiscation
+
+*Section 56, Electronic Transactions Act, 2063 (2008)*
+
+**Conduct.** Any computer, computer system, disk, software or accessory device used to commit an offence relating to computer under the Act is liable to confiscation.
+
+**Penalty.** confiscation of the computer, computer system, disks, software or other accessory devices used
+
+**Why this is engaged.** the findings engage 1 provision of the Act (s.45). Any computer, device or storage medium used to commit those acts falls within the confiscation power and should be identified for seizure.
+
 > This is an automated mapping from technical findings to statutory provisions, provided to assist the investigating officer. It is not legal advice and not a charging decision. A provision is listed because the evidence contains the features described, not because an offence has been proved: intent, authorisation and identity are matters for investigation. Provisions of the Act not listed here were not assessed.
 
 
@@ -283,20 +293,20 @@ The findings engage 1 provision of the Electronic Transactions Act, 2063 (2008):
 
 ## Report Provenance & Integrity
 
-- **report id**: RPT-2CF24DBA5F-C8883DF6
-- **generated at**: 2026-08-04T08:00:29.133Z
+- **report id**: RPT-2CF24DBA5F-31F7E052
+- **generated at**: 2026-08-04T08:17:40.297Z
 - **generator**: CIIS Phase-2 reporting module (template-over-data; no free-text generation)
 - **evidence set digest**: 845d2580a93c7505d88a3b735dd3a956db233d26f779d05f4a85f60abfe82c3f
 - **evidence set digest note**: SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.
 - **source artifact hashes**:
-  - **correlation analysis.json**: 2d57afdb51343554e595844cb2a274b20c355ff13087b74a6ff470d4881f12d5
+  - **correlation analysis.json**: 80600ed590b4b6f84bf207d6fc46117276055980a4525548524f5f0483e19dc0
   - **cross case correlation.json**: 6c4b7e022465546d0555c8cb462748c5b6c81a0b9a0b5bdb505f7587bf91bc63
-  - **campaign analysis.json**: 7856775cd28ef95b437458bb907364cfe0c8de73389c36157b1ed72c9e04533b
-  - **suspect assessment.json**: af5b15dc582da749d120eb639299c194cd7c72f97fb321a0db6edf08f2e0b26a
-  - **timeline analysis.json**: e322209dbc45ab07534a3c602f1e95116be88a91e6f8af2c72b1a9377c3d0303
-  - **analytics.json**: e9a9674684d2c8399d0be2cf210ebdc18dd81290d6f79884195f9ccca9f9dffa
-  - **case priority.json**: d17cfb9ce1c75ed206b6bb75aabf1920e5c46b207566dcd02bf660c7ee6cde1e
-  - **graph.json**: 00c3067d993272b697dd80190e19a4a75eb79f73db055fdf17d97348722ed1f1
+  - **campaign analysis.json**: 8b2dd267e8a9fade193f1298efe16cacdc716a9c659894be262d8ed889717bd5
+  - **suspect assessment.json**: 0943595a2395c0e656e9781f28a901bc36305ed2324ea62ef1856393a593ef5d
+  - **timeline analysis.json**: e4c60659f83b851d060ff39e1af2fa8d3998ab078c1d6c742fb887b2cd0a0f24
+  - **analytics.json**: 0eea77d525df8a22967b1c7a30caea048a927306b16481d22f6c94dec2945ff9
+  - **case priority.json**: 4c0a02165052f74097f1a3a32dc85abeffd045862d7ab6a02595594df34b9b29
+  - **graph.json**: c33293147f41a5f595e63885e4c2994d90df5d1ee1a1e3c4a96013b9c44bced3
 
 ## Appendix
 

@@ -194,3 +194,107 @@ def test_the_pdf_never_prints_unrenderable_devanagari():
 
     assert renderable("Electronic Transactions Act, 2063 (2008)")
     assert not renderable("विद्युतीय (इलेक्ट्रोनिक) कारोबार ऐन, २०६३")
+
+
+# =========================================================== Tier 1 additions
+
+def evidence_with_logos(evidence_id: str, detections) -> EvidenceContext:
+    """Evidence carrying Phase-1 logo detections."""
+    context = evidence(evidence_id)
+    context.forensics = {"logo_detections": {"detections": [
+        {"brand": brand, "detection_method": method, "confidence": 0.9}
+        for brand, method in detections
+    ]}}
+    return context
+
+
+def test_lockout_language_engages_damage_to_a_system(service):
+    items = [evidence("E1", raw_text="he blocked me and I cannot access my wallet")]
+    result = service.assess(CASE, items)
+    assert "46" in sections(result)
+    damage = next(p for p in result.provisions if p.section == "46")
+    # Inferential trigger: the basis must not present it as a technical finding.
+    assert "complainant's description, not a technical finding" in damage.basis
+
+
+def test_losing_money_is_not_losing_access(service):
+    """'scammed' and 'cheated' are s.52 territory, not s.46."""
+    items = [evidence("E1", raw_text="I was scammed and cheated out of NPR 5000")]
+    assert "46" not in sections(service.assess(CASE, items))
+
+
+def test_a_campaign_engages_both_abetment_and_accomplice(service):
+    """Distinct liabilities: procuring the offence vs assisting it."""
+    class Campaign:
+        campaign_id = "CAMP_1"
+        members = ["E1", "E2"]
+
+    class Campaigns:
+        campaigns = [Campaign()]
+
+    engaged = sections(service.assess(CASE, [evidence("E1")], campaigns=Campaigns()))
+    assert {"53", "54"} <= engaged
+
+
+def test_confiscation_follows_any_engaged_offence(service):
+    items = [evidence("E1", [("esewa_ids", "98"), ("money", "NPR 1")])]
+    result = service.assess(CASE, items)
+    assert "56" in sections(result)
+    conf = next(p for p in result.provisions if p.section == "56")
+    assert "s.52" in conf.basis, "confiscation must name the offence it follows from"
+
+
+def test_confiscation_does_not_fire_on_its_own(service):
+    """It is consequential; with no offence engaged there is nothing to seize."""
+    result = service.assess(CASE, [evidence("E1")])
+    assert result.provisions == []
+
+
+# =========================================================== Tier 2 additions
+
+def test_a_detected_brand_mark_engages_the_trade_mark_act(service):
+    items = [evidence_with_logos("E1", [("eSewa", "ocr_keyword")])]
+    result = service.assess(CASE, items)
+    tm = [p for p in result.provisions if "Trade Mark" in p.citation]
+    assert tm, "brand detection should engage the Trade Mark Act"
+    assert tm[0].section == "19"
+    assert "eSewa" in tm[0].basis
+    # Registration and authority are records to check, not things to assert.
+    assert "matters of record to be confirmed" in tm[0].basis
+
+
+def test_naming_a_brand_does_not_engage_copyright(service):
+    """Using the mark is s.19; reproducing the artwork is the Copyright Act."""
+    items = [evidence_with_logos("E1", [("eSewa", "ocr_keyword"),
+                                        ("Khalti", "colour_signature")])]
+    result = service.assess(CASE, items)
+    assert not [p for p in result.provisions if "Copyright" in p.citation]
+
+
+def test_template_matched_artwork_engages_copyright(service):
+    """The rule is dormant on a default install, not broken.
+
+    Template matching only runs once an investigator supplies reference logos,
+    so no case in the shipped corpus can trigger this. Simulating the detection
+    proves the rule works, rather than leaving it unverified until someone
+    happens to add artwork.
+    """
+    items = [evidence_with_logos("E1", [("eSewa", "template_match")])]
+    result = service.assess(CASE, items)
+    cr = [p for p in result.provisions if "Copyright" in p.citation]
+    assert cr, "a template match should engage the Copyright Act"
+    assert cr[0].section == "27"
+    assert "reproduced rather than merely named" in cr[0].basis
+
+
+def test_provisions_from_different_statutes_cite_their_own_act(service):
+    items = [
+        evidence_with_logos("E1", [("eSewa", "template_match")]),
+    ]
+    items[0].entities = evidence("E1", [("esewa_ids", "98"),
+                                        ("money", "NPR 1")]).entities
+    result = service.assess(CASE, items)
+    acts = {p.citation.split(", ", 1)[1] for p in result.provisions}
+    assert len(acts) >= 2, "a case can engage more than one statute"
+    for p in result.provisions:
+        assert p.citation.startswith(f"Section {p.section},")

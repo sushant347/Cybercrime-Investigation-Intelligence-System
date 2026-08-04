@@ -38,8 +38,10 @@ from .provisions import (
     ACT_LANGUAGE_NOTE,
     ACT_NEPALI_NAME,
     ACT_SHORT_NAME,
+    ALL_PROVISIONS,
     ASSESSMENT_CAVEAT,
-    PROVISIONS,
+    COPYRIGHT_ACT,
+    TRADEMARK_ACT,
     StatutoryProvision,
 )
 
@@ -62,6 +64,16 @@ _CREDENTIAL_TYPES = frozenset({"otp"})
 #: Deliberately narrow: these are the words that name a secret, not words that
 #: merely sound urgent.
 _CREDENTIAL_WORDS = ("otp", "password", "pin", "cvv", "login", "security code")
+
+#: Phrases in which a complainant describes losing access to their own account.
+#: Drawn from the post-attack stage vocabulary the timeline already uses, so the
+#: two modules read the same evidence the same way. Deliberately excludes
+#: "scammed", "fraud" and "cheated" - those describe the loss of money, which is
+#: s.52, not the loss of access, which is s.46.
+_LOCKOUT_WORDS = (
+    "blocked me", "locked out", "cannot login", "can't login",
+    "cannot access", "account deleted", "deleted my", "lost access",
+)
 
 
 class LegalBasisService:
@@ -88,15 +100,20 @@ class LegalBasisService:
         analytics: Any = None,
     ) -> LegalBasisAssessment:
         started = time.perf_counter()
-        by_section = {p.section: p for p in PROVISIONS}
+        by_key = {(p.statute, p.section): p for p in ALL_PROVISIONS}
+        eta = lambda section: by_key[(ACT_SHORT_NAME, section)]  # noqa: E731
         engaged: List[EngagedProvision] = []
 
         for build in (
-            lambda: self._computer_fraud(by_section["52"], items),
-            lambda: self._illegal_publication(by_section["47"], items, analytics),
-            lambda: self._unauthorised_access(by_section["45"], items),
-            lambda: self._abetment(by_section["53"], campaigns),
-            lambda: self._extraterritorial(by_section["55"], cross_case),
+            lambda: self._computer_fraud(eta("52"), items),
+            lambda: self._illegal_publication(eta("47"), items, analytics),
+            lambda: self._unauthorised_access(eta("45"), items),
+            lambda: self._system_damage(eta("46"), items),
+            lambda: self._abetment(eta("53"), campaigns),
+            lambda: self._accomplice(eta("54"), campaigns),
+            lambda: self._extraterritorial(eta("55"), cross_case),
+            lambda: self._trademark(by_key[(TRADEMARK_ACT, "19")], items),
+            lambda: self._copyright(by_key[(COPYRIGHT_ACT, "27")], items),
         ):
             try:
                 found = build()
@@ -105,6 +122,15 @@ class LegalBasisService:
                 continue
             if found is not None:
                 engaged.append(found)
+
+        # Confiscation is consequential: it applies because an offence is made
+        # out, not because of anything separate in the evidence. So it is
+        # evaluated last, against what the rules above actually found.
+        if engaged:
+            try:
+                engaged.append(self._confiscation(eta("56"), engaged))
+            except Exception as exc:  # noqa: BLE001
+                self._log.warning("confiscation rule failed for %s: %s", case_id, exc)
 
         assessment = LegalBasisAssessment(
             case_id=case_id,
@@ -231,6 +257,140 @@ class LegalBasisService:
             "still applies to systems located in Nepal."
         )
         return self._engaged(provision, basis, [])
+
+    def _system_damage(
+        self, provision: StatutoryProvision, items: Sequence[EvidenceContext]
+    ) -> Optional[EngagedProvision]:
+        """s.46 - the complainant describes being locked out of an account.
+
+        Inferential, and the basis says so. The signal is the victim's own
+        words, not a technical observation, so the wording keeps that
+        distinction visible rather than presenting it as established fact.
+        """
+        ids, phrases = set(), []
+        for context in items:
+            text = (context.raw_text or "").lower()
+            hit = [w for w in _LOCKOUT_WORDS if w in text]
+            if hit:
+                ids.add(context.evidence_id)
+                phrases.extend(hit)
+        if not ids:
+            return None
+        basis = (
+            f"the account given in {count_of(len(ids), 'evidence item')} "
+            f"describes loss of access ({joined(sorted(set(phrases))[:3])}). "
+            "This is the complainant's description, not a technical finding: "
+            "whether information was in fact deleted, altered or made "
+            "unusable is a matter for investigation."
+        )
+        return self._engaged(provision, basis, sorted(ids))
+
+    def _accomplice(
+        self, provision: StatutoryProvision, campaigns: Optional[CampaignAnalysis]
+    ) -> Optional[EngagedProvision]:
+        """s.54 - where activity is coordinated, liability may reach assistants.
+
+        Distinct from s.53: abetment is procuring the offence, accomplice
+        liability is assisting it, and the penalty is half the principal's.
+        Both become live on the same finding, so both are reported.
+        """
+        if campaigns is None or not campaigns.campaigns:
+            return None
+        largest = max(campaigns.campaigns, key=lambda c: len(c.members))
+        if len(largest.members) < 2:
+            return None
+        basis = (
+            f"campaign {largest.campaign_id} evidences coordination across "
+            f"{count_of(len(largest.members), 'evidence item')}. Where more "
+            "than one person acted, anyone who assisted is liable to one half "
+            "of the principal's punishment."
+        )
+        return self._engaged(provision, basis, sorted(largest.members))
+
+    def _confiscation(
+        self, provision: StatutoryProvision, engaged: Sequence[EngagedProvision]
+    ) -> EngagedProvision:
+        """s.56 - consequential on an offence under the Act being engaged.
+
+        Practical value rather than legal novelty: it tells the officer that
+        the devices used are within the confiscation power, which is a seizure
+        decision they have to make early or not at all.
+        """
+        sections = sorted({p.section for p in engaged
+                           if p.citation.endswith(f"{ACT_SHORT_NAME}")})
+        basis = (
+            "the findings engage "
+            f"{count_of(len(sections), 'provision')} of the Act "
+            f"({joined(['s.' + s for s in sections])}). Any computer, device "
+            "or storage medium used to commit those acts falls within the "
+            "confiscation power and should be identified for seizure."
+        )
+        return self._engaged(provision, basis, [])
+
+    # ------------------------------------------------------------ intellectual
+
+    @staticmethod
+    def _detected_brands(items: Sequence[EvidenceContext]) -> Dict[str, List[str]]:
+        """``brand -> evidence ids`` from the Phase-1 logo detector."""
+        found: Dict[str, List[str]] = {}
+        for context in items:
+            report = context.forensics.get("logo_detections") or {}
+            for detection in report.get("detections") or []:
+                brand = str(detection.get("brand") or "").strip()
+                if brand:
+                    found.setdefault(brand, []).append(context.evidence_id)
+        return found
+
+    def _trademark(
+        self, provision: StatutoryProvision, items: Sequence[EvidenceContext]
+    ) -> Optional[EngagedProvision]:
+        """Trade Mark Act s.19 - a registered mark used by someone who may not.
+
+        This is the offence that the payment-wallet scams in scope actually
+        commit twice over: the page carries eSewa's mark and eSewa did not
+        publish it. Prosecuted separately from the Electronic Transactions Act,
+        so an officer needs to be told about it separately.
+        """
+        brands = self._detected_brands(items)
+        if not brands:
+            return None
+        ids = sorted({eid for eids in brands.values() for eid in eids})
+        basis = (
+            f"brand marks were detected in the evidence "
+            f"({joined(sorted(brands))}) across "
+            f"{count_of(len(ids), 'evidence item')}. Where the material was "
+            "not published by the mark's owner, its use is unauthorised. "
+            "Registration and authority are matters of record to be confirmed."
+        )
+        return self._engaged(provision, basis, ids)
+
+    def _copyright(
+        self, provision: StatutoryProvision, items: Sequence[EvidenceContext]
+    ) -> Optional[EngagedProvision]:
+        """Copyright Act s.27 - a brand's own assets reproduced, not just named.
+
+        Narrower than the trade-mark rule on purpose. Naming a brand in text
+        engages the mark; reproducing its logo engages copyright as well. The
+        detector distinguishes the two, so this rule uses only the visual
+        matches and stays silent when a brand was merely mentioned.
+        """
+        reproduced: Dict[str, List[str]] = {}
+        for context in items:
+            report = context.forensics.get("logo_detections") or {}
+            for detection in report.get("detections") or []:
+                method = str(detection.get("detection_method") or "")
+                brand = str(detection.get("brand") or "").strip()
+                if brand and "template" in method.lower():
+                    reproduced.setdefault(brand, []).append(context.evidence_id)
+        if not reproduced:
+            return None
+        ids = sorted({eid for eids in reproduced.values() for eid in eids})
+        basis = (
+            f"the visual assets of {joined(sorted(reproduced))} were matched "
+            f"against reference artwork in {count_of(len(ids), 'evidence item')}, "
+            "indicating the work was reproduced rather than merely named."
+        )
+        return self._engaged(provision, basis, ids)
 
     # ----------------------------------------------------------------- helpers
 

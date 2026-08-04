@@ -855,13 +855,43 @@ makes it explicit and reviewable.
 It maps stored findings onto the **Electronic Transactions Act, 2063 (2008)**
 of Nepal, transcribed from the text in [`samples/legal_corpus/`](samples/legal_corpus/).
 
+**Electronic Transactions Act, 2063 (2008)** — 8 of the Act's 15 offence
+sections:
+
 | Section | Offence | Engaged when |
 |---|---|---|
 | **52** | To commit computer fraud | payment-rail identifiers (wallet, bank account, card, transaction id) appear with a money value |
 | **47** | Publication of illegal materials in electronic form | threat intelligence flags a URL or domain present in the evidence |
 | **45** | Unauthorized access in computer materials | credential material (OTP, password, PIN, CVV, login) appears as an entity or in the text |
+| **46** | Damage to any computer and information system | the complainant's own account describes losing access — blocked, locked out, deleted |
 | **53** | Abetment / conspiracy | a campaign cluster groups two or more evidence items |
+| **54** | Punishment to the accomplice | same finding as s.53; distinct liability at half the principal's penalty |
 | **55** | Offence committed outside Nepal | the case shares identifiers with another case |
+| **56** | Confiscation | consequential — at least one offence above is engaged, so the devices used fall within the seizure power |
+
+**Intellectual property.** Brand impersonation is the defining feature of these
+scams: a page carrying eSewa's mark that eSewa did not publish. That is an
+offence twice over, prosecuted separately, and omitting the second left an
+officer with a clear case of mark misuse never being told so.
+
+| Statute | Section | Engaged when |
+|---|---|---|
+| Patent, Design and Trade Mark Act, 2022 | **19** | logo/brand detection identifies a registered brand's mark in the evidence |
+| Copyright Act, 2059 | **27** | a brand's artwork is *template-matched*, i.e. reproduced rather than merely named |
+
+The Copyright rule is **dormant on a default install** — template matching only
+runs once an investigator places reference logos in
+`storage/forensics/logo_templates/<brand>/`. It is tested with a simulated
+template match so the rule is verified rather than left unexercised until
+someone happens to supply artwork. Naming a brand engages the mark (s.19);
+reproducing its artwork engages copyright as well, and the detector
+distinguishes the two.
+
+**What is deliberately not assessed** is recorded in
+`provisions.UNASSESSED_ETA_SECTIONS` with a reason each — s.44 (no signal for
+source-code tampering), s.48 (requires establishing authorised access), s.49–51
+(digital-signature certification), s.57 (no organisation entity is extracted),
+s.58 (residual). Their absence is a scoping decision, not an oversight.
 
 Each entry carries the section number, the heading as enacted and the penalty
 **as written** — never paraphrased into a different figure — plus the concrete

@@ -1,9 +1,9 @@
 {
   "report_type": "graph",
-  "report_version": 22,
+  "report_version": 24,
   "schema_version": "2.0",
   "case_id": "CASE_185915593C",
-  "generated_at": "2026-08-04T08:00:30.656Z",
+  "generated_at": "2026-08-04T08:17:41.849Z",
   "report": {
     "case_id": "CASE_185915593C",
     "directed": false,

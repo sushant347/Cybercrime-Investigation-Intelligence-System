@@ -26,10 +26,19 @@ That is a stronger claim than "trained on", because it is checkable — open
 
 | Document | Used for |
 |---|---|
-| `2.1 The Electronic Transactions Act, 2063 (2008).pdf` | Sections 45, 47, 52, 53, 55 |
+| `2.1 The Electronic Transactions Act, 2063 (2008).pdf` | Sections 45, 46, 47, 52, 53, 54, 55, 56 — 8 of the Act's 15 offence sections |
+| `7.3 The Patent, Design and Trade Mark Act, 2022 (1965).pdf` | Section 19 — illegal use of trade-marks, triggered by brand/logo detection |
+| `7.2 The Copyright Act, 2059 (2002).pdf` | Section 27 — infringement, triggered by template-matched artwork |
+
+The Copyright rule is dormant unless an investigator supplies reference logos in
+`storage/forensics/logo_templates/<brand>/`: without them the detector reports
+keyword and colour matches, which evidence *use of the mark* (trade-mark s.19)
+but not *reproduction of the work*.
 
 Everything else is reference material, held for provenance and for work not yet
-done. Its presence is not a claim that the engine implements it.
+done. Its presence is not a claim that the engine implements it. Which sections
+of the Electronic Transactions Act are deliberately not assessed, and why, is
+recorded in `provisions.UNASSESSED_ETA_SECTIONS`.
 
 ## The Nepali texts
 

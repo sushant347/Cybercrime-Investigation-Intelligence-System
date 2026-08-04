@@ -1,9 +1,9 @@
 {
   "report_type": "suspect_assessment",
-  "report_version": 14,
+  "report_version": 16,
   "schema_version": "2.0",
   "case_id": "CASE_185915593C",
-  "generated_at": "2026-08-04T08:00:30.719Z",
+  "generated_at": "2026-08-04T08:17:41.907Z",
   "report": {
     "case_id": "CASE_185915593C",
     "suspect_count": 13,
@@ -810,7 +810,7 @@
       }
     ],
     "top_suspect": "SUSPECT_CASE_185915593C_09",
-    "analysis_time_ms": 2.1,
+    "analysis_time_ms": 1.7,
     "methodology": "Deterministic weighted scoring over identity anchors (no machine learning); every component carries its own explanation."
   }
 }

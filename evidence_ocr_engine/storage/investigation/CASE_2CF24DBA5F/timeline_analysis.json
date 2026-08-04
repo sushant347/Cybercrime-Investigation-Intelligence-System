@@ -1,9 +1,9 @@
 {
   "report_type": "timeline_analysis",
-  "report_version": 19,
+  "report_version": 21,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-08-04T08:00:29.023Z",
+  "generated_at": "2026-08-04T08:17:40.176Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
     "events": [
@@ -631,6 +631,6 @@
       "critical_event_count": 2.0,
       "timeline_span_hours": 4851.7
     },
-    "analysis_time_ms": 3.9
+    "analysis_time_ms": 4.0
   }
 }

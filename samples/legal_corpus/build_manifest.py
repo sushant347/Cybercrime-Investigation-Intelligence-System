@@ -42,8 +42,17 @@ LEGACY_NEPALI_FONTS = {"Preeti", "PCSNEPALI", "FONTASY_ HIMALI_ TT", "Kantipur"}
 #: reference material - held for provenance, not consumed by code.
 USED_BY = {
     "2.1 The Electronic Transactions Act, 2063 (2008).pdf": (
-        "ciis_timeline_report.legal.provisions - sections 45, 47, 52, 53, 55 "
-        "transcribed by hand (number, heading, penalty)"
+        "ciis_timeline_report.legal.provisions - sections 45, 46, 47, 52, 53, "
+        "54, 55, 56 transcribed by hand (number, heading, penalty)"
+    ),
+    "7.3 The Patent, Design and Trade Mark Act, 2022 (1965).pdf": (
+        "ciis_timeline_report.legal.provisions - section 19, punishment for "
+        "illegal use of trade-marks; triggered by brand/logo detection"
+    ),
+    "7.2 The Copyright Act, 2059 (2002).pdf": (
+        "ciis_timeline_report.legal.provisions - section 27, punishment on "
+        "infringement; triggered by template-matched artwork (dormant until "
+        "reference logos are supplied)"
     ),
 }
 
