@@ -492,6 +492,159 @@ the verdict; it does not invert it.
 
 ---
 
+## 4A. The transformer — XLM-RoBERTa in semantic correction
+
+There are two neural components in CIIS. §4 covered the phishing classifier.
+This one sits much earlier, in the OCR engine, and is the more interesting of
+the two because of *where* it is allowed to act.
+
+`evidence_ocr_engine/backend/modules/evidence/semantic/`
+
+### 4A.1 The problem it solves
+
+OCR on a Nepali scam screenshot produces text that is mostly right and locally
+wrong. A dictionary can tell you a token is not a word. It cannot tell you
+*which* correction is the right one, because that depends on the sentence:
+
+```
+OCR output   : "तपाईंको खाता ब्लक भएको छ, तुरुन्तै [garbled] गर्नुहोस्"
+candidates   : verify / verity / very / भेरिफाई
+```
+
+Every candidate is dictionary-valid in some sense. Only context distinguishes
+them. Three properties make this hard:
+
+1. **The text is bilingual, often mid-sentence.** Nepali scam messages mix
+   Devanagari and Latin freely. A monolingual English model cannot score a
+   Devanagari candidate at all.
+2. **There is no labelled data.** Nobody has a corpus of Nepali OCR errors
+   paired with corrections.
+3. **The correction must never invent.** This is evidence. A model that
+   *generates* replacement text is disqualified outright.
+
+### 4A.2 Why XLM-RoBERTa specifically
+
+| Requirement | Why XLM-R satisfies it |
+|---|---|
+| Multilingual, incl. Nepali | Pretrained on 100 languages; Devanagari is in-vocabulary |
+| No fine-tuning possible | Masked-LM pretraining is *already* the task — score a word in context |
+| Must not generate | Fill-mask **scores a fixed candidate list**; it never emits free text |
+| Must degrade offline | Optional dependency, heuristic fallback (§4A.5) |
+
+A monolingual model (BERT, RoBERTa) fails requirement 1. A generative model
+(GPT-style, mBART) fails requirement 3. mBERT satisfies both but is weaker on
+low-resource languages. **XLM-RoBERTa is the smallest model that satisfies all
+four**, which is why it is the one wired in.
+
+### 4A.3 How it is used — inference only, scoring only
+
+`validator.py :: XLMRobertaValidator`. No training, no fine-tuning, no
+checkpoint of our own. The pretrained `xlm-roberta-base` runs as a **fill-mask
+pipeline**.
+
+For each suspicious token the pipeline builds the sentence with a sentinel at
+the token's position, swaps the sentinel for the model's mask token, and asks
+for the top *k* predictions:
+
+```
+sentence  : "तपाईंको खाता ब्लक भएको छ, तुरुन्तै ⁣SLOT⁣ गर्नुहोस्"
+masked    : "तपाईंको खाता ब्लक भएको छ, तुरुन्तै <mask> गर्नुहोस्"
+predictions ← pipe(masked, top_k=20)
+
+cand_score = P(candidate | context)      from those predictions
+orig_score = P(original  | context)
+
+accept  ⟺  cand_score ≥ 0.15  AND  cand_score ≥ orig_score
+```
+
+| Parameter | Value | Meaning |
+|---|---|---|
+| `top_k` | 20 | how many mask predictions to search |
+| `accept_threshold` | 0.15 | minimum probability for a candidate to be usable |
+| pipeline `confidence_threshold` | 0.5 | second gate before a correction is applied |
+
+Two gates, deliberately. The model must find the candidate *plausible*
+(≥ 0.15) **and** more plausible than what the OCR actually produced — a
+correction that the context likes less than the original is not a correction.
+The pipeline then applies its own 0.5 confidence gate on top
+(`semantic_pipeline.py:63`), so a weak model opinion cannot change evidence
+text.
+
+Candidates come from the rule-based `CandidateGenerator`. **The model never
+proposes a word — it only ranks words the rules proposed.** That is the
+structural guarantee that it cannot hallucinate into evidence.
+
+### 4A.4 Where it is allowed to act — the important part
+
+```
+raw_text ──► cleaned_text ──► enhanced_text ──► semantic_text ──► entities
+ (frozen)      (frozen)         (frozen)        (model may act)   (rules only)
+```
+
+The forensic invariants — `raw_text`, `cleaned_text`, `enhanced_text` — are
+**never modified**. The model writes to `semantic_text` and nothing else. Every
+correction it accepts is recorded with its original, its candidate, the
+confidence, the validator name and the reason.
+
+Downstream, entity extraction, correlation, campaigns, suspects, timeline and
+priority remain **entirely rule-based and deterministic**. The transformer
+improves the *text quality* those rules read. It never contributes to a score.
+
+This is the answer to "should the project use more ML": it already uses exactly
+as much as is defensible. A model that improves recognition is auditable — you
+can show the before, the after, and the probability. A model that emits a
+suspect score is not.
+
+### 4A.5 What it is worth, honestly
+
+**Verified status of this deployment:**
+
+```
+semantic_validator   : heuristic
+semantic_ml_available: false
+```
+
+`transformers` and `torch` are **commented out** of
+`evidence_ocr_engine/requirements.txt` (lines 30-31) — together a multi-GB
+download. So on a default install **the transformer does not run**; the
+`HeuristicSemanticValidator` does, accepting a candidate when it is a
+single-script dictionary-valid word replacing a mixed-script token.
+
+That degradation is by design and correct. What was wrong until this change is
+that it was **invisible**: nothing told an operator which validator their
+evidence had been through. `engine_health()` now reports
+`semantic_validator` / `semantic_ml_available`, and `./dev.sh doctor` prints
+the same, so the mode is knowable before evidence is processed rather than
+inferred afterwards from per-item fields.
+
+**To turn it on:**
+
+```bash
+.venv-platform/Scripts/python -m pip install "transformers>=4.40" "torch>=2.0"
+./dev.sh doctor      # -> semantic validator: xlm-roberta-base
+```
+
+Nothing else changes: the pipeline picks it up automatically, and the stored
+`validator` field on each correction records which one ran.
+
+**What it buys.** Fewer OCR errors surviving into entity extraction. That
+matters because a mangled wallet address is a *missed correlation*, and a
+missed correlation is a link between two cases that never appears. The value is
+indirect but it is upstream of everything.
+
+**What it costs.** ~1.1 GB of model weights, a slow first inference, and a
+dependency that must be present on every deployment that wants it.
+
+**Whether it is worth turning on: not measured yet.** There is no A/B of
+correction accuracy with and against the heuristic, because that needs a gold
+set of OCR errors and their correct resolutions, and this repository does not
+have one. Until it does, "XLM-R improves extraction" is a reasonable
+expectation, not a demonstrated result — and this report will not claim it as
+one. The harness to measure it would be the same shape as
+`scripts/run_table_6_2.py` (entity extraction against gold), run twice.
+
+---
+
 ## 5. Correlation — the mathematics
 
 `evidence_correlation_engine/ciis_correlation/correlation/`
