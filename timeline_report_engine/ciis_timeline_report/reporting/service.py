@@ -33,6 +33,40 @@ from . import pdf_renderer
 
 MODULE = "reporting"
 
+#: Section key -> heading, in the order every renderer must emit them.
+#:
+#: The order follows the pipeline that produced the findings, so the report
+#: reads in the sequence the analysis actually ran rather than an arbitrary
+#: one: evidence is gathered, placed on a timeline, then correlated, clustered
+#: into campaigns and attributed to suspects, and only then summarised and
+#: acted on. Timeline precedes correlation here because a reader needs to know
+#: *when* things happened before *how* they connect.
+#:
+#: This is the single definition. The Markdown writer, the JSON section map and
+#: :mod:`.pdf_renderer` all derive their order from it, so the three exports
+#: cannot drift apart.
+SECTION_ORDER: List[tuple] = [
+    ("executive_summary", "Executive Summary"),
+    ("scope_and_methodology", "Scope & Methodology"),
+    ("case_overview", "Case Overview"),
+    ("evidence_summary", "Evidence Summary"),
+    ("timeline_analysis", "Timeline Analysis"),
+    ("correlation_analysis", "Correlation Analysis"),
+    ("cross_case_correlation", "Cross-Case Correlation"),
+    ("campaign_analysis", "Campaign Analysis"),
+    ("suspect_assessment", "Suspect Assessment"),
+    ("threat_intelligence_summary", "Threat Intelligence Summary"),
+    ("model_predictions", "Model Prediction Results"),
+    ("evidence_quality_summary", "Evidence Quality Summary"),
+    ("metadata_summary", "Metadata Summary"),
+    ("investigation_statistics", "Investigation Statistics"),
+    ("confidence_analysis", "Confidence Analysis"),
+    ("investigation_conclusion", "Investigation Conclusion"),
+    ("recommendations", "Recommendations"),
+    ("report_provenance", "Report Provenance & Integrity"),
+    ("appendix", "Appendix"),
+]
+
 
 def _url_host(value: str) -> str:
     """Bare host of a URL or domain, for de-duplicating indicators.
@@ -92,32 +126,37 @@ class InvestigationReportService:
             f"{uuid.uuid4().hex[:8].upper()}"
         )
 
-        sections: Dict[str, Any] = {
-            "executive_summary": self._executive_summary(
+        # Built in SECTION_ORDER sequence: dicts preserve insertion order, so
+        # the stored JSON, the Markdown and the PDF all present the findings
+        # in the same order without any renderer re-sorting them.
+        built = {
+            "executive_summary": lambda: self._executive_summary(
                 case_id, items, correlation, campaigns, suspects, timeline,
                 cross_case),
-            "scope_and_methodology": self._scope_section(items),
-            "case_overview": self._case_overview(case_id, items),
-            "evidence_summary": self._evidence_summary(items),
-            "correlation_analysis": self._correlation_section(correlation),
-            "cross_case_correlation": self._cross_case_section(cross_case),
-            "campaign_analysis": self._campaign_section(campaigns),
-            "timeline_analysis": self._timeline_section(timeline),
-            "suspect_assessment": self._suspect_section(suspects),
-            "threat_intelligence_summary": self._threat_section(analytics),
-            "model_predictions": self._model_predictions(items),
-            "evidence_quality_summary": self._quality_section(analytics, items),
-            "metadata_summary": self._metadata_section(items),
-            "investigation_statistics": self._statistics_section(analytics),
-            "confidence_analysis": self._confidence_section(items),
-            "investigation_conclusion": self._conclusion(
+            "scope_and_methodology": lambda: self._scope_section(items),
+            "case_overview": lambda: self._case_overview(case_id, items),
+            "evidence_summary": lambda: self._evidence_summary(items),
+            "timeline_analysis": lambda: self._timeline_section(timeline),
+            "correlation_analysis": lambda: self._correlation_section(correlation),
+            "cross_case_correlation": lambda: self._cross_case_section(cross_case),
+            "campaign_analysis": lambda: self._campaign_section(campaigns),
+            "suspect_assessment": lambda: self._suspect_section(suspects),
+            "threat_intelligence_summary": lambda: self._threat_section(analytics),
+            "model_predictions": lambda: self._model_predictions(items),
+            "evidence_quality_summary": lambda: self._quality_section(
+                analytics, items),
+            "metadata_summary": lambda: self._metadata_section(items),
+            "investigation_statistics": lambda: self._statistics_section(analytics),
+            "confidence_analysis": lambda: self._confidence_section(items),
+            "investigation_conclusion": lambda: self._conclusion(
                 items, correlation, campaigns, suspects, timeline),
-            "recommendations": self._recommendations(
+            "recommendations": lambda: self._recommendations(
                 campaigns, suspects, timeline, priority, analytics),
-            "report_provenance": self._provenance(
+            "report_provenance": lambda: self._provenance(
                 case_id, items, report_id, generated_at),
-            "appendix": self._appendix(items),
+            "appendix": lambda: self._appendix(items),
         }
+        sections: Dict[str, Any] = {key: built[key]() for key, _ in SECTION_ORDER}
         markdown = self._render_markdown(case_id, sections)
         duration = round((time.perf_counter() - started) * 1000.0, 1)
 
@@ -826,27 +865,7 @@ class InvestigationReportService:
 
     @staticmethod
     def _render_markdown(case_id: str, sections: Dict[str, Any]) -> str:
-        titles = {
-            "executive_summary": "Executive Summary",
-            "scope_and_methodology": "Scope & Methodology",
-            "case_overview": "Case Overview",
-            "evidence_summary": "Evidence Summary",
-            "correlation_analysis": "Correlation Analysis",
-            "cross_case_correlation": "Cross-Case Correlation",
-            "campaign_analysis": "Campaign Analysis",
-            "timeline_analysis": "Timeline Analysis",
-            "suspect_assessment": "Suspect Assessment",
-            "threat_intelligence_summary": "Threat Intelligence Summary",
-            "model_predictions": "Model Prediction Results",
-            "evidence_quality_summary": "Evidence Quality Summary",
-            "metadata_summary": "Metadata Summary",
-            "investigation_statistics": "Investigation Statistics",
-            "confidence_analysis": "Confidence Analysis",
-            "investigation_conclusion": "Investigation Conclusion",
-            "recommendations": "Recommendations",
-            "report_provenance": "Report Provenance & Integrity",
-            "appendix": "Appendix",
-        }
+        titles = dict(SECTION_ORDER)
         out: List[str] = [
             f"# Forensic Investigation Report - {case_id}",
             "",

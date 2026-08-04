@@ -41,7 +41,6 @@ import { StatCard } from "@/components/common/StatCard";
 import { formatBytes, formatDateTime, titleCase } from "@/lib/format";
 import { BRAND } from "@/theme/theme";
 
-import { buildReportHtml } from "./reportHtml";
 import { buildSimpleReport } from "./reportModel";
 import { SimpleReportView } from "./SimpleReportView";
 import type {
@@ -391,25 +390,32 @@ export function ReportsTab({
     ? buildSimpleReport(latestQuery.data, priorityQuery.data?.report, caseReference)
     : null;
 
-  const downloadReadable = () => {
-    if (!simple) return;
-    const blob = new Blob([buildReportHtml(simple)], { type: "text/html;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `investigation-report-${simple.caseReference || simple.caseId}.html`;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
-  const download = async (fileName: string) => {
-    const blob = await reportsApi.downloadBlob(caseId, fileName);
+  const saveBlob = (blob: Blob, fileName: string) => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
     a.download = fileName;
     a.click();
     URL.revokeObjectURL(url);
+  };
+
+  const download = async (fileName: string) => {
+    saveBlob(await reportsApi.downloadBlob(caseId, fileName), fileName);
+  };
+
+  // The engine renders a paginated PDF alongside the JSON and Markdown, with
+  // the report ID and "Page X of Y" in the footer of every page — that is the
+  // copy that gets printed and filed, so it is what the button hands over.
+  // Falling back to a browser-built HTML file would produce a different
+  // document from the one the engine signed with its provenance hashes.
+  const pdfReport = reports.find((r) => r.format === "pdf");
+
+  const downloadReadable = async () => {
+    if (!pdfReport) return;
+    saveBlob(
+      await reportsApi.downloadBlob(caseId, pdfReport.file_name),
+      `investigation-report-${simple?.caseReference || caseId}.pdf`,
+    );
   };
 
   const openPreview = async (fileName: string) => {
@@ -448,10 +454,15 @@ export function ReportsTab({
                   size="small"
                   variant="contained"
                   startIcon={<DownloadIcon />}
-                  onClick={downloadReadable}
-                  disabled={!simple}
+                  onClick={() => void downloadReadable()}
+                  disabled={!pdfReport}
+                  title={
+                    pdfReport
+                      ? "Download the engine-generated PDF"
+                      : "PDF not available — reportlab is not installed on the engine"
+                  }
                 >
-                  Download report
+                  Download PDF
                 </Button>
                 <Button size="small" startIcon={<VisibilityIcon />} onClick={() => setJsonPreview(true)}>
                   Raw JSON

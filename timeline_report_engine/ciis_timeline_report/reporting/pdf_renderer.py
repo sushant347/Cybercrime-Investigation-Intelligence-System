@@ -43,28 +43,13 @@ ACCENT = "#14532d"
 MUTED = "#4a5568"
 RULE = "#cbd5e0"
 
-#: Section rendering order and display titles (mirrors the Markdown renderer).
-SECTION_TITLES = [
-    ("executive_summary", "Executive Summary"),
-    ("scope_and_methodology", "Scope & Methodology"),
-    ("case_overview", "Case Overview"),
-    ("evidence_summary", "Evidence Summary"),
-    ("correlation_analysis", "Correlation Analysis"),
-    ("cross_case_correlation", "Cross-Case Correlation"),
-    ("campaign_analysis", "Campaign Analysis"),
-    ("timeline_analysis", "Timeline Analysis"),
-    ("suspect_assessment", "Suspect Assessment"),
-    ("threat_intelligence_summary", "Threat Intelligence Summary"),
-    ("model_predictions", "Model Prediction Results"),
-    ("evidence_quality_summary", "Evidence Quality Summary"),
-    ("metadata_summary", "Metadata Summary"),
-    ("investigation_statistics", "Investigation Statistics"),
-    ("confidence_analysis", "Confidence Analysis"),
-    ("investigation_conclusion", "Investigation Conclusion"),
-    ("recommendations", "Recommendations"),
-    ("report_provenance", "Report Provenance & Integrity"),
-    ("appendix", "Appendix"),
-]
+#: Section rendering order and display titles. Imported from the service so the
+#: PDF, the Markdown and the stored JSON cannot present sections in different
+#: orders - there is one definition, in ``service.SECTION_ORDER``.
+def _section_titles() -> List[tuple]:
+    from .service import SECTION_ORDER
+
+    return list(SECTION_ORDER)
 
 
 def _esc(value: Any) -> str:
@@ -345,7 +330,7 @@ def render_pdf(
         return True
 
     # ------------------------------------------------------------- body build
-    for key, title in SECTION_TITLES:
+    for key, title in _section_titles():
         if key not in sections:
             continue
         story.append(Paragraph(title, styles["h2"]))

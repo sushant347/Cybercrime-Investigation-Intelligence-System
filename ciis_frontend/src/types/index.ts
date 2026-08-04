@@ -532,7 +532,9 @@ export interface RegisteredCase {
 // ------------------------------------------------------------- reports
 export interface ReportFile {
   file_name: string;
-  format: "json" | "markdown";
+  /** The engine writes all three alongside each other; "pdf" is the copy
+   *  investigators download, print and file. */
+  format: "json" | "markdown" | "pdf";
   size_bytes: number;
   generated_at: string | null;
   modified_at: number;
