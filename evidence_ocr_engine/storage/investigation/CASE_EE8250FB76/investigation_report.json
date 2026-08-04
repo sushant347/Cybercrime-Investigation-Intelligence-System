@@ -1,22 +1,22 @@
 {
   "report_type": "investigation_report",
-  "report_version": 4,
+  "report_version": 5,
   "schema_version": "2.0",
   "case_id": "CASE_EE8250FB76",
-  "generated_at": "2026-08-04T05:01:18.757Z",
+  "generated_at": "2026-08-04T05:29:51.445Z",
   "report": {
-    "report_id": "RPT-EE8250FB76-11EE178A",
+    "report_id": "RPT-EE8250FB76-86F4937B",
     "sections": {
       "executive_summary": [
-        "Case CASE_EE8250FB76 contains 2 evidence item(s), each acquired under SHA-256 chain-of-custody verification.",
-        "This case is linked to 2 other case(s) through shared entities: CASE_185915593C, CASE_1A1BF573F3 [cross_case_correlation.json].",
-        "The weighted correlation engine found 1 related evidence pair(s) out of 1 analysed [correlation_analysis.json].",
+        "Case CASE_EE8250FB76 contains 2 evidence items, each acquired under SHA-256 chain-of-custody verification.",
+        "This case is linked to 2 other cases through shared entities: CASE_185915593C, CASE_1A1BF573F3 [cross_case_correlation.json].",
+        "The weighted correlation engine found 1 related evidence pair out of 1 analysed [correlation_analysis.json].",
         "The strongest suspect anchor is '05019012345678' (bank_accounts) with confidence 68/100 [suspect_assessment.json].",
         "Observed attack progression: initial_contact -> social_engineering -> financial_transaction -> post_attack [timeline_analysis.json]."
       ],
       "scope_and_methodology": {
         "objective": "Acquire, verify, correlate and reconstruct the digital evidence for this case, and derive investigative leads (suspect anchors, campaigns, cross-case links) strictly from stored, hash-verified artifacts.",
-        "evidence_scope": "2 evidence item(s) acquired through the CIIS intake pipeline under SHA-256 chain-of-custody control.",
+        "evidence_scope": "2 evidence items acquired through the CIIS intake pipeline under SHA-256 chain-of-custody control.",
         "methodology": [
           "Phase 1 - Acquisition & OCR: PaddleOCR PP-OCRv5 text extraction with per-item confidence scoring; SHA-256 fingerprint recorded at intake and re-verified at read.",
           "Phase 1 - Forensics: metadata/EXIF consistency, forgery signals, logo detection and evidence-confidence scoring stored per item under storage/forensics/.",
@@ -60,7 +60,7 @@
         }
       ],
       "timeline_analysis": {
-        "summary": "2 event(s) spanning 0.0 hour(s); 0 timestamp(s) unresolved. Observed scam progression: initial_contact -> social_engineering -> financial_transaction -> post_attack.",
+        "summary": "2 events spanning 0.0 hours; 0 timestamps unresolved. Observed scam progression: initial_contact -> social_engineering -> financial_transaction -> post_attack.",
         "stage_progression": [
           "initial_contact",
           "social_engineering",
@@ -115,7 +115,7 @@
             "pair": "EVID_00005 <-> EVID_00006",
             "strength": "WEAK",
             "confidence": 0.2212,
-            "explanation": "EVID_00005 (08_complaint_letter.pdf) and EVID_00006 (07_bank_transfer_slip.pdf) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+            "explanation": "EVID_00005 (08_complaint_letter.pdf) and EVID_00006 (07_bank_transfer_slip.pdf) show a weak relationship (confidence 0.22) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
           }
         ]
       },
@@ -618,7 +618,7 @@
           "evidence_ids": [
             "EVID_00005"
           ],
-          "explanation": "Suspect anchor '05019012345678' (bank_accounts) scores 67.5/100 (HIGH, risk HIGH) across 1 evidence item(s): EVID_00005. Identity strength: 100/100 (weight 0.25) - '05019012345678' is a bank_account - identity weight 100/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence item(s). Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00005. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 day(s) across its evidence set. Co-occurring identity entities: emails:esewa.cashback99@gmail.com, emails:sunita.gurung21@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, esewa_ids:sunita.gurung21@gmail.com, khalti_ids:+9779801122334, phones:+9779801122334, phones:+9779847011223."
+          "explanation": "Suspect anchor '05019012345678' (bank_accounts) scores 67.5/100 (HIGH, risk HIGH) across 1 evidence item: EVID_00005. Identity strength: 100/100 (weight 0.25) - '05019012345678' is a bank_account - identity weight 100/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence items. Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00005. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: emails:esewa.cashback99@gmail.com, emails:sunita.gurung21@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, esewa_ids:sunita.gurung21@gmail.com, khalti_ids:+9779801122334, phones:+9779801122334, phones:+9779847011223."
         },
         {
           "suspect_id": "SUSPECT_CASE_EE8250FB76_05",
@@ -629,7 +629,7 @@
           "evidence_ids": [
             "EVID_00005"
           ],
-          "explanation": "Suspect anchor 'esewa.cashback99@gmail.com' (esewa_ids) scores 67.5/100 (HIGH, risk HIGH) across 1 evidence item(s): EVID_00005. Identity strength: 100/100 (weight 0.25) - 'esewa.cashback99@gmail.com' is a esewa_id - identity weight 100/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence item(s). Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00005. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 day(s) across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:esewa.cashback99@gmail.com, emails:sunita.gurung21@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:sunita.gurung21@gmail.com, khalti_ids:+9779801122334, phones:+9779801122334, phones:+9779847011223."
+          "explanation": "Suspect anchor 'esewa.cashback99@gmail.com' (esewa_ids) scores 67.5/100 (HIGH, risk HIGH) across 1 evidence item: EVID_00005. Identity strength: 100/100 (weight 0.25) - 'esewa.cashback99@gmail.com' is a esewa_id - identity weight 100/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence items. Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00005. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:esewa.cashback99@gmail.com, emails:sunita.gurung21@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:sunita.gurung21@gmail.com, khalti_ids:+9779801122334, phones:+9779801122334, phones:+9779847011223."
         },
         {
           "suspect_id": "SUSPECT_CASE_EE8250FB76_06",
@@ -640,7 +640,7 @@
           "evidence_ids": [
             "EVID_00005"
           ],
-          "explanation": "Suspect anchor 'sunita.gurung21@gmail.com' (esewa_ids) scores 67.5/100 (HIGH, risk HIGH) across 1 evidence item(s): EVID_00005. Identity strength: 100/100 (weight 0.25) - 'sunita.gurung21@gmail.com' is a esewa_id - identity weight 100/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence item(s). Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00005. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 day(s) across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:esewa.cashback99@gmail.com, emails:sunita.gurung21@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, khalti_ids:+9779801122334, phones:+9779801122334, phones:+9779847011223."
+          "explanation": "Suspect anchor 'sunita.gurung21@gmail.com' (esewa_ids) scores 67.5/100 (HIGH, risk HIGH) across 1 evidence item: EVID_00005. Identity strength: 100/100 (weight 0.25) - 'sunita.gurung21@gmail.com' is a esewa_id - identity weight 100/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence items. Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00005. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:esewa.cashback99@gmail.com, emails:sunita.gurung21@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, khalti_ids:+9779801122334, phones:+9779801122334, phones:+9779847011223."
         },
         {
           "suspect_id": "SUSPECT_CASE_EE8250FB76_07",
@@ -651,7 +651,7 @@
           "evidence_ids": [
             "EVID_00005"
           ],
-          "explanation": "Suspect anchor '+9779801122334' (khalti_ids) scores 67.5/100 (HIGH, risk HIGH) across 1 evidence item(s): EVID_00005. Identity strength: 100/100 (weight 0.25) - '+9779801122334' is a khalti_id - identity weight 100/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence item(s). Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00005. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 day(s) across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:esewa.cashback99@gmail.com, emails:sunita.gurung21@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, esewa_ids:sunita.gurung21@gmail.com, phones:+9779801122334, phones:+9779847011223."
+          "explanation": "Suspect anchor '+9779801122334' (khalti_ids) scores 67.5/100 (HIGH, risk HIGH) across 1 evidence item: EVID_00005. Identity strength: 100/100 (weight 0.25) - '+9779801122334' is a khalti_id - identity weight 100/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence items. Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00005. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:esewa.cashback99@gmail.com, emails:sunita.gurung21@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, esewa_ids:sunita.gurung21@gmail.com, phones:+9779801122334, phones:+9779847011223."
         },
         {
           "suspect_id": "SUSPECT_CASE_EE8250FB76_08",
@@ -662,7 +662,7 @@
           "evidence_ids": [
             "EVID_00005"
           ],
-          "explanation": "Suspect anchor '+9779801122334' (phones) scores 63.8/100 (HIGH, risk HIGH) across 1 evidence item(s): EVID_00005. Identity strength: 85/100 (weight 0.25) - '+9779801122334' is a phone - identity weight 85/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence item(s). Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00005. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 day(s) across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:esewa.cashback99@gmail.com, emails:sunita.gurung21@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, esewa_ids:sunita.gurung21@gmail.com, khalti_ids:+9779801122334, phones:+9779847011223."
+          "explanation": "Suspect anchor '+9779801122334' (phones) scores 63.8/100 (HIGH, risk HIGH) across 1 evidence item: EVID_00005. Identity strength: 85/100 (weight 0.25) - '+9779801122334' is a phone - identity weight 85/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence items. Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00005. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:esewa.cashback99@gmail.com, emails:sunita.gurung21@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, esewa_ids:sunita.gurung21@gmail.com, khalti_ids:+9779801122334, phones:+9779847011223."
         },
         {
           "suspect_id": "SUSPECT_CASE_EE8250FB76_09",
@@ -673,7 +673,7 @@
           "evidence_ids": [
             "EVID_00005"
           ],
-          "explanation": "Suspect anchor '+9779847011223' (phones) scores 63.8/100 (HIGH, risk HIGH) across 1 evidence item(s): EVID_00005. Identity strength: 85/100 (weight 0.25) - '+9779847011223' is a phone - identity weight 85/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence item(s). Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00005. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 day(s) across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:esewa.cashback99@gmail.com, emails:sunita.gurung21@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, esewa_ids:sunita.gurung21@gmail.com, khalti_ids:+9779801122334, phones:+9779801122334."
+          "explanation": "Suspect anchor '+9779847011223' (phones) scores 63.8/100 (HIGH, risk HIGH) across 1 evidence item: EVID_00005. Identity strength: 85/100 (weight 0.25) - '+9779847011223' is a phone - identity weight 85/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence items. Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00005. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:esewa.cashback99@gmail.com, emails:sunita.gurung21@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, esewa_ids:sunita.gurung21@gmail.com, khalti_ids:+9779801122334, phones:+9779801122334."
         },
         {
           "suspect_id": "SUSPECT_CASE_EE8250FB76_02",
@@ -684,7 +684,7 @@
           "evidence_ids": [
             "EVID_00005"
           ],
-          "explanation": "Suspect anchor 'esewa.cashback99@gmail.com' (emails) scores 61.2/100 (HIGH, risk HIGH) across 1 evidence item(s): EVID_00005. Identity strength: 75/100 (weight 0.25) - 'esewa.cashback99@gmail.com' is a email - identity weight 75/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence item(s). Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00005. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 day(s) across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:sunita.gurung21@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, esewa_ids:sunita.gurung21@gmail.com, khalti_ids:+9779801122334, phones:+9779801122334, phones:+9779847011223."
+          "explanation": "Suspect anchor 'esewa.cashback99@gmail.com' (emails) scores 61.2/100 (HIGH, risk HIGH) across 1 evidence item: EVID_00005. Identity strength: 75/100 (weight 0.25) - 'esewa.cashback99@gmail.com' is a email - identity weight 75/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence items. Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00005. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:sunita.gurung21@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, esewa_ids:sunita.gurung21@gmail.com, khalti_ids:+9779801122334, phones:+9779801122334, phones:+9779847011223."
         },
         {
           "suspect_id": "SUSPECT_CASE_EE8250FB76_03",
@@ -695,7 +695,7 @@
           "evidence_ids": [
             "EVID_00005"
           ],
-          "explanation": "Suspect anchor 'sunita.gurung21@gmail.com' (emails) scores 61.2/100 (HIGH, risk HIGH) across 1 evidence item(s): EVID_00005. Identity strength: 75/100 (weight 0.25) - 'sunita.gurung21@gmail.com' is a email - identity weight 75/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence item(s). Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00005. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 day(s) across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:esewa.cashback99@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, esewa_ids:sunita.gurung21@gmail.com, khalti_ids:+9779801122334, phones:+9779801122334, phones:+9779847011223."
+          "explanation": "Suspect anchor 'sunita.gurung21@gmail.com' (emails) scores 61.2/100 (HIGH, risk HIGH) across 1 evidence item: EVID_00005. Identity strength: 75/100 (weight 0.25) - 'sunita.gurung21@gmail.com' is a email - identity weight 75/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence items. Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00005. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:esewa.cashback99@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, esewa_ids:sunita.gurung21@gmail.com, khalti_ids:+9779801122334, phones:+9779801122334, phones:+9779847011223."
         },
         {
           "suspect_id": "SUSPECT_CASE_EE8250FB76_04",
@@ -706,7 +706,7 @@
           "evidence_ids": [
             "EVID_00005"
           ],
-          "explanation": "Suspect anchor 'support@esewa-verify-kyc.com' (emails) scores 61.2/100 (HIGH, risk HIGH) across 1 evidence item(s): EVID_00005. Identity strength: 75/100 (weight 0.25) - 'support@esewa-verify-kyc.com' is a email - identity weight 75/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence item(s). Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - anchor 'support@esewa-verify-kyc.com' is flagged malicious by threat intelligence. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 day(s) across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:esewa.cashback99@gmail.com, emails:sunita.gurung21@gmail.com, esewa_ids:esewa.cashback99@gmail.com, esewa_ids:sunita.gurung21@gmail.com, khalti_ids:+9779801122334, phones:+9779801122334, phones:+9779847011223."
+          "explanation": "Suspect anchor 'support@esewa-verify-kyc.com' (emails) scores 61.2/100 (HIGH, risk HIGH) across 1 evidence item: EVID_00005. Identity strength: 75/100 (weight 0.25) - 'support@esewa-verify-kyc.com' is a email - identity weight 75/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence items. Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - anchor 'support@esewa-verify-kyc.com' is flagged malicious by threat intelligence. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:esewa.cashback99@gmail.com, emails:sunita.gurung21@gmail.com, esewa_ids:esewa.cashback99@gmail.com, esewa_ids:sunita.gurung21@gmail.com, khalti_ids:+9779801122334, phones:+9779801122334, phones:+9779847011223."
         }
       ],
       "threat_intelligence_summary": {
@@ -848,36 +848,36 @@
         }
       ],
       "investigation_conclusion": [
-        "1/2 evidence item(s) passed SHA-256 chain-of-custody verification.",
-        "The evidence set is internally connected (1 weighted relationship(s)), consistent with related activity rather than isolated incidents.",
+        "1/2 evidence items passed SHA-256 chain-of-custody verification.",
+        "The evidence set is internally connected (1 weighted relationship), consistent with related activity rather than isolated incidents.",
         "Investigation should focus on anchor '05019012345678' (68/100 confidence)."
       ],
       "recommendations": [
-        "Get the fake website(s) shut down: esewa-cashback-offer.xyz, esewa-verify-kyc.com. Ask the hosting company to save its records first.",
+        "Get the fake websites shut down: esewa-cashback-offer.xyz, esewa-verify-kyc.com. Ask the hosting company to save its records first.",
         "Tell eSewa their name is being used in this scam, so they can warn other customers.",
         "Ask eSewa who owns these wallets (KYC) and their payment history: sunita.gurung21@gmail.com, esewa.cashback99@gmail.com.",
         "Ask Khalti who owns these wallets (KYC) and their payment history: +9779801122334.",
         "Ask the bank who owns these accounts and their statements: 05019012345678.",
         "Include these payment reference numbers in those requests so the transfers are easy to find: 0119.0625.987456, KH-2026-0611-77245, MBL-2026-441829.",
         "Ask the phone/wallet company who is registered to 05019012345678, esewa.cashback99@gmail.com - it appears again and again across this evidence.",
-        "Go through the 1 key moment(s) - when money moved and codes were shared - with the victim, and record what they lost.",
+        "Go through the 1 key moment - when money moved and codes were shared - with the victim, and record what they lost.",
         "Handle this case in the normal queue (rated 38 out of 100)."
       ],
       "report_provenance": {
-        "report_id": "RPT-EE8250FB76-11EE178A",
-        "generated_at": "2026-08-04T05:01:18.606Z",
+        "report_id": "RPT-EE8250FB76-86F4937B",
+        "generated_at": "2026-08-04T05:29:51.294Z",
         "generator": "CIIS Phase-2 reporting module (template-over-data; no free-text generation)",
         "evidence_set_digest": "0f6afe626b2e5e1c4bb70b2efae2d8aea52ca3d8d38b481532cc8e4ff88c3ff6",
         "evidence_set_digest_note": "SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.",
         "source_artifact_hashes": {
-          "correlation_analysis.json": "48b6ea1e80b2e1ef8a4323beda6ef1e172d53f2e08642b46995981576d4630de",
+          "correlation_analysis.json": "763ce67d40d7b1f5a43f6c0a7cc8d8569b66d6510eea1d8658fde27291854ccd",
           "cross_case_correlation.json": "eb69d4047d8579e0bc5f6954ea3d2fb83b3f633333637e84c7f0eefd53b6e690",
-          "campaign_analysis.json": "27d89311f8580da19391dc8116e45bfe64e3b31d5647fb9e3370669d434a31b1",
-          "suspect_assessment.json": "5b866e77e3e7a2a64b63a2adb18ae22c07908f92ce7253533229d98c9f81f751",
-          "timeline_analysis.json": "3d5df23707fe7d37d4a745d542d169da5892b355b086d912091822240946e56f",
-          "analytics.json": "fa163ef6c2b213ea78429f1ea21cab6510f3ed78a3ccff8c310e1a4f6e11bbee",
-          "case_priority.json": "69872e1502f883922b0cf4e6084e8e719052cedb0b28189e78602c49baaf4999",
-          "graph.json": "be179b64de84278f4270fee3040c23007eea7b3e6ec2779e09fdd9bc970c7121"
+          "campaign_analysis.json": "ff9faff39845004f69aaa6dba02a5ea0f2ebde07fc1d262905124c58de774bdb",
+          "suspect_assessment.json": "ca909a85ca3b6500a62d8aa27b4bd464b8211857f5817fae252c452b3a8ea7ea",
+          "timeline_analysis.json": "fe7c9a401e4fccbf3970c64f86785f0448b92cdcd3e791fcbc005ebe406e2ad1",
+          "analytics.json": "424a78728ca5fe709bb68e51e9967a59e7d3d4873696fce8fc96c6d9f84b67d6",
+          "case_priority.json": "1d9b6b1493c87b19609ab2f830a0e27219d7f80f680b2e1fe174af20b56be3c0",
+          "graph.json": "a2a08d0c6e88fdda1a4c49392ada0ca4866e4096736e4815f6ae984cd1287323"
         }
       },
       "appendix": {

@@ -1,9 +1,9 @@
 {
   "report_type": "graph_statistics",
-  "report_version": 16,
+  "report_version": 17,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-08-04T05:01:18.223Z",
+  "generated_at": "2026-08-04T05:29:50.642Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
     "node_count": 15,

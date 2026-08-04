@@ -1,19 +1,19 @@
 # Forensic Investigation Report - CASE_2CF24DBA5F
 
-Generated: 2026-08-04T05:01:18.402Z  
+Generated: 2026-08-04T05:29:50.850Z  
 Produced by: Cybercrime Investigation Intelligence Engine (CIIS), Phase 2  
 Basis: every statement below references stored forensic findings; no content is generated outside computed results.
 
 ## Executive Summary
 
-- Case CASE_2CF24DBA5F contains 4 evidence item(s), each acquired under SHA-256 chain-of-custody verification.
-- The weighted correlation engine found 6 related evidence pair(s) out of 6 analysed [correlation_analysis.json].
+- Case CASE_2CF24DBA5F contains 4 evidence items, each acquired under SHA-256 chain-of-custody verification.
+- The weighted correlation engine found 6 related evidence pairs out of 6 analysed [correlation_analysis.json].
 - Observed attack progression: financial_transaction -> post_attack -> initial_contact -> social_engineering -> credential_theft [timeline_analysis.json].
 
 ## Scope & Methodology
 
 - **objective**: Acquire, verify, correlate and reconstruct the digital evidence for this case, and derive investigative leads (suspect anchors, campaigns, cross-case links) strictly from stored, hash-verified artifacts.
-- **evidence scope**: 4 evidence item(s) acquired through the CIIS intake pipeline under SHA-256 chain-of-custody control.
+- **evidence scope**: 4 evidence items acquired through the CIIS intake pipeline under SHA-256 chain-of-custody control.
 - **methodology**:
   - Phase 1 - Acquisition & OCR: PaddleOCR PP-OCRv5 text extraction with per-item confidence scoring; SHA-256 fingerprint recorded at intake and re-verified at read.
   - Phase 1 - Forensics: metadata/EXIF consistency, forgery signals, logo detection and evidence-confidence scoring stored per item under storage/forensics/.
@@ -72,7 +72,7 @@ Basis: every statement below references stored forensic findings; no content is 
 
 ## Timeline Analysis
 
-- **summary**: 4 event(s) spanning 4851.7 hour(s); 0 timestamp(s) unresolved. Observed scam progression: financial_transaction -> post_attack -> initial_contact -> social_engineering -> credential_theft.
+- **summary**: 4 events spanning 4851.7 hours; 0 timestamps unresolved. Observed scam progression: financial_transaction -> post_attack -> initial_contact -> social_engineering -> credential_theft.
 - **stage progression**:
   - financial_transaction
   - post_attack
@@ -113,23 +113,23 @@ Basis: every statement below references stored forensic findings; no content is 
   - **pair**: EVID_00001 <-> EVID_00002
   - **strength**: WEAK
   - **confidence**: 0.2545
-  - **explanation**: EVID_00001 (yeti.jpg) and EVID_00002 (whatsapp_chat_export.txt) show a weak relationship (confidence 0.25) based on 2 independent factor(s). Both items reference the same money: npr 2000 [weight 0.07]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40].
+  - **explanation**: EVID_00001 (yeti.jpg) and EVID_00002 (whatsapp_chat_export.txt) show a weak relationship (confidence 0.25) based on 2 independent factors. Both items reference the same money: npr 2000 [weight 0.07]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40].
   - **pair**: EVID_00001 <-> EVID_00003
   - **strength**: WEAK
   - **confidence**: 0.2212
-  - **explanation**: EVID_00001 (yeti.jpg) and EVID_00003 (romanchat.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40].
+  - **explanation**: EVID_00001 (yeti.jpg) and EVID_00003 (romanchat.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40].
   - **pair**: EVID_00001 <-> EVID_00004
   - **strength**: WEAK
   - **confidence**: 0.2212
-  - **explanation**: EVID_00001 (yeti.jpg) and EVID_00004 (phishing_email_screenshot.png) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40].
+  - **explanation**: EVID_00001 (yeti.jpg) and EVID_00004 (phishing_email_screenshot.png) show a weak relationship (confidence 0.22) based on 1 independent factor. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40].
   - **pair**: EVID_00002 <-> EVID_00003
   - **strength**: WEAK
   - **confidence**: 0.2212
-  - **explanation**: EVID_00002 (whatsapp_chat_export.txt) and EVID_00003 (romanchat.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40].
+  - **explanation**: EVID_00002 (whatsapp_chat_export.txt) and EVID_00003 (romanchat.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40].
   - **pair**: EVID_00002 <-> EVID_00004
   - **strength**: WEAK
   - **confidence**: 0.2212
-  - **explanation**: EVID_00002 (whatsapp_chat_export.txt) and EVID_00004 (phishing_email_screenshot.png) show a weak relationship (confidence 0.22) based on 1 independent factor(s). Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40].
+  - **explanation**: EVID_00002 (whatsapp_chat_export.txt) and EVID_00004 (phishing_email_screenshot.png) show a weak relationship (confidence 0.22) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40].
 
 ## Cross-Case Correlation
 
@@ -247,31 +247,31 @@ The active threat-intelligence provider returned no classification for any URL/d
 
 ## Investigation Conclusion
 
-- 4/4 evidence item(s) passed SHA-256 chain-of-custody verification.
-- The evidence set is internally connected (6 weighted relationship(s)), consistent with related activity rather than isolated incidents.
+- 4/4 evidence items passed SHA-256 chain-of-custody verification.
+- The evidence set is internally connected (6 weighted relationships), consistent with related activity rather than isolated incidents.
 - Observed stage order deviates from the canonical scam sequence; evidence acquisition order should be reviewed.
 
 ## Recommendations
 
-- Go through the 2 key moment(s) - when money moved and codes were shared - with the victim, and record what they lost.
+- Go through the 2 key moments - when money moved and codes were shared - with the victim, and record what they lost.
 - Low urgency - handle after the others (rated 30 out of 100).
 
 ## Report Provenance & Integrity
 
-- **report id**: RPT-2CF24DBA5F-66B5A567
-- **generated at**: 2026-08-04T05:01:18.254Z
+- **report id**: RPT-2CF24DBA5F-12CFF9FC
+- **generated at**: 2026-08-04T05:29:50.726Z
 - **generator**: CIIS Phase-2 reporting module (template-over-data; no free-text generation)
 - **evidence set digest**: 845d2580a93c7505d88a3b735dd3a956db233d26f779d05f4a85f60abfe82c3f
 - **evidence set digest note**: SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.
 - **source artifact hashes**:
-  - **correlation analysis.json**: cc5e1d2eb49d80b1d5a70b56bc83728abd9d0a57b87529a84cf72b4f5faca3ec
+  - **correlation analysis.json**: 3b4dfea120ca21d01e15888ab11f16d98a992574e7e70f2f83700f3133e34d8e
   - **cross case correlation.json**: 6c4b7e022465546d0555c8cb462748c5b6c81a0b9a0b5bdb505f7587bf91bc63
-  - **campaign analysis.json**: ad5036a5f3c88d54f08b0e6086f76cc11ef4e483f065c856053308faec8fe407
-  - **suspect assessment.json**: 0256411e08eb8ffd35297b82ca1e42bf5c6a97af101aea3f80361834c3877318
-  - **timeline analysis.json**: 179cd809b68c744b7fcab263660408fed03fafa3b70afe0548858d1a4d1dfd1b
-  - **analytics.json**: 4a56a40bb9e06d84335d6458852cba7ef619761a2b276c96c81c771a6b6a4a57
-  - **case priority.json**: 3d2f3da5a60872c40e1f5e609be386f579802dc3f4c54ae8d94251383458273f
-  - **graph.json**: b3e048ad459b27e50663f1e399d6f2ebbbc1a0152ac8b8326dd7b99d942a63d6
+  - **campaign analysis.json**: 9de713497ccdbdfa2b534f69b0f7da170c0e7bf285cc89f0b917f1f0bb0c5288
+  - **suspect assessment.json**: 752497ea636208cb1e52fbd5eb3207e5fe83f6f05123bf4a23525a67fcbb2704
+  - **timeline analysis.json**: d4189177894610f13490b7e0a6946df2e6d9546e1c4b86af855ba02679eeec1d
+  - **analytics.json**: c27afb6394098d874f9fb7e6c758574bc0111ac66747bc37f8a1adf62e59054d
+  - **case priority.json**: d9776374b6775e023cfeb282e4e71ec308ea387cf71a5b828cccae79b7e13ab5
+  - **graph.json**: 063b55866d7bb07325f3101d13c1be188a04c1e42cfb2c0a41168f17898b107e
 
 ## Appendix
 
