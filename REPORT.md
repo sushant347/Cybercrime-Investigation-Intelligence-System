@@ -247,24 +247,37 @@ L = Σ l(ŷᵢ, yᵢ)  +  Σ_k [ γ·T_k  +  ½·λ·‖w_k‖²  +  α·‖w_k�
 Three different (α, λ) pairs exist in the codebase, for three different
 purposes. This is worth being precise about:
 
-| Context | α (L1) | λ (L2) | Other | Source |
+| Context | α (L1) | λ (L2) | Other | Status |
 |---|---|---|---|---|
-| Class default | 0.1 | 1.0 | depth 8, lr 0.1, 300 est, γ 0.1, min_child_weight 3 | `baseline_models.py:547` |
-| Optuna best trial | **0.0160** | 0.4504 | depth 11, lr 0.0862, 186 est (early-stopped), subsample 0.693, colsample 0.918, γ 0.0545, min_child_weight 5 | `results/best_hyperparameters.json` |
-| Production v3 checkpoint | **0.5** | 2.0 | depth 7, lr 0.07, 500 est, subsample 0.9, colsample 0.7, min_child_weight 5, γ 0.0 | `results/final_model_v3_report.json` |
+| Class default | 0.1 | 1.0 | depth 8, lr 0.1, 300 est, γ 0.1, min_child_weight 3 | fallback only (`baseline_models.py:547`) |
+| **Deployed** | **0.01599** | **0.45043** | depth 11, lr 0.0862, 186 est (early-stopped), subsample 0.693, colsample 0.918, γ 0.0545, min_child_weight 5 | **live** — read from `checkpoints/xgboost.pkl` |
+| Superseded v3 | 0.5 | 2.0 | depth 7, lr 0.07, 500 est, subsample 0.9, colsample 0.7, γ 0.0 | earlier 200k corpus (`final_model_v3_report.json`) |
 
-**Why production regularises ten times harder than Optuna suggested.** The
-untuned baseline showed XGBoost with train accuracy 0.9832 against validation
-0.7850 — a **0.198 generalisation gap**, the worst of any candidate except the
-decision tree. Optuna optimises the tuning objective, which rewards fitting the
-tuning sample; it pushed α down to 0.016 and depth up to 11. The production
-checkpoint goes the other way — α 0.5, λ 2.0, depth 7 — trading a little
-tuning-set score for a model that generalises. That is the correct trade for a
-system whose output is quoted in a report.
+The deployed values are Optuna's best trial, applied verbatim — confirmed by
+unpickling the live checkpoint, not by reading a report about it.
 
-LightGBM's tuned α is 1.037 — an order of magnitude above XGBoost's — because
-its leaf-wise growth overfits more aggressively and needs heavier L1 to
-compensate.
+**Why so little L1 (α = 0.016)?** Because the corpus is large and the feature
+space is small: 585,040 rows against **71 features**. L1's job is to zero out
+uninformative dimensions, and with 71 hand-engineered features there is little
+to eliminate — every one was included because it carries signal. Heavy L1 would
+discard real information. The variance control is carried by λ, `subsample`
+0.693 and `colsample_bytree` 0.918 instead, which is the right division of
+labour when n ≫ p.
+
+**Contrast with the superseded v3 checkpoint** (α 0.5, λ 2.0, depth 7). That was
+trained on a smaller 200k corpus where the same model overfits — the untuned
+baseline showed a **0.198 train/validation gap**, the worst of any candidate
+bar the decision tree. Heavy regularisation was the correct response *at that
+corpus size*; its recall of 0.645 shows what it cost. Growing the corpus to
+585k solved the same problem better, which is why the deployed model can afford
+depth 11 and α 0.016.
+
+The general rule this illustrates: **regularisation strength is a function of
+the data volume, not a property of the algorithm.** Quoting α = 0.5 as "our
+value" without saying which corpus it belongs to would be meaningless.
+
+LightGBM's tuned α is 1.037 — 65× XGBoost's — because its leaf-wise growth
+overfits far more aggressively and needs heavy L1 to compensate.
 
 ### 4.5 Why XGBoost, and why not the others
 
@@ -370,6 +383,43 @@ best model by ~0.0016 F1 and 0.18 pp FNR over LightGBM, and it was preferred
 because it wins on the untouched test set, on the error direction that matters,
 and on explainability. That is a defensible basis for selection. Claiming it
 dominated the field would not be.
+
+#### Which checkpoint is deployed — verified, not assumed
+
+Two training runs exist in `results/`, on **different corpora**, with metrics far
+apart. Quoting one under the other's provenance is the easiest way to lose
+credibility, so this was resolved by unpickling the live checkpoint rather than
+trusting a report.
+
+| | **Deployed** — run `20260712T090000Z` | Superseded — `final_model_v3_report.json` |
+|---|---|---|
+| Corpus | **585,040** URLs (305,573 phishing / 279,467 legit) | `ds-curated-200k-v3` |
+| Evaluated on | 87,756 held-out test | 40,000 validation |
+| Accuracy | 0.9790 | 0.8316 |
+| F1 | **0.9800** | 0.7168 |
+| ROC-AUC | 0.9973 | 0.9125 |
+| Recall | 0.9838 | 0.6449 |
+| α / λ | 0.01599 / 0.45043 | 0.5 / 2.0 |
+
+`checkpoints/production_model.json` and the pickle agree: `run_id
+20260712T090000Z`, dataset 585,040, 71 features, isotonic calibrator, XGBoost
+params exactly Optuna's best trial. **The high figures are the live ones.** The
+v3 report describes an earlier, smaller-corpus checkpoint that is no longer
+deployed.
+
+The checkpoint also records its own selection rationale, which is worth quoting
+verbatim in a viva because it was written by the pipeline, not afterwards:
+
+> *"Selected 'xgboost' using the priority F1 > ROC-AUC > Recall > Precision
+> (accuracy alone is never used): F1=0.9800, ROC-AUC=0.9973, Recall=0.9838,
+> Precision=0.9762, PR-AUC=0.9977, MCC=0.9579. Runner-up: 'lightgbm'."*
+
+Training took 1,652 s (~28 min).
+
+**One caveat.** `dataset_directory` in that file is
+`/sessions/…/mnt/project/sample` — a sandbox path, so the model was trained in a
+different environment from this checkout. The artifact is reproducible from the
+recorded run id and seed, but the path will not resolve locally.
 
 ### 4.6 Calibration — why raw probabilities are not used
 
