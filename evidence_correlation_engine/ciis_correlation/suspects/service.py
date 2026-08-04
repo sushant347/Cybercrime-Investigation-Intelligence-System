@@ -28,6 +28,7 @@ from ..correlation.models import CorrelationAnalysis
 from ..core.data_access import CaseDataRepository, EvidenceContext
 from ..core.repository import InvestigationReportRepository
 from .models import SuspectAssessment, SuspectProfile, SuspectScoreComponent
+from ..core.text import count_of, plural
 
 MODULE = "suspects"
 
@@ -82,7 +83,7 @@ class SuspectService:
                             assessment.model_dump())
             self._audit.record(
                 case_id, MODULE, "assessed",
-                f"{assessment.suspect_count} suspect anchor(s), "
+                f"{count_of(assessment.suspect_count, 'suspect anchor')}, "
                 f"top={assessment.top_suspect or 'none'}",
                 duration_ms=assessment.analysis_time_ms,
             )
@@ -137,7 +138,7 @@ class SuspectService:
         count_score = min(100.0, len(appearances) /
                           cfg.suspect_evidence_count_full_score * 100.0)
         add("evidence_count", count_score,
-            f"appears in {len(appearances)} of {len(all_items)} evidence item(s)")
+            f"appears in {len(appearances)} of {count_of(len(all_items), 'evidence item')}")
 
         ecs = [
             float((c.forensics.get("evidence_confidence", {}) or {})
@@ -165,7 +166,8 @@ class SuspectService:
                 span_days = (dts[-1] - dts[0]).total_seconds() / 86400.0
         span_score = min(100.0, span_days / cfg.suspect_timeline_span_full_days * 100.0)
         add("timeline_span", span_score,
-            f"activity spans {span_days:.1f} day(s) across its evidence set")
+            f"activity spans {span_days:.1f} {plural('day', span_days)} "
+            "across its evidence set")
 
         total_weight = sum(c.weight for c in components) or 1.0
         score = round(sum(c.score * c.weight for c in components) / total_weight, 1)
@@ -257,7 +259,7 @@ class SuspectService:
             f"({profile.identity_type}) scores "
             f"{profile.confidence_score:.1f}/100 "
             f"({profile.confidence_level}, risk {profile.risk_level}) across "
-            f"{profile.evidence_count} evidence item(s): "
+            f"{count_of(profile.evidence_count, 'evidence item')}: "
             + ", ".join(profile.evidence_ids) + "."
         ]
         for component in profile.components:

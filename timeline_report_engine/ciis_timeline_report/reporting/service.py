@@ -30,6 +30,7 @@ from ciis_correlation.core.repository import InvestigationReportRepository
 from ciis_correlation.suspects.models import SuspectAssessment
 from ..timeline.models import TimelineAnalysis
 from . import pdf_renderer
+from ciis_correlation.core.text import count_of, plural
 
 MODULE = "reporting"
 
@@ -258,12 +259,12 @@ class InvestigationReportService:
     def _executive_summary(case_id, items, correlation, campaigns,
                            suspects, timeline, cross_case=None) -> List[str]:
         lines = [
-            f"Case {case_id} contains {len(items)} evidence item(s), each "
+            f"Case {case_id} contains {count_of(len(items), 'evidence item')}, each "
             "acquired under SHA-256 chain-of-custody verification."
         ]
         if cross_case is not None and cross_case.link_count:
             lines.append(
-                f"This case is linked to {cross_case.link_count} other case(s) "
+                f"This case is linked to {count_of(cross_case.link_count, 'other case')} "
                 f"through shared entities: "
                 f"{', '.join(cross_case.related_case_ids)} "
                 "[cross_case_correlation.json]."
@@ -271,15 +272,15 @@ class InvestigationReportService:
         if correlation is not None:
             lines.append(
                 f"The weighted correlation engine found "
-                f"{correlation.related_pair_count} related evidence pair(s) "
+                f"{count_of(correlation.related_pair_count, 'related evidence pair')} "
                 f"out of {correlation.pair_count} analysed [correlation_analysis.json]."
             )
         if campaigns is not None and campaigns.campaign_count:
             largest = max(campaigns.campaigns, key=lambda c: len(c.members))
             lines.append(
-                f"{campaigns.campaign_count} coordinated campaign(s) were "
+                f"{count_of(campaigns.campaign_count, 'coordinated campaign')} were "
                 f"identified; the largest ({largest.campaign_id}) groups "
-                f"{len(largest.members)} item(s) [campaign_analysis.json]."
+                f"{count_of(len(largest.members), 'item')} [campaign_analysis.json]."
             )
         if suspects is not None and suspects.suspect_count:
             top = suspects.suspects[0]
@@ -456,7 +457,7 @@ class InvestigationReportService:
                 "(suspect anchors, campaigns, cross-case links) strictly "
                 "from stored, hash-verified artifacts."),
             "evidence_scope": (
-                f"{len(items)} evidence item(s) acquired through the CIIS "
+                f"{count_of(len(items), 'evidence item')} acquired through the CIIS "
                 "intake pipeline under SHA-256 chain-of-custody control."),
             "methodology": [
                 "Phase 1 - Acquisition & OCR: PaddleOCR PP-OCRv5 text "
@@ -664,18 +665,18 @@ class InvestigationReportService:
         lines: List[str] = []
         verified = sum(1 for c in items if c.hash_verified is True)
         lines.append(
-            f"{verified}/{len(items)} evidence item(s) passed SHA-256 "
+            f"{verified}/{count_of(len(items), 'evidence item')} passed SHA-256 "
             "chain-of-custody verification."
         )
         if correlation is not None and correlation.related_pair_count:
             lines.append(
                 "The evidence set is internally connected "
-                f"({correlation.related_pair_count} weighted relationship(s)), "
+                f"({count_of(correlation.related_pair_count, 'weighted relationship')}), "
                 "consistent with related activity rather than isolated incidents."
             )
         if campaigns is not None and campaigns.campaign_count:
             lines.append(
-                f"{campaigns.campaign_count} campaign cluster(s) indicate "
+                f"{count_of(campaigns.campaign_count, 'campaign cluster')} indicate "
                 "coordinated operation."
             )
         if suspects is not None and suspects.suspect_count:
@@ -758,8 +759,9 @@ class InvestigationReportService:
             shown = ", ".join(hosts[:2])
             more = f" (+{len(hosts) - 2} more)" if len(hosts) > 2 else ""
             actions.append(
-                f"Get the fake website(s) shut down: {shown}{more}. Ask the "
-                "hosting company to save its records first."
+                f"Get the fake {plural('website', len(hosts))} shut down: "
+                f"{shown}{more}. Ask the hosting company to save its records "
+                "first."
             )
         brands = sorted({i.brand_impersonated for i in flagged
                          if i.brand_impersonated})
@@ -818,7 +820,7 @@ class InvestigationReportService:
         critical = len(getattr(timeline, "critical_events", None) or [])
         if critical:
             actions.append(
-                f"Go through the {critical} key moment(s) - when money moved "
+                f"Go through the {count_of(critical, 'key moment')} - when money moved "
                 "and codes were shared - with the victim, and record what they "
                 "lost."
             )

@@ -39,6 +39,7 @@ from backend.modules.evidence.semantic.orchestrator import (  # noqa: E402
     EvidenceProcessingOrchestrator,
 )
 from ciis_timeline_report.pipeline import build_default_pipeline  # noqa: E402
+from ciis_correlation.core.text import count_of
 
 
 def main() -> int:
@@ -51,7 +52,7 @@ def main() -> int:
 
     with open(ecfg.cases_csv, encoding="utf-8") as handle:
         case_ids = [row["case_id"] for row in csv.DictReader(handle)]
-    print(f"{len(case_ids)} case(s): {', '.join(case_ids)}")
+    print(f"{count_of(len(case_ids), 'case')}: {', '.join(case_ids)}")
 
     orchestrator = EvidenceProcessingOrchestrator(ecfg)
     pipeline = build_default_pipeline()
@@ -66,7 +67,7 @@ def main() -> int:
         try:
             summary = orchestrator.process_case(case_id)
             print(f"   re-extracted entities for "
-                  f"{summary['stages'].get('cleaning', 0)} evidence item(s)")
+                  f"{count_of(summary['stages'].get('cleaning', 0), 'evidence item')}")
             processed.append(case_id)
         except Exception as exc:  # noqa: BLE001 - continue with other cases
             # Typical benign cause: a case created in the app but with no
@@ -80,7 +81,7 @@ def main() -> int:
         try:
             refreshed = pipeline.refresh_timeline_graph(case_id)
             cross = refreshed["cross_case"]
-            print(f"   {cross.link_count} cross-case link(s) "
+            print(f"   {count_of(cross.link_count, 'cross-case link')} "
                   f"-> {', '.join(cross.related_case_ids) or 'none'}")
         except Exception as exc:  # noqa: BLE001
             print(f"   !! artifact refresh failed: {exc}")

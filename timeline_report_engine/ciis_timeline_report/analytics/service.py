@@ -28,6 +28,7 @@ from ciis_correlation.core.data_access import CaseDataRepository, EvidenceContex
 from ciis_correlation.core.repository import InvestigationReportRepository
 from ..timeline.models import TimelineAnalysis
 from .models import CaseAnalytics, ThreatIndicator, ValueCount
+from ciis_correlation.core.text import count_of
 
 MODULE = "analytics"
 
@@ -129,7 +130,7 @@ class AnalyticsService:
             self._audit.record(
                 case_id, MODULE, "generated",
                 f"{sum(entity_counts.values())} entities across "
-                f"{len(entity_counts)} type(s)",
+                f"{count_of(len(entity_counts), 'type')}",
                 duration_ms=analytics.analysis_time_ms,
             )
         return analytics

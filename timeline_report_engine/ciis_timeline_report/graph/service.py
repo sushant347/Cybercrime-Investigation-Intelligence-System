@@ -26,6 +26,7 @@ from ciis_correlation.core.config import InvestigationConfig
 from ciis_correlation.correlation.models import CorrelationAnalysis, CrossCaseCorrelation
 from ciis_correlation.core.data_access import CaseDataRepository, EvidenceContext
 from ciis_correlation.core.repository import InvestigationReportRepository
+from ciis_correlation.core.text import count_of
 from ..timeline.models import TimelineAnalysis
 from .models import (
     GraphEdge,
@@ -110,7 +111,7 @@ class GraphService:
             self._audit.record(
                 case_id, MODULE, "built",
                 f"{statistics.node_count} nodes, {statistics.edge_count} edges, "
-                f"{statistics.connected_components} component(s)",
+                f"{count_of(statistics.connected_components, 'component')}",
                 duration_ms=duration,
             )
         return graph
@@ -449,13 +450,13 @@ class GraphService:
         threat_edges = statistics.edges_by_type.get("threat_relationship", 0)
         if threat_edges:
             observations.append(
-                f"{threat_edges} threat-intelligence edge(s) link flagged "
+                f"{count_of(threat_edges, 'threat-intelligence edge')} link flagged "
                 "indicators to evidence."
             )
         behavioral = statistics.edges_by_type.get("behavioral_relationship", 0)
         if behavioral:
             observations.append(
-                f"{behavioral} strong behavioural link(s) derived from the "
+                f"{count_of(behavioral, 'strong behavioural link')} derived from the "
                 "weighted correlation engine."
             )
         if statistics.connected_components == 1 and statistics.node_count > 1:
@@ -467,7 +468,7 @@ class GraphService:
             case_id=graph.case_id,
             headline=(
                 f"{statistics.node_count} nodes and {statistics.edge_count} "
-                f"edges across {statistics.connected_components} component(s)"
+                f"edges across {count_of(statistics.connected_components, 'component')}"
             ),
             key_connectors=connectors,
             observations=observations,

@@ -37,6 +37,20 @@ from typing import Iterable, Optional
 
 OUTPUT_DIR = "output"
 
+
+# Local rather than imported from ciis_correlation.core.text: this module is
+# the framework-independent algorithm and deliberately depends on nothing but
+# the standard library, so it stays testable and reusable on its own.
+def _plural(word: str, count: float) -> str:
+    """``"hour"`` or ``"hours"``, agreeing with ``count``."""
+    return word if count == 1 else f"{word}s"
+
+
+def _count(count: int, word: str) -> str:
+    """``"3 events"`` - the number and its correctly agreeing noun."""
+    return f"{count} {_plural(word, count)}"
+
+
 CHAT_TIMESTAMP_RE = re.compile(
     r"(?P<month>\d{1,2})-(?P<day>\d{1,2})\s*,\s*"
     r"(?P<hour>\d{1,2}):(?P<minute>\d{2})(?::\w+)?"
@@ -430,8 +444,9 @@ def build_timeline(
     milestones = _milestones(ordered)
     critical_events = [event for event in ordered if event["critical"]]
     summary = (
-        f"{len(ordered)} event(s) spanning {span_hours:.1f} hour(s); "
-        f"{len(unresolved)} timestamp(s) unresolved."
+        f"{_count(len(ordered), 'event')} spanning "
+        f"{span_hours:.1f} {_plural('hour', span_hours)}; "
+        f"{_count(len(unresolved), 'timestamp')} unresolved."
     )
     if progression:
         summary += " Observed scam progression: " + " -> ".join(progression) + "."
@@ -510,7 +525,7 @@ def main():
     with open(narrative_path, "w", encoding="utf-8") as f:
         f.write("\n".join(narrative))
 
-    print(f"Built timeline: {timeline['total_events']} event(s), "
+    print(f"Built timeline: {_count(timeline['total_events'], 'event')}, "
           f"{timeline['resolved_count']} resolved, "
           f"{timeline['unresolved_count']} unresolved")
     print(f"Saved -> {timeline_path}")

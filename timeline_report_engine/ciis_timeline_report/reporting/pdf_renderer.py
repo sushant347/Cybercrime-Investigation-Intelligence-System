@@ -21,19 +21,22 @@ from typing import Any, Dict, List, Optional
 
 try:  # reportlab is an optional dependency (installed by dev.sh setup)
     from reportlab.lib import colors
-    from reportlab.lib.enums import TA_LEFT
+    from reportlab.lib.enums import TA_CENTER, TA_LEFT
     from reportlab.lib.pagesizes import A4
     from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
     from reportlab.lib.units import mm
     from reportlab.pdfgen.canvas import Canvas as _BaseCanvas
     from reportlab.platypus import (
         HRFlowable,
+        KeepTogether,
+        PageBreak,
         Paragraph,
         SimpleDocTemplate,
         Spacer,
         Table,
         TableStyle,
     )
+    from reportlab.platypus.tableofcontents import TableOfContents
 
     _REPORTLAB = True
 except ImportError:  # pragma: no cover - environment-dependent
@@ -42,6 +45,14 @@ except ImportError:  # pragma: no cover - environment-dependent
 ACCENT = "#14532d"
 MUTED = "#4a5568"
 RULE = "#cbd5e0"
+
+#: Handling caveat printed on the cover and in the header of every page.
+#: A forensic report circulates outside the unit that produced it, so the
+#: constraint has to travel with the paper, not with the covering email.
+HANDLING = "RESTRICTED - LAW ENFORCEMENT SENSITIVE"
+
+#: The issuing body, printed on the cover and in the running header.
+ISSUING_BODY = "Cybercrime Investigation Intelligence System"
 
 #: Section rendering order and display titles. Imported from the service so the
 #: PDF, the Markdown and the stored JSON cannot present sections in different
@@ -116,10 +127,17 @@ def render_pdf(
     if not _REPORTLAB:
         return None
 
-    footer_text = f"{report_id}  ·  CIIS Investigation Report  ·  {case_id}"
+    # ASCII only: this line carries the identifiers a reader copies out of
+    # the PDF, and the standard-14 fonts ship no ToUnicode map, so a
+    # decorative separator extracts as a replacement char in some tools.
+    footer_text = f"{report_id}  |  CIIS Investigation Report  |  {case_id}"
 
     class _NumberedCanvas(_BaseCanvas):
-        """Two-pass canvas so every footer can say 'Page X of Y'."""
+        """Two-pass canvas so every footer can say 'Page X of Y'.
+
+        Also stamps the running header. Both are drawn on the second pass,
+        once the total page count is known.
+        """
 
         def __init__(self, *args: Any, **kwargs: Any) -> None:
             super().__init__(*args, **kwargs)
@@ -133,9 +151,25 @@ def render_pdf(
             total = len(self._saved)
             for state in self._saved:
                 self.__dict__.update(state)
+                # The cover carries its own banner; a second one would just
+                # repeat itself half an inch higher.
+                if self._pageNumber > 1:
+                    self._draw_header()
                 self._draw_footer(total)
                 super().showPage()
             super().save()
+
+        def _draw_header(self) -> None:
+            self.setFont("Helvetica-Bold", 6.5)
+            self.setFillColor(colors.HexColor("#991b1b"))
+            self.drawString(18 * mm, A4[1] - 11 * mm, HANDLING)
+            self.setFont("Helvetica", 6.5)
+            self.setFillColor(colors.HexColor(MUTED))
+            self.drawRightString(A4[0] - 18 * mm, A4[1] - 11 * mm,
+                                 f"{ISSUING_BODY}  |  Case {case_id}")
+            self.setStrokeColor(colors.HexColor(RULE))
+            self.setLineWidth(0.4)
+            self.line(18 * mm, A4[1] - 13 * mm, A4[0] - 18 * mm, A4[1] - 13 * mm)
 
         def _draw_footer(self, total: int) -> None:
             self.setFont("Helvetica", 7.5)
@@ -148,6 +182,20 @@ def render_pdf(
             self.setLineWidth(0.4)
             self.line(18 * mm, 13.5 * mm, A4[0] - 18 * mm, 13.5 * mm)
 
+    class _ReportDoc(SimpleDocTemplate):
+        """Feeds section headings to the table of contents as they are laid out.
+
+        The TOC needs real page numbers, which are only known once the story
+        has been placed - hence ``multiBuild``, which lays out twice and uses
+        the first pass to resolve them.
+        """
+
+        def afterFlowable(self, flowable: Any) -> None:  # noqa: N802
+            level = getattr(flowable, "_toc_level", None)
+            if level is not None:
+                self.notify("TOCEntry",
+                            (level, flowable.getPlainText(), self.page))
+
     base = getSampleStyleSheet()
     styles = {
         "title": ParagraphStyle(
@@ -157,6 +205,16 @@ def render_pdf(
         "subtitle": ParagraphStyle(
             "r_subtitle", parent=base["Normal"], fontSize=9, leading=13,
             textColor=colors.HexColor(MUTED)),
+        "banner": ParagraphStyle(
+            "r_banner", parent=base["Normal"], fontName="Helvetica-Bold",
+            fontSize=10, leading=14, alignment=TA_CENTER,
+            textColor=colors.HexColor("#991b1b"),
+            borderWidth=0.9, borderColor=colors.HexColor("#991b1b"),
+            borderPadding=5),
+        "h1": ParagraphStyle(
+            "r_h1", parent=base["Heading1"], fontName="Helvetica-Bold",
+            fontSize=13.5, leading=18, textColor=colors.HexColor("#111827"),
+            spaceBefore=0, spaceAfter=2),
         "h2": ParagraphStyle(
             "r_h2", parent=base["Heading2"], fontName="Helvetica-Bold",
             fontSize=11.5, leading=15, textColor=colors.HexColor(ACCENT),
@@ -171,6 +229,9 @@ def render_pdf(
         "mono": ParagraphStyle(
             "r_mono", parent=base["Normal"], fontName="Courier", fontSize=7.5,
             leading=10.5, textColor=colors.HexColor("#374151")),
+        "end": ParagraphStyle(
+            "r_end", parent=base["Normal"], fontSize=8, leading=11,
+            alignment=TA_CENTER, textColor=colors.HexColor(MUTED)),
     }
 
     def esc(value: Any) -> str:
@@ -179,38 +240,70 @@ def render_pdf(
 
     story: List[Any] = []
 
-    # ------------------------------------------------------------- title block
-    story.append(Paragraph(
-        "CYBERCRIME INVESTIGATION INTELLIGENCE SYSTEM", styles["subtitle"]))
+    # -------------------------------------------------------------- cover page
+    story.append(Spacer(1, 22 * mm))
+    story.append(Paragraph(HANDLING, styles["banner"]))
+    story.append(Spacer(1, 14 * mm))
+    story.append(Paragraph(ISSUING_BODY.upper(), styles["subtitle"]))
+    story.append(Spacer(1, 2))
     story.append(Paragraph("Forensic Investigation Report", styles["title"]))
-    story.append(Spacer(1, 3))
-    header_rows = [
-        ["Case ID", case_id, "Report ID", report_id],
-        ["Generated (UTC)", generated_at, "Report version", f"v{report_version}"],
-    ]
-    header_table = Table(
-        header_rows, colWidths=[28 * mm, 62 * mm, 28 * mm, 56 * mm])
-    header_table.setStyle(TableStyle([
-        ("FONTNAME", (0, 0), (-1, -1), "Helvetica"),
-        ("FONTNAME", (0, 0), (0, -1), "Helvetica-Bold"),
-        ("FONTNAME", (2, 0), (2, -1), "Helvetica-Bold"),
-        ("FONTSIZE", (0, 0), (-1, -1), 8),
-        ("TEXTCOLOR", (0, 0), (-1, -1), colors.HexColor("#1f2937")),
-        ("LINEBELOW", (0, 0), (-1, -1), 0.3, colors.HexColor(RULE)),
-        ("TOPPADDING", (0, 0), (-1, -1), 3),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
-        ("LEFTPADDING", (0, 0), (0, -1), 0),
-    ]))
-    story.append(header_table)
-    story.append(Spacer(1, 4))
-    story.append(Paragraph(
-        "Every statement in this report references stored forensic findings; "
-        "no content is generated outside computed results. Section "
-        "“Report Provenance &amp; Integrity” lists the SHA-256 "
-        "digests of the source artifacts.", styles["subtitle"]))
-    story.append(Spacer(1, 4))
-    story.append(HRFlowable(width="100%", thickness=0.8,
+    story.append(Spacer(1, 1.5 * mm))
+    story.append(HRFlowable(width="100%", thickness=1.1,
                             color=colors.HexColor(ACCENT)))
+    story.append(Spacer(1, 8 * mm))
+
+    # Document-control block: what this document is, which case it belongs to,
+    # and which revision the reader is holding.
+    control_rows = [
+        ["Case reference", case_id],
+        ["Report reference", report_id],
+        ["Report version", f"v{report_version}"],
+        ["Date of issue (UTC)", generated_at],
+        ["Status", "Final - machine generated"],
+        ["Prepared by", f"{ISSUING_BODY}, automated analysis pipeline"],
+        ["Handling", HANDLING.title()],
+    ]
+    control = Table(control_rows, colWidths=[45 * mm, 129 * mm])
+    control.setStyle(TableStyle([
+        ("FONTNAME", (0, 0), (0, -1), "Helvetica-Bold"),
+        ("FONTNAME", (1, 0), (1, -1), "Helvetica"),
+        ("FONTSIZE", (0, 0), (-1, -1), 9),
+        ("TEXTCOLOR", (0, 0), (0, -1), colors.HexColor(MUTED)),
+        ("TEXTCOLOR", (1, 0), (1, -1), colors.HexColor("#111827")),
+        ("LINEBELOW", (0, 0), (-1, -1), 0.3, colors.HexColor(RULE)),
+        ("TOPPADDING", (0, 0), (-1, -1), 5),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
+        ("LEFTPADDING", (0, 0), (0, -1), 0),
+        ("VALIGN", (0, 0), (-1, -1), "TOP"),
+    ]))
+    story.append(control)
+    story.append(Spacer(1, 10 * mm))
+    story.append(Paragraph(
+        "<b>Basis of this report.</b> Every statement is templated over a "
+        "stored forensic finding; the generator has no free-text capability "
+        "and cannot introduce a fact the analysis did not compute. Where an "
+        "input was unavailable the report says so explicitly rather than "
+        "inferring. Section 18, Report Provenance &amp; Integrity, lists the "
+        "SHA-256 digest of every source artifact, so this document can be "
+        "tied back to the exact evidence state it was produced from.",
+        styles["body"]))
+    story.append(Spacer(1, 4 * mm))
+    story.append(Paragraph(
+        "<b>Distribution.</b> This report contains material relating to an "
+        "active investigation. Onward disclosure is restricted to persons "
+        "authorised by the case officer.", styles["body"]))
+    story.append(PageBreak())
+
+    # ---------------------------------------------------------------- contents
+    story.append(Paragraph("Contents", styles["h1"]))
+    story.append(Spacer(1, 3 * mm))
+    toc = TableOfContents()
+    toc.levelStyles = [ParagraphStyle(
+        "toc0", fontName="Helvetica", fontSize=9.5, leading=16,
+        leftIndent=0, firstLineIndent=0,
+        textColor=colors.HexColor("#1f2937"))]
+    story.append(toc)
+    story.append(PageBreak())
 
     # ------------------------------------------------------------ table helper
     def data_table(headers: List[str], rows: List[List[str]],
@@ -330,10 +423,18 @@ def render_pdf(
         return True
 
     # ------------------------------------------------------------- body build
+    #
+    # Sections are numbered so the report can be cited precisely — "see 6.2"
+    # is how an investigator, a prosecutor or a defence expert refers to a
+    # finding, and an unnumbered document cannot be cross-referenced at all.
+    number = 0
     for key, title in _section_titles():
         if key not in sections:
             continue
-        story.append(Paragraph(title, styles["h2"]))
+        number += 1
+        heading = Paragraph(f"{number}. {title}", styles["h2"])
+        heading._toc_level = 0  # picked up by _ReportDoc.afterFlowable
+        story.append(heading)
         value = sections.get(key)
         if key == "evidence_summary" and emit_evidence_table(value):
             continue
@@ -354,17 +455,48 @@ def render_pdf(
             continue
         emit(value)
 
-    # -------------------------------------------------------- signature block
-    story.append(Spacer(1, 16))
+    # ------------------------------------------------- limitations & signature
+    #
+    # A forensic report states what it cannot support as plainly as what it
+    # can. Without this, a reader can mistake a correlation score for a
+    # finding of fact, which is exactly the error that discredits a report
+    # under cross-examination.
+    number += 1
+    limits_heading = Paragraph(f"{number}. Statement of Limitations",
+                               styles["h2"])
+    limits_heading._toc_level = 0
+    story.append(limits_heading)
+    for line in (
+        "This report is produced by automated analysis of the material "
+        "submitted to the case. It does not constitute an opinion on guilt, "
+        "and no conclusion here should be read as attributing an offence to a "
+        "named person.",
+        "Correlation confidence expresses how strongly two items of evidence "
+        "share identifying features. It is a measure of association, not of "
+        "causation, and not of identity.",
+        "Suspect scores rank identity anchors observed in the evidence by how "
+        "strongly the material connects them to the case. An anchor is not a "
+        "suspect in law until corroborated by investigation.",
+        "Timestamps resolved from the content of an exhibit carry the "
+        "reliability of that content. Where no timestamp could be recovered, "
+        "the acquisition time is used and is labelled as such.",
+        "The analysis reflects the evidence held at the date of issue. "
+        "Material submitted later may change any finding in this report.",
+    ):
+        story.append(Paragraph(f"&bull; {line}", styles["bullet"]))
+
+    story.append(Spacer(1, 14))
     story.append(HRFlowable(width="100%", thickness=0.5,
                             color=colors.HexColor(RULE)))
     story.append(Spacer(1, 8))
     sign = Table(
-        [["Prepared by (system)", "Reviewed by (investigator)"],
-         ["Cybercrime Investigation Intelligence Engine\n"
-          "Automated Phase-2 reporting module", ""],
+        [["Prepared by (system)", "Reviewed by (investigating officer)"],
+         [f"{ISSUING_BODY}\nAutomated analysis pipeline", ""],
          ["", ""],
-         ["Date:", "Date:                    Signature:"]],
+         [f"Report reference: {report_id}",
+          "Name:                                        "],
+         [f"Date of issue: {generated_at[:10]}",
+          "Signature:                          Date:            "]],
         colWidths=[87 * mm, 87 * mm])
     sign.setStyle(TableStyle([
         ("FONTNAME", (0, 0), (-1, 0), "Helvetica-Bold"),
@@ -373,17 +505,25 @@ def render_pdf(
         ("LINEABOVE", (0, 3), (-1, 3), 0.4, colors.HexColor(MUTED)),
         ("TOPPADDING", (0, 0), (-1, -1), 4),
         ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+        ("VALIGN", (0, 0), (-1, -1), "TOP"),
     ]))
-    story.append(sign)
+    story.append(KeepTogether(sign))
+
+    # Tells the reader nothing is missing from the copy in their hands.
+    story.append(Spacer(1, 10))
+    story.append(Paragraph(
+        f"- End of report | {report_id} -", styles["end"]))
 
     buffer = io.BytesIO()
-    document = SimpleDocTemplate(
+    document = _ReportDoc(
         buffer, pagesize=A4,
         leftMargin=18 * mm, rightMargin=18 * mm,
-        topMargin=16 * mm, bottomMargin=20 * mm,
+        topMargin=20 * mm, bottomMargin=20 * mm,
         title=f"CIIS Investigation Report {case_id}",
-        author="Cybercrime Investigation Intelligence Engine",
-        subject=report_id,
+        author=ISSUING_BODY,
+        subject=f"Forensic investigation report {report_id} for case {case_id}",
     )
-    document.build(story, canvasmaker=_NumberedCanvas)
+    # Two passes: the first resolves the page number of every heading, the
+    # second lays the document out again with a populated contents page.
+    document.multiBuild(story, canvasmaker=_NumberedCanvas)
     return buffer.getvalue()

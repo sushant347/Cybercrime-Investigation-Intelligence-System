@@ -20,6 +20,7 @@ from ..correlation.models import CorrelationAnalysis, EvidencePairCorrelation
 from ..core.data_access import CaseDataRepository, EvidenceContext
 from ..core.repository import InvestigationReportRepository
 from .models import Campaign, CampaignAnalysis, CampaignMembership
+from ..core.text import count_of
 
 MODULE = "campaigns"
 
@@ -90,8 +91,8 @@ class CampaignService:
                             analysis.model_dump())
             self._audit.record(
                 case_id, MODULE, "clustered",
-                f"{analysis.campaign_count} campaign(s), "
-                f"{len(analysis.unclustered_evidence)} unclustered item(s)",
+                f"{count_of(analysis.campaign_count, 'campaign')}, "
+                f"{count_of(len(analysis.unclustered_evidence), 'unclustered item')}",
                 duration_ms=analysis.analysis_time_ms,
             )
         return analysis
@@ -167,7 +168,7 @@ class CampaignService:
                            f"(confidence {pair.correlation_confidence:.2f})")
         explanation = (
             f"{member} belongs to this campaign through "
-            f"{len(linked_via)} weighted correlation link(s): "
+            f"{count_of(len(linked_via), 'weighted correlation link')}: "
             + "; ".join(reasons[:3])
             + ("." if len(reasons) <= 3 else f"; and {len(reasons) - 3} more.")
         ) if linked_via else f"{member} has no internal links."
@@ -211,7 +212,7 @@ class CampaignService:
     def _summary(campaign: Campaign) -> str:
         parts = [
             f"Campaign {campaign.campaign_id} groups "
-            f"{len(campaign.members)} evidence item(s) with mean link "
+            f"{count_of(len(campaign.members), 'evidence item')} with mean link "
             f"confidence {campaign.campaign_confidence:.2f}."
         ]
         if campaign.signature:

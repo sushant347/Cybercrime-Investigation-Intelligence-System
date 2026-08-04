@@ -24,6 +24,7 @@ from ciis_correlation.correlation.models import CorrelationAnalysis
 
 from . import engine
 from .models import TimelineAnalysis
+from ciis_correlation.core.text import count_of
 
 MODULE = "timeline"
 
@@ -78,7 +79,7 @@ class TimelineService:
                 case_id,
                 MODULE,
                 "analyzed",
-                f"{len(analysis.events)} event(s), "
+                f"{count_of(len(analysis.events), 'event')}, "
                 f"resolved={int(analysis.statistics.get('resolved_event_count', 0))}, "
                 f"inferred={int(analysis.statistics.get('inferred_event_count', 0))}",
                 duration_ms=analysis.analysis_time_ms,

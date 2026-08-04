@@ -37,6 +37,7 @@ from .reporting.service import InvestigationReportService
 from ciis_correlation.core.repository import InvestigationReportRepository
 from ciis_correlation.suspects.service import SuspectService
 from .timeline.service import TimelineService
+from ciis_correlation.core.text import count_of
 
 MODULE = "phase2_pipeline"
 
@@ -81,7 +82,7 @@ class InvestigationPipeline:
             raise EvidenceError(f"Unknown case '{case_id}'")
         evidence = self._data.load_case_evidence(case_id)
         self._audit.record(case_id, MODULE, "started",
-                           f"{len(evidence)} evidence item(s)")
+                           f"{count_of(len(evidence), 'evidence item')}")
 
         results: Dict[str, Any] = {}
         failures: List[str] = []
@@ -199,8 +200,8 @@ class InvestigationPipeline:
             case_id,
             MODULE,
             "timeline_graph_refreshed",
-            f"{len(evidence)} evidence item(s), {len(timeline.events)} event(s), "
-            f"{len(graph.nodes)} graph node(s)",
+            f"{count_of(len(evidence), 'evidence item')}, {count_of(len(timeline.events), 'event')}, "
+            f"{count_of(len(graph.nodes), 'graph node')}",
         )
         return {
             "correlation": correlation,
@@ -236,7 +237,7 @@ class InvestigationPipeline:
         if updated:
             self._audit.record(
                 case_id, MODULE, "cross_case_propagated",
-                f"updated {len(updated)} linked case(s): {', '.join(updated)}")
+                f"updated {count_of(len(updated), 'linked case')}: {', '.join(updated)}")
         return updated
 
     def analyze_all_cases(self) -> Dict[str, Dict[str, Any]]:

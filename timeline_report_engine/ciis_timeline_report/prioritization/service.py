@@ -22,6 +22,7 @@ from ciis_correlation.correlation.models import CorrelationAnalysis
 from ciis_correlation.core.repository import InvestigationReportRepository
 from ..timeline.models import TimelineAnalysis
 from .models import CasePriority, PriorityComponent
+from ciis_correlation.core.text import count_of
 
 MODULE = "prioritization"
 
@@ -79,8 +80,8 @@ class PrioritizationService:
             threat_score = ratio * 100.0
             if threat.get("malicious_indicators", 0) > 0:
                 indicators.append(
-                    f"{int(threat['malicious_indicators'])} threat-flagged "
-                    "indicator(s) present in the evidence"
+                    f"{count_of(int(threat['malicious_indicators']), 'threat-flagged indicator')}"
+                    " present in the evidence"
                 )
         add("threat_intelligence", threat_score,
             f"{threat.get('threat_evidence_ratio', 0):.0%} of evidence touches "
@@ -107,12 +108,12 @@ class PrioritizationService:
                                  largest / cfg.priority_campaign_full_size * 100.0)
             if largest >= cfg.priority_campaign_full_size:
                 indicators.append(
-                    f"large coordinated campaign of {largest} evidence item(s)"
+                    f"large coordinated campaign of {count_of(largest, 'evidence item')}"
                 )
         add("campaign_size", campaign_score,
-            f"largest campaign groups "
-            f"{max((len(c.members) for c in campaigns.campaigns), default=0)} "
-            "item(s)" if campaigns is not None else "")
+            "largest campaign groups "
+            f"{count_of(max((len(c.members) for c in campaigns.campaigns), default=0), 'item')}"
+            if campaigns is not None else "")
 
         correlation_score = None
         if correlation is not None and correlation.pairs:
@@ -130,10 +131,10 @@ class PrioritizationService:
                                  critical / cfg.priority_critical_events_full * 100.0)
             if critical:
                 indicators.append(
-                    f"{critical} critical event(s) involving OTP/financial entities"
+                    f"{count_of(critical, 'critical event')} involving OTP/financial entities"
                 )
         add("timeline_criticality", timeline_score,
-            f"{len(timeline.critical_events)} critical timeline event(s)"
+            f"{count_of(len(timeline.critical_events), 'critical timeline event')}"
             if timeline is not None else "")
 
         available = [c for c in components if c.available]
@@ -189,7 +190,7 @@ class PrioritizationService:
                      available: List[PriorityComponent]) -> str:
         parts = [
             f"Case priority is {score:.1f}/100 ({level}), computed from "
-            f"{len(available)} available dimension(s) with renormalised weights."
+            f"{count_of(len(available), 'available dimension')} with renormalised weights."
         ]
         for component in sorted(available, key=lambda c: c.score * c.weight,
                                 reverse=True):

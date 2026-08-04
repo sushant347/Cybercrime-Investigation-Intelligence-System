@@ -206,7 +206,9 @@ describe("TimelineChart multi-stage events", () => {
       event({ timestamp: "2026-01-01T11:00:00Z", stages: ["initial_contact"] }),
     ]);
     expect(container.textContent).toContain("2 events");
-    expect(container.textContent).toContain("no events start here · 1 also evidence this");
+    // Credential Theft has no event of its own; the one that evidences it is
+    // reported as an echo rather than counted as starting there.
+    expect(container.textContent).toContain("none start · 1 echo");
   });
 
   it("draws a full marker in every stage when asked to", async () => {

@@ -50,6 +50,7 @@ from .models import (
     SharedValueDetail,
 )
 from .specificity import EntitySpecificityModel
+from ..core.text import count_of, plural
 
 MODULE = "correlation"
 CROSS_CASE_MODULE = "cross_case_correlation"
@@ -244,7 +245,7 @@ class CorrelationService:
                         correlation.model_dump())
         self._audit.record(
             case_id, CROSS_CASE_MODULE, "linked",
-            f"{correlation.link_count} related case(s): "
+            f"{count_of(correlation.link_count, 'related case')}: "
             f"{', '.join(correlation.related_case_ids) or 'none'}",
             duration_ms=correlation.analysis_time_ms,
         )
@@ -489,8 +490,9 @@ class CorrelationService:
             return None
         return self._factor(
             "threat_intelligence", len(shared), shared,
-            "Threat intelligence flags the same malicious indicator(s) in both "
-            f"items: {', '.join(shared[:3])}",
+            f"Threat intelligence flags the same malicious "
+            f"{plural('indicator', len(shared))} in both items: "
+            f"{', '.join(shared[:3])}",
         )
 
     # ---------------------------------------------------------------- helpers
@@ -560,7 +562,7 @@ class CorrelationService:
             f"{a.evidence_id} ({a.file_name}) and {b.evidence_id} "
             f"({b.file_name}) show a {strength.replace('_', ' ').lower()} "
             f"relationship (confidence {confidence:.2f}) based on "
-            f"{len(factors)} independent factor(s)."
+            f"{count_of(len(factors), 'independent factor')}."
         ]
         for factor in factors:
             parts.append(f"{factor.reason} [weight {factor.contribution:.2f}].")

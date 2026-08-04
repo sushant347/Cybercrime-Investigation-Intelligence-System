@@ -47,6 +47,10 @@ const EDGE_PAD = 18;
 const BAR_H = 20;
 /** Hovering off a marker waits this long, so the pointer can reach the card. */
 const HOVER_GRACE_MS = 220;
+/** Marks the tooltip so the page-scroll listener can tell its own scroll apart. */
+const TOOLTIP_MARKER = "data-timeline-tooltip";
+/** Below this width a collapsed-gap band cannot hold its own duration label. */
+const GAP_LABEL_MIN_PX = 46;
 
 interface Cluster {
   x: number;
@@ -97,10 +101,19 @@ export function TimelineChart({
     return () => observer.disconnect();
   }, []);
 
-  // The tooltip is viewport-anchored, so a scroll would leave it stranded.
+  // The tooltip is viewport-anchored, so scrolling the page would leave it
+  // stranded next to nothing — hence dropping it on scroll. But the tooltip
+  // scrolls internally when a cluster has more events than fit, and this
+  // listener is on the capture phase, so it used to see that inner scroll and
+  // close the very list the reader was scrolling. Scrolls that originate
+  // inside the tooltip are therefore ignored.
   useEffect(() => {
     if (!hover) return;
-    const drop = () => setHover(null);
+    const drop = (event: Event) => {
+      const target = event.target;
+      if (target instanceof Element && target.closest(`[${TOOLTIP_MARKER}]`)) return;
+      setHover(null);
+    };
     window.addEventListener("scroll", drop, true);
     return () => window.removeEventListener("scroll", drop, true);
   }, [hover]);
@@ -341,6 +354,16 @@ export function TimelineChart({
               setHotLane(null);
             }}
           >
+            {/* Stage names and captions are free text of unknown length. The
+                plot begins at LABEL_W, so without a clip a long stage name ran
+                under the gridlines and markers. This bounds the label column
+                absolutely, whatever the wording or font. */}
+            <defs>
+              <clipPath id="timeline-label-column">
+                <rect x={0} y={0} width={LABEL_W - 10} height={height} />
+              </clipPath>
+            </defs>
+
             {/* Lane rows: label column on the left, plot area on the right. */}
             {lanes.map((stage, lane) => {
               const meta = stageMeta(stage, lane);
@@ -358,24 +381,36 @@ export function TimelineChart({
                     opacity={hot ? 0.07 : lane % 2 === 1 ? 0.025 : 0}
                   />
                   {/* Colour key + stage name + what it actually means. */}
-                  <circle cx={12} cy={laneY(lane) - 5} r={5} fill={meta.color} />
-                  <text
-                    x={26}
-                    y={laneY(lane) - 1}
-                    fontSize={12.5}
-                    fontWeight={700}
-                    fill={theme.palette.text.primary}
-                  >
-                    {meta.label}
-                  </text>
-                  <text
-                    x={26}
-                    y={laneY(lane) + 14}
-                    fontSize={10.5}
-                    fill={theme.palette.text.secondary}
-                  >
-                    {laneCaption(bar)}
-                  </text>
+                  <g clipPath="url(#timeline-label-column)">
+                    <circle cx={12} cy={laneY(lane) - 5} r={5} fill={meta.color} />
+                    <text
+                      x={26}
+                      y={laneY(lane) - 1}
+                      fontSize={12.5}
+                      fontWeight={700}
+                      fill={theme.palette.text.primary}
+                    >
+                      {meta.label}
+                    </text>
+                    <text
+                      x={26}
+                      y={laneY(lane) + 14}
+                      fontSize={10.5}
+                      fill={theme.palette.text.secondary}
+                    >
+                      {laneCaption(bar)}
+                    </text>
+                  </g>
+                  {/* Separates the label column from the plot, so the eye reads
+                      them as two panes instead of one crowded strip. */}
+                  <line
+                    x1={LABEL_W - 10}
+                    x2={LABEL_W - 10}
+                    y1={TOP_PAD + lane * LANE_H + 6}
+                    y2={TOP_PAD + (lane + 1) * LANE_H - 6}
+                    stroke={theme.palette.divider}
+                    strokeWidth={1}
+                  />
                 </g>
               );
             })}
@@ -402,15 +437,19 @@ export function TimelineChart({
                     strokeWidth={1.5}
                   />
                 ))}
-                <text
-                  x={(gap.x0 + gap.x1) / 2}
-                  y={axisY - 6}
-                  textAnchor="middle"
-                  fontSize={9.5}
-                  fill={theme.palette.text.secondary}
-                >
-                  {humanSpan(gap.t1 - gap.t0)}
-                </text>
+                {/* A narrow gap has no room for its own duration; the label
+                    would spill over the markers on either side of it. */}
+                {gap.x1 - gap.x0 >= GAP_LABEL_MIN_PX && (
+                  <text
+                    x={(gap.x0 + gap.x1) / 2}
+                    y={axisY - 6}
+                    textAnchor="middle"
+                    fontSize={9.5}
+                    fill={theme.palette.text.secondary}
+                  >
+                    {humanSpan(gap.t1 - gap.t0)}
+                  </text>
+                )}
               </g>
             ))}
 
@@ -575,15 +614,24 @@ export function TimelineChart({
 }
 
 /** Lane sub-caption: what is drawn here, and over how long. */
+/**
+ * One short line under each stage name.
+ *
+ * Says the same three things as before — how many events start here, how many
+ * merely evidence the stage, and how long it ran — but tersely. The long form
+ * ("no events start here · 1 also evidence this · 2 days") ran past the label
+ * column on most screens and buried the numbers a reader scans for. "echo"
+ * matches the hollow echo markers, which the "draw in every stage" toggle
+ * explains.
+ */
 function laneCaption(
   bar: { count: number; echoes: number; from: number; to: number } | undefined,
 ): string {
   if (!bar) return "no events";
-  const span = bar.to > bar.from ? humanSpan(bar.to - bar.from) : "single moment";
-  const head =
-    bar.count > 0 ? `${bar.count} event${bar.count === 1 ? "" : "s"}` : "no events start here";
-  const echo = bar.echoes > 0 ? ` · ${bar.echoes} also evidence this` : "";
-  return `${head}${echo} · ${span}`;
+  const echo = bar.echoes > 0 ? ` · ${bar.echoes} echo` : "";
+  if (bar.count === 0) return `none start${echo}`;
+  const span = bar.to > bar.from ? humanSpan(bar.to - bar.from) : "one moment";
+  return `${bar.count} event${bar.count === 1 ? "" : "s"}${echo} · ${span}`;
 }
 
 /** Marker shapes double up the severity signal so colour is never the only cue. */
@@ -731,6 +779,7 @@ function ClusterTooltip({
   return (
     <Box
       ref={ref}
+      {...{ [TOOLTIP_MARKER]: "" }}
       onMouseEnter={onEnter}
       onMouseLeave={onLeave}
       sx={{

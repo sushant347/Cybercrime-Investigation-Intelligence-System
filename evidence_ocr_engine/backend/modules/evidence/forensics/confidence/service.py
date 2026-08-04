@@ -179,9 +179,11 @@ class ConfidenceScoringService:
     ) -> str:
         strongest = max(available, key=lambda c: c.score * c.weight, default=None)
         weakest = min(available, key=lambda c: c.score, default=None)
+        count = len(available)
         parts = [
             f"Evidence confidence is {score:.1f}/100 ({level}), "
-            f"derived from {len(available)} verified dimension(s)."
+            f"derived from {count} verified "
+            f"dimension{'' if count == 1 else 's'}."
         ]
         if strongest is not None:
             parts.append(f"Strongest signal: {strongest.name} ({strongest.score:.0f}/100).")
