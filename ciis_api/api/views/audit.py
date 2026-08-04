@@ -1,6 +1,5 @@
 """Unified audit trail: Phase-1 processing log + Phase-2 investigation audit
 + platform activity log, merged and filterable."""
-from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from ..permissions import require

@@ -32,7 +32,7 @@ from .pdf_processor import PDFProcessor
 from .preprocessing import ImagePreprocessor, load_image
 from .schemas import EvidenceOCRResult, PageResult
 from .upload import EvidenceUploader
-from .utils import EmptyOCRError, EvidenceError, file_extension, utc_now_iso
+from .utils import EmptyOCRError, EvidenceError, utc_now_iso
 
 
 #: Called as ``(stage_key, human_note)`` when the pipeline enters a step.

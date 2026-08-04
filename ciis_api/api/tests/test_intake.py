@@ -1,5 +1,4 @@
 """Intake: reference -> stable case id, create-then-reopen semantics."""
-import pytest
 
 
 

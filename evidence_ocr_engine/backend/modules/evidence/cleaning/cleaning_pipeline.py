@@ -20,7 +20,7 @@ replaced without changing this class.
 from __future__ import annotations
 
 import time
-from typing import Dict, List, Optional
+from typing import List, Optional
 
 from ..logger import get_logger
 from .cleaning_schemas import CleaningResult, CleaningStatistics, EntityRecord

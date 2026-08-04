@@ -16,7 +16,7 @@ exists only so investigators can run one command instead of three.
 
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 from ..config import EvidenceConfig
 from ..logger import StageTimer, get_logger

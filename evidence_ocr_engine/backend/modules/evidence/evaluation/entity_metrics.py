@@ -20,7 +20,7 @@ Aggregates are reported **both** ways (a common type must not mask a weak one):
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Callable, Dict, Iterable, List, Mapping, Optional, Set, Tuple
+from typing import Callable, Dict, Iterable, List, Mapping, Optional, Set
 
 
 # --------------------------------------------------------------- normalization

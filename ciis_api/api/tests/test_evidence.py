@@ -1,7 +1,6 @@
 """Evidence upload path — including the F1 proof that the FULL Phase-1 chain
 (OCR -> cleaning -> enhancement -> semantic -> entity extraction) runs for
 web-uploaded evidence, not OCR only."""
-import pytest
 
 
 

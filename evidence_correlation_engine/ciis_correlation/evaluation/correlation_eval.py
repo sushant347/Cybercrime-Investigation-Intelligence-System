@@ -11,7 +11,7 @@ Pairs are order-independent: ``(A, B)`` == ``(B, A)`` (a ``frozenset``).
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Dict, FrozenSet, Iterable, List, Set, Tuple
+from typing import Any, Dict, FrozenSet, Iterable, Set, Tuple
 
 Pair = FrozenSet[str]
 

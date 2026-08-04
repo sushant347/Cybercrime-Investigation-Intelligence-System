@@ -13,6 +13,7 @@ No forensic logic lives here - only orchestration and data access.
 from __future__ import annotations
 
 import csv
+import importlib.util
 import logging
 import sys
 import threading
@@ -922,7 +923,47 @@ def engine_health() -> dict[str, Any]:
         "cases_csv": cfg.cases_csv.is_file(),
         "evidence_csv": cfg.evidence_csv.is_file(),
         "investigation_dir": investigation_config().investigation_dir.is_dir(),
+        **_optional_capabilities(),
     }
+
+
+def _optional_capabilities() -> dict[str, Any]:
+    """Which optional analysis capabilities this deployment can actually run.
+
+    Both degrade silently by design - the pipeline works without them - but a
+    forensic deployment has to be able to state which mode it is in *before*
+    evidence is processed, not infer it afterwards from per-item fields. A
+    report that says "semantically corrected" means something different when
+    the corrector was a multilingual language model than when it was the
+    dictionary fallback.
+
+    Neither probe loads a model, and neither imports an engine package.
+    ``find_spec`` resolves a module without executing it, which keeps this
+    cheap and - more importantly - keeps it off the import graph: warm-up runs
+    in a background thread, and a probe that imported the semantic package
+    could observe it half-initialised and report "unknown" for no real reason.
+
+    ``MLThreatIntelProvider.available`` is deliberately *not* called: it loads
+    the classifier, which is far too expensive for a health endpoint.
+    """
+    capabilities: dict[str, Any] = {}
+
+    # Mirrors SemanticCorrectionPipeline._default_validator: XLM-R is used when
+    # transformers is present, otherwise the heuristic fallback. The
+    # authoritative per-item record stays on each semantic result
+    # (``validator=`` in the stored artifact); this is the deployment-level view.
+    semantic_ml = importlib.util.find_spec("transformers") is not None
+    capabilities["semantic_ml_available"] = semantic_ml
+    capabilities["semantic_validator"] = "xlm-roberta-base" if semantic_ml else "heuristic"
+
+    enabled = bool(getattr(settings, "ML_THREAT_INTEL_ENABLED", False))
+    model = getattr(settings, "ML_THREAT_INTEL_MODEL", "xgboost")
+    root = getattr(settings, "ML_THREAT_INTEL_ROOT", None)
+    checkpoint = Path(root) / "checkpoints" / f"{model}.pkl" if root else None
+    capabilities["threat_ml_enabled"] = enabled
+    capabilities["threat_ml_checkpoint"] = bool(checkpoint and checkpoint.is_file())
+
+    return capabilities
 
 
 def iter_case_artifact(case_ids: list[str], key: str) -> Iterator[tuple[str, dict]]:

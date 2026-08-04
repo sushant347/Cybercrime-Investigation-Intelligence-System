@@ -10,7 +10,7 @@ high-risk indicators plus an investigation recommendation.
 
 from __future__ import annotations
 
-from typing import Dict, List, Optional
+from typing import List, Optional
 
 from backend.modules.evidence.logger import get_logger
 from backend.modules.evidence.utils import utc_now_iso

@@ -7,7 +7,6 @@ is a documented no-op. The thesis row must state this honestly, not claim
 permitted (never 401/403) — so the table's claim is backed by a passing test
 rather than an assumption.
 """
-import pytest
 
 
 _DENIED = {401, 403}

@@ -1,5 +1,4 @@
 """Phase-2 analysis: run analysis on an enriched case and read artifacts."""
-import pytest
 
 
 

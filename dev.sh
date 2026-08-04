@@ -496,7 +496,23 @@ doctor() {
   echo "  API port         : $CIIS_API_PORT $(port_busy "$CIIS_API_PORT" && echo '(BUSY - will be auto-bumped)' || echo '(free)')"
   echo "  web port         : $WEB_PORT $(port_busy "$WEB_PORT" && echo '(BUSY - will be auto-bumped)' || echo '(free)')"
   echo "  full pipeline    : CIIS_RUN_FULL_PIPELINE=$CIIS_RUN_FULL_PIPELINE"
-  echo "  ML threat intel  : CIIS_ML_THREAT_INTEL=${CIIS_ML_THREAT_INTEL:-0}"
+  # The API defaults this to 1 (ciis_api/config/settings.py). Printing 0 as the
+  # default told the operator the opposite of what the running system does.
+  echo "  ML threat intel  : CIIS_ML_THREAT_INTEL=${CIIS_ML_THREAT_INTEL:-1}\
+ $([ "${CIIS_ML_THREAT_INTEL:-1}" = "1" ] \
+   && echo '(enabled; needs a venv with the ML stack, else falls back)' \
+   || echo '(disabled)')"
+  # Semantic correction uses xlm-roberta-base when transformers is importable,
+  # otherwise a dictionary heuristic. Both are valid; which one ran is recorded
+  # on every piece of evidence, so the operator should know which to expect.
+  local ppy_probe; ppy_probe="$(venv_py "$ROOT/$PLATFORM_VENV")"
+  if [ -x "$ppy_probe" ]; then
+    if "$ppy_probe" -c "import importlib.util,sys; sys.exit(0 if importlib.util.find_spec('transformers') else 1)" 2>/dev/null; then
+      echo "  semantic validator: xlm-roberta-base (transformers installed)"
+    else
+      echo "  semantic validator: heuristic (transformers not installed - optional)"
+    fi
+  fi
   echo
 
   if [ "$problems" -eq 0 ]; then ok "Everything looks good. Run: ./dev.sh"

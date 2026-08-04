@@ -229,10 +229,31 @@ class SemanticCorrectionPipeline:
     @staticmethod
     def _default_validator(use_xlm_roberta: bool) -> BaseSemanticValidator:
         """XLM-R if requested and importable; otherwise the heuristic fallback."""
-        if use_xlm_roberta:
-            try:
-                import transformers  # noqa: F401
-                return XLMRobertaValidator()
-            except Exception:  # noqa: BLE001 - offline / not installed
-                pass
+        if use_xlm_roberta and xlm_roberta_available():
+            return XLMRobertaValidator()
         return HeuristicSemanticValidator()
+
+
+def xlm_roberta_available() -> bool:
+    """True when the XLM-R validator can actually run in this environment.
+
+    ``transformers`` and ``torch`` are deliberately commented out of
+    ``requirements.txt`` - together they are a multi-gigabyte download, and the
+    pipeline is designed to degrade to :class:`HeuristicSemanticValidator`
+    without them. That degradation is correct, but it must not be *invisible*:
+    an investigator needs to know whether the semantic correction applied to a
+    case was model-backed or heuristic, and a deployment needs to be able to
+    report which mode it is in before any evidence is processed. This probe is
+    what makes that answerable - see ``engine_health()`` in the API bridge.
+    """
+    try:
+        import transformers  # noqa: F401
+        return True
+    except Exception:  # noqa: BLE001 - offline, not installed, or broken install
+        return False
+
+
+def active_validator_name(use_xlm_roberta: bool = True) -> str:
+    """Name of the validator this environment would use, without building it."""
+    return (XLMRobertaValidator.name if use_xlm_roberta and xlm_roberta_available()
+            else HeuristicSemanticValidator.name)

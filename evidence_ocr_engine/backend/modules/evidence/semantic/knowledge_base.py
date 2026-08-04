@@ -15,7 +15,6 @@ Adding new words/pairs requires editing the JSON only - no code change.
 from __future__ import annotations
 
 import json
-import unicodedata
 from pathlib import Path
 from typing import Dict, List, Optional
 

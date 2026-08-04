@@ -1,5 +1,4 @@
 """Direct unit tests for the engine bridge helpers (no HTTP)."""
-import pytest
 
 
 
@@ -9,6 +8,51 @@ def test_engine_health_reports_storage(api):
     health = engine.engine_health()
     assert health["storage_ok"] is True
     assert "engine_root" in health
+
+
+def test_engine_health_states_which_optional_capabilities_are_live(api):
+    """The two optional capabilities degrade silently; health must not.
+
+    Semantic correction runs XLM-R or a dictionary heuristic, and threat intel
+    runs the ML classifier or heuristics. Both are valid, but a forensic
+    deployment has to be able to say which one processed its evidence, so the
+    mode is reported rather than left to be inferred.
+    """
+    from api import engine
+
+    health = engine.engine_health()
+
+    assert isinstance(health["semantic_ml_available"], bool)
+    # The name must agree with the availability flag, or the report would
+    # describe a validator that never ran.
+    expected = "xlm-roberta-base" if health["semantic_ml_available"] else "heuristic"
+    assert health["semantic_validator"] == expected
+
+    assert isinstance(health["threat_ml_enabled"], bool)
+    assert isinstance(health["threat_ml_checkpoint"], bool)
+
+
+def test_engine_health_never_loads_a_model(api, monkeypatch):
+    """Health is called per dashboard request; it must stay cheap.
+
+    Guards against the obvious regression: reaching for
+    ``MLThreatIntelProvider.available``, which loads the classifier.
+    """
+    import importlib
+
+    from api import engine
+
+    loaded: list[str] = []
+    real_import = importlib.import_module
+
+    def spy(name, *args, **kwargs):
+        loaded.append(name)
+        return real_import(name, *args, **kwargs)
+
+    monkeypatch.setattr(importlib, "import_module", spy)
+    engine.engine_health()
+
+    assert not any("ml_provider" in name or name == "torch" for name in loaded)
 
 
 def test_enrich_disabled_flag(monkeypatch, api):

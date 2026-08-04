@@ -157,13 +157,16 @@ class SuspectService:
         rel_strength, rel_score, rel_detail = self._relationship(evidence_ids, correlation)
         add("correlation_strength", rel_score, rel_detail)
 
+        # Raw ISO strings for first/last seen below; they are UTC and
+        # zero-padded, so lexicographic order is chronological order.
         times = sorted(t for t in (c.upload_time for c in appearances) if t)
-        span_days = 0.0
-        if len(times) >= 2:
-            first = appearances[0].upload_datetime
-            dts = sorted(d for d in (c.upload_datetime for c in appearances) if d)
-            if len(dts) >= 2:
-                span_days = (dts[-1] - dts[0]).total_seconds() / 86400.0
+        # ``upload_datetime`` is ``parse_iso(upload_time)``, so an item can only
+        # contribute a datetime if it had a parseable string - guarding on the
+        # datetimes alone is equivalent to the string-then-datetime double guard
+        # this replaced.
+        dts = sorted(d for d in (c.upload_datetime for c in appearances) if d)
+        span_days = ((dts[-1] - dts[0]).total_seconds() / 86400.0
+                     if len(dts) >= 2 else 0.0)
         span_score = min(100.0, span_days / cfg.suspect_timeline_span_full_days * 100.0)
         add("timeline_span", span_score,
             f"activity spans {span_days:.1f} {plural('day', span_days)} "
