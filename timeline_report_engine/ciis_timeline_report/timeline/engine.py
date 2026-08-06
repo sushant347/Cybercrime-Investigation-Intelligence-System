@@ -32,7 +32,7 @@ import json
 import os
 import re
 import argparse
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from typing import Iterable, Optional
 
 OUTPUT_DIR = "output"
@@ -54,6 +54,13 @@ def _count(count: int, word: str) -> str:
 CHAT_TIMESTAMP_RE = re.compile(
     r"(?P<month>\d{1,2})-(?P<day>\d{1,2})\s*,\s*"
     r"(?P<hour>\d{1,2}):(?P<minute>\d{2})(?::\w+)?"
+)
+
+FULL_CHAT_TIMESTAMP_RE = re.compile(
+    r"[\[(]?\s*(?P<day>\d{1,2})[/-](?P<month>\d{1,2})[/-]"
+    r"(?P<year>\d{2,4})\s*,?\s*(?P<hour>\d{1,2}):(?P<minute>\d{2})"
+    r"(?::(?P<second>\d{2}))?\s*(?P<ampm>am|pm)?\s*[\])]?",
+    re.IGNORECASE,
 )
 
 
@@ -97,8 +104,36 @@ def _parse_upload_time(upload_time_str: str):
         return None
 
 
-def _try_chat_style_timestamp(raw_text: str, reference_dt: datetime):
-    if not raw_text or not reference_dt:
+def _try_chat_style_timestamp(raw_text: str, reference_dt: Optional[datetime]):
+    if not raw_text:
+        return None
+
+    full = FULL_CHAT_TIMESTAMP_RE.search(raw_text)
+    if full:
+        try:
+            year = int(full.group("year"))
+            if year < 100:
+                year += 2000
+            hour = int(full.group("hour"))
+            ampm = (full.group("ampm") or "").lower()
+            if ampm == "pm" and hour < 12:
+                hour += 12
+            elif ampm == "am" and hour == 12:
+                hour = 0
+            candidate = datetime(
+                year,
+                int(full.group("month")),
+                int(full.group("day")),
+                hour,
+                int(full.group("minute")),
+                int(full.group("second") or 0),
+                tzinfo=timezone.utc,
+            )
+            return candidate, False
+        except (ValueError, TypeError):
+            pass
+
+    if not reference_dt:
         return None
 
     match = CHAT_TIMESTAMP_RE.search(raw_text)
@@ -121,7 +156,7 @@ def _try_chat_style_timestamp(raw_text: str, reference_dt: datetime):
         if candidate > reference_dt:
             candidate = candidate.replace(year=candidate.year - 1)
 
-        return candidate
+        return candidate, True
     except (ValueError, TypeError):
         return None
 
@@ -138,9 +173,11 @@ def _entity_values(entities: dict, entity_type: str) -> list[str]:
 
 def _parse_date(value: str, reference_dt: Optional[datetime]) -> Optional[datetime]:
     """Parse common normalized/visible forensic date representations."""
-    text = value.strip().replace("/", "-")
+    text = re.sub(r"(?<=\d)(?:st|nd|rd|th)\b", "", value.strip(), flags=re.I)
+    text = text.replace(",", "").replace("/", "-")
     for fmt in ("%Y-%m-%d", "%d-%m-%Y", "%m-%d-%Y", "%Y-%m-%d %H:%M:%S",
-                "%Y-%m-%d %H:%M"):
+                "%Y-%m-%d %H:%M", "%B %d %Y", "%b %d %Y",
+                "%d %B %Y", "%d %b %Y"):
         try:
             parsed = datetime.strptime(text, fmt).replace(tzinfo=timezone.utc)
             return parsed
@@ -162,6 +199,59 @@ def _parse_date(value: str, reference_dt: Optional[datetime]) -> Optional[dateti
         except ValueError:
             continue
     return None
+
+
+def _parse_metadata_datetime(value: str) -> Optional[datetime]:
+    """Parse ISO, EXIF and PDF metadata timestamp representations."""
+    text = str(value or "").strip()
+    if not text:
+        return None
+    # PDF dates commonly use D:YYYYMMDDHHmmSS+05'45'. Preserve the offset.
+    pdf = re.match(
+        r"^D:(\d{4})(\d{2})(\d{2})(\d{2})?(\d{2})?(\d{2})?"
+        r"(?:(Z)|([+-])(\d{2})'?(\d{2})'?)?",
+        text,
+    )
+    if pdf:
+        try:
+            base = datetime(
+                int(pdf.group(1)), int(pdf.group(2)), int(pdf.group(3)),
+                int(pdf.group(4) or 0), int(pdf.group(5) or 0),
+                int(pdf.group(6) or 0), tzinfo=timezone.utc,
+            )
+            if pdf.group(8):
+                offset_minutes = int(pdf.group(9)) * 60 + int(pdf.group(10))
+                if pdf.group(8) == "+":
+                    offset_minutes *= -1
+                base += timedelta(minutes=offset_minutes)
+            return base
+        except (ValueError, TypeError):
+            return None
+    for fmt in ("%Y:%m:%d %H:%M:%S", "%Y-%m-%d %H:%M:%S"):
+        try:
+            return datetime.strptime(text, fmt).replace(tzinfo=timezone.utc)
+        except ValueError:
+            continue
+    try:
+        parsed = datetime.fromisoformat(text.replace("Z", "+00:00"))
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+        return parsed.astimezone(timezone.utc)
+    except ValueError:
+        return None
+
+
+def _try_metadata_datetime(metadata: dict):
+    candidates = (
+        ("metadata_exif_created", (metadata.get("image") or {}).get("date_created")),
+        ("metadata_pdf_created", (metadata.get("pdf") or {}).get("creation_date")),
+        ("metadata_office_created", (metadata.get("office") or {}).get("created")),
+    )
+    for source, value in candidates:
+        parsed = _parse_metadata_datetime(value)
+        if parsed is not None:
+            return parsed, source
+    return None, None
 
 
 def _parse_time(value: str) -> Optional[tuple[int, int, int]]:
@@ -218,15 +308,30 @@ def resolve_evidence_timestamp(evidence: dict) -> dict:
             "resolved_time_iso": dt.isoformat(),
             "source": source,
             "confidence": confidence,
+            "inferred": source != "content_date_time",
         }
 
-    chat_dt = _try_chat_style_timestamp(raw_text, upload_dt)
-    if chat_dt:
+    chat_resolution = _try_chat_style_timestamp(raw_text, upload_dt)
+    if chat_resolution:
+        chat_dt, inferred = chat_resolution
         return {
             "resolved_time": chat_dt,
             "resolved_time_iso": chat_dt.isoformat(),
             "source": "content_chat_timestamp",
+            "confidence": "medium" if inferred else "high",
+            "inferred": inferred,
+        }
+
+    metadata_dt, metadata_source = _try_metadata_datetime(
+        evidence.get("metadata") or {}
+    )
+    if metadata_dt:
+        return {
+            "resolved_time": metadata_dt,
+            "resolved_time_iso": metadata_dt.isoformat(),
+            "source": metadata_source,
             "confidence": "medium",
+            "inferred": False,
         }
 
     if upload_dt:
@@ -235,6 +340,7 @@ def resolve_evidence_timestamp(evidence: dict) -> dict:
             "resolved_time_iso": upload_dt.isoformat(),
             "source": "upload_time_fallback",
             "confidence": "low",
+            "inferred": True,
         }
 
     return {
@@ -242,6 +348,7 @@ def resolve_evidence_timestamp(evidence: dict) -> dict:
         "resolved_time_iso": None,
         "source": "unresolved",
         "confidence": "none",
+        "inferred": False,
     }
 
 
@@ -389,10 +496,7 @@ def build_timeline(
             for stage, keywords in matched.items():
                 stage_hits.setdefault(stage, {})[evidence_id] = keywords
             critical_reasons = _critical_reasons(entities, critical_entity_types)
-            timestamp_inferred = resolution["source"] in {
-                "content_date_only", "content_time_only", "content_chat_timestamp",
-                "upload_time_fallback",
-            }
+            timestamp_inferred = resolution["inferred"]
 
             events.append({
                 "evidence_id": evidence_id,

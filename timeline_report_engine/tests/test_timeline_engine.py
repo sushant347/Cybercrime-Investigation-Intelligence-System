@@ -75,6 +75,59 @@ class TimelineReconstructionTests(unittest.TestCase):
         self.assertEqual(inferred["correlated_with"][0]["confidence"], 0.9)
         self.assertEqual(result["statistics"]["event_count"], 3.0)
 
+    def test_full_chat_timestamp_is_actual_without_upload_time(self):
+        result = build_timeline([{
+            "case_id": "CASE_CHAT",
+            "evidence": [{
+                "evidence_id": "EVID_CHAT",
+                "file_name": "chat.txt",
+                "raw_text": "[11/06/2026, 9:41 PM] Suspect: send OTP",
+                "cleaning": {"entities": {}},
+            }],
+        }])
+
+        event = result["events"][0]
+        self.assertEqual(event["timestamp"], "2026-06-11T21:41:00+00:00")
+        self.assertEqual(event["time_source"], "content_chat_timestamp")
+        self.assertFalse(event["timestamp_inferred"])
+        self.assertEqual(event["confidence"], "high")
+
+    def test_named_content_date_and_time_are_parsed(self):
+        result = build_timeline([{
+            "case_id": "CASE_DATE",
+            "evidence": [{
+                "evidence_id": "EVID_DATE",
+                "raw_text": "Payment completed",
+                "cleaning": {"entities": {
+                    "dates": [{"normalized": "11 June 2026"}],
+                    "times": [{"normalized": "14:30"}],
+                }},
+            }],
+        }])
+
+        event = result["events"][0]
+        self.assertEqual(event["timestamp"], "2026-06-11T14:30:00+00:00")
+        self.assertFalse(event["timestamp_inferred"])
+
+    def test_exif_creation_time_beats_upload_fallback(self):
+        result = build_timeline([{
+            "case_id": "CASE_META",
+            "evidence": [{
+                "evidence_id": "EVID_META",
+                "upload_time": "2026-08-01T10:00:00Z",
+                "raw_text": "No visible timestamp",
+                "cleaning": {"entities": {}},
+                "metadata": {
+                    "image": {"date_created": "2026:06:11 08:15:30"}
+                },
+            }],
+        }])
+
+        event = result["events"][0]
+        self.assertEqual(event["timestamp"], "2026-06-11T08:15:30+00:00")
+        self.assertEqual(event["time_source"], "metadata_exif_created")
+        self.assertFalse(event["timestamp_inferred"])
+
 
 if __name__ == "__main__":
     unittest.main()
