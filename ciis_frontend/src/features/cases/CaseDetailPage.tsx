@@ -17,24 +17,46 @@ import {
   Typography,
 } from "@mui/material";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { casesApi, evidenceApi, investigationApi } from "@/api";
 import { ErrorState } from "@/components/common/EmptyState";
 import { DetailSkeleton } from "@/components/common/LoadingSkeleton";
 import { StatusChip } from "@/components/common/StatusChip";
-import { AnalyticsTab } from "@/features/analytics/AnalyticsTab";
 import { useAuth } from "@/features/auth/AuthContext";
 import { EvidenceTab } from "@/features/evidence/EvidenceTab";
-import { GraphTab } from "@/features/graph/GraphTab";
-import { InvestigationTab } from "@/features/investigation/InvestigationTab";
-import { ReportsTab } from "@/features/reports/ReportsTab";
-import { TimelineTab } from "@/features/timeline/TimelineTab";
 import { apiErrorMessage } from "@/lib/apiClient";
 import { formatDateTime } from "@/lib/format";
 
 import { CaseOverviewTab } from "./CaseOverviewTab";
+
+// Analysis tabs are independent investigation surfaces. Loading each one only
+// when selected keeps Cytoscape, timeline rendering, analytics charts, report
+// tooling, and their data-display code out of the initial case-detail bundle.
+const InvestigationTab = lazy(() =>
+  import("@/features/investigation/InvestigationTab").then((module) => ({
+    default: module.InvestigationTab,
+  })),
+);
+const GraphTab = lazy(() =>
+  import("@/features/graph/GraphTab").then((module) => ({ default: module.GraphTab })),
+);
+const TimelineTab = lazy(() =>
+  import("@/features/timeline/TimelineTab").then((module) => ({
+    default: module.TimelineTab,
+  })),
+);
+const AnalyticsTab = lazy(() =>
+  import("@/features/analytics/AnalyticsTab").then((module) => ({
+    default: module.AnalyticsTab,
+  })),
+);
+const ReportsTab = lazy(() =>
+  import("@/features/reports/ReportsTab").then((module) => ({
+    default: module.ReportsTab,
+  })),
+);
 
 /** How often to check a running analysis job. */
 const ANALYSIS_POLL_MS = 2500;
@@ -258,12 +280,34 @@ export default function CaseDetailPage() {
 
       {activeTab === "overview" && <CaseOverviewTab caseData={caseData} />}
       {activeTab === "evidence" && <EvidenceTab caseId={caseId} />}
-      {activeTab === "investigation" && <InvestigationTab caseId={caseId} />}
-      {activeTab === "graph" && <GraphTab caseId={caseId} />}
-      {activeTab === "timeline" && <TimelineTab caseId={caseId} />}
-      {activeTab === "analytics" && <AnalyticsTab caseId={caseId} />}
+      {activeTab === "investigation" && (
+        <Suspense fallback={<DetailSkeleton />}>
+          <InvestigationTab key={caseId} caseId={caseId} />
+        </Suspense>
+      )}
+      {activeTab === "graph" && (
+        <Suspense fallback={<DetailSkeleton />}>
+          <GraphTab key={caseId} caseId={caseId} />
+        </Suspense>
+      )}
+      {activeTab === "timeline" && (
+        <Suspense fallback={<DetailSkeleton />}>
+          <TimelineTab key={caseId} caseId={caseId} />
+        </Suspense>
+      )}
+      {activeTab === "analytics" && (
+        <Suspense fallback={<DetailSkeleton />}>
+          <AnalyticsTab key={caseId} caseId={caseId} />
+        </Suspense>
+      )}
       {activeTab === "reports" && (
-        <ReportsTab caseId={caseId} caseReference={caseData.case_reference} />
+        <Suspense fallback={<DetailSkeleton />}>
+          <ReportsTab
+            key={caseId}
+            caseId={caseId}
+            caseReference={caseData.case_reference}
+          />
+        </Suspense>
       )}
 
       <Snackbar
