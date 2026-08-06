@@ -53,7 +53,7 @@ Each engine imports only the one before it, so the dependency graph is acyclic.
 | `evidence_correlation_engine` | Relationship intelligence + shared infrastructure | [README](evidence_correlation_engine/README.md) |
 | `timeline_report_engine` | Timeline, graph, analytics, priority, reports | [README](timeline_report_engine/README.md) |
 | `ciis_api` | REST API, permissions, background jobs | — |
-| `ciis_frontend` | Investigator UI | — |
+| `ciis_frontend` | Investigator UI, timeline and progressive relationship graph | [README](ciis_frontend/README.md) |
 
 ## Reference data
 
@@ -94,6 +94,36 @@ load evidence (read-only)
 Every module is failure-isolated — one broken analysis is audited as an error
 and the rest continue — and every run appends to
 `storage/investigation/investigation_audit_log.csv`.
+
+## Investigator relationship graph
+
+The graph artifact remains complete and audit-friendly: the Python graph
+service stores every case, evidence, entity, event and typed relationship in
+`graph.json`. The frontend never rewrites that artifact. Instead, Cytoscape.js
+builds smaller investigator views from it:
+
+- **Evidence map** (default) projects all relationships between two evidence
+  items into one labelled edge. Selecting the edge lists and can reveal its
+  underlying phones, wallets, accounts, timestamps and correlations.
+- **Entity map** shows evidence and extracted entities with Leads, Standard and
+  Everything detail levels.
+- **Cross-case** isolates entities and evidence shared with other cases.
+- **Threats** isolates threat-intelligence hits and their source evidence.
+- **Full graph** displays the complete technical artifact for advanced review.
+
+Search always scans the complete artifact, including nodes hidden by the active
+view. Confidence, relationship type, entity type and actual/inferred/unresolved
+timestamp filters apply without changing stored evidence. Quick presets cover
+strong leads, cross-case indicators, threat hits, cryptocurrency trails and
+actual-time relationships. View preferences, expansions and viewport are saved
+per case in the browser.
+
+For rendering performance, the frontend caps unreadable overview and focus
+views, suppresses upload-batch temporal noise by default, updates Cytoscape
+elements incrementally, and reruns layout only when the visible structure
+changes. Investigation, Graph, Timeline, Analytics and Reports are independently
+lazy-loaded, so opening a case initially downloads only the overview/evidence
+surface. See [the frontend README](ciis_frontend/README.md#relationship-graph).
 
 ## Running it
 
