@@ -279,6 +279,14 @@ export interface GraphEdge {
   timestamp_source?: string;
   timestamp_inferred?: boolean;
   explanation: string;
+  /** Frontend-only metadata for an aggregated evidence relationship. */
+  projection?: {
+    pair_key: string;
+    relationship_count: number;
+    relationship_types: string[];
+    entity_ids: string[];
+    source_edge_indexes: number[];
+  };
 }
 
 export interface RelationshipGraph {

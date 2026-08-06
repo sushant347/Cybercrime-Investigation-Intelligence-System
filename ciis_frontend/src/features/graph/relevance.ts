@@ -123,6 +123,8 @@ export interface GraphView {
   };
   /** Edges dropped as upload-batch noise. */
   uploadBatchEdges: number;
+  /** Edges below the investigator's selected confidence threshold. */
+  belowConfidenceEdges: number;
   /** True when the budget cap trimmed the view. */
   capped: boolean;
   /** Totals from the untouched artifact, for honest "showing X of Y" copy. */
@@ -135,6 +137,18 @@ export interface GraphView {
  * investigator is told the count and can lift it with the density control.
  */
 export const NODE_BUDGET = 140;
+
+/**
+ * A consistent confidence value for presentation-side filtering.
+ *
+ * New artifacts carry an explicit confidence. Older artifacts only have a
+ * normalised weight, so retain that as a backwards-compatible fallback. A
+ * count-like weight above one is not a low-confidence relationship.
+ */
+export function confidenceOf(edge: GraphEdge): number {
+  if (edge.confidence !== undefined) return edge.confidence;
+  return edge.weight <= 1 ? edge.weight : 1;
+}
 
 /**
  * Score a node for the "which of these do I draw" decision.
@@ -173,11 +187,13 @@ export function buildGraphView(
     density,
     hiddenTypes = new Set<string>(),
     includeUploadBatch = false,
+    minimumConfidence = 0,
     budget = NODE_BUDGET,
   }: {
     density: Density;
     hiddenTypes?: Set<string>;
     includeUploadBatch?: boolean;
+    minimumConfidence?: number;
     budget?: number;
   },
 ): GraphView {
@@ -187,9 +203,15 @@ export function buildGraphView(
 
   // ------------------------------------------------------------ edge pass
   const uploadBatch = graph.edges.filter(isUploadBatchEdge);
-  const liveEdges = includeUploadBatch
+  const withoutUploadNoise = includeUploadBatch
     ? graph.edges
     : graph.edges.filter((e) => !isUploadBatchEdge(e));
+  const belowConfidenceEdges = withoutUploadNoise.filter(
+    (edge) => confidenceOf(edge) < minimumConfidence,
+  ).length;
+  const liveEdges = withoutUploadNoise.filter(
+    (edge) => confidenceOf(edge) >= minimumConfidence,
+  );
 
   // ----------------------------------------------------------- node signals
   const reach = new Map<string, Set<string>>();
@@ -342,8 +364,91 @@ export function buildGraphView(
     signals,
     hidden,
     uploadBatchEdges: uploadBatch.length,
+    belowConfidenceEdges,
     capped,
     totals,
+  };
+}
+
+export interface NeighborhoodView {
+  nodes: GraphNode[];
+  edges: GraphEdge[];
+  /** Direct neighbours before the readable focus cap is applied. */
+  totalNeighbors: number;
+  /** Direct neighbours omitted by filters or the readable focus cap. */
+  hiddenNeighbors: number;
+}
+
+/**
+ * Build a small, one-hop investigation view around a selected item.
+ *
+ * This is progressive disclosure rather than a new finding: all nodes and
+ * relationships still come from the stored graph. Focusing evidence reveals
+ * its single-mention entities too, while mirrored timeline events remain on
+ * the Timeline tab where their ordering is meaningful.
+ */
+export function buildNeighborhoodView(
+  graph: RelationshipGraph,
+  focusNodeId: string,
+  {
+    hiddenTypes = new Set<string>(),
+    includeUploadBatch = false,
+    minimumConfidence = 0,
+    budget = 60,
+  }: {
+    hiddenTypes?: Set<string>;
+    includeUploadBatch?: boolean;
+    minimumConfidence?: number;
+    budget?: number;
+  } = {},
+): NeighborhoodView {
+  const focus = graph.nodes.find((node) => node.id === focusNodeId);
+  if (!focus) {
+    return { nodes: [], edges: [], totalNeighbors: 0, hiddenNeighbors: 0 };
+  }
+
+  const byId = new Map(graph.nodes.map((node) => [node.id, node]));
+  const signalView = buildGraphView(graph, {
+    density: "full",
+    includeUploadBatch,
+    minimumConfidence,
+    budget: Math.max(graph.nodes.length, 1),
+  });
+
+  const incident = graph.edges.filter((edge) => {
+    if (edge.source !== focusNodeId && edge.target !== focusNodeId) return false;
+    if (!includeUploadBatch && isUploadBatchEdge(edge)) return false;
+    return confidenceOf(edge) >= minimumConfidence;
+  });
+
+  const candidateIds = new Set<string>();
+  for (const edge of incident) {
+    const otherId = edge.source === focusNodeId ? edge.target : edge.source;
+    const other = byId.get(otherId);
+    if (!other) continue;
+    if (hiddenTypes.has(other.node_type)) continue;
+    if (MIRRORED_TYPES.has(other.node_type)) continue;
+    candidateIds.add(otherId);
+  }
+
+  const totalNeighbors = candidateIds.size;
+  const rankedIds = [...candidateIds].sort((a, b) => {
+    const scoreDifference =
+      (signalView.signals.get(b)?.score ?? 0) -
+      (signalView.signals.get(a)?.score ?? 0);
+    if (scoreDifference !== 0) return scoreDifference;
+    return a.localeCompare(b);
+  });
+  const visibleNeighborIds = new Set(rankedIds.slice(0, Math.max(0, budget - 1)));
+  const visibleIds = new Set([focusNodeId, ...visibleNeighborIds]);
+
+  return {
+    nodes: graph.nodes.filter((node) => visibleIds.has(node.id)),
+    edges: incident.filter(
+      (edge) => visibleIds.has(edge.source) && visibleIds.has(edge.target),
+    ),
+    totalNeighbors,
+    hiddenNeighbors: Math.max(0, totalNeighbors - visibleNeighborIds.size),
   };
 }
 

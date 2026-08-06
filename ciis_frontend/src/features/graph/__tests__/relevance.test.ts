@@ -2,7 +2,12 @@ import { describe, expect, it } from "vitest";
 
 import type { GraphEdge, GraphNode, RelationshipGraph } from "@/types";
 
-import { buildGraphView, isUploadBatchEdge } from "../relevance";
+import {
+  buildGraphView,
+  buildNeighborhoodView,
+  confidenceOf,
+  isUploadBatchEdge,
+} from "../relevance";
 
 const node = (id: string, node_type: string): GraphNode => ({
   id,
@@ -203,6 +208,65 @@ describe("buildGraphView", () => {
     expect(view.signals.get("wallet:9800000000")?.evidenceReach).toBe(2);
     expect(view.signals.get("phone:9811111111")?.evidenceReach).toBe(1);
   });
+
+  it("filters weak relationships without removing stronger ones", () => {
+    const g = sample();
+    g.edges.push(
+      edge("evidence:EVID_2", "phone:9811111111", "shared_entity", {
+        confidence: 0.35,
+      }),
+    );
+    g.edges.push(
+      edge("evidence:EVID_3", "phone:9811111111", "threat_relationship", {
+        confidence: 0.9,
+      }),
+    );
+
+    const view = buildGraphView(g, {
+      density: "full",
+      minimumConfidence: 0.75,
+    });
+
+    expect(view.edges.some((e) => e.confidence === 0.35)).toBe(false);
+    expect(view.edges.some((e) => e.confidence === 0.9)).toBe(true);
+    expect(view.belowConfidenceEdges).toBe(1);
+  });
+});
+
+describe("buildNeighborhoodView", () => {
+  it("reveals direct evidence detail without redrawing the whole case", () => {
+    const view = buildNeighborhoodView(sample(), "evidence:EVID_1");
+
+    expect(ids(view)).toEqual([
+      "case:CASE_1",
+      "evidence:EVID_1",
+      "evidence:EVID_3",
+      "phone:9811111111",
+      "wallet:9800000000",
+    ]);
+    expect(view.nodes.map((n) => n.id)).not.toContain("evidence:EVID_2");
+    expect(view.nodes.map((n) => n.id)).not.toContain("timeline_event:T1");
+    expect(view.edges.every((e) =>
+      e.source === "evidence:EVID_1" || e.target === "evidence:EVID_1",
+    )).toBe(true);
+  });
+
+  it("caps a busy neighbourhood and reports the omitted count", () => {
+    const nodes = [node("evidence:EVID_1", "evidence")];
+    const edges: GraphEdge[] = [];
+    for (let i = 0; i < 10; i += 1) {
+      nodes.push(node(`phone:P${i}`, "phone_number"));
+      edges.push(edge("evidence:EVID_1", `phone:P${i}`, "shared_entity"));
+    }
+
+    const view = buildNeighborhoodView(graph(nodes, edges), "evidence:EVID_1", {
+      budget: 5,
+    });
+
+    expect(view.nodes).toHaveLength(5);
+    expect(view.totalNeighbors).toBe(10);
+    expect(view.hiddenNeighbors).toBe(6);
+  });
 });
 
 describe("isUploadBatchEdge", () => {
@@ -222,5 +286,13 @@ describe("isUploadBatchEdge", () => {
         edge("a", "b", "shared_entity", { timestamp_source: "upload_time_fallback" }),
       ),
     ).toBe(false);
+  });
+});
+
+describe("confidenceOf", () => {
+  it("uses explicit confidence and supports legacy weights", () => {
+    expect(confidenceOf(edge("a", "b", "linked_to", { confidence: 0.42 }))).toBe(0.42);
+    expect(confidenceOf(edge("a", "b", "linked_to", { weight: 0.7 }))).toBe(0.7);
+    expect(confidenceOf(edge("a", "b", "linked_to", { weight: 3 }))).toBe(1);
   });
 });
