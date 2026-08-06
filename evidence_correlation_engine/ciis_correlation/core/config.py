@@ -22,6 +22,7 @@ Storage tree (all new, independent of legacy storage)::
             investigation_report.json       Module 7
             investigation_report.md         Module 7
             case_priority.json              Module 8
+            analysis_manifest.json          API run provenance / quality gate
 """
 
 from __future__ import annotations
@@ -64,6 +65,7 @@ class InvestigationConfig:
     entity_statistics_name: str = "entity_statistics"
     investigation_report_name: str = "investigation_report"
     priority_report_name: str = "case_priority"
+    analysis_manifest_name: str = "analysis_manifest"
     #: Per-case cross-case correlation artifact (versioned like the others).
     cross_case_report_name: str = "cross_case_correlation"
     #: Persistent, engine-wide entity index (single JSON, not versioned).
@@ -95,7 +97,11 @@ class InvestigationConfig:
         "money": 0.20, "otp": 0.25,
         # non-entity correlation factors
         "file_hash": 1.00, "device_metadata": 0.70, "image_metadata": 0.50,
-        "timeline_proximity": 0.40, "threat_intelligence": 0.80,
+        # Upload proximity is investigator workflow context, not evidence that
+        # two underlying events are related. Keep the factor/explanation in the
+        # artifact, but give it no correlation contribution. Event-time
+        # proximity is handled later by the canonical timeline/graph engine.
+        "timeline_proximity": 0.00, "threat_intelligence": 0.80,
     })
     #: Entity types compared value-for-value between evidence items and across
     #: cases - every extracted identifier that ties evidence to an actor,

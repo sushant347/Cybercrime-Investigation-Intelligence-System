@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import pytest
 
+from ciis_correlation.core.data_access import EvidenceContext
 from ciis_correlation.correlation.service import CorrelationService
 
 from .conftest import CASE
@@ -51,6 +52,26 @@ def test_unrelated_evidence_scores_low(service):
     assert ad.relationship_strength in {"NO_RELATIONSHIP", "WEAK"}
     # even 'no relationship' must carry an explanation
     assert ad.explanation
+
+
+def test_upload_proximity_alone_does_not_create_a_relationship(service):
+    a = EvidenceContext(
+        evidence_id="EVID_UPLOAD_A",
+        case_id="CASE_UPLOAD",
+        upload_time="2026-08-01T10:00:00Z",
+    )
+    b = EvidenceContext(
+        evidence_id="EVID_UPLOAD_B",
+        case_id="CASE_UPLOAD",
+        upload_time="2026-08-01T10:05:00Z",
+    )
+
+    pair = service.correlate_pair(a, b)
+
+    proximity = next(f for f in pair.factors if f.factor == "timeline_proximity")
+    assert proximity.contribution == 0.0
+    assert pair.correlation_confidence == 0.0
+    assert pair.relationship_strength == "NO_RELATIONSHIP"
 
 
 def test_ordering_distribution_and_persistence(service, icfg, repo):
