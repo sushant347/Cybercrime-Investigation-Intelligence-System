@@ -1,5 +1,6 @@
 """Direct unit tests for the engine bridge helpers (no HTTP)."""
 
+import hashlib
 
 
 def test_engine_health_reports_storage(api):
@@ -170,11 +171,13 @@ def test_forensics_backfill_sanitizes_module_failures(monkeypatch, api):
 
     cfg = engine.evidence_config()
     stored_name = "EVID_0001__hash__scan.png"
-    (cfg.originals_dir / stored_name).write_bytes(b"mocked Phase-1 input")
+    original = b"mocked Phase-1 input"
+    (cfg.originals_dir / stored_name).write_bytes(original)
     row = {
         "case_id": "CASE_0001",
         "evidence_id": "EVID_0001",
         "stored_file_name": stored_name,
+        "sha256_before": hashlib.sha256(original).hexdigest(),
     }
     monkeypatch.setattr(engine, "list_evidence", lambda _case_id: [row])
     monkeypatch.setattr(
