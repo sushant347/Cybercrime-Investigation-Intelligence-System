@@ -327,6 +327,7 @@ export function GraphCanvas({
                 : "",
               index: i,
           },
+          classes: edge.backbone ? "backbone" : "",
         })),
       ],
       style: [
@@ -392,6 +393,18 @@ export function GraphCanvas({
             // Thinner and fainter as the graph grows, so the lines read as
             // texture behind the nodes rather than competing with them.
             opacity: crowded ? 0.4 : 0.68,
+          },
+        },
+        {
+          // The backend's maximum-spanning forest preserves the strongest
+          // route through every graph component. Make those key links easier
+          // to trace without hiding any underlying forensic relationship.
+          selector: "edge.backbone",
+          style: {
+            width: (el: EdgeSingular) =>
+              Math.min(5.5, 2.4 + (el.data("weight") as number)),
+            opacity: 0.92,
+            "z-index": 4,
           },
         },
         {

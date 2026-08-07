@@ -209,6 +209,18 @@ describe("buildGraphView", () => {
     expect(view.signals.get("phone:9811111111")?.evidenceReach).toBe(1);
   });
 
+  it("uses backend NetworkX importance and community annotations", () => {
+    const g = sample();
+    const wallet = g.nodes.find((item) => item.id === "wallet:9800000000")!;
+    wallet.properties.graph_importance = "0.82";
+    wallet.properties.community_id = "3";
+
+    const view = buildGraphView(g, { density: "leads" });
+    const signal = view.signals.get(wallet.id);
+    expect(signal?.backendImportance).toBe(0.82);
+    expect(signal?.communityId).toBe("3");
+  });
+
   it("filters weak relationships without removing stronger ones", () => {
     const g = sample();
     g.edges.push(

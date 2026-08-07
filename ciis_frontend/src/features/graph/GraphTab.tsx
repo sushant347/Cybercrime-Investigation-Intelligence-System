@@ -511,6 +511,14 @@ export function GraphTab({ caseId }: { caseId: string }) {
             <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
               {summary.headline}
             </Typography>
+            {stats?.analytics_engine && (
+              <Stack direction="row" spacing={0.75} flexWrap="wrap" useFlexGap sx={{ my: 1 }}>
+                <Chip size="small" label={`${stats.community_count ?? 0} communities`} />
+                <Chip size="small" label={`${stats.backbone_edge_count ?? 0} key links`} />
+                <Chip size="small" label={`${stats.bridge_count ?? 0} bridges`} />
+                <Chip size="small" variant="outlined" label={stats.analytics_engine} />
+              </Stack>
+            )}
             {summary.observations.map((obs, i) => (
               <Typography key={i} variant="body2" color="text.secondary">
                 • {obs}

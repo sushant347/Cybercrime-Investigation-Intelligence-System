@@ -104,6 +104,9 @@ export interface NodeSignals {
   threat: boolean;
   /** Seen in at least one other case. */
   crossCase: boolean;
+  /** Backend NetworkX importance score, when present in a regenerated artifact. */
+  backendImportance: number;
+  communityId: string;
   /** Ranking score; higher is more worth drawing. */
   score: number;
 }
@@ -165,12 +168,14 @@ function scoreOf(
   degree: number,
   threat: boolean,
   crossCase: boolean,
+  backendImportance: number,
 ): number {
   if (type === "case") return 1e6;
   if (type === "evidence") return 1e5;
   let score = reach * 100 + degree * 4;
   if (threat) score += 400;
   if (crossCase) score += 250;
+  score += backendImportance * 600;
   if (LOW_IDENTITY_TYPES.has(type)) score *= 0.35;
   return score;
 }
@@ -247,12 +252,15 @@ export function buildGraphView(
     const d = degree.get(node.id) ?? 0;
     const t = threat.has(node.id);
     const c = crossCase.has(node.id);
+    const backendImportance = Number(node.properties.graph_importance ?? 0) || 0;
     signals.set(node.id, {
       evidenceReach: r,
       degree: d,
       threat: t,
       crossCase: c,
-      score: scoreOf(node.node_type, r, d, t, c),
+      backendImportance,
+      communityId: node.properties.community_id ?? "",
+      score: scoreOf(node.node_type, r, d, t, c, backendImportance),
     });
   }
 
@@ -465,5 +473,7 @@ export function whyRelevant(sig: NodeSignals | undefined, type: string): string 
   }
   if (sig.threat) parts.push("threat-flagged by the engine");
   if (sig.crossCase) parts.push("also seen in another case");
+  if (sig.backendImportance >= 0.5) parts.push("ranked as a key graph connector");
+  if (sig.communityId) parts.push(`community ${sig.communityId}`);
   return parts.length ? parts.join(" · ") : "no recorded links";
 }

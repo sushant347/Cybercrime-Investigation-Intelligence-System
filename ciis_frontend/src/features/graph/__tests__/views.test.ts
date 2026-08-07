@@ -117,6 +117,33 @@ describe("buildEvidenceProjection", () => {
     expect(view.nodes).toHaveLength(2);
     expect(view.hiddenNodes).toBe(1);
   });
+
+  it("does not infer evidence relationships from shared low-identity values", () => {
+    const graph = sample();
+    graph.nodes.push(node("date:2026-06-10", "date", "10 June 2026"));
+    graph.edges.push(
+      edge("evidence:E2", "date:2026-06-10", "shared_entity"),
+      edge("evidence:E3", "date:2026-06-10", "shared_entity"),
+    );
+
+    const view = buildEvidenceProjection(graph);
+    const relationship = view.edges.find((item) =>
+      [item.source, item.target].includes("evidence:E2") &&
+      [item.source, item.target].includes("evidence:E3"),
+    );
+    // E2/E3 already have a real temporal relationship in this fixture, but
+    // the shared calendar date must not be represented as another finding.
+    expect(relationship?.projection?.entity_ids).not.toContain("date:2026-06-10");
+  });
+
+  it("uses backend graph importance when an evidence budget is applied", () => {
+    const graph = sample();
+    const important = graph.nodes.find((item) => item.id === "evidence:E3")!;
+    important.properties.graph_importance = "0.99";
+
+    const view = buildEvidenceProjection(graph, { evidenceBudget: 1 });
+    expect(view.nodes.map((item) => item.id)).toEqual(["evidence:E3"]);
+  });
 });
 
 describe("special investigation views", () => {

@@ -165,7 +165,12 @@ export interface JobStage {
 export interface BackgroundJob {
   id: number;
   job_type: "evidence_processing" | "case_analysis";
-  status: "queued" | "running" | "completed" | "failed";
+  status:
+    | "queued"
+    | "running"
+    | "completed"
+    | "completed_with_warnings"
+    | "failed";
   case_id: string;
   evidence_id: string;
   detail: string;
@@ -279,6 +284,8 @@ export interface GraphEdge {
   timestamp_source?: string;
   timestamp_inferred?: boolean;
   explanation: string;
+  /** Backend NetworkX analytics selected this as a key connection. */
+  backbone?: boolean;
   /** Frontend-only metadata for an aggregated evidence relationship. */
   projection?: {
     pair_key: string;
@@ -307,6 +314,11 @@ export interface GraphStatistics {
   largest_component_size: number;
   average_degree: number;
   top_hubs: Record<string, string>[];
+  community_count?: number;
+  bridge_count?: number;
+  backbone_edge_count?: number;
+  analytics_engine?: string;
+  top_central_nodes?: Record<string, string>[];
 }
 
 export interface GraphSummary {

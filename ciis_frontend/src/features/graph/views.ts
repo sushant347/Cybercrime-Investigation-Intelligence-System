@@ -58,6 +58,11 @@ const CROSS_CASE_EDGE_TYPES = new Set([
   "cross_case",
 ]);
 const THREAT_EDGE_TYPES = new Set(["threat_relationship"]);
+const PROJECTION_NOISE_TYPES = new Set(["date", "time", "money", "amount", "otp", "keyword"]);
+
+function graphImportance(node: GraphNode | undefined): number {
+  return Number(node?.properties.graph_importance ?? 0) || 0;
+}
 
 export function pairKey(a: string, b: string): string {
   return [a, b].sort().join("|");
@@ -196,6 +201,10 @@ export function buildEvidenceProjection(
     if (STRUCTURAL_NODE_TYPES.has(entity.node_type) || MIRRORED_NODE_TYPES.has(entity.node_type)) {
       continue;
     }
+    // Dates, times, round amounts and OTP-shaped values may legitimately be
+    // stored as entities, but sharing one must not create an evidence-pair
+    // relationship in the investigator's default map.
+    if (PROJECTION_NOISE_TYPES.has(entity.node_type)) continue;
     const mentions = liveEdges.filter(
       ({ edge }) =>
         (edge.source === entity.id && localIds.has(edge.target)) ||
@@ -230,9 +239,13 @@ export function buildEvidenceProjection(
     evidenceDegree.set(aggregate.source, (evidenceDegree.get(aggregate.source) ?? 0) + 1);
     evidenceDegree.set(aggregate.target, (evidenceDegree.get(aggregate.target) ?? 0) + 1);
   }
-  const rankedEvidence = [...localIds].sort((a, b) =>
-    (evidenceDegree.get(b) ?? 0) - (evidenceDegree.get(a) ?? 0) || a.localeCompare(b),
-  );
+  const rankedEvidence = [...localIds].sort((a, b) => {
+    const importanceDifference =
+      graphImportance(byId.get(b)) - graphImportance(byId.get(a));
+    if (importanceDifference !== 0) return importanceDifference;
+    return (evidenceDegree.get(b) ?? 0) - (evidenceDegree.get(a) ?? 0) ||
+      a.localeCompare(b);
+  });
   const visibleEvidenceIds = new Set(rankedEvidence.slice(0, evidenceBudget));
   const nodes = graph.nodes.filter(
     (node) => node.node_type === "evidence" && visibleEvidenceIds.has(node.id),
