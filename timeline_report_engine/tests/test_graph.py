@@ -11,6 +11,7 @@ from ciis_correlation.correlation.models import (
     CrossCaseLink,
 )
 from ciis_timeline_report.graph.service import GraphService
+from ciis_timeline_report.timeline.models import TimelineAnalysis, TimelineEvent
 from ciis_timeline_report.timeline.service import TimelineService
 
 from .conftest import CASE
@@ -34,9 +35,48 @@ def test_node_and_edge_types(graph_and_stats):
     assert {"case", "evidence", "phone_number", "wallet", "url", "domain",
             "email", "brand", "device", "timeline_event"} <= node_types
     edge_types = {e.edge_type for e in graph.edges}
-    assert {"contains", "shared_entity", "temporal_relationship",
+    assert {"contains", "shared_entity",
             "threat_relationship", "metadata_relationship",
             "behavioral_relationship", "timeline_event"} <= edge_types
+
+
+def test_temporal_relationship_requires_reconstructed_event_times(
+    icfg, data, repo, audit
+):
+    items = data.load_case_evidence(CASE)
+    timeline = TimelineAnalysis(
+        case_id=CASE,
+        events=[
+            TimelineEvent(
+                timestamp="2026-06-10T10:00:00+00:00",
+                event_type="evidence_acquired",
+                evidence_id=items[0].evidence_id,
+                case_id=CASE,
+                time_source="content_date_and_time",
+                confidence="high",
+                timestamp_inferred=False,
+            ),
+            TimelineEvent(
+                timestamp="2026-06-10T12:00:00+00:00",
+                event_type="evidence_acquired",
+                evidence_id=items[1].evidence_id,
+                case_id=CASE,
+                time_source="image_metadata",
+                confidence="high",
+                timestamp_inferred=False,
+            ),
+        ],
+    )
+    graph = GraphService(icfg, data, repo, audit).build(
+        CASE, evidence=items[:2], timeline=timeline, persist=False
+    )
+    temporal = [
+        edge for edge in graph.edges
+        if edge.edge_type == "temporal_relationship"
+    ]
+    assert len(temporal) == 1
+    assert temporal[0].timestamp_source == "mixed_content_timestamps"
+    assert temporal[0].timestamp_inferred is False
 
 
 def test_shared_entity_nodes_are_deduplicated(graph_and_stats):
@@ -58,8 +98,29 @@ def test_every_edge_has_provenance_confidence_and_timestamp_contract(graph_and_s
     assert all(0.0 <= edge.confidence <= 1.0 for edge in graph.edges)
     assert all(isinstance(edge.source_evidence_ids, list) for edge in graph.edges)
     assert all(edge.timestamp_source for edge in graph.edges)
-    signatures = [(edge.source, edge.target, edge.edge_type) for edge in graph.edges]
+    signatures = [
+        (*sorted((edge.source, edge.target)), edge.edge_type)
+        for edge in graph.edges
+    ]
     assert len(signatures) == len(set(signatures))
+    assert all(
+        edge.timestamp_source != "upload_time_fallback"
+        for edge in graph.edges
+        if edge.edge_type == "temporal_relationship"
+    )
+
+
+def test_networkx_analytics_enrich_graph_and_statistics(graph_and_stats):
+    graph, repo, icfg = graph_and_stats
+    assert all("graph_importance" in node.properties for node in graph.nodes)
+    assert all("community_id" in node.properties for node in graph.nodes)
+    assert any(edge.backbone for edge in graph.edges)
+
+    stats = repo.load_latest(CASE, icfg.graph_statistics_name)["report"]
+    assert stats["analytics_engine"].startswith("networkx-")
+    assert stats["community_count"] >= 1
+    assert stats["backbone_edge_count"] >= 1
+    assert stats["top_central_nodes"]
 
 
 def test_matching_entity_connects_evidence_across_cases(icfg, data, repo, audit):
@@ -105,6 +166,7 @@ def test_matching_entity_connects_evidence_across_cases(icfg, data, repo, audit)
     assert len(cross_edges) == 1
     assert cross_edges[0].target == "phone_number:9812345678"
     assert set(cross_edges[0].source_evidence_ids) == {"EVID_A", "EVID_OTHER"}
+    assert cross_edges[0].backbone is True
 
 
 def test_three_artifacts_persisted(graph_and_stats):
