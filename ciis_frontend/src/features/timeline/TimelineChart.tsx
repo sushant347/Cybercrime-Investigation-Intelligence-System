@@ -2,6 +2,7 @@ import { Box, FormControlLabel, Stack, Switch, Tooltip, Typography, useTheme } f
 import dayjs from "dayjs";
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 
+import { MetricLabel } from "@/components/common/MetricLabel";
 import { BRAND } from "@/theme/theme";
 import type { TimelineEvent } from "@/types";
 
@@ -296,7 +297,7 @@ export function TimelineChart({
           <Legend shape="diamond" color={BRAND.high} label="Milestone" />
           <Legend shape="dot" color={BRAND.primary} label="Event" />
           {hasEchoes && !everyStage && (
-            <Legend shape="hollow" color={theme.palette.text.secondary} label="Also evidences" />
+            <Legend shape="hollow" color={theme.palette.text.secondary} label="Also evidences" term="also_evidences" />
           )}
         </Stack>
       </Stack>
@@ -705,7 +706,22 @@ function EchoMarker({
   );
 }
 
-function Legend({ shape, color, label }: { shape: string; color: string; label: string }) {
+/**
+ * One legend key. The label carries the glossary definition on hover — the
+ * legend says *which glyph* means critical, but not what the engine counts as
+ * critical, and that is the part a reader new to the case actually needs.
+ */
+function Legend({
+  shape,
+  color,
+  label,
+  term,
+}: {
+  shape: string;
+  color: string;
+  label: string;
+  term?: string;
+}) {
   const glyph =
     shape === "ring"
       ? { border: `2.5px solid ${color}`, borderRadius: "50%" }
@@ -717,9 +733,7 @@ function Legend({ shape, color, label }: { shape: string; color: string; label: 
   return (
     <Stack direction="row" spacing={0.6} alignItems="center">
       <Box sx={{ width: 10, height: 10, flexShrink: 0, ...glyph }} />
-      <Typography variant="caption" color="text.secondary">
-        {label}
-      </Typography>
+      <MetricLabel name={term ?? label} label={label} variant="caption" />
     </Stack>
   );
 }

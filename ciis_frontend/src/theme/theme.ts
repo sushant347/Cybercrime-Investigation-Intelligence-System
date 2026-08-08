@@ -171,29 +171,94 @@ export function buildTheme(mode: "dark" | "light"): Theme {
   });
 }
 
-/** Engine value -> UI color, shared everywhere (bands, strengths, statuses). */
+/**
+ * Semantic tones that stay legible in *both* modes.
+ *
+ * The report view previously hardcoded a single set of print-oriented inks
+ * (`#14532d`, `#4a5568`, …). Those are chosen for dark-on-white paper, so on
+ * the dark canvas they sat at roughly 1.5:1 against the background and were
+ * effectively unreadable. Each tone therefore carries a per-mode value, and
+ * every one of these pairs clears WCAG AA (4.5:1) on its own surface.
+ */
+export const TONE = {
+  good: { dark: "#4ade80", light: "#1a7f5a" },
+  warn: { dark: "#fbbf24", light: "#a86612" },
+  bad: { dark: "#ff6b6d", light: "#b3261e" },
+  neutral: { dark: "#94a3b8", light: "#4a5568" },
+  accent: { dark: "#5eead4", light: "#14532d" },
+} as const;
+
+export type ToneName = keyof typeof TONE;
+
+/** Pick the readable ink for a semantic tone in the active mode. */
+export function toneColor(tone: ToneName, mode: "dark" | "light"): string {
+  return TONE[tone][mode];
+}
+
+/**
+ * Whether a *higher* number is good or bad for a given metric.
+ *
+ * Priority components are not directionally uniform: a high
+ * `evidence_confidence` is reassuring, while an equally high `forgery_risk`
+ * is alarming. Rendering both in the same accent colour told the reader they
+ * meant the same thing, so scores are coloured by direction instead.
+ */
+export function metricDirection(name: string): "higher_is_good" | "higher_is_bad" | "neutral" {
+  switch (name) {
+    case "evidence_confidence":
+    case "correlation_strength":
+      return "higher_is_good";
+    case "forgery_risk":
+    case "threat_intelligence":
+    case "campaign_size":
+    case "timeline_criticality":
+      return "higher_is_bad";
+    default:
+      return "neutral";
+  }
+}
+
+/**
+ * Severity inks that stay readable on the active surface.
+ *
+ * `BRAND.*` is tuned for the dark canvas. Used unchanged in light mode the
+ * warmer bands fail badly as *text*: `medium` (#ffd666) on white is about
+ * 1.5:1 and `low` (#52c41a) about 2.2:1, well under AA — and `StatusChip`
+ * paints the label in exactly this colour over a 10%-alpha wash of itself.
+ * That made "MEDIUM" and "WEAK" chips nearly unreadable in light mode
+ * everywhere they appear. Light mode therefore gets darkened equivalents of
+ * the same hues; dark mode is unchanged.
+ */
+const LIGHT_SEVERITY = {
+  critical: "#c2261f",
+  high: "#a85a08",
+  medium: "#8a6100",
+  low: "#2b7a12",
+} as const;
+
 export function severityColor(value: string | undefined, theme: Theme): string {
+  const light = theme.palette.mode === "light";
   switch ((value ?? "").toLowerCase()) {
     case "critical":
     case "urgent":
     case "failed":
     case "error":
-      return BRAND.critical;
+      return light ? LIGHT_SEVERITY.critical : BRAND.critical;
     case "high":
     case "strong":
     case "warning":
-      return BRAND.high;
+      return light ? LIGHT_SEVERITY.high : BRAND.high;
     case "medium":
     case "moderate":
     case "running":
     case "queued":
-      return BRAND.medium;
+      return light ? LIGHT_SEVERITY.medium : BRAND.medium;
     case "low":
     case "weak":
     case "completed":
     case "processed":
     case "info":
-      return BRAND.low;
+      return light ? LIGHT_SEVERITY.low : BRAND.low;
     default:
       return theme.palette.text.secondary;
   }

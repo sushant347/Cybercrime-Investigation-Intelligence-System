@@ -1,3 +1,6 @@
+import GavelIcon from "@mui/icons-material/Gavel";
+import BalanceIcon from "@mui/icons-material/Balance";
+import FactCheckIcon from "@mui/icons-material/FactCheck";
 import {
   Box,
   Chip,
@@ -9,26 +12,47 @@ import {
   TableHead,
   TableRow,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { Fragment } from "react";
 import type { ReactNode } from "react";
 
+import { toneColor } from "@/theme/theme";
 import type { SimpleReport, SummaryRow } from "./reportModel";
 import {
   connectionDiagramSvg,
   ocrConfidenceSvg,
   predictionRiskSvg,
+  DARK_PALETTE,
+  PRINT_PALETTE,
 } from "./reportCharts";
 
-const BADGE_COLOR: Record<NonNullable<SummaryRow["badge"]>, string> = {
-  good: "#1a7f5a",
-  warn: "#a86612",
-  bad: "#b3261e",
-  neutral: "#4a5568",
-};
-
-const ACCENT = "#14532d";
 const MONO = '"JetBrains Mono", ui-monospace, monospace';
+
+/**
+ * Resolve the report's semantic inks for the active mode.
+ *
+ * These were previously fixed print colours — a near-black green for headings
+ * (`#14532d`) and a slate grey for neutral badges. Against the dark canvas
+ * (`#0b1020`) those sat around 1.5:1, well under the 4.5:1 needed to be read
+ * at body size, which is exactly the "dark text on dark theme" problem. The
+ * light-mode values are unchanged, so printed and light-mode output looks
+ * exactly as it did before.
+ */
+function useReportTones() {
+  const theme = useTheme();
+  const mode = theme.palette.mode === "dark" ? "dark" : "light";
+  return {
+    mode,
+    accent: toneColor("accent", mode),
+    badge: {
+      good: toneColor("good", mode),
+      warn: toneColor("warn", mode),
+      bad: toneColor("bad", mode),
+      neutral: toneColor("neutral", mode),
+    } as Record<NonNullable<SummaryRow["badge"]>, string>,
+  };
+}
 
 function Section({
   number,
@@ -39,12 +63,13 @@ function Section({
   title: string;
   children: ReactNode;
 }) {
+  const { accent } = useReportTones();
   return (
     <Box sx={{ borderTop: 1, borderColor: "divider", p: { xs: 2, sm: 3 } }}>
       <Typography
         variant="subtitle2"
         sx={{
-          color: ACCENT,
+          color: accent,
           textTransform: "uppercase",
           letterSpacing: "0.06em",
           mb: 1.5,
@@ -59,12 +84,236 @@ function Section({
 }
 
 function Badge({ label, tone }: { label: string; tone: NonNullable<SummaryRow["badge"]> }) {
+  const { badge, mode } = useReportTones();
+  const color = badge[tone];
+  // In dark mode the tones are light inks, so a filled chip needs dark text to
+  // stay legible; in light mode they are dark inks and need white.
   return (
     <Chip
       label={label}
       size="small"
-      sx={{ bgcolor: BADGE_COLOR[tone], color: "#fff", fontWeight: 700 }}
+      sx={{
+        bgcolor: color,
+        color: mode === "dark" ? "#0b1020" : "#fff",
+        fontWeight: 700,
+      }}
     />
+  );
+}
+
+/**
+ * One provision of the Act the findings engage.
+ *
+ * The previous rendering ran conduct, penalty and basis together as three
+ * near-identical `<strong>`-prefixed sentences in one block, so the section
+ * number, the offence, the sentence exposure and — most importantly — the
+ * reason the provision is listed at all were all the same visual weight. An
+ * officer checking this section reads it in a specific order: *which section,
+ * why is it here, what does it carry*. The layout now follows that order.
+ *
+ * "Why this is engaged" gets the accent panel because it is the only part
+ * tied to this case's actual findings; the other two are statute text that
+ * would read identically in any report.
+ */
+function ProvisionCard({
+  provision,
+}: {
+  provision: NonNullable<SimpleReport["legalBasis"]>["provisions"][number];
+}) {
+  const { accent, mode } = useReportTones();
+
+  const Field = ({
+    icon,
+    label,
+    children,
+  }: {
+    icon: ReactNode;
+    label: string;
+    children: ReactNode;
+  }) => (
+    <Stack direction="row" spacing={1.25} alignItems="flex-start">
+      <Box sx={{ color: "text.disabled", display: "flex", mt: 0.25 }}>{icon}</Box>
+      <Box sx={{ minWidth: 0 }}>
+        <Typography
+          variant="caption"
+          sx={{
+            display: "block",
+            textTransform: "uppercase",
+            letterSpacing: "0.07em",
+            fontWeight: 700,
+            color: "text.secondary",
+            mb: 0.25,
+          }}
+        >
+          {label}
+        </Typography>
+        <Typography variant="body2" sx={{ lineHeight: 1.6 }}>
+          {children}
+        </Typography>
+      </Box>
+    </Stack>
+  );
+
+  return (
+    <Box
+      sx={{
+        border: 1,
+        borderColor: "divider",
+        borderRadius: 1.5,
+        overflow: "hidden",
+        transition: "border-color 160ms ease",
+        "&:hover": { borderColor: accent },
+      }}
+    >
+      {/* Citation header — the section number is the thing being looked up. */}
+      <Stack
+        direction="row"
+        spacing={1.5}
+        alignItems="center"
+        sx={{
+          p: 1.75,
+          bgcolor: "action.hover",
+          borderBottom: 1,
+          borderColor: "divider",
+        }}
+      >
+        <Box
+          sx={{
+            flexShrink: 0,
+            px: 1.25,
+            py: 0.5,
+            borderRadius: 1,
+            bgcolor: accent,
+            color: mode === "dark" ? "#0b1020" : "#fff",
+            fontFamily: MONO,
+            fontWeight: 800,
+            fontSize: "0.8rem",
+            lineHeight: 1.5,
+          }}
+        >
+          § {provision.section}
+        </Box>
+        <Box sx={{ minWidth: 0 }}>
+          <Typography variant="subtitle2" sx={{ fontWeight: 700, lineHeight: 1.35 }}>
+            {provision.title}
+          </Typography>
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            sx={{ fontFamily: MONO, fontSize: "0.68rem" }}
+          >
+            {provision.citation}
+          </Typography>
+        </Box>
+      </Stack>
+
+      <Stack spacing={1.75} sx={{ p: 2 }}>
+        <Field icon={<BalanceIcon fontSize="small" />} label="Conduct the section covers">
+          {provision.conduct}
+        </Field>
+        <Field icon={<GavelIcon fontSize="small" />} label="Penalty on conviction">
+          {provision.penalty}
+        </Field>
+
+        {/* The basis is the whole point: it is why this provision is listed at
+            all, and it is what an officer checks first. */}
+        <Box
+          sx={{
+            borderLeft: 3,
+            borderColor: accent,
+            borderRadius: 0.5,
+            bgcolor: mode === "dark" ? "rgba(94,234,212,0.07)" : "rgba(20,83,45,0.05)",
+            p: 1.5,
+          }}
+        >
+          <Field icon={<FactCheckIcon fontSize="small" />} label="Why this case engages it">
+            {provision.basis}
+          </Field>
+
+          {provision.evidence_ids.length > 0 && (
+            <Stack
+              direction="row"
+              spacing={0.5}
+              flexWrap="wrap"
+              useFlexGap
+              sx={{ mt: 1.5, pl: 4 }}
+            >
+              {provision.evidence_ids.map((id) => (
+                <Chip
+                  key={id}
+                  label={id}
+                  size="small"
+                  variant="outlined"
+                  sx={{ fontFamily: MONO, fontSize: "0.68rem" }}
+                />
+              ))}
+            </Stack>
+          )}
+        </Box>
+      </Stack>
+    </Box>
+  );
+}
+
+/**
+ * The stages the scam moved through, as an ordered flow.
+ *
+ * Chips separated by arrows wrapped mid-sequence on narrow widths and lost
+ * the sense of direction. A numbered rail keeps the order unambiguous however
+ * it wraps, and the deepening tint carries the sense of escalation that the
+ * flat chips did not.
+ */
+function ProgressionFlow({ stages }: { stages: string[] }) {
+  const { accent, mode } = useReportTones();
+
+  return (
+    <Stack direction="row" flexWrap="wrap" useFlexGap sx={{ gap: 1 }}>
+      {stages.map((stage, i) => {
+        // Later stages sit deeper in the accent, so escalation is visible at a
+        // glance without needing to read the labels in order.
+        const weight = 0.1 + (i / Math.max(1, stages.length - 1)) * 0.5;
+        return (
+          <Stack
+            key={stage}
+            direction="row"
+            spacing={1}
+            alignItems="center"
+            sx={{
+              px: 1.25,
+              py: 0.75,
+              borderRadius: 1,
+              border: 1,
+              borderColor: "divider",
+              bgcolor:
+                mode === "dark"
+                  ? `rgba(94,234,212,${weight * 0.22})`
+                  : `rgba(20,83,45,${weight * 0.14})`,
+            }}
+          >
+            <Box
+              sx={{
+                width: 20,
+                height: 20,
+                flexShrink: 0,
+                borderRadius: "50%",
+                bgcolor: accent,
+                color: mode === "dark" ? "#0b1020" : "#fff",
+                fontSize: "0.7rem",
+                fontWeight: 800,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              {i + 1}
+            </Box>
+            <Typography variant="body2" sx={{ fontWeight: 600 }}>
+              {stage}
+            </Typography>
+          </Stack>
+        );
+      })}
+    </Stack>
   );
 }
 
@@ -82,6 +331,9 @@ function Svg({ markup }: { markup: string }) {
  * it out. Section numbering mirrors the PDF and downloadable HTML exports.
  */
 export function SimpleReportView({ report }: { report: SimpleReport }) {
+  // Screen-only: the downloadable HTML keeps the print inks (see reportCharts).
+  const { mode } = useReportTones();
+  const chartPalette = mode === "dark" ? DARK_PALETTE : PRINT_PALETTE;
   let n = 0;
   const next = () => ++n;
 
@@ -197,13 +449,13 @@ export function SimpleReportView({ report }: { report: SimpleReport }) {
               ))}
             </TableBody>
           </Table>
-          <Svg markup={ocrConfidenceSvg(report.evidence)} />
+          <Svg markup={ocrConfidenceSvg(report.evidence, chartPalette)} />
         </Section>
       )}
 
       {report.connections.length > 0 && (
         <Section number={next()} title="How the Evidence Connects">
-          <Svg markup={connectionDiagramSvg(report.evidence, report.connections)} />
+          <Svg markup={connectionDiagramSvg(report.evidence, report.connections, chartPalette)} />
           <Table size="small" sx={{ mt: 1.5 }}>
             <TableHead>
               <TableRow>
@@ -358,7 +610,7 @@ export function SimpleReportView({ report }: { report: SimpleReport }) {
                   ))}
                 </TableBody>
               </Table>
-              <Svg markup={predictionRiskSvg(report.modelPredictions)} />
+              <Svg markup={predictionRiskSvg(report.modelPredictions, chartPalette)} />
             </>
           )}
         </Section>
@@ -366,26 +618,7 @@ export function SimpleReportView({ report }: { report: SimpleReport }) {
 
       {report.progression.length > 0 && (
         <Section number={next()} title="How the Scam Progressed">
-          <Stack direction="row" spacing={0.5} flexWrap="wrap" useFlexGap alignItems="center">
-            {report.progression.map((stage, i) => (
-              <Stack key={stage} direction="row" spacing={0.5} alignItems="center">
-                {i > 0 && (
-                  <Typography color="text.disabled" sx={{ mx: 0.5 }}>
-                    →
-                  </Typography>
-                )}
-                <Chip
-                  label={`${i + 1}. ${stage}`}
-                  size="small"
-                  sx={
-                    i === 0
-                      ? { bgcolor: ACCENT, color: "#fff", fontWeight: 600 }
-                      : { bgcolor: "rgba(26,161,121,0.14)", color: ACCENT, fontWeight: 600 }
-                  }
-                />
-              </Stack>
-            ))}
-          </Stack>
+          <ProgressionFlow stages={report.progression} />
         </Section>
       )}
 
@@ -409,50 +642,7 @@ export function SimpleReportView({ report }: { report: SimpleReport }) {
 
           <Stack spacing={2}>
             {report.legalBasis.provisions.map((provision) => (
-              <Box
-                key={provision.section}
-                sx={{
-                  border: 1,
-                  borderColor: "divider",
-                  borderLeft: 3,
-                  borderLeftColor: ACCENT,
-                  borderRadius: 1,
-                  p: 2,
-                }}
-              >
-                <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
-                  Section {provision.section} — {provision.title}
-                </Typography>
-                <Typography variant="caption" color="text.secondary">
-                  {provision.citation}
-                </Typography>
-
-                <Typography variant="body2" sx={{ mt: 1.5 }}>
-                  <strong>Conduct.</strong> {provision.conduct}
-                </Typography>
-                <Typography variant="body2" sx={{ mt: 0.5 }}>
-                  <strong>Penalty.</strong> {provision.penalty}
-                </Typography>
-                {/* The basis is the whole point: it is why this provision is
-                    listed at all, and it is what an officer checks first. */}
-                <Typography variant="body2" sx={{ mt: 0.5 }}>
-                  <strong>Why this is engaged.</strong> {provision.basis}
-                </Typography>
-
-                {provision.evidence_ids.length > 0 && (
-                  <Stack
-                    direction="row"
-                    spacing={0.5}
-                    flexWrap="wrap"
-                    useFlexGap
-                    sx={{ mt: 1.5 }}
-                  >
-                    {provision.evidence_ids.map((id) => (
-                      <Chip key={id} label={id} size="small" variant="outlined" />
-                    ))}
-                  </Stack>
-                )}
-              </Box>
+              <ProvisionCard key={provision.section} provision={provision} />
             ))}
           </Stack>
 

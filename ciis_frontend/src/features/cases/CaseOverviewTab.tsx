@@ -17,7 +17,6 @@ import {
   DialogTitle,
   Divider,
   IconButton,
-  LinearProgress,
   Stack,
   TextField,
   Tooltip,
@@ -31,6 +30,8 @@ import { casesApi, investigationApi } from "@/api";
 import { useAuth } from "@/features/auth/AuthContext";
 import { apiErrorMessage } from "@/lib/apiClient";
 import { KeyValueTable } from "@/components/common/KeyValueTable";
+import { MetricLabel } from "@/components/common/MetricLabel";
+import { ScoreComponents } from "@/components/common/ScoreComponents";
 import { StatCard } from "@/components/common/StatCard";
 import { StatusChip } from "@/components/common/StatusChip";
 import { formatDateTime } from "@/lib/format";
@@ -343,20 +344,20 @@ export function CaseOverviewTab({ caseData }: { caseData: CaseDetail }) {
                 </Typography>
               ) : (
                 <Stack spacing={1}>
-                  <Stack direction="row" justifyContent="space-between">
-                    <Typography variant="body2">Hash-verified on acquisition</Typography>
+                  <Stack direction="row" justifyContent="space-between" alignItems="center">
+                    <MetricLabel name="hash_verified" label="Hash-verified on acquisition" />
                     <Typography variant="body2" sx={{ fontWeight: 600 }}>
                       {counts.verified} / {evidence.length}
                     </Typography>
                   </Stack>
-                  <Stack direction="row" justifyContent="space-between">
-                    <Typography variant="body2">Mean OCR confidence</Typography>
+                  <Stack direction="row" justifyContent="space-between" alignItems="center">
+                    <MetricLabel name="ocr_confidence" label="Mean OCR confidence" />
                     <Typography variant="body2" sx={{ fontWeight: 600 }}>
                       {analytics ? num(quality.mean_ocr_confidence).toFixed(2) : "—"}
                     </Typography>
                   </Stack>
-                  <Stack direction="row" justifyContent="space-between">
-                    <Typography variant="body2">Highest forgery risk</Typography>
+                  <Stack direction="row" justifyContent="space-between" alignItems="center">
+                    <MetricLabel name="forgery_risk" label="Highest forgery risk" />
                     <Typography variant="body2" sx={{ fontWeight: 600 }}>
                       {analytics ? num(quality.max_forgery_score).toFixed(1) : "—"}
                     </Typography>
@@ -483,9 +484,11 @@ export function CaseOverviewTab({ caseData }: { caseData: CaseDetail }) {
               ) : (
                 <Stack spacing={2}>
                   <Stack direction="row" spacing={2} alignItems="baseline">
-                    <Typography variant="h3">
-                      {priority.priority_score.toFixed(1)}
-                    </Typography>
+                    <MetricLabel name="priority_score">
+                      <Typography variant="h3" component="span">
+                        {priority.priority_score.toFixed(1)}
+                      </Typography>
+                    </MetricLabel>
                     <Typography variant="body2" color="text.secondary">
                       / 100 · computed {formatDateTime(priority.computed_at)}
                     </Typography>
@@ -510,30 +513,16 @@ export function CaseOverviewTab({ caseData }: { caseData: CaseDetail }) {
                   )}
 
                   <Divider />
-                  <Typography variant="subtitle2">Score components</Typography>
-                  {priority.components.map((component) => (
-                    <Tooltip
-                      key={component.name}
-                      title={component.explanation || component.name}
-                    >
-                      <Stack spacing={0.5}>
-                        <Stack direction="row" justifyContent="space-between">
-                          <Typography variant="body2" sx={{ textTransform: "capitalize" }}>
-                            {component.name.replace(/_/g, " ")}
-                            {!component.available && " (unavailable)"}
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary">
-                            {component.score.toFixed(1)} × {component.weight.toFixed(2)}
-                          </Typography>
-                        </Stack>
-                        <LinearProgress
-                          variant="determinate"
-                          value={Math.min(100, component.score)}
-                          sx={{ height: 6, borderRadius: 3 }}
-                        />
-                      </Stack>
-                    </Tooltip>
-                  ))}
+                  <Stack direction="row" alignItems="center" spacing={1}>
+                    <Typography variant="subtitle2">Score components</Typography>
+                    <Typography variant="caption" color="text.secondary">
+                      hover any term for what it measures
+                    </Typography>
+                  </Stack>
+                  <ScoreComponents
+                    components={priority.components}
+                    total={priority.priority_score}
+                  />
                 </Stack>
               )}
             </CardContent>

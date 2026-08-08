@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, Divider, Typography } from "@mui/material";
+import { Card, CardContent, CardHeader, Divider, Typography, useTheme } from "@mui/material";
 import {
   Bar,
   BarChart,
@@ -44,6 +44,20 @@ export function ChartCard({
   /** Fixed Y-axis domain (e.g. [0, 100] for score charts). */
   domain?: [number, number];
 }) {
+  const theme = useTheme();
+
+  // Recharts renders its own SVG text and tooltip surface, so it inherits
+  // nothing from the MUI theme: axis ticks default to #666 and the tooltip to
+  // a white card. On the dark canvas the ticks were barely legible and the
+  // tooltip flashed a white rectangle. Both are handed theme colours instead.
+  const axisTick = { fontSize: 11, fill: theme.palette.text.secondary };
+  const tooltipStyle = {
+    backgroundColor: theme.palette.background.paper,
+    border: `1px solid ${theme.palette.divider}`,
+    borderRadius: 8,
+    color: theme.palette.text.primary,
+  };
+
   return (
     <Card sx={{ flex: "1 1 420px", minWidth: 0 }}>
       <CardHeader title={title} subheader={subheader} />
@@ -61,17 +75,34 @@ export function ChartCard({
                   <Cell key={i} fill={CHART_COLORS[i % CHART_COLORS.length]} />
                 ))}
               </Pie>
-              <ChartTooltip />
-              <Legend />
+              <ChartTooltip contentStyle={tooltipStyle} itemStyle={{ color: theme.palette.text.primary }} />
+              <Legend formatter={(v) => <span style={{ color: theme.palette.text.secondary }}>{v}</span>} />
             </PieChart>
           </ResponsiveContainer>
         ) : (
           <ResponsiveContainer>
             <BarChart data={data} margin={{ left: 0, right: 12 }}>
-              <CartesianGrid strokeDasharray="3 3" opacity={0.25} />
-              <XAxis dataKey="name" tick={{ fontSize: 11 }} interval={0} angle={-18} textAnchor="end" height={60} />
-              <YAxis allowDecimals={!!domain} domain={domain} tick={{ fontSize: 11 }} />
-              <ChartTooltip />
+              <CartesianGrid strokeDasharray="3 3" stroke={theme.palette.divider} />
+              <XAxis
+                dataKey="name"
+                tick={axisTick}
+                stroke={theme.palette.divider}
+                interval={0}
+                angle={-18}
+                textAnchor="end"
+                height={60}
+              />
+              <YAxis
+                allowDecimals={!!domain}
+                domain={domain}
+                tick={axisTick}
+                stroke={theme.palette.divider}
+              />
+              <ChartTooltip
+                contentStyle={tooltipStyle}
+                itemStyle={{ color: theme.palette.text.primary }}
+                cursor={{ fill: theme.palette.action.hover }}
+              />
               <Bar dataKey="value" radius={[4, 4, 0, 0]}>
                 {data.map((_, i) => (
                   <Cell key={i} fill={CHART_COLORS[i % CHART_COLORS.length]} />
