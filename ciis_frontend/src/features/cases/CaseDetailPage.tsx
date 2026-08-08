@@ -89,6 +89,15 @@ export default function CaseDetailPage() {
     enabled: !!caseId,
   });
 
+  const analysisHistoryQuery = useQuery({
+    queryKey: ["jobs", caseId],
+    queryFn: () => evidenceApi.jobs({ case_id: caseId }),
+    enabled: !!caseId,
+  });
+  const latestAnalysisJob = analysisHistoryQuery.data?.results.find(
+    (job) => job.job_type === "case_analysis",
+  );
+
   const analyzeMutation = useMutation({
     mutationFn: () => investigationApi.runAnalysis(caseId),
     onSuccess: (job) => {
@@ -117,16 +126,24 @@ export default function CaseDetailPage() {
     enabled: analysisJobId !== null,
     refetchInterval: (query) => {
       const status = query.state.data?.status;
-      return status === "completed" || status === "failed" ? false : ANALYSIS_POLL_MS;
+      return status === "completed" ||
+        status === "completed_with_warnings" ||
+        status === "failed"
+        ? false
+        : ANALYSIS_POLL_MS;
     },
   });
 
   useEffect(() => {
     const job = analysisJob.data;
     if (!job || analysisJobId === null) return;
-    if (job.status === "completed") {
+    if (job.status === "completed" || job.status === "completed_with_warnings") {
       setAnalysisJobId(null);
-      setToast("Analysis complete — priority, findings and report updated.");
+      setToast(
+        job.status === "completed_with_warnings"
+          ? `Analysis completed with warnings: ${job.detail}`
+          : "Analysis complete — priority, findings and report updated.",
+      );
       // The case payload (priority verdict), every Phase-2 artifact and the
       // report list are all downstream of this job.
       for (const key of [
@@ -135,6 +152,7 @@ export default function CaseDetailPage() {
         ["reports", caseId],
         ["report-latest", caseId],
         ["cases"],
+        ["jobs", caseId],
       ]) {
         void queryClient.invalidateQueries({ queryKey: key });
       }
@@ -255,6 +273,14 @@ export default function CaseDetailPage() {
           )}
         </Stack>
       </Stack>
+
+      {latestAnalysisJob?.status === "completed_with_warnings" && (
+        <Alert severity="warning" sx={{ mb: 2 }}>
+          <strong>Latest analysis produced partial results.</strong> Timeline, graph,
+          analytics, and report artifacts were regenerated, but should be reviewed with
+          these warnings: {latestAnalysisJob.detail}
+        </Alert>
+      )}
 
       <Tabs
         value={activeTab}

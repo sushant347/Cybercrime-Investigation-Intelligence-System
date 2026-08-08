@@ -140,3 +140,58 @@ def test_live_timeline_graph_refresh_uses_focused_pipeline(monkeypatch, api):
     result = engine._refresh_timeline_graph("CASE_0001")
     assert result is not None
     assert called == ["CASE_0001"]
+
+
+def test_forensics_backfill_skips_missing_original(monkeypatch, api):
+    """Missing evidence must not produce a misleading confidence score."""
+    from api import engine
+
+    monkeypatch.setattr(engine, "list_evidence", lambda _case_id: [{
+        "case_id": "CASE_0001",
+        "evidence_id": "EVID_0001",
+        "stored_file_name": "EVID_0001__missing__scan.png",
+    }])
+
+    def should_not_run(_evidence_id):
+        raise AssertionError("Phase 1 must not run without the stored original")
+
+    monkeypatch.setattr(engine, "_run_forensics", should_not_run)
+    result = engine._backfill_forensics("CASE_0001")
+
+    assert result["repaired"] == 0
+    assert result["warnings"] == [
+        "Original evidence files unavailable for 1 item(s): EVID_0001"
+    ]
+
+
+def test_forensics_backfill_sanitizes_module_failures(monkeypatch, api):
+    """Job-facing warnings identify failed modules without leaking local paths."""
+    from api import engine
+
+    cfg = engine.evidence_config()
+    stored_name = "EVID_0001__hash__scan.png"
+    (cfg.originals_dir / stored_name).write_bytes(b"mocked Phase-1 input")
+    row = {
+        "case_id": "CASE_0001",
+        "evidence_id": "EVID_0001",
+        "stored_file_name": stored_name,
+    }
+    monkeypatch.setattr(engine, "list_evidence", lambda _case_id: [row])
+    monkeypatch.setattr(
+        engine,
+        "_run_forensics",
+        lambda _evidence_id: {
+            "failures": [
+                "integrity: Cannot read E:\\private\\scan.png",
+                "image_load: Cannot decode E:\\private\\scan.png",
+            ]
+        },
+    )
+
+    result = engine._backfill_forensics("CASE_0001")
+
+    assert result["repaired"] == 0
+    assert result["warnings"] == [
+        "EVID_0001: Phase-1 warnings in image_load, integrity"
+    ]
+    assert "private" not in " ".join(result["warnings"])

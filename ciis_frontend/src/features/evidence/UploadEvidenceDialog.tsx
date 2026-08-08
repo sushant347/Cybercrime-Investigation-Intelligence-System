@@ -4,6 +4,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import LinkIcon from "@mui/icons-material/Link";
 import ErrorIcon from "@mui/icons-material/Error";
 import HourglassEmptyIcon from "@mui/icons-material/HourglassEmpty";
+import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 import {
   Alert,
   Box,
@@ -39,7 +40,13 @@ const POLL_MS = 1100;
 /** First check comes sooner: a small screenshot is often already done. */
 const FIRST_POLL_MS = 500;
 
-type ItemStatus = "waiting" | "uploading" | "processing" | "completed" | "failed";
+type ItemStatus =
+  | "waiting"
+  | "uploading"
+  | "processing"
+  | "completed"
+  | "completed_with_warnings"
+  | "failed";
 
 type Mode = "file" | "url";
 
@@ -236,6 +243,14 @@ export function UploadEvidenceDialog({
                 evidenceId: latest.evidence_id,
               });
               settled.push(jobId);
+            } else if (latest.status === "completed_with_warnings") {
+              patch(index, {
+                ...progress,
+                status: "completed_with_warnings",
+                evidenceId: latest.evidence_id,
+                error: latest.detail,
+              });
+              settled.push(jobId);
             } else if (latest.status === "failed") {
               patch(index, {
                 ...progress,
@@ -264,15 +279,25 @@ export function UploadEvidenceDialog({
   };
 
   const waiting = items.filter((i) => i.status === "waiting" || i.status === "failed");
-  const completedCount = items.filter((i) => i.status === "completed").length;
+  const completedCount = items.filter(
+    (i) => i.status === "completed" || i.status === "completed_with_warnings",
+  ).length;
   const failedCount = items.filter((i) => i.status === "failed").length;
   const allSettled =
-    items.length > 0 && items.every((i) => i.status === "completed" || i.status === "failed");
+    items.length > 0 &&
+    items.every(
+      (i) =>
+        i.status === "completed" ||
+        i.status === "completed_with_warnings" ||
+        i.status === "failed",
+    );
 
   const statusIcon = (status: ItemStatus) => {
     switch (status) {
       case "completed":
         return <CheckCircleIcon color="success" fontSize="small" />;
+      case "completed_with_warnings":
+        return <WarningAmberIcon color="warning" fontSize="small" />;
       case "failed":
         return <ErrorIcon color="error" fontSize="small" />;
       case "uploading":
@@ -294,6 +319,8 @@ export function UploadEvidenceDialog({
         return it.url ? "Link submitted — processing" : "In the engine";
       case "completed":
         return it.evidenceId ? `Processed as ${it.evidenceId}` : "Processed";
+      case "completed_with_warnings":
+        return it.error || "Processed with warnings";
       case "failed":
         return it.error || "Failed";
     }
@@ -402,6 +429,7 @@ export function UploadEvidenceDialog({
                 const showStages =
                   it.status === "processing" ||
                   it.status === "completed" ||
+                  it.status === "completed_with_warnings" ||
                   (it.status === "failed" && (it.stages?.length ?? 0) > 0);
                 return (
                   <ListItem
@@ -425,7 +453,13 @@ export function UploadEvidenceDialog({
                         </Typography>
                         <Typography
                           variant="caption"
-                          color={it.status === "failed" ? "error" : "text.secondary"}
+                          color={
+                            it.status === "failed"
+                              ? "error"
+                              : it.status === "completed_with_warnings"
+                                ? "warning.main"
+                                : "text.secondary"
+                          }
                           sx={{ display: "block", overflowWrap: "anywhere" }}
                         >
                           {statusText(it)}
@@ -436,7 +470,10 @@ export function UploadEvidenceDialog({
                               current={it.stage ?? ""}
                               note={it.stageNote}
                               stages={it.stages ?? []}
-                              done={it.status === "completed"}
+                              done={
+                                it.status === "completed" ||
+                                it.status === "completed_with_warnings"
+                              }
                               failed={it.status === "failed"}
                             />
                           </Box>

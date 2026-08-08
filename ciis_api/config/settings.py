@@ -183,6 +183,16 @@ ENGINE_RUN_FULL_PIPELINE = os.environ.get("CIIS_RUN_FULL_PIPELINE", "1") == "1"
 # environment lacks the optional imaging dependencies.
 ENGINE_RUN_FORENSICS = os.environ.get("CIIS_RUN_FORENSICS", "1") == "1"
 
+# Input-quality policy for an explicit Phase-2 case analysis. ``warn`` keeps
+# useful OCR/entity-derived artifacts available but marks them partial;
+# ``strict`` refuses to regenerate timeline/graph/report artifacts when an
+# original or required Phase-1 report cannot be validated.
+ANALYSIS_INPUT_POLICY = os.environ.get(
+    "CIIS_ANALYSIS_INPUT_POLICY", "warn"
+).strip().lower()
+if ANALYSIS_INPUT_POLICY not in {"warn", "strict"}:
+    raise RuntimeError("CIIS_ANALYSIS_INPUT_POLICY must be 'warn' or 'strict'.")
+
 # OCR engines for the multi-OCR fusion module. All off by default: each one
 # performs a complete *second* OCR pass over an image the pipeline has already
 # read, and EasyOCR/Tesseract are separate stacks (EasyOCR downloads model
