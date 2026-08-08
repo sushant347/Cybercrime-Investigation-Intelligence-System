@@ -17,7 +17,9 @@ continues (Markdown + JSON remain the canonical artifacts).
 from __future__ import annotations
 
 import io
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Sequence
+
+from . import pdf_charts
 
 try:  # reportlab is an optional dependency (installed by dev.sh setup)
     from reportlab.lib import colors
@@ -129,6 +131,42 @@ def _prediction_facts(row: Dict[str, Any]) -> List[str]:
     if isinstance(row.get("trust_score"), int):
         facts.append(f"trust: {row['trust_score']}/100")
     return facts
+
+
+def _pretty(value: Any) -> str:
+    """Render a scalar the way a reader expects to see it on paper.
+
+    Booleans as yes/no rather than Python's ``True``; whole floats without a
+    stray ``.0``; ``None`` as an explicit "not available" so a blank cell can
+    never be mistaken for a measured zero.
+    """
+    if value is None:
+        return "not available"
+    if isinstance(value, bool):
+        return "yes" if value else "no"
+    if isinstance(value, float):
+        if abs(value - round(value)) < 1e-9:
+            return str(int(round(value)))
+        return f"{value:.2f}"
+    if isinstance(value, list):
+        return ", ".join(_pretty(v) for v in value) if value else "none"
+    return str(value)
+
+
+def _pct(value: Any) -> str:
+    """A 0–1 fraction as a percentage; anything else passed through."""
+    if value is None:
+        return "n/a"
+    try:
+        return f"{float(value) * 100:.0f}%"
+    except (TypeError, ValueError):
+        return str(value)
+
+
+def _short_ts(value: Any) -> str:
+    """Trim an ISO timestamp to minutes — seconds never matter in a table."""
+    text = str(value or "")
+    return text[:16].replace("T", " ") if text else "—"
 
 
 def available() -> bool:
@@ -263,6 +301,26 @@ def render_pdf(
         "end": ParagraphStyle(
             "r_end", parent=base["Normal"], fontSize=8, leading=11,
             alignment=TA_CENTER, textColor=colors.HexColor(MUTED)),
+        # The opening statement of a section carries the finding; setting it
+        # slightly larger stops it reading as the first of N equal bullets.
+        "lead": ParagraphStyle(
+            "r_lead", parent=base["Normal"], fontSize=9.8, leading=14.5,
+            textColor=colors.HexColor("#111827")),
+        "metric": ParagraphStyle(
+            "r_metric", parent=base["Normal"], fontSize=14, leading=17,
+            alignment=TA_CENTER, textColor=colors.HexColor(ACCENT)),
+        "metric_label": ParagraphStyle(
+            "r_metric_label", parent=base["Normal"], fontSize=6.2, leading=8,
+            alignment=TA_CENTER, textColor=colors.HexColor(MUTED)),
+        "caption": ParagraphStyle(
+            "r_caption", parent=base["Normal"], fontSize=7, leading=9.5,
+            textColor=colors.HexColor(MUTED)),
+        "cell": ParagraphStyle(
+            "r_cell", parent=base["Normal"], fontSize=8, leading=11,
+            textColor=colors.HexColor("#1f2937")),
+        "cell_mono": ParagraphStyle(
+            "r_cell_mono", parent=base["Normal"], fontName="Courier",
+            fontSize=7.2, leading=10, textColor=colors.HexColor("#1f2937")),
     }
 
     def esc(value: Any) -> str:
@@ -338,24 +396,117 @@ def render_pdf(
 
     # ------------------------------------------------------------ table helper
     def data_table(headers: List[str], rows: List[List[str]],
-                   widths: Optional[List[float]] = None) -> Table:
-        wrapped = [[Paragraph(f"<b>{esc(h)}</b>", styles["body"])
+                   widths: Optional[List[float]] = None,
+                   mono_cols: Sequence[int] = ()) -> Table:
+        """A repeating-header data table.
+
+        Long tables are the normal case in this report (36 correlation pairs,
+        every evidence item), so the header repeats on each page — a table
+        whose headings are three pages back is unreadable — and rows are
+        banded, which is what stops the eye losing its place when scanning
+        across a wide row. Digest and identifier columns are set in Courier
+        via ``mono_cols`` so characters align and a transposition is visible.
+        """
+        wrapped = [[Paragraph(f"<b>{esc(h)}</b>", styles["cell"])
                     for h in headers]]
         for row in rows:
-            wrapped.append([Paragraph(esc(cell), styles["body"])
-                            for cell in row])
+            wrapped.append([
+                Paragraph(esc(cell),
+                          styles["cell_mono"] if i in mono_cols else styles["cell"])
+                for i, cell in enumerate(row)])
         table = Table(wrapped, colWidths=widths, repeatRows=1)
-        table.setStyle(TableStyle([
+        style = [
             ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#f0fdf4")),
             ("LINEBELOW", (0, 0), (-1, 0), 0.8, colors.HexColor(ACCENT)),
-            ("LINEBELOW", (0, 1), (-1, -1), 0.3, colors.HexColor(RULE)),
-            ("TOPPADDING", (0, 0), (-1, -1), 3),
-            ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
+            ("LINEBELOW", (0, 1), (-1, -1), 0.25, colors.HexColor(RULE)),
+            ("TOPPADDING", (0, 0), (-1, -1), 3.5),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 3.5),
             ("LEFTPADDING", (0, 0), (-1, -1), 4),
             ("RIGHTPADDING", (0, 0), (-1, -1), 4),
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
+        ]
+        # Zebra banding, applied to body rows only.
+        for i in range(1, len(wrapped)):
+            if i % 2 == 0:
+                style.append(("BACKGROUND", (0, i), (-1, i),
+                              colors.HexColor("#fafbfc")))
+        table.setStyle(TableStyle(style))
+        return table
+
+    # ------------------------------------------------------- layout helpers
+    def metric_strip(pairs: List[tuple]) -> Optional[Table]:
+        """A row of KPI cells: bold value over a small caption.
+
+        Headline counts were previously bullets ("• pair count: 36"), which
+        buries the one number a reader wants at a glance under the same
+        typography as everything else.
+        """
+        cells = [p for p in pairs if p[1] is not None]
+        if not cells:
+            return None
+        value_row = [Paragraph(f"<b>{esc(v)}</b>", styles["metric"])
+                     for _, v in cells]
+        label_row = [Paragraph(esc(label).upper(), styles["metric_label"])
+                     for label, _ in cells]
+        col = (174 * mm) / len(cells)
+        table = Table([value_row, label_row], colWidths=[col] * len(cells))
+        table.setStyle(TableStyle([
+            ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
+            ("TOPPADDING", (0, 0), (-1, 0), 5),
+            ("BOTTOMPADDING", (0, 0), (-1, 0), 0),
+            ("TOPPADDING", (0, 1), (-1, 1), 0),
+            ("BOTTOMPADDING", (0, 1), (-1, 1), 6),
+            ("BACKGROUND", (0, 0), (-1, -1), colors.HexColor("#f8fafc")),
+            ("LINEBELOW", (0, 1), (-1, 1), 0.8, colors.HexColor(ACCENT)),
+            ("LINEBEFORE", (1, 0), (-1, -1), 0.4, colors.HexColor(RULE)),
         ]))
         return table
+
+    def kv_table(data: Dict[str, Any],
+                 skip: Sequence[str] = ()) -> Optional[Table]:
+        """Two-column definition table for a flat mapping."""
+        rows = [(k, v) for k, v in data.items()
+                if k not in skip and not isinstance(v, (dict, list))]
+        if not rows:
+            return None
+        wrapped = [[Paragraph(f"<b>{esc(str(k).replace('_', ' ').capitalize())}</b>",
+                              styles["body"]),
+                    Paragraph(esc(_pretty(v)), styles["body"])]
+                   for k, v in rows]
+        table = Table(wrapped, colWidths=[54 * mm, 120 * mm])
+        table.setStyle(TableStyle([
+            ("LINEBELOW", (0, 0), (-1, -1), 0.3, colors.HexColor(RULE)),
+            ("TOPPADDING", (0, 0), (-1, -1), 3.5),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 3.5),
+            ("LEFTPADDING", (0, 0), (0, -1), 0),
+            ("VALIGN", (0, 0), (-1, -1), "TOP"),
+        ]))
+        return table
+
+    def numbered_list(items: Sequence[Any], lead: bool = False) -> None:
+        """An ordered list of statements, numbered so they can be cited."""
+        for i, item in enumerate(items, 1):
+            text = _pretty(item)
+            if not str(text).strip():
+                continue
+            style = styles["lead"] if (lead and i == 1) else styles["body"]
+            story.append(Paragraph(
+                f"<b>{i}.</b>&nbsp;&nbsp;{esc(text)}", style))
+            story.append(Spacer(1, 3))
+
+    def chart(drawing: Any, caption: str = "") -> None:
+        """Place a chart, with its caption, keeping the two together."""
+        if drawing is None:
+            return
+        block = [Spacer(1, 4), drawing]
+        if caption:
+            block.append(Spacer(1, 1))
+            block.append(Paragraph(esc(caption), styles["caption"]))
+        block.append(Spacer(1, 5))
+        story.append(KeepTogether(block))
+
+    def subhead(text: str) -> None:
+        story.append(Paragraph(esc(text), styles["h3"]))
 
     # ------------------------------------------------- generic value rendering
     def emit(value: Any, indent: int = 0) -> None:
@@ -453,6 +604,584 @@ def render_pdf(
             emit(remainder)
         return True
 
+    def emit_statement_list(section: Any) -> bool:
+        """Executive summary / conclusion / recommendations: numbered prose."""
+        if not (isinstance(section, list) and section
+                and all(not isinstance(i, (dict, list)) for i in section)):
+            return False
+        numbered_list(section, lead=True)
+        return True
+
+    def emit_flat_mapping(section: Any) -> bool:
+        """A flat dict as a definition table instead of a bullet run."""
+        if not isinstance(section, dict):
+            return False
+        table = kv_table(section)
+        nested = {k: v for k, v in section.items() if isinstance(v, (dict, list))}
+        if table is None and not nested:
+            return False
+        if table is not None:
+            story.append(table)
+        for key, value in nested.items():
+            story.append(Spacer(1, 5))
+            subhead(str(key).replace("_", " ").capitalize())
+            if isinstance(value, list) and all(
+                    not isinstance(i, (dict, list)) for i in value):
+                for item in value:
+                    story.append(Paragraph(f"&bull; {esc(_pretty(item))}",
+                                           styles["bullet"]))
+            else:
+                emit(value)
+        return True
+
+    def emit_timeline(section: Any) -> bool:
+        """Timeline: the stage ribbon first, then the milestones that made it."""
+        if not isinstance(section, dict):
+            return False
+        if section.get("summary"):
+            story.append(Paragraph(esc(section["summary"]), styles["lead"]))
+            story.append(Spacer(1, 4))
+
+        milestones = section.get("milestones") or []
+        stages = section.get("stage_progression") or []
+        if stages:
+            # No per-stage event count exists in the data, so the ribbon shows
+            # order and nothing else. Printing a count the engine never
+            # computed would be a fabricated figure in a forensic document.
+            chart(
+                pdf_charts.timeline_strip(
+                    [(str(s).replace("_", " "), None) for s in stages]),
+                "Order in which the engine observed each stage of the attack.",
+            )
+        if section.get("progression_consistent") is not None:
+            story.append(Paragraph(
+                "Stage order is "
+                + ("consistent with a typical scam progression."
+                   if section["progression_consistent"]
+                   else "OUT OF ORDER against a typical scam progression, "
+                        "which can indicate multiple actors or a re-contact."),
+                styles["subtitle"]))
+            story.append(Spacer(1, 5))
+
+        if milestones and isinstance(milestones[0], dict):
+            subhead("Milestone events")
+            story.append(data_table(
+                ["When", "What happened"],
+                [[_short_ts(m.get("timestamp")),
+                  m.get("description") or m.get("event_type", "")]
+                 for m in milestones],
+                widths=[36 * mm, 138 * mm]))
+            story.append(Spacer(1, 5))
+
+        critical = section.get("critical_events") or []
+        if critical and isinstance(critical[0], dict):
+            subhead("Critical events")
+            story.append(Paragraph(
+                "Moments involving an OTP or a financial transfer — the points "
+                "at which money or account control actually moved.",
+                styles["caption"]))
+            story.append(Spacer(1, 3))
+            story.append(data_table(
+                ["When", "Evidence", "Why it is critical"],
+                [[_short_ts(c.get("timestamp")),
+                  str(c.get("evidence_id", "")),
+                  "; ".join(str(r) for r in (c.get("reasons") or []))
+                  or str(c.get("description", ""))]
+                 for c in critical],
+                widths=[30 * mm, 26 * mm, 118 * mm]))
+            story.append(Spacer(1, 4))
+
+        # Anything the engine adds to this section later still reaches paper.
+        handled = {"summary", "stage_progression", "progression_consistent",
+                   "milestones", "critical_events"}
+        rest = {k: v for k, v in section.items() if k not in handled}
+        if rest:
+            table = kv_table(rest)
+            if table is not None:
+                story.append(table)
+            for key, value in rest.items():
+                if isinstance(value, (dict, list)):
+                    subhead(str(key).replace("_", " ").capitalize())
+                    emit(value)
+        return True
+
+    def emit_correlation(section: Any) -> bool:
+        """Correlation: counts, the strength distribution, then the pairs.
+
+        Previously each pair emitted four sibling bullets (pair, strength,
+        confidence, then a paragraph-long explanation), so thirty-six pairs
+        became an unreadable column of a hundred and forty bullets. The
+        ranking is the finding, so it becomes a sorted table.
+        """
+        if not isinstance(section, dict) or "top_relationships" not in section:
+            return False
+
+        strip = metric_strip([
+            ("Pairs examined", section.get("pair_count")),
+            ("Related pairs", section.get("related_pair_count")),
+            ("Strongest link",
+             _pct(max((r.get("confidence") or 0)
+                      for r in section.get("top_relationships") or [{}]))
+             if section.get("top_relationships") else None),
+        ])
+        if strip is not None:
+            story.append(strip)
+            story.append(Spacer(1, 6))
+
+        dist = section.get("strength_distribution") or {}
+        if dist:
+            order = ["VERY_STRONG", "STRONG", "MEDIUM", "WEAK"]
+            rows = [(k.replace("_", " ").title(), dist[k], pdf_charts.band_color(k))
+                    for k in order if k in dist]
+            rows += [(k.replace("_", " ").title(), v, pdf_charts.band_color(k))
+                     for k, v in dist.items() if k not in order]
+            chart(pdf_charts.vbar_chart(rows),
+                  "How many evidence pairs fell into each strength band.")
+
+        pairs = section.get("top_relationships") or []
+        if pairs:
+            subhead("Strongest relationships")
+            story.append(data_table(
+                ["Evidence pair", "Strength", "Confidence"],
+                [[str(p.get("pair", "")),
+                  str(p.get("strength", "")).replace("_", " "),
+                  _pct(p.get("confidence"))]
+                 for p in pairs],
+                widths=[100 * mm, 40 * mm, 34 * mm]))
+            # The explanation is the evidence for the row above it, so it is
+            # kept as prose beneath the table rather than crammed into a cell
+            # where it would force a column three lines deep.
+            explained = [p for p in pairs if p.get("explanation")]
+            if explained:
+                story.append(Spacer(1, 6))
+                subhead("Why each pair is linked")
+                for p in explained:
+                    story.append(KeepTogether([
+                        Paragraph(f"<b>{esc(p.get('pair', ''))}</b> "
+                                  f"({esc(_pct(p.get('confidence')))})",
+                                  styles["body"]),
+                        Paragraph(esc(p["explanation"]), styles["subtitle"]),
+                        Spacer(1, 5),
+                    ]))
+        remainder = {k: v for k, v in section.items()
+                     if k not in ("pair_count", "related_pair_count",
+                                  "strength_distribution", "top_relationships")}
+        if remainder:
+            emit(remainder)
+        return True
+
+    def emit_cross_case(section: Any) -> bool:
+        if not isinstance(section, dict) or "links" not in section:
+            return False
+        links = section.get("links") or []
+        if not links:
+            story.append(Paragraph(
+                "This case shares no identifiers with any other case held by "
+                "the engine.", styles["body"]))
+            return True
+        story.append(Paragraph(
+            f"Identifiers from this case also appear in "
+            f"{esc(section.get('related_case_count', len(links)))} other "
+            f"case(s). A shared identifier is a lead, not proof the cases are "
+            f"the same operation.", styles["body"]))
+        story.append(Spacer(1, 4))
+        story.append(data_table(
+            ["Related case", "Strength", "Confidence", "Shared identifiers"],
+            [[str(l.get("other_case_id", "")),
+              str(l.get("relationship_strength", "")).replace("_", " "),
+              _pct(l.get("match_confidence")),
+              str(len(l.get("matched_entities") or []))]
+             for l in links],
+            widths=[54 * mm, 34 * mm, 30 * mm, 56 * mm]))
+        for link in links:
+            entities = link.get("matched_entities") or []
+            story.append(Spacer(1, 6))
+            subhead(f"Shared with {link.get('other_case_id', '')}")
+            if link.get("match_reason"):
+                story.append(Paragraph(esc(link["match_reason"]),
+                                       styles["subtitle"]))
+                story.append(Spacer(1, 3))
+            if entities:
+                # Both sides' evidence ids are listed: the point of a
+                # cross-case link is being able to pull the exact exhibit in
+                # the other case, which a count alone does not let you do.
+                # Specificity is only present on some artifact versions; an
+                # all-dashes column just makes the reader hunt for a meaning.
+                has_spec = any(e.get("specificity") is not None for e in entities)
+                headers = ["Type", "Value"] + (["Spec."] if has_spec else []) \
+                    + ["This case", "Other case"]
+                widths = ([26 * mm, 56 * mm] + ([14 * mm] if has_spec else [])
+                          + ([39 * mm, 39 * mm] if has_spec
+                             else [46 * mm, 46 * mm]))
+                story.append(data_table(
+                    headers,
+                    [[str(e.get("entity_type", "")).replace("_", " "),
+                      str(e.get("value", ""))]
+                     + ([f"{float(e['specificity']):.2f}"
+                         if e.get("specificity") is not None else "—"]
+                        if has_spec else [])
+                     + [", ".join(str(i) for i in (e.get("this_evidence_ids") or [])),
+                        ", ".join(str(i) for i in (e.get("other_evidence_ids") or []))]
+                     for e in entities],
+                    widths=widths))
+            rest = kv_table(link, skip=("other_case_id", "relationship_strength",
+                                        "match_confidence", "match_reason"))
+            if rest is not None:
+                story.append(Spacer(1, 3))
+                story.append(rest)
+        remainder = {k: v for k, v in section.items()
+                     if k not in ("links", "related_case_count")}
+        if remainder:
+            story.append(Spacer(1, 4))
+            emit(remainder)
+        return True
+
+    def emit_campaigns(section: Any) -> bool:
+        if not isinstance(section, dict) or "campaigns" not in section:
+            return False
+        campaigns = section.get("campaigns") or []
+        strip = metric_strip([
+            ("Campaigns detected", section.get("campaign_count", len(campaigns))),
+            ("Unclustered items", len(section.get("unclustered_evidence") or [])),
+        ])
+        if strip is not None:
+            story.append(strip)
+            story.append(Spacer(1, 6))
+        if not campaigns:
+            story.append(Paragraph(
+                "The engine did not cluster this case's evidence into a "
+                "coordinated campaign.", styles["body"]))
+            return True
+
+        for campaign in campaigns:
+            members = campaign.get("members") or []
+            # `confidence` here is a 0-1 fraction; older artifacts used
+            # `campaign_confidence`. Accept either rather than printing n/a.
+            confidence = campaign.get("confidence")
+            if confidence is None:
+                confidence = campaign.get("campaign_confidence")
+            block: List[Any] = [
+                Paragraph(f"{esc(campaign.get('campaign_id', 'Campaign'))} "
+                          f"&ndash; {len(members)} item(s), confidence "
+                          f"{esc(_pct(confidence))}", styles["h3"]),
+            ]
+            if campaign.get("summary"):
+                block.append(Paragraph(esc(campaign["summary"]), styles["body"]))
+            block.append(Spacer(1, 3))
+            story.append(KeepTogether(block))
+
+            signature = campaign.get("signature") or []
+            if signature:
+                story.append(data_table(
+                    ["Shared signature"],
+                    [[str(s)] for s in signature],
+                    widths=[174 * mm]))
+                story.append(Spacer(1, 3))
+            if members:
+                story.append(Paragraph(
+                    "<b>Members.</b> " + esc(", ".join(str(m) for m in members)),
+                    styles["subtitle"]))
+            memberships = campaign.get("memberships") or []
+            if memberships:
+                story.append(Spacer(1, 3))
+                story.append(data_table(
+                    ["Evidence", "Why it belongs to this campaign"],
+                    [[str(m.get("evidence_id", "")),
+                      m.get("membership_explanation")
+                      or "; ".join(str(r) for r in (m.get("link_reasons") or []))]
+                     for m in memberships],
+                    widths=[34 * mm, 140 * mm]))
+            leftover = kv_table(campaign, skip=("campaign_id", "members",
+                                                "confidence",
+                                                "campaign_confidence",
+                                                "signature", "summary"))
+            if leftover is not None:
+                story.append(Spacer(1, 3))
+                story.append(leftover)
+            story.append(Spacer(1, 7))
+
+        unclustered = section.get("unclustered_evidence") or []
+        if unclustered:
+            subhead("Not clustered into any campaign")
+            story.append(Paragraph(
+                esc(", ".join(str(u) for u in unclustered)), styles["subtitle"]))
+        return True
+
+    def emit_suspects(section: Any) -> bool:
+        """Suspects ranked, charted, then justified — never a bullet dump."""
+        if not (isinstance(section, list) and section
+                and isinstance(section[0], dict)
+                and "identity" in section[0]
+                and "confidence_score" in section[0]):
+            return False
+
+        def split_identity(value: Any) -> tuple:
+            """`khalti_ids:+977…` -> ("khalti ids", "+977…")."""
+            text = str(value or "")
+            kind, sep, ident = text.partition(":")
+            return ((kind.replace("_", " "), ident) if sep else ("", text))
+
+        ranked = sorted(section,
+                        key=lambda s: float(s.get("confidence_score") or 0),
+                        reverse=True)
+        chart(
+            pdf_charts.hbar_chart(
+                [(split_identity(s.get("identity"))[1],
+                  float(s.get("confidence_score") or 0),
+                  pdf_charts.band_color(
+                      s.get("risk_level") or s.get("confidence_level") or "medium"))
+                 for s in ranked[:12]],
+                max_value=100.0, label_w_mm=58),
+            "How strongly each identifier is connected to this case, out of "
+            "100. This measures strength of association with the evidence; it "
+            "is not a finding of guilt.",
+        )
+        story.append(data_table(
+            ["Identifier", "Type", "Risk", "Confidence", "Score", "Appears in"],
+            [[split_identity(s.get("identity"))[1],
+              split_identity(s.get("identity"))[0],
+              str(s.get("risk_level", "")),
+              str(s.get("confidence_level", "")),
+              _pretty(s.get("confidence_score")),
+              ", ".join(str(i) for i in (s.get("evidence_ids") or []))]
+             for s in ranked],
+            widths=[46 * mm, 24 * mm, 18 * mm, 22 * mm, 16 * mm, 48 * mm]))
+
+        explained = [s for s in ranked if s.get("explanation")]
+        if explained:
+            story.append(Spacer(1, 6))
+            subhead("Basis for each ranked identifier")
+            for s in explained:
+                story.append(KeepTogether([
+                    Paragraph(
+                        f"<b>{esc(split_identity(s.get('identity'))[1])}</b> "
+                        f"({esc(s.get('suspect_id', ''))})", styles["body"]),
+                    Paragraph(esc(s["explanation"]), styles["subtitle"]),
+                    Spacer(1, 5),
+                ]))
+        return True
+
+    def emit_threat_intel(section: Any) -> bool:
+        if not isinstance(section, dict) or "indicators_checked" not in section:
+            return False
+        strip = metric_strip([
+            ("Indicators checked", _pretty(section.get("indicators_checked"))),
+            ("Malicious", _pretty(section.get("malicious_indicators"))),
+            ("Suspicious", _pretty(section.get("suspicious_indicators"))),
+            ("Items affected", _pretty(section.get("evidence_with_threats"))),
+        ])
+        if strip is not None:
+            story.append(strip)
+            story.append(Spacer(1, 6))
+        malicious = float(section.get("malicious_indicators") or 0)
+        suspicious = float(section.get("suspicious_indicators") or 0)
+        checked = float(section.get("indicators_checked") or 0)
+        clean = max(0.0, checked - malicious - suspicious)
+        chart(
+            pdf_charts.stacked_share_bar([
+                ("Malicious", malicious, pdf_charts.band_color("bad")),
+                ("Suspicious", suspicious, pdf_charts.band_color("high")),
+                ("Clean", clean, pdf_charts.band_color("good")),
+            ]),
+            "Verdicts returned for every indicator the engine checked.",
+        )
+        rest = kv_table(section, skip=("indicators_checked",
+                                       "malicious_indicators",
+                                       "suspicious_indicators",
+                                       "evidence_with_threats"))
+        if rest is not None:
+            story.append(rest)
+        return True
+
+    def emit_quality(section: Any) -> bool:
+        if not isinstance(section, dict) or "mean_evidence_confidence" not in section:
+            return False
+        strip = metric_strip([
+            ("Mean confidence", _pretty(section.get("mean_evidence_confidence"))),
+            ("Mean image quality", _pretty(section.get("mean_image_quality"))),
+            ("Mean forgery score", _pretty(section.get("mean_forgery_score"))),
+            ("Worst forgery score", _pretty(section.get("max_forgery_score"))),
+        ])
+        if strip is not None:
+            story.append(strip)
+            story.append(Spacer(1, 5))
+        worst = section.get("max_forgery_score")
+        if isinstance(worst, (int, float)) and float(worst) >= 50:
+            story.append(Paragraph(
+                f"<b>Attention.</b> The worst forgery score in this case is "
+                f"{esc(_pretty(worst))}/100, at or above the threshold the "
+                f"engine treats as possible tampering. The affected item "
+                f"should be examined manually before it is relied upon.",
+                styles["caveat"]))
+            story.append(Spacer(1, 4))
+        rest = kv_table(section, skip=("mean_evidence_confidence",
+                                       "mean_image_quality",
+                                       "mean_forgery_score",
+                                       "max_forgery_score"))
+        if rest is not None:
+            story.append(rest)
+        return True
+
+    def emit_dict_list(section: Any, title_hint: str = "") -> bool:
+        """A uniform list of flat dicts as one table with shared columns.
+
+        Columns come from the scalar fields. Fields holding a list (notes,
+        reasons) will not fit a cell, so they are printed under the table
+        keyed by the row they belong to — dropping them would lose findings
+        such as the EXIF consistency notes.
+        """
+        if not (isinstance(section, list) and section
+                and all(isinstance(r, dict) for r in section)):
+            return False
+        keys: List[str] = []
+        list_keys: List[str] = []
+        for row in section:
+            for k, v in row.items():
+                if isinstance(v, dict):
+                    return False  # nested objects need a bespoke layout
+                if isinstance(v, list):
+                    if k not in list_keys:
+                        list_keys.append(k)
+                elif k not in keys:
+                    keys.append(k)
+        if not keys:
+            return False
+
+        # A paragraph-length field (an explanation) cannot share a row with
+        # short columns: it forces the whole table six lines deep and the
+        # short values drift apart. Those fields are printed below instead.
+        def longest(key: str) -> int:
+            return max((len(str(r.get(key) or "")) for r in section), default=0)
+
+        prose_keys = [k for k in keys if longest(k) > 90]
+        keys = [k for k in keys if k not in prose_keys]
+        if not keys or len(keys) > 7:
+            return False
+
+        # The first column is usually the identifier; use it to key the notes.
+        id_key = keys[0]
+        story.append(data_table(
+            [k.replace("_", " ").capitalize() for k in keys],
+            [[_pretty(row.get(k)) for k in keys] for row in section]))
+
+        for list_key in list_keys:
+            entries = [(row.get(id_key), row.get(list_key) or [])
+                       for row in section if row.get(list_key)]
+            if not entries:
+                continue
+            story.append(Spacer(1, 5))
+            subhead(str(list_key).replace("_", " ").capitalize())
+            for row_id, items in entries:
+                story.append(Paragraph(
+                    f"<b>{esc(_pretty(row_id))}</b> &mdash; "
+                    + esc("; ".join(_pretty(i) for i in items)),
+                    styles["subtitle"]))
+                story.append(Spacer(1, 2))
+
+        for prose_key in prose_keys:
+            entries = [(row.get(id_key), row.get(prose_key))
+                       for row in section if row.get(prose_key)]
+            if not entries:
+                continue
+            story.append(Spacer(1, 5))
+            subhead(str(prose_key).replace("_", " ").capitalize())
+            for row_id, text in entries:
+                story.append(KeepTogether([
+                    Paragraph(f"<b>{esc(_pretty(row_id))}</b>", styles["body"]),
+                    Paragraph(esc(_pretty(text)), styles["subtitle"]),
+                    Spacer(1, 4),
+                ]))
+        return True
+
+    def emit_statistics(section: Any) -> bool:
+        """Grouped counters as one table per group, not nested bullets."""
+        if not isinstance(section, dict):
+            return False
+        groups = {k: v for k, v in section.items() if isinstance(v, dict) and v}
+        if not groups:
+            return False
+        flat = kv_table(section)
+        if flat is not None:
+            story.append(flat)
+            story.append(Spacer(1, 5))
+        for name, group in groups.items():
+            subhead(str(name).replace("_", " ").capitalize())
+            scalars = {k: v for k, v in group.items()
+                       if not isinstance(v, (dict, list))}
+            if scalars:
+                story.append(data_table(
+                    ["Measure", "Value"],
+                    [[k.replace("_", " ").capitalize(), _pretty(v)]
+                     for k, v in scalars.items()],
+                    widths=[110 * mm, 64 * mm]))
+                story.append(Spacer(1, 5))
+            nested = {k: v for k, v in group.items() if isinstance(v, (dict, list))}
+            for key, value in nested.items():
+                story.append(Paragraph(
+                    f"<b>{esc(str(key).replace('_', ' ').capitalize())}</b>",
+                    styles["body"]))
+                emit(value, 1)
+        return True
+
+    def emit_appendix(section: Any) -> bool:
+        if not isinstance(section, dict):
+            return False
+        custody = section.get("chain_of_custody")
+        if isinstance(custody, list) and custody and isinstance(custody[0], dict):
+            subhead("Chain of custody")
+            core = ("evidence_id", "file_name", "upload_time", "sha256", "hash")
+            # Columns follow what this artifact actually carries — older
+            # exports include a file name, current ones do not, and an empty
+            # column in a custody table invites the reader to wonder what is
+            # missing. The digest is the evidentiary heart of the section, so
+            # it gets a full-width line per item instead of a column that
+            # would wrap a hash mid-string.
+            has_file = any(c.get("file_name") for c in custody)
+            headers = ["Evidence"] + (["File"] if has_file else []) \
+                + ["Acquired", "Status"]
+            widths = ([28 * mm] + ([74 * mm] if has_file else [])
+                      + ([34 * mm, 38 * mm] if has_file else [98 * mm, 48 * mm]))
+            story.append(data_table(
+                headers,
+                [[str(c.get("evidence_id", ""))]
+                 + ([str(c.get("file_name", ""))] if has_file else [])
+                 + [_short_ts(c.get("upload_time")), _pretty(c.get("status", ""))]
+                 for c in custody],
+                widths=widths))
+            story.append(Spacer(1, 4))
+            subhead("Acquisition digests (SHA-256)")
+            for c in custody:
+                digest = c.get("sha256") or c.get("hash")
+                if not digest:
+                    continue
+                story.append(Paragraph(
+                    f"{esc(c.get('evidence_id', ''))}: {esc(digest)}",
+                    styles["mono"]))
+            extra_keys = [k for c in custody for k in c
+                          if k not in core and k != "status"]
+            if extra_keys:
+                story.append(Spacer(1, 4))
+                for c in custody:
+                    leftover = {k: v for k, v in c.items()
+                                if k not in core and k != "status"}
+                    if leftover:
+                        story.append(Paragraph(
+                            f"<b>{esc(c.get('evidence_id', ''))}</b> &mdash; "
+                            + esc("; ".join(f"{k.replace('_', ' ')}: {_pretty(v)}"
+                                            for k, v in leftover.items())),
+                            styles["subtitle"]))
+            story.append(Spacer(1, 5))
+        rest = kv_table(section, skip=("chain_of_custody",))
+        if rest is not None:
+            story.append(rest)
+        other = {k: v for k, v in section.items()
+                 if k != "chain_of_custody" and isinstance(v, (dict, list))}
+        for key, value in other.items():
+            story.append(Spacer(1, 4))
+            subhead(str(key).replace("_", " ").capitalize())
+            emit(value)
+        return True
+
     def emit_legal_basis(section: Any) -> bool:
         """Statutory basis: each provision as a titled block, not a bullet dump.
 
@@ -528,11 +1257,43 @@ def render_pdf(
         heading._toc_level = 0  # picked up by _ReportDoc.afterFlowable
         story.append(heading)
         value = sections.get(key)
-        if key == "evidence_summary" and emit_evidence_table(value):
-            continue
-        if key == "model_predictions" and emit_predictions_table(value):
-            continue
-        if key == "legal_basis" and emit_legal_basis(value):
+
+        # Every section gets a layout chosen for the shape of its data. The
+        # generic `emit` below is the fallback for anything a renderer
+        # declines, so an unexpected shape degrades to bullets rather than
+        # failing — but nothing routinely reaches it any more.
+        specialised = {
+            "executive_summary": emit_statement_list,
+            "scope_and_methodology": emit_flat_mapping,
+            "case_overview": emit_flat_mapping,
+            "evidence_summary": emit_evidence_table,
+            "timeline_analysis": emit_timeline,
+            "correlation_analysis": emit_correlation,
+            "cross_case_correlation": emit_cross_case,
+            "campaign_analysis": emit_campaigns,
+            "suspect_assessment": emit_suspects,
+            "threat_intelligence_summary": emit_threat_intel,
+            "model_predictions": emit_predictions_table,
+            "evidence_quality_summary": emit_quality,
+            "metadata_summary": emit_dict_list,
+            "investigation_statistics": emit_statistics,
+            "confidence_analysis": emit_dict_list,
+            "investigation_conclusion": emit_statement_list,
+            "legal_basis": emit_legal_basis,
+            "recommendations": emit_statement_list,
+            "appendix": emit_appendix,
+        }
+        renderer = specialised.get(key)
+        if renderer is not None:
+            try:
+                if renderer(value):
+                    continue
+            except Exception:  # noqa: BLE001
+                # A malformed section must not cost the reader the whole
+                # report; fall through to the generic rendering instead.
+                pass
+        if key in ("confidence_analysis", "metadata_summary") \
+                and emit_statement_list(value):
             continue
         if key == "report_provenance" and isinstance(value, dict):
             hashes = value.get("source_artifact_hashes") or {}
