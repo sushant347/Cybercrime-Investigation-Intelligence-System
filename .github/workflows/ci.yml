@@ -1,7 +1,7 @@
 name: CI
 
 # Every suite in the repository, on every push and pull request. Before this
-# existed the project had ~1,080 tests that nothing ran automatically, which
+# existed the project had over a thousand tests that nothing ran automatically, which
 # means a regression could land and stay hidden until someone happened to run
 # pytest locally.
 on:
@@ -20,13 +20,13 @@ permissions:
 
 jobs:
   backend:
-    name: Engines and API (605 tests)
+    name: Engines and API (650 tests)
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
@@ -69,9 +69,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
@@ -91,23 +91,23 @@ jobs:
       # asserting a trained booster's output reach CI and fail here.
       #
       # Verified by hiding the local checkpoints and running the suite the way
-      # this job does: 392 passed, 17 skipped, 0 failed. Checkpoint-dependent
+      # this job does: 390 passed, 19 skipped, 0 failed. Checkpoint-dependent
       # tests skip with a stated reason rather than being deleted.
       - name: Tests (no trained checkpoints, by design)
         working-directory: threat_intelligence_system
         run: python -m pytest -q
 
   frontend:
-    name: Frontend (67 tests)
+    name: Frontend (84 tests)
     runs-on: ubuntu-latest
     timeout-minutes: 15
     defaults:
       run:
         working-directory: ciis_frontend
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "20"
           cache: npm
@@ -117,7 +117,7 @@ jobs:
         run: npm ci
 
       - name: Typecheck
-        run: npx tsc --noEmit
+        run: npm run typecheck
 
       - name: Tests
         run: npm run test

@@ -41,7 +41,7 @@ evidence_ocr_engine/
 │       ├── confidence_corrector.py enhancement_pipeline.py
 │       ├── correction_logger.py    enhancement_service.py
 │       └── data/nepali_ocr_lexicon.json  data/english_ocr_lexicon.json
-├── tests/                 # 209 unit/integration tests (no Paddle required)
+├── tests/                 # 392 unit/integration tests (no Paddle required)
 ├── storage/               # cases.csv, evidence.csv, ocr_results.csv,
 │                          # processing_log.csv, json/CASE_XXXX.json, originals/
 ├── samples/               # sample evidence files
@@ -145,7 +145,7 @@ Implement `BaseOCR.recognize(image) -> list[OCRLine]` (see `FutureOCRService` in
 ## Tests
 
 ```bash
-pytest            # 209 tests: OCR engine (50) + cleaning (69) + enhancement (90)
+pytest            # 392 tests across OCR, cleaning, enhancement and forensics
 ```
 
 Tests use a deterministic in-memory OCR double, so they run without PaddleOCR or model downloads.
@@ -153,6 +153,18 @@ Tests use a deterministic in-memory OCR double, so they run without PaddleOCR or
 ## Example outputs
 
 `samples/` and `storage/` ship with a fully processed demo case (`CASE_0001`, five evidence items). They were produced by `python scripts/generate_examples.py`, which runs the real pipeline with a deterministic stub engine so the repository stays reproducible offline; run it with `--paddle` to regenerate them with genuine PaddleOCR recognition.
+
+To validate the existing bundled evidence without regenerating samples or
+touching normal case storage, run:
+
+```bash
+python scripts/validate_sample_case.py
+```
+
+This processes two screenshots with real PaddleOCR plus the PDF, text export,
+and transaction CSV as one case. It checks non-empty extraction, unique
+evidence IDs, and post-processing SHA-256 verification in temporary storage,
+then removes that temporary case automatically.
 
 ## Prompt 2 — Hybrid Multilingual Forensic Text Cleaning and Entity Extraction
 

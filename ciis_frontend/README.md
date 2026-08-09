@@ -54,6 +54,8 @@ artifact remains untouched.
 - Node-type and relationship-type chips can be independently toggled.
 - Upload-time fallback relationships are hidden by default because a common
   upload batch describes investigator workflow, not necessarily criminal activity.
+- Shared dates, times, round amounts, OTPs and keywords remain available in
+  entity/full views but do not invent links in the default Evidence map.
 
 Quick views reset conflicting filters and configure the graph for overview,
 strong leads, cross-case indicators, threat hits, cryptocurrency trails or
@@ -70,6 +72,8 @@ actual-time relationships.
 - Cytoscape elements are diffed and updated in place instead of recreating the
   renderer for every filter or expansion.
 - Labels are progressively disclosed through importance, hover and zoom.
+- Backend NetworkX importance ranks budgeted views; community IDs explain
+  grouping, and backbone relationships are emphasized as traceable key links.
 - View, layout, filters, expanded evidence pairs, focus, zoom and pan are saved
   per case in browser local storage.
 
@@ -83,5 +87,6 @@ actual-time relationships.
 | `src/features/graph/views.ts` | Evidence projection, special views, search and relationship filtering |
 | `src/features/graph/__tests__/` | Relevance and projection regression tests |
 
-The current backend graph implementation is pure Python and does not require
-NetworkX. Cytoscape.js is responsible only for the interactive browser view.
+NetworkX performs backend analysis and writes graph metrics into the JSON
+artifact. Cytoscape.js does not calculate forensic relationships; it converts
+the stored nodes, edges and metrics into the interactive browser view.

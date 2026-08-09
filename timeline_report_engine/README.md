@@ -33,7 +33,7 @@ ciis_timeline_report/
 │   │                   attack stages, milestones, critical events
 │   ├── service.py      adapter: model translation, persistence, audit
 │   └── models.py       TimelineAnalysis / TimelineEvent contracts
-├── graph/              typed relationship graph (12 node / 5+1 edge types)
+├── graph/              typed graph + NetworkX centrality/community/backbone
 ├── analytics/          case, entity, threat and quality statistics
 ├── prioritization/     weighted case priority (6 dimensions)
 ├── reporting/          report as Markdown + JSON + PDF (19 sections)
@@ -51,6 +51,24 @@ All three consume `TimelineAnalysis` — the graph most heavily, building
 `timeline_event` nodes and temporal edges from it. Leaving them in the
 correlation engine while the timeline moved here would have made the two
 engines import each other. They belong to the output stage.
+
+## Timeline and graph provenance
+
+Timestamp resolution prefers explicit content date/time entities, complete
+chat timestamps, and then EXIF/PDF/Office creation metadata. A partial chat
+timestamp may borrow its year from acquisition time and is explicitly marked
+`timestamp_inferred=true`; upload time is the final fallback and is labelled
+`upload_time_fallback`. Only reconstructed content/metadata event times may
+create evidence-to-evidence temporal edges, so uploading *n* files together no
+longer produces *n(n-1)/2* false chronology links.
+
+Graph nodes cover cases, evidence, normalized entities, and timeline events.
+Every edge carries its relationship type, confidence, source evidence IDs,
+timestamp/provenance, inference flag, and explanation. NetworkX runs on a
+simple analytical projection of the complete typed artifact and writes degree
+centrality, betweenness, PageRank, combined importance, community membership,
+bridge counts, and a maximum-spanning-forest `backbone` flag. No stored
+relationship is removed by this analysis.
 
 ## Pipeline
 
@@ -89,7 +107,7 @@ python scripts/report_review.py                  # report-correctness harness
 ## Tests
 
 ```bash
-python -m pytest -q      # 52 tests
+python -m pytest -q      # 81 tests
 ```
 
 Fixtures come from `ciis_correlation.testing`, the same synthetic case the
@@ -105,6 +123,7 @@ overwritten:
 timeline_analysis.json   graph.json + graph_statistics.json + graph_summary.json
 analytics.json           case_statistics.json   entity_statistics.json
 case_priority.json       investigation_report.{json,md,pdf}
+analysis_manifest.json   API-run inputs, versions, policy and warnings
 ```
 
 PDF rendering needs `reportlab`. Without it the Markdown and JSON reports are

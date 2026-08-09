@@ -80,10 +80,10 @@ orchestrated by `ciis_timeline_report.pipeline`:
 
 ```
 load evidence (read-only)
-  → correlation          weighted 12-factor evidence-pair scoring
+  → correlation          weighted evidence-pair scoring (upload time is context only)
   → cross-case           links to other cases over the shared entity index
   → timeline             timestamp resolution, ordering, attack stages
-      → graph            relationship graph (consumes timeline events)
+      → graph            typed graph + NetworkX analytics (consumes timeline events)
       → campaigns        clustering over strong correlations
       → suspects         identity-anchor scoring
   → analytics            case / entity / threat / quality statistics
@@ -95,12 +95,24 @@ Every module is failure-isolated — one broken analysis is audited as an error
 and the rest continue — and every run appends to
 `storage/investigation/investigation_audit_log.csv`.
 
+Before Phase 2, the API verifies that each stored item still has its original
+file and required forensic artifacts. `CIIS_ANALYSIS_INPUT_POLICY=warn` (the
+default) completes a reproducible partial run with visible warnings;
+`CIIS_ANALYSIS_INPUT_POLICY=strict` blocks regeneration instead. Missing or
+tampered originals are detected against the acquisition SHA-256. Every
+completed or quality-blocked run writes a versioned `analysis_manifest.json`
+containing input quality, evidence IDs, warnings, runtime/library versions,
+semantic validator, threat provider, and the correlation/timeline settings
+used.
+
 ## Investigator relationship graph
 
 The graph artifact remains complete and audit-friendly: the Python graph
 service stores every case, evidence, entity, event and typed relationship in
-`graph.json`. The frontend never rewrites that artifact. Instead, Cytoscape.js
-builds smaller investigator views from it:
+`graph.json`. NetworkX enriches it with centrality, community, bridge and
+maximum-spanning-forest backbone metrics. The frontend never rewrites that
+artifact. Instead, Cytoscape.js uses those metrics to prioritize and render
+smaller investigator views:
 
 - **Evidence map** (default) projects all relationships between two evidence
   items into one labelled edge. Selecting the edge lists and can reveal its
@@ -119,7 +131,8 @@ actual-time relationships. View preferences, expansions and viewport are saved
 per case in the browser.
 
 For rendering performance, the frontend caps unreadable overview and focus
-views, suppresses upload-batch temporal noise by default, updates Cytoscape
+views, prevents upload timestamps and shared dates/amounts from inventing
+relationships, updates Cytoscape
 elements incrementally, and reruns layout only when the visible structure
 changes. Investigation, Graph, Timeline, Analytics and Reports are independently
 lazy-loaded, so opening a case initially downloads only the overview/evidence
@@ -144,10 +157,36 @@ everything else uses `.venv-platform`.
 
 ```bash
 cd evidence_ocr_engine          && python -m pytest -q    # 392
-cd evidence_correlation_engine  && python -m pytest -q    #  93
-cd timeline_report_engine       && python -m pytest -q    #  52
-cd ciis_api                     && python -m pytest -q    #  53
+cd evidence_correlation_engine  && python -m pytest -q    # 103
+cd timeline_report_engine       && python -m pytest -q    #  81
+cd ciis_api                     && python -m pytest -q    #  74
+cd ciis_frontend                && npm test               #  84
 ```
+
+## Continuous integration
+
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs automatically on
+every pushed branch and pull request, and can also be started manually from
+the GitHub Actions page. Its three isolated jobs run:
+
+- 650 OCR, correlation, timeline/report and API tests using
+  `requirements-ci.txt`, followed by static-analysis and module-boundary gates;
+- 409 threat-intelligence tests in their separate NumPy-compatible environment;
+- 84 frontend tests, TypeScript checking and the production Vite build.
+
+Normal CI deliberately excludes PaddleOCR/PaddlePaddle and uses the injected
+OCR test doubles, keeping checks repeatable and lightweight. Real PP-OCRv5
+validation remains an explicit research check:
+
+```bash
+cd evidence_ocr_engine
+python scripts/validate_sample_case.py
+```
+
+After the workflow passes on GitHub, protect the target integration branch in
+**Settings → Branches** and require these checks before merging:
+`Engines and API (650 tests)`, `Threat intelligence (409 tests)`, and
+`Frontend (84 tests)`.
 
 ## Storage
 

@@ -4,7 +4,7 @@
 # engine is lazy (inside a function or a try/except availability probe), and
 # the tests drive OCR through FakeOCR / FakeAdapter doubles, so no test path
 # reaches the real engine. Verified by building a clean virtualenv from exactly
-# this file and running all four suites: 605 tests, all passing.
+# this file and running all four suites: 650 tests, all passing.
 #
 # That keeps CI honest and roughly 700 MB lighter. It also proves the design
 # claim the engine makes about itself - that OCR is injected, not assumed.

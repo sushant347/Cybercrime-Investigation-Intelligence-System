@@ -88,7 +88,7 @@ When none is available the factor is reported as *unavailable*, never as
 ## Tests
 
 ```bash
-python -m pytest -q      # 93 tests
+python -m pytest -q      # 103 tests
 ```
 
 Runs against a synthetic case (`ciis_correlation/testing.py`) — no OCR
