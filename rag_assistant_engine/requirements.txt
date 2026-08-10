@@ -1,0 +1,5 @@
+# Standalone runtime only. Lock exact versions after validating the target
+# research machine; these ranges intentionally remain separate from OCR and
+# threat-intelligence environments because Torch/NumPy constraints differ.
+chromadb>=0.5,<2
+sentence-transformers>=3,<6
