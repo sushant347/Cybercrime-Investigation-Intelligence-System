@@ -13,8 +13,10 @@ No forensic logic lives here - only orchestration and data access.
 from __future__ import annotations
 
 import csv
+import importlib.metadata
 import importlib.util
 import logging
+import platform
 import sys
 import threading
 from concurrent.futures import ThreadPoolExecutor
@@ -38,6 +40,7 @@ for _root in (settings.ENGINE_ROOT, settings.CORRELATION_ROOT,
         sys.path.insert(0, str(_root))
 
 from backend.modules.evidence.config import EvidenceConfig  # noqa: E402
+from backend.modules.evidence.hash_service import HashService  # noqa: E402
 from ciis_correlation.core.config import InvestigationConfig  # noqa: E402
 from ciis_correlation.core.repository import (  # noqa: E402
     InvestigationReportRepository,
@@ -206,6 +209,7 @@ ARTIFACTS: dict[str, str] = {
     "entity_statistics": "entity_statistics",
     "report": "investigation_report",
     "priority": "case_priority",
+    "analysis_manifest": "analysis_manifest",
 }
 
 
@@ -243,6 +247,21 @@ def artifact_exists(case_id: str, key: str) -> bool:
     if name is None:
         return False
     return bool(report_repository().list_versions(case_id, name, ".json"))
+
+
+# ---------------------------------------------------------- RAG assistant
+def rag_status(case_id: str) -> dict[str, Any]:
+    """Index freshness/availability through the integrated RAG adapter."""
+    from .rag_bridge import status_case
+
+    return status_case(case_id)
+
+
+def ask_rag(case_id: str, question: str) -> dict[str, Any]:
+    """Ask the standalone engine one case-scoped, citation-checked question."""
+    from .rag_bridge import ask_case
+
+    return ask_case(case_id, question)
 
 
 def report_versions(case_id: str, suffix: str = ".json") -> list[Path]:
@@ -525,6 +544,11 @@ def _run_forensics(evidence_id: str) -> Optional[dict[str, Any]]:
         return None
 
 
+def _failure_modules(failures: list[Any]) -> str:
+    """Compact failure details to module names safe for job-facing messages."""
+    return ", ".join(sorted({str(item).split(":", 1)[0] for item in failures}))
+
+
 @lru_cache(maxsize=1)
 def _ocr_engine():
     """The single PaddleOCR instance shared by every pipeline (heavy: lazy)."""
@@ -616,6 +640,24 @@ def _refresh_timeline_graph(case_id: str) -> Optional[dict[str, Any]]:
         return None
 
 
+def _sync_rag_index(case_id: str) -> dict[str, Any]:
+    """Refresh derived RAG data without making it a pipeline dependency."""
+    try:
+        from .rag_bridge import sync_case
+
+        result = sync_case(case_id)
+    except Exception as exc:  # noqa: BLE001 - optional consumer is fail-open
+        log.exception("Unexpected RAG index refresh failure for %s", case_id)
+        return {
+            "case_id": case_id,
+            "available": False,
+            "status": "unavailable",
+            "detail": f"RAG index refresh failed: {type(exc).__name__}",
+        }
+    log.info("RAG index for %s: %s", case_id, result.get("status", "unknown"))
+    return result
+
+
 #: Evidence jobs still queued or running, per case. Guarded by its own lock so
 #: a worker can read it without waiting on the (long-held) pipeline lock.
 _pending_uploads: dict[str, int] = {}
@@ -688,6 +730,10 @@ def submit_evidence_job(job_id: int, tmp_path: str, case_id: str,
                     live_artifacts = _refresh_timeline_graph(case_id)
                 else:
                     live_artifacts = None
+            rag_index = (
+                _sync_rag_index(case_id)
+                if still_pending == 0 else {"status": "deferred"}
+            )
             entities = _entity_count(summary)
             if summary is None:
                 detail = f"Processed as {result.evidence_id} (OCR only)"
@@ -698,8 +744,22 @@ def submit_evidence_job(job_id: int, tmp_path: str, case_id: str,
                     f"Processed as {result.evidence_id}; "
                     f"{entities} entities extracted"
                 )
-            if forensics is not None:
-                detail += "; forensic reports generated"
+            warnings: list[str] = []
+            if summary is None and getattr(settings, "ENGINE_RUN_FULL_PIPELINE", True):
+                warnings.append("entity enrichment did not complete")
+            if forensics is None:
+                if getattr(settings, "ENGINE_RUN_FORENSICS", True):
+                    warnings.append("Phase-1 forensic processing did not complete")
+            else:
+                forensic_failures = forensics.get("failures") or []
+                if forensic_failures:
+                    warnings.append(
+                        "Phase-1 warnings in "
+                        f"{_failure_modules(forensic_failures)}"
+                    )
+                    detail += "; forensic reports generated with warnings"
+                else:
+                    detail += "; forensic reports generated"
             if live_artifacts is not None:
                 detail += "; timeline and graph refreshed"
             elif still_pending:
@@ -709,12 +769,25 @@ def submit_evidence_job(job_id: int, tmp_path: str, case_id: str,
                 )
             else:
                 detail += "; timeline/graph refresh pending"
-            jobs.finish(job_id, "completed", detail=detail,
+                warnings.append("timeline/graph refresh did not complete")
+            if rag_index.get("status") in {"updated", "fresh"}:
+                detail += "; case assistant index refreshed"
+            if warnings:
+                detail += f"; warnings={'; '.join(warnings)}"
+            outcome = "completed_with_warnings" if warnings else "completed"
+            jobs.finish(job_id, outcome, detail=detail,
                         evidence_id=result.evidence_id)
             notifications.broadcast(
                 type=NotificationType.PROCESSING_COMPLETE,
-                title=f"Evidence {result.evidence_id} processed",
-                message=f"{result.file_name} processed for {case_id}.",
+                title=(
+                    f"Evidence {result.evidence_id} processed with warnings"
+                    if warnings else f"Evidence {result.evidence_id} processed"
+                ),
+                message=(
+                    f"{result.file_name} processed for {case_id} with "
+                    f"{len(warnings)} warning(s)."
+                    if warnings else f"{result.file_name} processed for {case_id}."
+                ),
                 case_id=case_id, evidence_id=result.evidence_id,
             )
         except Exception as exc:  # noqa: BLE001 - report, never crash worker
@@ -779,27 +852,171 @@ def _threat_intel_provider():
     return chain
 
 
-def _backfill_forensics(case_id: str) -> int:
-    """Generate missing Phase-1 reports for a case; returns items repaired.
+def _has_forensic_report(directory: Path, report_name: str) -> bool:
+    """Return whether ``directory`` contains any version of a report."""
+    return any(directory.glob(f"{report_name}*.json"))
 
-    Only items with no forensics directory are touched, so this is cheap on a
-    healthy case and self-limiting on a repeat run. The caller must hold
-    ``_pipeline_lock``.
+
+def _forensics_complete(evidence_row: dict[str, str]) -> bool:
+    """Check the minimum Phase-1 reports expected for this evidence type.
+
+    Directory existence alone is not sufficient: a failed run can persist a
+    metadata or confidence report before integrity/image loading fails. Such a
+    directory must remain eligible for repair on a later analysis.
     """
+    from backend.modules.evidence.forensics.config import ForensicsConfig
+
+    ecfg = evidence_config()
+    fcfg = ForensicsConfig.from_env(ecfg)
+    directory = fcfg.evidence_dir(evidence_row.get("evidence_id", ""))
+    required = {
+        fcfg.fingerprint_report_name,
+        fcfg.metadata_report_name,
+        fcfg.confidence_report_name,
+    }
+    suffix = Path(evidence_row.get("stored_file_name", "")).suffix.lower()
+    if suffix in ecfg.image_extensions:
+        required.update({
+            fcfg.quality_report_name,
+            fcfg.forgery_report_name,
+            fcfg.logo_report_name,
+        })
+    return directory.is_dir() and all(
+        _has_forensic_report(directory, name) for name in required
+    )
+
+
+def _backfill_forensics(case_id: str) -> dict[str, Any]:
+    """Generate missing Phase-1 reports and return repairs plus warnings.
+
+    Every registered original is validated before analysis. Missing originals
+    are not sent through Phase 1, because doing so creates low-information
+    confidence scores that look authoritative despite integrity failure. The
+    caller must hold ``_pipeline_lock``.
+    """
+    summary: dict[str, Any] = {"repaired": 0, "warnings": []}
     if not getattr(settings, "ENGINE_RUN_FORENSICS", True):
-        return 0
-    root = investigation_config().forensics_dir
-    repaired = 0
+        return summary
+    ecfg = evidence_config()
+    originals_root = ecfg.originals_dir.resolve()
+    hash_service = HashService()
+    missing_originals: list[str] = []
     for row in list_evidence(case_id):
         evidence_id = row.get("evidence_id", "")
-        if not evidence_id or (root / evidence_id).is_dir():
+        if not evidence_id:
             continue
-        if _run_forensics(evidence_id) is not None:
-            repaired += 1
-    if repaired:
+        stored_name = row.get("stored_file_name", "").strip()
+        if not stored_name:
+            summary["warnings"].append(
+                f"{evidence_id}: stored original filename is missing"
+            )
+            continue
+        stored_path = (originals_root / stored_name).resolve()
+        try:
+            stored_path.relative_to(originals_root)
+        except ValueError:
+            summary["warnings"].append(
+                f"{evidence_id}: stored original path is outside evidence storage"
+            )
+            continue
+        if not stored_path.is_file():
+            missing_originals.append(evidence_id)
+            continue
+        acquisition_hash = row.get("sha256_before", "").strip().lower()
+        if not acquisition_hash:
+            summary["warnings"].append(
+                f"{evidence_id}: acquisition SHA-256 is missing"
+            )
+            continue
+        if hash_service.sha256_file(stored_path).lower() != acquisition_hash:
+            summary["warnings"].append(
+                f"{evidence_id}: original evidence SHA-256 no longer matches acquisition"
+            )
+            continue
+        if _forensics_complete(row):
+            continue
+
+        result = _run_forensics(evidence_id)
+        if result is None:
+            summary["warnings"].append(
+                f"{evidence_id}: Phase-1 forensic processing did not complete"
+            )
+            continue
+        failures = result.get("failures") or []
+        if failures:
+            summary["warnings"].append(
+                f"{evidence_id}: Phase-1 warnings in {_failure_modules(failures)}"
+            )
+            continue
+        if not _forensics_complete(row):
+            summary["warnings"].append(
+                f"{evidence_id}: required forensic reports remain incomplete"
+            )
+            continue
+        summary["repaired"] += 1
+    if missing_originals:
+        summary["warnings"].insert(
+            0,
+            f"Original evidence files unavailable for {len(missing_originals)} "
+            f"item(s): {', '.join(missing_originals)}",
+        )
+    if summary["repaired"]:
         log.info("backfilled Phase-1 forensics for %d item(s) in %s",
-                 repaired, case_id)
-    return repaired
+                 summary["repaired"], case_id)
+    if summary["warnings"]:
+        log.warning("Phase-1 validation warnings for %s: %s",
+                    case_id, "; ".join(summary["warnings"]))
+    return summary
+
+
+def _save_analysis_manifest(
+    case_id: str,
+    *,
+    status: str,
+    warnings: list[str],
+    threat_provider: Any,
+) -> None:
+    """Persist the runtime/configuration provenance behind an analysis run."""
+    health = engine_health()
+
+    def version(distribution: str) -> str:
+        try:
+            return importlib.metadata.version(distribution)
+        except importlib.metadata.PackageNotFoundError:
+            return "not-installed"
+
+    icfg = investigation_config()
+    rows = list_evidence(case_id)
+    report_repository().save(
+        case_id,
+        icfg.analysis_manifest_name,
+        {
+            "status": status,
+            "input_quality": "partial" if warnings else "complete",
+            "warnings": warnings,
+            "evidence_ids": [row.get("evidence_id", "") for row in rows],
+            "evidence_count": len(rows),
+            "semantic_validator": health.get("semantic_validator", "unknown"),
+            "threat_provider": getattr(threat_provider, "source_name", "unknown"),
+            "graph_analytics": f"networkx-{version('networkx')}",
+            "runtime": {
+                "python": platform.python_version(),
+                "pydantic": version("pydantic"),
+                "networkx": version("networkx"),
+            },
+            "correlation_configuration": {
+                "confidence_normaliser": icfg.correlation_confidence_normaliser,
+                "relationship_bands": icfg.relationship_bands,
+                "timeline_proximity_weight": icfg.correlation_weights.get(
+                    "timeline_proximity", 0.0
+                ),
+            },
+            "timeline_configuration": {
+                "proximity_hours": icfg.timeline_proximity_hours,
+                "stage_order": list(icfg.timeline_stage_order),
+            },
+        },
+    )
 
 
 def submit_analysis_job(job_id: int, case_id: str, username: str) -> None:
@@ -820,19 +1037,57 @@ def submit_analysis_job(job_id: int, case_id: str, username: str) -> None:
                 # brand and forgery statistics at zero forever. Analysis is
                 # the natural place to repair that: it is explicit, already
                 # long-running, and the reports are what the analysis reads.
-                backfilled = _backfill_forensics(case_id)
+                backfill = _backfill_forensics(case_id)
+                threat_provider = _threat_intel_provider()
+                if (
+                    backfill["warnings"]
+                    and getattr(settings, "ANALYSIS_INPUT_POLICY", "warn") == "strict"
+                ):
+                    _save_analysis_manifest(
+                        case_id,
+                        status="failed_quality_gate",
+                        warnings=list(backfill["warnings"]),
+                        threat_provider=threat_provider,
+                    )
+                    raise RuntimeError(
+                        "Analysis quality gate blocked Phase 2: "
+                        + "; ".join(backfill["warnings"])
+                    )
                 results = build_default_pipeline(
-                    threat_intel=_threat_intel_provider()
+                    threat_intel=threat_provider
                 ).analyze_case(case_id)
-            failures = results.get("failures") or []
-            detail = f"failures={failures or 'none'}"
-            if backfilled:
-                detail += f"; forensics backfilled for {backfilled} item(s)"
-            jobs.finish(job_id, "completed", detail=detail)
+            phase2_failures = results.get("failures") or []
+            warnings = list(backfill["warnings"])
+            warnings.extend(f"Phase-2 {failure}" for failure in phase2_failures)
+            detail = f"phase2_failures={phase2_failures or 'none'}"
+            if backfill["repaired"]:
+                detail += (
+                    f"; forensics backfilled for {backfill['repaired']} item(s)"
+                )
+            if warnings:
+                detail += f"; warnings={'; '.join(warnings)}"
+            outcome = "completed_with_warnings" if warnings else "completed"
+            _save_analysis_manifest(
+                case_id,
+                status=outcome,
+                warnings=warnings,
+                threat_provider=threat_provider,
+            )
+            rag_index = _sync_rag_index(case_id)
+            detail += f"; rag_index={rag_index.get('status', 'unknown')}"
+            jobs.finish(job_id, outcome, detail=detail)
             notifications.broadcast(
                 type=NotificationType.REPORT_GENERATED,
-                title=f"Investigation analysis completed for {case_id}",
-                message="All Phase-2 artifacts regenerated.", case_id=case_id,
+                title=(
+                    f"Investigation analysis completed with warnings for {case_id}"
+                    if warnings else
+                    f"Investigation analysis completed for {case_id}"
+                ),
+                message=(
+                    f"Phase-2 artifacts regenerated with {len(warnings)} warning(s)."
+                    if warnings else "All Phase-2 artifacts regenerated."
+                ),
+                case_id=case_id,
             )
             _emit_priority_notification(case_id)
         except Exception as exc:  # noqa: BLE001
@@ -962,6 +1217,15 @@ def _optional_capabilities() -> dict[str, Any]:
     checkpoint = Path(root) / "checkpoints" / f"{model}.pkl" if root else None
     capabilities["threat_ml_enabled"] = enabled
     capabilities["threat_ml_checkpoint"] = bool(checkpoint and checkpoint.is_file())
+
+    # Cheap path/configuration probe only. Index status and model loading belong
+    # to the case-scoped assistant endpoint, never the general health screen.
+    from .rag_bridge import availability as rag_availability
+
+    rag = rag_availability()
+    capabilities["rag_enabled"] = bool(getattr(settings, "RAG_ENABLED", True))
+    capabilities["rag_available"] = bool(rag.get("available"))
+    capabilities["rag_status"] = str(rag.get("status") or "unavailable")
 
     return capabilities
 

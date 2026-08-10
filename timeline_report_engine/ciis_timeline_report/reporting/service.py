@@ -30,7 +30,7 @@ from ciis_correlation.core.repository import InvestigationReportRepository
 from ciis_correlation.suspects.models import SuspectAssessment
 from ..timeline.models import TimelineAnalysis
 from . import pdf_renderer
-from ciis_correlation.core.text import count_of, plural
+from ciis_correlation.core.text import count_of
 
 MODULE = "reporting"
 
@@ -62,6 +62,7 @@ SECTION_ORDER: List[tuple] = [
     ("metadata_summary", "Metadata Summary"),
     ("investigation_statistics", "Investigation Statistics"),
     ("confidence_analysis", "Confidence Analysis"),
+    ("limitations", "Statement of Limitations"),
     ("investigation_conclusion", "Investigation Conclusion"),
     # Statutory basis sits between the conclusion and the actions: it reads as
     # "this is what the evidence shows, this is the law it engages, this is
@@ -151,8 +152,11 @@ class InvestigationReportService:
             "evidence_quality_summary": lambda: self._quality_section(
                 analytics, items),
             "metadata_summary": lambda: self._metadata_section(items),
-            "investigation_statistics": lambda: self._statistics_section(analytics),
+            "investigation_statistics": lambda: self._statistics_section(
+                analytics, timeline
+            ),
             "confidence_analysis": lambda: self._confidence_section(items),
+            "limitations": lambda: self._limitations(timeline),
             "investigation_conclusion": lambda: self._conclusion(
                 items, correlation, campaigns, suspects, timeline),
             "legal_basis": lambda: self._legal_section(
@@ -264,14 +268,16 @@ class InvestigationReportService:
     @staticmethod
     def _executive_summary(case_id, items, correlation, campaigns,
                            suspects, timeline, cross_case=None) -> List[str]:
+        verified = sum(1 for item in items if item.hash_verified is True)
         lines = [
-            f"Case {case_id} contains {count_of(len(items), 'evidence item')}, each "
-            "acquired under SHA-256 chain-of-custody verification."
+            f"Case {case_id} contains {count_of(len(items), 'evidence item')}; "
+            f"{verified}/{len(items)} passed the stored SHA-256 integrity check."
         ]
         if cross_case is not None and cross_case.link_count:
             lines.append(
-                f"This case is linked to {count_of(cross_case.link_count, 'other case')} "
-                f"through shared entities: "
+                "This case was automatically linked to "
+                f"{count_of(cross_case.link_count, 'other case')}; these are "
+                "candidate shared-entity associations: "
                 f"{', '.join(cross_case.related_case_ids)} "
                 "[cross_case_correlation.json]."
             )
@@ -284,22 +290,56 @@ class InvestigationReportService:
         if campaigns is not None and campaigns.campaign_count:
             largest = max(campaigns.campaigns, key=lambda c: len(c.members))
             lines.append(
-                f"{count_of(campaigns.campaign_count, 'coordinated campaign')} were "
-                f"identified; the largest ({largest.campaign_id}) groups "
-                f"{count_of(len(largest.members), 'item')} [campaign_analysis.json]."
+                f"Clustering produced {count_of(campaigns.campaign_count, 'candidate campaign')}"
+                f"; the largest ({largest.campaign_id}) groups "
+                f"{count_of(len(largest.members), 'item')} for investigator review "
+                "[campaign_analysis.json]."
             )
         if suspects is not None and suspects.suspect_count:
             top = suspects.suspects[0]
             lines.append(
-                f"The strongest suspect anchor is '{top.identity_value}' "
-                f"({top.identity_type}) with confidence "
-                f"{top.confidence_score:.0f}/100 [suspect_assessment.json]."
+                f"The highest-scoring identity lead is '{top.identity_value}' "
+                f"({top.identity_type}), supported by "
+                f"{count_of(len(top.evidence_ids), 'evidence item')} and scored "
+                f"{top.confidence_score:.0f}/100; this is a lead, not identity "
+                "attribution [suspect_assessment.json]."
+            )
+        if timeline is not None:
+            inferred = int(timeline.statistics.get("inferred_event_count", 0))
+            fallback = int(timeline.statistics.get("acquisition_fallback_count", 0))
+            unresolved = int(timeline.statistics.get("unresolved_event_count", 0))
+            event_times = max(0, len(timeline.events) - fallback - unresolved)
+            inferred_event_times = max(0, inferred - fallback)
+            lines.append(
+                f"Chronology contains {count_of(event_times, 'evidence-derived event time')} "
+                f"({inferred_event_times} inferred), {count_of(fallback, 'acquisition-only record')} "
+                f"and {count_of(unresolved, 'unresolved record')} "
+                "[timeline_analysis.json]."
             )
         if timeline is not None and timeline.stage_progression:
+            assessable = bool(timeline.statistics.get(
+                "progression_assessable", False
+            ))
+            if assessable:
+                lines.append(
+                    "Evidence-timed stage order: "
+                    + " -> ".join(timeline.stage_progression)
+                    + " [timeline_analysis.json]."
+                )
+            else:
+                lines.append(
+                    "Evidence-timed stage order is incomplete because one or "
+                    "more detected stages has acquisition time only "
+                    "[timeline_analysis.json]."
+                )
+        elif (
+            timeline is not None
+            and timeline.attack_stages
+            and not bool(timeline.statistics.get("progression_assessable", False))
+        ):
             lines.append(
-                "Observed attack progression: "
-                + " -> ".join(timeline.stage_progression)
-                + " [timeline_analysis.json]."
+                "Attack stages were detected, but no evidence-derived event "
+                "times were available to order them [timeline_analysis.json]."
             )
         return lines
 
@@ -405,17 +445,99 @@ class InvestigationReportService:
     def _timeline_section(timeline) -> Any:
         if timeline is None:
             return "Timeline analysis not available for this case."
+        inferred = int(timeline.statistics.get("inferred_event_count", 0))
+        fallback = int(timeline.statistics.get("acquisition_fallback_count", 0))
+        unresolved = int(timeline.statistics.get("unresolved_event_count", 0))
+        if fallback or unresolved:
+            reliability = (
+                "Chronology is provisional: acquisition time is an intake "
+                "timestamp, not proof of when the underlying event occurred. "
+                "Every fallback and unresolved value must be checked against "
+                "the source exhibit."
+            )
+        elif inferred:
+            reliability = (
+                "Chronology includes inferred values. Date-only values are "
+                "normalised to 00:00 UTC and do not establish an exact time."
+            )
+        else:
+            reliability = (
+                "All events have non-inferred content or metadata timestamps; "
+                "their accuracy still depends on the source exhibit and clock."
+            )
+        chronological_events = [
+            {
+                "timestamp": event.timestamp or "unresolved",
+                "evidence_id": event.evidence_id,
+                "file_name": event.file_name,
+                "event_type": event.event_type,
+                "description": event.description,
+                "timestamp_source": event.time_source,
+                "timestamp_confidence": event.confidence,
+                "timestamp_inferred": event.timestamp_inferred,
+                "stages": event.stages,
+                "critical": event.critical,
+                "critical_reasons": event.critical_reasons,
+            }
+            for event in timeline.events
+        ]
+        event_time_events = [
+            event for event in chronological_events
+            if event["timestamp"] != "unresolved"
+            and event["timestamp_source"] != "upload_time_fallback"
+        ]
+        acquisition_records = [
+            event for event in chronological_events
+            if event["timestamp_source"] == "upload_time_fallback"
+        ]
+        unresolved_records = [
+            event for event in chronological_events
+            if event["timestamp"] == "unresolved"
+        ]
+
         return {
             "summary": timeline.summary,
+            "timestamp_quality": {
+                "event_count": len(timeline.events),
+                "non_inferred_count": int(timeline.statistics.get(
+                    "non_inferred_event_count", len(timeline.events) - inferred
+                )),
+                "inferred_count": inferred,
+                "acquisition_fallback_count": fallback,
+                "unresolved_count": unresolved,
+                "reliability_note": reliability,
+            },
             "stage_progression": timeline.stage_progression,
             "progression_consistent": timeline.progression_consistent,
+            "progression_assessable": bool(timeline.statistics.get(
+                "progression_assessable", not fallback and not unresolved
+            )),
+            # The complete compatibility view remains available to API clients,
+            # while formal renderers can keep incident chronology separate from
+            # intake provenance and unresolved records.
+            "chronological_events": chronological_events,
+            "event_time_events": event_time_events,
+            "acquisition_records": acquisition_records,
+            "unresolved_records": unresolved_records,
             "milestones": [
-                {"timestamp": m.timestamp, "description": m.description}
+                {
+                    "timestamp": m.timestamp or "unresolved",
+                    "timestamp_source": m.time_source,
+                    "timestamp_confidence": m.confidence,
+                    "timestamp_inferred": m.timestamp_inferred,
+                    "description": m.description,
+                }
                 for m in timeline.milestones
             ],
             "critical_events": [
-                {"timestamp": e.timestamp, "evidence_id": e.evidence_id,
-                 "reasons": e.critical_reasons}
+                {
+                    "timestamp": e.timestamp or "unresolved",
+                    "timestamp_source": e.time_source,
+                    "timestamp_confidence": e.confidence,
+                    "timestamp_inferred": e.timestamp_inferred,
+                    "evidence_id": e.evidence_id,
+                    "reasons": e.critical_reasons,
+                }
                 for e in timeline.critical_events
             ],
         }
@@ -460,11 +582,12 @@ class InvestigationReportService:
             "objective": (
                 "Acquire, verify, correlate and reconstruct the digital "
                 "evidence for this case, and derive investigative leads "
-                "(suspect anchors, campaigns, cross-case links) strictly "
-                "from stored, hash-verified artifacts."),
+                "(identity anchors, candidate clusters and cross-case links) "
+                "from stored artifacts while preserving each item's recorded "
+                "integrity status."),
             "evidence_scope": (
                 f"{count_of(len(items), 'evidence item')} acquired through the CIIS "
-                "intake pipeline under SHA-256 chain-of-custody control."),
+                "intake pipeline with a recorded SHA-256 digest."),
             "methodology": [
                 "Phase 1 - Acquisition & OCR: PaddleOCR PP-OCRv5 text "
                 "extraction with per-item confidence scoring; SHA-256 "
@@ -489,8 +612,9 @@ class InvestigationReportService:
             ],
             "reproducibility": (
                 "Re-running the analysis against the same stored evidence "
-                "reproduces every figure herein; artifacts are versioned "
-                "and never overwritten."),
+                "recomputes the canonical artifacts; report control records "
+                "the evidence-set digest and the stored JSON companion retains "
+                "the complete source-artifact hash register."),
         }
 
     def _model_predictions(self, items) -> Any:
@@ -642,14 +766,29 @@ class InvestigationReportService:
         return rows or [{"note": "No Phase-1 metadata reports stored for this case."}]
 
     @staticmethod
-    def _statistics_section(analytics) -> Any:
-        if analytics is None:
+    def _statistics_section(analytics, timeline=None) -> Any:
+        if analytics is None and timeline is None:
             return "Analytics not available."
         return {
-            "entity_statistics": analytics.entity_statistics,
-            "campaign_statistics": analytics.campaign_statistics,
-            "timeline_statistics": analytics.timeline_statistics,
-            "correlation_statistics": analytics.correlation_statistics,
+            "entity_statistics": (
+                analytics.entity_statistics if analytics is not None
+                else "not available"
+            ),
+            "campaign_statistics": (
+                analytics.campaign_statistics if analytics is not None
+                else "not available"
+            ),
+            # Reporting receives the current TimelineAnalysis directly. Use it
+            # instead of a previously persisted analytics snapshot so a focused
+            # timeline/report refresh cannot publish contradictory statistics.
+            "timeline_statistics": (
+                timeline.statistics if timeline is not None
+                else analytics.timeline_statistics
+            ),
+            "correlation_statistics": (
+                analytics.correlation_statistics if analytics is not None
+                else "not available"
+            ),
         }
 
     @staticmethod
@@ -665,6 +804,44 @@ class InvestigationReportService:
                     "explanation": confidence.get("explanation", ""),
                 })
         return rows or [{"note": "No Phase-1 confidence scores stored for this case."}]
+
+    @staticmethod
+    def _limitations(timeline) -> List[str]:
+        """Interpretive boundaries that must travel with every report format."""
+        lines = [
+            "This automated report organises submitted material and computed "
+            "leads. It does not determine guilt or attribute an offence to a "
+            "person.",
+            "OCR and entity extraction can omit, merge or misclassify text. "
+            "Identifiers, amounts and names must be verified in the original "
+            "exhibit before operational use.",
+            "Correlation and cross-case scores measure shared features, not "
+            "causation, common ownership or identity.",
+            "Campaign clusters and identity-anchor scores are prioritisation "
+            "aids that require independent corroboration.",
+            "Threat-intelligence verdicts reflect the configured provider and "
+            "its coverage at analysis time; no match does not prove safety.",
+            "New evidence or corrected extraction may change any finding in "
+            "this report.",
+        ]
+        if timeline is None:
+            lines.insert(2, "Timeline coverage was unavailable for this report.")
+        else:
+            inferred = int(timeline.statistics.get("inferred_event_count", 0))
+            fallback = int(timeline.statistics.get(
+                "acquisition_fallback_count", 0
+            ))
+            unresolved = int(timeline.statistics.get(
+                "unresolved_event_count", 0
+            ))
+            lines.insert(
+                2,
+                f"Timeline quality: {inferred} inferred timestamp(s), including "
+                f"{fallback} acquisition-time fallback(s), and {unresolved} "
+                "unresolved timestamp(s). Date-only values use 00:00 UTC; "
+                "fallbacks describe intake time rather than event time.",
+            )
+        return lines
 
     def _legal_section(self, case_id, items, campaigns, cross_case,
                        analytics) -> Dict[str, Any]:
@@ -688,50 +865,65 @@ class InvestigationReportService:
         verified = sum(1 for c in items if c.hash_verified is True)
         lines.append(
             f"{verified}/{count_of(len(items), 'evidence item')} passed SHA-256 "
-            "chain-of-custody verification."
+            "integrity verification; this establishes stored-file integrity, "
+            "not the truth of its content."
         )
         if correlation is not None and correlation.related_pair_count:
             lines.append(
-                "The evidence set is internally connected "
-                f"({count_of(correlation.related_pair_count, 'weighted relationship')}), "
-                "consistent with related activity rather than isolated incidents."
+                f"The engine identified {count_of(correlation.related_pair_count, 'weighted association')} "
+                "for manual corroboration; shared features alone do not prove "
+                "that the items have a common actor or cause."
             )
         if campaigns is not None and campaigns.campaign_count:
+            verb = "requires" if campaigns.campaign_count == 1 else "require"
             lines.append(
-                f"{count_of(campaigns.campaign_count, 'campaign cluster')} indicate "
-                "coordinated operation."
+                f"{count_of(campaigns.campaign_count, 'candidate campaign cluster')} "
+                f"met the configured clustering criteria and {verb} investigator "
+                "review before being treated as coordinated activity."
             )
         if suspects is not None and suspects.suspect_count:
             top = suspects.suspects[0]
             lines.append(
-                f"Investigation should focus on anchor '{top.identity_value}' "
-                f"({top.confidence_score:.0f}/100 confidence)."
+                f"Validate the ownership and role of identity lead "
+                f"'{top.identity_value}' ({top.confidence_score:.0f}/100 model "
+                f"score; {count_of(len(top.evidence_ids), 'supporting evidence item')}) "
+                "against provider records and the original exhibits."
             )
-        if timeline is not None and not timeline.progression_consistent:
-            lines.append(
-                "Observed stage order deviates from the canonical scam "
-                "sequence; evidence acquisition order should be reviewed."
-            )
+        if timeline is not None:
+            fallback = int(timeline.statistics.get(
+                "acquisition_fallback_count", 0
+            ))
+            unresolved = int(timeline.statistics.get(
+                "unresolved_event_count", 0
+            ))
+            assessable = bool(timeline.statistics.get(
+                "progression_assessable", not fallback and not unresolved
+            ))
+            if not assessable:
+                lines.append(
+                    "The keyword-derived stage order is provisional because "
+                    "one or more stage-bearing items lack a reliable event time."
+                )
+            elif not timeline.progression_consistent:
+                lines.append(
+                    "The keyword-derived stage order differs from the configured "
+                    "reference sequence and should be checked against the exhibits."
+                )
         return lines
 
     #: Where each payment rail's records actually live - so a recommendation
     #: names the institution to serve, not just "the provider".
-    #: Written for a reader who is not a forensic specialist: the person who
-    #: holds the records, and what to ask them for, in ordinary words. Terms an
-    #: investigator will meet on the official request form ("KYC") are kept in
-    #: brackets after the plain wording rather than used on their own.
+    #: Each entry names the institution that holds the relevant records and the
+    #: record class to request. KYC is retained because it appears on provider
+    #: request forms; it is paired with a plain-language description.
     _RAIL_AUTHORITIES = {
-        "esewa_ids": ("eSewa", "who owns these wallets (KYC) and their payment "
-                               "history"),
-        "khalti_ids": ("Khalti", "who owns these wallets (KYC) and their "
-                                 "payment history"),
-        "imepay_ids": ("IME Pay", "who owns these wallets (KYC) and their "
-                                  "payment history"),
-        "bank_accounts": ("the bank", "who owns these accounts and their "
-                                      "statements"),
-        "card_numbers": ("the card issuer", "who owns these cards"),
-        "eth_wallets": ("a crypto-tracing specialist", "where the coins went"),
-        "btc_wallets": ("a crypto-tracing specialist", "where the coins went"),
+        "esewa_ids": ("eSewa", "subscriber/KYC ownership and transaction history"),
+        "khalti_ids": ("Khalti", "subscriber/KYC ownership and transaction history"),
+        "imepay_ids": ("IME Pay", "subscriber/KYC ownership and transaction history"),
+        "bank_accounts": ("the relevant bank", "account-holder identity and statements"),
+        "card_numbers": ("the card issuer", "cardholder and transaction records"),
+        "eth_wallets": ("a crypto-tracing specialist", "transaction tracing"),
+        "btc_wallets": ("a crypto-tracing specialist", "transaction tracing"),
     }
 
     #: How a brand name is written in a report ("esewa" is a matcher key).
@@ -754,15 +946,7 @@ class InvestigationReportService:
     @classmethod
     def _recommendations(cls, campaigns, suspects, timeline, priority,
                          analytics=None) -> List[str]:
-        """One short, plain-English action per line - nothing else.
-
-        Written for the person handling the complaint, who is not a forensic
-        specialist: ordinary words ("get the fake website shut down", "ask the
-        bank who owns this account"), never the engine's vocabulary
-        ("registrar", "indicator", "anchor", "subscriber records"). Where a
-        term will appear on the official request form - KYC, OTP - it is given
-        once in brackets after the plain wording, so the reader can match it up
-        without having to know it first.
+        """One concise, operationally formal action per line.
 
         Each line is a single sentence naming what to do and to which
         identifier, capped at ~150 characters. No rationale and no repetition:
@@ -781,9 +965,8 @@ class InvestigationReportService:
             shown = ", ".join(hosts[:2])
             more = f" (+{len(hosts) - 2} more)" if len(hosts) > 2 else ""
             actions.append(
-                f"Get the fake {plural('website', len(hosts))} shut down: "
-                f"{shown}{more}. Ask the hosting company to save its records "
-                "first."
+                "Issue preservation requests to the relevant hosting providers, "
+                f"then seek suspension of the suspected domains: {shown}{more}."
             )
         brands = sorted({i.brand_impersonated for i in flagged
                          if i.brand_impersonated})
@@ -791,8 +974,8 @@ class InvestigationReportService:
             named = ", ".join(cls._BRAND_NAMES.get(b, b.title())
                               for b in brands[:3])
             actions.append(
-                f"Tell {named} their name is being used in this scam, so they "
-                "can warn other customers."
+                f"Notify {named} of suspected brand impersonation and request "
+                "preservation of any related abuse records."
             )
 
         # -- 2. Follow the money -------------------------------------------
@@ -804,14 +987,16 @@ class InvestigationReportService:
                 rail, ("the operating institution", "account records"))
             ids = ", ".join(v.value for v in values[:2])
             extra = f" (+{len(values) - 2} more)" if len(values) > 2 else ""
-            actions.append(f"Ask {authority} {records}: {ids}{extra}.")
+            actions.append(
+                f"Request {records} from {authority} for: {ids}{extra}."
+            )
         transaction_ids = (getattr(analytics, "top_entities", None) or {}
                            ).get("transaction_ids") or []
         if transaction_ids:
             codes = ", ".join(v.value.upper() for v in transaction_ids[:3])
             actions.append(
-                f"Include these payment reference numbers in those requests so "
-                f"the transfers are easy to find: {codes}."
+                "Verify these extracted payment references against the source "
+                f"exhibits before including them in record requests: {codes}."
             )
 
         # -- 3. Identify the actor -------------------------------------------
@@ -820,41 +1005,44 @@ class InvestigationReportService:
         if anchors:
             named = ", ".join(s.identity_value for s in anchors)
             actions.append(
-                f"Ask the phone/wallet company who is registered to {named} - "
-                "it appears again and again across this evidence."
+                "Ask the relevant provider to verify registration, ownership "
+                f"and transaction records for {named}; confirm each party's role."
             )
         clustered = [c for c in (getattr(campaigns, "campaigns", None) or [])
                      if c.shared_domains]
         if clustered:
             total = sum(len(c.members) for c in clustered)
             actions.append(
-                f"Treat {total} of the items as one scam operation rather than "
-                f"{total} separate incidents - they share the same website."
+                f"Review {total} items as a candidate cluster because they share "
+                "a website; corroborate the link before combining incidents."
             )
 
         # -- 4. Victim care & handling ----------------------------------------
         if (getattr(analytics, "entity_statistics", None) or {}).get("otp"):
             actions.append(
-                "A one-time password (OTP) was given to the scammer. Tell the "
-                "victim to change their passwords now and ask their bank or "
-                "wallet to watch the account."
+                "Advise the complainant to reset affected credentials and ask "
+                "the relevant bank or wallet provider to monitor the account."
             )
-        critical = len(getattr(timeline, "critical_events", None) or [])
+        critical = len([
+            event for event in (getattr(timeline, "critical_events", None) or [])
+            if event.time_source != "upload_time_fallback"
+        ])
         if critical:
             actions.append(
-                f"Go through the {count_of(critical, 'key moment')} - when money moved "
-                "and codes were shared - with the victim, and record what they "
-                "lost."
+                f"Review the {count_of(critical, 'flagged event')} with the source "
+                "exhibits; confirm each event's time, participants and any loss "
+                "with the "
+                "complainant."
             )
         if priority is not None:
             level = str(priority.get("priority_level", "")).lower()
             score = priority.get("priority_score")
             urgency = {
-                "critical": "Act on this case first",
-                "high": "Give this case early attention",
-                "medium": "Handle this case in the normal queue",
-                "low": "Low urgency - handle after the others",
-            }.get(level, "Handle this case in the normal queue")
+                "critical": "Assign immediate queue priority",
+                "high": "Assign high queue priority",
+                "medium": "Assign standard queue priority",
+                "low": "Assign low queue priority",
+            }.get(level, "Assign standard queue priority")
             scored = f" (rated {float(score):.0f} out of 100)" \
                 if isinstance(score, (int, float)) else ""
             actions.append(f"{urgency}{scored}.")
@@ -866,7 +1054,7 @@ class InvestigationReportService:
         for text in actions:
             cleaned = " ".join(text.split())
             if len(cleaned) > cls._MAX_ACTION_CHARS:
-                cleaned = cleaned[: cls._MAX_ACTION_CHARS - 1].rsplit(" ", 1)[0] + "…"
+                cleaned = cleaned[: cls._MAX_ACTION_CHARS - 3].rsplit(" ", 1)[0] + "..."
             if cleaned and cleaned not in deduped:
                 deduped.append(cleaned)
         return deduped or [
@@ -896,8 +1084,9 @@ class InvestigationReportService:
             f"Generated: {utc_now_iso()}  ",
             "Produced by: Cybercrime Investigation Intelligence Engine (CIIS), "
             "Phase 2  ",
+            "Status: Automated analytical draft - investigator review required  ",
             "Basis: every statement below references stored forensic findings; "
-            "no content is generated outside computed results.",
+            "accuracy depends on the source evidence and upstream extraction.",
             "",
         ]
         for key, title in titles.items():
@@ -905,10 +1094,309 @@ class InvestigationReportService:
             out.append("")
             if key == "legal_basis":
                 out.extend(_legal_markdown(sections.get(key)))
+            elif key == "scope_and_methodology":
+                out.extend(_scope_markdown(sections.get(key)))
+            elif key == "case_overview":
+                out.extend(_case_overview_markdown(sections.get(key)))
+            elif key == "evidence_summary":
+                out.extend(_evidence_markdown(sections.get(key)))
+            elif key == "timeline_analysis":
+                out.extend(_timeline_markdown(sections.get(key)))
+            elif key == "correlation_analysis":
+                out.extend(_correlation_markdown(sections.get(key)))
+            elif key == "cross_case_correlation":
+                out.extend(_cross_case_markdown(sections.get(key)))
+            elif key == "campaign_analysis":
+                out.extend(_campaign_markdown(sections.get(key)))
+            elif key == "suspect_assessment":
+                out.extend(_suspect_markdown(sections.get(key)))
+            elif key == "metadata_summary":
+                out.extend(_metadata_markdown(sections.get(key)))
+            elif key == "confidence_analysis":
+                out.extend(_confidence_markdown(sections.get(key)))
+            elif key in {
+                "executive_summary", "limitations",
+                "investigation_conclusion", "recommendations",
+            }:
+                label = {
+                    "executive_summary": "Finding",
+                    "limitations": "Review boundary",
+                    "investigation_conclusion": "Conclusion",
+                    "recommendations": "Investigator action",
+                }[key]
+                out.extend(_numbered_markdown(sections.get(key), label))
             else:
                 out.extend(_to_markdown(sections.get(key)))
             out.append("")
         return "\n".join(out)
+
+
+def _markdown_cell(value: Any) -> str:
+    """Keep generated Markdown tables valid when evidence text contains pipes."""
+    if isinstance(value, list):
+        value = ", ".join(str(item) for item in value) or "none"
+    return str(value if value not in (None, "") else "none").replace("|", "\\|")
+
+
+def _short(value: Any, limit: int = 220) -> str:
+    text = " ".join(str(value or "").split())
+    if len(text) <= limit:
+        return text
+    return text[:limit - 1].rsplit(" ", 1)[0] + "…"
+
+
+def _markdown_table(headers: List[str], rows: List[List[Any]]) -> List[str]:
+    output = [
+        "| " + " | ".join(headers) + " |",
+        "| " + " | ".join("---" for _ in headers) + " |",
+    ]
+    output.extend(
+        "| " + " | ".join(_markdown_cell(value) for value in row) + " |"
+        for row in rows
+    )
+    if not rows:
+        output.append("| " + " | ".join("none" for _ in headers) + " |")
+    return output
+
+
+def _numbered_markdown(section: Any, label: str) -> List[str]:
+    if not isinstance(section, list):
+        return _to_markdown(section)
+    return _markdown_table(
+        ["#", label],
+        [[index, item] for index, item in enumerate(section, start=1)],
+    )
+
+
+def _case_overview_markdown(section: Any) -> List[str]:
+    if not isinstance(section, dict):
+        return _to_markdown(section)
+    return _markdown_table(
+        ["Case field", "Recorded value"],
+        [[str(key).replace("_", " ").title(), value]
+         for key, value in section.items()],
+    )
+
+
+def _scope_markdown(section: Any) -> List[str]:
+    if not isinstance(section, dict):
+        return _to_markdown(section)
+    out = _markdown_table(
+        ["Scope", "Recorded basis"],
+        [["Objective", section.get("objective", "not available")],
+         ["Evidence scope", section.get("evidence_scope", "not available")],
+         ["Reproducibility", section.get("reproducibility", "not available")]],
+    )
+    out += ["", "### Processing stages", ""]
+    rows = []
+    for method in section.get("methodology") or []:
+        stage, separator, detail = str(method).partition(":")
+        rows.append([stage, detail.strip() if separator else method])
+    out += _markdown_table(["Stage", "Method and stored output"], rows)
+    return out
+
+
+def _evidence_markdown(section: Any) -> List[str]:
+    if not isinstance(section, list) or not section or not isinstance(section[0], dict):
+        return _to_markdown(section)
+    return _markdown_table(
+        ["Evidence", "File", "Acquired", "OCR confidence", "Entities", "Integrity"],
+        [[row.get("evidence_id", ""), row.get("file_name", ""),
+          row.get("upload_time", ""), row.get("ocr_confidence", ""),
+          row.get("entity_count", 0),
+          "VERIFIED" if row.get("hash_verified") else "FAILED"]
+         for row in section],
+    )
+
+
+def _metadata_markdown(section: Any) -> List[str]:
+    if not isinstance(section, list) or not section or "evidence_id" not in section[0]:
+        return _to_markdown(section)
+    return _markdown_table(
+        ["Evidence", "EXIF", "Device", "Software", "Consistency notes"],
+        [[row.get("evidence_id", ""), row.get("has_exif", False),
+          row.get("device", ""), row.get("software", ""),
+          row.get("consistency_notes", [])] for row in section],
+    )
+
+
+def _confidence_markdown(section: Any) -> List[str]:
+    if not isinstance(section, list) or not section or "evidence_id" not in section[0]:
+        return _to_markdown(section)
+    return _markdown_table(
+        ["Evidence", "Score", "Level", "Computed explanation"],
+        [[row.get("evidence_id", ""), row.get("score", ""),
+          row.get("level", ""), _short(row.get("explanation", ""))]
+         for row in section],
+    )
+
+
+def _correlation_markdown(section: Any) -> List[str]:
+    if not isinstance(section, dict):
+        return _to_markdown(section)
+    out = [
+        f"{section.get('related_pair_count', 0)} of "
+        f"{section.get('pair_count', 0)} analysed pairs met a configured "
+        "relationship threshold.",
+        "",
+    ]
+    out += _markdown_table(
+        ["Evidence pair", "Strength", "Confidence", "Computed basis"],
+        [[
+            row.get("pair", ""),
+            row.get("strength", ""),
+            row.get("confidence", ""),
+            _short(row.get("explanation", "")),
+        ] for row in section.get("top_relationships") or []],
+    )
+    return out
+
+
+def _cross_case_markdown(section: Any) -> List[str]:
+    if not isinstance(section, dict):
+        return _to_markdown(section)
+    rows = []
+    for link in section.get("links") or []:
+        matches = link.get("matched_entities") or []
+        indicators = [
+            f"{match.get('entity_type', '')}:{match.get('value', '')}"
+            for match in matches[:5]
+        ]
+        if len(matches) > 5:
+            indicators.append(f"+{len(matches) - 5} more")
+        rows.append([
+            link.get("other_case_id", ""),
+            link.get("relationship_strength", ""),
+            link.get("match_confidence", ""),
+            indicators,
+            _short(link.get("match_reason", ""), 180),
+        ])
+    out = [
+        "These are automated shared-entity associations and require "
+        "independent corroboration.",
+        "",
+    ]
+    out += _markdown_table(
+        ["Other case", "Strength", "Confidence", "Matched indicators", "Basis"],
+        rows,
+    )
+    return out
+
+
+def _campaign_markdown(section: Any) -> List[str]:
+    if not isinstance(section, dict):
+        return _to_markdown(section)
+    rows = [[
+        campaign.get("campaign_id", ""),
+        campaign.get("members", []),
+        campaign.get("confidence", ""),
+        (campaign.get("signature") or [])[:5],
+    ] for campaign in section.get("campaigns") or []]
+    out = [
+        "Clusters are candidate groupings produced by configured thresholds; "
+        "they do not by themselves establish coordination.",
+        "",
+    ]
+    out += _markdown_table(
+        ["Candidate cluster", "Evidence", "Confidence", "Shared signature"],
+        rows,
+    )
+    if section.get("unclustered_evidence"):
+        out += [
+            "",
+            "**Unclustered evidence:** "
+            + ", ".join(section["unclustered_evidence"]),
+        ]
+    return out
+
+
+def _suspect_markdown(section: Any) -> List[str]:
+    if not isinstance(section, list):
+        return _to_markdown(section)
+    out = [
+        "> Identity anchors are investigative leads, not legal attribution. "
+        "Verify ownership and role using original exhibits and independent records.",
+        "",
+    ]
+    out += _markdown_table(
+        ["Identity lead", "Score", "Confidence", "Risk", "Supporting evidence"],
+        [[
+            row.get("identity", ""),
+            row.get("confidence_score", ""),
+            row.get("confidence_level", ""),
+            row.get("risk_level", ""),
+            row.get("evidence_ids", []),
+        ] for row in section],
+    )
+    return out
+
+
+def _timeline_markdown(section: Any) -> List[str]:
+    """Render chronology as an investigator-readable table, not a dict dump."""
+    if not isinstance(section, dict):
+        return _to_markdown(section)
+
+    out: List[str] = []
+    if section.get("summary"):
+        out += [str(section["summary"]), ""]
+    quality = section.get("timestamp_quality") or {}
+    if quality.get("reliability_note"):
+        out += [f"> {quality['reliability_note']}", ""]
+    out += [
+        "| Events | Non-inferred | Inferred | Acquisition fallback | Unresolved |",
+        "| ---: | ---: | ---: | ---: | ---: |",
+        "| {event_count} | {non_inferred_count} | {inferred_count} | "
+        "{acquisition_fallback_count} | {unresolved_count} |".format(
+            event_count=quality.get("event_count", 0),
+            non_inferred_count=quality.get("non_inferred_count", 0),
+            inferred_count=quality.get("inferred_count", 0),
+            acquisition_fallback_count=quality.get(
+                "acquisition_fallback_count", 0
+            ),
+            unresolved_count=quality.get("unresolved_count", 0),
+        ),
+        "",
+        "### Chronological Events",
+        "",
+        "| Timestamp (UTC) | Evidence | File | Source | Confidence | Inferred | Stages |",
+        "| --- | --- | --- | --- | --- | --- | --- |",
+    ]
+    for event in section.get("chronological_events") or []:
+        out.append(
+            "| " + " | ".join(_markdown_cell(event.get(key)) for key in (
+                "timestamp", "evidence_id", "file_name", "timestamp_source",
+                "timestamp_confidence", "timestamp_inferred", "stages",
+            )) + " |"
+        )
+    if not section.get("chronological_events"):
+        out.append("| none | none | none | none | none | none | none |")
+
+    stages = section.get("stage_progression") or []
+    out += [
+        "",
+        "### Stage Assessment",
+        "",
+        f"- **Keyword-derived order:** {_markdown_cell(stages)}",
+        f"- **Order assessable:** {section.get('progression_assessable', False)}",
+        f"- **Matches configured sequence:** "
+        f"{section.get('progression_consistent', False)}",
+        "",
+        "### Critical Events",
+        "",
+    ]
+    critical = section.get("critical_events") or []
+    if not critical:
+        out.append("- none")
+    for event in critical:
+        reasons = "; ".join(event.get("reasons") or []) or "no reason recorded"
+        out.append(
+            f"- **{event.get('evidence_id', 'unknown')}** at "
+            f"{event.get('timestamp', 'unresolved')} "
+            f"({event.get('timestamp_source', 'unresolved')}, "
+            f"{event.get('timestamp_confidence', 'unknown')}, "
+            f"inferred={event.get('timestamp_inferred', False)}): {reasons}"
+        )
+    return out
 
 
 def _legal_markdown(section: Any) -> List[str]:
@@ -937,19 +1425,62 @@ def _legal_markdown(section: Any) -> List[str]:
         out += [f"*{section['language_note']}*", ""]
     for provision in section.get("provisions") or []:
         out.append(f"### Section {provision['section']} — {provision['title']}")
+        out += ["", f"*{provision['citation']}*", ""]
+        out += _markdown_table(
+            ["Field", "Recorded value"],
+            [["Conduct", provision["conduct"]],
+             ["Penalty", provision["penalty"]],
+             ["Evidence-based match", provision["basis"]],
+             ["Supporting evidence", provision.get("evidence_ids") or ["none"]]],
+        )
+        out.append("")
+
+    guidance = section.get("investigative_guidance") or []
+    if guidance:
+        out += ["### Evidentiary and regulatory follow-up", ""]
         out += [
+            "These entries are preservation or investigative actions, not findings "
+            "that an institution violated a rule.",
             "",
-            f"*{provision['citation']}*",
-            "",
-            f"**Conduct.** {provision['conduct']}",
-            "",
-            f"**Penalty.** {provision['penalty']}",
-            "",
-            f"**Why this is engaged.** {provision['basis']}",
         ]
-        if provision.get("evidence_ids"):
+        for item in guidance:
+            out += [f"#### {item['title']}", "", f"*{item['citation']}*", ""]
+            out += _markdown_table(
+                ["Field", "Recorded value"],
+                [["Status", item.get("status", "investigative_follow_up")],
+                 ["Expectation", item["expectation"]],
+                 ["Why relevant", item["basis"]],
+                 ["Recommended action", item["recommended_action"]],
+                 ["Applicability", item["applicability"]],
+                 ["Supporting evidence", item.get("evidence_ids") or ["none"]]],
+            )
             out.append("")
-            out.append(f"**Evidence.** {', '.join(provision['evidence_ids'])}")
+
+    manual = section.get("manual_review_provisions") or []
+    if manual:
+        out += ["### Provisions requiring manual review", ""]
+        out += [
+            "The current evidence model does not automatically assess these "
+            "provisions:",
+            "",
+        ]
+        for item in manual:
+            out.append(
+                f"- **Section {item['section']} — {item['title']}:** {item['reason']}"
+            )
+        out.append("")
+
+    sources = section.get("sources") or []
+    if sources:
+        out += ["### Primary sources", ""]
+        for source in sources:
+            out += [
+                f"- **{source['authority']} — {source['title']}**  ",
+                f"  {source['url']}  ",
+                f"  Used for: {source['usage']}",
+            ]
+            if source.get("note"):
+                out.append(f"  Note: {source['note']}")
         out.append("")
     if section.get("caveat"):
         out += [f"> {section['caveat']}", ""]

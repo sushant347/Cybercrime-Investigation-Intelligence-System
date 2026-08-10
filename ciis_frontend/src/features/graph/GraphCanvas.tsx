@@ -23,7 +23,7 @@ import { STRUCTURAL_TYPES, type NodeSignals } from "./relevance";
 cytoscape.use(fcose);
 
 /** Layout modes offered to the investigator. */
-export type LayoutMode = "structure" | "force" | "circle";
+export type LayoutMode = "structure" | "timeline" | "force" | "circle";
 
 /**
  * Node sizing model. Kept at module scope (rather than inline in the
@@ -38,7 +38,7 @@ const NODE_DEGREE_BONUS_MAX = 16; // matches Math.min(16, degree * 1.6)
  * so only the case skeleton and the leads stay labelled until the
  * investigator zooms in past ZOOM_LABEL_ALL or hovers.
  */
-const CROWDED_NODE_COUNT = 45;
+const CROWDED_NODE_COUNT = 28;
 const ZOOM_LABEL_ALL = 1.15;
 
 /** Cytoscape node size: base-by-role, growing slightly with connectivity
@@ -79,6 +79,11 @@ export const EDGE_STYLES: Record<
   cross_case: { color: "#a970ff", style: "dashed", label: "Link to another case" },
   timeline_event: { color: "#22d3ee", style: "dotted", label: "Timeline event" },
   linked_to: { color: "#64748b", style: "solid", label: "Related" },
+  evidence_relationship: {
+    color: "#2563eb",
+    style: "solid",
+    label: "Combined evidence relationship",
+  },
 };
 
 const FALLBACK_EDGE = { color: "#64748b", style: "solid" as const, label: "Relationship" };
@@ -106,6 +111,54 @@ function truncate(value: string, max: number): string {
   return value.length <= max ? value : `${value.slice(0, max - 1)}…`;
 }
 
+function edgeElementId(edge: RelationshipGraph["edges"][number]): string {
+  return `edge:${edge.source}|${edge.target}|${edge.edge_type}`;
+}
+
+function timelineOrderFor(graph: RelationshipGraph): Map<string, number> {
+  const events = graph.nodes
+    .filter((node) => node.node_type === "timeline_event")
+    .sort(
+      (a, b) =>
+        (a.properties.timestamp ?? "~").localeCompare(b.properties.timestamp ?? "~") ||
+        a.id.localeCompare(b.id),
+    );
+  const order = new Map(events.map((node, index) => [node.id, index]));
+  graph.edges
+    .filter((edge) => edge.edge_type === "timeline_event")
+    .forEach((edge) => {
+      const eventId = edge.source.startsWith("timeline_event:") ? edge.source : edge.target;
+      const evidenceId = eventId === edge.source ? edge.target : edge.source;
+      const eventOrder = order.get(eventId);
+      if (eventOrder !== undefined) order.set(evidenceId, eventOrder);
+    });
+  return order;
+}
+
+function timelineClass(type: string, properties: Record<string, string>): string | null {
+  if (type !== "timeline_event") return null;
+  if (properties.time_source === "upload_time_fallback") return "timeline-fallback";
+  if (properties.timestamp_inferred === "true") return "timeline-inferred";
+  return "timeline-actual";
+}
+
+function applySearchState(cy: Core, search: string) {
+  cy.elements().removeClass("highlighted dimmed");
+  const query = search.trim().toLowerCase();
+  if (!query) return cy.collection();
+  const matches = cy.nodes().filter((node) => {
+    const label = String(node.data("label") ?? "").toLowerCase();
+    const id = String(node.id()).toLowerCase();
+    return label.includes(query) || id.includes(query);
+  });
+  if (matches.length === 0) return matches;
+  cy.elements().addClass("dimmed");
+  matches.removeClass("dimmed").addClass("highlighted show-label");
+  matches.connectedEdges().removeClass("dimmed");
+  matches.connectedEdges().connectedNodes().removeClass("dimmed").addClass("show-label");
+  return matches;
+}
+
 /**
  * Human-readable caption for a node.
  * Evidence nodes are labelled by their file name (the thing an investigator
@@ -120,6 +173,12 @@ function displayLabel(
   const raw = label || id.split(":").slice(1).join(":") || id;
   if (type === "case") return truncate(raw, 22);
   if (type === "evidence") return truncate(properties.file_name || raw, 24);
+  if (type === "timeline_event") {
+    const date = properties.timestamp && properties.timestamp !== "unresolved"
+      ? properties.timestamp.slice(0, 10)
+      : "time unresolved";
+    return truncate(`${date} · ${raw}`, 34);
+  }
   return truncate(raw, 22);
 }
 
@@ -140,18 +199,31 @@ export function GraphCanvas({
   signals,
   search,
   layout,
+  focusNodeId,
+  viewportKey,
   onSelect,
 }: {
   graph: RelationshipGraph;
   signals: Map<string, NodeSignals>;
   search: string;
   layout: LayoutMode;
+  focusNodeId?: string | null;
+  viewportKey?: string;
   onSelect: (selection: Selection) => void;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const cyRef = useRef<Core | null>(null);
+  const graphRef = useRef(graph);
+  const signalsRef = useRef(signals);
+  const onSelectRef = useRef(onSelect);
+  const searchRef = useRef(search);
   const theme = useTheme();
+
+  graphRef.current = graph;
+  signalsRef.current = signals;
+  onSelectRef.current = onSelect;
+  searchRef.current = search;
 
   /** Layout options per mode, tuned for the node count actually drawn. */
   const layoutOptions = useCallback(
@@ -190,6 +262,21 @@ export function GraphCanvas({
           sort: (a: NodeSingular, b: NodeSingular) =>
             (b.data("degree") as number) - (a.data("degree") as number),
         } as cytoscape.LayoutOptions;
+      }
+      if (mode === "timeline") {
+        return {
+          name: "preset",
+          fit: true,
+          padding: 58,
+          positions: (node: NodeSingular) => {
+            const order = Number(node.data("timelineOrder") ?? 0);
+            const type = node.data("type") as string;
+            return {
+              x: 90 + order * 190,
+              y: type === "timeline_event" ? 90 : type === "evidence" ? 260 : 390,
+            };
+          },
+        } as unknown as cytoscape.LayoutOptions;
       }
       // "force": fcose, not cytoscape's built-in cose. cose has no overlap
       // avoidance at all; fcose's nodeDimensionsIncludeLabels folds each
@@ -234,6 +321,7 @@ export function GraphCanvas({
       degree.set(e.source, (degree.get(e.source) ?? 0) + 1);
       degree.set(e.target, (degree.get(e.target) ?? 0) + 1);
     });
+    const timelineOrder = timelineOrderFor(graph);
 
     const crowded = graph.nodes.length > CROWDED_NODE_COUNT;
 
@@ -245,6 +333,19 @@ export function GraphCanvas({
           const structural = (STRUCTURAL_TYPES as readonly string[]).includes(
             node.node_type,
           );
+          const classes: string[] = [];
+          if (
+            !crowded ||
+            structural ||
+            (sig?.evidenceReach ?? 0) >= 3 ||
+            sig?.threat ||
+            sig?.crossCase
+          ) {
+            classes.push("show-label");
+          }
+          if (node.id === focusNodeId) classes.push("focus-root");
+          const chronologyClass = timelineClass(node.node_type, node.properties);
+          if (chronologyClass) classes.push(chronologyClass);
           return {
             data: {
               id: node.id,
@@ -256,28 +357,29 @@ export function GraphCanvas({
               ),
               type: node.node_type,
               degree: degree.get(node.id) ?? 0,
+              timelineOrder: timelineOrder.get(node.id) ?? timelineOrder.size,
             },
-            // Labels that survive a crowded canvas: the case skeleton, and
-            // entities the engine gave a reason to care about.
-            classes:
-              !crowded ||
-              structural ||
-              (sig?.evidenceReach ?? 0) >= 2 ||
-              sig?.threat ||
-              sig?.crossCase
-                ? "show-label"
-                : "",
+            // On an overview, label the skeleton and only the strongest hubs.
+            // Two-evidence leads remain visible but reveal their label on
+            // hover; a focused neighbourhood is small enough to label all.
+            classes: classes.join(" "),
           };
         }),
         ...graph.edges.map((edge, i) => ({
           data: {
-            id: `e${i}`,
+            id: edgeElementId(edge),
             source: edge.source,
             target: edge.target,
-            type: edge.edge_type,
-            weight: edge.weight,
-            index: i,
+              type: edge.edge_type,
+              weight: edge.weight,
+              label: edge.projection
+                ? `${edge.projection.relationship_count} finding${
+                    edge.projection.relationship_count === 1 ? "" : "s"
+                  }`
+                : "",
+              index: i,
           },
+          classes: edge.backbone ? "backbone" : "",
         })),
       ],
       style: [
@@ -327,6 +429,27 @@ export function GraphCanvas({
           },
         },
         {
+          selector: "node.timeline-actual",
+          style: { "border-color": "#15803d", "border-width": 3 },
+        },
+        {
+          selector: "node.timeline-inferred",
+          style: {
+            "border-color": "#d97706",
+            "border-width": 3,
+            "border-style": "dashed",
+          },
+        },
+        {
+          selector: "node.timeline-fallback",
+          style: {
+            "border-color": "#64748b",
+            "border-width": 3,
+            "border-style": "dotted",
+            opacity: 0.72,
+          },
+        },
+        {
           selector: "edge",
           style: {
             width: (el: EdgeSingular) =>
@@ -343,6 +466,49 @@ export function GraphCanvas({
             // Thinner and fainter as the graph grows, so the lines read as
             // texture behind the nodes rather than competing with them.
             opacity: crowded ? 0.4 : 0.68,
+          },
+        },
+        {
+          // The backend's maximum-spanning forest preserves the strongest
+          // route through every graph component. Make those key links easier
+          // to trace without hiding any underlying forensic relationship.
+          selector: "edge.backbone",
+          style: {
+            width: (el: EdgeSingular) =>
+              Math.min(5.5, 2.4 + (el.data("weight") as number)),
+            opacity: 0.92,
+            "z-index": 4,
+          },
+        },
+        {
+          // Containment is useful structure, but it is not an investigative
+          // finding. Keep the case skeleton visually behind shared entities,
+          // threat flags, and cross-case relationships.
+          selector: "edge[type = 'contains']",
+          style: { width: 1, opacity: 0.18, "line-color": "#94a3b8" },
+        },
+        {
+          selector: "edge[type = 'evidence_relationship']",
+          style: {
+            label: "data(label)",
+            "font-size": 9,
+            "font-weight": 700,
+            color: theme.palette.text.secondary,
+            "text-background-color": theme.palette.background.paper,
+            "text-background-opacity": 0.92,
+            "text-background-padding": "3px",
+            "text-rotation": "autorotate",
+            "line-color": EDGE_STYLES.evidence_relationship.color,
+            opacity: 0.78,
+          },
+        },
+        {
+          selector: ".focus-root",
+          style: {
+            "border-color": theme.palette.warning.main,
+            "border-width": 5,
+            label: "data(label)",
+            "z-index": 12,
           },
         },
         {
@@ -367,45 +533,74 @@ export function GraphCanvas({
       wheelSensitivity: 0.2,
       maxZoom: 2.5,
       minZoom: 0.1,
-      // Rendering hints that keep panning a 140-node case smooth. Both are
-      // no-ops on a small graph because the thresholds are never crossed.
-      hideEdgesOnViewport: crowded,
-      textureOnViewport: crowded,
+      // Rendering hints keep a later switch from the small Evidence Map to the
+      // Full graph smooth without recreating the Cytoscape core.
+      hideEdgesOnViewport: true,
+      textureOnViewport: true,
       motionBlur: false,
-      pixelRatio: crowded ? 1 : "auto",
+      pixelRatio: "auto",
     });
     cy.fit(undefined, 46);
 
+    if (viewportKey) {
+      try {
+        const stored = window.localStorage.getItem(viewportKey);
+        if (stored) {
+          const viewport = JSON.parse(stored) as {
+            zoom?: number;
+            pan?: { x: number; y: number };
+          };
+          if (viewport.zoom && viewport.pan) {
+            cy.viewport({ zoom: viewport.zoom, pan: viewport.pan });
+          }
+        }
+      } catch {
+        // A stale local preference must never stop the graph from rendering.
+      }
+    }
+
+    let viewportTimer: number | undefined;
+    if (viewportKey) {
+      cy.on("zoom pan", () => {
+        window.clearTimeout(viewportTimer);
+        viewportTimer = window.setTimeout(() => {
+          window.localStorage.setItem(
+            viewportKey,
+            JSON.stringify({ zoom: cy.zoom(), pan: cy.pan() }),
+          );
+        }, 180);
+      });
+    }
+
     cy.on("tap", "node", (event) => {
       const id = event.target.id() as string;
-      const node = graph.nodes.find((n) => n.id === id);
-      if (node) onSelect({ kind: "node", node });
+      const node = graphRef.current.nodes.find((n) => n.id === id);
+      if (node) onSelectRef.current({ kind: "node", node });
     });
     cy.on("tap", "edge", (event) => {
       const index = event.target.data("index") as number;
-      const edge = graph.edges[index];
-      if (edge) onSelect({ kind: "edge", edge });
+      const edge = graphRef.current.edges[index];
+      if (edge) onSelectRef.current({ kind: "edge", edge });
     });
     cy.on("tap", (event) => {
-      if (event.target === cy) onSelect(null);
+      if (event.target === cy) onSelectRef.current(null);
     });
 
     // Zooming in is a request for detail: reveal every label once the text
     // has room, and fall back to the curated set on the way out.
-    if (crowded) {
-      cy.on("zoom", () => {
-        const all = cy.zoom() >= ZOOM_LABEL_ALL;
-        cy.batch(() => {
-          cy.nodes().forEach((n) => {
-            if (all) n.addClass("show-label");
-            else if (!n.scratch("_keepLabel")) n.removeClass("show-label");
-          });
+    cy.on("zoom", () => {
+      if (cy.nodes().length <= CROWDED_NODE_COUNT) return;
+      const all = cy.zoom() >= ZOOM_LABEL_ALL;
+      cy.batch(() => {
+        cy.nodes().forEach((n) => {
+          if (all) n.addClass("show-label");
+          else if (!n.scratch("_keepLabel")) n.removeClass("show-label");
         });
       });
-      cy.nodes(".show-label").forEach((n) => {
-        n.scratch("_keepLabel", true);
-      });
-    }
+    });
+    cy.nodes(".show-label").forEach((n) => {
+      n.scratch("_keepLabel", true);
+    });
 
     // ---------------------------------------------------------------- hover
     const tooltip = tooltipRef.current;
@@ -431,17 +626,18 @@ export function GraphCanvas({
     cy.on("mouseover", "node", (event) => {
       const nodeEl = event.target as NodeSingular;
       const id = nodeEl.id() as string;
-      const source = graph.nodes.find((n) => n.id === id);
+      const currentGraph = graphRef.current;
+      const source = currentGraph.nodes.find((n) => n.id === id);
       const hood = nodeEl.closedNeighborhood();
       cy.elements().not(hood).addClass("dimmed");
       hood.addClass("hover-focus");
 
       const links: string[] = [];
       let hidden = 0;
-      graph.edges.forEach((e) => {
+      currentGraph.edges.forEach((e) => {
         if (e.source !== id && e.target !== id) return;
         const otherId = e.source === id ? e.target : e.source;
-        const other = graph.nodes.find((n) => n.id === otherId);
+        const other = currentGraph.nodes.find((n) => n.id === otherId);
         if (!other) return;
         if (links.length < 6) {
           links.push(
@@ -471,7 +667,7 @@ export function GraphCanvas({
         )
         .join("");
 
-      const sig = signals.get(id);
+      const sig = signalsRef.current.get(id);
       const reachLine =
         sig && sig.evidenceReach >= 2
           ? `<div style="opacity:.75;margin-bottom:3px">Links ${sig.evidenceReach} pieces of evidence</div>`
@@ -503,14 +699,15 @@ export function GraphCanvas({
 
     cy.on("mouseover", "edge", (event) => {
       const edgeEl = event.target as EdgeSingular;
-      const edge = graph.edges[edgeEl.data("index") as number];
+      const currentGraph = graphRef.current;
+      const edge = currentGraph.edges[edgeEl.data("index") as number];
       if (!edge) return;
       const focus = edgeEl.connectedNodes().union(edgeEl);
       cy.elements().not(focus).addClass("dimmed");
       focus.addClass("hover-focus");
 
-      const src = graph.nodes.find((n) => n.id === edge.source);
-      const dst = graph.nodes.find((n) => n.id === edge.target);
+      const src = currentGraph.nodes.find((n) => n.id === edge.source);
+      const dst = currentGraph.nodes.find((n) => n.id === edge.target);
       const meta = edgeStyle(edge.edge_type);
       const confidence =
         edge.confidence ?? (edge.weight <= 1 ? edge.weight : undefined);
@@ -543,16 +740,126 @@ export function GraphCanvas({
 
     cy.on("mouseout", "node, edge", () => {
       cy.elements().removeClass("dimmed hover-focus");
+      applySearchState(cy, searchRef.current);
       hideTooltip();
     });
 
     cyRef.current = cy;
     return () => {
+      window.clearTimeout(viewportTimer);
       cy.destroy();
       cyRef.current = null;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [graph, signals, theme.palette.mode]);
+  }, [theme.palette.mode, viewportKey]);
+
+  // Update the existing Cytoscape core instead of destroying and recreating
+  // it whenever a filter, expansion, or search changes the visible elements.
+  // This preserves event handlers and the investigator's mental map while
+  // avoiding a full renderer allocation on every interaction.
+  useEffect(() => {
+    const cy = cyRef.current;
+    if (!cy) return;
+
+    const degree = new Map<string, number>();
+    graph.edges.forEach((edge) => {
+      degree.set(edge.source, (degree.get(edge.source) ?? 0) + 1);
+      degree.set(edge.target, (degree.get(edge.target) ?? 0) + 1);
+    });
+    const timelineOrder = timelineOrderFor(graph);
+    const crowded = graph.nodes.length > CROWDED_NODE_COUNT;
+    const desiredNodeIds = new Set(graph.nodes.map((node) => node.id));
+    const desiredEdgeIds = new Set(graph.edges.map(edgeElementId));
+    let structureChanged = false;
+
+    cy.batch(() => {
+      cy.edges().forEach((element) => {
+        if (!desiredEdgeIds.has(element.id())) {
+          element.remove();
+          structureChanged = true;
+        }
+      });
+      cy.nodes().forEach((element) => {
+        if (!desiredNodeIds.has(element.id())) {
+          element.remove();
+          structureChanged = true;
+        }
+      });
+
+      graph.nodes.forEach((node) => {
+        const sig = signals.get(node.id);
+        const structural = (STRUCTURAL_TYPES as readonly string[]).includes(node.node_type);
+        const classes: string[] = [];
+        if (
+          !crowded ||
+          structural ||
+          (sig?.evidenceReach ?? 0) >= 3 ||
+          sig?.threat ||
+          sig?.crossCase
+        ) {
+          classes.push("show-label");
+        }
+        if (node.id === focusNodeId) classes.push("focus-root");
+        const chronologyClass = timelineClass(node.node_type, node.properties);
+        if (chronologyClass) classes.push(chronologyClass);
+        const data = {
+          id: node.id,
+          label: displayLabel(
+            node.node_type,
+            node.label,
+            node.id,
+            node.properties ?? {},
+          ),
+          type: node.node_type,
+          degree: degree.get(node.id) ?? 0,
+          timelineOrder: timelineOrder.get(node.id) ?? timelineOrder.size,
+        };
+        const existing = cy.getElementById(node.id);
+        if (existing.empty()) {
+          cy.add({ group: "nodes", data, classes: classes.join(" ") });
+          structureChanged = true;
+        } else {
+          existing.data(data);
+          existing.classes(classes.join(" "));
+        }
+      });
+
+      graph.edges.forEach((edge, index) => {
+        const id = edgeElementId(edge);
+        const data = {
+          id,
+          source: edge.source,
+          target: edge.target,
+          type: edge.edge_type,
+          weight: edge.weight,
+          label: edge.projection
+            ? `${edge.projection.relationship_count} finding${
+                edge.projection.relationship_count === 1 ? "" : "s"
+              }`
+            : "",
+          index,
+        };
+        const existing = cy.getElementById(id);
+        const classes = edge.backbone ? "backbone" : "";
+        if (existing.empty()) {
+          cy.add({ group: "edges", data, classes });
+          structureChanged = true;
+        } else {
+          existing.data(data);
+          existing.classes(classes);
+        }
+      });
+
+      cy.nodes().forEach((node) => {
+        node.scratch("_keepLabel", node.hasClass("show-label"));
+      });
+    });
+
+    if (structureChanged) {
+      cy.layout(layoutOptions(layout, cy.nodes().length)).run();
+      cy.fit(undefined, 46);
+    }
+  }, [graph, signals, focusNodeId, layoutOptions, theme.palette.mode]);
 
   // Re-run the layout when the investigator switches mode.
   useEffect(() => {
@@ -568,20 +875,7 @@ export function GraphCanvas({
     const cy = cyRef.current;
     if (!cy) return;
     cy.batch(() => {
-      cy.elements().removeClass("highlighted dimmed");
-
-      const q = search.trim().toLowerCase();
-      if (!q) return;
-      const matches = cy.nodes().filter((node) => {
-        const label = String(node.data("label") ?? "").toLowerCase();
-        const id = String(node.id()).toLowerCase();
-        return label.includes(q) || id.includes(q);
-      });
-      if (matches.length === 0) return;
-      cy.elements().addClass("dimmed");
-      matches.removeClass("dimmed").addClass("highlighted show-label");
-      matches.connectedEdges().removeClass("dimmed");
-      matches.connectedEdges().connectedNodes().removeClass("dimmed").addClass("show-label");
+      applySearchState(cy, search);
     });
 
     // Bring the hits into view: on a large case the match is usually off
@@ -591,7 +885,7 @@ export function GraphCanvas({
       const matches = cy.nodes(".highlighted");
       if (matches.length > 0) cy.animate({ fit: { eles: matches.closedNeighborhood(), padding: 80 }, duration: 250 });
     }
-  }, [search]);
+  }, [search, graph]);
 
   const zoomBy = (factor: number) => {
     const cy = cyRef.current;

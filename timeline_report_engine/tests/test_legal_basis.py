@@ -6,6 +6,9 @@ the tests care as much about what it refuses to say as about what it finds.
 
 from __future__ import annotations
 
+import hashlib
+from pathlib import Path
+
 import pytest
 
 from ciis_correlation.core.data_access import EntityRecord, EvidenceContext
@@ -298,3 +301,116 @@ def test_provisions_from_different_statutes_cite_their_own_act(service):
     assert len(acts) >= 2, "a case can engage more than one statute"
     for p in result.provisions:
         assert p.citation.startswith(f"Section {p.section},")
+
+
+# =============================================== source-backed legal guidance
+
+def test_primary_legal_source_and_manual_review_scope_are_reported(service):
+    result = service.assess(CASE, [evidence("E1")])
+
+    assert {item.section for item in result.manual_review_provisions} == {
+        "44", "48", "57"
+    }
+    assert all(item.reason for item in result.manual_review_provisions)
+    eta = next(source for source in result.sources if source.source_id == "eta_2063")
+    assert eta.authority == "Nepal Law Commission"
+    assert eta.url.startswith("https://lawcommission.gov.np/")
+    assert set(eta.sha256) == set(eta.local_documents)
+
+
+def test_reported_source_hashes_match_the_repository_pdfs(service):
+    result = service.assess(
+        CASE, [evidence("E1", [("bank_accounts", "00123456789")])]
+    )
+    corpus = Path(__file__).resolve().parents[2] / "samples" / "legal_corpus"
+
+    for source in result.sources:
+        for document in source.local_documents:
+            actual = hashlib.sha256((corpus / document).read_bytes()).hexdigest()
+            assert actual == source.sha256[document], document
+
+
+def test_every_case_gets_electronic_record_preservation_guidance(service):
+    result = service.assess(CASE, [evidence("E1"), evidence("E2")])
+    preservation = [
+        item for item in result.investigative_guidance
+        if item.category == "evidence_preservation"
+    ]
+
+    assert len(preservation) == 1
+    assert preservation[0].control_ids == ["4", "6"]
+    assert preservation[0].evidence_ids == ["E1", "E2"]
+    assert "not by itself a statutory digital signature" in (
+        preservation[0].recommended_action
+    )
+
+
+def test_payment_evidence_adds_nrb_log_preservation_follow_up(service):
+    items = [evidence("E1", [("esewa_ids", "9800000000")])]
+    result = service.assess(CASE, items)
+
+    logging = [
+        item for item in result.investigative_guidance
+        if set(item.control_ids) == {"83", "84", "85", "86"}
+    ]
+    assert len(logging) == 1
+    assert logging[0].status == "investigative_follow_up"
+    assert "Conditional" in logging[0].applicability
+    assert logging[0].evidence_ids == ["E1"]
+    assert any(source.source_id == "nrb_crg_2023" for source in result.sources)
+
+
+def test_payment_and_credential_evidence_adds_nrb_mfa_follow_up(service):
+    items = [
+        evidence(
+            "E1",
+            [("bank_accounts", "00123456789"), ("otp", "123456")],
+            raw_text="Share the OTP",
+        )
+    ]
+    result = service.assess(CASE, items)
+
+    authentication = [
+        item for item in result.investigative_guidance
+        if item.control_ids == ["71(d)"]
+    ]
+    assert len(authentication) == 1
+    assert authentication[0].evidence_ids == ["E1"]
+
+
+def test_credentials_without_payment_context_do_not_invoke_nrb_scope(service):
+    result = service.assess(
+        CASE, [evidence("E1", [("otp", "123456")], raw_text="Share the OTP")]
+    )
+
+    assert not [
+        item for item in result.investigative_guidance
+        if item.source_id == "nrb_crg_2023"
+    ]
+    assert not [source for source in result.sources if source.source_id == "nrb_crg_2023"]
+
+
+def test_nrb_guidance_never_claims_a_compliance_failure(service):
+    items = [
+        evidence(
+            "E1",
+            [("bank_accounts", "00123456789"), ("otp", "123456")],
+            raw_text="Share the OTP",
+        )
+    ]
+    result = service.assess(CASE, items)
+    prose = " ".join(
+        f"{item.basis} {item.expectation} {item.recommended_action}"
+        for item in result.investigative_guidance
+    ).lower()
+
+    for forbidden in ("non-compliant", "violated the guideline", "the bank failed"):
+        assert forbidden not in prose
+
+
+def test_section_46_uses_the_two_hundred_thousand_rupee_penalty(service):
+    result = service.assess(
+        CASE, [evidence("E1", raw_text="I was locked out and cannot access it")]
+    )
+    section_46 = next(item for item in result.provisions if item.section == "46")
+    assert "two hundred thousand" in section_46.penalty

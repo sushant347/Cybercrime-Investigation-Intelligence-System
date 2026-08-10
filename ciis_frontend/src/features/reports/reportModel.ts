@@ -35,6 +35,7 @@ export interface EvidenceRow {
   textConfidenceValue: number | null;
   integrity: string;
   integrityOk: boolean;
+  entityCount: number;
 }
 
 export interface ConnectionRow {
@@ -47,6 +48,20 @@ export interface ConnectionRow {
   /** Numeric confidence (0–1) for diagram rendering; null when unknown. */
   confidenceValue: number | null;
   meaning: string;
+  /** Stored correlation-engine explanation, shown without reinterpretation. */
+  basis: string;
+}
+
+export interface TimelineEventRow {
+  timestamp: string;
+  evidenceId: string;
+  file: string;
+  source: string;
+  confidence: string;
+  inferred: boolean;
+  fallback: boolean;
+  stages: string[];
+  critical: boolean;
 }
 
 export interface ModelPredictionRow {
@@ -107,6 +122,9 @@ export interface SimpleReport {
   modelPredictionsNote: string | null;
   methodology: string[];
   progression: string[];
+  timelineEvents: TimelineEventRow[];
+  timelineReliability: string | null;
+  limitations: string[];
   nextSteps: string[];
   legalBasis: ReportLegalBasisSection | null;
   provenance: ProvenanceInfo | null;
@@ -182,6 +200,17 @@ export function buildSimpleReport(
     summary: string;
     stage_progression: string[];
     progression_consistent: boolean;
+    timestamp_quality?: { reliability_note?: string };
+    chronological_events?: {
+      timestamp: string;
+      evidence_id: string;
+      file_name: string;
+      timestamp_source: string;
+      timestamp_confidence: number | string;
+      timestamp_inferred: boolean;
+      stages: string[];
+      critical: boolean;
+    }[];
   }>(sections.timeline_analysis);
   const quality = structured<Record<string, number>>(sections.evidence_quality_summary);
   const crossCase = structured<{
@@ -335,6 +364,7 @@ export function buildSimpleReport(
         typeof row.ocr_confidence === "number" ? row.ocr_confidence : null,
       integrity: row.hash_verified ? "Verified" : "FAILED",
       integrityOk: row.hash_verified,
+      entityCount: row.entity_count,
     })),
     connections: (correlation?.top_relationships ?? []).map((rel) => {
       const [from = "", to = ""] = rel.pair.split("<->").map((s) => s.trim());
@@ -347,6 +377,7 @@ export function buildSimpleReport(
         confidenceValue:
           typeof rel.confidence === "number" ? rel.confidence : null,
         meaning: strengthMeaning(rel.strength),
+        basis: rel.explanation,
       };
     }),
     modelPredictions: (predictions?.predictions ?? []).map((p) => ({
@@ -418,6 +449,22 @@ export function buildSimpleReport(
         : null,
     methodology: scope?.methodology ?? [],
     progression: (timeline?.stage_progression ?? []).map(titleCaseStage),
+    timelineEvents: (timeline?.chronological_events ?? []).map((event) => ({
+      timestamp: humanDate(event.timestamp),
+      evidenceId: event.evidence_id,
+      file: event.file_name,
+      source: titleCaseStage(event.timestamp_source),
+      confidence:
+        typeof event.timestamp_confidence === "number"
+          ? percent(event.timestamp_confidence)
+          : String(event.timestamp_confidence || "—"),
+      inferred: event.timestamp_inferred,
+      fallback: event.timestamp_source === "upload_time_fallback",
+      stages: (event.stages ?? []).map(titleCaseStage),
+      critical: Boolean(event.critical),
+    })),
+    timelineReliability: timeline?.timestamp_quality?.reliability_note ?? null,
+    limitations: Array.isArray(sections.limitations) ? sections.limitations : [],
     nextSteps: sections.recommendations ?? [],
     legalBasis: structured<ReportLegalBasisSection>(sections.legal_basis),
     provenance: provenanceSection

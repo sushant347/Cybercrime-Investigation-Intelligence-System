@@ -31,6 +31,10 @@ class GraphEdge(BaseModel):
     timestamp_source: str = "unresolved"
     timestamp_inferred: bool = False
     explanation: str = ""
+    backbone: bool = Field(
+        default=False,
+        description="Selected by backend graph analytics as a key connection",
+    )
 
 
 class RelationshipGraph(BaseModel):
@@ -57,6 +61,11 @@ class GraphStatistics(BaseModel):
     top_hubs: List[Dict[str, str]] = Field(
         default_factory=list, description="Highest-degree nodes with degree"
     )
+    community_count: int = 0
+    bridge_count: int = 0
+    backbone_edge_count: int = 0
+    analytics_engine: str = ""
+    top_central_nodes: List[Dict[str, str]] = Field(default_factory=list)
 
 
 class GraphSummary(BaseModel):

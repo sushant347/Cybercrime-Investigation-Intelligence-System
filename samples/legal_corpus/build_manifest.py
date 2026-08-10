@@ -43,7 +43,16 @@ LEGACY_NEPALI_FONTS = {"Preeti", "PCSNEPALI", "FONTASY_ HIMALI_ TT", "Kantipur"}
 USED_BY = {
     "2.1 The Electronic Transactions Act, 2063 (2008).pdf": (
         "ciis_timeline_report.legal.provisions - sections 45, 46, 47, 52, 53, "
-        "54, 55, 56 transcribed by hand (number, heading, penalty)"
+        "54, 55, 56 automatically assessed; sections 44, 48 and 57 exposed "
+        "for manual review; sections 4 and 6 used for evidence-preservation guidance"
+    ),
+    "2.1 विद्युतीय (इलेक्ट्रोनिक) कारोबार ऐन, २०६३ (नेपाली).pdf": (
+        "ciis_timeline_report.legal.provisions - authoritative Nepali source "
+        "used to resolve differences from the English translation"
+    ),
+    "4.5 NRB Cyber-Resilience-Guidelines-2023.pdf": (
+        "ciis_timeline_report.legal.guidance - controls 71(d) and 83-86 used "
+        "for conditional authentication and forensic-log preservation follow-up"
     ),
     "7.3 The Patent, Design and Trade Mark Act, 2022 (1965).pdf": (
         "ciis_timeline_report.legal.provisions - section 19, punishment for "
@@ -119,9 +128,10 @@ def main() -> int:
     manifest = {
         "generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "purpose": (
-            "Primary legal sources for the statutory-basis module. The engine "
-            "transcribes provisions from these; it does not train on them and "
-            "no model of any kind is fitted to this corpus."
+            "Primary statutory and regulatory sources for the legal-basis and "
+            "investigative-guidance module. The engine transcribes selected "
+            "provisions and controls; it does not train on them and no model of "
+            "any kind is fitted to this corpus."
         ),
         "statute_in_use": {
             "english": "Electronic Transactions Act, 2063 (2008)",

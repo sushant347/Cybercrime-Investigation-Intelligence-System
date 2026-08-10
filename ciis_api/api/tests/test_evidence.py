@@ -12,6 +12,70 @@ def test_upload_returns_job_and_completes(uploaded_evidence, api):
     assert status["evidence_id"]
 
 
+def test_upload_refreshes_the_case_assistant_index(api, case, tmp_path, monkeypatch):
+    from django.core.files.uploadedfile import SimpleUploadedFile
+
+    from api import engine
+    from api.tests.conftest import make_png
+
+    refreshed = []
+    monkeypatch.setattr(
+        engine,
+        "_sync_rag_index",
+        lambda case_id: refreshed.append(case_id) or {"status": "updated"},
+    )
+    png = make_png(tmp_path / "rag-refresh.png")
+    upload = SimpleUploadedFile(
+        "rag-refresh.png", png.read_bytes(), content_type="image/png"
+    )
+
+    response = api.post(
+        f"/api/cases/{case['case_id']}/evidence/upload/",
+        {"file": upload, "notes": ""},
+        format="multipart",
+    )
+    status = api.get(f"/api/jobs/{response.json()['id']}/").json()
+
+    assert response.status_code == 202
+    assert status["status"] == "completed"
+    assert refreshed == [case["case_id"]]
+    assert "case assistant index refreshed" in status["detail"]
+
+
+def test_upload_surfaces_forensic_warnings_as_partial_success(
+    api, case, tmp_path, monkeypatch
+):
+    """OCR evidence survives a forensic warning, but the job must disclose it."""
+    from django.core.files.uploadedfile import SimpleUploadedFile
+
+    from api import engine
+    from api.tests.conftest import make_png
+
+    monkeypatch.setattr(
+        engine,
+        "_run_forensics",
+        lambda _evidence_id: {
+            "failures": ["integrity: Cannot read E:\\private\\scan.png"]
+        },
+    )
+    png = make_png(tmp_path / "warning.png")
+    upload = SimpleUploadedFile(
+        "warning.png", png.read_bytes(), content_type="image/png"
+    )
+    response = api.post(
+        f"/api/cases/{case['case_id']}/evidence/upload/",
+        {"file": upload, "notes": ""},
+        format="multipart",
+    )
+    assert response.status_code == 202, response.content
+
+    status = api.get(f"/api/jobs/{response.json()['id']}/").json()
+    assert status["status"] == "completed_with_warnings", status
+    assert "Phase-1 warnings in integrity" in status["detail"]
+    assert "private" not in status["detail"]
+    assert status["evidence_id"]
+
+
 def test_upload_extracts_entities(uploaded_evidence, api):
     """The single most important F1 assertion: entities.csv is populated."""
     case_id, job = uploaded_evidence

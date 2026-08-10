@@ -39,6 +39,48 @@ TIMELINE_REPORT_ROOT = Path(
     )
 ).resolve()
 
+# Standalone RAG engine. It remains in a separate Python environment because
+# Chroma/sentence-transformers/Torch must not change PaddleOCR's dependency
+# set. The API invokes its CLI through a narrow JSON adapter.
+RAG_ASSISTANT_ROOT = Path(
+    os.environ.get(
+        "CIIS_RAG_ROOT", BASE_DIR.parent / "rag_assistant_engine"
+    )
+).resolve()
+
+
+def _normalise_runtime_path(value: str, platform: str | None = None) -> str:
+    """Translate a Git-Bash drive path before native Windows ``pathlib`` sees it.
+
+    ``dev.sh`` normally performs this conversion at the process boundary. The
+    settings-side guard also covers operators who export ``/c/...`` manually
+    before starting Django.
+    """
+    raw = value.strip()
+    platform = platform or os.name
+    if (
+        platform == "nt"
+        and len(raw) >= 3
+        and raw[0] == "/"
+        and raw[1].isalpha()
+        and raw[2] == "/"
+    ):
+        return f"{raw[1].upper()}:{raw[2:]}"
+    return raw
+
+
+_rag_python = os.environ.get("CIIS_RAG_PYTHON", "").strip()
+RAG_PYTHON = (
+    Path(_normalise_runtime_path(_rag_python)).resolve() if _rag_python else None
+)
+RAG_ENABLED = os.environ.get("CIIS_RAG_ENABLED", "1") == "1"
+RAG_STORAGE_DIR = Path(
+    os.environ.get(
+        "CIIS_RAG_STORAGE_DIR", RAG_ASSISTANT_ROOT / "storage"
+    )
+).resolve()
+RAG_COMMAND_TIMEOUT = int(os.environ.get("CIIS_RAG_COMMAND_TIMEOUT", "330"))
+
 SECRET_KEY = os.environ.get(
     "CIIS_SECRET_KEY", "dev-only-insecure-key-change-in-production"
 )
@@ -182,6 +224,16 @@ ENGINE_RUN_FULL_PIPELINE = os.environ.get("CIIS_RUN_FULL_PIPELINE", "1") == "1"
 # upload path never ran them at all. Set to "0" for fast tests or when an
 # environment lacks the optional imaging dependencies.
 ENGINE_RUN_FORENSICS = os.environ.get("CIIS_RUN_FORENSICS", "1") == "1"
+
+# Input-quality policy for an explicit Phase-2 case analysis. ``warn`` keeps
+# useful OCR/entity-derived artifacts available but marks them partial;
+# ``strict`` refuses to regenerate timeline/graph/report artifacts when an
+# original or required Phase-1 report cannot be validated.
+ANALYSIS_INPUT_POLICY = os.environ.get(
+    "CIIS_ANALYSIS_INPUT_POLICY", "warn"
+).strip().lower()
+if ANALYSIS_INPUT_POLICY not in {"warn", "strict"}:
+    raise RuntimeError("CIIS_ANALYSIS_INPUT_POLICY must be 'warn' or 'strict'.")
 
 # OCR engines for the multi-OCR fusion module. All off by default: each one
 # performs a complete *second* OCR pass over an image the pipeline has already

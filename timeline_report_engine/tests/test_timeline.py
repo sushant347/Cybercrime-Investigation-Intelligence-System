@@ -31,10 +31,10 @@ def test_stage_detection(analysis):
     assert "EVID_B" in financial.explanation
 
 
-def test_progression_follows_canonical_order(analysis):
-    assert analysis.stage_progression[0] == "initial_contact"
+def test_acquisition_only_fixture_does_not_invent_stage_order(analysis):
+    assert analysis.stage_progression == []
     assert analysis.progression_consistent
-    assert analysis.stage_progression[-1] == "post_attack"
+    assert not bool(analysis.statistics["progression_assessable"])
 
 
 def test_critical_events_from_entities(analysis):
@@ -46,10 +46,12 @@ def test_critical_events_from_entities(analysis):
 
 
 def test_milestones_summary_statistics(analysis, icfg, repo):
-    descriptions = " ".join(m.description for m in analysis.milestones)
-    assert "Investigation start" in descriptions
-    assert "financial_transaction" in descriptions
+    # This synthetic fixture has upload timestamps only. Intake provenance may
+    # be listed, but it must not create incident milestones or duration.
+    assert analysis.milestones == []
     assert analysis.summary
+    assert "no evidence-derived event times" in analysis.summary
     assert analysis.statistics["event_count"] == 4.0
     assert analysis.statistics["timeline_span_hours"] > 0
+    assert analysis.statistics["event_time_span_hours"] == 0
     assert repo.load_latest(CASE, icfg.timeline_report_name) is not None

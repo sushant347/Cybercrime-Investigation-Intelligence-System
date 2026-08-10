@@ -14,6 +14,29 @@ export default defineConfig({
   // so an unrelated `postcss.config.mjs` there (a Tailwind one, say) gets
   // picked up and fails the whole run with a missing-plugin error.
   css: { postcss: {} },
+  build: {
+    rollupOptions: {
+      output: {
+        // The graph tab is route-lazy; split its large renderer and layout
+        // engine too, so ordinary case work never downloads them and browser
+        // caches can reuse them independently of graph UI changes.
+        manualChunks(id) {
+          const normalized = id.replaceAll("\\", "/");
+          if (normalized.includes("/node_modules/cytoscape/")) {
+            return "graph-renderer";
+          }
+          if (
+            normalized.includes("/node_modules/cytoscape-fcose/") ||
+            normalized.includes("/node_modules/cose-base/") ||
+            normalized.includes("/node_modules/layout-base/")
+          ) {
+            return "graph-layout";
+          }
+          return undefined;
+        },
+      },
+    },
+  },
   test: {
     globals: true,
     environment: "jsdom",

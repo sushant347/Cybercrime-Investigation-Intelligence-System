@@ -100,6 +100,10 @@ class TimelineService:
             "upload_time": context.upload_time,
             "raw_text": context.raw_text,
             "cleaning": {"entities": grouped},
+            # Creation timestamps from EXIF/PDF/Office metadata are a better
+            # fallback than ingestion time. The standalone engine remains
+            # framework-independent; it only receives this plain dictionary.
+            "metadata": context.forensics.get("metadata_report", {}),
         }
 
     @staticmethod

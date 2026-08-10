@@ -4,21 +4,23 @@ Converts case data + Module-1 correlations into a typed, structured graph:
 
 * structural edges   case --contains--> evidence
 * shared_entity      evidence --mentions--> entity node (phone/url/wallet/...)
-* temporal           evidence <-> evidence acquired within the proximity window
+* temporal           evidence <-> evidence occurring within the proximity window
 * threat             entity node flagged by threat intelligence
 * metadata           evidence <-> evidence sharing device/software metadata
 * behavioral         evidence <-> evidence with strong Module-1 correlation
 
 Outputs three artefacts (graph.json, graph_statistics.json,
-graph_summary.json). Strictly visualization-independent: pure data for the
-future dashboard phase. Pure-Python graph algorithms (no networkx needed).
+graph_summary.json). Strictly visualization-independent: pure data enriched
+with NetworkX centrality, community, bridge, and graph-backbone analytics.
 """
 
 from __future__ import annotations
 
 import time
 from datetime import datetime
-from typing import Dict, List, Optional, Sequence, Set
+from typing import Dict, List, Optional, Sequence
+
+import networkx as nx
 
 from backend.modules.evidence.logger import get_logger
 from ciis_correlation.core.audit import InvestigationAuditTrail
@@ -99,7 +101,8 @@ class GraphService:
         edges = self._finalize_edges(edges, timeline)
         graph = RelationshipGraph(case_id=case_id, nodes=list(nodes.values()),
                                   edges=edges)
-        statistics = self._statistics(graph)
+        nx_metrics = self._enrich_with_networkx(graph)
+        statistics = self._statistics(graph, nx_metrics)
         summary = self._summary(graph, statistics)
         duration = round((time.perf_counter() - started) * 1000.0, 1)
 
@@ -270,13 +273,24 @@ class GraphService:
                         timeline: Optional[TimelineAnalysis] = None) -> None:
         window = self._cfg.timeline_proximity_hours
         reconstructed = {
-            event.evidence_id: self._parse_timestamp(event.timestamp)
+            event.evidence_id: event
             for event in (timeline.events if timeline is not None else [])
         }
         for i, a in enumerate(items):
             for b in items[i + 1:]:
-                ta = reconstructed.get(a.evidence_id) or a.upload_datetime
-                tb = reconstructed.get(b.evidence_id) or b.upload_datetime
+                event_a = reconstructed.get(a.evidence_id)
+                event_b = reconstructed.get(b.evidence_id)
+                # Two files uploaded together describe the investigator's
+                # workflow, not the crime chronology. Retaining all such pairs
+                # created O(n^2) noise and made every batch look connected.
+                if event_a is None or event_b is None:
+                    continue
+                if "upload_time_fallback" in {
+                    event_a.time_source, event_b.time_source
+                }:
+                    continue
+                ta = self._parse_timestamp(event_a.timestamp)
+                tb = self._parse_timestamp(event_b.timestamp)
                 if ta is None or tb is None:
                     continue
                 hours = abs((ta - tb).total_seconds()) / 3600.0
@@ -288,7 +302,19 @@ class GraphService:
                         weight=round(1.0 - hours / max(window, 1e-6), 4),
                         confidence=round(1.0 - hours / max(window, 1e-6), 4),
                         source_evidence_ids=[a.evidence_id, b.evidence_id],
-                        explanation=f"Acquired {hours:.1f}h apart "
+                        timestamp=(
+                            event_a.timestamp if ta <= tb else event_b.timestamp
+                        ),
+                        timestamp_source=(
+                            event_a.time_source
+                            if event_a.time_source == event_b.time_source
+                            else "mixed_content_timestamps"
+                        ),
+                        timestamp_inferred=(
+                            event_a.timestamp_inferred or event_b.timestamp_inferred
+                        ),
+                        explanation=f"Occurred {hours:.1f}h apart "
+                                    f"using reconstructed event time "
                                     f"(window {window:.0f}h)",
                     ))
 
@@ -359,7 +385,8 @@ class GraphService:
                 edge.timestamp_inferred = event.timestamp_inferred
             edge.source_evidence_ids = evidence_ids
             edge.confidence = min(1.0, max(0.0, edge.confidence))
-            key = (edge.source, edge.target, edge.edge_type)
+            endpoints = tuple(sorted((edge.source, edge.target)))
+            key = (endpoints[0], endpoints[1], edge.edge_type)
             existing = unique.get(key)
             if existing is None or edge.confidence > existing.confidence:
                 unique[key] = edge
@@ -386,28 +413,156 @@ class GraphService:
 
     # ------------------------------------------------------------- statistics
 
-    def _statistics(self, graph: RelationshipGraph) -> GraphStatistics:
+    def _enrich_with_networkx(self, graph: RelationshipGraph) -> Dict[str, object]:
+        """Derive centrality, communities and a readable graph backbone.
+
+        NetworkX operates on a simple analytical projection because the
+        forensic artifact may hold several typed edges between the same pair.
+        The artifact itself remains unchanged except for additive metrics and
+        ``backbone`` flags; no relationship is discarded.
+        """
+        projected = nx.Graph()
+        projected.add_nodes_from(node.id for node in graph.nodes)
+        best_edge: Dict[tuple[str, str], tuple[int, float]] = {}
+        for index, edge in enumerate(graph.edges):
+            if edge.source == edge.target:
+                continue
+            pair = tuple(sorted((edge.source, edge.target)))
+            # Structural links keep isolated evidence attached to its case,
+            # but must not overpower actual investigative relationships when
+            # deriving communities, paths and the simplified backbone.
+            type_weight = {
+                "contains": 0.08,
+                "timeline_event": 0.12,
+                "shared_entity": 0.85,
+                "temporal_relationship": 0.70,
+                "metadata_relationship": 0.80,
+                "behavioral_relationship": 0.90,
+                "threat_relationship": 1.00,
+                "cross_case_relationship": 1.00,
+                "cross_case_entity_match": 1.00,
+            }.get(edge.edge_type, 0.65)
+            score = max(
+                0.001,
+                min(1.0, edge.confidence) * type_weight,
+            )
+            current = best_edge.get(pair)
+            if current is None or score > current[1]:
+                best_edge[pair] = (index, score)
+            if projected.has_edge(*pair):
+                strongest = max(projected[pair[0]][pair[1]]["weight"], score)
+                projected[pair[0]][pair[1]]["weight"] = strongest
+                projected[pair[0]][pair[1]]["distance"] = 1.0 / strongest
+            else:
+                projected.add_edge(*pair, weight=score, distance=1.0 / score)
+
+        degree = (
+            nx.degree_centrality(projected)
+            if len(projected) > 1
+            else {node_id: 0.0 for node_id in projected}
+        )
+        if projected.number_of_edges():
+            try:
+                pagerank = nx.pagerank(projected, weight="weight")
+            except (ImportError, nx.NetworkXException):
+                pagerank = dict(degree)
+            if len(projected) <= 250:
+                betweenness = nx.betweenness_centrality(
+                    projected, normalized=True, weight="distance"
+                )
+            else:
+                betweenness = nx.betweenness_centrality(
+                    projected, k=min(64, len(projected)), normalized=True,
+                    weight="distance", seed=42
+                )
+            communities = list(
+                nx.community.greedy_modularity_communities(projected, weight="weight")
+            )
+        else:
+            pagerank = {node_id: 0.0 for node_id in projected}
+            betweenness = {node_id: 0.0 for node_id in projected}
+            communities = [{node_id} for node_id in projected]
+
+        community_by_node: Dict[str, int] = {}
+        community_sizes: Dict[int, int] = {}
+        ordered_communities = sorted(
+            communities,
+            key=lambda group: (-len(group), min(group) if group else ""),
+        )
+        for community_id, members in enumerate(ordered_communities, start=1):
+            community_sizes[community_id] = len(members)
+            for node_id in members:
+                community_by_node[node_id] = community_id
+
+        max_pagerank = max(pagerank.values(), default=0.0) or 1.0
+        importance: Dict[str, float] = {}
+        node_by_id = {node.id: node for node in graph.nodes}
+        for node_id in projected:
+            normalized_pagerank = pagerank.get(node_id, 0.0) / max_pagerank
+            value = min(
+                1.0,
+                0.45 * normalized_pagerank
+                + 0.35 * betweenness.get(node_id, 0.0)
+                + 0.20 * degree.get(node_id, 0.0),
+            )
+            importance[node_id] = value
+            community_id = community_by_node.get(node_id, 0)
+            node_by_id[node_id].properties.update({
+                "degree_centrality": f"{degree.get(node_id, 0.0):.6f}",
+                "betweenness_centrality": f"{betweenness.get(node_id, 0.0):.6f}",
+                "pagerank": f"{pagerank.get(node_id, 0.0):.6f}",
+                "graph_importance": f"{value:.6f}",
+                "community_id": str(community_id),
+                "community_size": str(community_sizes.get(community_id, 1)),
+            })
+
+        forest = nx.maximum_spanning_tree(projected, weight="weight")
+        for raw_pair in forest.edges():
+            representative = best_edge.get(tuple(sorted(raw_pair)))
+            if representative is not None:
+                graph.edges[representative[0]].backbone = True
+        critical_types = {
+            "threat_relationship",
+            "cross_case_relationship",
+            "cross_case_entity_match",
+        }
+        for edge in graph.edges:
+            if edge.edge_type in critical_types:
+                edge.backbone = True
+
+        components = list(nx.connected_components(projected))
+        bridges = list(nx.bridges(projected)) if projected.number_of_edges() else []
+        return {
+            "components": len(components),
+            "largest_component": max((len(group) for group in components), default=0),
+            "importance": importance,
+            "community_count": len(ordered_communities),
+            "bridge_count": len(bridges),
+            "backbone_edge_count": sum(edge.backbone for edge in graph.edges),
+        }
+
+    def _statistics(
+        self,
+        graph: RelationshipGraph,
+        nx_metrics: Dict[str, object],
+    ) -> GraphStatistics:
         nodes_by_type: Dict[str, int] = {}
         for node in graph.nodes:
             nodes_by_type[node.node_type] = nodes_by_type.get(node.node_type, 0) + 1
         edges_by_type: Dict[str, int] = {}
         degree: Dict[str, int] = {node.id: 0 for node in graph.nodes}
-        adjacency: Dict[str, Set[str]] = {node.id: set() for node in graph.nodes}
         for edge in graph.edges:
             edges_by_type[edge.edge_type] = edges_by_type.get(edge.edge_type, 0) + 1
             if edge.source in degree:
                 degree[edge.source] += 1
             if edge.target in degree:
                 degree[edge.target] += 1
-            if edge.source in adjacency and edge.target in adjacency:
-                adjacency[edge.source].add(edge.target)
-                adjacency[edge.target].add(edge.source)
-
-        components, largest = self._components(adjacency)
         n, e = len(graph.nodes), len(graph.edges)
         top = sorted(degree.items(), key=lambda kv: kv[1], reverse=True)
         top_hubs = [{"node": node_id, "degree": str(d)}
                     for node_id, d in top[: self._cfg.graph_top_hubs] if d > 0]
+        importance = dict(nx_metrics.get("importance", {}))
+        node_by_id = {node.id: node for node in graph.nodes}
         return GraphStatistics(
             case_id=graph.case_id,
             node_count=n,
@@ -415,38 +570,46 @@ class GraphService:
             nodes_by_type=nodes_by_type,
             edges_by_type=edges_by_type,
             density=round(2.0 * e / (n * (n - 1)), 4) if n > 1 else 0.0,
-            connected_components=components,
-            largest_component_size=largest,
+            connected_components=int(nx_metrics.get("components", 0)),
+            largest_component_size=int(nx_metrics.get("largest_component", 0)),
             average_degree=round(sum(degree.values()) / n, 3) if n else 0.0,
             top_hubs=top_hubs,
+            community_count=int(nx_metrics.get("community_count", 0)),
+            bridge_count=int(nx_metrics.get("bridge_count", 0)),
+            backbone_edge_count=int(nx_metrics.get("backbone_edge_count", 0)),
+            analytics_engine=f"networkx-{nx.__version__}",
+            top_central_nodes=[
+                {
+                    "node": node_id,
+                    "importance": f"{score:.6f}",
+                    "community": node_by_id[node_id].properties.get(
+                        "community_id", "0"
+                    ),
+                }
+                for node_id, score in sorted(
+                    importance.items(), key=lambda item: (-item[1], item[0])
+                )[: self._cfg.graph_top_hubs]
+            ],
         )
-
-    @staticmethod
-    def _components(adjacency: Dict[str, Set[str]]) -> tuple[int, int]:
-        seen: Set[str] = set()
-        count, largest = 0, 0
-        for start in adjacency:
-            if start in seen:
-                continue
-            count += 1
-            stack, size = [start], 0
-            while stack:
-                node = stack.pop()
-                if node in seen:
-                    continue
-                seen.add(node)
-                size += 1
-                stack.extend(adjacency[node] - seen)
-            largest = max(largest, size)
-        return count, largest
 
     def _summary(self, graph: RelationshipGraph,
                  statistics: GraphStatistics) -> GraphSummary:
         connectors = [
-            hub["node"] for hub in statistics.top_hubs
-            if not hub["node"].startswith(("case:", "evidence:"))
+            node["node"] for node in statistics.top_central_nodes
+            if not node["node"].startswith(("case:", "evidence:", "timeline_event:"))
         ][:5]
         observations: List[str] = []
+        if statistics.community_count:
+            observations.append(
+                f"NetworkX identified {count_of(statistics.community_count, 'community')} "
+                f"and retained {count_of(statistics.backbone_edge_count, 'key edge')} "
+                "for simplified investigation views."
+            )
+        if statistics.bridge_count:
+            observations.append(
+                f"{count_of(statistics.bridge_count, 'bridge connection')} can separate "
+                "otherwise distinct portions of the relationship graph."
+            )
         threat_edges = statistics.edges_by_type.get("threat_relationship", 0)
         if threat_edges:
             observations.append(

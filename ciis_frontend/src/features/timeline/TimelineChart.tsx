@@ -1,877 +1,495 @@
-import { Box, FormControlLabel, Stack, Switch, Tooltip, Typography, useTheme } from "@mui/material";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import {
+  Alert,
+  Box,
+  Button,
+  Chip,
+  Collapse,
+  FormControlLabel,
+  Paper,
+  Stack,
+  Switch,
+  Tooltip,
+  Typography,
+  alpha,
+  useTheme,
+} from "@mui/material";
 import dayjs from "dayjs";
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import type { ReactNode } from "react";
+import { useMemo, useState } from "react";
 
 import { BRAND } from "@/theme/theme";
 import type { TimelineEvent } from "@/types";
 
 import { eventTitle } from "./eventText";
 import { UNSTAGED, primaryStage, stageMeta } from "./stages";
-import { buildTicks, buildTimeScale, humanSpan, type TimeScale } from "./timeScale";
+import { humanSpan } from "./timeScale";
+
+/** Number of moments shown before the investigator asks to expand the story. */
+const INITIAL_MOMENTS = 8;
+
+/** Intake timestamps are provenance records, not incident chronology. */
+export const isAcquisitionFallback = (event: TimelineEvent) =>
+  (event.time_source ?? "").toLowerCase().replaceAll(" ", "_") === "upload_time_fallback";
+
+interface Moment {
+  timestamp: string;
+  at: number;
+  events: TimelineEvent[];
+}
+
+const validTime = (event: TimelineEvent) => {
+  const value = new Date(event.timestamp).getTime();
+  return Number.isNaN(value) ? null : value;
+};
+
+const timeBasis = (event: TimelineEvent) => {
+  if (isAcquisitionFallback(event)) return "Acquisition";
+  return event.timestamp_inferred ? "Inferred" : "Recorded";
+};
+
+const sourceLabel = (event: TimelineEvent) =>
+  (event.time_source || "unresolved").replaceAll("_", " ");
 
 /**
- * Gantt-style swimlane chart of the engine's reconstructed timeline.
+ * Investigator-first chronology.
  *
- * One lane per attack stage, ordered as the attack unfolded, with a bar
- * spanning each stage's first to last event — so both the *sequence* and the
- * *duration* of the attack are readable at a glance. Lane colour escalates
- * along the canonical stage order (see `stages.ts`), which means the severity
- * story is visible before any label is read.
- *
- * Two things make it read as a chart rather than a smear on real data:
- *
- *  - **The axis rations empty time** (see `timeScale.ts`). Cases routinely
- *    span months while every event that matters happens inside one minute.
- *  - **Each event is drawn once**, in the stage it enters the story at. An
- *    event evidencing four stages used to appear four times, so eleven
- *    events drew twenty-three markers and every lane count was wrong. The
- *    other stages it evidences get a hollow echo, which keeps the stage bar
- *    honest without double counting.
- *
- * Marker shape, not just colour, carries severity: critical events are a
- * haloed ring and milestones a diamond, so the chart survives greyscale
- * printing and colour-blind readers — both of which matter for something a
- * supervisor may print into a case file.
+ * The former Gantt/swimlane view made a small case look dense because one
+ * multi-stage exhibit was repeated across several rows. This view draws each
+ * event once, in chronological order. Attack stages remain visible as chips,
+ * while timestamp provenance is shown beside the finding it qualifies.
+ * Equal vertical spacing represents sequence only; the exact elapsed time is
+ * stated in the header rather than encoded as a misleading empty canvas.
  */
-
-/** Events closer together than this merge into one cluster marker. */
-const CLUSTER_PX = 16;
-
-const LANE_H = 54;
-const AXIS_H = 36;
-const TOP_PAD = 10;
-const LABEL_W = 210;
-const RIGHT_PAD = 28;
-/** Keeps a marker sitting on the first or last instant off the plot edge. */
-const EDGE_PAD = 18;
-const BAR_H = 20;
-/** Hovering off a marker waits this long, so the pointer can reach the card. */
-const HOVER_GRACE_MS = 220;
-/** Marks the tooltip so the page-scroll listener can tell its own scroll apart. */
-const TOOLTIP_MARKER = "data-timeline-tooltip";
-/** Below this width a collapsed-gap band cannot hold its own duration label. */
-const GAP_LABEL_MIN_PX = 46;
-
-interface Cluster {
-  x: number;
-  lane: number;
-  events: TimelineEvent[];
-  kind: "critical" | "milestone" | "event";
-  /** Echoes mark a stage the event evidences but is not primarily drawn in. */
-  echo: boolean;
-}
-
-interface Hover {
-  cx: number;
-  cy: number;
-  cluster: Cluster;
-}
-
-const at = (event: TimelineEvent) => new Date(event.timestamp).getTime();
-
 export function TimelineChart({
   events,
   milestoneKeys,
   selected,
   onSelect,
+  renderDetails,
 }: {
   events: TimelineEvent[];
-  /** `${timestamp}|${description}` keys marking milestone events. */
   milestoneKeys: Set<string>;
   selected: TimelineEvent | null;
   onSelect: (event: TimelineEvent) => void;
+  renderDetails?: (event: TimelineEvent) => ReactNode;
 }) {
   const theme = useTheme();
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const [width, setWidth] = useState(0);
-  const [hover, setHover] = useState<Hover | null>(null);
-  const [hotLane, setHotLane] = useState<number | null>(null);
-  const [compress, setCompress] = useState(true);
-  const [everyStage, setEveryStage] = useState(false);
-  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  // Render at real pixel width so labels stay at their intended size — a
-  // scaled viewBox stretched the type differently on every screen.
-  useLayoutEffect(() => {
-    const node = wrapRef.current;
-    if (!node) return;
-    const observer = new ResizeObserver(([entry]) => setWidth(entry.contentRect.width));
-    observer.observe(node);
-    setWidth(node.getBoundingClientRect().width);
-    return () => observer.disconnect();
-  }, []);
-
-  // The tooltip is viewport-anchored, so scrolling the page would leave it
-  // stranded next to nothing — hence dropping it on scroll. But the tooltip
-  // scrolls internally when a cluster has more events than fit, and this
-  // listener is on the capture phase, so it used to see that inner scroll and
-  // close the very list the reader was scrolling. Scrolls that originate
-  // inside the tooltip are therefore ignored.
-  useEffect(() => {
-    if (!hover) return;
-    const drop = (event: Event) => {
-      const target = event.target;
-      if (target instanceof Element && target.closest(`[${TOOLTIP_MARKER}]`)) return;
-      setHover(null);
-    };
-    window.addEventListener("scroll", drop, true);
-    return () => window.removeEventListener("scroll", drop, true);
-  }, [hover]);
-
-  useEffect(() => () => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-  }, []);
-
-  /** Leaving a marker starts a countdown the tooltip itself can cancel. */
-  const scheduleClose = useCallback(() => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    closeTimer.current = setTimeout(() => setHover(null), HOVER_GRACE_MS);
-  }, []);
-  const cancelClose = useCallback(() => {
-    if (closeTimer.current) clearTimeout(closeTimer.current);
-    closeTimer.current = null;
-  }, []);
+  const [includeAcquisition, setIncludeAcquisition] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   const model = useMemo(() => {
-    const dated = events.filter(
-      (e) => e.timestamp && !Number.isNaN(new Date(e.timestamp).getTime()),
-    );
-    const undated = events.length - dated.length;
-    if (dated.length === 0) {
-      return { dated, undated, lanes: [] as string[] };
-    }
-
-    // Lane order follows first occurrence, so lanes read in attack order.
-    // Every stage any event *evidences* earns a lane, even if no event is
-    // drawn there — losing "Credential Theft" from the picture because its
-    // one event entered at an earlier stage would hide the worst finding.
-    const firstSeen = new Map<string, number>();
-    for (const event of dated) {
-      const t = at(event);
-      for (const stage of event.stages.length ? event.stages : [UNSTAGED]) {
-        if (!firstSeen.has(stage) || t < firstSeen.get(stage)!) firstSeen.set(stage, t);
+    const acquisitionOnly = events.filter(isAcquisitionFallback);
+    const visible = includeAcquisition
+      ? events
+      : events.filter((event) => !isAcquisitionFallback(event));
+    const dated = visible
+      .map((event) => ({ event, at: validTime(event) }))
+      .filter((item): item is { event: TimelineEvent; at: number } => item.at !== null)
+      .sort((a, b) => a.at - b.at || a.event.evidence_id.localeCompare(b.event.evidence_id));
+    const undated = visible.length - dated.length;
+    const moments: Moment[] = [];
+    for (const item of dated) {
+      const timestamp = new Date(item.at).toISOString();
+      const previous = moments.at(-1);
+      if (previous?.timestamp === timestamp) {
+        previous.events.push(item.event);
+      } else {
+        moments.push({ timestamp, at: item.at, events: [item.event] });
       }
     }
-    const lanes = [...firstSeen.entries()]
-      .sort((a, b) => a[1] - b[1])
-      .map(([stage]) => stage)
-      // Unattributed events always sit at the bottom, out of the attack story.
-      .sort((a, b) => Number(a === UNSTAGED) - Number(b === UNSTAGED));
+    return { acquisitionOnly, dated, undated, moments };
+  }, [events, includeAcquisition]);
 
-    return { dated, undated, lanes };
-  }, [events]);
-
-  const { dated, undated, lanes } = model;
-
-  const plotW = Math.max(140, width - LABEL_W - RIGHT_PAD);
-  const height = TOP_PAD + lanes.length * LANE_H + AXIS_H;
-  const laneY = (lane: number) => TOP_PAD + lane * LANE_H + LANE_H / 2;
-  const axisY = TOP_PAD + lanes.length * LANE_H;
-
-  /** The (possibly gap-compressed) time axis. */
-  const scale: TimeScale = useMemo(
-    () =>
-      buildTimeScale(
-        dated.map(at),
-        LABEL_W + EDGE_PAD,
-        Math.max(1, plotW - EDGE_PAD * 2),
-        { compress },
-      ),
-    [dated, plotW, compress],
-  );
-
-  const layout = useMemo(() => {
-    const empty = {
-      clusters: [] as Cluster[],
-      bars: [] as {
-        lane: number;
-        x1: number;
-        x2: number;
-        from: number;
-        to: number;
-        count: number;
-        echoes: number;
-      }[],
-    };
-    if (!dated.length || !lanes.length || plotW <= 0) return empty;
-
-    const kindOf = (e: TimelineEvent): Cluster["kind"] =>
-      e.critical
-        ? "critical"
-        : milestoneKeys.has(`${e.timestamp}|${e.description}`)
-          ? "milestone"
-          : "event";
-    const rank = { event: 0, milestone: 1, critical: 2 } as const;
-
-    const clusters: Cluster[] = [];
-    const bars: typeof empty.bars = [];
-
-    /** Merge a time-sorted run of events into markers no closer than CLUSTER_PX. */
-    const clusterRun = (run: TimelineEvent[], lane: number, echo: boolean) => {
-      let current: Cluster | null = null;
-      for (const event of run) {
-        const x = scale.x(at(event));
-        if (current && x - current.x < CLUSTER_PX) {
-          current.events.push(event);
-          if (rank[kindOf(event)] > rank[current.kind]) current.kind = kindOf(event);
-          continue;
-        }
-        current = { x, lane, events: [event], kind: kindOf(event), echo };
-        clusters.push(current);
-      }
-    };
-
-    lanes.forEach((stage, lane) => {
-      const evidencing = dated
-        .filter((e) => (stage === UNSTAGED ? e.stages.length === 0 : e.stages.includes(stage)))
-        .sort((a, b) => at(a) - at(b));
-      if (!evidencing.length) return;
-
-      // With `everyStage` on, the chart reverts to a marker per stage per
-      // event — the data-faithful reading, at the cost of double counting.
-      const primary = everyStage
-        ? evidencing
-        : evidencing.filter((e) => primaryStage(e.stages) === stage);
-      const echoes = everyStage
-        ? []
-        : evidencing.filter((e) => primaryStage(e.stages) !== stage);
-
-      const from = at(evidencing[0]);
-      const to = at(evidencing[evidencing.length - 1]);
-      bars.push({
-        lane,
-        x1: scale.x(from),
-        x2: scale.x(to),
-        from,
-        to,
-        count: primary.length,
-        echoes: echoes.length,
-      });
-
-      clusterRun(primary, lane, false);
-      clusterRun(echoes, lane, true);
-    });
-
-    return { clusters, bars };
-  }, [dated, lanes, plotW, scale, milestoneKeys, everyStage]);
-
-  const ticks = useMemo(() => buildTicks(scale), [scale]);
+  const { acquisitionOnly, dated, undated, moments } = model;
+  const visibleMoments = expanded ? moments : moments.slice(0, INITIAL_MOMENTS);
+  const hiddenMoments = moments.length - visibleMoments.length;
+  const inferred = dated.filter(({ event }) =>
+    event.timestamp_inferred && !isAcquisitionFallback(event)).length;
+  const recorded = dated.filter(({ event }) =>
+    !event.timestamp_inferred && !isAcquisitionFallback(event)).length;
+  const critical = dated.filter(({ event }) => event.critical).length;
+  const first = dated[0]?.at;
+  const last = dated.at(-1)?.at;
 
   if (!dated.length) {
     return (
-      <Box sx={{ px: 2, py: 3, textAlign: "center" }}>
-        <Typography variant="body2" color="text.secondary">
-          No events with a resolved timestamp to plot
-          {undated > 0 ? ` — ${undated} event(s) have no usable time and are listed below` : ""}.
+      <Paper variant="outlined" sx={{ p: 3, textAlign: "center", borderRadius: 3 }}>
+        <Typography variant="subtitle1" fontWeight={700}>
+          No evidence-derived event times
         </Typography>
-      </Box>
+        <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+          {undated > 0
+            ? `${undated} event(s) have no usable timestamp and remain in the evidence list.`
+            : "No event can currently be placed in the incident sequence."}
+        </Typography>
+        {acquisitionOnly.length > 0 && (
+          <Typography variant="caption" color="text.secondary" display="block" sx={{ mt: 1 }}>
+            {acquisitionOnly.length} acquisition-only record
+            {acquisitionOnly.length === 1 ? " is" : "s are"} excluded from incident chronology.
+          </Typography>
+        )}
+      </Paper>
     );
   }
 
-  const severityColor = (kind: Cluster["kind"]) =>
-    kind === "critical" ? BRAND.critical : kind === "milestone" ? BRAND.high : BRAND.primary;
-
-  const hasEchoes = layout.bars.some((b) => b.echoes > 0);
-
   return (
-    <Box sx={{ px: 2, pt: 2, pb: 1 }}>
-      <Stack
-        direction={{ xs: "column", md: "row" }}
-        spacing={1}
-        alignItems={{ md: "baseline" }}
-        sx={{ mb: 1.5 }}
+    <Box sx={{ px: { xs: 1, sm: 2 }, pt: 1.5, pb: 1 }}>
+      <Paper
+        variant="outlined"
+        sx={{
+          p: { xs: 1.5, md: 2 },
+          mb: 1.5,
+          borderRadius: 3,
+          borderColor: alpha(BRAND.primary, 0.2),
+          background: `linear-gradient(135deg, ${alpha(BRAND.primary, 0.08)}, ${alpha(BRAND.primary, 0.015)} 58%, transparent)`,
+        }}
       >
-        <Typography variant="subtitle2">Attack timeline</Typography>
-        <Typography variant="caption" color="text.secondary" sx={{ flexGrow: 1 }}>
-          {dayjs(scale.min).format("MMM D, YYYY HH:mm")} →{" "}
-          {dayjs(scale.max).format("MMM D, YYYY HH:mm")}
-          {"  ·  "}
-          spans {humanSpan(scale.max - scale.min)}
-          {"  ·  "}
-          {dated.length} event{dated.length === 1 ? "" : "s"}
-          {undated > 0 ? ` · ${undated} without a usable time` : ""}
-        </Typography>
-        <Stack direction="row" spacing={1.5} alignItems="center" flexWrap="wrap" useFlexGap>
-          <Legend shape="ring" color={BRAND.critical} label="Critical" />
-          <Legend shape="diamond" color={BRAND.high} label="Milestone" />
-          <Legend shape="dot" color={BRAND.primary} label="Event" />
-          {hasEchoes && !everyStage && (
-            <Legend shape="hollow" color={theme.palette.text.secondary} label="Also evidences" />
+        <Stack direction={{ xs: "column", md: "row" }} spacing={1.5} alignItems={{ md: "center" }}>
+          <Box sx={{ flexGrow: 1, minWidth: 0 }}>
+            <Stack direction="row" spacing={1} alignItems="center" flexWrap="wrap" useFlexGap>
+              <Typography variant="subtitle1" fontWeight={800}>
+                {dated.length}{" "}
+                {includeAcquisition
+                  ? `chronology record${dated.length === 1 ? "" : "s"}`
+                  : `incident event${dated.length === 1 ? "" : "s"}`}
+              </Typography>
+              {critical > 0 && (
+                <Chip
+                  size="small"
+                  label={`${critical} priority`}
+                  sx={{ color: BRAND.critical, bgcolor: alpha(BRAND.critical, 0.09) }}
+                />
+              )}
+            </Stack>
+            <Typography variant="body2" color="text.secondary" sx={{ mt: 0.45 }}>
+              {dayjs(first).format("MMM D, YYYY HH:mm")} - {dayjs(last).format("MMM D, YYYY HH:mm")}
+              {first !== undefined && last !== undefined ? ` · ${humanSpan(last - first)}` : ""}
+            </Typography>
+            <Stack direction="row" spacing={0.75} flexWrap="wrap" useFlexGap sx={{ mt: 1 }}>
+              <BasisPill color={BRAND.primary} label={`${recorded} recorded`} />
+              <BasisPill color={BRAND.high} label={`${inferred} inferred`} />
+              {includeAcquisition && (
+                <BasisPill color={theme.palette.text.secondary} label={`${acquisitionOnly.length} acquisition`} />
+              )}
+              {undated > 0 && <BasisPill color={theme.palette.text.disabled} label={`${undated} unresolved`} />}
+            </Stack>
+          </Box>
+
+          {acquisitionOnly.length > 0 && (
+            <Tooltip title="Upload time records when CIIS received an exhibit. It is not proof of when the incident occurred.">
+              <FormControlLabel
+                sx={{ m: 0, alignSelf: { xs: "flex-start", md: "center" } }}
+                control={
+                  <Switch
+                    size="small"
+                    checked={includeAcquisition}
+                    onChange={(event) => {
+                      setIncludeAcquisition(event.target.checked);
+                      setExpanded(false);
+                    }}
+                    inputProps={{ "aria-label": "Include acquisition timestamps" }}
+                  />
+                }
+                label={
+                  <Typography variant="caption" color="text.secondary">
+                    Show {acquisitionOnly.length} acquisition record
+                    {acquisitionOnly.length === 1 ? "" : "s"}
+                  </Typography>
+                }
+              />
+            </Tooltip>
           )}
         </Stack>
-      </Stack>
+      </Paper>
 
-      {/* Axis and lane behaviour, kept next to the chart they change. */}
-      <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap sx={{ mb: 0.5 }}>
-        <Tooltip title="Cases often span months while everything that matters happens in one minute. Collapsing the empty stretches gives that minute room to be read. Turn this off for a true-to-scale axis.">
-          <FormControlLabel
-            sx={{ mr: 0 }}
-            control={
-              <Switch
-                size="small"
-                checked={compress}
-                onChange={(e) => setCompress(e.target.checked)}
-                inputProps={{ "aria-label": "Compress quiet periods" }}
-              />
-            }
-            label={
-              <Typography variant="caption" color="text.secondary">
-                Compress quiet periods
-              </Typography>
-            }
-          />
-        </Tooltip>
-        <Tooltip title="An event can evidence several stages at once. By default it is drawn once, in the stage it enters the story at, with a hollow echo in the others. Turn this on to draw a full marker in every stage it evidences.">
-          <FormControlLabel
-            sx={{ mr: 0 }}
-            control={
-              <Switch
-                size="small"
-                checked={everyStage}
-                onChange={(e) => setEveryStage(e.target.checked)}
-                inputProps={{ "aria-label": "Draw in every stage" }}
-              />
-            }
-            label={
-              <Typography variant="caption" color="text.secondary">
-                Draw in every stage
-              </Typography>
-            }
-          />
-        </Tooltip>
-      </Stack>
+      {acquisitionOnly.length > 0 && (
+        <Alert
+          severity={includeAcquisition ? "warning" : "info"}
+          variant="outlined"
+          sx={{ mb: 1.5, borderRadius: 2.5, py: 0 }}
+        >
+          {includeAcquisition
+            ? "Acquisition records are included for provenance; they are not incident events."
+            : `${acquisitionOnly.length} upload timestamp${acquisitionOnly.length === 1 ? " is" : "s are"} kept out of the incident story.`}
+        </Alert>
+      )}
 
-      <Box ref={wrapRef} sx={{ width: "100%" }}>
-        {width > 0 && (
-          <svg
-            width={width}
-            height={height}
-            role="img"
-            aria-label={`Timeline of ${dated.length} events across ${lanes.length} attack stages`}
-            style={{ display: "block", overflow: "visible" }}
-            onMouseLeave={() => {
-              scheduleClose();
-              setHotLane(null);
-            }}
-          >
-            {/* Stage names and captions are free text of unknown length. The
-                plot begins at LABEL_W, so without a clip a long stage name ran
-                under the gridlines and markers. This bounds the label column
-                absolutely, whatever the wording or font. */}
-            <defs>
-              <clipPath id="timeline-label-column">
-                <rect x={0} y={0} width={LABEL_W - 10} height={height} />
-              </clipPath>
-            </defs>
-
-            {/* Lane rows: label column on the left, plot area on the right. */}
-            {lanes.map((stage, lane) => {
-              const meta = stageMeta(stage, lane);
-              const bar = layout.bars.find((b) => b.lane === lane);
-              const hot = hotLane === lane;
-              return (
-                <g key={stage} onMouseEnter={() => setHotLane(lane)}>
-                  <rect
-                    x={0}
-                    y={TOP_PAD + lane * LANE_H}
-                    width={Math.max(width, 0)}
-                    height={LANE_H}
-                    rx={8}
-                    fill={hot ? meta.color : theme.palette.text.primary}
-                    opacity={hot ? 0.07 : lane % 2 === 1 ? 0.025 : 0}
-                  />
-                  {/* Colour key + stage name + what it actually means. */}
-                  <g clipPath="url(#timeline-label-column)">
-                    <circle cx={12} cy={laneY(lane) - 5} r={5} fill={meta.color} />
-                    <text
-                      x={26}
-                      y={laneY(lane) - 1}
-                      fontSize={12.5}
-                      fontWeight={700}
-                      fill={theme.palette.text.primary}
-                    >
-                      {meta.label}
-                    </text>
-                    <text
-                      x={26}
-                      y={laneY(lane) + 14}
-                      fontSize={10.5}
-                      fill={theme.palette.text.secondary}
-                    >
-                      {laneCaption(bar)}
-                    </text>
-                  </g>
-                  {/* Separates the label column from the plot, so the eye reads
-                      them as two panes instead of one crowded strip. */}
-                  <line
-                    x1={LABEL_W - 10}
-                    x2={LABEL_W - 10}
-                    y1={TOP_PAD + lane * LANE_H + 6}
-                    y2={TOP_PAD + (lane + 1) * LANE_H - 6}
-                    stroke={theme.palette.divider}
-                    strokeWidth={1}
-                  />
-                </g>
-              );
-            })}
-
-            {/* Collapsed stretches of dead time, drawn before the data. */}
-            {scale.gaps.map((gap) => (
-              <g key={`gap-${gap.t0}`} aria-hidden>
-                <rect
-                  x={gap.x0}
-                  y={TOP_PAD}
-                  width={Math.max(0, gap.x1 - gap.x0)}
-                  height={axisY - TOP_PAD}
-                  fill={theme.palette.text.primary}
-                  opacity={0.05}
-                />
-                {[gap.x0, gap.x1].map((x) => (
-                  <line
-                    key={x}
-                    x1={x}
-                    x2={x}
-                    y1={TOP_PAD}
-                    y2={axisY}
-                    stroke={theme.palette.divider}
-                    strokeWidth={1.5}
-                  />
-                ))}
-                {/* A narrow gap has no room for its own duration; the label
-                    would spill over the markers on either side of it. */}
-                {gap.x1 - gap.x0 >= GAP_LABEL_MIN_PX && (
-                  <text
-                    x={(gap.x0 + gap.x1) / 2}
-                    y={axisY - 6}
-                    textAnchor="middle"
-                    fontSize={9.5}
-                    fill={theme.palette.text.secondary}
-                  >
-                    {humanSpan(gap.t1 - gap.t0)}
-                  </text>
-                )}
-              </g>
-            ))}
-
-            {/* Time gridlines behind the data. */}
-            {ticks.map((tick) => (
-              <line
-                key={`grid-${tick.t}-${tick.x}`}
-                x1={tick.x}
-                x2={tick.x}
-                y1={TOP_PAD}
-                y2={axisY}
-                stroke={theme.palette.divider}
-                strokeDasharray="2 5"
-              />
-            ))}
-
-            {/* Stage bars: first → last event, in the stage's own colour. */}
-            {layout.bars.map(({ lane, x1, x2 }) => {
-              const meta = stageMeta(lanes[lane], lane);
-              return (
-                <g key={`bar-${lane}`}>
-                  <rect
-                    x={x1 - BAR_H / 2}
-                    y={laneY(lane) - BAR_H / 2}
-                    width={Math.max(x2 - x1 + BAR_H, BAR_H)}
-                    height={BAR_H}
-                    rx={BAR_H / 2}
-                    fill={meta.color}
-                    opacity={0.16}
-                  />
-                  <rect
-                    x={x1 - BAR_H / 2}
-                    y={laneY(lane) - BAR_H / 2}
-                    width={Math.max(x2 - x1 + BAR_H, BAR_H)}
-                    height={BAR_H}
-                    rx={BAR_H / 2}
-                    fill="none"
-                    stroke={meta.color}
-                    strokeOpacity={0.4}
-                  />
-                </g>
-              );
-            })}
-
-            {/* Axis */}
-            <line
-              x1={LABEL_W}
-              x2={LABEL_W + plotW}
-              y1={axisY}
-              y2={axisY}
-              stroke={theme.palette.divider}
-              strokeWidth={1.5}
+      <Box
+        aria-label={`Chronological sequence of ${dated.length} events`}
+        sx={{
+          position: "relative",
+          "&::before": {
+            content: '""',
+            position: "absolute",
+            top: 18,
+            bottom: 18,
+            left: { xs: 15, sm: 137 },
+            width: 2,
+            borderRadius: 2,
+            background: `linear-gradient(${alpha(BRAND.primary, 0.15)}, ${alpha(BRAND.primary, 0.55)}, ${alpha(BRAND.primary, 0.15)})`,
+          },
+        }}
+      >
+        <Stack spacing={1.25}>
+          {visibleMoments.map((moment, index) => (
+            <MomentRow
+              key={moment.timestamp}
+              moment={moment}
+              number={index + 1}
+              milestoneKeys={milestoneKeys}
+              selected={selected}
+              onSelect={onSelect}
+              renderDetails={renderDetails}
             />
-            {ticks.map((tick) => (
-              <g key={`tick-${tick.t}-${tick.x}`}>
-                <line
-                  x1={tick.x}
-                  x2={tick.x}
-                  y1={axisY}
-                  y2={axisY + 5}
-                  stroke={theme.palette.divider}
-                  strokeWidth={1.5}
-                />
-                <text
-                  x={tick.x}
-                  y={axisY + 20}
-                  textAnchor="middle"
-                  fontSize={11}
-                  fill={theme.palette.text.secondary}
-                >
-                  {dayjs(tick.t).format(tick.fmt)}
-                </text>
-              </g>
-            ))}
-
-            {/* Event markers */}
-            {layout.clusters.map((cluster, i) => {
-              const color = severityColor(cluster.kind);
-              const isSelected = !!selected && cluster.events.includes(selected);
-              const isHovered = hover?.cluster === cluster;
-              const grow = isSelected ? 2.5 : isHovered ? 1.5 : 0;
-              const cy = laneY(cluster.lane);
-              return (
-                <g
-                  key={`${cluster.lane}-${cluster.echo ? "e" : "p"}-${i}`}
-                  data-marker={cluster.echo ? "echo" : "primary"}
-                  style={{ cursor: "pointer" }}
-                  onMouseEnter={(e) => {
-                    cancelClose();
-                    setHotLane(cluster.lane);
-                    const box = (e.currentTarget as SVGGElement).getBoundingClientRect();
-                    setHover({
-                      cx: box.left + box.width / 2,
-                      cy: box.top + box.height / 2,
-                      cluster,
-                    });
-                  }}
-                  // Moving off a marker into empty canvas used to leave the
-                  // card stranded until the pointer left the whole chart.
-                  onMouseLeave={scheduleClose}
-                  onClick={() => onSelect(cluster.events[0])}
-                >
-                  {/* Generous invisible hit area — a 6px dot is hard to hover. */}
-                  <circle
-                    cx={cluster.x}
-                    cy={cy}
-                    r={cluster.echo ? 11 : 15}
-                    fill="transparent"
-                  />
-                  {cluster.echo ? (
-                    <EchoMarker x={cluster.x} y={cy} grow={grow} color={color} />
-                  ) : (
-                    <Marker
-                      kind={cluster.kind}
-                      x={cluster.x}
-                      y={cy}
-                      grow={grow}
-                      color={color}
-                      ring={theme.palette.background.paper}
-                      emphasised={isSelected}
-                    />
-                  )}
-                  {cluster.events.length > 1 && !cluster.echo && (
-                    <text
-                      x={cluster.x}
-                      y={cy - 13 - grow}
-                      textAnchor="middle"
-                      fontSize={10}
-                      fontWeight={700}
-                      fill={color}
-                    >
-                      {cluster.events.length}
-                    </text>
-                  )}
-                </g>
-              );
-            })}
-          </svg>
-        )}
+          ))}
+        </Stack>
       </Box>
 
-      <Typography variant="caption" color="text.disabled" sx={{ display: "block", mt: 1 }}>
-        Each row is one stage of the attack, coloured by how serious it is; the bar runs from
-        that stage's first event to its last. A number above a marker means several events
-        happened at that moment. Hover to read them all, click to open the event below.
-        {scale.compressed
-          ? " Shaded bands are stretches with no events at all, collapsed so the busy periods have room; the label gives the time skipped."
-          : ""}
-      </Typography>
+      {hiddenMoments > 0 && (
+        <Box sx={{ pl: { xs: 5, sm: 20 }, pt: 1.25 }}>
+          <Button size="small" variant="outlined" onClick={() => setExpanded(true)}>
+            Show {hiddenMoments} more moment{hiddenMoments === 1 ? "" : "s"}
+          </Button>
+        </Box>
+      )}
+      {expanded && moments.length > INITIAL_MOMENTS && (
+        <Box sx={{ pl: { xs: 5, sm: 20 }, pt: 1.25 }}>
+          <Button size="small" onClick={() => setExpanded(false)}>
+            Show concise story
+          </Button>
+        </Box>
+      )}
 
-      {hover && (
-        <ClusterTooltip
-          hover={hover}
-          milestoneKeys={milestoneKeys}
-          onSelect={onSelect}
-          onEnter={cancelClose}
-          onLeave={scheduleClose}
+      <Typography variant="caption" color="text.disabled" display="block" sx={{ mt: 1.5, pl: { sm: 20 } }}>
+        Cards are equally spaced to keep the sequence readable; timestamps show the actual elapsed time. Select a finding for full evidence details.
+      </Typography>
+    </Box>
+  );
+}
+
+function MomentRow({
+  moment,
+  number,
+  milestoneKeys,
+  selected,
+  onSelect,
+  renderDetails,
+}: {
+  moment: Moment;
+  number: number;
+  milestoneKeys: Set<string>;
+  selected: TimelineEvent | null;
+  onSelect: (event: TimelineEvent) => void;
+  renderDetails?: (event: TimelineEvent) => ReactNode;
+}) {
+  const theme = useTheme();
+  const representative = moment.events[0];
+  const primary = primaryStage(representative.stages);
+  const meta = stageMeta(primary, number - 1);
+  const isCritical = moment.events.some((event) => event.critical);
+  const isMilestone = moment.events.some((event) =>
+    milestoneKeys.has(`${event.timestamp}|${event.description}`));
+  const markerColor = isCritical ? BRAND.critical : isMilestone ? BRAND.high : meta.color;
+
+  return (
+    <Box
+      data-testid="timeline-moment"
+      sx={{
+        display: "grid",
+        gridTemplateColumns: { xs: "32px minmax(0, 1fr)", sm: "120px 34px minmax(0, 1fr)" },
+        columnGap: { xs: 0.75, sm: 0 },
+        alignItems: "start",
+        position: "relative",
+      }}
+    >
+      <Box sx={{ display: { xs: "none", sm: "block" }, pr: 2, pt: 1.1, textAlign: "right" }}>
+        <Typography variant="caption" fontWeight={800} display="block">
+          {dayjs(moment.at).format("MMM D, YYYY")}
+        </Typography>
+        <Typography variant="caption" color="text.secondary">
+          {dayjs(moment.at).format("HH:mm:ss")}
+        </Typography>
+      </Box>
+
+      <Box sx={{ position: "relative", minHeight: 44, display: "flex", justifyContent: "center", pt: 1.2 }}>
+        <Box
+          aria-label={isCritical ? "Critical moment" : isMilestone ? "Milestone" : "Event moment"}
+          sx={{
+            position: "relative",
+            zIndex: 1,
+            width: isCritical ? 20 : 16,
+            height: isCritical ? 20 : 16,
+            borderRadius: isMilestone && !isCritical ? 0.75 : "50%",
+            transform: isMilestone && !isCritical ? "rotate(45deg)" : "none",
+            bgcolor: theme.palette.background.paper,
+            border: `${isCritical ? 4 : 3}px solid ${markerColor}`,
+            boxShadow: `0 0 0 5px ${alpha(markerColor, 0.12)}`,
+          }}
         />
+      </Box>
+
+      <Paper
+        variant="outlined"
+        sx={{
+          overflow: "hidden",
+          borderRadius: 3,
+          borderColor: moment.events.some((event) => event === selected)
+            ? BRAND.primary
+            : "divider",
+          boxShadow: moment.events.some((event) => event === selected)
+            ? `0 0 0 2px ${alpha(BRAND.primary, 0.12)}, 0 8px 24px ${alpha(theme.palette.common.black, 0.08)}`
+            : `0 3px 14px ${alpha(theme.palette.common.black, 0.045)}`,
+          transition: "border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease",
+          "&:hover": {
+            borderColor: alpha(BRAND.primary, 0.45),
+            boxShadow: `0 8px 24px ${alpha(theme.palette.common.black, 0.09)}`,
+            transform: "translateY(-1px)",
+          },
+        }}
+      >
+        <Box sx={{ p: { xs: 1.1, sm: 1.25 }, borderLeft: `4px solid ${alpha(markerColor, 0.8)}` }}>
+          <Stack direction="row" alignItems="center" spacing={0.75} flexWrap="wrap" useFlexGap sx={{ mb: 0.75 }}>
+            <Typography variant="caption" fontWeight={800} color="text.secondary">
+              {String(number).padStart(2, "0")}
+            </Typography>
+            <Typography variant="caption" fontWeight={800} sx={{ display: { xs: "block", sm: "none" } }}>
+              {dayjs(moment.at).format("MMM D, YYYY · HH:mm:ss")}
+            </Typography>
+            {moment.events.length > 1 && (
+              <Chip size="small" label={`${moment.events.length} events at this moment`} />
+            )}
+            {isCritical && (
+              <Chip size="small" label="Priority review" sx={{ color: BRAND.critical, bgcolor: alpha(BRAND.critical, 0.08) }} />
+            )}
+            {isMilestone && !isCritical && (
+              <Chip size="small" label="Milestone" sx={{ color: BRAND.high, bgcolor: alpha(BRAND.high, 0.09) }} />
+            )}
+          </Stack>
+
+          <Stack spacing={moment.events.length > 1 ? 0.75 : 0}>
+            {moment.events.map((event) => (
+              <EventFinding
+                key={`${event.evidence_id}|${event.description}`}
+                event={event}
+                selected={event === selected}
+                onSelect={onSelect}
+                renderDetails={renderDetails}
+              />
+            ))}
+          </Stack>
+        </Box>
+      </Paper>
+    </Box>
+  );
+}
+
+function EventFinding({
+  event,
+  selected,
+  onSelect,
+  renderDetails,
+}: {
+  event: TimelineEvent;
+  selected: boolean;
+  onSelect: (event: TimelineEvent) => void;
+  renderDetails?: (event: TimelineEvent) => ReactNode;
+}) {
+  const theme = useTheme();
+  const stages = event.stages.length ? event.stages : [UNSTAGED];
+  const basis = timeBasis(event);
+  const basisColor = basis === "Recorded" ? BRAND.primary : basis === "Inferred" ? BRAND.high : theme.palette.text.secondary;
+
+  return (
+    <Box>
+      <Box
+        component="button"
+        type="button"
+        data-testid="timeline-event"
+        aria-expanded={selected}
+        onClick={() => onSelect(event)}
+        sx={{
+          display: "block",
+          width: "100%",
+          p: 0.75,
+          border: 0,
+          borderRadius: 2,
+          bgcolor: selected ? alpha(BRAND.primary, 0.075) : "transparent",
+          color: "inherit",
+          textAlign: "left",
+          font: "inherit",
+          cursor: "pointer",
+          "&:hover": { bgcolor: alpha(BRAND.primary, 0.055) },
+          "&:focus-visible": { outline: `2px solid ${BRAND.primary}`, outlineOffset: 2 },
+        }}
+      >
+        <Stack direction={{ xs: "column", md: "row" }} spacing={0.75} alignItems={{ md: "flex-start" }}>
+          <Box sx={{ flexGrow: 1, minWidth: 0 }}>
+            <Typography variant="body2" fontWeight={750} sx={{ overflowWrap: "anywhere" }}>
+              {eventTitle(event)}
+            </Typography>
+            <Typography variant="caption" color="text.secondary" sx={{ overflowWrap: "anywhere" }}>
+              {event.evidence_id}{event.file_name ? ` · ${event.file_name}` : ""}
+            </Typography>
+          </Box>
+          <Stack direction="row" spacing={0.5} alignItems="center" sx={{ flexShrink: 0 }}>
+            <Tooltip title={`Timestamp source: ${sourceLabel(event)}; confidence: ${event.confidence || "unknown"}`}>
+              <Chip
+                size="small"
+                variant="outlined"
+                label={`${basis} · ${event.confidence || "unknown"}`}
+                sx={{ color: basisColor, borderColor: alpha(basisColor, 0.45) }}
+              />
+            </Tooltip>
+            {renderDetails && (
+              <ExpandMoreIcon
+                fontSize="small"
+                sx={{
+                  color: "text.secondary",
+                  transition: "transform 180ms ease",
+                  transform: selected ? "rotate(180deg)" : "none",
+                }}
+              />
+            )}
+          </Stack>
+        </Stack>
+
+        <Stack direction="row" spacing={0.6} flexWrap="wrap" useFlexGap sx={{ mt: 0.65 }}>
+          {stages.map((stage, index) => {
+            const meta = stageMeta(stage, index);
+            return (
+              <Chip
+                key={stage}
+                size="small"
+                label={meta.label}
+                sx={{
+                  height: 22,
+                  color: meta.color,
+                  bgcolor: alpha(meta.color, 0.08),
+                  "& .MuiChip-label": { px: 0.9, fontSize: "0.68rem", fontWeight: 700 },
+                }}
+              />
+            );
+          })}
+        </Stack>
+      </Box>
+
+      {renderDetails && (
+        <Collapse in={selected} unmountOnExit>
+          {renderDetails(event)}
+        </Collapse>
       )}
     </Box>
   );
 }
 
-/** Lane sub-caption: what is drawn here, and over how long. */
-/**
- * One short line under each stage name.
- *
- * Says the same three things as before — how many events start here, how many
- * merely evidence the stage, and how long it ran — but tersely. The long form
- * ("no events start here · 1 also evidence this · 2 days") ran past the label
- * column on most screens and buried the numbers a reader scans for. "echo"
- * matches the hollow echo markers, which the "draw in every stage" toggle
- * explains.
- */
-function laneCaption(
-  bar: { count: number; echoes: number; from: number; to: number } | undefined,
-): string {
-  if (!bar) return "no events";
-  const echo = bar.echoes > 0 ? ` · ${bar.echoes} echo` : "";
-  if (bar.count === 0) return `none start${echo}`;
-  const span = bar.to > bar.from ? humanSpan(bar.to - bar.from) : "one moment";
-  return `${bar.count} event${bar.count === 1 ? "" : "s"}${echo} · ${span}`;
-}
-
-/** Marker shapes double up the severity signal so colour is never the only cue. */
-function Marker({
-  kind, x, y, grow, color, ring, emphasised,
-}: {
-  kind: Cluster["kind"];
-  x: number;
-  y: number;
-  grow: number;
-  color: string;
-  ring: string;
-  emphasised: boolean;
-}) {
-  if (kind === "critical") {
-    const r = 6 + grow;
-    return (
-      <>
-        <circle cx={x} cy={y} r={r + 5} fill={color} opacity={0.2} />
-        <circle cx={x} cy={y} r={r} fill={ring} stroke={color} strokeWidth={3.5} />
-      </>
-    );
-  }
-  if (kind === "milestone") {
-    const s = 6.5 + grow;
-    return (
-      <>
-        {emphasised && <circle cx={x} cy={y} r={s + 5} fill={color} opacity={0.2} />}
-        <rect
-          x={x - s} y={y - s} width={s * 2} height={s * 2}
-          transform={`rotate(45 ${x} ${y})`}
-          fill={color} stroke={ring} strokeWidth={2} rx={1.5}
-        />
-      </>
-    );
-  }
-  const r = 5.5 + grow;
+function BasisPill({ color, label }: { color: string; label: string }) {
   return (
-    <>
-      {emphasised && <circle cx={x} cy={y} r={r + 5} fill={color} opacity={0.2} />}
-      <circle cx={x} cy={y} r={r} fill={color} stroke={ring} strokeWidth={2} />
-    </>
-  );
-}
-
-/**
- * The same event, seen from a stage it evidences but is not counted in.
- * Deliberately quiet: a short tick, no fill, no count — it is a cross
- * reference, not a second occurrence.
- */
-function EchoMarker({
-  x, y, grow, color,
-}: {
-  x: number;
-  y: number;
-  grow: number;
-  color: string;
-}) {
-  const r = 4 + grow;
-  return (
-    <circle
-      cx={x}
-      cy={y}
-      r={r}
-      fill="none"
-      stroke={color}
-      strokeWidth={1.5}
-      strokeDasharray="2 2"
-      opacity={0.85}
-    />
-  );
-}
-
-function Legend({ shape, color, label }: { shape: string; color: string; label: string }) {
-  const glyph =
-    shape === "ring"
-      ? { border: `2.5px solid ${color}`, borderRadius: "50%" }
-      : shape === "hollow"
-        ? { border: `1.5px dashed ${color}`, borderRadius: "50%" }
-        : shape === "diamond"
-          ? { bgcolor: color, transform: "rotate(45deg)" }
-          : { bgcolor: color, borderRadius: "50%" };
-  return (
-    <Stack direction="row" spacing={0.6} alignItems="center">
-      <Box sx={{ width: 10, height: 10, flexShrink: 0, ...glyph }} />
+    <Stack direction="row" spacing={0.55} alignItems="center">
+      <Box sx={{ width: 7, height: 7, borderRadius: "50%", bgcolor: color }} />
       <Typography variant="caption" color="text.secondary">
         {label}
       </Typography>
     </Stack>
-  );
-}
-
-/**
- * Viewport-anchored tooltip listing *every* event under the marker.
- *
- * It used to show the first four and say "+7 more", which is the worst of
- * both: the reader is told there is more and given no way to see it without
- * clicking through. It now takes pointer events, so the pointer can travel
- * into it (a grace period covers the gap), scrolls when the list is long, and
- * each row is clickable — hover to read, click to open.
- *
- * It measures itself and then clamps to the visible viewport, flipping above
- * the marker when there is no room below. Anchoring to the *viewport* rather
- * than to the chart is what stops it being clipped by the scrolling card the
- * chart lives in — an absolutely-positioned box could only guess, and got cut
- * off near the right and bottom edges.
- */
-function ClusterTooltip({
-  hover,
-  milestoneKeys,
-  onSelect,
-  onEnter,
-  onLeave,
-}: {
-  hover: Hover;
-  milestoneKeys: Set<string>;
-  onSelect: (event: TimelineEvent) => void;
-  onEnter: () => void;
-  onLeave: () => void;
-}) {
-  const theme = useTheme();
-  const ref = useRef<HTMLDivElement>(null);
-  const [pos, setPos] = useState<{ left: number; top: number } | null>(null);
-
-  useLayoutEffect(() => {
-    const node = ref.current;
-    if (!node) return;
-    const { width, height } = node.getBoundingClientRect();
-    const margin = 8;
-    const gap = 18;
-
-    let left = hover.cx - width / 2;
-    left = Math.max(margin, Math.min(left, window.innerWidth - width - margin));
-
-    // Prefer below the marker; flip above when that would overflow.
-    let top = hover.cy + gap;
-    if (top + height > window.innerHeight - margin) top = hover.cy - gap - height;
-    top = Math.max(margin, Math.min(top, window.innerHeight - height - margin));
-
-    setPos({ left, top });
-  }, [hover]);
-
-  const { events, echo } = hover.cluster;
-
-  return (
-    <Box
-      ref={ref}
-      {...{ [TOOLTIP_MARKER]: "" }}
-      onMouseEnter={onEnter}
-      onMouseLeave={onLeave}
-      sx={{
-        position: "fixed",
-        left: pos?.left ?? -9999,
-        top: pos?.top ?? -9999,
-        // Hidden until measured, so it never flashes in the wrong place.
-        visibility: pos ? "visible" : "hidden",
-        zIndex: theme.zIndex.tooltip,
-        width: "min(380px, calc(100vw - 16px))",
-        // Long clusters scroll inside the card instead of being truncated.
-        maxHeight: "min(340px, 60vh)",
-        overflowY: "auto",
-        overscrollBehavior: "contain",
-        p: 1.5,
-        borderRadius: 2,
-        border: 1,
-        borderColor: "divider",
-        boxShadow: 8,
-        bgcolor: theme.palette.mode === "dark" ? "rgba(18,26,46,0.98)" : "rgba(255,255,255,0.99)",
-      }}
-    >
-      {(events.length > 1 || echo) && (
-        <Typography
-          variant="caption"
-          sx={{ fontWeight: 700, display: "block", mb: 0.75 }}
-        >
-          {events.length > 1 ? `${events.length} events at this moment` : "Also evidences this stage"}
-          {events.length > 1 && echo ? " · also evidence this stage" : ""}
-        </Typography>
-      )}
-      <Stack spacing={1.25}>
-        {events.map((event, i) => {
-          const kind = event.critical
-            ? "critical"
-            : milestoneKeys.has(`${event.timestamp}|${event.description}`)
-              ? "milestone"
-              : "event";
-          const color =
-            kind === "critical" ? BRAND.critical : kind === "milestone" ? BRAND.high : BRAND.primary;
-          return (
-            <Box
-              key={`${event.timestamp}-${i}`}
-              role="button"
-              tabIndex={0}
-              onClick={() => onSelect(event)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  onSelect(event);
-                }
-              }}
-              sx={{
-                cursor: "pointer",
-                borderRadius: 1,
-                px: 0.75,
-                py: 0.5,
-                mx: -0.75,
-                "&:hover": { bgcolor: "action.hover" },
-              }}
-            >
-              <Stack direction="row" spacing={0.75} alignItems="center" sx={{ mb: 0.25 }}>
-                <Box sx={{ width: 8, height: 8, borderRadius: "50%", bgcolor: color, flexShrink: 0 }} />
-                <Typography variant="caption" color="text.secondary" noWrap>
-                  {dayjs(event.timestamp).format("MMM D, YYYY HH:mm")}
-                  {event.timestamp_inferred ? " (inferred)" : ""}
-                </Typography>
-              </Stack>
-              <Typography
-                variant="body2"
-                sx={{ fontWeight: 600, overflowWrap: "anywhere" }}
-              >
-                {eventTitle(event)}
-              </Typography>
-              <Typography variant="caption" color="text.secondary" sx={{ overflowWrap: "anywhere" }}>
-                {event.evidence_id}
-                {event.stages.length
-                  ? ` · ${event.stages.map((s, n) => stageMeta(s, n).label).join(", ")}`
-                  : ""}
-              </Typography>
-              {event.critical && event.critical_reasons.length > 0 && (
-                <Typography
-                  variant="caption"
-                  sx={{ color: BRAND.critical, display: "block", overflowWrap: "anywhere" }}
-                >
-                  Critical: {event.critical_reasons.join("; ")}
-                </Typography>
-              )}
-            </Box>
-          );
-        })}
-      </Stack>
-    </Box>
   );
 }

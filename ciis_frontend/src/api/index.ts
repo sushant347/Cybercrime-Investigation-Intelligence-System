@@ -32,6 +32,8 @@ import type {
   SuspectAssessment,
   SystemSettings,
   TimelineAnalysis,
+  RAGAnswer,
+  RAGStatus,
 } from "@/types";
 
 type Query = Record<string, string | number | boolean | undefined>;
@@ -223,6 +225,24 @@ export const reportsApi = {
     apiClient
       .get<Blob>(`/cases/${caseId}/reports/${fileName}/download/`, { responseType: "blob" })
       .then((r) => r.data),
+};
+
+// ---------------------------------------------------------- case assistant
+export const ragApi = {
+  status: (caseId: string) =>
+    apiClient
+      .get<RAGStatus>(`/cases/${caseId}/assistant/status/`)
+      .then((response) => response.data),
+  ask: (caseId: string, question: string) =>
+    apiClient
+      .post<RAGAnswer>(
+        `/cases/${caseId}/assistant/ask/`,
+        { question },
+        // Local CPU generation can legitimately take longer than ordinary API
+        // calls; the backend still enforces its own bounded timeout.
+        { timeout: 340_000 },
+      )
+      .then((response) => response.data),
 };
 
 // ------------------------------------------------------------------ audit

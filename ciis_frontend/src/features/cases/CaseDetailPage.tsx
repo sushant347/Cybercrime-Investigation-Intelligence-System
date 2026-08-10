@@ -17,24 +17,51 @@ import {
   Typography,
 } from "@mui/material";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { casesApi, evidenceApi, investigationApi } from "@/api";
 import { ErrorState } from "@/components/common/EmptyState";
 import { DetailSkeleton } from "@/components/common/LoadingSkeleton";
 import { StatusChip } from "@/components/common/StatusChip";
-import { AnalyticsTab } from "@/features/analytics/AnalyticsTab";
 import { useAuth } from "@/features/auth/AuthContext";
 import { EvidenceTab } from "@/features/evidence/EvidenceTab";
-import { GraphTab } from "@/features/graph/GraphTab";
-import { InvestigationTab } from "@/features/investigation/InvestigationTab";
-import { ReportsTab } from "@/features/reports/ReportsTab";
-import { TimelineTab } from "@/features/timeline/TimelineTab";
 import { apiErrorMessage } from "@/lib/apiClient";
 import { formatDateTime } from "@/lib/format";
 
 import { CaseOverviewTab } from "./CaseOverviewTab";
+
+// Analysis tabs are independent investigation surfaces. Loading each one only
+// when selected keeps Cytoscape, timeline rendering, analytics charts, report
+// tooling, and their data-display code out of the initial case-detail bundle.
+const InvestigationTab = lazy(() =>
+  import("@/features/investigation/InvestigationTab").then((module) => ({
+    default: module.InvestigationTab,
+  })),
+);
+const GraphTab = lazy(() =>
+  import("@/features/graph/GraphTab").then((module) => ({ default: module.GraphTab })),
+);
+const TimelineTab = lazy(() =>
+  import("@/features/timeline/TimelineTab").then((module) => ({
+    default: module.TimelineTab,
+  })),
+);
+const AnalyticsTab = lazy(() =>
+  import("@/features/analytics/AnalyticsTab").then((module) => ({
+    default: module.AnalyticsTab,
+  })),
+);
+const ReportsTab = lazy(() =>
+  import("@/features/reports/ReportsTab").then((module) => ({
+    default: module.ReportsTab,
+  })),
+);
+const CaseAssistant = lazy(() =>
+  import("@/features/assistant/CaseAssistant").then((module) => ({
+    default: module.CaseAssistant,
+  })),
+);
 
 /** How often to check a running analysis job. */
 const ANALYSIS_POLL_MS = 2500;
@@ -67,6 +94,15 @@ export default function CaseDetailPage() {
     enabled: !!caseId,
   });
 
+  const analysisHistoryQuery = useQuery({
+    queryKey: ["jobs", caseId],
+    queryFn: () => evidenceApi.jobs({ case_id: caseId }),
+    enabled: !!caseId,
+  });
+  const latestAnalysisJob = analysisHistoryQuery.data?.results.find(
+    (job) => job.job_type === "case_analysis",
+  );
+
   const analyzeMutation = useMutation({
     mutationFn: () => investigationApi.runAnalysis(caseId),
     onSuccess: (job) => {
@@ -95,16 +131,24 @@ export default function CaseDetailPage() {
     enabled: analysisJobId !== null,
     refetchInterval: (query) => {
       const status = query.state.data?.status;
-      return status === "completed" || status === "failed" ? false : ANALYSIS_POLL_MS;
+      return status === "completed" ||
+        status === "completed_with_warnings" ||
+        status === "failed"
+        ? false
+        : ANALYSIS_POLL_MS;
     },
   });
 
   useEffect(() => {
     const job = analysisJob.data;
     if (!job || analysisJobId === null) return;
-    if (job.status === "completed") {
+    if (job.status === "completed" || job.status === "completed_with_warnings") {
       setAnalysisJobId(null);
-      setToast("Analysis complete — priority, findings and report updated.");
+      setToast(
+        job.status === "completed_with_warnings"
+          ? `Analysis completed with warnings: ${job.detail}`
+          : "Analysis complete — priority, findings and report updated.",
+      );
       // The case payload (priority verdict), every Phase-2 artifact and the
       // report list are all downstream of this job.
       for (const key of [
@@ -113,6 +157,8 @@ export default function CaseDetailPage() {
         ["reports", caseId],
         ["report-latest", caseId],
         ["cases"],
+        ["jobs", caseId],
+        ["rag-status", caseId],
       ]) {
         void queryClient.invalidateQueries({ queryKey: key });
       }
@@ -234,6 +280,14 @@ export default function CaseDetailPage() {
         </Stack>
       </Stack>
 
+      {latestAnalysisJob?.status === "completed_with_warnings" && (
+        <Alert severity="warning" sx={{ mb: 2 }}>
+          <strong>Latest analysis produced partial results.</strong> Timeline, graph,
+          analytics, and report artifacts were regenerated, but should be reviewed with
+          these warnings: {latestAnalysisJob.detail}
+        </Alert>
+      )}
+
       <Tabs
         value={activeTab}
         onChange={(_, value: TabKey) =>
@@ -258,13 +312,39 @@ export default function CaseDetailPage() {
 
       {activeTab === "overview" && <CaseOverviewTab caseData={caseData} />}
       {activeTab === "evidence" && <EvidenceTab caseId={caseId} />}
-      {activeTab === "investigation" && <InvestigationTab caseId={caseId} />}
-      {activeTab === "graph" && <GraphTab caseId={caseId} />}
-      {activeTab === "timeline" && <TimelineTab caseId={caseId} />}
-      {activeTab === "analytics" && <AnalyticsTab caseId={caseId} />}
-      {activeTab === "reports" && (
-        <ReportsTab caseId={caseId} caseReference={caseData.case_reference} />
+      {activeTab === "investigation" && (
+        <Suspense fallback={<DetailSkeleton />}>
+          <InvestigationTab key={caseId} caseId={caseId} />
+        </Suspense>
       )}
+      {activeTab === "graph" && (
+        <Suspense fallback={<DetailSkeleton />}>
+          <GraphTab key={caseId} caseId={caseId} />
+        </Suspense>
+      )}
+      {activeTab === "timeline" && (
+        <Suspense fallback={<DetailSkeleton />}>
+          <TimelineTab key={caseId} caseId={caseId} />
+        </Suspense>
+      )}
+      {activeTab === "analytics" && (
+        <Suspense fallback={<DetailSkeleton />}>
+          <AnalyticsTab key={caseId} caseId={caseId} />
+        </Suspense>
+      )}
+      {activeTab === "reports" && (
+        <Suspense fallback={<DetailSkeleton />}>
+          <ReportsTab
+            key={caseId}
+            caseId={caseId}
+            caseReference={caseData.case_reference}
+          />
+        </Suspense>
+      )}
+
+      <Suspense fallback={null}>
+        <CaseAssistant key={caseId} caseId={caseId} />
+      </Suspense>
 
       <Snackbar
         open={!!toast}

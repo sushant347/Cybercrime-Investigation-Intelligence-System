@@ -141,7 +141,11 @@ class MyValidator(BaseSemanticValidator):
         return ValidationVerdict(fits=..., confidence=...)
 ```
 
-Tests use a `FakeValidator` to exercise accept/reject logic deterministically — see `tests/semantic/test_semantic_engine.py` (20 offline tests: entity protection, mixed-script detection, sentence building, forensic invariants, accept/reject, output contract, heuristic validator, and end-to-end service integration proving the `semantic_correction` section is appended without touching prior sections).
+The semantic suite contains 65 collected offline tests across the engine,
+knowledge base and merge integration. `FakeValidator` exercises accept/reject
+logic deterministically, including entity protection, mixed-script detection,
+sentence building, forensic invariants, heuristic fallback and proof that the
+`semantic_correction` section is appended without changing earlier stages.
 
 ## Assumptions & limitations
 

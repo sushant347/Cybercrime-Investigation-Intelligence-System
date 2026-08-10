@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Fail the build if the engine dependency chain has inverted.
 
-The architecture claims one thing above all: the four engines form a straight
-line, each importing only the one before it.
+The architecture claims one thing above all: the analysis engines form a
+straight line, while the RAG engine remains a standalone read-only consumer.
 
     evidence_ocr_engine -> evidence_correlation_engine -> timeline_report_engine
 
@@ -46,6 +46,12 @@ CHECKS = [
         "ciis_correlation.correlation.service",
         ("ciis_timeline_report",),
     ),
+    (
+        "RAG assistant engine",
+        "rag_assistant_engine",
+        "ciis_rag.assistant.service",
+        ("django", "backend", "ciis_correlation", "ciis_timeline_report"),
+    ),
 ]
 
 PROBE = """
@@ -81,8 +87,8 @@ def main() -> int:
             failures.append(label)
 
     if failures:
-        print(f"\n{len(failures)} boundary violation(s). The dependency chain "
-              "must stay: OCR -> correlation -> timeline+report.")
+        print(f"\n{len(failures)} boundary violation(s). The analysis chain "
+              "must stay OCR -> correlation -> timeline+report, with RAG standalone.")
         return 1
     print("\nmodule boundaries hold")
     return 0

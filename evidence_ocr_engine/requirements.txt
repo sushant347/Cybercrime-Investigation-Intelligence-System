@@ -5,13 +5,17 @@
 # PP-OCRv5 is the only generation with a Devanagari recogniser, so it is the
 # best fit for this Nepali-first forensic engine. paddlepaddle 3.2.x is the
 # recommended CPU build (3.3.x has a known oneDNN/PIR CPU-inference regression).
+# Paddle's CPU index carries the supported Windows and Apple-Silicon wheels.
+--extra-index-url https://www.paddlepaddle.org.cn/packages/stable/cpu/
 paddleocr>=3.0.0
 paddlepaddle==3.2.0
 
 # Imaging / preprocessing
 opencv-python>=4.9
 pillow>=10.0
-numpy>=1.26
+# PaddlePaddle 3.2 CPU is validated against NumPy 1.x. The separate threat
+# environment intentionally owns NumPy 2.x.
+numpy>=1.26,<2.0
 
 # PDF page rendering
 pymupdf>=1.24

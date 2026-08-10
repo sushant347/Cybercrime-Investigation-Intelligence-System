@@ -152,7 +152,7 @@ PROVISIONS: Tuple[StatutoryProvision, ...] = (
         section="46",
         title="Damage to any Computer and Information System",
         penalty=(
-            "fine not exceeding two thousand Rupees and imprisonment not "
+            "fine not exceeding two hundred thousand Rupees or imprisonment not "
             "exceeding three years or both"
         ),
         conduct=(
@@ -193,6 +193,62 @@ PROVISIONS: Tuple[StatutoryProvision, ...] = (
         trigger=(
             "at least one offence provision of the Act is engaged, so the "
             "devices used to commit it fall within the confiscation power"
+        ),
+    ),
+)
+
+# The uploaded banking-law summary also names these provisions.  They are
+# transcribed here from the Act so the report can expose the assessment gap,
+# but they are deliberately not placed in ``PROVISIONS``: the current evidence
+# model cannot establish their essential legal elements safely.
+MANUAL_REVIEW_PROVISIONS: Tuple[StatutoryProvision, ...] = (
+    StatutoryProvision(
+        section="44",
+        title="To Pirate, Destroy or Alter computer source code",
+        penalty=(
+            "fine not exceeding two hundred thousand Rupees or imprisonment "
+            "not exceeding three years or both"
+        ),
+        conduct=(
+            "Knowingly or with mala fide intention pirating, destroying or "
+            "altering computer source code that prevailing law requires to be "
+            "kept, or causing another person to do so."
+        ),
+        trigger=(
+            "manual review requires source-code versions, repository history or "
+            "another technical comparison establishing alteration"
+        ),
+    ),
+    StatutoryProvision(
+        section="48",
+        title="Breach of confidentiality",
+        penalty=(
+            "fine not exceeding one hundred thousand Rupees or imprisonment "
+            "not exceeding two years or both, depending on the degree of the offence"
+        ),
+        conduct=(
+            "A person with authorised access under the Act or its Rules divulging "
+            "protected records, correspondence, information, documents or other "
+            "materials to an unauthorised person."
+        ),
+        trigger=(
+            "manual review must establish both the person's authorised access "
+            "and disclosure to an unauthorised recipient"
+        ),
+    ),
+    StatutoryProvision(
+        section="57",
+        title="Offences committed by a corporate body",
+        penalty="liability follows the underlying offence under the Act",
+        conduct=(
+            "Responsibility for an offence committed by a corporate body may "
+            "attach to the person responsible for its operation and, where "
+            "consent, knowledge or negligence is proved, to the corporate body "
+            "and responsible director, manager, secretary or other person."
+        ),
+        trigger=(
+            "manual review requires attribution to a corporate body and evidence "
+            "of responsibility, consent, knowledge or negligence"
         ),
     ),
 )

@@ -14,6 +14,10 @@ from ciis_timeline_report.graph.service import GraphService
 from ciis_timeline_report.pipeline import InvestigationPipeline
 from ciis_timeline_report.prioritization.service import PrioritizationService
 from ciis_timeline_report.reporting.service import InvestigationReportService
+from ciis_timeline_report.reporting.pdf_renderer import (
+    BODY_FONT,
+    PDF_SECTION_TITLES,
+)
 from ciis_correlation.core.repository import InvestigationReportRepository
 from ciis_correlation.suspects.service import SuspectService
 from ciis_timeline_report.timeline.service import TimelineService
@@ -61,7 +65,7 @@ def test_report_references_findings_not_hallucinations(pipeline, icfg, repo):
     assert "+9779812345678" in markdown          # suspect anchor from data
     assert "campaign_analysis.json" in markdown     # findings referenced
     assert "scam-bank.top" in markdown
-    # all 15 mandated sections present
+    # The report keeps the complete 21-section contract in one stable order.
     for title in ("Executive Summary", "Case Overview", "Evidence Summary",
                   "Correlation Analysis", "Campaign Analysis",
                   "Timeline Analysis", "Suspect Assessment",
@@ -77,6 +81,96 @@ def test_report_marks_missing_inputs_explicitly(icfg, data, repo, audit):
     result = service.generate(CASE, persist=False)
     markdown = result["markdown"]
     assert "not available" in markdown  # no invented correlation/campaign data
+
+
+def test_pdf_uses_investigator_brief_structure_without_appendix_dump():
+    assert BODY_FONT == "Times-Roman"
+    assert PDF_SECTION_TITLES == (
+        "Executive Brief",
+        "Evidence Register and Integrity",
+        "Reconstructed Incident Chronology",
+        "Analytical Findings",
+        "Statutory and Regulatory Screening",
+        "Investigator Action Plan",
+        "Methodology, Limitations and Conclusion",
+        "Report Control and Review Certification",
+    )
+    assert all("appendix" not in title.lower() for title in PDF_SECTION_TITLES)
+
+
+def test_report_exposes_timestamp_provenance_and_avoids_attribution(pipeline):
+    pipeline_result = pipeline.analyze_case(CASE)
+    result = pipeline_result["report"]
+    sections = result["sections"]
+    timeline = sections["timeline_analysis"]
+
+    assert len(timeline["chronological_events"]) == 4
+    assert all(
+        {"timestamp", "evidence_id", "timestamp_source",
+         "timestamp_confidence", "timestamp_inferred"} <= set(event)
+        for event in timeline["chronological_events"]
+    )
+    assert all(
+        event["timestamp_source"] != "upload_time_fallback"
+        for event in timeline["event_time_events"]
+    )
+    assert all(
+        event["timestamp_source"] == "upload_time_fallback"
+        for event in timeline["acquisition_records"]
+    )
+    assert len(timeline["chronological_events"]) == (
+        len(timeline["event_time_events"])
+        + len(timeline["acquisition_records"])
+        + len(timeline["unresolved_records"])
+    )
+    assert "reliability_note" in timeline["timestamp_quality"]
+    assert sections["limitations"]
+
+    report_text = " ".join(
+        sections["executive_summary"] + sections["investigation_conclusion"]
+    ).lower()
+    assert "identity lead" in report_text
+    assert "not identity attribution" in report_text
+    assert "coordinated operation." not in report_text
+    assert "automated analytical draft" in result["markdown"].lower()
+    assert "| timestamp (utc) | evidence |" in result["markdown"].lower()
+    assert "| identity lead | score |" in result["markdown"].lower()
+    assert "suspect_id" not in result["markdown"]
+    assert "| # | Finding |" in result["markdown"]
+    assert "| Stage | Method and stored output |" in result["markdown"]
+    assert "| Evidence | File | Acquired | OCR confidence | Entities | Integrity |" in result["markdown"]
+    assert sections["investigation_statistics"]["timeline_statistics"] == (
+        pipeline_result["timeline"].statistics
+    )
+    if not timeline["progression_assessable"]:
+        executive = " ".join(sections["executive_summary"])
+        assert (
+            "stage order is incomplete" in executive
+            or "no evidence-derived event times were available" in executive
+        )
+        assert "Keyword-derived stage order:" not in executive
+
+
+def test_report_separates_offences_from_source_backed_follow_up(pipeline):
+    result = pipeline.analyze_case(CASE)["report"]
+    legal = result["sections"]["legal_basis"]
+
+    assert legal["sources"]
+    assert {item["section"] for item in legal["manual_review_provisions"]} == {
+        "44", "48", "57"
+    }
+    assert legal["investigative_guidance"]
+    assert all(
+        item["status"] in {
+            "evidence_handling_requirement", "investigative_follow_up"
+        }
+        for item in legal["investigative_guidance"]
+    )
+    assert "Evidentiary and regulatory follow-up" in result["markdown"]
+    assert "not findings that an institution violated a rule" in result["markdown"]
+    assert "Primary sources" in result["markdown"]
+    assert "| Field | Recorded value |" in result["markdown"]
+    assert "Evidence-based match" in result["markdown"]
 
 
 def test_one_failing_module_does_not_abort(pipeline, monkeypatch):
