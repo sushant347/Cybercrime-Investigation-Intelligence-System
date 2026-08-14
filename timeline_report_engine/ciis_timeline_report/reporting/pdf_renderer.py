@@ -290,7 +290,7 @@ def render_pdf(
         ["Report reference", report_id],
         ["Report version", f"v{report_version}"],
         ["Date of issue (UTC)", generated_at],
-        ["Status", "Final - machine generated"],
+        ["Status", "Automated analytical draft - investigator review required"],
         ["Prepared by", f"{ISSUING_BODY}, automated analysis pipeline"],
         ["Handling", HANDLING.title()],
     ]
@@ -311,10 +311,11 @@ def render_pdf(
     story.append(Spacer(1, 10 * mm))
     story.append(Paragraph(
         "<b>Basis of this report.</b> Every statement is templated over a "
-        "stored forensic finding; the generator has no free-text capability "
-        "and cannot introduce a fact the analysis did not compute. Where an "
-        "input was unavailable the report says so explicitly rather than "
-        "inferring. Section 18, Report Provenance &amp; Integrity, lists the "
+        "stored forensic finding; the generator has no free-text capability. "
+        "The accuracy of those findings still depends on source quality and "
+        "upstream extraction, and requires investigator review. Where an "
+        "input was unavailable the report says so explicitly. The Report "
+        "Provenance &amp; Integrity section lists the "
         "SHA-256 digest of every source artifact, so this document can be "
         "tied back to the exact evidence state it was produced from.",
         styles["body"]))
@@ -412,6 +413,172 @@ def render_pdf(
         story.append(Paragraph(
             "SHA-256 digests for each item are listed in the Appendix "
             "(chain of custody).", styles["subtitle"]))
+        return True
+
+    def emit_timeline_table(section: Any) -> bool:
+        """Show the chronology and timestamp provenance in one readable view."""
+        if not isinstance(section, dict) or "chronological_events" not in section:
+            return False
+        if section.get("summary"):
+            story.append(Paragraph(esc(section["summary"]), styles["body"]))
+            story.append(Spacer(1, 4))
+        quality = section.get("timestamp_quality") or {}
+        if quality.get("reliability_note"):
+            story.append(Paragraph(
+                esc(quality["reliability_note"]), styles["caveat"]
+            ))
+            story.append(Spacer(1, 5))
+        rows = section.get("chronological_events") or []
+        if rows:
+            story.append(data_table(
+                ["Timestamp (UTC)", "Evidence", "File", "Source", "Conf.", "Inferred"],
+                [[
+                    str(row.get("timestamp", "unresolved"))[:25],
+                    row.get("evidence_id", ""),
+                    row.get("file_name", ""),
+                    str(row.get("timestamp_source", "")).replace("_", " "),
+                    row.get("timestamp_confidence", ""),
+                    "YES" if row.get("timestamp_inferred") else "NO",
+                ] for row in rows],
+                widths=[35 * mm, 25 * mm, 39 * mm, 33 * mm, 14 * mm, 15 * mm],
+            ))
+        story.append(Spacer(1, 5))
+        order = section.get("stage_progression") or []
+        story.append(Paragraph(
+            "<b>Keyword-derived stage order:</b> "
+            + esc(" -> ".join(order) if order else "none"),
+            styles["body"],
+        ))
+        story.append(Paragraph(
+            "<b>Order assessable:</b> "
+            + ("yes" if section.get("progression_assessable") else "no")
+            + " &nbsp;|&nbsp; <b>Matches configured sequence:</b> "
+            + ("yes" if section.get("progression_consistent") else "no"),
+            styles["subtitle"],
+        ))
+        critical = section.get("critical_events") or []
+        if critical:
+            story.append(Spacer(1, 5))
+            story.append(Paragraph("<b>Critical events</b>", styles["body"]))
+            for event in critical:
+                reasons = "; ".join(event.get("reasons") or [])
+                story.append(Paragraph(
+                    f"&bull; <b>{esc(event.get('evidence_id', 'unknown'))}</b> "
+                    f"{esc(event.get('timestamp', 'unresolved'))} - {esc(reasons)}",
+                    styles["bullet"],
+                ))
+        return True
+
+    def emit_correlation_table(section: Any) -> bool:
+        if not isinstance(section, dict) or "top_relationships" not in section:
+            return False
+        story.append(Paragraph(
+            f"{section.get('related_pair_count', 0)} of "
+            f"{section.get('pair_count', 0)} analysed pairs met a configured "
+            "relationship threshold. Association is not causation or identity.",
+            styles["caveat"],
+        ))
+        rows = section.get("top_relationships") or []
+        if rows:
+            story.append(Spacer(1, 5))
+            story.append(data_table(
+                ["Evidence pair", "Strength", "Confidence", "Computed basis"],
+                [[
+                    row.get("pair", ""),
+                    row.get("strength", ""),
+                    f"{float(row.get('confidence') or 0):.2f}",
+                    " ".join(str(row.get("explanation", "")).split())[:260],
+                ] for row in rows],
+                widths=[39 * mm, 23 * mm, 19 * mm, 80 * mm],
+            ))
+        return True
+
+    def emit_cross_case_table(section: Any) -> bool:
+        if not isinstance(section, dict) or "links" not in section:
+            return False
+        story.append(Paragraph(
+            "Automated shared-entity associations require independent "
+            "corroboration; common identifiers can link unrelated parties.",
+            styles["caveat"],
+        ))
+        rows = []
+        for link in section.get("links") or []:
+            matches = link.get("matched_entities") or []
+            indicators = [
+                f"{match.get('entity_type', '')}:{match.get('value', '')}"
+                for match in matches[:4]
+            ]
+            if len(matches) > 4:
+                indicators.append(f"+{len(matches) - 4} more")
+            rows.append([
+                link.get("other_case_id", ""),
+                link.get("relationship_strength", ""),
+                f"{float(link.get('match_confidence') or 0):.2f}",
+                ", ".join(indicators),
+                " ".join(str(link.get("match_reason", "")).split())[:180],
+            ])
+        if rows:
+            story.append(Spacer(1, 5))
+            story.append(data_table(
+                ["Other case", "Strength", "Conf.", "Matched indicators", "Basis"],
+                rows,
+                widths=[31 * mm, 22 * mm, 16 * mm, 52 * mm, 40 * mm],
+            ))
+        else:
+            story.append(Paragraph("No cross-case associations found.", styles["body"]))
+        return True
+
+    def emit_campaign_table(section: Any) -> bool:
+        if not isinstance(section, dict) or "campaigns" not in section:
+            return False
+        story.append(Paragraph(
+            "Clusters are candidate groupings produced by configured thresholds; "
+            "they do not by themselves establish coordination.",
+            styles["caveat"],
+        ))
+        campaigns = section.get("campaigns") or []
+        if campaigns:
+            story.append(Spacer(1, 5))
+            story.append(data_table(
+                ["Candidate cluster", "Evidence", "Conf.", "Shared signature"],
+                [[
+                    campaign.get("campaign_id", ""),
+                    ", ".join(campaign.get("members") or []),
+                    f"{float(campaign.get('confidence') or 0):.2f}",
+                    ", ".join((campaign.get("signature") or [])[:5]),
+                ] for campaign in campaigns],
+                widths=[43 * mm, 42 * mm, 16 * mm, 60 * mm],
+            ))
+        unclustered = section.get("unclustered_evidence") or []
+        if unclustered:
+            story.append(Spacer(1, 4))
+            story.append(Paragraph(
+                "<b>Unclustered evidence:</b> " + esc(", ".join(unclustered)),
+                styles["subtitle"],
+            ))
+        return True
+
+    def emit_suspect_table(section: Any) -> bool:
+        if not (isinstance(section, list) and section
+                and isinstance(section[0], dict) and "identity" in section[0]):
+            return False
+        story.append(Paragraph(
+            "Identity anchors are investigative leads, not legal attribution. "
+            "Verify ownership and role using original exhibits and independent records.",
+            styles["caveat"],
+        ))
+        story.append(Spacer(1, 5))
+        story.append(data_table(
+            ["Identity lead", "Score", "Confidence", "Risk", "Supporting evidence"],
+            [[
+                row.get("identity", ""),
+                str(row.get("confidence_score", "")),
+                row.get("confidence_level", ""),
+                row.get("risk_level", ""),
+                ", ".join(row.get("evidence_ids") or []),
+            ] for row in section],
+            widths=[46 * mm, 16 * mm, 24 * mm, 18 * mm, 57 * mm],
+        ))
         return True
 
     def emit_predictions_table(section: Any) -> bool:
@@ -530,6 +697,16 @@ def render_pdf(
         value = sections.get(key)
         if key == "evidence_summary" and emit_evidence_table(value):
             continue
+        if key == "timeline_analysis" and emit_timeline_table(value):
+            continue
+        if key == "correlation_analysis" and emit_correlation_table(value):
+            continue
+        if key == "cross_case_correlation" and emit_cross_case_table(value):
+            continue
+        if key == "campaign_analysis" and emit_campaign_table(value):
+            continue
+        if key == "suspect_assessment" and emit_suspect_table(value):
+            continue
         if key == "model_predictions" and emit_predictions_table(value):
             continue
         if key == "legal_basis" and emit_legal_basis(value):
@@ -549,36 +726,7 @@ def render_pdf(
             continue
         emit(value)
 
-    # ------------------------------------------------- limitations & signature
-    #
-    # A forensic report states what it cannot support as plainly as what it
-    # can. Without this, a reader can mistake a correlation score for a
-    # finding of fact, which is exactly the error that discredits a report
-    # under cross-examination.
-    number += 1
-    limits_heading = Paragraph(f"{number}. Statement of Limitations",
-                               styles["h2"])
-    limits_heading._toc_level = 0
-    story.append(limits_heading)
-    for line in (
-        "This report is produced by automated analysis of the material "
-        "submitted to the case. It does not constitute an opinion on guilt, "
-        "and no conclusion here should be read as attributing an offence to a "
-        "named person.",
-        "Correlation confidence expresses how strongly two items of evidence "
-        "share identifying features. It is a measure of association, not of "
-        "causation, and not of identity.",
-        "Suspect scores rank identity anchors observed in the evidence by how "
-        "strongly the material connects them to the case. An anchor is not a "
-        "suspect in law until corroborated by investigation.",
-        "Timestamps resolved from the content of an exhibit carry the "
-        "reliability of that content. Where no timestamp could be recovered, "
-        "the acquisition time is used and is labelled as such.",
-        "The analysis reflects the evidence held at the date of issue. "
-        "Material submitted later may change any finding in this report.",
-    ):
-        story.append(Paragraph(f"&bull; {line}", styles["bullet"]))
-
+    # -------------------------------------------------------------- signature
     story.append(Spacer(1, 14))
     story.append(HRFlowable(width="100%", thickness=0.5,
                             color=colors.HexColor(RULE)))
