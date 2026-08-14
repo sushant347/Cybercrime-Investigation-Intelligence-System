@@ -79,6 +79,36 @@ def test_report_marks_missing_inputs_explicitly(icfg, data, repo, audit):
     assert "not available" in markdown  # no invented correlation/campaign data
 
 
+def test_report_exposes_timestamp_provenance_and_avoids_attribution(pipeline):
+    pipeline_result = pipeline.analyze_case(CASE)
+    result = pipeline_result["report"]
+    sections = result["sections"]
+    timeline = sections["timeline_analysis"]
+
+    assert len(timeline["chronological_events"]) == 4
+    assert all(
+        {"timestamp", "evidence_id", "timestamp_source",
+         "timestamp_confidence", "timestamp_inferred"} <= set(event)
+        for event in timeline["chronological_events"]
+    )
+    assert "reliability_note" in timeline["timestamp_quality"]
+    assert sections["limitations"]
+
+    report_text = " ".join(
+        sections["executive_summary"] + sections["investigation_conclusion"]
+    ).lower()
+    assert "identity lead" in report_text
+    assert "not identity attribution" in report_text
+    assert "coordinated operation." not in report_text
+    assert "automated analytical draft" in result["markdown"].lower()
+    assert "| timestamp (utc) | evidence |" in result["markdown"].lower()
+    assert "| identity lead | score |" in result["markdown"].lower()
+    assert "suspect_id" not in result["markdown"]
+    assert sections["investigation_statistics"]["timeline_statistics"] == (
+        pipeline_result["timeline"].statistics
+    )
+
+
 def test_one_failing_module_does_not_abort(pipeline, monkeypatch):
     def boom(*args, **kwargs):
         raise RuntimeError("campaign module exploded")
