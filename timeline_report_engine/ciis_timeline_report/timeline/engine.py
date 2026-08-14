@@ -57,10 +57,48 @@ CHAT_TIMESTAMP_RE = re.compile(
 )
 
 FULL_CHAT_TIMESTAMP_RE = re.compile(
-    r"[\[(]?\s*(?P<day>\d{1,2})[/-](?P<month>\d{1,2})[/-]"
+    r"(?<!\d)[\[(]?\s*(?P<day>\d{1,2})[/-](?P<month>\d{1,2})[/-]"
     r"(?P<year>\d{2,4})\s*,?\s*(?P<hour>\d{1,2}):(?P<minute>\d{2})"
-    r"(?::(?P<second>\d{2}))?\s*(?P<ampm>am|pm)?\s*[\])]?",
+    r"(?::(?P<second>\d{2}))?\s*(?P<ampm>am|pm)?\s*[\])]?\s*(?!\d)",
     re.IGNORECASE,
+)
+
+# OCR often removes the separator between an ISO date and its time, for
+# example ``2026-06-1110:42AM``. Fixed-width year/month/day groups are
+# intentional: a permissive day/month parser can backtrack into that value and
+# turn it into the syntactically valid but impossible year 0111.
+VISIBLE_ISO_DATETIME_RE = re.compile(
+    r"(?<!\d)(?P<year>\d{4})[/-](?P<month>\d{1,2})[/-](?P<day>\d{1,2})"
+    r"(?:[ T]?)(?P<hour>\d{1,2}):(?P<minute>\d{2})"
+    r"(?::(?P<second>\d{2}))?\s*(?P<ampm>am|pm)?\b",
+    re.IGNORECASE,
+)
+
+# A labelled value is more probative than the first date mentioned in prose.
+# The label grammar is deliberately generic (``Payment Date``, ``Date of
+# Report``, ``Created Time`` and similar forms), rather than tied to a case or
+# document template. Both ``Label: value`` and OCR's ``Label\nvalue`` survive.
+LABELLED_TIMESTAMP_RE = re.compile(
+    r"^[ \t]*(?P<label>(?:"
+    r"date(?:\s*(?:&|and)\s*time)?|timestamp|time|"
+    r"date\s+of\s+[A-Za-z][A-Za-z0-9 _/&-]{0,30}|"
+    r"[A-Za-z][A-Za-z0-9 _/&-]{0,30}\s+"
+    r"(?:date(?:\s*(?:&|and)\s*time)?|timestamp|time)"
+    r"))[ \t]*(?::[ \t]*|\r?\n[ \t]*)(?P<value>[^\r\n]{1,100})",
+    re.IGNORECASE | re.MULTILINE,
+)
+
+VISIBLE_DATE_PATTERNS = (
+    re.compile(r"(?<!\d)\d{4}[/-]\d{1,2}[/-]\d{1,2}(?!\d)"),
+    re.compile(r"(?<!\d)\d{1,2}[/-]\d{1,2}[/-]\d{2,4}(?!\d)"),
+    re.compile(
+        r"\b\d{1,2}(?:st|nd|rd|th)?\s+[A-Za-z]{3,9}\s+\d{4}\b",
+        re.IGNORECASE,
+    ),
+    re.compile(
+        r"\b[A-Za-z]{3,9}\s+\d{1,2}(?:st|nd|rd|th)?(?:,)?\s+\d{4}\b",
+        re.IGNORECASE,
+    ),
 )
 
 
@@ -104,6 +142,18 @@ def _parse_upload_time(upload_time_str: str):
         return None
 
 
+def _plausible_year(year: int, reference_dt: Optional[datetime] = None) -> bool:
+    """Reject parser artefacts while retaining ordinary historical evidence."""
+    upper_reference = reference_dt or datetime.now(timezone.utc)
+    return 1970 <= year <= upper_reference.year + 1
+
+
+def _plausible_datetime(
+    value: datetime, reference_dt: Optional[datetime] = None
+) -> bool:
+    return _plausible_year(value.year, reference_dt)
+
+
 def _try_chat_style_timestamp(raw_text: str, reference_dt: Optional[datetime]):
     if not raw_text:
         return None
@@ -113,7 +163,9 @@ def _try_chat_style_timestamp(raw_text: str, reference_dt: Optional[datetime]):
         try:
             year = int(full.group("year"))
             if year < 100:
-                year += 2000
+                year += 2000 if year <= 68 else 1900
+            if not _plausible_year(year, reference_dt):
+                raise ValueError("implausible timestamp year")
             hour = int(full.group("hour"))
             ampm = (full.group("ampm") or "").lower()
             if ampm == "pm" and hour < 12:
@@ -180,7 +232,8 @@ def _parse_date(value: str, reference_dt: Optional[datetime]) -> Optional[dateti
                 "%d %B %Y", "%d %b %Y"):
         try:
             parsed = datetime.strptime(text, fmt).replace(tzinfo=timezone.utc)
-            return parsed
+            if _plausible_datetime(parsed, reference_dt):
+                return parsed
         except ValueError:
             continue
     # Partial month-day dates use the upload year, rolling back if needed.
@@ -256,6 +309,7 @@ def _try_metadata_datetime(metadata: dict):
 
 def _parse_time(value: str) -> Optional[tuple[int, int, int]]:
     text = value.strip().lower().replace(".", ":")
+    text = re.sub(r"(?<=\d)(am|pm)$", r" \1", text)
     for fmt in ("%H:%M:%S", "%H:%M", "%I:%M %p", "%I:%M:%S %p"):
         try:
             parsed = datetime.strptime(text, fmt)
@@ -263,6 +317,73 @@ def _parse_time(value: str) -> Optional[tuple[int, int, int]]:
         except ValueError:
             continue
     return None
+
+
+def _visible_datetime(
+    value: str, reference_dt: Optional[datetime]
+) -> Optional[tuple[datetime, bool]]:
+    """Parse one visible label value and say whether it included a time."""
+    match = VISIBLE_ISO_DATETIME_RE.search(value or "")
+    if match:
+        try:
+            year = int(match.group("year"))
+            if not _plausible_year(year, reference_dt):
+                return None
+            hour = int(match.group("hour"))
+            ampm = (match.group("ampm") or "").lower()
+            if ampm == "pm" and hour < 12:
+                hour += 12
+            elif ampm == "am" and hour == 12:
+                hour = 0
+            parsed = datetime(
+                year,
+                int(match.group("month")),
+                int(match.group("day")),
+                hour,
+                int(match.group("minute")),
+                int(match.group("second") or 0),
+                tzinfo=timezone.utc,
+            )
+            return parsed, True
+        except (TypeError, ValueError):
+            return None
+
+    date_value = None
+    for pattern in VISIBLE_DATE_PATTERNS:
+        date_match = pattern.search(value or "")
+        if date_match:
+            date_value = date_match.group(0)
+            break
+    parsed_date = _parse_date(date_value, reference_dt) if date_value else None
+    if parsed_date is None:
+        return None
+
+    remainder = (value or "").replace(date_value, " ", 1)
+    time_match = re.search(
+        r"(?<!\d)(\d{1,2}:\d{2}(?::\d{2})?\s*(?:am|pm)?)(?!\d)",
+        remainder,
+        re.IGNORECASE,
+    )
+    parsed_time = _parse_time(time_match.group(1)) if time_match else None
+    if parsed_time is None:
+        return parsed_date, False
+    return parsed_date.replace(
+        hour=parsed_time[0], minute=parsed_time[1], second=parsed_time[2]
+    ), True
+
+
+def _try_labelled_timestamp(raw_text: str, reference_dt: Optional[datetime]):
+    """Resolve explicit document labels before unrelated narrative dates."""
+    for match in LABELLED_TIMESTAMP_RE.finditer(raw_text or ""):
+        parsed = _visible_datetime(match.group("value"), reference_dt)
+        if parsed is None:
+            continue
+        value, has_time = parsed
+        return value, (
+            "content_labeled_date_time" if has_time
+            else "content_labeled_date_only"
+        )
+    return None, None
 
 
 def _try_entity_datetime(entities: dict, reference_dt: Optional[datetime]):
@@ -299,6 +420,16 @@ def resolve_evidence_timestamp(evidence: dict) -> dict:
     cleaning = evidence.get("cleaning", {})
     entities = cleaning.get("entities", {})
     raw_text = evidence.get("raw_text") or cleaning.get("cleaned_text") or ""
+
+    dt, source = _try_labelled_timestamp(raw_text, upload_dt)
+    if dt:
+        return {
+            "resolved_time": dt,
+            "resolved_time_iso": dt.isoformat(),
+            "source": source,
+            "confidence": "high" if source.endswith("date_time") else "medium",
+            "inferred": source.endswith("date_only"),
+        }
 
     dt, source = _try_entity_datetime(entities, upload_dt)
     if dt:
@@ -543,17 +674,47 @@ def build_timeline(
     observed = [order_index[stage] for stage in progression if stage in order_index]
     timestamps = [datetime.fromisoformat(event["timestamp"])
                   for event in ordered if event["timestamp"]]
-    span_hours = ((max(timestamps) - min(timestamps)).total_seconds() / 3600.0
-                  if len(timestamps) > 1 else 0.0)
+    event_timestamps = [
+        datetime.fromisoformat(event["timestamp"])
+        for event in ordered
+        if event["timestamp"] and event["time_source"] != "upload_time_fallback"
+    ]
+    acquisition_inclusive_span = (
+        (max(timestamps) - min(timestamps)).total_seconds() / 3600.0
+        if len(timestamps) > 1 else 0.0
+    )
+    span_hours = (
+        (max(event_timestamps) - min(event_timestamps)).total_seconds() / 3600.0
+        if len(event_timestamps) > 1 else 0.0
+    )
     milestones = _milestones(ordered)
     critical_events = [event for event in ordered if event["critical"]]
+    inferred_count = sum(1 for event in ordered if event["timestamp_inferred"])
+    fallback_count = sum(
+        1 for event in ordered if event["time_source"] == "upload_time_fallback"
+    )
+    direct_count = len(resolved) - inferred_count
+    staged_events = [event for event in ordered if event["stages"]]
+    progression_assessable = bool(staged_events) and all(
+        event["timestamp"] and event["time_source"] != "upload_time_fallback"
+        for event in staged_events
+    )
     summary = (
-        f"{_count(len(ordered), 'event')} spanning "
-        f"{span_hours:.1f} {_plural('hour', span_hours)}; "
+        f"{_count(len(ordered), 'event')}; {_count(len(resolved), 'timestamp')} "
+        f"resolved ({direct_count} non-inferred, {inferred_count} inferred, "
+        f"including {fallback_count} acquisition-time "
+        f"{_plural('fallback', fallback_count)}); "
         f"{_count(len(unresolved), 'timestamp')} unresolved."
     )
+    if len(event_timestamps) > 1:
+        summary += (
+            f" Content/metadata event times span {span_hours:.1f} "
+            f"{_plural('hour', span_hours)}."
+        )
     if progression:
-        summary += " Observed scam progression: " + " -> ".join(progression) + "."
+        summary += " Keyword-derived stage order: " + " -> ".join(progression) + "."
+        if not progression_assessable:
+            summary += " This order is provisional because one or more stages use acquisition time."
 
     return {
         "case_id": cases[0].get("case_id", "UNKNOWN_CASE")
@@ -573,12 +734,20 @@ def build_timeline(
             "event_count": float(len(ordered)),
             "resolved_event_count": float(len(resolved)),
             "unresolved_event_count": float(len(unresolved)),
-            "inferred_event_count": float(sum(
-                1 for event in ordered if event["timestamp_inferred"]
-            )),
+            "inferred_event_count": float(inferred_count),
+            "non_inferred_event_count": float(direct_count),
+            "acquisition_fallback_count": float(fallback_count),
+            "progression_assessable": float(progression_assessable),
             "stage_count": float(len(attack_stages)),
             "critical_event_count": float(len(critical_events)),
-            "timeline_span_hours": round(span_hours, 2),
+            # Retained as the acquisition-inclusive value for schema/backward
+            # compatibility. Consumers that need event chronology should use
+            # event_time_span_hours, which excludes intake-time fallbacks.
+            "timeline_span_hours": round(acquisition_inclusive_span, 2),
+            "event_time_span_hours": round(span_hours, 2),
+            "acquisition_inclusive_span_hours": round(
+                acquisition_inclusive_span, 2
+            ),
         },
     }
 

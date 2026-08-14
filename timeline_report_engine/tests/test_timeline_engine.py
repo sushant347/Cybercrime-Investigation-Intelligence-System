@@ -128,6 +128,64 @@ class TimelineReconstructionTests(unittest.TestCase):
         self.assertEqual(event["time_source"], "metadata_exif_created")
         self.assertFalse(event["timestamp_inferred"])
 
+    def test_compact_ocr_iso_datetime_does_not_backtrack_into_bad_year(self):
+        result = build_timeline([{
+            "case_id": "CASE_COMPACT",
+            "evidence": [{
+                "evidence_id": "EVID_COMPACT",
+                "upload_time": "2026-08-01T10:00:00Z",
+                "raw_text": "Date & Time\n2026-06-1110:42AM\nStatus: complete",
+                "cleaning": {"entities": {}},
+            }],
+        }])
+
+        event = result["events"][0]
+        self.assertEqual(event["timestamp"], "2026-06-11T10:42:00+00:00")
+        self.assertEqual(event["time_source"], "content_labeled_date_time")
+        self.assertFalse(event["timestamp_inferred"])
+        self.assertEqual(event["confidence"], "high")
+
+    def test_labelled_document_date_beats_earlier_narrative_entity(self):
+        result = build_timeline([{
+            "case_id": "CASE_LABEL",
+            "evidence": [{
+                "evidence_id": "EVID_LABEL",
+                "upload_time": "2026-08-01T10:00:00Z",
+                "raw_text": (
+                    "The incident began on 10 June 2026.\n"
+                    "Date of Report: 15 June 2026"
+                ),
+                "cleaning": {"entities": {
+                    "dates": [
+                        {"normalized": "10 June 2026"},
+                        {"normalized": "15 June 2026"},
+                    ],
+                }},
+            }],
+        }])
+
+        event = result["events"][0]
+        self.assertEqual(event["timestamp"], "2026-06-15T00:00:00+00:00")
+        self.assertEqual(event["time_source"], "content_labeled_date_only")
+        self.assertTrue(event["timestamp_inferred"])
+        self.assertEqual(event["confidence"], "medium")
+
+    def test_implausible_chat_year_is_rejected(self):
+        result = build_timeline([{
+            "case_id": "CASE_BAD_YEAR",
+            "evidence": [{
+                "evidence_id": "EVID_BAD_YEAR",
+                "upload_time": "2026-08-01T10:00:00Z",
+                "raw_text": "26-06-1110:42AM",
+                "cleaning": {"entities": {}},
+            }],
+        }])
+
+        event = result["events"][0]
+        self.assertEqual(event["timestamp"], "2026-08-01T10:00:00+00:00")
+        self.assertEqual(event["time_source"], "upload_time_fallback")
+        self.assertTrue(event["timestamp_inferred"])
+
 
 if __name__ == "__main__":
     unittest.main()
