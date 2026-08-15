@@ -248,7 +248,7 @@ class LegalBasisService:
         """s.55 - links beyond this case put locality in issue."""
         if cross_case is None or not getattr(cross_case, "link_count", 0):
             return None
-        linked = [link.case_id for link in getattr(cross_case, "links", [])][:3]
+        linked = [link.other_case_id for link in getattr(cross_case, "links", [])][:3]
         basis = (
             f"this case shares identifiers with "
             f"{count_of(cross_case.link_count, 'other case')}"
