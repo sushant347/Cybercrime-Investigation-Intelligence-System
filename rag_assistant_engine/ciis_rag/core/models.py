@@ -47,11 +47,26 @@ class Relationship:
 
 
 @dataclass(frozen=True)
+class ArtifactSection:
+    """One investigator-facing section derived from a canonical CIIS artifact."""
+
+    source_id: str
+    source_kind: str
+    title: str
+    file_name: str
+    text: str
+    evidence_ids: tuple[str, ...] = ()
+    entity_values: tuple[str, ...] = ()
+    source_url: str = ""
+
+
+@dataclass(frozen=True)
 class CaseKnowledgeBundle:
     case_id: str
     evidence: tuple[EvidenceItem, ...]
     timeline: tuple[TimelineFact, ...] = ()
     relationships: tuple[Relationship, ...] = ()
+    artifact_sections: tuple[ArtifactSection, ...] = ()
     summary: dict[str, Any] = field(default_factory=dict)
     source_hashes: dict[str, str] = field(default_factory=dict)
     warnings: tuple[str, ...] = ()
@@ -69,6 +84,9 @@ class KnowledgeChunk:
     entity_values: tuple[str, ...] = ()
     related_evidence_ids: tuple[str, ...] = ()
     source_kind: str = "evidence"
+    source_title: str = ""
+    source_url: str = ""
+    supporting_evidence_ids: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -94,6 +112,10 @@ class SourceReference:
     evidence_id: str
     file_name: str
     chunk_ids: tuple[str, ...]
+    source_kind: str = "evidence"
+    title: str = ""
+    url: str = ""
+    supporting_evidence_ids: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)

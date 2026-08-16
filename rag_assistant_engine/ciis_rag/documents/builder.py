@@ -10,7 +10,7 @@ from ..core.models import CaseKnowledgeBundle, KnowledgeChunk, Relationship
 from .chunking import split_text
 
 
-CHUNKING_VERSION = "2"
+CHUNKING_VERSION = "3"
 
 
 def _digest(text: str) -> str:
@@ -137,6 +137,46 @@ def build_chunks(bundle: CaseKnowledgeBundle, config: RAGConfig) -> list[Knowled
                     if entity.normalized
                 })),
                 related_evidence_ids=tuple(related_ids),
+                source_title=evidence.file_name,
+                supporting_evidence_ids=(evidence.evidence_id,),
+            ))
+
+    for section in bundle.artifact_sections:
+        parts = split_text(
+            section.text,
+            max_chars=config.chunk_size_chars,
+            overlap_chars=config.chunk_overlap_chars,
+        )
+        for index, part in enumerate(parts):
+            header = "\n".join([
+                f"Source ID: {section.source_id}",
+                f"Case: {bundle.case_id}",
+                f"Source type: {section.source_kind}",
+                f"Title: {section.title}",
+                f"Artifact: {section.file_name}",
+                "Supporting evidence IDs: "
+                + (", ".join(section.evidence_ids) or "not explicitly listed"),
+                f"Source URL: {section.source_url or 'not applicable'}",
+                "Canonical CIIS artifact content:",
+            ])
+            text = f"{header}\n{part}".strip()
+            chunk_id = (
+                f"{bundle.case_id}:artifact:{section.source_id}:{index:03d}"
+            )
+            chunks.append(KnowledgeChunk(
+                chunk_id=chunk_id,
+                case_id=bundle.case_id,
+                evidence_id=section.source_id,
+                file_name=section.file_name,
+                chunk_index=index,
+                text=text,
+                content_hash=_digest(text),
+                entity_values=section.entity_values,
+                related_evidence_ids=section.evidence_ids,
+                source_kind=section.source_kind,
+                source_title=section.title,
+                source_url=section.source_url,
+                supporting_evidence_ids=section.evidence_ids,
             ))
 
     ids = [chunk.chunk_id for chunk in chunks]

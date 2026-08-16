@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from datetime import datetime, timezone
 from itertools import combinations
 from pathlib import Path
@@ -11,6 +12,7 @@ from typing import Any, Mapping
 
 from ..core.exceptions import ArtifactContractError
 from ..core.models import (
+    ArtifactSection,
     CaseKnowledgeBundle,
     EntityMention,
     EvidenceItem,
@@ -21,10 +23,29 @@ from ..core.models import (
 
 ARTIFACT_FILES = {
     "correlation": "correlation_analysis.json",
+    "cross_case": "cross_case_correlation.json",
+    "campaigns": "campaign_analysis.json",
+    "suspects": "suspect_assessment.json",
     "timeline": "timeline_analysis.json",
     "graph": "graph.json",
     "graph_summary": "graph_summary.json",
     "graph_statistics": "graph_statistics.json",
+    "analytics": "analytics.json",
+    "priority": "case_priority.json",
+    "report": "investigation_report.json",
+    "analysis_manifest": "analysis_manifest.json",
+}
+
+_ARTIFACT_TITLES = {
+    "correlation": "Evidence correlation analysis",
+    "cross_case": "Cross-case correlation",
+    "campaigns": "Campaign analysis",
+    "suspects": "Suspect assessment",
+    "analytics": "Investigation analytics",
+    "priority": "Case priority assessment",
+    "graph_summary": "Relationship graph summary",
+    "graph_statistics": "Relationship graph statistics",
+    "analysis_manifest": "Analysis provenance and configuration",
 }
 
 
@@ -282,6 +303,124 @@ def _summary(artifacts: Mapping[str, Mapping[str, Any]]) -> dict[str, Any]:
     }
 
 
+def _safe_id(value: str) -> str:
+    cleaned = "".join(
+        character if character.isalnum() else "_" for character in value.upper()
+    )
+    return "_".join(part for part in cleaned.split("_") if part) or "SECTION"
+
+
+def _collect_evidence_ids(value: Any) -> tuple[str, ...]:
+    """Collect provenance IDs carried anywhere inside an artifact section."""
+    found: set[str] = set()
+
+    def visit(item: Any, key: str = "") -> None:
+        if isinstance(item, Mapping):
+            for child_key, child in item.items():
+                visit(child, str(child_key))
+            return
+        if isinstance(item, list):
+            for child in item:
+                visit(child, key)
+            return
+        if key in {
+            "evidence_id", "evidence_a", "evidence_b", "source_evidence_ids",
+            "evidence_ids", "supporting_evidence",
+        }:
+            text = str(item or "").strip()
+            found.update(
+                match.upper() for match in re.findall(
+                    r"\bEVID_[A-Z0-9_-]+\b", text, re.IGNORECASE
+                )
+            )
+
+    visit(value)
+    return tuple(sorted(found))
+
+
+def _section_text(title: str, value: Any) -> str:
+    return (
+        f"Section: {title}\n"
+        + json.dumps(value, ensure_ascii=False, indent=2, sort_keys=True)
+    )
+
+
+def _artifact_sections(
+    artifacts: Mapping[str, Mapping[str, Any]],
+) -> tuple[ArtifactSection, ...]:
+    """Expose the complete investigator-facing findings without graph duplication."""
+    sections: list[ArtifactSection] = []
+    report = _unwrap(artifacts.get("report"))
+    report_sections = report.get("sections") or {}
+    if isinstance(report_sections, Mapping):
+        for key, value in report_sections.items():
+            if value in (None, "", [], {}):
+                continue
+            title = str(key).replace("_", " ").title()
+            sections.append(ArtifactSection(
+                source_id=f"REPORT_{_safe_id(str(key))}",
+                source_kind="report_section",
+                title=title,
+                file_name=ARTIFACT_FILES["report"],
+                text=_section_text(title, value),
+                evidence_ids=_collect_evidence_ids(value),
+            ))
+
+        legal = report_sections.get("legal_basis") or {}
+        if isinstance(legal, Mapping):
+            for source in legal.get("sources") or []:
+                if not isinstance(source, Mapping):
+                    continue
+                source_key = str(source.get("source_id") or source.get("title") or "legal")
+                title = str(source.get("title") or "Primary legal source")
+                sections.append(ArtifactSection(
+                    source_id=f"SOURCE_{_safe_id(source_key)}",
+                    source_kind="primary_legal_source",
+                    title=title,
+                    file_name=ARTIFACT_FILES["report"],
+                    text=_section_text(title, source),
+                    source_url=str(source.get("url") or ""),
+                ))
+
+    timeline = _unwrap(artifacts.get("timeline"))
+    events = timeline.get("events") or timeline.get("timeline") or []
+    if isinstance(events, list):
+        for index, event in enumerate(events):
+            if not isinstance(event, Mapping):
+                continue
+            evidence_id = str(event.get("evidence_id") or "").strip()
+            title = f"Timeline event for {evidence_id or index + 1}"
+            sections.append(ArtifactSection(
+                source_id=f"TIMELINE_{_safe_id(evidence_id or str(index + 1))}",
+                source_kind="timeline_event",
+                title=title,
+                file_name=ARTIFACT_FILES["timeline"],
+                text=_section_text(title, event),
+                evidence_ids=_collect_evidence_ids(event),
+            ))
+
+    # These compact artifacts contain findings not guaranteed to appear in an
+    # older generated report. The raw graph is intentionally excluded: its
+    # typed relationships are already normalized onto evidence chunks.
+    for key, title in _ARTIFACT_TITLES.items():
+        payload = _unwrap(artifacts.get(key))
+        if not payload:
+            continue
+        sections.append(ArtifactSection(
+            source_id=f"ARTIFACT_{_safe_id(key)}",
+            source_kind=f"{key}_artifact",
+            title=title,
+            file_name=ARTIFACT_FILES[key],
+            text=_section_text(title, payload),
+            evidence_ids=_collect_evidence_ids(payload),
+        ))
+
+    chosen: dict[str, ArtifactSection] = {}
+    for section in sections:
+        chosen.setdefault(section.source_id, section)
+    return tuple(chosen[key] for key in sorted(chosen))
+
+
 def _artifact_file_names(
     artifacts: Mapping[str, Mapping[str, Any]],
 ) -> dict[str, set[str]]:
@@ -325,13 +464,55 @@ def _consistent_artifacts(
         current_name = current_names.get(evidence_id)
         if current_name and artifact_names != {current_name}:
             mismatches.append(evidence_id)
-    if not mismatches:
-        return artifacts, ()
-    warning = (
-        "Ignored stale Phase-2 artifacts because their evidence filenames do not "
-        "match the current case records: " + ", ".join(sorted(set(mismatches)))
+    if mismatches:
+        warning = (
+            "Ignored stale Phase-2 artifacts because their evidence filenames do not "
+            "match the current case records: " + ", ".join(sorted(set(mismatches)))
+        )
+        return {}, (warning,)
+
+    current_ids = set(current_names)
+    usable = dict(artifacts)
+    warnings: list[str] = []
+
+    # A lightweight upload refresh deliberately rebuilds correlation/timeline/
+    # graph but not campaigns, priority or the report. Use the analysis
+    # manifest to withhold those older high-level findings until full analysis
+    # runs again, while keeping the newly uploaded evidence searchable now.
+    manifest = _unwrap(artifacts.get("analysis_manifest"))
+    manifest_ids = {
+        str(item) for item in (manifest.get("evidence_ids") or []) if item
+    }
+    if manifest_ids and manifest_ids != current_ids:
+        stale_full_analysis = {
+            "analysis_manifest", "cross_case", "campaigns", "suspects",
+            "analytics", "priority", "report",
+        }
+        for key in stale_full_analysis:
+            usable.pop(key, None)
+        warnings.append(
+            "Ignored stale full-analysis artifacts because they predate the "
+            "current evidence set; run case analysis to refresh them."
+        )
+
+    report = _unwrap(usable.get("report"))
+    report_sections = report.get("sections") or {}
+    evidence_summary = (
+        report_sections.get("evidence_summary")
+        if isinstance(report_sections, Mapping) else None
     )
-    return {}, (warning,)
+    report_ids = {
+        str(row.get("evidence_id"))
+        for row in (evidence_summary or [])
+        if isinstance(row, Mapping) and row.get("evidence_id")
+    }
+    if report_ids and report_ids != current_ids:
+        usable.pop("report", None)
+        warnings.append(
+            "Ignored a stale investigation report because it does not cover the "
+            "current evidence set; run case analysis to refresh it."
+        )
+    return usable, tuple(warnings)
 
 
 def bundle_from_documents(
@@ -367,6 +548,7 @@ def bundle_from_documents(
         evidence=evidence,
         timeline=timeline,
         relationships=_deduplicate_relationships(relationships),
+        artifact_sections=_artifact_sections(usable_artifacts),
         summary=_summary(usable_artifacts),
         source_hashes=dict(source_hashes or {}),
         warnings=warnings + timeline_warnings,

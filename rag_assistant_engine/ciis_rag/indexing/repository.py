@@ -105,6 +105,11 @@ class ChromaVectorStore:
             "entity_values_json": json.dumps(chunk.entity_values),
             "related_evidence_ids_json": json.dumps(chunk.related_evidence_ids),
             "source_kind": chunk.source_kind,
+            "source_title": chunk.source_title,
+            "source_url": chunk.source_url,
+            "supporting_evidence_ids_json": json.dumps(
+                chunk.supporting_evidence_ids
+            ),
         }
 
     @staticmethod
@@ -122,6 +127,11 @@ class ChromaVectorStore:
                 metadata.get("related_evidence_ids_json") or "[]"
             )),
             source_kind=str(metadata.get("source_kind") or "evidence"),
+            source_title=str(metadata.get("source_title") or ""),
+            source_url=str(metadata.get("source_url") or ""),
+            supporting_evidence_ids=tuple(json.loads(
+                metadata.get("supporting_evidence_ids_json") or "[]"
+            )),
         )
 
     def list_chunks(self, case_id: str) -> list[KnowledgeChunk]:

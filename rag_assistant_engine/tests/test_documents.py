@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import replace
 
+from ciis_rag.core.models import ArtifactSection
 from ciis_rag.documents import build_chunks, split_text
 
 
@@ -38,3 +39,27 @@ def test_long_evidence_creates_stable_numbered_chunks(bundle, config):
     ]
     assert len(chunks) > 2
     assert [chunk.chunk_index for chunk in chunks] == list(range(len(chunks)))
+
+
+def test_artifact_chunks_retain_source_and_evidence_provenance(bundle, config):
+    legal = ArtifactSection(
+        source_id="REPORT_LEGAL_BASIS",
+        source_kind="report_section",
+        title="Legal Basis",
+        file_name="investigation_report.json",
+        text="Section 52 is engaged by payment evidence.",
+        evidence_ids=("EVID_001", "EVID_002"),
+        source_url="https://lawcommission.gov.np/content/13397/",
+    )
+    enriched = replace(bundle, artifact_sections=(legal,))
+
+    chunks = [
+        chunk for chunk in build_chunks(enriched, config)
+        if chunk.evidence_id == "REPORT_LEGAL_BASIS"
+    ]
+
+    assert len(chunks) == 1
+    assert chunks[0].source_kind == "report_section"
+    assert chunks[0].source_title == "Legal Basis"
+    assert chunks[0].supporting_evidence_ids == ("EVID_001", "EVID_002")
+    assert chunks[0].related_evidence_ids == ("EVID_001", "EVID_002")

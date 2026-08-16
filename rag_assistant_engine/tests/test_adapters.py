@@ -37,6 +37,7 @@ def current_documents():
             "time_source": "content_chat_timestamp",
             "confidence": "high",
             "timestamp_inferred": False,
+            "source_evidence_ids": "EVID_010 EVID_011",
         }]}},
         "correlation": {"case_id": "CASE_NOW", "report": {
             "case_id": "CASE_NOW",
@@ -130,3 +131,85 @@ def test_implausible_reconstructed_year_is_rejected():
         "Ignored implausible reconstructed timestamp(s): "
         "EVID_010=0111-06-26T00:42:00+00:00",
     )
+
+
+def test_report_legal_priority_and_primary_sources_become_searchable_sections():
+    case, artifacts = current_documents()
+    artifacts.update({
+        "priority": {"case_id": "CASE_NOW", "report": {
+            "case_id": "CASE_NOW",
+            "priority_level": "HIGH",
+            "explanation": "Payment loss and credential theft indicators",
+        }},
+        "report": {"case_id": "CASE_NOW", "report": {
+            "case_id": "CASE_NOW",
+            "sections": {
+                "evidence_summary": [
+                    {"evidence_id": "EVID_010", "file": "message.png"},
+                    {"evidence_id": "EVID_011", "file": "receipt.pdf"},
+                ],
+                "legal_basis": {
+                    "summary": "Section 52 is engaged by the payment evidence.",
+                    "provisions": [{
+                        "section": "52",
+                        "evidence_ids": ["EVID_010", "EVID_011"],
+                    }],
+                    "sources": [{
+                        "source_id": "eta_2063",
+                        "authority": "Nepal Law Commission",
+                        "title": "Electronic Transactions Act, 2063",
+                        "url": "https://lawcommission.gov.np/content/13397/",
+                    }],
+                },
+            },
+        }},
+    })
+
+    bundle = bundle_from_documents(case, artifacts)
+    sections = {section.source_id: section for section in bundle.artifact_sections}
+
+    assert "REPORT_LEGAL_BASIS" in sections
+    assert sections["REPORT_LEGAL_BASIS"].evidence_ids == (
+        "EVID_010", "EVID_011"
+    )
+    assert sections["SOURCE_ETA_2063"].source_url.startswith("https://")
+    assert "ARTIFACT_PRIORITY" in sections
+    assert "TIMELINE_EVID_010" in sections
+    assert sections["TIMELINE_EVID_010"].evidence_ids == (
+        "EVID_010", "EVID_011"
+    )
+
+
+def test_stale_full_analysis_is_withheld_after_new_evidence():
+    case, artifacts = current_documents()
+    case["evidence"].append({
+        "evidence_id": "EVID_012",
+        "file_name": "new-message.txt",
+        "raw_text": "Newly uploaded evidence",
+        "cleaning": {},
+    })
+    artifacts["analysis_manifest"] = {
+        "case_id": "CASE_NOW",
+        "report": {
+            "case_id": "CASE_NOW",
+            "evidence_ids": ["EVID_010", "EVID_011"],
+        },
+    }
+    artifacts["report"] = {
+        "case_id": "CASE_NOW",
+        "report": {
+            "case_id": "CASE_NOW",
+            "sections": {"legal_basis": {"summary": "old legal result"}},
+        },
+    }
+
+    bundle = bundle_from_documents(case, artifacts)
+
+    assert all(
+        section.source_id != "REPORT_LEGAL_BASIS"
+        for section in bundle.artifact_sections
+    )
+    assert any("predate the current evidence set" in item for item in bundle.warnings)
+    assert {item.evidence_id for item in bundle.evidence} == {
+        "EVID_010", "EVID_011", "EVID_012"
+    }
