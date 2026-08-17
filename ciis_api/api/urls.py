@@ -10,6 +10,7 @@ from .views import (
     investigation,
     maintenance,
     notifications,
+    rag,
     reports,
     system,
 )
@@ -39,6 +40,10 @@ urlpatterns = [
     path("cases/<str:case_id>/artifacts/", investigation.ArtifactIndexView.as_view()),
     path("cases/<str:case_id>/artifacts/<str:key>/", investigation.ArtifactView.as_view()),
     path("cases/<str:case_id>/analyze/", investigation.RunAnalysisView.as_view()),
+    # Case-scoped grounded assistant. The API is an adapter; retrieval and
+    # generation remain owned by the standalone RAG engine.
+    path("cases/<str:case_id>/assistant/status/", rag.RAGStatusView.as_view()),
+    path("cases/<str:case_id>/assistant/ask/", rag.RAGAskView.as_view()),
     # Reports
     path("cases/<str:case_id>/reports/", reports.ReportListView.as_view()),
     path("cases/<str:case_id>/reports/latest/", reports.ReportLatestView.as_view()),

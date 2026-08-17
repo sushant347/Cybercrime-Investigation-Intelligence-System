@@ -33,6 +33,16 @@ class AdminLoginSerializer(serializers.Serializer):
     password = serializers.CharField(max_length=256, trim_whitespace=False)
 
 
+class RAGQuestionSerializer(serializers.Serializer):
+    """One bounded, case-scoped investigator question."""
+
+    question = serializers.CharField(
+        min_length=2,
+        max_length=2000,
+        trim_whitespace=True,
+    )
+
+
 # ------------------------------------------------------------------ output
 def _int(value, default=0) -> int:
     try:

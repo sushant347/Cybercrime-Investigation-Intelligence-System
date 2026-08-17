@@ -39,6 +39,24 @@ TIMELINE_REPORT_ROOT = Path(
     )
 ).resolve()
 
+# Standalone RAG engine. It remains in a separate Python environment because
+# Chroma/sentence-transformers/Torch must not change PaddleOCR's dependency
+# set. The API invokes its CLI through a narrow JSON adapter.
+RAG_ASSISTANT_ROOT = Path(
+    os.environ.get(
+        "CIIS_RAG_ROOT", BASE_DIR.parent / "rag_assistant_engine"
+    )
+).resolve()
+_rag_python = os.environ.get("CIIS_RAG_PYTHON", "").strip()
+RAG_PYTHON = Path(_rag_python).resolve() if _rag_python else None
+RAG_ENABLED = os.environ.get("CIIS_RAG_ENABLED", "1") == "1"
+RAG_STORAGE_DIR = Path(
+    os.environ.get(
+        "CIIS_RAG_STORAGE_DIR", RAG_ASSISTANT_ROOT / "storage"
+    )
+).resolve()
+RAG_COMMAND_TIMEOUT = int(os.environ.get("CIIS_RAG_COMMAND_TIMEOUT", "330"))
+
 SECRET_KEY = os.environ.get(
     "CIIS_SECRET_KEY", "dev-only-insecure-key-change-in-production"
 )
