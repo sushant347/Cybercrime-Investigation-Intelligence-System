@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import ipaddress
 import json
+import re
 import socket
 import urllib.error
 import urllib.request
@@ -41,6 +42,12 @@ _RESPONSE_SCHEMA = {
     "additionalProperties": False,
 }
 
+_SOURCE_ID = re.compile(
+    r"(?<![A-Z0-9_])(?:EVID|REPORT|TIMELINE|ARTIFACT|SOURCE|CASE_OVERVIEW)_"
+    r"[A-Z0-9_-]+(?![A-Z0-9_])",
+    flags=re.IGNORECASE,
+)
+
 
 def _loopback_host(url: str) -> bool:
     parsed = urlparse(url)
@@ -66,7 +73,20 @@ def parse_generation(content: str) -> StructuredGeneration:
     except json.JSONDecodeError:
         start, end = value.find("{"), value.rfind("}")
         if start < 0 or end <= start:
-            raise GenerationResponseError("Ollama response was not a JSON object")
+            # Some small Ollama models occasionally ignore JSON mode but still
+            # return a concise, source-cited answer. Preserve that answer only
+            # when it contains IDs that the assistant layer can validate
+            # against the retrieved context; uncited prose still fails closed.
+            citations = tuple(sorted({
+                match.group(0).upper() for match in _SOURCE_ID.finditer(value)
+            }))
+            if not citations:
+                raise GenerationResponseError("Ollama response was not a JSON object")
+            lowered = value.lower()
+            insufficient = any(phrase in lowered for phrase in (
+                "insufficient evidence", "not enough evidence", "cannot determine",
+            ))
+            return StructuredGeneration(value, citations, insufficient)
         try:
             payload = json.loads(value[start:end + 1])
         except json.JSONDecodeError as exc:

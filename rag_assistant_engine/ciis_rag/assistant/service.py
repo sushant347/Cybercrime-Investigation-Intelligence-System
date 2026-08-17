@@ -2,14 +2,16 @@
 
 from __future__ import annotations
 
-from collections import defaultdict
+import json
 import re
+from datetime import UTC, datetime
 from typing import Protocol
 
 from ..core.models import (
     AssistantResponse,
     CaseKnowledgeBundle,
     EvidenceBreakdown,
+    Relationship,
     RetrievalHit,
     SharedEvidenceLink,
     SourceReference,
@@ -26,13 +28,16 @@ class AnswerGenerator(Protocol):
 
 
 _ENTITY_QUESTION_GROUPS = (
-    ("transaction IDs", ("transaction id", "transaction code", "transaction reference"),
-     ("transaction_ids",)),
+    ("transaction IDs", (
+        "transaction id", "transaction code", "transaction reference",
+        "payment identifier", "payment reference",
+    ), ("transaction_ids",)),
     ("amounts", ("amount", "money", "npr", "rupee"), ("money",)),
     ("phone numbers", ("phone", "mobile", "contact number"),
      ("phones", "phone_numbers", "whatsapp_numbers")),
     ("email addresses", ("email", "e-mail"), ("emails", "esewa_ids")),
-    ("URLs/domains", ("url", "link", "domain", "website"), ("urls", "domains")),
+    ("URLs/domains", ("url", "web link", "hyperlink", "domain", "website"),
+     ("urls", "domains")),
     ("bank accounts", ("bank account", "account number"), ("bank_accounts",)),
 )
 
@@ -53,12 +58,30 @@ def _substantive_answer(answer: str) -> bool:
 
 
 def _sources(hits: list[RetrievalHit]) -> tuple[SourceReference, ...]:
-    grouped: dict[tuple[str, str], list[str]] = defaultdict(list)
+    grouped: dict[tuple[str, str, str, str, str], dict[str, set[str]]] = {}
     for hit in hits:
-        grouped[(hit.chunk.evidence_id, hit.chunk.file_name)].append(hit.chunk.chunk_id)
+        key = (
+            hit.chunk.evidence_id,
+            hit.chunk.file_name,
+            hit.chunk.source_kind,
+            hit.chunk.source_title,
+            hit.chunk.source_url,
+        )
+        entry = grouped.setdefault(key, {"chunks": set(), "evidence": set()})
+        entry["chunks"].add(hit.chunk.chunk_id)
+        entry["evidence"].update(hit.chunk.supporting_evidence_ids)
     return tuple(
-        SourceReference(evidence_id, file_name, tuple(sorted(set(chunk_ids))))
-        for (evidence_id, file_name), chunk_ids in sorted(grouped.items())
+        SourceReference(
+            evidence_id=source_id,
+            file_name=file_name,
+            chunk_ids=tuple(sorted(values["chunks"])),
+            source_kind=source_kind,
+            title=title or file_name,
+            url=url,
+            supporting_evidence_ids=tuple(sorted(values["evidence"])),
+        )
+        for (source_id, file_name, source_kind, title, url), values
+        in sorted(grouped.items())
     )
 
 
@@ -99,6 +122,115 @@ def _shared_links(
     )
 
 
+def _bundle_sources(
+    bundle: CaseKnowledgeBundle,
+    source_ids: set[str],
+    hits: list[RetrievalHit],
+) -> tuple[SourceReference, ...]:
+    """Resolve deterministic citations even when vector top-k omitted a source."""
+    resolved = {
+        source.evidence_id: source
+        for source in _sources(hits)
+        if source.evidence_id in source_ids
+    }
+    evidence_by_id = {item.evidence_id: item for item in bundle.evidence}
+    artifacts_by_id = {
+        section.source_id: section for section in bundle.artifact_sections
+    }
+    for source_id in source_ids - set(resolved):
+        evidence = evidence_by_id.get(source_id)
+        if evidence is not None:
+            resolved[source_id] = SourceReference(
+                evidence_id=source_id,
+                file_name=evidence.file_name,
+                chunk_ids=(),
+                source_kind="evidence",
+                title=evidence.file_name,
+                supporting_evidence_ids=(source_id,),
+            )
+            continue
+        section = artifacts_by_id.get(source_id)
+        if section is not None:
+            resolved[source_id] = SourceReference(
+                evidence_id=source_id,
+                file_name=section.file_name,
+                chunk_ids=(),
+                source_kind=section.source_kind,
+                title=section.title,
+                url=section.source_url,
+                supporting_evidence_ids=section.evidence_ids,
+            )
+    return tuple(resolved[source_id] for source_id in sorted(resolved))
+
+
+def _timeline_extreme(query: str) -> str:
+    lowered = query.lower()
+    if not any(term in lowered for term in ("timeline", "event", "happened", "occurred")):
+        return ""
+    if any(term in lowered for term in ("earliest", "happened first", "first event")):
+        return "first"
+    if any(term in lowered for term in ("latest", "happened last", "last event", "most recent")):
+        return "last"
+    return ""
+
+
+def _timestamp_key(value: str) -> datetime:
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=UTC)
+        return parsed.astimezone(UTC)
+    except ValueError:
+        return datetime.max.replace(tzinfo=UTC)
+
+
+def _timeline_source_id(bundle: CaseKnowledgeBundle, evidence_id: str) -> str:
+    for section in bundle.artifact_sections:
+        if (
+            section.source_kind == "timeline_event"
+            and evidence_id in section.evidence_ids
+        ):
+            return section.source_id
+    return evidence_id
+
+
+def _requested_relationship_types(query: str) -> set[str]:
+    lowered = query.lower()
+    relationship_terms = (
+        "connect", "linked", "linking", "relationship", "share", "shared",
+    )
+    if not any(term in lowered for term in relationship_terms):
+        return set()
+    return {
+        entity_type
+        for _label, entity_types in _requested_entity_groups(query)
+        for entity_type in entity_types
+    }
+
+
+def _legal_basis_section(bundle: CaseKnowledgeBundle):
+    for section in bundle.artifact_sections:
+        if section.source_id != "REPORT_LEGAL_BASIS":
+            continue
+        _heading, separator, body = section.text.partition("\n")
+        if not separator:
+            return None, None
+        try:
+            payload = json.loads(body)
+        except json.JSONDecodeError:
+            return None, None
+        return section, payload if isinstance(payload, dict) else None
+    return None, None
+
+
+def _is_legal_basis_question(query: str) -> bool:
+    lowered = query.lower()
+    return any(term in lowered for term in (
+        "legal", "law", "statute", "statutory", "section", "provision",
+        "regulation", "regulatory", "guideline", "manual review",
+    ))
+
+
 class AssistantService:
     def __init__(
         self,
@@ -120,17 +252,6 @@ class AssistantService:
         if sync_before_query:
             self._indexing.sync(bundle)
         hits = self._retrieval.retrieve(bundle.case_id, query)
-        if not hits:
-            return AssistantResponse(
-                answer="No sufficiently relevant indexed evidence was found for this question.",
-                insufficient_evidence=True,
-                cited_sources=(),
-                retrieved_sources=(),
-                evidence_breakdown=(),
-                shared_entity_links=(),
-                warnings=tuple(bundle.warnings),
-            )
-
         missing = missing_query_constraints(query, hits)
         if missing:
             requested = ", ".join(item.display for item in missing)
@@ -258,6 +379,179 @@ class AssistantService:
                     shared_entity_links=(),
                     warnings=tuple(bundle.warnings),
                 )
+
+        extreme = _timeline_extreme(query)
+        resolved_events = [item for item in bundle.timeline if item.timestamp]
+        if extreme and resolved_events:
+            ordered_events = sorted(
+                resolved_events,
+                key=lambda item: (_timestamp_key(item.timestamp), item.evidence_id),
+            )
+            event = ordered_events[0 if extreme == "first" else -1]
+            source_id = _timeline_source_id(bundle, event.evidence_id)
+            inference_label = "inferred" if event.inferred else "actual/non-inferred"
+            answer = (
+                f"The {extreme} resolved timeline event is {event.evidence_id} at "
+                f"{event.timestamp}. Its timestamp is {inference_label}; "
+                f"source={event.source}; confidence={event.confidence}. "
+                f"[{source_id}]"
+            )
+            return AssistantResponse(
+                answer=answer,
+                insufficient_evidence=False,
+                cited_sources=_bundle_sources(bundle, {source_id}, hits),
+                retrieved_sources=_sources(hits),
+                evidence_breakdown=_breakdown(bundle, {event.evidence_id}),
+                shared_entity_links=(),
+                warnings=tuple(bundle.warnings),
+            )
+
+        relationship_types = _requested_relationship_types(query)
+        if relationship_types:
+            matching: list[tuple[Relationship, tuple[str, ...]]] = []
+            for relationship in bundle.relationships:
+                shared = tuple(
+                    value for value in relationship.shared_entities
+                    if value.partition("=")[0].strip().lower() in relationship_types
+                )
+                if shared:
+                    matching.append((relationship, shared))
+
+            strongest_by_pair: dict[
+                tuple[str, str], tuple[Relationship, tuple[str, ...]]
+            ] = {}
+            for relationship, shared in matching:
+                pair = tuple(sorted((relationship.evidence_a, relationship.evidence_b)))
+                previous = strongest_by_pair.get(pair)
+                if previous is None or relationship.confidence > previous[0].confidence:
+                    strongest_by_pair[pair] = (relationship, shared)
+            strongest = sorted(
+                strongest_by_pair.values(),
+                key=lambda item: (
+                    -item[0].confidence,
+                    item[0].evidence_a,
+                    item[0].evidence_b,
+                ),
+            )[:5]
+            if strongest:
+                evidence_ids = {
+                    evidence_id
+                    for relationship, _shared in strongest
+                    for evidence_id in (
+                        relationship.evidence_a, relationship.evidence_b,
+                    )
+                }
+                statements = [
+                    (
+                        f"{relationship.evidence_a} and {relationship.evidence_b} "
+                        f"share {', '.join(shared)} "
+                        f"(confidence {relationship.confidence:.3f})."
+                    )
+                    for relationship, shared in strongest
+                ]
+                citations = " ".join(
+                    f"[{evidence_id}]" for evidence_id in sorted(evidence_ids)
+                )
+                return AssistantResponse(
+                    answer=" ".join(statements) + " " + citations,
+                    insufficient_evidence=False,
+                    cited_sources=_bundle_sources(bundle, evidence_ids, hits),
+                    retrieved_sources=_sources(hits),
+                    evidence_breakdown=_breakdown(bundle, evidence_ids),
+                    shared_entity_links=tuple(
+                        SharedEvidenceLink(
+                            evidence_a=relationship.evidence_a,
+                            evidence_b=relationship.evidence_b,
+                            relationship_type=relationship.relationship_type,
+                            confidence=relationship.confidence,
+                            shared_entities=shared,
+                        )
+                        for relationship, shared in strongest
+                    ),
+                    warnings=tuple(bundle.warnings),
+                )
+            return AssistantResponse(
+                answer=(
+                    "No stored evidence relationship contains the requested "
+                    "shared entity type."
+                ),
+                insufficient_evidence=True,
+                cited_sources=(),
+                retrieved_sources=_sources(hits),
+                evidence_breakdown=(),
+                shared_entity_links=(),
+                warnings=tuple(bundle.warnings),
+            )
+
+        if _is_legal_basis_question(query):
+            legal_section, legal = _legal_basis_section(bundle)
+            if legal_section is not None and legal is not None:
+                provisions = [
+                    str(item.get("citation") or (
+                        f"Section {item.get('section')}: {item.get('title')}"
+                    ))
+                    for item in legal.get("provisions") or []
+                    if isinstance(item, dict)
+                ]
+                manual_review = [
+                    str(item.get("citation") or (
+                        f"Section {item.get('section')}: {item.get('title')}"
+                    ))
+                    for item in legal.get("manual_review_provisions") or []
+                    if isinstance(item, dict)
+                ]
+                guidance = [
+                    str(item.get("citation") or item.get("title"))
+                    for item in legal.get("investigative_guidance") or []
+                    if isinstance(item, dict)
+                ]
+                parts = [
+                    "Mapped statutory provisions: "
+                    + ("; ".join(provisions) if provisions else "none mapped"),
+                ]
+                if manual_review:
+                    parts.append(
+                        "Provisions reserved for manual review: "
+                        + "; ".join(manual_review)
+                    )
+                if guidance:
+                    parts.append(
+                        "Investigative or regulatory guidance (not an offence "
+                        "finding): " + "; ".join(guidance)
+                    )
+                caveat = str(legal.get("caveat") or "").strip()
+                if caveat:
+                    parts.append("Required caveat: " + caveat)
+
+                source_ids = {legal_section.source_id}
+                source_ids.update(
+                    section.source_id for section in bundle.artifact_sections
+                    if section.source_kind == "primary_legal_source"
+                )
+                citations = " ".join(
+                    f"[{source_id}]" for source_id in sorted(source_ids)
+                )
+                supporting_ids = set(legal_section.evidence_ids)
+                return AssistantResponse(
+                    answer=" ".join(parts) + " " + citations,
+                    insufficient_evidence=not provisions and not guidance,
+                    cited_sources=_bundle_sources(bundle, source_ids, hits),
+                    retrieved_sources=_sources(hits),
+                    evidence_breakdown=_breakdown(bundle, supporting_ids),
+                    shared_entity_links=(),
+                    warnings=tuple(bundle.warnings),
+                )
+
+        if not hits:
+            return AssistantResponse(
+                answer="No sufficiently relevant indexed evidence was found for this question.",
+                insufficient_evidence=True,
+                cited_sources=(),
+                retrieved_sources=(),
+                evidence_breakdown=(),
+                shared_entity_links=(),
+                warnings=tuple(bundle.warnings),
+            )
 
         generated = self._generator.generate(query, hits)
         candidates = {hit.chunk.evidence_id for hit in hits}

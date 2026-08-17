@@ -26,6 +26,15 @@ def test_malformed_generation_is_not_treated_as_an_answer():
         parse_generation("ordinary unstructured prose")
 
 
+def test_source_cited_plain_text_from_small_model_is_validated_upstream():
+    generated = parse_generation(
+        "The first event is supported by [TIMELINE_EVID_001]."
+    )
+    assert generated.answer.startswith("The first event")
+    assert generated.citations == ("TIMELINE_EVID_001",)
+    assert generated.insufficient_evidence is False
+
+
 def test_evidence_is_delimited_as_untrusted(bundle, config):
     store = InMemoryVectorStore()
     IndexService(config, store, ManifestRepository(config.manifest_dir)).sync(bundle)
