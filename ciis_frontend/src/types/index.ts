@@ -693,6 +693,7 @@ export interface InvestigationReport {
     metadata_summary: unknown[];
     investigation_statistics: Record<string, Record<string, number>>;
     confidence_analysis: unknown[];
+    limitations: string[];
     investigation_conclusion: string[];
     legal_basis?: ReportLegalBasisSection | string;
     recommendations: string[];
@@ -713,11 +714,92 @@ export interface ReportEngagedProvision {
   evidence_ids: string[];
 }
 
+// ---------------------------------------------------------- case assistant
+export interface RAGStatus {
+  case_id: string;
+  available: boolean;
+  status: "configured" | "missing" | "stale" | "fresh" | "disabled" | "unavailable" | string;
+  detail: string;
+  source_hashes?: Record<string, string>;
+  warnings?: string[];
+}
+
+export interface RAGSourceReference {
+  /** Citation ID emitted by the standalone engine (evidence or artifact). */
+  evidence_id: string;
+  file_name: string;
+  chunk_ids: string[];
+  source_kind: string;
+  title: string;
+  url: string;
+  supporting_evidence_ids: string[];
+}
+
+export interface RAGEvidenceBreakdown {
+  evidence_id: string;
+  file_name: string;
+  entities: string[];
+}
+
+export interface RAGSharedEvidenceLink {
+  evidence_a: string;
+  evidence_b: string;
+  relationship_type: string;
+  confidence: number;
+  shared_entities: string[];
+}
+
+export interface RAGAnswer {
+  answer: string;
+  insufficient_evidence: boolean;
+  cited_sources: RAGSourceReference[];
+  retrieved_sources: RAGSourceReference[];
+  evidence_breakdown: RAGEvidenceBreakdown[];
+  shared_entity_links: RAGSharedEvidenceLink[];
+  warnings: string[];
+}
+
+export interface ReportUnassessedProvision {
+  section: string;
+  title: string;
+  citation: string;
+  reason: string;
+}
+
+export interface ReportInvestigativeGuidance {
+  category: "evidence_preservation" | "regulatory_follow_up" | string;
+  control_ids: string[];
+  title: string;
+  citation: string;
+  expectation: string;
+  basis: string;
+  recommended_action: string;
+  applicability: string;
+  status: string;
+  evidence_ids: string[];
+  source_id: string;
+}
+
+export interface ReportLegalSource {
+  source_id: string;
+  authority: string;
+  title: string;
+  url: string;
+  local_documents: string[];
+  sha256: Record<string, string>;
+  usage: string;
+  note: string;
+}
+
 export interface ReportLegalBasisSection {
   case_id: string;
   statute: string;
   jurisdiction: string;
   provisions: ReportEngagedProvision[];
+  /** Present in newly generated reports; optional for older stored versions. */
+  manual_review_provisions?: ReportUnassessedProvision[];
+  investigative_guidance?: ReportInvestigativeGuidance[];
+  sources?: ReportLegalSource[];
   /** Must be displayed wherever provisions are displayed. */
   caveat: string;
   summary: string;
