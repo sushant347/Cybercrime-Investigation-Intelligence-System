@@ -249,6 +249,21 @@ def artifact_exists(case_id: str, key: str) -> bool:
     return bool(report_repository().list_versions(case_id, name, ".json"))
 
 
+# ---------------------------------------------------------- RAG assistant
+def rag_status(case_id: str) -> dict[str, Any]:
+    """Index freshness/availability through the integrated RAG adapter."""
+    from .rag_bridge import status_case
+
+    return status_case(case_id)
+
+
+def ask_rag(case_id: str, question: str) -> dict[str, Any]:
+    """Ask the standalone engine one case-scoped, citation-checked question."""
+    from .rag_bridge import ask_case
+
+    return ask_case(case_id, question)
+
+
 def report_versions(case_id: str, suffix: str = ".json") -> list[Path]:
     return report_repository().list_versions(case_id, "investigation_report", suffix)
 
@@ -625,6 +640,24 @@ def _refresh_timeline_graph(case_id: str) -> Optional[dict[str, Any]]:
         return None
 
 
+def _sync_rag_index(case_id: str) -> dict[str, Any]:
+    """Refresh derived RAG data without making it a pipeline dependency."""
+    try:
+        from .rag_bridge import sync_case
+
+        result = sync_case(case_id)
+    except Exception as exc:  # noqa: BLE001 - optional consumer is fail-open
+        log.exception("Unexpected RAG index refresh failure for %s", case_id)
+        return {
+            "case_id": case_id,
+            "available": False,
+            "status": "unavailable",
+            "detail": f"RAG index refresh failed: {type(exc).__name__}",
+        }
+    log.info("RAG index for %s: %s", case_id, result.get("status", "unknown"))
+    return result
+
+
 #: Evidence jobs still queued or running, per case. Guarded by its own lock so
 #: a worker can read it without waiting on the (long-held) pipeline lock.
 _pending_uploads: dict[str, int] = {}
@@ -697,6 +730,10 @@ def submit_evidence_job(job_id: int, tmp_path: str, case_id: str,
                     live_artifacts = _refresh_timeline_graph(case_id)
                 else:
                     live_artifacts = None
+            rag_index = (
+                _sync_rag_index(case_id)
+                if still_pending == 0 else {"status": "deferred"}
+            )
             entities = _entity_count(summary)
             if summary is None:
                 detail = f"Processed as {result.evidence_id} (OCR only)"
@@ -733,6 +770,8 @@ def submit_evidence_job(job_id: int, tmp_path: str, case_id: str,
             else:
                 detail += "; timeline/graph refresh pending"
                 warnings.append("timeline/graph refresh did not complete")
+            if rag_index.get("status") in {"updated", "fresh"}:
+                detail += "; case assistant index refreshed"
             if warnings:
                 detail += f"; warnings={'; '.join(warnings)}"
             outcome = "completed_with_warnings" if warnings else "completed"
@@ -1034,6 +1073,8 @@ def submit_analysis_job(job_id: int, case_id: str, username: str) -> None:
                 warnings=warnings,
                 threat_provider=threat_provider,
             )
+            rag_index = _sync_rag_index(case_id)
+            detail += f"; rag_index={rag_index.get('status', 'unknown')}"
             jobs.finish(job_id, outcome, detail=detail)
             notifications.broadcast(
                 type=NotificationType.REPORT_GENERATED,
@@ -1176,6 +1217,15 @@ def _optional_capabilities() -> dict[str, Any]:
     checkpoint = Path(root) / "checkpoints" / f"{model}.pkl" if root else None
     capabilities["threat_ml_enabled"] = enabled
     capabilities["threat_ml_checkpoint"] = bool(checkpoint and checkpoint.is_file())
+
+    # Cheap path/configuration probe only. Index status and model loading belong
+    # to the case-scoped assistant endpoint, never the general health screen.
+    from .rag_bridge import availability as rag_availability
+
+    rag = rag_availability()
+    capabilities["rag_enabled"] = bool(getattr(settings, "RAG_ENABLED", True))
+    capabilities["rag_available"] = bool(rag.get("available"))
+    capabilities["rag_status"] = str(rag.get("status") or "unavailable")
 
     return capabilities
 

@@ -26,6 +26,27 @@ def test_analyze_generates_artifacts(uploaded_evidence, api):
     assert manifest["semantic_validator"] in {"xlm-roberta-base", "heuristic"}
 
 
+def test_analysis_refreshes_the_case_assistant_index(
+    uploaded_evidence, api, monkeypatch
+):
+    from api import engine
+
+    case_id, _ = uploaded_evidence
+    refreshed = []
+    monkeypatch.setattr(
+        engine,
+        "_sync_rag_index",
+        lambda value: refreshed.append(value) or {"status": "updated"},
+    )
+
+    job = _run_analysis(api, case_id)
+    status = api.get(f"/api/jobs/{job['id']}/").json()
+
+    assert status["status"] == "completed"
+    assert refreshed == [case_id]
+    assert "rag_index=updated" in status["detail"]
+
+
 def test_analysis_with_missing_original_is_partial_but_keeps_artifacts(
     uploaded_evidence, api
 ):

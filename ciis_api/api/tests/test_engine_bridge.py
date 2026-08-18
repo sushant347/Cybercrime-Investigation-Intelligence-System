@@ -31,6 +31,9 @@ def test_engine_health_states_which_optional_capabilities_are_live(api):
 
     assert isinstance(health["threat_ml_enabled"], bool)
     assert isinstance(health["threat_ml_checkpoint"], bool)
+    assert isinstance(health["rag_enabled"], bool)
+    assert isinstance(health["rag_available"], bool)
+    assert health["rag_status"] in {"configured", "disabled", "unavailable"}
 
 
 def test_engine_health_never_loads_a_model(api, monkeypatch):
