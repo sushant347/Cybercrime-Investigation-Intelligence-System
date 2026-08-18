@@ -57,6 +57,11 @@ const ReportsTab = lazy(() =>
     default: module.ReportsTab,
   })),
 );
+const CaseAssistant = lazy(() =>
+  import("@/features/assistant/CaseAssistant").then((module) => ({
+    default: module.CaseAssistant,
+  })),
+);
 
 /** How often to check a running analysis job. */
 const ANALYSIS_POLL_MS = 2500;
@@ -153,6 +158,7 @@ export default function CaseDetailPage() {
         ["report-latest", caseId],
         ["cases"],
         ["jobs", caseId],
+        ["rag-status", caseId],
       ]) {
         void queryClient.invalidateQueries({ queryKey: key });
       }
@@ -335,6 +341,10 @@ export default function CaseDetailPage() {
           />
         </Suspense>
       )}
+
+      <Suspense fallback={null}>
+        <CaseAssistant key={caseId} caseId={caseId} />
+      </Suspense>
 
       <Snackbar
         open={!!toast}
