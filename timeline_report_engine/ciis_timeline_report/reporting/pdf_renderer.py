@@ -396,19 +396,92 @@ def render_pdf(
                                    styles["bullet"]))
 
     # ----------------------------------------------- specialised section views
+    def emit_numbered_table(section: Any, label: str) -> bool:
+        if not isinstance(section, list):
+            return False
+        story.append(data_table(
+            ["#", label],
+            [[str(index), str(item)] for index, item in enumerate(section, start=1)],
+            widths=[12 * mm, 149 * mm],
+        ))
+        return True
+
+    def emit_case_overview(section: Any) -> bool:
+        if not isinstance(section, dict) or "case_id" not in section:
+            return False
+        story.append(data_table(
+            ["Case field", "Recorded value"],
+            [[str(key).replace("_", " ").title(), value]
+             for key, value in section.items()],
+            widths=[47 * mm, 114 * mm],
+        ))
+        return True
+
+    def emit_scope_table(section: Any) -> bool:
+        if not isinstance(section, dict) or "methodology" not in section:
+            return False
+        story.append(data_table(
+            ["Scope", "Recorded basis"],
+            [["Objective", section.get("objective", "not available")],
+             ["Evidence scope", section.get("evidence_scope", "not available")],
+             ["Reproducibility", section.get("reproducibility", "not available")]],
+            widths=[34 * mm, 127 * mm],
+        ))
+        methods = []
+        for method in section.get("methodology") or []:
+            stage, separator, detail = str(method).partition(":")
+            methods.append([stage, detail.strip() if separator else method])
+        if methods:
+            story.append(Spacer(1, 5))
+            story.append(Paragraph("Processing stages", styles["h3"]))
+            story.append(data_table(
+                ["Stage", "Method and stored output"], methods,
+                widths=[48 * mm, 113 * mm],
+            ))
+        return True
+
+    def emit_metadata_table(section: Any) -> bool:
+        if not (isinstance(section, list) and section
+                and isinstance(section[0], dict) and "evidence_id" in section[0]):
+            return False
+        story.append(data_table(
+            ["Evidence", "EXIF", "Device", "Software", "Consistency notes"],
+            [[row.get("evidence_id", ""),
+              "yes" if row.get("has_exif") else "no",
+              row.get("device", ""), row.get("software", ""),
+              ", ".join(row.get("consistency_notes") or [])]
+             for row in section],
+            widths=[28 * mm, 14 * mm, 36 * mm, 36 * mm, 47 * mm],
+        ))
+        return True
+
+    def emit_confidence_table(section: Any) -> bool:
+        if not (isinstance(section, list) and section
+                and isinstance(section[0], dict) and "evidence_id" in section[0]):
+            return False
+        story.append(data_table(
+            ["Evidence", "Score", "Level", "Computed explanation"],
+            [[row.get("evidence_id", ""), row.get("score", ""),
+              row.get("level", ""), row.get("explanation", "")]
+             for row in section],
+            widths=[30 * mm, 17 * mm, 24 * mm, 90 * mm],
+        ))
+        return True
+
     def emit_evidence_table(rows: Any) -> bool:
         if not (isinstance(rows, list) and rows
                 and isinstance(rows[0], dict) and "evidence_id" in rows[0]):
             return False
         story.append(data_table(
-            ["Evidence", "File", "Acquired", "OCR conf.", "Integrity"],
+            ["Evidence", "File", "Acquired", "OCR", "Entities", "Integrity"],
             [[r.get("evidence_id", ""), r.get("file_name", ""),
               str(r.get("upload_time", ""))[:19],
               (f"{float(r.get('ocr_confidence') or 0) * 100:.0f}%"
                if r.get("ocr_confidence") is not None else "n/a"),
+              str(r.get("entity_count", 0)),
               "VERIFIED" if r.get("hash_verified") else "FAILED"]
              for r in rows],
-            widths=[30 * mm, 52 * mm, 34 * mm, 20 * mm, 22 * mm]))
+            widths=[27 * mm, 45 * mm, 31 * mm, 14 * mm, 17 * mm, 27 * mm]))
         story.append(Spacer(1, 3))
         story.append(Paragraph(
             "SHA-256 digests for each item are listed in the Appendix "
@@ -661,20 +734,75 @@ def render_pdf(
                     f"{esc(provision['title'])}", styles["h3"]),
                 Paragraph(esc(provision["citation"]), styles["subtitle"]),
                 Spacer(1, 3),
-                Paragraph(f"<b>Conduct.</b> {esc(provision['conduct'])}",
-                          styles["body"]),
-                Paragraph(f"<b>Penalty.</b> {esc(provision['penalty'])}",
-                          styles["body"]),
-                Paragraph(f"<b>Why this is engaged.</b> {esc(provision['basis'])}",
-                          styles["body"]),
+                data_table(
+                    ["Field", "Recorded value"],
+                    [["Conduct", provision["conduct"]],
+                     ["Penalty", provision["penalty"]],
+                     ["Evidence-based match", provision["basis"]],
+                     ["Supporting evidence", ", ".join(
+                         provision.get("evidence_ids") or ["none"])]],
+                    widths=[39 * mm, 122 * mm],
+                ),
             ]
-            if provision.get("evidence_ids"):
-                block.append(Paragraph(
-                    f"<b>Evidence.</b> {esc(', '.join(provision['evidence_ids']))}",
-                    styles["subtitle"]))
             block.append(Spacer(1, 8))
             # A provision split across a page break reads as two half-findings.
             story.append(KeepTogether(block))
+
+        guidance = section.get("investigative_guidance") or []
+        if guidance:
+            story.append(Paragraph(
+                "Evidentiary and regulatory follow-up", styles["h3"]))
+            story.append(Paragraph(
+                "These are preservation or investigative actions, not findings "
+                "that an institution violated a rule.", styles["subtitle"]))
+            story.append(Spacer(1, 5))
+            for item in guidance:
+                block = [
+                    Paragraph(esc(item["title"]), styles["h3"]),
+                    Paragraph(esc(item["citation"]), styles["subtitle"]),
+                    Spacer(1, 3),
+                    data_table(
+                        ["Field", "Recorded value"],
+                        [["Status", item.get("status", "investigative_follow_up")],
+                         ["Expectation", item["expectation"]],
+                         ["Why relevant", item["basis"]],
+                         ["Recommended action", item["recommended_action"]],
+                         ["Applicability", item["applicability"]],
+                         ["Supporting evidence", ", ".join(
+                             item.get("evidence_ids") or ["none"])]],
+                        widths=[39 * mm, 122 * mm],
+                    ),
+                ]
+                block.append(Spacer(1, 7))
+                story.append(KeepTogether(block))
+
+        manual = section.get("manual_review_provisions") or []
+        if manual:
+            story.append(Paragraph(
+                "Provisions requiring manual review", styles["h3"]))
+            story.append(Paragraph(
+                "The current evidence model does not automatically assess these "
+                "provisions:", styles["subtitle"]))
+            for item in manual:
+                story.append(Paragraph(
+                    f"&bull; <b>Section {esc(item['section'])} - "
+                    f"{esc(item['title'])}.</b> {esc(item['reason'])}",
+                    styles["subtitle"],
+                ))
+            story.append(Spacer(1, 6))
+
+        sources = section.get("sources") or []
+        if sources:
+            story.append(Paragraph("Primary sources", styles["h3"]))
+            for source in sources:
+                source_line = (
+                    f"<b>{esc(source['authority'])} - {esc(source['title'])}.</b> "
+                    f"{esc(source['url'])} Used for: {esc(source['usage'])}"
+                )
+                if source.get("note"):
+                    source_line += f" Note: {esc(source['note'])}"
+                story.append(Paragraph(source_line, styles["subtitle"]))
+            story.append(Spacer(1, 4))
 
         if section.get("caveat"):
             story.append(Spacer(1, 2))
@@ -695,6 +823,10 @@ def render_pdf(
         heading._toc_level = 0  # picked up by _ReportDoc.afterFlowable
         story.append(heading)
         value = sections.get(key)
+        if key == "scope_and_methodology" and emit_scope_table(value):
+            continue
+        if key == "case_overview" and emit_case_overview(value):
+            continue
         if key == "evidence_summary" and emit_evidence_table(value):
             continue
         if key == "timeline_analysis" and emit_timeline_table(value):
@@ -709,8 +841,24 @@ def render_pdf(
             continue
         if key == "model_predictions" and emit_predictions_table(value):
             continue
+        if key == "metadata_summary" and emit_metadata_table(value):
+            continue
+        if key == "confidence_analysis" and emit_confidence_table(value):
+            continue
         if key == "legal_basis" and emit_legal_basis(value):
             continue
+        if key in {
+            "executive_summary", "limitations",
+            "investigation_conclusion", "recommendations",
+        }:
+            label = {
+                "executive_summary": "Finding",
+                "limitations": "Review boundary",
+                "investigation_conclusion": "Conclusion",
+                "recommendations": "Investigator action",
+            }[key]
+            if emit_numbered_table(value, label):
+                continue
         if key == "report_provenance" and isinstance(value, dict):
             hashes = value.get("source_artifact_hashes") or {}
             meta = {k: v for k, v in value.items()

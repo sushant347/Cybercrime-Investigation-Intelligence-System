@@ -1057,6 +1057,12 @@ class InvestigationReportService:
             out.append("")
             if key == "legal_basis":
                 out.extend(_legal_markdown(sections.get(key)))
+            elif key == "scope_and_methodology":
+                out.extend(_scope_markdown(sections.get(key)))
+            elif key == "case_overview":
+                out.extend(_case_overview_markdown(sections.get(key)))
+            elif key == "evidence_summary":
+                out.extend(_evidence_markdown(sections.get(key)))
             elif key == "timeline_analysis":
                 out.extend(_timeline_markdown(sections.get(key)))
             elif key == "correlation_analysis":
@@ -1067,6 +1073,21 @@ class InvestigationReportService:
                 out.extend(_campaign_markdown(sections.get(key)))
             elif key == "suspect_assessment":
                 out.extend(_suspect_markdown(sections.get(key)))
+            elif key == "metadata_summary":
+                out.extend(_metadata_markdown(sections.get(key)))
+            elif key == "confidence_analysis":
+                out.extend(_confidence_markdown(sections.get(key)))
+            elif key in {
+                "executive_summary", "limitations",
+                "investigation_conclusion", "recommendations",
+            }:
+                label = {
+                    "executive_summary": "Finding",
+                    "limitations": "Review boundary",
+                    "investigation_conclusion": "Conclusion",
+                    "recommendations": "Investigator action",
+                }[key]
+                out.extend(_numbered_markdown(sections.get(key), label))
             else:
                 out.extend(_to_markdown(sections.get(key)))
             out.append("")
@@ -1099,6 +1120,78 @@ def _markdown_table(headers: List[str], rows: List[List[Any]]) -> List[str]:
     if not rows:
         output.append("| " + " | ".join("none" for _ in headers) + " |")
     return output
+
+
+def _numbered_markdown(section: Any, label: str) -> List[str]:
+    if not isinstance(section, list):
+        return _to_markdown(section)
+    return _markdown_table(
+        ["#", label],
+        [[index, item] for index, item in enumerate(section, start=1)],
+    )
+
+
+def _case_overview_markdown(section: Any) -> List[str]:
+    if not isinstance(section, dict):
+        return _to_markdown(section)
+    return _markdown_table(
+        ["Case field", "Recorded value"],
+        [[str(key).replace("_", " ").title(), value]
+         for key, value in section.items()],
+    )
+
+
+def _scope_markdown(section: Any) -> List[str]:
+    if not isinstance(section, dict):
+        return _to_markdown(section)
+    out = _markdown_table(
+        ["Scope", "Recorded basis"],
+        [["Objective", section.get("objective", "not available")],
+         ["Evidence scope", section.get("evidence_scope", "not available")],
+         ["Reproducibility", section.get("reproducibility", "not available")]],
+    )
+    out += ["", "### Processing stages", ""]
+    rows = []
+    for method in section.get("methodology") or []:
+        stage, separator, detail = str(method).partition(":")
+        rows.append([stage, detail.strip() if separator else method])
+    out += _markdown_table(["Stage", "Method and stored output"], rows)
+    return out
+
+
+def _evidence_markdown(section: Any) -> List[str]:
+    if not isinstance(section, list) or not section or not isinstance(section[0], dict):
+        return _to_markdown(section)
+    return _markdown_table(
+        ["Evidence", "File", "Acquired", "OCR confidence", "Entities", "Integrity"],
+        [[row.get("evidence_id", ""), row.get("file_name", ""),
+          row.get("upload_time", ""), row.get("ocr_confidence", ""),
+          row.get("entity_count", 0),
+          "VERIFIED" if row.get("hash_verified") else "FAILED"]
+         for row in section],
+    )
+
+
+def _metadata_markdown(section: Any) -> List[str]:
+    if not isinstance(section, list) or not section or "evidence_id" not in section[0]:
+        return _to_markdown(section)
+    return _markdown_table(
+        ["Evidence", "EXIF", "Device", "Software", "Consistency notes"],
+        [[row.get("evidence_id", ""), row.get("has_exif", False),
+          row.get("device", ""), row.get("software", ""),
+          row.get("consistency_notes", [])] for row in section],
+    )
+
+
+def _confidence_markdown(section: Any) -> List[str]:
+    if not isinstance(section, list) or not section or "evidence_id" not in section[0]:
+        return _to_markdown(section)
+    return _markdown_table(
+        ["Evidence", "Score", "Level", "Computed explanation"],
+        [[row.get("evidence_id", ""), row.get("score", ""),
+          row.get("level", ""), _short(row.get("explanation", ""))]
+         for row in section],
+    )
 
 
 def _correlation_markdown(section: Any) -> List[str]:
@@ -1295,19 +1388,62 @@ def _legal_markdown(section: Any) -> List[str]:
         out += [f"*{section['language_note']}*", ""]
     for provision in section.get("provisions") or []:
         out.append(f"### Section {provision['section']} — {provision['title']}")
+        out += ["", f"*{provision['citation']}*", ""]
+        out += _markdown_table(
+            ["Field", "Recorded value"],
+            [["Conduct", provision["conduct"]],
+             ["Penalty", provision["penalty"]],
+             ["Evidence-based match", provision["basis"]],
+             ["Supporting evidence", provision.get("evidence_ids") or ["none"]]],
+        )
+        out.append("")
+
+    guidance = section.get("investigative_guidance") or []
+    if guidance:
+        out += ["### Evidentiary and regulatory follow-up", ""]
         out += [
+            "These entries are preservation or investigative actions, not findings "
+            "that an institution violated a rule.",
             "",
-            f"*{provision['citation']}*",
-            "",
-            f"**Conduct.** {provision['conduct']}",
-            "",
-            f"**Penalty.** {provision['penalty']}",
-            "",
-            f"**Why this is engaged.** {provision['basis']}",
         ]
-        if provision.get("evidence_ids"):
+        for item in guidance:
+            out += [f"#### {item['title']}", "", f"*{item['citation']}*", ""]
+            out += _markdown_table(
+                ["Field", "Recorded value"],
+                [["Status", item.get("status", "investigative_follow_up")],
+                 ["Expectation", item["expectation"]],
+                 ["Why relevant", item["basis"]],
+                 ["Recommended action", item["recommended_action"]],
+                 ["Applicability", item["applicability"]],
+                 ["Supporting evidence", item.get("evidence_ids") or ["none"]]],
+            )
             out.append("")
-            out.append(f"**Evidence.** {', '.join(provision['evidence_ids'])}")
+
+    manual = section.get("manual_review_provisions") or []
+    if manual:
+        out += ["### Provisions requiring manual review", ""]
+        out += [
+            "The current evidence model does not automatically assess these "
+            "provisions:",
+            "",
+        ]
+        for item in manual:
+            out.append(
+                f"- **Section {item['section']} — {item['title']}:** {item['reason']}"
+            )
+        out.append("")
+
+    sources = section.get("sources") or []
+    if sources:
+        out += ["### Primary sources", ""]
+        for source in sources:
+            out += [
+                f"- **{source['authority']} — {source['title']}**  ",
+                f"  {source['url']}  ",
+                f"  Used for: {source['usage']}",
+            ]
+            if source.get("note"):
+                out.append(f"  Note: {source['note']}")
         out.append("")
     if section.get("caveat"):
         out += [f"> {section['caveat']}", ""]

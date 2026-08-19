@@ -61,7 +61,7 @@ def test_report_references_findings_not_hallucinations(pipeline, icfg, repo):
     assert "+9779812345678" in markdown          # suspect anchor from data
     assert "campaign_analysis.json" in markdown     # findings referenced
     assert "scam-bank.top" in markdown
-    # all 15 mandated sections present
+    # The report keeps the complete 21-section contract in one stable order.
     for title in ("Executive Summary", "Case Overview", "Evidence Summary",
                   "Correlation Analysis", "Campaign Analysis",
                   "Timeline Analysis", "Suspect Assessment",
@@ -104,9 +104,34 @@ def test_report_exposes_timestamp_provenance_and_avoids_attribution(pipeline):
     assert "| timestamp (utc) | evidence |" in result["markdown"].lower()
     assert "| identity lead | score |" in result["markdown"].lower()
     assert "suspect_id" not in result["markdown"]
+    assert "| # | Finding |" in result["markdown"]
+    assert "| Stage | Method and stored output |" in result["markdown"]
+    assert "| Evidence | File | Acquired | OCR confidence | Entities | Integrity |" in result["markdown"]
     assert sections["investigation_statistics"]["timeline_statistics"] == (
         pipeline_result["timeline"].statistics
     )
+
+
+def test_report_separates_offences_from_source_backed_follow_up(pipeline):
+    result = pipeline.analyze_case(CASE)["report"]
+    legal = result["sections"]["legal_basis"]
+
+    assert legal["sources"]
+    assert {item["section"] for item in legal["manual_review_provisions"]} == {
+        "44", "48", "57"
+    }
+    assert legal["investigative_guidance"]
+    assert all(
+        item["status"] in {
+            "evidence_handling_requirement", "investigative_follow_up"
+        }
+        for item in legal["investigative_guidance"]
+    )
+    assert "Evidentiary and regulatory follow-up" in result["markdown"]
+    assert "not findings that an institution violated a rule" in result["markdown"]
+    assert "Primary sources" in result["markdown"]
+    assert "| Field | Recorded value |" in result["markdown"]
+    assert "Evidence-based match" in result["markdown"]
 
 
 def test_one_failing_module_does_not_abort(pipeline, monkeypatch):
