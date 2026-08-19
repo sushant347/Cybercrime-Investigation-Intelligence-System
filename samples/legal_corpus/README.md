@@ -13,9 +13,8 @@ project does with it.
 ## What this corpus is — and is not — used for
 
 **The engine does not train on this corpus. No model of any kind is fitted to
-it.** Five provisions of one Act were transcribed by hand into
-`legal/provisions.py`: the section number, the heading as enacted, and the
-penalty as written.
+it.** Selected provisions and controls are transcribed by hand into the legal
+module and remain deterministic and reviewable.
 
 The accurate claim is that **the statutory module is grounded in the primary
 legislation, and every citation can be verified against the source held here.**
@@ -26,7 +25,8 @@ That is a stronger claim than "trained on", because it is checkable — open
 
 | Document | Used for |
 |---|---|
-| `2.1 The Electronic Transactions Act, 2063 (2008).pdf` | Sections 45, 46, 47, 52, 53, 54, 55, 56 — 8 of the Act's 15 offence sections |
+| `2.1 The Electronic Transactions Act, 2063 (2008).pdf` | Sections 45, 46, 47, 52, 53, 54, 55 and 56 are automatically assessed; sections 44, 48 and 57 are surfaced for manual review; sections 4 and 6 support electronic-record preservation guidance |
+| `4.5 NRB Cyber-Resilience-Guidelines-2023.pdf` | Controls 71(d) and 83–86 provide conditional authentication and forensic-log preservation follow-up for in-scope licensed institutions |
 | `7.3 The Patent, Design and Trade Mark Act, 2022 (1965).pdf` | Section 19 — illegal use of trade-marks, triggered by brand/logo detection |
 | `7.2 The Copyright Act, 2059 (2002).pdf` | Section 27 — infringement, triggered by template-matched artwork |
 
@@ -39,6 +39,11 @@ Everything else is reference material, held for provenance and for work not yet
 done. Its presence is not a claim that the engine implements it. Which sections
 of the Electronic Transactions Act are deliberately not assessed, and why, is
 recorded in `provisions.UNASSESSED_ETA_SECTIONS`.
+
+NRB controls are rendered as investigative follow-up, never as criminal
+provisions or findings of non-compliance. Their applicability must be confirmed:
+the 2023 Guidelines cover the licensed institutions identified by the NRB
+Payment Systems Department and explicitly call for a risk-based approach.
 
 ## The Nepali texts
 

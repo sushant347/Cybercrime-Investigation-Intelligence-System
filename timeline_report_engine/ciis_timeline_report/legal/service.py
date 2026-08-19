@@ -32,7 +32,21 @@ from ciis_correlation.core.data_access import EvidenceContext
 from ciis_correlation.correlation.models import CrossCaseCorrelation
 from ciis_correlation.core.text import count_of, joined
 
-from .models import EngagedProvision, LegalBasisAssessment
+from .guidance import (
+    ELECTRONIC_RECORD_PRESERVATION,
+    ETA_SOURCE_ID,
+    NRB_APPLICABILITY,
+    NRB_AUTHENTICATION_CONTROL,
+    NRB_CRG_SOURCE_ID,
+    NRB_FORENSIC_LOG_CONTROL,
+    primary_sources,
+)
+from .models import (
+    EngagedProvision,
+    InvestigativeGuidance,
+    LegalBasisAssessment,
+    UnassessedProvision,
+)
 from .provisions import (
     ACT_JURISDICTION,
     ACT_LANGUAGE_NOTE,
@@ -41,6 +55,7 @@ from .provisions import (
     ALL_PROVISIONS,
     ASSESSMENT_CAVEAT,
     COPYRIGHT_ACT,
+    MANUAL_REVIEW_PROVISIONS,
     TRADEMARK_ACT,
     StatutoryProvision,
 )
@@ -132,6 +147,20 @@ class LegalBasisService:
             except Exception as exc:  # noqa: BLE001
                 self._log.warning("confiscation rule failed for %s: %s", case_id, exc)
 
+        guidance = self._investigative_guidance(items)
+        manual_review = [
+            UnassessedProvision(
+                section=provision.section,
+                title=provision.title,
+                citation=provision.citation,
+                reason=provision.trigger,
+            )
+            for provision in MANUAL_REVIEW_PROVISIONS
+        ]
+        include_nrb = any(
+            item.source_id == NRB_CRG_SOURCE_ID for item in guidance
+        )
+
         assessment = LegalBasisAssessment(
             case_id=case_id,
             statute=ACT_SHORT_NAME,
@@ -139,6 +168,9 @@ class LegalBasisService:
             jurisdiction=ACT_JURISDICTION,
             language_note=ACT_LANGUAGE_NOTE,
             provisions=engaged,
+            manual_review_provisions=manual_review,
+            investigative_guidance=guidance,
+            sources=primary_sources(include_nrb=include_nrb),
             caveat=ASSESSMENT_CAVEAT,
             summary=self._summary(engaged),
             analysis_time_ms=round((time.perf_counter() - started) * 1000.0, 1),
@@ -162,6 +194,93 @@ class LegalBasisService:
                 if entity.entity_type in types:
                     found.setdefault(entity.value, []).append(context.evidence_id)
         return found
+
+    def _investigative_guidance(
+        self, items: Sequence[EvidenceContext]
+    ) -> List[InvestigativeGuidance]:
+        """Build preservation/follow-up guidance without asserting non-compliance."""
+        if not items:
+            return []
+
+        all_ids = sorted({item.evidence_id for item in items})
+        guidance = [
+            InvestigativeGuidance(
+                category="evidence_preservation",
+                control_ids=list(ELECTRONIC_RECORD_PRESERVATION.control_ids),
+                title=ELECTRONIC_RECORD_PRESERVATION.title,
+                citation=ELECTRONIC_RECORD_PRESERVATION.citation,
+                expectation=ELECTRONIC_RECORD_PRESERVATION.expectation,
+                basis=(
+                    f"This report relies on "
+                    f"{count_of(len(all_ids), 'electronic evidence item')}; "
+                    "preservation and reproducibility therefore "
+                    "remain material to later verification."
+                ),
+                recommended_action=ELECTRONIC_RECORD_PRESERVATION.recommended_action,
+                applicability=(
+                    "Applies where an electronic record is retained or relied on "
+                    "under the Electronic Transactions Act and prevailing law."
+                ),
+                status="evidence_handling_requirement",
+                evidence_ids=all_ids,
+                source_id=ETA_SOURCE_ID,
+            )
+        ]
+
+        rails = self._entities_of(items, _PAYMENT_TYPES)
+        if not rails:
+            return guidance
+
+        payment_ids = sorted({eid for ids in rails.values() for eid in ids})
+        guidance.append(
+            InvestigativeGuidance(
+                category="regulatory_follow_up",
+                control_ids=list(NRB_FORENSIC_LOG_CONTROL.control_ids),
+                title=NRB_FORENSIC_LOG_CONTROL.title,
+                citation=NRB_FORENSIC_LOG_CONTROL.citation,
+                expectation=NRB_FORENSIC_LOG_CONTROL.expectation,
+                basis=(
+                    f"The case contains {count_of(len(rails), 'payment identifier')} "
+                    f"across {count_of(len(payment_ids), 'evidence item')}; the "
+                    "corresponding institution-side records may establish transaction "
+                    "sequence, account activity, source address and timing."
+                ),
+                recommended_action=NRB_FORENSIC_LOG_CONTROL.recommended_action,
+                applicability=NRB_APPLICABILITY,
+                evidence_ids=payment_ids,
+                source_id=NRB_CRG_SOURCE_ID,
+            )
+        )
+
+        credential_ids = set()
+        for ids in self._entities_of(items, _CREDENTIAL_TYPES).values():
+            credential_ids.update(ids)
+        for context in items:
+            text = (context.raw_text or "").lower()
+            if any(word in text for word in _CREDENTIAL_WORDS):
+                credential_ids.add(context.evidence_id)
+
+        if credential_ids:
+            ids = sorted(credential_ids)
+            guidance.append(
+                InvestigativeGuidance(
+                    category="regulatory_follow_up",
+                    control_ids=list(NRB_AUTHENTICATION_CONTROL.control_ids),
+                    title=NRB_AUTHENTICATION_CONTROL.title,
+                    citation=NRB_AUTHENTICATION_CONTROL.citation,
+                    expectation=NRB_AUTHENTICATION_CONTROL.expectation,
+                    basis=(
+                        f"Credential or OTP material appears in "
+                        f"{count_of(len(ids), 'evidence item')}; authentication and "
+                        "account-change records are therefore relevant corroboration."
+                    ),
+                    recommended_action=NRB_AUTHENTICATION_CONTROL.recommended_action,
+                    applicability=NRB_APPLICABILITY,
+                    evidence_ids=ids,
+                    source_id=NRB_CRG_SOURCE_ID,
+                )
+            )
+        return guidance
 
     def _computer_fraud(
         self, provision: StatutoryProvision, items: Sequence[EvidenceContext]

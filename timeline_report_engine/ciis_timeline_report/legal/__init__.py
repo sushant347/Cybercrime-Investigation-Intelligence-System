@@ -8,15 +8,30 @@ describes; whether an offence is made out is for the investigating officer and
 the prosecutor.
 """
 
-from .models import EngagedProvision, LegalBasisAssessment
-from .provisions import ACT_SHORT_NAME, ASSESSMENT_CAVEAT, PROVISIONS
+from .models import (
+    EngagedProvision,
+    InvestigativeGuidance,
+    LegalBasisAssessment,
+    LegalSourceReference,
+    UnassessedProvision,
+)
+from .provisions import (
+    ACT_SHORT_NAME,
+    ASSESSMENT_CAVEAT,
+    MANUAL_REVIEW_PROVISIONS,
+    PROVISIONS,
+)
 from .service import LegalBasisService
 
 __all__ = [
     "EngagedProvision",
+    "InvestigativeGuidance",
     "LegalBasisAssessment",
+    "LegalSourceReference",
     "LegalBasisService",
+    "UnassessedProvision",
     "PROVISIONS",
+    "MANUAL_REVIEW_PROVISIONS",
     "ACT_SHORT_NAME",
     "ASSESSMENT_CAVEAT",
 ]
