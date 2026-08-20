@@ -1,4 +1,4 @@
-import { Card, CardContent, CardHeader, Divider, Typography } from "@mui/material";
+import { Card, CardContent, CardHeader, Divider, Typography, useTheme } from "@mui/material";
 import {
   Bar,
   BarChart,
@@ -36,6 +36,7 @@ export function ChartCard({
   data,
   kind = "bar",
   domain,
+  valueLabel = "Count",
 }: {
   title: string;
   subheader?: string;
@@ -43,7 +44,40 @@ export function ChartCard({
   kind?: "bar" | "pie";
   /** Fixed Y-axis domain (e.g. [0, 100] for score charts). */
   domain?: [number, number];
+  /**
+   * What a bar/slice actually counts. Without it the tooltip prints the raw
+   * series key — "value : 11" — which names nothing the reader recognises.
+   */
+  valueLabel?: string;
 }) {
+  const theme = useTheme();
+
+  /**
+   * Recharts ships light-mode defaults: a white tooltip card with #666 label
+   * text, and #666 axis ticks. Against the dark theme that is grey on grey —
+   * the hovered value was the least readable text on the page. Every chart
+   * surface is pinned to the theme's own palette instead, so both themes stay
+   * legible.
+   */
+  const tickStyle = { fontSize: 11, fill: theme.palette.text.secondary };
+  const axisStroke = theme.palette.divider;
+  const tooltipProps = {
+    contentStyle: {
+      background: theme.palette.background.paper,
+      border: `1px solid ${theme.palette.divider}`,
+      borderRadius: 8,
+      boxShadow: theme.shadows[3],
+      fontSize: 12,
+    },
+    labelStyle: {
+      color: theme.palette.text.primary,
+      fontWeight: 700,
+      marginBottom: 4,
+    },
+    itemStyle: { color: theme.palette.text.primary },
+    formatter: (value: number) => [value, valueLabel] as [number, string],
+  };
+
   return (
     <Card sx={{ flex: "1 1 420px", minWidth: 0 }}>
       <CardHeader title={title} subheader={subheader} />
@@ -61,17 +95,33 @@ export function ChartCard({
                   <Cell key={i} fill={CHART_COLORS[i % CHART_COLORS.length]} />
                 ))}
               </Pie>
-              <ChartTooltip />
-              <Legend />
+              <ChartTooltip {...tooltipProps} />
+              <Legend wrapperStyle={{ color: theme.palette.text.secondary, fontSize: 12 }} />
             </PieChart>
           </ResponsiveContainer>
         ) : (
           <ResponsiveContainer>
             <BarChart data={data} margin={{ left: 0, right: 12 }}>
-              <CartesianGrid strokeDasharray="3 3" opacity={0.25} />
-              <XAxis dataKey="name" tick={{ fontSize: 11 }} interval={0} angle={-18} textAnchor="end" height={60} />
-              <YAxis allowDecimals={!!domain} domain={domain} tick={{ fontSize: 11 }} />
-              <ChartTooltip />
+              <CartesianGrid strokeDasharray="3 3" stroke={axisStroke} opacity={0.6} />
+              <XAxis
+                dataKey="name"
+                tick={tickStyle}
+                stroke={axisStroke}
+                interval={0}
+                angle={-18}
+                textAnchor="end"
+                height={60}
+              />
+              <YAxis
+                allowDecimals={!!domain}
+                domain={domain}
+                tick={tickStyle}
+                stroke={axisStroke}
+              />
+              <ChartTooltip
+                {...tooltipProps}
+                cursor={{ fill: theme.palette.action.hover }}
+              />
               <Bar dataKey="value" radius={[4, 4, 0, 0]}>
                 {data.map((_, i) => (
                   <Cell key={i} fill={CHART_COLORS[i % CHART_COLORS.length]} />

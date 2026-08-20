@@ -573,19 +573,22 @@ export function AnalyticsTab({ caseId }: { caseId: string }) {
                 label="Mean OCR confidence"
                 value={num(quality.mean_ocr_confidence)}
                 max={1}
-                hint="How confident the OCR engine was in the text it read (0-1)."
+                hint="Average certainty of the text the OCR read, 0 to 1. The engine flags
+                  individual lines below 0.50 as unreliable."
               />
               <MetricBar
                 label="Mean image quality"
                 value={num(quality.mean_image_quality)}
                 max={100}
-                hint="Sharpness/contrast score of the uploaded images (0-100)."
+                hint="Average sharpness and contrast of the uploaded images, 0-100.
+                  Higher means the engine had a clean image to read from."
               />
               <MetricBar
                 label="Mean evidence confidence"
                 value={num(quality.mean_evidence_confidence)}
                 max={100}
-                hint="Overall Phase-1 confidence in each evidence item (0-100)."
+                hint="How far Phase 1 trusts each item overall, 0-100, combining image
+                  quality, OCR certainty and the forgery checks."
               />
             </Box>
             <Box sx={{ flex: 1 }}>
@@ -593,14 +596,15 @@ export function AnalyticsTab({ caseId }: { caseId: string }) {
                 label="Mean forgery risk"
                 value={num(quality.mean_forgery_score)}
                 max={100}
-                hint="Tampering indicators found (0-100). Lower is better."
+                hint="Average tampering score across every item, 0-100. Lower is better."
                 invert
               />
               <MetricBar
                 label="Highest forgery risk"
                 value={num(quality.max_forgery_score)}
                 max={100}
-                hint="The most suspicious single item (0-100). Lower is better."
+                hint="The most suspicious single item, 0-100. At 50 or above the engine
+                    raises it as a possible-tampering indicator."
                 invert
               />
               <Box sx={{ mt: 2 }}>
@@ -608,20 +612,23 @@ export function AnalyticsTab({ caseId }: { caseId: string }) {
                   label="Hash-verified items"
                   value={num(quality.hash_verified_count)}
                   total={num(analytics.evidence_count)}
-                  hint="Items whose SHA-256 matched before and after acquisition — the chain-of-custody guarantee. This should always be full."
+                  hint="Items whose SHA-256 is unchanged since acquisition. This is the
+                    chain-of-custody guarantee, so it should always be full."
                 />
                 <RatioBar
                   label="Items with EXIF metadata"
                   value={num(metadata.evidence_with_exif)}
                   total={num(analytics.evidence_count)}
                   neutralWhenZero
-                  hint="Camera EXIF found inside the image file: device model, capture time, sometimes GPS. Screenshots, chat exports and PDFs carry none, so 0 is normal for screenshot-based evidence — it means no device provenance, not a defect."
+                  hint="Camera metadata inside the file: device, capture time, sometimes
+                    GPS. Screenshots and PDFs never carry it, so 0 is normal here."
                 />
                 <RatioBar
                   label="Items with a metadata report"
                   value={num(metadata.evidence_with_metadata_report)}
                   total={num(analytics.evidence_count)}
-                  hint="Items the Phase-1 metadata module analysed at all. If this is 0, forensics never ran — re-run the analysis."
+                  hint="Items the Phase-1 metadata module examined. If this is 0,
+                    forensics never ran — re-run the analysis."
                 />
               </Box>
               {num(metadata.evidence_with_exif) === 0 &&

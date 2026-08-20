@@ -179,6 +179,7 @@ function ReportView({ caseId, report }: { caseId: string; report: InvestigationR
             subheader="Weighted components behind the engine's priority verdict (0–100)"
             data={priorityChart}
             domain={[0, 100]}
+            valueLabel="Score"
           />
         )}
         {strengthChart.length > 0 && (
@@ -187,6 +188,7 @@ function ReportView({ caseId, report }: { caseId: string; report: InvestigationR
             subheader="Evidence-pair relationships by strength band"
             data={strengthChart}
             kind="pie"
+            valueLabel="Pairs"
           />
         )}
         {ocrChart.length > 0 && (
@@ -195,6 +197,7 @@ function ReportView({ caseId, report }: { caseId: string; report: InvestigationR
             subheader="Phase-1 recognition confidence (%)"
             data={ocrChart}
             domain={[0, 100]}
+            valueLabel="Confidence %"
           />
         )}
         {qualityChart.length > 0 && (
@@ -202,6 +205,7 @@ function ReportView({ caseId, report }: { caseId: string; report: InvestigationR
             title="Evidence Quality Summary"
             subheader="Aggregate Phase-1 quality metrics"
             data={qualityChart}
+            valueLabel="Score"
           />
         )}
       </Stack>
