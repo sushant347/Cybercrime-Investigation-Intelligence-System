@@ -39,6 +39,9 @@ import type { CorrelationFactor, EvidencePairCorrelation } from "@/types";
 
 type SortKey = "confidence" | "pair";
 
+/** The strength the engine assigns to a pair it examined and rejected. */
+const UNRELATED = "NO_RELATIONSHIP";
+
 const specificityTone = (specificity: number) =>
   specificity >= 0.7 ? "low" : specificity >= 0.4 ? "high" : ("critical" as const);
 
@@ -215,6 +218,14 @@ export function CorrelationTable({
   const visible = useMemo(() => {
     const needle = query.trim().toLowerCase();
     const filtered = pairs.filter((pair) => {
+      const unrelated = pair.relationship_strength === UNRELATED;
+      // The engine examines every possible pair and keeps the rejections, so
+      // `pairs` is n(n-1)/2 entries of which most are usually
+      // NO_RELATIONSHIP. Showing all of them by default contradicted the
+      // header ("10 related pair(s) of 55 examined") and buried the ten links
+      // that matter under forty-five that do not. The rejections stay one
+      // click away rather than being dropped.
+      if (strengthFilter === null && unrelated) return false;
       if (strengthFilter && pair.relationship_strength !== strengthFilter) return false;
       if (!needle) return true;
       return (
@@ -234,6 +245,24 @@ export function CorrelationTable({
       return direction * (a.correlation_confidence - b.correlation_confidence);
     });
   }, [pairs, query, strengthFilter, sortKey, descending]);
+
+  const relatedCount = pairs.filter((p) => p.relationship_strength !== UNRELATED).length;
+  const unrelatedCount = pairs.length - relatedCount;
+
+  // What the count is measured against depends on the active filter, so the
+  // denominator has to move with it — "45 of 10 related pair(s)" is not a
+  // sentence.
+  const scope =
+    strengthFilter === null
+      ? { total: relatedCount, label: "related pair(s)" }
+      : strengthFilter === UNRELATED
+        ? { total: unrelatedCount, label: "pair(s) examined and found unrelated" }
+        : {
+            total: pairs.filter(
+              (p) => p.relationship_strength === strengthFilter,
+            ).length,
+            label: `${strengthFilter.replace(/_/g, " ").toLowerCase()} pair(s)`,
+          };
 
   const toggleSort = (key: SortKey) => {
     if (key === sortKey) setDescending((v) => !v);
@@ -286,9 +315,16 @@ export function CorrelationTable({
       </Stack>
 
       <Typography variant="caption" color="text.secondary">
-        Showing {visible.length} of {pairs.length} correlated pair(s). Select a
-        row to see the engine&apos;s reasoning and the factor-by-factor
-        contribution.
+        Showing {visible.length} of {scope.total} {scope.label}
+        {unrelatedCount > 0 && strengthFilter === null && (
+          <>
+            {" "}
+            — {unrelatedCount} further pair(s) were examined and found
+            unrelated; select <strong>{UNRELATED}</strong> above to include them
+          </>
+        )}
+        . Select a row to see the engine&apos;s reasoning and the
+        factor-by-factor contribution.
       </Typography>
 
       {/* ---------------------------------------------------------- the table */}
