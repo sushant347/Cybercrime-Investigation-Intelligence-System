@@ -37,6 +37,9 @@ try:  # reportlab is an optional dependency (installed by dev.sh setup)
         TableStyle,
     )
     from reportlab.platypus.tableofcontents import TableOfContents
+    from reportlab.graphics.shapes import Drawing, String
+    from reportlab.graphics.charts.barcharts import HorizontalBarChart
+    from reportlab.graphics.charts.piecharts import Pie
 
     _REPORTLAB = True
 except ImportError:  # pragma: no cover - environment-dependent
@@ -182,6 +185,121 @@ def _prediction_facts(row: Dict[str, Any]) -> List[str]:
     if isinstance(row.get("trust_score"), int):
         facts.append(f"trust: {row['trust_score']}/100")
     return facts
+
+
+#: Figure palette. Distinct in colour *and* in order, so a chart survives
+#: being printed in greyscale — which is how a case file usually travels.
+_FIGURE_COLORS = ("#1a5c3a", "#2f7d5c", "#5aa17f", "#8cc0a6", "#b9d9c8", "#d8e8df")
+
+
+def _figure_caption_style(styles) -> Any:
+    """Caption style for a figure, reusing the document's caveat styling."""
+    return styles["caveat"]
+
+
+def _bar_figure(
+    pairs: List[tuple],
+    *,
+    width: float,
+    value_label: str = "",
+    max_bars: int = 8,
+) -> Optional[Any]:
+    """A horizontal bar figure for ``(label, value)`` pairs.
+
+    Horizontal rather than vertical because the labels here are words -
+    "Timeline criticality", "esewa_ids" - and vertical bars would either
+    clip them or turn them on their side. Returns ``None`` when there is
+    nothing to plot, so a caller can skip the whole figure block.
+    """
+    usable = [(str(label), float(value)) for label, value in pairs
+              if isinstance(value, (int, float)) and float(value) > 0]
+    if not usable:
+        return None
+    usable = usable[:max_bars]
+
+    row_height = 13
+    chart_height = max(46, row_height * len(usable))
+    drawing = Drawing(width, chart_height + 24)
+
+    chart = HorizontalBarChart()
+    chart.x = 96
+    chart.y = 8
+    chart.height = chart_height
+    chart.width = max(80, width - chart.x - 34)
+    chart.data = [[value for _, value in usable]]
+    # Bars read top-to-bottom in the order given; reportlab plots the first
+    # datum at the bottom, so the list is reversed to match the reading order.
+    chart.data = [list(reversed(chart.data[0]))]
+    chart.categoryAxis.categoryNames = [label for label, _ in reversed(usable)]
+    chart.categoryAxis.labels.fontName = BODY_FONT
+    chart.categoryAxis.labels.fontSize = 7
+    chart.categoryAxis.labels.dx = -4
+    chart.categoryAxis.labels.boxAnchor = "e"
+    chart.categoryAxis.strokeColor = colors.HexColor(RULE)
+    chart.valueAxis.valueMin = 0
+    chart.valueAxis.labels.fontName = BODY_FONT
+    chart.valueAxis.labels.fontSize = 7
+    chart.valueAxis.strokeColor = colors.HexColor(RULE)
+    chart.barSpacing = 2
+    chart.barWidth = 7
+    chart.bars[0].fillColor = colors.HexColor(_FIGURE_COLORS[1])
+    chart.bars[0].strokeColor = colors.HexColor(_FIGURE_COLORS[0])
+    chart.bars[0].strokeWidth = 0.4
+    # Print each bar's value at its tip: a reader citing this report needs the
+    # figure, not an estimate off an axis.
+    chart.barLabels.fontName = BODY_FONT
+    chart.barLabels.fontSize = 7
+    chart.barLabelFormat = "%0.1f" if any(
+        abs(v - round(v)) > 0.05 for _, v in usable
+    ) else "%d"
+    chart.barLabels.dx = 7
+    drawing.add(chart)
+
+    if value_label:
+        drawing.add(String(
+            chart.x, chart_height + 15, value_label,
+            fontName=BODY_FONT, fontSize=7,
+            fillColor=colors.HexColor(MUTED),
+        ))
+    return drawing
+
+
+def _pie_figure(pairs: List[tuple], *, width: float) -> Optional[Any]:
+    """A labelled pie for ``(label, count)`` pairs; ``None`` when empty."""
+    usable = [(str(label), float(value)) for label, value in pairs
+              if isinstance(value, (int, float)) and float(value) > 0]
+    if not usable:
+        return None
+
+    total = sum(value for _, value in usable)
+    drawing = Drawing(width, 128)
+    pie = Pie()
+    pie.x = 12
+    pie.y = 10
+    pie.width = 108
+    pie.height = 108
+    pie.data = [value for _, value in usable]
+    pie.slices.strokeColor = colors.white
+    pie.slices.strokeWidth = 0.75
+    for index in range(len(usable)):
+        pie.slices[index].fillColor = colors.HexColor(
+            _FIGURE_COLORS[index % len(_FIGURE_COLORS)]
+        )
+    drawing.add(pie)
+
+    # A legend beside the pie rather than labels on the slices: slice labels
+    # collide as soon as one share is small, and these shares often are.
+    legend_x = 138
+    legend_y = 108
+    for index, (label, value) in enumerate(usable):
+        share = (value / total * 100) if total else 0
+        drawing.add(String(
+            legend_x, legend_y - index * 12,
+            f"{label}: {value:g} ({share:.0f}%)",
+            fontName=BODY_FONT, fontSize=7.5,
+            fillColor=colors.HexColor("#1a202c"),
+        ))
+    return drawing
 
 
 def available() -> bool:
@@ -1066,6 +1184,7 @@ def render_pdf(
     # is an investigator brief: related outputs are grouped around decisions,
     # with raw diagnostic detail left in the machine-readable twin.
     number = 0
+    figure_number = 0
 
     def major(title: str, *, new_page: bool = True) -> None:
         nonlocal number
@@ -1080,6 +1199,27 @@ def render_pdf(
     def subheading(title: str) -> None:
         story.append(Spacer(1, 7))
         story.append(Paragraph(title, styles["h3"]))
+
+    def figure(drawing: Any, caption: str) -> None:
+        """Append a chart with a numbered caption.
+
+        Figures restate numbers the tables already carry; they are here so the
+        shape of a case - where its evidence clusters, how its links are
+        distributed - can be taken in at a glance. Nothing is presented only
+        as a picture, so a greyscale print or a screen reader loses no
+        finding. A figure that has no data to plot is skipped by its caller.
+        """
+        nonlocal figure_number
+        if drawing is None:
+            return
+        figure_number += 1
+        story.append(KeepTogether([
+            Spacer(1, 4),
+            drawing,
+            Paragraph(f"Figure {figure_number}. {_esc(caption)}",
+                      _figure_caption_style(styles)),
+            Spacer(1, 4),
+        ]))
 
     def metric_text(key: str, value: Any) -> str:
         if value in (None, ""):
@@ -1131,6 +1271,22 @@ def render_pdf(
         ],
         widths=[34 * mm, 47 * mm, 40 * mm, 40 * mm],
     ))
+    statistics = sections.get("investigation_statistics")
+    entity_stats = (
+        statistics.get("entity_statistics") if isinstance(statistics, dict) else None
+    )
+    if isinstance(entity_stats, dict) and entity_stats:
+        ranked = sorted(
+            ((str(k).replace("_", " "), v) for k, v in entity_stats.items()),
+            key=lambda item: item[1] if isinstance(item[1], (int, float)) else 0,
+            reverse=True,
+        )
+        figure(
+            _bar_figure(ranked, width=174 * mm, value_label="identifiers extracted"),
+            "Identifier types recovered from this case's evidence, most "
+            "frequent first. Counts are occurrences, not distinct values.",
+        )
+
     subheading("Material findings")
     executive_findings = list(sections.get("executive_summary") or [])
     if (
@@ -1181,6 +1337,18 @@ def render_pdf(
             for row in confidence
             if isinstance(row.get("score"), (int, float))
         ]
+        if scores:
+            figure(
+                _bar_figure(
+                    sorted(scores, key=lambda item: item[1]),
+                    width=174 * mm,
+                    value_label="confidence score (0-100)",
+                    max_bars=12,
+                ),
+                "Phase-1 confidence for each evidence item, weakest first. "
+                "The weakest items are the ones to corroborate before relying "
+                "on them.",
+            )
         levels: Dict[str, int] = {}
         for row in confidence:
             label = str(row.get("level", "not available")).replace("_", " ").title()
@@ -1243,8 +1411,20 @@ def render_pdf(
     # ------------------------------------------------------ analytical findings
     major(PDF_SECTION_TITLES[3])
     subheading("Evidence relationships")
-    if not emit_correlation_table(sections.get("correlation_analysis")):
-        emit(sections.get("correlation_analysis"))
+    correlation_section = sections.get("correlation_analysis")
+    if not emit_correlation_table(correlation_section):
+        emit(correlation_section)
+    if isinstance(correlation_section, dict):
+        distribution = correlation_section.get("strength_distribution")
+        if isinstance(distribution, dict) and distribution:
+            figure(
+                _pie_figure(
+                    sorted(distribution.items(), key=lambda kv: -kv[1]),
+                    width=174 * mm,
+                ),
+                "Distribution of the examined evidence pairs by relationship "
+                "strength. NO_RELATIONSHIP pairs were examined and rejected.",
+            )
 
     subheading("Cross-case candidates")
     if not emit_cross_case_table(sections.get("cross_case_correlation")):
