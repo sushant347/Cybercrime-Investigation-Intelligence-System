@@ -1,6 +1,7 @@
 import {
   Box,
   Chip,
+  Link,
   Paper,
   Stack,
   Table,
@@ -74,6 +75,15 @@ function Svg({ markup }: { markup: string }) {
   // user-controlled strings, which are escaped) and shared verbatim with the
   // downloadable HTML file so both renderings stay identical.
   return <Box sx={{ mt: 1.5 }} dangerouslySetInnerHTML={{ __html: markup }} />;
+}
+
+function splitMethod(line: string): { stage: string; method: string } {
+  const divider = line.indexOf(":");
+  if (divider < 0) return { stage: "Analysis", method: line };
+  return {
+    stage: line.slice(0, divider).replace(/^Phase\s+\d+\s*-\s*/i, ""),
+    method: line.slice(divider + 1).trim(),
+  };
 }
 
 /**
@@ -156,11 +166,17 @@ export function SimpleReportView({ report }: { report: SimpleReport }) {
 
       {report.findings.length > 0 && (
         <Section number={next()} title="Key Findings">
-          <Stack spacing={1}>
+          <Stack spacing={0.75}>
             {report.findings.map((line, i) => (
-              <Typography key={i} variant="body2">
-                {i + 1}. {line}
-              </Typography>
+              <Stack
+                key={i}
+                direction="row"
+                spacing={1.25}
+                sx={{ p: 1.25, border: 1, borderColor: "divider", borderRadius: 1 }}
+              >
+                <Chip label={i + 1} size="small" sx={{ minWidth: 28, fontWeight: 700 }} />
+                <Typography variant="body2">{line}</Typography>
+              </Stack>
             ))}
           </Stack>
         </Section>
@@ -174,6 +190,7 @@ export function SimpleReportView({ report }: { report: SimpleReport }) {
                 <TableCell>File</TableCell>
                 <TableCell>Added</TableCell>
                 <TableCell>Text Read</TableCell>
+                <TableCell>Entities</TableCell>
                 <TableCell>Integrity</TableCell>
               </TableRow>
             </TableHead>
@@ -190,6 +207,7 @@ export function SimpleReportView({ report }: { report: SimpleReport }) {
                   </TableCell>
                   <TableCell>{row.acquired}</TableCell>
                   <TableCell>{row.textConfidence}</TableCell>
+                  <TableCell>{row.entityCount}</TableCell>
                   <TableCell>
                     <Badge label={row.integrity} tone={row.integrityOk ? "good" : "bad"} />
                   </TableCell>
@@ -225,8 +243,13 @@ export function SimpleReportView({ report }: { report: SimpleReport }) {
                   <TableCell>{row.confidence}</TableCell>
                   <TableCell>
                     <Typography variant="body2" color="text.secondary">
-                      {row.meaning}
+                      {row.basis || row.meaning}
                     </Typography>
+                    {row.basis && (
+                      <Typography variant="caption" color="text.secondary">
+                        Interpretation: {row.meaning}
+                      </Typography>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}
@@ -389,15 +412,74 @@ export function SimpleReportView({ report }: { report: SimpleReport }) {
         </Section>
       )}
 
+      {report.timelineEvents.length > 0 && (
+        <Section number={next()} title="Chronological Events">
+          {report.timelineReliability && (
+            <Box sx={{ mb: 1.5, p: 1.25, bgcolor: "action.hover", borderRadius: 1 }}>
+              <Typography variant="caption" color="text.secondary">
+                {report.timelineReliability}
+              </Typography>
+            </Box>
+          )}
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell>Resolved time</TableCell>
+                <TableCell>Evidence</TableCell>
+                <TableCell>Source</TableCell>
+                <TableCell>Status</TableCell>
+                <TableCell>Stages</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {report.timelineEvents.map((event, index) => (
+                <TableRow key={`${event.evidenceId}-${index}`} hover>
+                  <TableCell sx={{ whiteSpace: "nowrap" }}>{event.timestamp}</TableCell>
+                  <TableCell>
+                    <Typography variant="body2" sx={{ fontWeight: 600 }}>{event.file}</Typography>
+                    <Typography variant="caption" color="text.secondary" sx={{ fontFamily: MONO }}>
+                      {event.evidenceId}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography variant="body2">{event.source}</Typography>
+                    <Typography variant="caption" color="text.secondary">{event.confidence}</Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Chip
+                      size="small"
+                      label={event.fallback ? "Upload fallback" : event.inferred ? "Inferred" : "Actual"}
+                      color={event.fallback ? "default" : event.inferred ? "warning" : "success"}
+                      variant="outlined"
+                    />
+                    {event.critical && <Chip size="small" label="Critical" color="error" sx={{ ml: 0.5 }} />}
+                  </TableCell>
+                  <TableCell>{event.stages.join(", ") || "—"}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Section>
+      )}
+
       {report.methodology.length > 0 && (
         <Section number={next()} title="Methodology">
-          <Stack spacing={0.75}>
-            {report.methodology.map((line, i) => (
-              <Typography key={i} variant="body2" color="text.secondary">
-                • {line}
-              </Typography>
-            ))}
-          </Stack>
+          <Table size="small">
+            <TableHead>
+              <TableRow><TableCell>Stage</TableCell><TableCell>Method and stored output</TableCell></TableRow>
+            </TableHead>
+            <TableBody>
+              {report.methodology.map((line, i) => {
+                const row = splitMethod(line);
+                return (
+                  <TableRow key={i}>
+                    <TableCell sx={{ fontWeight: 700, width: "28%" }}>{row.stage}</TableCell>
+                    <TableCell>{row.method}</TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
         </Section>
       )}
 
@@ -427,17 +509,22 @@ export function SimpleReportView({ report }: { report: SimpleReport }) {
                   {provision.citation}
                 </Typography>
 
-                <Typography variant="body2" sx={{ mt: 1.5 }}>
-                  <strong>Conduct.</strong> {provision.conduct}
-                </Typography>
-                <Typography variant="body2" sx={{ mt: 0.5 }}>
-                  <strong>Penalty.</strong> {provision.penalty}
-                </Typography>
-                {/* The basis is the whole point: it is why this provision is
-                    listed at all, and it is what an officer checks first. */}
-                <Typography variant="body2" sx={{ mt: 0.5 }}>
-                  <strong>Why this is engaged.</strong> {provision.basis}
-                </Typography>
+                <Table size="small" sx={{ mt: 1 }}>
+                  <TableBody>
+                    {[
+                      ["Conduct", provision.conduct],
+                      ["Penalty", provision.penalty],
+                      ["Evidence-based match", provision.basis],
+                    ].map(([label, value]) => (
+                      <TableRow key={label}>
+                        <TableCell sx={{ width: 150, fontWeight: 700, verticalAlign: "top" }}>
+                          {label}
+                        </TableCell>
+                        <TableCell>{value}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
 
                 {provision.evidence_ids.length > 0 && (
                   <Stack
@@ -455,6 +542,107 @@ export function SimpleReportView({ report }: { report: SimpleReport }) {
               </Box>
             ))}
           </Stack>
+
+          {(report.legalBasis.investigative_guidance?.length ?? 0) > 0 && (
+            <Box sx={{ mt: 3 }}>
+              <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+                Evidentiary and regulatory follow-up
+              </Typography>
+              <Typography variant="caption" color="text.secondary">
+                Preservation and investigative actions—not findings that an institution
+                violated a rule.
+              </Typography>
+
+              <Stack spacing={1.5} sx={{ mt: 1.5 }}>
+                {report.legalBasis.investigative_guidance?.map((item) => (
+                  <Box
+                    key={`${item.source_id}-${item.control_ids.join("-")}`}
+                    sx={{ border: 1, borderColor: "divider", borderRadius: 1, p: 2 }}
+                  >
+                    <Stack
+                      direction={{ xs: "column", sm: "row" }}
+                      spacing={1}
+                      justifyContent="space-between"
+                    >
+                      <Box>
+                        <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                          {item.title}
+                        </Typography>
+                        <Typography variant="caption" color="text.secondary">
+                          {item.citation}
+                        </Typography>
+                      </Box>
+                      <Chip
+                        size="small"
+                        label={item.status.replaceAll("_", " ")}
+                        variant="outlined"
+                      />
+                    </Stack>
+                    <Table size="small" sx={{ mt: 1 }}>
+                      <TableBody>
+                        {[
+                          ["Expectation", item.expectation],
+                          ["Why relevant", item.basis],
+                          ["Action", item.recommended_action],
+                          ["Applicability", item.applicability],
+                        ].map(([label, value]) => (
+                          <TableRow key={label}>
+                            <TableCell sx={{ width: 130, fontWeight: 700, verticalAlign: "top" }}>
+                              {label}
+                            </TableCell>
+                            <TableCell>{value}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                    {item.evidence_ids.length > 0 && (
+                      <Stack direction="row" spacing={0.5} flexWrap="wrap" useFlexGap sx={{ mt: 1 }}>
+                        {item.evidence_ids.map((id) => (
+                          <Chip key={id} label={id} size="small" variant="outlined" />
+                        ))}
+                      </Stack>
+                    )}
+                  </Box>
+                ))}
+              </Stack>
+            </Box>
+          )}
+
+          {(report.legalBasis.manual_review_provisions?.length ?? 0) > 0 && (
+            <Box sx={{ mt: 3, p: 2, borderRadius: 1, bgcolor: "action.hover" }}>
+              <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                Provisions requiring manual review
+              </Typography>
+              <Typography variant="caption" color="text.secondary">
+                The current evidence model does not automatically assess these sections.
+              </Typography>
+              <Stack spacing={0.75} sx={{ mt: 1 }}>
+                {report.legalBasis.manual_review_provisions?.map((item) => (
+                  <Typography key={item.section} variant="body2">
+                    <strong>Section {item.section} — {item.title}.</strong> {item.reason}
+                  </Typography>
+                ))}
+              </Stack>
+            </Box>
+          )}
+
+          {(report.legalBasis.sources?.length ?? 0) > 0 && (
+            <Box sx={{ mt: 3 }}>
+              <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                Primary sources
+              </Typography>
+              <Stack spacing={0.75} sx={{ mt: 0.75 }}>
+                {report.legalBasis.sources?.map((source) => (
+                  <Typography key={source.source_id} variant="caption" color="text.secondary">
+                    <Link href={source.url} target="_blank" rel="noopener noreferrer">
+                      {source.authority} — {source.title}
+                    </Link>{" "}
+                    · {source.usage} {source.note}
+                  </Typography>
+                ))}
+              </Stack>
+            </Box>
+          )}
 
           {/* Never rendered separately from the provisions above: the caveat is
               what stops the list being read as a charging decision. */}
@@ -477,13 +665,33 @@ export function SimpleReportView({ report }: { report: SimpleReport }) {
 
       {report.nextSteps.length > 0 && (
         <Section number={next()} title="Recommendations">
-          <Stack spacing={1}>
-            {report.nextSteps.map((line, i) => (
-              <Typography key={i} variant="body2">
-                {i + 1}. {line}
-              </Typography>
-            ))}
-          </Stack>
+          <Table size="small">
+            <TableHead><TableRow><TableCell>#</TableCell><TableCell>Investigator action</TableCell></TableRow></TableHead>
+            <TableBody>
+              {report.nextSteps.map((line, i) => (
+                <TableRow key={i}>
+                  <TableCell sx={{ width: 48, fontWeight: 700 }}>{i + 1}</TableCell>
+                  <TableCell>{line}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Section>
+      )}
+
+      {report.limitations.length > 0 && (
+        <Section number={next()} title="Limitations & Review Notes">
+          <Table size="small">
+            <TableHead><TableRow><TableCell>#</TableCell><TableCell>What must be verified</TableCell></TableRow></TableHead>
+            <TableBody>
+              {report.limitations.map((line, i) => (
+                <TableRow key={i}>
+                  <TableCell sx={{ width: 48 }}>{i + 1}</TableCell>
+                  <TableCell>{line}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </Section>
       )}
 
