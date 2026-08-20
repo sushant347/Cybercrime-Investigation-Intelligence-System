@@ -17,14 +17,13 @@ import {
   DialogTitle,
   Divider,
   IconButton,
-  LinearProgress,
   Stack,
   TextField,
   Tooltip,
   Typography,
 } from "@mui/material";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
 import { casesApi, investigationApi } from "@/api";
@@ -32,6 +31,7 @@ import { useAuth } from "@/features/auth/AuthContext";
 import { apiErrorMessage } from "@/lib/apiClient";
 import { KeyValueTable } from "@/components/common/KeyValueTable";
 import { StatCard } from "@/components/common/StatCard";
+import { PriorityBreakdown } from "./PriorityBreakdown";
 import { StatusChip } from "@/components/common/StatusChip";
 import { formatDateTime } from "@/lib/format";
 import { BRAND } from "@/theme/theme";
@@ -110,7 +110,14 @@ function EditDetailsDialog({
   );
 }
 
-/** Compact "identifier ×n" list used by the findings panel. */
+/**
+ * One group of extracted identifiers.
+ *
+ * Values are rendered as discrete rows rather than a run-on list so an
+ * identifier can be picked out at a glance, and the count of anything beyond
+ * the visible five is stated explicitly — the previous version truncated
+ * silently, so a case with forty wallets looked like a case with five.
+ */
 function ValueList({ values, empty }: { values: ValueCount[]; empty: string }) {
   if (values.length === 0) {
     return (
@@ -119,10 +126,26 @@ function ValueList({ values, empty }: { values: ValueCount[]; empty: string }) {
       </Typography>
     );
   }
+  const shown = values.slice(0, 5);
+  const hidden = values.length - shown.length;
+
   return (
-    <Stack spacing={0.25}>
-      {values.slice(0, 5).map((v) => (
-        <Stack key={v.value} direction="row" justifyContent="space-between" spacing={1}>
+    <Stack spacing={0.5}>
+      {shown.map((v) => (
+        <Stack
+          key={v.value}
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          spacing={1}
+          sx={{
+            px: 1,
+            py: 0.5,
+            borderRadius: 1,
+            bgcolor: "action.hover",
+            minWidth: 0,
+          }}
+        >
           <Typography
             variant="body2"
             noWrap
@@ -131,12 +154,49 @@ function ValueList({ values, empty }: { values: ValueCount[]; empty: string }) {
           >
             {v.value}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            ×{v.count}
-          </Typography>
+          <Chip
+            size="small"
+            label={`×${v.count}`}
+            sx={{ height: 20, fontWeight: 700, flexShrink: 0 }}
+          />
         </Stack>
       ))}
+      {hidden > 0 && (
+        <Typography variant="caption" color="text.secondary">
+          + {hidden} more — see the Analytics tab for the full list
+        </Typography>
+      )}
     </Stack>
+  );
+}
+
+/** Section heading inside the findings panel, with the group's total. */
+function FindingGroup({
+  title,
+  count,
+  children,
+}: {
+  title: string;
+  count: number;
+  children: ReactNode;
+}) {
+  return (
+    <Box>
+      <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 0.75 }}>
+        <Typography variant="overline" color="text.secondary" sx={{ lineHeight: 1.4 }}>
+          {title}
+        </Typography>
+        {count > 0 && (
+          <Chip
+            size="small"
+            label={count}
+            variant="outlined"
+            sx={{ height: 18, fontSize: 11, fontWeight: 700 }}
+          />
+        )}
+      </Stack>
+      {children}
+    </Box>
   );
 }
 
@@ -388,28 +448,28 @@ export function CaseOverviewTab({ caseData }: { caseData: CaseDetail }) {
                 </Typography>
               ) : (
                 <Stack spacing={2}>
-                  <Box>
-                    <Typography variant="subtitle2" color="text.secondary">
-                      Payment identifiers
-                    </Typography>
+                  <FindingGroup
+                    title="Payment identifiers"
+                    count={(analytics.wallet_statistics ?? []).length}
+                  >
                     <ValueList
                       values={analytics.wallet_statistics ?? []}
                       empty="No wallet, bank or card identifier was found."
                     />
-                  </Box>
-                  <Box>
-                    <Typography variant="subtitle2" color="text.secondary">
-                      Links & domains
-                    </Typography>
+                  </FindingGroup>
+                  <FindingGroup
+                    title="Links & domains"
+                    count={(analytics.url_statistics ?? []).length}
+                  >
                     <ValueList
                       values={analytics.url_statistics ?? []}
                       empty="No URLs appeared in this case's evidence."
                     />
-                  </Box>
-                  <Box>
-                    <Typography variant="subtitle2" color="text.secondary">
-                      Flagged by threat intelligence
-                    </Typography>
+                  </FindingGroup>
+                  <FindingGroup
+                    title="Flagged by threat intelligence"
+                    count={(analytics.threat_indicators ?? []).length}
+                  >
                     {(analytics.threat_indicators ?? []).length === 0 ? (
                       <Typography variant="body2" color="text.secondary">
                         {num(threat.intel_available) > 0
@@ -438,9 +498,15 @@ export function CaseOverviewTab({ caseData }: { caseData: CaseDetail }) {
                             </Stack>
                           </Tooltip>
                         ))}
+                        {(analytics.threat_indicators ?? []).length > 4 && (
+                          <Typography variant="caption" color="text.secondary">
+                            + {(analytics.threat_indicators ?? []).length - 4} more
+                            — see the Analytics tab for the full list
+                          </Typography>
+                        )}
                       </Stack>
                     )}
-                  </Box>
+                  </FindingGroup>
                   <Divider />
                   <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
                     <Chip
@@ -469,9 +535,8 @@ export function CaseOverviewTab({ caseData }: { caseData: CaseDetail }) {
           <Card>
             <CardHeader
               title="Case Priority"
-              subheader="Computed by the Phase-2 prioritization engine"
+              subheader="How urgently this case needs attention, and why"
               titleTypographyProps={{ variant: "subtitle1" }}
-              action={priority && <StatusChip value={priority.priority_level} />}
             />
             <Divider />
             <CardContent>
@@ -481,60 +546,7 @@ export function CaseOverviewTab({ caseData }: { caseData: CaseDetail }) {
                   generate one.
                 </Typography>
               ) : (
-                <Stack spacing={2}>
-                  <Stack direction="row" spacing={2} alignItems="baseline">
-                    <Typography variant="h3">
-                      {priority.priority_score.toFixed(1)}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      / 100 · computed {formatDateTime(priority.computed_at)}
-                    </Typography>
-                  </Stack>
-
-                  {priority.explanation && (
-                    <Typography variant="body2">{priority.explanation}</Typography>
-                  )}
-
-                  {priority.investigation_recommendation && (
-                    <Typography variant="body2" sx={{ fontStyle: "italic" }}>
-                      Recommendation: {priority.investigation_recommendation}
-                    </Typography>
-                  )}
-
-                  {priority.high_risk_indicators.length > 0 && (
-                    <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-                      {priority.high_risk_indicators.map((ind) => (
-                        <StatusChip key={ind} value="high" label={ind} />
-                      ))}
-                    </Stack>
-                  )}
-
-                  <Divider />
-                  <Typography variant="subtitle2">Score components</Typography>
-                  {priority.components.map((component) => (
-                    <Tooltip
-                      key={component.name}
-                      title={component.explanation || component.name}
-                    >
-                      <Stack spacing={0.5}>
-                        <Stack direction="row" justifyContent="space-between">
-                          <Typography variant="body2" sx={{ textTransform: "capitalize" }}>
-                            {component.name.replace(/_/g, " ")}
-                            {!component.available && " (unavailable)"}
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary">
-                            {component.score.toFixed(1)} × {component.weight.toFixed(2)}
-                          </Typography>
-                        </Stack>
-                        <LinearProgress
-                          variant="determinate"
-                          value={Math.min(100, component.score)}
-                          sx={{ height: 6, borderRadius: 3 }}
-                        />
-                      </Stack>
-                    </Tooltip>
-                  ))}
-                </Stack>
+                <PriorityBreakdown priority={priority} />
               )}
             </CardContent>
           </Card>

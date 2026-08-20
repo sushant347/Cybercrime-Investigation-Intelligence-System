@@ -6,6 +6,12 @@
 
 pydantic>=2.6
 networkx>=3.0,<4.0
+# NetworkX runs PageRank through a SciPy sparse solver. SciPy is otherwise a
+# transitive dependency, and an unbounded resolve picks a wheel built for
+# NumPy 2.x - which this environment cannot use, because PaddlePaddle pins
+# NumPy to 1.x. The mismatch fails at import time and used to take the whole
+# graph module down with it. 1.17.x is the last line that supports NumPy 1.x.
+scipy>=1.11,<1.18
 reportlab>=4.0
 
 # Development and standalone regression checks

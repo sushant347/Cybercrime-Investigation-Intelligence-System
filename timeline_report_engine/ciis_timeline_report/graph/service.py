@@ -413,6 +413,43 @@ class GraphService:
 
     # ------------------------------------------------------------- statistics
 
+    def _pagerank(
+        self, projected: "nx.Graph", degree: Dict[str, float]
+    ) -> Dict[str, float]:
+        """PageRank that survives a broken SciPy stack.
+
+        ``nx.pagerank`` delegates to a SciPy sparse solver. SciPy arrives here
+        as a transitive dependency, so a wheel built for a different NumPy
+        major fails on *import* with ``AttributeError`` on a removed alias
+        rather than ``ImportError`` - and an uncaught one used to cost the case
+        its entire relationship graph. That is an environment fault, not a
+        graph fault, so fall back rather than fail: NetworkX ships an
+        equivalent pure-Python power iteration that yields the same ranking
+        without SciPy. Degree centrality is the last resort, used only when
+        the iteration genuinely cannot converge.
+        """
+        try:
+            return nx.pagerank(projected, weight="weight")
+        except nx.PowerIterationFailedConvergence:
+            self._log.warning("pagerank did not converge; using degree centrality")
+            return dict(degree)
+        except Exception as exc:  # noqa: BLE001 - environment, not graph, fault
+            self._log.warning(
+                "SciPy-backed pagerank unavailable (%s); "
+                "using the pure-Python power iteration", exc,
+            )
+
+        pure_python = getattr(
+            nx.algorithms.link_analysis.pagerank_alg, "_pagerank_python", None
+        )
+        if pure_python is None:
+            return dict(degree)
+        try:
+            return pure_python(projected, weight="weight")
+        except Exception as exc:  # noqa: BLE001 - keep the graph, lose one metric
+            self._log.warning("pagerank unavailable (%s); using degree centrality", exc)
+            return dict(degree)
+
     def _enrich_with_networkx(self, graph: RelationshipGraph) -> Dict[str, object]:
         """Derive centrality, communities and a readable graph backbone.
 
@@ -462,10 +499,7 @@ class GraphService:
             else {node_id: 0.0 for node_id in projected}
         )
         if projected.number_of_edges():
-            try:
-                pagerank = nx.pagerank(projected, weight="weight")
-            except (ImportError, nx.NetworkXException):
-                pagerank = dict(degree)
+            pagerank = self._pagerank(projected, degree)
             if len(projected) <= 250:
                 betweenness = nx.betweenness_centrality(
                     projected, normalized=True, weight="distance"

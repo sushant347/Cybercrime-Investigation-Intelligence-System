@@ -25,6 +25,12 @@ Django>=5.0,<6.0
 djangorestframework>=3.15
 django-cors-headers>=4.3
 networkx>=3.0,<4.0
+# NetworkX runs PageRank through a SciPy sparse solver. SciPy is otherwise a
+# transitive dependency, and an unbounded resolve picks a wheel built for
+# NumPy 2.x - which this environment cannot use, because PaddlePaddle pins
+# NumPy to 1.x. The mismatch fails at import time and used to take the whole
+# graph module down with it. 1.17.x is the last line that supports NumPy 1.x.
+scipy>=1.11,<1.18
 
 # --- reporting ---
 # Optional at runtime (the PDF is skipped when missing), but CI must exercise
