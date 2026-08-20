@@ -74,18 +74,26 @@ export function connectionDiagramSvg(
   if (ids.length === 0) return "";
 
   const width = 640;
-  const height = Math.max(240, Math.min(360, 140 + ids.length * 26));
+  // The plot and the legend get their own bands. Previously the circle was
+  // centred in the whole canvas and the legend drawn over its foot, so the
+  // lowest nodes' labels ran into the legend row.
+  const legendBand = 30;
+  const plotHeight = Math.max(280, Math.min(420, 150 + ids.length * 24));
+  const height = plotHeight + legendBand;
   const cx = width / 2;
-  const cy = height / 2;
-  const radius = Math.min(cx, cy) - 56;
+  const cy = plotHeight / 2;
+  // Labels sit outside the ring, so the ring itself has to leave room for
+  // them - both vertically and, for the nodes at 3 and 9 o'clock, sideways.
+  const radius = Math.max(70, Math.min(cx - 120, cy - 46));
 
-  const pos = new Map<string, { x: number; y: number }>();
+  const pos = new Map<string, { x: number; y: number; angle: number }>();
   ids.forEach((id, i) => {
     // Start at 12 o'clock and distribute evenly.
     const angle = -Math.PI / 2 + (2 * Math.PI * i) / ids.length;
     pos.set(id, {
       x: cx + radius * Math.cos(angle),
       y: cy + radius * Math.sin(angle),
+      angle,
     });
   });
 
@@ -96,14 +104,20 @@ export function connectionDiagramSvg(
       if (!a || !b) return "";
       const color = STRENGTH_COLOR[c.strength.toUpperCase()] ?? WEAK_LINE;
       const strokeWidth = STRENGTH_WIDTH[c.strength.toUpperCase()] ?? 1.5;
-      const midX = (a.x + b.x) / 2;
-      const midY = (a.y + b.y) / 2;
+      // Offset the reading perpendicular to its own edge. At the midpoint it
+      // landed on whatever else crossed there — including node circles.
+      const dx = b.x - a.x;
+      const dy = b.y - a.y;
+      const len = Math.hypot(dx, dy) || 1;
+      const midX = (a.x + b.x) / 2 - (dy / len) * 9;
+      const midY = (a.y + b.y) / 2 + (dx / len) * 9;
       return (
         `<line x1="${a.x.toFixed(1)}" y1="${a.y.toFixed(1)}" ` +
         `x2="${b.x.toFixed(1)}" y2="${b.y.toFixed(1)}" ` +
         `stroke="${color}" stroke-width="${strokeWidth}" stroke-opacity="0.75"/>` +
-        `<text x="${midX.toFixed(1)}" y="${(midY - 5).toFixed(1)}" ` +
-        `text-anchor="middle" font-size="9" fill="${color}">${esc(c.confidence)}</text>`
+        `<text x="${midX.toFixed(1)}" y="${(midY + 3).toFixed(1)}" ` +
+        `text-anchor="middle" font-size="9" font-weight="700" ` +
+        `fill="${color}">${esc(c.confidence)}</text>`
       );
     })
     .join("");
@@ -112,26 +126,33 @@ export function connectionDiagramSvg(
     .map((id) => {
       const p = pos.get(id);
       if (!p) return "";
-      const labelY = p.y > cy ? p.y + 26 : p.y - 18;
+      // Push each label straight out along its own spoke. Stacking every
+      // label directly above or below its node made neighbours on the ring
+      // overlap each other and sit on top of the edges running past them.
+      const cos = Math.cos(p.angle);
+      const sin = Math.sin(p.angle);
+      const labelX = cx + (radius + 18) * cos;
+      const labelY = cy + (radius + 18) * sin + 3.5;
+      const anchor = cos > 0.25 ? "start" : cos < -0.25 ? "end" : "middle";
       return (
         `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="11" ` +
         `fill="${NODE_FILL}" stroke="${NODE_STROKE}" stroke-width="1.6"/>` +
         `<text x="${p.x.toFixed(1)}" y="${(p.y + 3.5).toFixed(1)}" text-anchor="middle" ` +
         `font-size="8.5" font-weight="700" fill="${NODE_STROKE}">E</text>` +
-        `<text x="${p.x.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="middle" ` +
+        `<text x="${labelX.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="${anchor}" ` +
         `font-size="9.5" font-family="ui-monospace,monospace" fill="${INK}">${esc(shortId(id))}</text>`
       );
     })
     .join("");
 
   const legend =
-    `<g font-size="9.5" fill="${MUTED}">` +
-    `<line x1="16" y1="${height - 14}" x2="40" y2="${height - 14}" stroke="${STRONG_LINE}" stroke-width="3"/>` +
-    `<text x="46" y="${height - 10.5}">Strong</text>` +
-    `<line x1="92" y1="${height - 14}" x2="116" y2="${height - 14}" stroke="${MODERATE_LINE}" stroke-width="2"/>` +
-    `<text x="122" y="${height - 10.5}">Moderate</text>` +
-    `<line x1="182" y1="${height - 14}" x2="206" y2="${height - 14}" stroke="${WEAK_LINE}" stroke-width="1.2"/>` +
-    `<text x="212" y="${height - 10.5}">Weak — labels show engine confidence</text>` +
+    `<g font-size="9.5" fill="${MUTED}" transform="translate(0,${legendBand - 8})">` +
+    `<line x1="16" y1="${plotHeight}" x2="40" y2="${plotHeight}" stroke="${STRONG_LINE}" stroke-width="3"/>` +
+    `<text x="46" y="${plotHeight + 3.5}">Strong</text>` +
+    `<line x1="92" y1="${plotHeight}" x2="116" y2="${plotHeight}" stroke="${MODERATE_LINE}" stroke-width="2"/>` +
+    `<text x="122" y="${plotHeight + 3.5}">Moderate</text>` +
+    `<line x1="182" y1="${plotHeight}" x2="206" y2="${plotHeight}" stroke="${WEAK_LINE}" stroke-width="1.2"/>` +
+    `<text x="212" y="${plotHeight + 3.5}">Weak — labels show engine confidence</text>` +
     `</g>`;
 
   return (

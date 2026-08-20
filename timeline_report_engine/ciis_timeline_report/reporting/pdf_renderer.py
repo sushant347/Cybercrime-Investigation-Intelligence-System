@@ -225,7 +225,10 @@ def _bar_figure(
     chart.x = 96
     chart.y = 8
     chart.height = chart_height
-    chart.width = max(80, width - chart.x - 34)
+    # Every bar prints its own value past its tip, so the plot has to stop
+    # short of the page edge by more than the longest of those labels -
+    # otherwise a full-width bar pushes "100.0" off the paper.
+    chart.width = max(80, width - chart.x - 52)
     chart.data = [[value for _, value in usable]]
     # Bars read top-to-bottom in the order given; reportlab plots the first
     # datum at the bottom, so the list is reversed to match the reading order.
@@ -237,9 +240,10 @@ def _bar_figure(
     chart.categoryAxis.labels.boxAnchor = "e"
     chart.categoryAxis.strokeColor = colors.HexColor(RULE)
     chart.valueAxis.valueMin = 0
-    chart.valueAxis.labels.fontName = BODY_FONT
-    chart.valueAxis.labels.fontSize = 7
-    chart.valueAxis.strokeColor = colors.HexColor(RULE)
+    # The axis itself is dead ink here: each bar is labelled with its exact
+    # value, so a second, coarser reading of the same number only adds rules
+    # and tick marks across the foot of the figure.
+    chart.valueAxis.visible = 0
     chart.barSpacing = 2
     chart.barWidth = 7
     chart.bars[0].fillColor = colors.HexColor(_FIGURE_COLORS[1])
@@ -1311,6 +1315,8 @@ def render_pdf(
 
     # ---------------------------------------------------- evidence and integrity
     major(PDF_SECTION_TITLES[1])
+    evidence_rows = sections.get("evidence_summary")
+    evidence_rows = evidence_rows if isinstance(evidence_rows, list) else []
     emit_evidence_table(sections.get("evidence_summary"))
 
     subheading("Quality indicators")
@@ -1338,6 +1344,15 @@ def render_pdf(
             if isinstance(row.get("score"), (int, float))
         ]
         if scores:
+            # The chart can only show items Phase 1 actually scored, which is
+            # often fewer than the case holds. Saying "each evidence item"
+            # while plotting three of eleven misrepresents the coverage, so
+            # the caption states both figures.
+            plotted = min(len(scores), 12)
+            coverage = (
+                f"{plotted} of {len(evidence_rows)} evidence item(s)"
+                if evidence_rows else f"{plotted} evidence item(s)"
+            )
             figure(
                 _bar_figure(
                     sorted(scores, key=lambda item: item[1]),
@@ -1345,9 +1360,9 @@ def render_pdf(
                     value_label="confidence score (0-100)",
                     max_bars=12,
                 ),
-                "Phase-1 confidence for each evidence item, weakest first. "
-                "The weakest items are the ones to corroborate before relying "
-                "on them.",
+                f"Phase-1 confidence, weakest first, for the {coverage} the "
+                "confidence module scored. The weakest are the ones to "
+                "corroborate before relying on them.",
             )
         levels: Dict[str, int] = {}
         for row in confidence:
