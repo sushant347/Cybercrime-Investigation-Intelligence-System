@@ -30,6 +30,7 @@ import { apiErrorMessage } from "@/lib/apiClient";
 import { formatDateTime } from "@/lib/format";
 
 import { CaseOverviewTab } from "./CaseOverviewTab";
+import { PartialResultsIndicator } from "./PartialResultsIndicator";
 
 // Analysis tabs are independent investigation surfaces. Loading each one only
 // when selected keeps Cytoscape, timeline rendering, analytics charts, report
@@ -226,6 +227,9 @@ export default function CaseDetailPage() {
                   </span>
                 </Tooltip>
               )}
+              {latestAnalysisJob?.status === "completed_with_warnings" && (
+                <PartialResultsIndicator detail={latestAnalysisJob.detail} />
+              )}
             </Stack>
             <Typography variant="body2" color="text.secondary" noWrap>
               <Box component="span" sx={{ fontFamily: '"JetBrains Mono", monospace' }}>
@@ -279,14 +283,6 @@ export default function CaseDetailPage() {
           )}
         </Stack>
       </Stack>
-
-      {latestAnalysisJob?.status === "completed_with_warnings" && (
-        <Alert severity="warning" sx={{ mb: 2 }}>
-          <strong>Latest analysis produced partial results.</strong> Timeline, graph,
-          analytics, and report artifacts were regenerated, but should be reviewed with
-          these warnings: {latestAnalysisJob.detail}
-        </Alert>
-      )}
 
       <Tabs
         value={activeTab}
