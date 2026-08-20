@@ -7,7 +7,7 @@ import VerifiedUserIcon from "@mui/icons-material/VerifiedUser";
 import { Box, Stack, Typography, useTheme } from "@mui/material";
 import type { ReactElement } from "react";
 
-import { BRAND } from "@/theme/theme";
+import { brandTone, type BRAND } from "@/theme/theme";
 
 /**
  * The report's key findings.
@@ -26,7 +26,8 @@ type Subject = {
   key: string;
   label: string;
   icon: ReactElement;
-  color: string;
+  /** Resolved against the active theme — see `brandTone`. */
+  tone: keyof typeof BRAND;
 };
 
 const SUBJECTS: Subject[] = [
@@ -34,37 +35,37 @@ const SUBJECTS: Subject[] = [
     key: "identity",
     label: "Identity lead",
     icon: <PersonSearchIcon />,
-    color: BRAND.critical,
+    tone: "critical",
   },
   {
     key: "campaign",
     label: "Campaign",
     icon: <GroupWorkIcon />,
-    color: BRAND.high,
+    tone: "high",
   },
   {
     key: "links",
     label: "Case links",
     icon: <AccountTreeIcon />,
-    color: BRAND.accent,
+    tone: "accent",
   },
   {
     key: "chronology",
     label: "Chronology",
     icon: <ScheduleIcon />,
-    color: BRAND.medium,
+    tone: "medium",
   },
   {
     key: "integrity",
     label: "Integrity",
     icon: <VerifiedUserIcon />,
-    color: BRAND.low,
+    tone: "low",
   },
   {
     key: "analysis",
     label: "Analysis",
     icon: <InsightsIcon />,
-    color: BRAND.primary,
+    tone: "primary",
   },
 ];
 
@@ -140,6 +141,7 @@ export function KeyFindings({ findings }: { findings: string[] }) {
     <Stack spacing={1}>
       {findings.map((line, index) => {
         const subject = findingSubject(line);
+        const color = brandTone(subject.tone, theme);
         return (
           <Stack
             key={index}
@@ -150,12 +152,12 @@ export function KeyFindings({ findings }: { findings: string[] }) {
               border: 1,
               borderColor: "divider",
               borderLeft: 3,
-              borderLeftColor: subject.color,
+              borderLeftColor: color,
               borderRadius: 1,
               bgcolor:
                 theme.palette.mode === "dark"
-                  ? `${subject.color}0d`
-                  : `${subject.color}0a`,
+                  ? `${color}0d`
+                  : `${color}12`,
             }}
           >
             <Stack
@@ -166,7 +168,7 @@ export function KeyFindings({ findings }: { findings: string[] }) {
               <Box
                 sx={{
                   display: "flex",
-                  color: subject.color,
+                  color,
                   "& svg": { fontSize: 20, display: "block" },
                 }}
               >
@@ -175,7 +177,7 @@ export function KeyFindings({ findings }: { findings: string[] }) {
               <Typography
                 variant="caption"
                 sx={{
-                  color: subject.color,
+                  color,
                   fontWeight: 700,
                   lineHeight: 1.2,
                   textAlign: "center",
@@ -194,7 +196,7 @@ export function KeyFindings({ findings }: { findings: string[] }) {
                 Finding {index + 1}
               </Typography>
               <Typography variant="body2" component="div">
-                <Highlighted text={line} color={subject.color} />
+                <Highlighted text={line} color={color} />
               </Typography>
             </Box>
           </Stack>

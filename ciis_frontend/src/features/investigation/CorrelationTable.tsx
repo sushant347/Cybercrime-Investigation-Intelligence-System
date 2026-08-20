@@ -16,12 +16,13 @@ import {
   TextField,
   Tooltip,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { useMemo, useState } from "react";
 
 import { ConfidenceBar } from "@/components/common/ConfidenceBar";
 import { StatusChip } from "@/components/common/StatusChip";
-import { BRAND } from "@/theme/theme";
+import { brandTone } from "@/theme/theme";
 import type { CorrelationFactor, EvidencePairCorrelation } from "@/types";
 
 /**
@@ -38,8 +39,8 @@ import type { CorrelationFactor, EvidencePairCorrelation } from "@/types";
 
 type SortKey = "confidence" | "pair";
 
-const specificityColor = (specificity: number) =>
-  specificity >= 0.7 ? BRAND.low : specificity >= 0.4 ? BRAND.high : BRAND.critical;
+const specificityTone = (specificity: number) =>
+  specificity >= 0.7 ? "low" : specificity >= 0.4 ? "high" : ("critical" as const);
 
 /** Mean specificity of the values behind a factor; null for non-entity factors. */
 function factorSpecificity(factor: CorrelationFactor): number | null {
@@ -50,6 +51,7 @@ function factorSpecificity(factor: CorrelationFactor): number | null {
 
 /** The factor breakdown, unchanged from the previous accordion body. */
 function FactorTable({ factors }: { factors: CorrelationFactor[] }) {
+  const theme = useTheme();
   return (
     <TableContainer sx={{ overflowX: "auto" }}>
       <Table size="small">
@@ -92,7 +94,7 @@ function FactorTable({ factors }: { factors: CorrelationFactor[] }) {
                     >
                       <Box
                         component="span"
-                        sx={{ fontWeight: 700, color: specificityColor(specificity) }}
+                        sx={{ fontWeight: 700, color: brandTone(specificityTone(specificity), theme) }}
                       >
                         {specificity.toFixed(2)}
                       </Box>

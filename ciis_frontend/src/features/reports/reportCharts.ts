@@ -1,8 +1,6 @@
 /**
  * Deterministic SVG diagrams for the investigation report.
  *
- * Shared by the on-screen report (SimpleReportView) and the downloadable
- * HTML file (reportHtml) so the two renderings can never drift apart.
  * Everything is drawn from values already present in the report model —
  * nothing is computed or inferred here. No charting library is used: the
  * output must be self-contained inline SVG that survives being embedded in
@@ -10,10 +8,33 @@
  */
 import type { ConnectionRow, EvidenceRow, ModelPredictionRow } from "./reportModel";
 
+/**
+ * Every colour is emitted as a CSS variable with its printed-document value as
+ * the fallback.
+ *
+ * These diagrams were drawn in fixed ink — near-black labels, a near-white bar
+ * track — which is right for paper and unreadable on the application's dark
+ * surfaces: the evidence ids beside each bar were the same tone as the page
+ * behind them. The consumer sets the variables from the active theme; anything
+ * embedding this SVG without them still gets the original document palette.
+ */
+const ink = (fallback: string, token: string) => `var(--ciis-chart-${token}, ${fallback})`;
+
+const INK = ink("#1f2937", "ink");
+const MUTED = ink("#4a5568", "muted");
+const TRACK = ink("#edf2f7", "track");
+const NODE_FILL = ink("#f0fdf4", "node-fill");
+const NODE_STROKE = ink("#14532d", "node-stroke");
+const WEAK_LINE = ink("#4a5568", "weak");
+
+const STRONG_LINE = ink("#b3261e", "strong");
+const MODERATE_LINE = ink("#a86612", "moderate");
+const GOOD_BAR = ink("#1a7f5a", "good");
+
 const STRENGTH_COLOR: Record<string, string> = {
-  STRONG: "#b3261e",
-  MODERATE: "#a86612",
-  WEAK: "#4a5568",
+  STRONG: STRONG_LINE,
+  MODERATE: MODERATE_LINE,
+  WEAK: WEAK_LINE,
 };
 
 const STRENGTH_WIDTH: Record<string, number> = {
@@ -73,7 +94,7 @@ export function connectionDiagramSvg(
       const a = pos.get(c.from);
       const b = pos.get(c.to);
       if (!a || !b) return "";
-      const color = STRENGTH_COLOR[c.strength.toUpperCase()] ?? "#4a5568";
+      const color = STRENGTH_COLOR[c.strength.toUpperCase()] ?? WEAK_LINE;
       const strokeWidth = STRENGTH_WIDTH[c.strength.toUpperCase()] ?? 1.5;
       const midX = (a.x + b.x) / 2;
       const midY = (a.y + b.y) / 2;
@@ -94,22 +115,22 @@ export function connectionDiagramSvg(
       const labelY = p.y > cy ? p.y + 26 : p.y - 18;
       return (
         `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="11" ` +
-        `fill="#f0fdf4" stroke="#14532d" stroke-width="1.6"/>` +
+        `fill="${NODE_FILL}" stroke="${NODE_STROKE}" stroke-width="1.6"/>` +
         `<text x="${p.x.toFixed(1)}" y="${(p.y + 3.5).toFixed(1)}" text-anchor="middle" ` +
-        `font-size="8.5" font-weight="700" fill="#14532d">E</text>` +
+        `font-size="8.5" font-weight="700" fill="${NODE_STROKE}">E</text>` +
         `<text x="${p.x.toFixed(1)}" y="${labelY.toFixed(1)}" text-anchor="middle" ` +
-        `font-size="9.5" font-family="ui-monospace,monospace" fill="#1f2937">${esc(shortId(id))}</text>`
+        `font-size="9.5" font-family="ui-monospace,monospace" fill="${INK}">${esc(shortId(id))}</text>`
       );
     })
     .join("");
 
   const legend =
-    `<g font-size="9.5" fill="#4a5568">` +
-    `<line x1="16" y1="${height - 14}" x2="40" y2="${height - 14}" stroke="#b3261e" stroke-width="3"/>` +
+    `<g font-size="9.5" fill="${MUTED}">` +
+    `<line x1="16" y1="${height - 14}" x2="40" y2="${height - 14}" stroke="${STRONG_LINE}" stroke-width="3"/>` +
     `<text x="46" y="${height - 10.5}">Strong</text>` +
-    `<line x1="92" y1="${height - 14}" x2="116" y2="${height - 14}" stroke="#a86612" stroke-width="2"/>` +
+    `<line x1="92" y1="${height - 14}" x2="116" y2="${height - 14}" stroke="${MODERATE_LINE}" stroke-width="2"/>` +
     `<text x="122" y="${height - 10.5}">Moderate</text>` +
-    `<line x1="182" y1="${height - 14}" x2="206" y2="${height - 14}" stroke="#4a5568" stroke-width="1.2"/>` +
+    `<line x1="182" y1="${height - 14}" x2="206" y2="${height - 14}" stroke="${WEAK_LINE}" stroke-width="1.2"/>` +
     `<text x="212" y="${height - 10.5}">Weak — labels show engine confidence</text>` +
     `</g>`;
 
@@ -141,10 +162,10 @@ function barChart(
       const barW = Math.max(2, frac * barMaxW);
       return (
         `<text x="${labelW - 8}" y="${y + 15}" text-anchor="end" font-size="10" ` +
-        `font-family="ui-monospace,monospace" fill="#1f2937">${esc(r.label)}</text>` +
-        `<rect x="${labelW}" y="${y + 4}" width="${barMaxW}" height="14" rx="3" fill="#edf2f7"/>` +
+        `font-family="ui-monospace,monospace" fill="${INK}">${esc(r.label)}</text>` +
+        `<rect x="${labelW}" y="${y + 4}" width="${barMaxW}" height="14" rx="3" fill="${TRACK}"/>` +
         `<rect x="${labelW}" y="${y + 4}" width="${barW.toFixed(1)}" height="14" rx="3" fill="${r.color}"/>` +
-        `<text x="${labelW + barMaxW + 8}" y="${y + 15}" font-size="10" fill="#1f2937">${esc(r.display)}</text>`
+        `<text x="${labelW + barMaxW + 8}" y="${y + 15}" font-size="10" fill="${INK}">${esc(r.display)}</text>`
       );
     })
     .join("");
@@ -153,7 +174,7 @@ function barChart(
     `<svg viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" ` +
     `role="img" style="width:100%;height:auto;max-width:${width}px">` +
     `${bars}` +
-    `<text x="${labelW}" y="${height - 6}" font-size="9" fill="#4a5568">${esc(axisNote)}</text>` +
+    `<text x="${labelW}" y="${height - 6}" font-size="9" fill="${MUTED}">${esc(axisNote)}</text>` +
     `</svg>`
   );
 }
@@ -166,7 +187,7 @@ export function ocrConfidenceSvg(evidence: EvidenceRow[]): string {
       label: shortId(e.evidenceId),
       value: e.textConfidenceValue,
       display: e.textConfidence,
-      color: (e.textConfidenceValue ?? 0) >= 0.85 ? "#1a7f5a" : "#a86612",
+      color: (e.textConfidenceValue ?? 0) >= 0.85 ? GOOD_BAR : MODERATE_LINE,
     }));
   return barChart(
     rows,
@@ -183,7 +204,7 @@ export function predictionRiskSvg(predictions: ModelPredictionRow[]): string {
       label: p.indicator.length > 26 ? `${p.indicator.slice(0, 24)}…` : p.indicator,
       value: (p.riskValue ?? 0) / 100,
       display: p.risk,
-      color: p.verdictBad ? "#b3261e" : "#1a7f5a",
+      color: p.verdictBad ? STRONG_LINE : GOOD_BAR,
     }));
   return barChart(
     rows,

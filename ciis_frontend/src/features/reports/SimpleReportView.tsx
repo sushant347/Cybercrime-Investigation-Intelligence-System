@@ -88,11 +88,38 @@ function Badge({ label, tone }: { label: string; tone: NonNullable<SummaryRow["b
 }
 
 function Svg({ markup }: { markup: string }) {
+  const theme = useTheme();
   if (!markup) return null;
   // Generated locally by reportCharts from engine values only (never from
-  // user-controlled strings, which are escaped) and shared verbatim with the
-  // downloadable HTML file so both renderings stay identical.
-  return <Box sx={{ mt: 1.5 }} dangerouslySetInnerHTML={{ __html: markup }} />;
+  // user-controlled strings, which are escaped).
+  //
+  // The diagrams are drawn in printed-document ink and declare each colour as
+  // a CSS variable with that ink as the fallback. Binding the variables to the
+  // active theme here is what keeps the evidence-id labels and the bar tracks
+  // legible on the dark surface, where the fixed palette rendered them at
+  // barely above the background tone.
+  const dark = theme.palette.mode === "dark";
+  return (
+    <Box
+      sx={{
+        mt: 1.5,
+        "--ciis-chart-ink": theme.palette.text.primary,
+        "--ciis-chart-muted": theme.palette.text.secondary,
+        "--ciis-chart-track": dark
+          ? "rgba(148,163,204,0.18)"
+          : "#edf2f7",
+        "--ciis-chart-node-fill": dark ? "rgba(74,222,128,0.16)" : "#f0fdf4",
+        "--ciis-chart-node-stroke": dark ? ACCENT_ON_DARK : ACCENT_ON_LIGHT,
+        "--ciis-chart-weak": theme.palette.text.secondary,
+        // The document reds and ambers are mixed for white paper and fall to
+        // ~2.6:1 on the dark surface; the dark theme takes its own tones.
+        "--ciis-chart-strong": dark ? "#ff6b63" : "#b3261e",
+        "--ciis-chart-moderate": dark ? "#f0a94a" : "#a86612",
+        "--ciis-chart-good": dark ? "#3ddc97" : "#1a7f5a",
+      }}
+      dangerouslySetInnerHTML={{ __html: markup }}
+    />
+  );
 }
 
 function splitMethod(line: string): { stage: string; method: string } {

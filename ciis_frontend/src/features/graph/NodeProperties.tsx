@@ -1,7 +1,7 @@
-import { Box, LinearProgress, Stack, Tooltip, Typography } from "@mui/material";
+import { Box, LinearProgress, Stack, Tooltip, Typography, useTheme } from "@mui/material";
 
 import { formatDateTime } from "@/lib/format";
-import { BRAND } from "@/theme/theme";
+import { brandTone } from "@/theme/theme";
 import type { GraphNode } from "@/types";
 
 /**
@@ -87,9 +87,12 @@ function MetricRow({
   // Scaled against the graph's own maximum: PageRank across 73 nodes is
   // ~0.014 at its largest, so an absolute 0–1 bar would read as empty for
   // every node and tell the investigator nothing.
+  const theme = useTheme();
   const relative = max > 0 ? Math.min(1, value / max) : 0;
-  const color =
-    relative >= 0.66 ? BRAND.critical : relative >= 0.33 ? BRAND.high : BRAND.primary;
+  const color = brandTone(
+    relative >= 0.66 ? "critical" : relative >= 0.33 ? "high" : "primary",
+    theme,
+  );
 
   return (
     <Box>

@@ -18,7 +18,7 @@ import {
 
 import { StatusChip } from "@/components/common/StatusChip";
 import { formatDateTime } from "@/lib/format";
-import { BRAND, severityColor } from "@/theme/theme";
+import { brandTone, severityColor } from "@/theme/theme";
 import type { CasePriority, PriorityComponent } from "@/types";
 
 /**
@@ -155,6 +155,7 @@ function ContributionRow({
   share: number;
   points: number;
 }) {
+  const theme = useTheme();
   return (
     <TableRow>
       <TableCell sx={{ verticalAlign: "top", minWidth: 200 }}>
@@ -189,7 +190,7 @@ function ContributionRow({
         <Typography variant="body2">{(share * 100).toFixed(0)}%</Typography>
       </TableCell>
       <TableCell align="right" sx={{ verticalAlign: "top", whiteSpace: "nowrap" }}>
-        <Typography variant="body2" sx={{ fontWeight: 700, color: BRAND.primary }}>
+        <Typography variant="body2" sx={{ fontWeight: 700, color: brandTone("primary", theme) }}>
           {points.toFixed(1)}
         </Typography>
       </TableCell>
@@ -198,6 +199,7 @@ function ContributionRow({
 }
 
 export function PriorityBreakdown({ priority }: { priority: CasePriority }) {
+  const theme = useTheme();
   const available = priority.components.filter((c) => c.available);
   const excluded = priority.components.filter((c) => !c.available);
   const totalWeight = available.reduce((sum, c) => sum + c.weight, 0);
@@ -329,7 +331,7 @@ export function PriorityBreakdown({ priority }: { priority: CasePriority }) {
                     <TableCell align="right" sx={{ borderBottom: 0 }}>
                       <Typography
                         variant="body2"
-                        sx={{ fontWeight: 800, color: BRAND.primary }}
+                        sx={{ fontWeight: 800, color: brandTone("primary", theme) }}
                       >
                         {summed.toFixed(1)}
                       </Typography>

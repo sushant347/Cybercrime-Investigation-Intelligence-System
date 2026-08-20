@@ -201,6 +201,21 @@ class CaseDataRepository:
     # ---------------------------------------------------------------- helpers
 
     def _attach_ocr(self, case_id: str, contexts: Dict[str, EvidenceContext]) -> None:
+        """Attach OCR text and confidence to each evidence context.
+
+        The case JSON is the only place the *full* recognised text lives, but
+        it is also the first artifact to disappear when a case's working files
+        are cleared - and when it did, every item silently kept the 0.0
+        default, so a case whose text was read at 0.99 confidence reported
+        "0% text read" across the board. ``ocr_results.csv`` survives that
+        clearance and holds the same per-item confidence, so it seeds every
+        context first and the JSON overwrites it where the JSON still exists.
+        Only the confidence is recovered this way: the CSV stores a truncated
+        preview, never the full text, and passing a preview off as the text
+        would quietly narrow keyword screening instead of reporting a gap.
+        """
+        self._attach_ocr_confidence_from_csv(case_id, contexts)
+
         path = self._cfg.case_json_dir / f"{case_id}.json"
         if not path.exists():
             return
@@ -225,6 +240,25 @@ class CaseDataRepository:
                 continue
             context.raw_text = item.get("raw_text", "") or ""
             context.ocr_confidence = float(item.get("average_confidence", 0.0) or 0.0)
+
+    def _attach_ocr_confidence_from_csv(
+        self, case_id: str, contexts: Dict[str, EvidenceContext]
+    ) -> None:
+        """Seed ``ocr_confidence`` from the OCR results register."""
+        csv_path = getattr(self._cfg, "ocr_results_csv", None)
+        if csv_path is None or not Path(csv_path).exists():
+            return
+        for row in self._read_csv(Path(csv_path)):
+            if row.get("case_id") != case_id:
+                continue
+            context = contexts.get(row.get("evidence_id", ""))
+            if context is None:
+                continue
+            try:
+                context.ocr_confidence = float(row.get("average_confidence") or 0.0)
+            except (TypeError, ValueError):
+                # A malformed row must not cost the whole case its figures.
+                continue
 
     def _attach_entities(self, case_id: str,
                          contexts: Dict[str, EvidenceContext]) -> None:

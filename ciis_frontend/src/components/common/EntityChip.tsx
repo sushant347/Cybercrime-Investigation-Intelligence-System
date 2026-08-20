@@ -10,7 +10,7 @@ import WalletIcon from "@mui/icons-material/Wallet";
 import { Box, Stack, Tooltip, Typography, useTheme } from "@mui/material";
 import type { ReactElement } from "react";
 
-import { BRAND } from "@/theme/theme";
+import { brandTone, type BRAND } from "@/theme/theme";
 
 /**
  * One captured identifier, rendered so it reads as a *thing* rather than as
@@ -29,34 +29,35 @@ import { BRAND } from "@/theme/theme";
 
 type EntityFamily = {
   icon: ReactElement;
-  color: string;
+  /** Resolved against the active theme — see `brandTone`. */
+  tone: keyof typeof BRAND;
   /** Human label for the identifier family, used when no value is shown. */
   label: string;
 };
 
 const FAMILIES: Record<string, EntityFamily> = {
-  phones: { icon: <PhoneIphoneIcon />, color: BRAND.accent, label: "Phone" },
-  whatsapp_numbers: { icon: <ChatIcon />, color: BRAND.accent, label: "WhatsApp" },
-  emails: { icon: <AlternateEmailIcon />, color: BRAND.primary, label: "Email" },
-  esewa_ids: { icon: <WalletIcon />, color: BRAND.critical, label: "eSewa" },
-  khalti_ids: { icon: <WalletIcon />, color: BRAND.critical, label: "Khalti" },
-  imepay_ids: { icon: <WalletIcon />, color: BRAND.critical, label: "IME Pay" },
-  wallets: { icon: <WalletIcon />, color: BRAND.critical, label: "Wallet" },
-  bank_accounts: { icon: <AccountBalanceIcon />, color: BRAND.critical, label: "Bank account" },
-  card_numbers: { icon: <CreditCardIcon />, color: BRAND.critical, label: "Card" },
-  eth_wallets: { icon: <CurrencyBitcoinIcon />, color: BRAND.high, label: "ETH wallet" },
-  btc_wallets: { icon: <CurrencyBitcoinIcon />, color: BRAND.high, label: "BTC wallet" },
-  telegram_usernames: { icon: <ChatIcon />, color: BRAND.medium, label: "Telegram" },
-  facebook_usernames: { icon: <ChatIcon />, color: BRAND.medium, label: "Facebook" },
-  instagram_usernames: { icon: <ChatIcon />, color: BRAND.medium, label: "Instagram" },
-  social_accounts: { icon: <ChatIcon />, color: BRAND.medium, label: "Social account" },
-  urls: { icon: <LanguageIcon />, color: BRAND.primary, label: "URL" },
-  domains: { icon: <LanguageIcon />, color: BRAND.primary, label: "Domain" },
+  phones: { icon: <PhoneIphoneIcon />, tone: "accent", label: "Phone" },
+  whatsapp_numbers: { icon: <ChatIcon />, tone: "accent", label: "WhatsApp" },
+  emails: { icon: <AlternateEmailIcon />, tone: "primary", label: "Email" },
+  esewa_ids: { icon: <WalletIcon />, tone: "critical", label: "eSewa" },
+  khalti_ids: { icon: <WalletIcon />, tone: "critical", label: "Khalti" },
+  imepay_ids: { icon: <WalletIcon />, tone: "critical", label: "IME Pay" },
+  wallets: { icon: <WalletIcon />, tone: "critical", label: "Wallet" },
+  bank_accounts: { icon: <AccountBalanceIcon />, tone: "critical", label: "Bank account" },
+  card_numbers: { icon: <CreditCardIcon />, tone: "critical", label: "Card" },
+  eth_wallets: { icon: <CurrencyBitcoinIcon />, tone: "high", label: "ETH wallet" },
+  btc_wallets: { icon: <CurrencyBitcoinIcon />, tone: "high", label: "BTC wallet" },
+  telegram_usernames: { icon: <ChatIcon />, tone: "medium", label: "Telegram" },
+  facebook_usernames: { icon: <ChatIcon />, tone: "medium", label: "Facebook" },
+  instagram_usernames: { icon: <ChatIcon />, tone: "medium", label: "Instagram" },
+  social_accounts: { icon: <ChatIcon />, tone: "medium", label: "Social account" },
+  urls: { icon: <LanguageIcon />, tone: "primary", label: "URL" },
+  domains: { icon: <LanguageIcon />, tone: "primary", label: "Domain" },
 };
 
 const FALLBACK: EntityFamily = {
   icon: <FingerprintIcon />,
-  color: BRAND.primary,
+  tone: "primary",
   label: "Identifier",
 };
 
@@ -88,7 +89,7 @@ export function EntityChip({
 }) {
   const theme = useTheme();
   const family = entityFamily(entityType);
-  const color = flagged ? BRAND.critical : family.color;
+  const color = brandTone(flagged ? "critical" : family.tone, theme);
   const compact = size === "small";
 
   const chip = (

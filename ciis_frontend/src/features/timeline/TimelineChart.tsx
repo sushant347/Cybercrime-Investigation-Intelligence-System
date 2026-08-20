@@ -18,7 +18,7 @@ import dayjs from "dayjs";
 import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
 
-import { BRAND } from "@/theme/theme";
+import { BRAND, lightModeEquivalent } from "@/theme/theme";
 import type { TimelineEvent } from "@/types";
 
 import { eventTitle } from "./eventText";
@@ -167,8 +167,8 @@ export function TimelineChart({
               {first !== undefined && last !== undefined ? ` · ${humanSpan(last - first)}` : ""}
             </Typography>
             <Stack direction="row" spacing={0.75} flexWrap="wrap" useFlexGap sx={{ mt: 1 }}>
-              <BasisPill color={BRAND.primary} label={`${recorded} recorded`} />
-              <BasisPill color={BRAND.high} label={`${inferred} inferred`} />
+              <BasisPill color={lightModeEquivalent(BRAND.primary, theme) as string} label={`${recorded} recorded`} />
+              <BasisPill color={lightModeEquivalent(BRAND.high, theme) as string} label={`${inferred} inferred`} />
               {includeAcquisition && (
                 <BasisPill color={theme.palette.text.secondary} label={`${acquisitionOnly.length} acquisition`} />
               )}
@@ -290,7 +290,10 @@ function MomentRow({
   const isCritical = moment.events.some((event) => event.critical);
   const isMilestone = moment.events.some((event) =>
     milestoneKeys.has(`${event.timestamp}|${event.description}`));
-  const markerColor = isCritical ? BRAND.critical : isMilestone ? BRAND.high : meta.color;
+  const markerColor = lightModeEquivalent(
+    isCritical ? BRAND.critical : isMilestone ? BRAND.high : meta.color,
+    theme,
+  ) as string;
 
   return (
     <Box
@@ -398,7 +401,14 @@ function EventFinding({
   const theme = useTheme();
   const stages = event.stages.length ? event.stages : [UNSTAGED];
   const basis = timeBasis(event);
-  const basisColor = basis === "Recorded" ? BRAND.primary : basis === "Inferred" ? BRAND.high : theme.palette.text.secondary;
+  const basisColor = lightModeEquivalent(
+    basis === "Recorded"
+      ? BRAND.primary
+      : basis === "Inferred"
+        ? BRAND.high
+        : theme.palette.text.secondary,
+    theme,
+  ) as string;
 
   return (
     <Box>
@@ -464,7 +474,7 @@ function EventFinding({
                 label={meta.label}
                 sx={{
                   height: 22,
-                  color: meta.color,
+                  color: lightModeEquivalent(meta.color, theme),
                   bgcolor: alpha(meta.color, 0.08),
                   "& .MuiChip-label": { px: 0.9, fontSize: "0.68rem", fontWeight: 700 },
                 }}

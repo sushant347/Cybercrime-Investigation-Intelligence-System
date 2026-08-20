@@ -44,6 +44,11 @@ class InvestigationConfig:
     #: Legacy storage roots (READ-ONLY access).
     evidence_csv: Path = Path("storage") / "evidence.csv"
     entities_csv: Path = Path("storage") / "entities.csv"
+    #: Per-evidence OCR metadata. The case JSON below holds the same figures
+    #: alongside the full text, but it is the first thing to go when a case's
+    #: working files are cleared; this CSV survives, so it is the fallback for
+    #: everything that does not need the text itself.
+    ocr_results_csv: Path = Path("storage") / "ocr_results.csv"
     case_json_dir: Path = Path("storage") / "json"
     forensics_dir: Path = Path("storage") / "forensics"
     #: Optional threat-intelligence verdict file:
@@ -288,6 +293,7 @@ class InvestigationConfig:
             investigation_dir=investigation,
             evidence_csv=evidence_config.evidence_csv,
             entities_csv=storage / "entities.csv",
+            ocr_results_csv=storage / "ocr_results.csv",
             case_json_dir=evidence_config.json_dir,
             forensics_dir=storage / "forensics",
             threat_intel_json=investigation / "threat_intel_indicators.json",
@@ -304,6 +310,7 @@ class InvestigationConfig:
             investigation_dir=investigation,
             evidence_csv=base.evidence_csv,
             entities_csv=base.entities_csv,
+            ocr_results_csv=base.ocr_results_csv,
             case_json_dir=base.case_json_dir,
             forensics_dir=base.forensics_dir,
             threat_intel_json=threat,

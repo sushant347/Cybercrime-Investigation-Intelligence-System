@@ -1,11 +1,13 @@
-import { Card, CardContent, Stack, Typography } from "@mui/material";
+import { Card, CardContent, Stack, Typography, useTheme } from "@mui/material";
 import type { ReactNode } from "react";
+
+import { lightModeEquivalent } from "@/theme/theme";
 
 export function StatCard({
   label,
   value,
   icon,
-  color,
+  color: colorProp,
   hint,
 }: {
   label: string;
@@ -14,6 +16,11 @@ export function StatCard({
   color?: string;
   hint?: string;
 }) {
+  const theme = useTheme();
+  // Callers pass a BRAND hex for emphasis. Those tones are mixed for the dark
+  // surface and drop below 3:1 as light-mode text, so they are translated
+  // rather than trusted verbatim.
+  const color = lightModeEquivalent(colorProp, theme);
   return (
     <Card
       sx={{

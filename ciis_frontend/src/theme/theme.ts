@@ -15,6 +15,56 @@ export const BRAND = {
   low: "#52c41a",
 };
 
+/**
+ * The same severities, mixed for a light surface.
+ *
+ * BRAND is tuned for the dark operating environment: those tones are bright
+ * because they sit on near-black. Used as *text* on the light theme they fall
+ * far below a readable ratio — amber "HIGH" measured 1.89:1 on white, and the
+ * green used for verified/integrity labels 2.27:1. Same hue family, darkened
+ * until each one carries on paper-white.
+ */
+export const BRAND_ON_LIGHT: typeof BRAND = {
+  primary: "#2a5cd4",
+  primaryDark: "#1e40af",
+  accent: "#00786a",
+  critical: "#c0272d",
+  high: "#b45309",
+  medium: "#a16207",
+  low: "#2f7d32",
+};
+
+/**
+ * Translate a BRAND hex into the tone for the active theme.
+ *
+ * For components that receive a colour as a prop rather than a severity name.
+ * Anything not from BRAND is returned untouched, so a caller passing its own
+ * colour keeps it.
+ */
+export function lightModeEquivalent(
+  color: string | undefined,
+  theme: Theme,
+): string | undefined {
+  if (!color || theme.palette.mode !== "light") return color;
+  const lowered = color.toLowerCase();
+  const key = (Object.keys(BRAND) as Array<keyof typeof BRAND>).find(
+    (candidate) => BRAND[candidate].toLowerCase() === lowered,
+  );
+  if (key) return BRAND_ON_LIGHT[key];
+  // Palette tones outside BRAND that are also mixed for the dark surface. The
+  // "unclassified" slate reads at 2.8:1 as light-mode text.
+  return NEUTRAL_ON_LIGHT[lowered] ?? color;
+}
+
+const NEUTRAL_ON_LIGHT: Record<string, string> = {
+  "#8c9bba": "#4a5878",
+};
+
+/** The severity tone that reads against the active theme's surface. */
+export function brandTone(key: keyof typeof BRAND, theme: Theme): string {
+  return theme.palette.mode === "light" ? BRAND_ON_LIGHT[key] : BRAND[key];
+}
+
 const typography = {
   fontFamily: '"Inter", "Segoe UI", "Roboto", sans-serif',
   h4: { fontWeight: 800, letterSpacing: "-0.02em" },
@@ -31,14 +81,19 @@ const shape = { borderRadius: 10 } as const;
 
 export function buildTheme(mode: "dark" | "light"): Theme {
   const dark = mode === "dark";
+  // Every MUI component that takes color="warning"/"success"/"error" resolves
+  // it from here, so seeding the palette with the dark-surface tones made those
+  // components unreadable on light: an outlined "Inferred" chip drew amber text
+  // on near-white at 2.04:1. Each mode gets the tone mixed for its surface.
+  const tone = dark ? BRAND : BRAND_ON_LIGHT;
   return createTheme({
     palette: {
       mode,
-      primary: { main: BRAND.primary },
-      secondary: { main: BRAND.accent },
-      error: { main: BRAND.critical },
-      warning: { main: BRAND.high },
-      success: { main: BRAND.low },
+      primary: { main: tone.primary },
+      secondary: { main: tone.accent },
+      error: { main: tone.critical },
+      warning: { main: tone.high },
+      success: { main: tone.low },
       background: dark
         ? { default: "#0b1020", paper: "#121a2e" }
         : { default: "#f4f6fb", paper: "#ffffff" },
@@ -173,27 +228,28 @@ export function buildTheme(mode: "dark" | "light"): Theme {
 
 /** Engine value -> UI color, shared everywhere (bands, strengths, statuses). */
 export function severityColor(value: string | undefined, theme: Theme): string {
+  const tone = (key: keyof typeof BRAND) => brandTone(key, theme);
   switch ((value ?? "").toLowerCase()) {
     case "critical":
     case "urgent":
     case "failed":
     case "error":
-      return BRAND.critical;
+      return tone("critical");
     case "high":
     case "strong":
     case "warning":
-      return BRAND.high;
+      return tone("high");
     case "medium":
     case "moderate":
     case "running":
     case "queued":
-      return BRAND.medium;
+      return tone("medium");
     case "low":
     case "weak":
     case "completed":
     case "processed":
     case "info":
-      return BRAND.low;
+      return tone("low");
     default:
       return theme.palette.text.secondary;
   }

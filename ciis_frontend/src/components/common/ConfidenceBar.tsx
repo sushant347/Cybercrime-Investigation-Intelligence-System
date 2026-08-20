@@ -1,6 +1,6 @@
-import { Box, LinearProgress, Stack, Tooltip, Typography } from "@mui/material";
+import { Box, LinearProgress, Stack, Tooltip, Typography, useTheme } from "@mui/material";
 
-import { BRAND } from "@/theme/theme";
+import { brandTone } from "@/theme/theme";
 
 /**
  * Displays an engine-computed confidence/score value (0-1 fraction or
@@ -17,6 +17,7 @@ export function ConfidenceBar({
   label?: string;
   width?: number | string;
 }) {
+  const theme = useTheme();
   if (value === null || value === undefined || Number.isNaN(value)) {
     return (
       <Typography variant="caption" color="text.secondary">
@@ -26,8 +27,10 @@ export function ConfidenceBar({
   }
   const percent = scale === "fraction" ? value * 100 : value;
   const clamped = Math.max(0, Math.min(100, percent));
-  const color =
-    clamped >= 75 ? BRAND.low : clamped >= 45 ? BRAND.high : BRAND.critical;
+  const color = brandTone(
+    clamped >= 75 ? "low" : clamped >= 45 ? "high" : "critical",
+    theme,
+  );
   return (
     <Tooltip title={`${label ?? "Confidence"}: ${clamped.toFixed(1)}%`}>
       <Stack direction="row" spacing={1} alignItems="center" sx={{ width }}>

@@ -15,6 +15,7 @@ import {
   TextField,
   Tooltip,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
@@ -25,7 +26,7 @@ import { EmptyState } from "@/components/common/EmptyState";
 import { DetailSkeleton } from "@/components/common/LoadingSkeleton";
 import { SearchField } from "@/components/common/SearchField";
 import { formatDateTime, titleCase } from "@/lib/format";
-import { BRAND } from "@/theme/theme";
+import { BRAND, brandTone } from "@/theme/theme";
 import type { TimelineEvent } from "@/types";
 
 import { TimelineChart } from "./TimelineChart";
@@ -38,6 +39,7 @@ import { stageMeta } from "./stages";
  * timeline_analysis artifact; the UI only filters and displays.
  */
 export function TimelineTab({ caseId }: { caseId: string }) {
+  const theme = useTheme();
   const [search, setSearch] = useState("");
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
@@ -119,7 +121,7 @@ export function TimelineTab({ caseId }: { caseId: string }) {
                       height: 20,
                       fontSize: "0.68rem",
                       bgcolor: timeline.progression_consistent ? `${BRAND.low}22` : `${BRAND.high}22`,
-                      color: timeline.progression_consistent ? BRAND.low : BRAND.high,
+                      color: brandTone(timeline.progression_consistent ? "low" : "high", theme),
                     }}
                   />
                 </Stack>
@@ -326,6 +328,7 @@ export function TimelineTab({ caseId }: { caseId: string }) {
 
 /** Everything the engine recorded about one event, shown beneath its row. */
 function EventDetail({ event }: { event: TimelineEvent }) {
+  const theme = useTheme();
   return (
     <Box
       sx={{
@@ -429,7 +432,7 @@ function EventDetail({ event }: { event: TimelineEvent }) {
 
       {event.critical_reasons.length > 0 && (
         <Box sx={{ mt: 2 }}>
-          <Typography variant="overline" sx={{ color: BRAND.critical }}>
+          <Typography variant="overline" sx={{ color: brandTone("critical", theme) }}>
             Why this is critical
           </Typography>
           <Stack component="ul" sx={{ m: 0, pl: 2.5 }} spacing={0.25}>
@@ -466,7 +469,7 @@ function EventDetail({ event }: { event: TimelineEvent }) {
                         key={entity}
                         size="small"
                         label={entity}
-                        sx={{ bgcolor: `${BRAND.accent}22`, color: BRAND.accent }}
+                        sx={{ bgcolor: `${BRAND.accent}22`, color: brandTone("accent", theme) }}
                       />
                     ))}
                   </Stack>
