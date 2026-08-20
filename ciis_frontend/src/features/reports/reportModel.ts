@@ -104,7 +104,13 @@ export interface LinkedCaseRow {
   caseId: string;
   strength: string;
   confidence: string;
-  sharedEntities: string;
+  /**
+   * Kept structured rather than pre-joined into prose. Flattening these to
+   * "bank account 0501…, domain esewa…, money npr 1500, …" produced a
+   * 29-item lowercase run-on sentence in a table cell — every shared
+   * identifier present, none of them findable.
+   */
+  sharedEntities: { entityType: string; value: string }[];
 }
 
 export interface SimpleReport {
@@ -140,6 +146,31 @@ const PRIORITY_BADGE: Record<string, SummaryRow["badge"]> = {
 /** Engine stores sections with no input data as an explanatory string. */
 function structured<T>(section: T | string | null | undefined): T | null {
   return section && typeof section === "object" ? (section as T) : null;
+}
+
+/**
+ * Name the classifier behind a verdict, readably.
+ *
+ * The engine reports the source as `ml:xgboost` and the model version from the
+ * trained model's own metadata — which defaults to the literal string
+ * "unknown" when the model file records no version. Printed straight through,
+ * that produced "ml:xgboost (unknown)", which reads like a failure rather than
+ * "this model file does not state its version". A missing version is now
+ * simply not shown, and the `ml:` prefix becomes words.
+ */
+export function describeModel(
+  source: string,
+  modelVersion: string | null | undefined,
+): string {
+  const raw = (source || "").trim();
+  const mlMatch = /^ml:(.+)$/i.exec(raw);
+  const name = mlMatch
+    ? `${mlMatch[1].toUpperCase()} model`
+    : raw || "Unrecorded source";
+
+  const version = (modelVersion || "").trim();
+  const versionIsKnown = version && !/^(unknown|none|n\/a|null)$/i.test(version);
+  return versionIsKnown ? `${name} v${version}` : name;
 }
 
 function percent(value: number | null | undefined): string {
@@ -311,9 +342,10 @@ export function buildSimpleReport(
     caseId: link.other_case_id,
     strength: link.relationship_strength,
     confidence: percent(link.match_confidence),
-    sharedEntities: link.matched_entities
-      .map((m) => `${m.entity_type.replace(/_/g, " ").replace(/s$/, "")} ${m.value}`)
-      .join(", "),
+    sharedEntities: link.matched_entities.map((m) => ({
+      entityType: m.entity_type,
+      value: m.value,
+    })),
   }));
 
   if (crossCase) {
@@ -391,7 +423,7 @@ export function buildSimpleReport(
       riskValue:
         typeof p.risk_score === "number" ? p.risk_score : null,
       confidence: percent(p.confidence),
-      model: p.model_version ? `${p.source} (${p.model_version})` : p.source,
+      model: describeModel(p.source, p.model_version),
       // "Only the necessary info": the facts an investigator would cite,
       // as label/value pairs. Anything the provider did not supply is
       // simply absent rather than rendered as an empty or zero field.

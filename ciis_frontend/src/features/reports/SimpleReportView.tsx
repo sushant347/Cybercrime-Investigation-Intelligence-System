@@ -10,10 +10,13 @@ import {
   TableHead,
   TableRow,
   Typography,
+  useTheme,
 } from "@mui/material";
 import { Fragment } from "react";
 import type { ReactNode } from "react";
 
+import { EntityChip, entityTypeLabel } from "@/components/common/EntityChip";
+import { KeyFindings } from "./KeyFindings";
 import type { SimpleReport, SummaryRow } from "./reportModel";
 import {
   connectionDiagramSvg,
@@ -28,7 +31,21 @@ const BADGE_COLOR: Record<NonNullable<SummaryRow["badge"]>, string> = {
   neutral: "#4a5568",
 };
 
-const ACCENT = "#14532d";
+/**
+ * The report view is styled after a printed document, and its accent was the
+ * dark green a document uses on white paper. Rendered on the app's dark
+ * surfaces it came out at a 1.9:1 contrast ratio — the section headings were
+ * effectively invisible, which is why parts of this report could not be read.
+ * The paper tone is kept for light mode and swapped for one that carries on
+ * dark, so the same design reads in both.
+ */
+const ACCENT_ON_LIGHT = "#14532d";
+const ACCENT_ON_DARK = "#4ade80";
+
+function useReportAccent(): string {
+  const theme = useTheme();
+  return theme.palette.mode === "dark" ? ACCENT_ON_DARK : ACCENT_ON_LIGHT;
+}
 const MONO = '"JetBrains Mono", ui-monospace, monospace';
 
 function Section({
@@ -40,12 +57,13 @@ function Section({
   title: string;
   children: ReactNode;
 }) {
+  const accent = useReportAccent();
   return (
     <Box sx={{ borderTop: 1, borderColor: "divider", p: { xs: 2, sm: 3 } }}>
       <Typography
         variant="subtitle2"
         sx={{
-          color: ACCENT,
+          color: accent,
           textTransform: "uppercase",
           letterSpacing: "0.06em",
           mb: 1.5,
@@ -91,7 +109,68 @@ function splitMethod(line: string): { stage: string; method: string } {
  * Every value comes from the stored engine report; this component only lays
  * it out. Section numbering mirrors the PDF and downloadable HTML exports.
  */
+/**
+ * The identifiers two cases have in common, grouped by kind.
+ *
+ * A strong cross-case link can share thirty identifiers; as prose that is a
+ * wall, so they are grouped by type and shown as the same chips the
+ * investigation view uses. Nothing is dropped — a long group states its
+ * remainder rather than trailing off.
+ */
+function SharedEntityList({
+  entities,
+}: {
+  entities: { entityType: string; value: string }[];
+}) {
+  if (entities.length === 0) {
+    return (
+      <Typography variant="body2" color="text.secondary">
+        No shared identifier was recorded.
+      </Typography>
+    );
+  }
+
+  const byType = new Map<string, string[]>();
+  for (const entity of entities) {
+    const bucket = byType.get(entity.entityType) ?? [];
+    bucket.push(entity.value);
+    byType.set(entity.entityType, bucket);
+  }
+  const PER_TYPE = 4;
+
+  return (
+    <Stack spacing={0.75}>
+      {[...byType.entries()].map(([type, values]) => {
+        const shown = values.slice(0, PER_TYPE);
+        const hidden = values.length - shown.length;
+        return (
+          <Box key={type}>
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              sx={{ fontWeight: 700, display: "block" }}
+            >
+              {entityTypeLabel(type)} ({values.length})
+            </Typography>
+            <Stack direction="row" spacing={0.5} flexWrap="wrap" useFlexGap sx={{ mt: 0.25 }}>
+              {shown.map((value) => (
+                <EntityChip key={value} entityType={type} value={value} size="small" />
+              ))}
+              {hidden > 0 && (
+                <Typography variant="caption" color="text.secondary" sx={{ alignSelf: "center" }}>
+                  +{hidden} more
+                </Typography>
+              )}
+            </Stack>
+          </Box>
+        );
+      })}
+    </Stack>
+  );
+}
+
 export function SimpleReportView({ report }: { report: SimpleReport }) {
+  const accent = useReportAccent();
   let n = 0;
   const next = () => ++n;
 
@@ -166,19 +245,7 @@ export function SimpleReportView({ report }: { report: SimpleReport }) {
 
       {report.findings.length > 0 && (
         <Section number={next()} title="Key Findings">
-          <Stack spacing={0.75}>
-            {report.findings.map((line, i) => (
-              <Stack
-                key={i}
-                direction="row"
-                spacing={1.25}
-                sx={{ p: 1.25, border: 1, borderColor: "divider", borderRadius: 1 }}
-              >
-                <Chip label={i + 1} size="small" sx={{ minWidth: 28, fontWeight: 700 }} />
-                <Typography variant="body2">{line}</Typography>
-              </Stack>
-            ))}
-          </Stack>
+          <KeyFindings findings={report.findings} />
         </Section>
       )}
 
@@ -283,10 +350,8 @@ export function SimpleReportView({ report }: { report: SimpleReport }) {
                     <Chip size="small" label={row.strength} variant="outlined" />
                   </TableCell>
                   <TableCell>{row.confidence}</TableCell>
-                  <TableCell>
-                    <Typography variant="body2" color="text.secondary">
-                      {row.sharedEntities}
-                    </Typography>
+                  <TableCell sx={{ minWidth: 260 }}>
+                    <SharedEntityList entities={row.sharedEntities} />
                   </TableCell>
                 </TableRow>
               ))}
@@ -402,8 +467,8 @@ export function SimpleReportView({ report }: { report: SimpleReport }) {
                   size="small"
                   sx={
                     i === 0
-                      ? { bgcolor: ACCENT, color: "#fff", fontWeight: 600 }
-                      : { bgcolor: "rgba(26,161,121,0.14)", color: ACCENT, fontWeight: 600 }
+                      ? { bgcolor: accent, color: "#08130c", fontWeight: 700 }
+                      : { bgcolor: "rgba(26,161,121,0.16)", color: accent, fontWeight: 600 }
                   }
                 />
               </Stack>
@@ -497,7 +562,7 @@ export function SimpleReportView({ report }: { report: SimpleReport }) {
                   border: 1,
                   borderColor: "divider",
                   borderLeft: 3,
-                  borderLeftColor: ACCENT,
+                  borderLeftColor: accent,
                   borderRadius: 1,
                   p: 2,
                 }}
