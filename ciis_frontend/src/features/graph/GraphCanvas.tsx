@@ -542,6 +542,55 @@ export function GraphCanvas({
     });
     cy.fit(undefined, 46);
 
+    /**
+     * Keep the graph reachable.
+     *
+     * Cytoscape does not bound panning, so a flick of a trackpad could send
+     * the whole graph past the edge of the canvas and leave an empty square
+     * with no way back except reloading. This clamps the pan so a margin of
+     * the graph's bounding box always overlaps the viewport: drag as far as
+     * you like, and the picture stops at the edge rather than leaving.
+     *
+     * It runs on the panning maths only — no platform or renderer specifics —
+     * so Apple Silicon and Intel behave identically.
+     */
+    let clamping = false;
+    const clampPan = () => {
+      if (clamping || cy.destroyed()) return;
+      const elements = cy.elements();
+      if (elements.empty()) return;
+
+      const bounds = elements.boundingBox();
+      const zoom = cy.zoom();
+      const pan = cy.pan();
+      const width = cy.width();
+      const height = cy.height();
+
+      // Where the graph currently sits in on-screen pixels.
+      const left = bounds.x1 * zoom + pan.x;
+      const right = bounds.x2 * zoom + pan.x;
+      const top = bounds.y1 * zoom + pan.y;
+      const bottom = bounds.y2 * zoom + pan.y;
+
+      // How much of the graph must stay on screen. Capped so a graph smaller
+      // than the margin can still be moved around freely.
+      const marginX = Math.min(width * 0.4, (right - left) * 0.5 + 24);
+      const marginY = Math.min(height * 0.4, (bottom - top) * 0.5 + 24);
+
+      let dx = 0;
+      let dy = 0;
+      if (right < marginX) dx = marginX - right;
+      else if (left > width - marginX) dx = width - marginX - left;
+      if (bottom < marginY) dy = marginY - bottom;
+      else if (top > height - marginY) dy = height - marginY - top;
+
+      if (dx || dy) {
+        clamping = true;
+        cy.panBy({ x: dx, y: dy });
+        clamping = false;
+      }
+    };
+
     if (viewportKey) {
       try {
         const stored = window.localStorage.getItem(viewportKey);
@@ -552,12 +601,17 @@ export function GraphCanvas({
           };
           if (viewport.zoom && viewport.pan) {
             cy.viewport({ zoom: viewport.zoom, pan: viewport.pan });
+            // A viewport saved before this clamp existed - or saved while the
+            // window was a different size - can itself be out of bounds.
+            clampPan();
           }
         }
       } catch {
         // A stale local preference must never stop the graph from rendering.
       }
     }
+
+    cy.on("pan zoom", clampPan);
 
     let viewportTimer: number | undefined;
     if (viewportKey) {

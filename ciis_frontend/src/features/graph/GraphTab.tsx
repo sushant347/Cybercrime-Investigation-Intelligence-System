@@ -40,6 +40,7 @@ import {
   nodeShape,
   type LayoutMode,
 } from "./GraphCanvas";
+import { NodeProperties } from "./NodeProperties";
 import {
   buildGraphView,
   buildNeighborhoodView,
@@ -1040,22 +1041,7 @@ export function GraphTab({ caseId }: { caseId: string }) {
                         Open evidence
                       </Button>
                     )}
-                    {Object.entries(selection.node.properties)
-                      .filter(([, value]) => value)
-                      .map(([key, value]) => (
-                        <Stack key={key} direction="row" spacing={1}>
-                          <Typography
-                            variant="body2"
-                            color="text.secondary"
-                            sx={{ minWidth: 90, flexShrink: 0 }}
-                          >
-                            {key.replace(/_/g, " ")}
-                          </Typography>
-                          <Typography variant="body2" sx={{ wordBreak: "break-all" }}>
-                            {value}
-                          </Typography>
-                        </Stack>
-                      ))}
+                    <NodeProperties node={selection.node} allNodes={graph.nodes} />
                     {connections.length > 0 && (
                       <>
                         <Divider sx={{ my: 0.5 }} />
