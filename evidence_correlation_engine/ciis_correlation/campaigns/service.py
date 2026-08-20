@@ -130,6 +130,9 @@ class CampaignService:
             t for t in (by_id[m].upload_time for m in members if m in by_id) if t
         )
         contexts = [by_id[m] for m in members if m in by_id]
+        read_confidences = [
+            c.ocr_confidence for c in contexts if c.ocr_confidence is not None
+        ]
         campaign = Campaign(
             campaign_id=f"{self._cfg.campaign_id_prefix}_{case_id}_{index:02d}",
             case_id=case_id,
@@ -145,9 +148,11 @@ class CampaignService:
                 "member_count": float(len(members)),
                 "internal_links": float(len(internal)),
                 "mean_link_confidence": confidence,
+                # Only the members that carry an OCR reading; an item with no
+                # recorded result is absent from the average, not a zero in it.
                 "mean_ocr_confidence": round(
-                    sum(c.ocr_confidence for c in contexts) / len(contexts), 4
-                ) if contexts else 0.0,
+                    sum(read_confidences) / len(read_confidences), 4
+                ) if read_confidences else 0.0,
             },
         )
         campaign.summary = self._summary(campaign)

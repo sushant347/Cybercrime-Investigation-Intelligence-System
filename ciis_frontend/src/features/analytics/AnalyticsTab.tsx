@@ -54,12 +54,15 @@ function SmartChart({
   data,
   kind = "bar",
   emptyReason,
+  valueLabel,
 }: {
   title: string;
   subheader: string;
   data: Point[];
   kind?: "bar" | "pie";
   emptyReason: string;
+  /** What one unit on this chart counts; shown in the hover. */
+  valueLabel?: string;
 }) {
   if (data.length === 0 || allZero(data)) {
     return (
@@ -81,7 +84,15 @@ function SmartChart({
       </Card>
     );
   }
-  return <ChartCard title={title} subheader={subheader} data={data} kind={kind} />;
+  return (
+    <ChartCard
+      title={title}
+      subheader={subheader}
+      data={data}
+      kind={kind}
+      valueLabel={valueLabel}
+    />
+  );
 }
 
 /** Human label for each payment rail the extractor can produce. */
@@ -475,9 +486,10 @@ export function AnalyticsTab({ caseId }: { caseId: string }) {
         />
         <SmartChart
           title="Brands Referenced"
-          subheader="Impersonated or mentioned brands"
+          subheader="Evidence items referencing each brand — by logo, wallet identifier, domain or text"
           data={valueCountToChart(analytics.brand_statistics)}
-          emptyReason="No known brand was detected. Brand detection needs a logo or a brand name in the recognised text."
+          valueLabel="Evidence items"
+          emptyReason="No known brand was referenced. The engine looks for a detected logo, a branded wallet identifier, or the brand name in a domain, address or the recognised text."
         />
       </Stack>
 

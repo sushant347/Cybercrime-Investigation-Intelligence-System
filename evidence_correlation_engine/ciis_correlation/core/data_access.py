@@ -64,7 +64,12 @@ class EvidenceContext:
     status: str = ""
     hash_verified: Optional[bool] = None
     raw_text: str = ""
-    ocr_confidence: float = 0.0
+    #: ``None`` means no OCR result was ever recorded for this item, which is
+    #: not the same fact as OCR running and scoring zero. Collapsing the two
+    #: made "text read 0%" claim the engine read the file and got nothing, and
+    #: dragged every mean that averaged over it. Phase 1's own confidence
+    #: engine already models the distinction this way.
+    ocr_confidence: Optional[float] = None
     entities: List[EntityRecord] = field(default_factory=list)
     #: Latest Phase-1 report payloads keyed by report name (may be empty).
     forensics: Dict[str, Dict[str, Any]] = field(default_factory=dict)
@@ -239,7 +244,9 @@ class CaseDataRepository:
             if context is None:
                 continue
             context.raw_text = item.get("raw_text", "") or ""
-            context.ocr_confidence = float(item.get("average_confidence", 0.0) or 0.0)
+            recorded = item.get("average_confidence")
+            if recorded is not None:
+                context.ocr_confidence = float(recorded or 0.0)
 
     def _attach_ocr_confidence_from_csv(
         self, case_id: str, contexts: Dict[str, EvidenceContext]
@@ -254,8 +261,11 @@ class CaseDataRepository:
             context = contexts.get(row.get("evidence_id", ""))
             if context is None:
                 continue
+            recorded = row.get("average_confidence")
+            if recorded in (None, ""):
+                continue
             try:
-                context.ocr_confidence = float(row.get("average_confidence") or 0.0)
+                context.ocr_confidence = float(recorded)
             except (TypeError, ValueError):
                 # A malformed row must not cost the whole case its figures.
                 continue

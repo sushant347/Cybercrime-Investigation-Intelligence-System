@@ -236,14 +236,84 @@ class AnalyticsService:
                 by_rail[entity_type] = _top(counter, top_n)
         return by_rail
 
-    @staticmethod
-    def _brand_statistics(items: Sequence[EvidenceContext], top_n: int
+    #: Brand names the engine can recognise, keyed by the token that appears in
+    #: a domain, an address or a line of recovered text. The display spelling is
+    #: the value; the report writer uses the same vocabulary for its wording.
+    _BRANDS: Dict[str, str] = {
+        "esewa": "eSewa", "khalti": "Khalti", "imepay": "IME Pay",
+        "connectips": "ConnectIPS", "fonepay": "Fonepay",
+        "nabil": "Nabil Bank", "nicasia": "NIC Asia Bank",
+        "globalime": "Global IME Bank",
+        "machhapuchchhre": "Machhapuchchhre Bank",
+        "machhapuchhre": "Machhapuchchhre Bank",
+        "nepalbank": "Nepal Bank", "rastriyabanijya": "Rastriya Banijya Bank",
+        "nrb": "Nepal Rastra Bank", "ntc": "Nepal Telecom", "ncell": "Ncell",
+        "facebook": "Facebook", "instagram": "Instagram",
+        "whatsapp": "WhatsApp", "gmail": "Gmail", "google": "Google",
+    }
+
+    #: Brands that turn up merely because an address is hosted there. Every
+    #: victim and every scammer in these cases has a gmail.com address, so
+    #: counting Gmail as a referenced brand puts incidental hosting on the same
+    #: chart as the banks and wallets actually being impersonated. They still
+    #: count when a logo is detected or the name is written in the text - that
+    #: is a real reference - just not for appearing behind an "@".
+    _INCIDENTAL_BRANDS = {"Gmail", "Google"}
+
+    #: Payment-identifier types that name their own brand. Extracting an eSewa
+    #: id *is* a reference to eSewa, whether or not the logo was visible.
+    _BRAND_BEARING_ENTITIES: Dict[str, str] = {
+        "esewa_ids": "eSewa",
+        "khalti_ids": "Khalti",
+        "imepay_ids": "IME Pay",
+    }
+
+    @classmethod
+    def _brand_statistics(cls, items: Sequence[EvidenceContext], top_n: int
                           ) -> List[ValueCount]:
+        """Evidence items referencing each brand, by any recorded signal.
+
+        This counted visually detected logos alone, which understated the
+        picture badly: logo detection runs on images and only where a logo
+        report exists, so a case whose evidence names three impersonated
+        brands in its text, its domains and its wallet identifiers reported
+        one. The count is per *evidence item*, so a brand named three times in
+        one screenshot counts once, and the figure reads as "how much of the
+        evidence touches this brand".
+        """
         counter: Counter = Counter()
         for context in items:
+            found: set = set()
+
+            # Strongest signal: the logo was actually seen in the image.
             logos = context.forensics.get("logo_detections", {}) or {}
             for brand in logos.get("detected_brands", []):
-                counter[str(brand)] += 1
+                token = str(brand).strip().lower().replace(" ", "")
+                found.add(cls._BRANDS.get(token, str(brand).strip()))
+
+            # A payment identifier names its own rail.
+            for entity_type, brand in cls._BRAND_BEARING_ENTITIES.items():
+                if context.entity_values(entity_type):
+                    found.add(brand)
+
+            # Anything written down: domains, URLs and addresses.
+            addressed = " ".join([
+                *context.entity_values("domains"),
+                *context.entity_values("urls"),
+                *context.entity_values("emails"),
+            ]).lower()
+            # The recovered text is a narrative mention rather than an address,
+            # so it counts for every brand including the incidental ones.
+            narrative = (context.raw_text or "").lower()
+
+            for token, brand in cls._BRANDS.items():
+                if token in narrative:
+                    found.add(brand)
+                elif token in addressed and brand not in cls._INCIDENTAL_BRANDS:
+                    found.add(brand)
+
+            for brand in found:
+                counter[brand] += 1
         return _top(counter, top_n)
 
     @staticmethod
@@ -320,9 +390,19 @@ class AnalyticsService:
             "mean_evidence_confidence": mean(confidence_scores),
             "mean_forgery_score": mean(forgery_scores),
             "max_forgery_score": round(max(forgery_scores), 2) if forgery_scores else 0.0,
-            "mean_ocr_confidence": mean([c.ocr_confidence for c in items]),
+            # Averaged over the items that carry a reading, exactly as the
+            # three means above are. Including an item with no OCR record as a
+            # zero reported 0.5 for a case whose one read item scored 1.0.
+            "mean_ocr_confidence": mean(
+                [c.ocr_confidence for c in items if c.ocr_confidence is not None]
+            ),
             "hash_verified_count": float(
                 sum(1 for c in items if c.hash_verified is True)
+            ),
+            #: How many items the mean above is actually based on, so a partial
+            #: reading cannot be mistaken for full coverage.
+            "evidence_with_ocr_result": float(
+                sum(1 for c in items if c.ocr_confidence is not None)
             ),
         }
 
