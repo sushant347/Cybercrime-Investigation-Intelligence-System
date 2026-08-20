@@ -1,6 +1,6 @@
 # Forensic Investigation Report - CASE_EE8250FB76
 
-Generated: 2026-08-20T18:18:43.931Z  
+Generated: 2026-08-20T18:49:02.524Z  
 Produced by: Cybercrime Investigation Intelligence Engine (CIIS), Phase 2  
 Status: Automated analytical draft - investigator review required  
 Basis: every statement below references stored forensic findings; accuracy depends on the source evidence and upstream extraction.
@@ -51,7 +51,7 @@ Basis: every statement below references stored forensic findings; accuracy depen
 | Evidence | File | Acquired | OCR confidence | Entities | Integrity |
 | --- | --- | --- | --- | --- | --- |
 | EVID_00005 | 08_complaint_letter.pdf | 2026-07-25T16:24:17.560Z | 1.0 | 25 | VERIFIED |
-| EVID_00006 | 07_bank_transfer_slip.pdf | 2026-07-25T16:24:18.091Z | 0.0 | 0 | FAILED |
+| EVID_00006 | 07_bank_transfer_slip.pdf | 2026-07-25T16:24:18.091Z | none | 0 | FAILED |
 
 ## Timeline Analysis
 
@@ -208,8 +208,8 @@ Clusters are candidate groupings produced by configured thresholds; they do not 
   - **spf present**: True
   - **dmarc present**: True
   - **ssl days left**: 69
-  - **hosting**: Google LLC, India
-  - **ip address**: 142.250.182.101
+  - **hosting**: Google LLC, United States
+  - **ip address**: 142.250.29.19
   - **reasons**:
     - The hybrid decision engine confirmed this URL is legitimate based on trusted signals and ML model agreement.
     - The URL does not use HTTPS, meaning data is transmitted without encryption.
@@ -229,8 +229,9 @@ Clusters are candidate groupings produced by configured thresholds; they do not 
 - **mean evidence confidence**: 75.0
 - **mean forgery score**: 0.0
 - **max forgery score**: 0.0
-- **mean ocr confidence**: 0.5
+- **mean ocr confidence**: 1.0
 - **hash verified count**: 1.0
+- **evidence with ocr result**: 1.0
 
 ## Metadata Summary
 
@@ -424,20 +425,20 @@ The current evidence model does not automatically assess these provisions:
 
 ## Report Provenance & Integrity
 
-- **report id**: RPT-EE8250FB76-A2A93F5D
-- **generated at**: 2026-08-20T18:18:43.924Z
+- **report id**: RPT-EE8250FB76-4BF00D37
+- **generated at**: 2026-08-20T18:49:02.522Z
 - **generator**: CIIS Phase-2 reporting module (template-over-data; no free-text generation)
 - **evidence set digest**: 0f6afe626b2e5e1c4bb70b2efae2d8aea52ca3d8d38b481532cc8e4ff88c3ff6
 - **evidence set digest note**: SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.
 - **source artifact hashes**:
-  - **correlation analysis.json**: 36a1e8076239dadc5dccf24f9c288b6ef790ab74a4adf4ae8bab86b8bfca0769
+  - **correlation analysis.json**: a250ab331c93509d88de7f49266b6ce1b1d8d7ea2fdb7d6fc5c30677690c6927
   - **cross case correlation.json**: eb69d4047d8579e0bc5f6954ea3d2fb83b3f633333637e84c7f0eefd53b6e690
-  - **campaign analysis.json**: 5b7123b106467ea7d40b19ae8f109c6797d62e8b0a156add5b88690ad4fd08a9
-  - **suspect assessment.json**: e5b46de171df226df405aad4692db8e8b6509895fdc3894b499aa0318d095e79
-  - **timeline analysis.json**: 12ed6415569cbb4f900bc3187491af56d12f843ccbd3d653db36bc934d14d2b7
-  - **analytics.json**: ad3b6fd16e8f0e16613f0b79bb74ec9102194cdc60de6ec1127fd781ae6653ea
-  - **case priority.json**: c78ccb54ba2adb1ac4743dfe1837c2ffaa45e109968a869bf3dcb49b7e165dca
-  - **graph.json**: 062155fdc06d92349b8ed39219e93fa5497076cd5330a0466d6d743633835a91
+  - **campaign analysis.json**: 4d68039cf59b85ef881acee8678cfbeb732645f13db2d724f133f8cfbeed3b84
+  - **suspect assessment.json**: d03ab32cfc5cc5b6dd4bc139e7d57fb3e8c1e6ee953230f5da41e5682a6936c1
+  - **timeline analysis.json**: 291d35eed78cb9a8fd7c329557e7bb659992cec3540c60a24c59f8acc6314eb8
+  - **analytics.json**: 74f950863d1e33338294b5af1c774862e262e9fd2577892dde5415438f71e8f9
+  - **case priority.json**: e994a7b3050e1bc2673c753db3f399a44fb3ec635ca179cc49fd59a0224b7753
+  - **graph.json**: d18231192a225b8682bab491a801c4fc17769648458b0a184e446c94528ebea8
 
 ## Appendix
 

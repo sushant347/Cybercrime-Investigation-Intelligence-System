@@ -1,9 +1,9 @@
 {
   "report_type": "case_statistics",
-  "report_version": 18,
+  "report_version": 20,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-08-20T18:18:43.661Z",
+  "generated_at": "2026-08-20T18:49:03.053Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
     "evidence_count": 4,
@@ -43,7 +43,8 @@
       "mean_forgery_score": 0.0,
       "max_forgery_score": 0.0,
       "mean_ocr_confidence": 0.97,
-      "hash_verified_count": 4.0
+      "hash_verified_count": 4.0,
+      "evidence_with_ocr_result": 4.0
     },
     "correlation_statistics": {
       "pair_count": 6.0,

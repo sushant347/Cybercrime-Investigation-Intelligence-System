@@ -1,9 +1,9 @@
 {
   "report_type": "case_statistics",
-  "report_version": 21,
+  "report_version": 23,
   "schema_version": "2.0",
   "case_id": "CASE_185915593C",
-  "generated_at": "2026-08-20T18:18:43.361Z",
+  "generated_at": "2026-08-20T18:49:02.773Z",
   "report": {
     "case_id": "CASE_185915593C",
     "evidence_count": 8,
@@ -43,7 +43,8 @@
       "mean_forgery_score": 17.18,
       "max_forgery_score": 25.2,
       "mean_ocr_confidence": 0.91,
-      "hash_verified_count": 8.0
+      "hash_verified_count": 8.0,
+      "evidence_with_ocr_result": 8.0
     },
     "correlation_statistics": {
       "pair_count": 28.0,

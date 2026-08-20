@@ -808,5 +808,145 @@
     "case_id": "CASE_EE8250FB76",
     "evidence_id": "",
     "read": false
+  },
+  {
+    "id": 86,
+    "created_at": "2026-08-20T18:32:13.174Z",
+    "type": "report_generated",
+    "title": "Investigation analysis completed with warnings for CASE_1A1BF573F3",
+    "message": "Phase-2 artifacts regenerated with 1 warning(s).",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 87,
+    "created_at": "2026-08-20T18:32:13.176Z",
+    "type": "high_priority",
+    "title": "CASE_1A1BF573F3 flagged HIGH priority",
+    "message": "Engine priority score: 74.7.",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 88,
+    "created_at": "2026-08-20T18:47:16.125Z",
+    "type": "report_generated",
+    "title": "Investigation analysis completed with warnings for CASE_1A1BF573F3",
+    "message": "Phase-2 artifacts regenerated with 1 warning(s).",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 89,
+    "created_at": "2026-08-20T18:47:16.133Z",
+    "type": "high_priority",
+    "title": "CASE_1A1BF573F3 flagged HIGH priority",
+    "message": "Engine priority score: 74.7.",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 90,
+    "created_at": "2026-08-20T18:47:16.866Z",
+    "type": "report_generated",
+    "title": "Investigation analysis completed for CASE_EE8250FB76",
+    "message": "All Phase-2 artifacts regenerated.",
+    "case_id": "CASE_EE8250FB76",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 91,
+    "created_at": "2026-08-20T18:47:17.067Z",
+    "type": "report_generated",
+    "title": "Investigation analysis completed for CASE_185915593C",
+    "message": "All Phase-2 artifacts regenerated.",
+    "case_id": "CASE_185915593C",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 92,
+    "created_at": "2026-08-20T18:47:17.069Z",
+    "type": "high_priority",
+    "title": "CASE_185915593C flagged HIGH priority",
+    "message": "Engine priority score: 72.7.",
+    "case_id": "CASE_185915593C",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 93,
+    "created_at": "2026-08-20T18:47:17.213Z",
+    "type": "report_generated",
+    "title": "Investigation analysis completed with warnings for CASE_2CF24DBA5F",
+    "message": "Phase-2 artifacts regenerated with 1 warning(s).",
+    "case_id": "CASE_2CF24DBA5F",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 94,
+    "created_at": "2026-08-20T18:49:02.478Z",
+    "type": "report_generated",
+    "title": "Investigation analysis completed with warnings for CASE_1A1BF573F3",
+    "message": "Phase-2 artifacts regenerated with 1 warning(s).",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 95,
+    "created_at": "2026-08-20T18:49:02.481Z",
+    "type": "high_priority",
+    "title": "CASE_1A1BF573F3 flagged HIGH priority",
+    "message": "Engine priority score: 74.7.",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 96,
+    "created_at": "2026-08-20T18:49:02.984Z",
+    "type": "report_generated",
+    "title": "Investigation analysis completed for CASE_EE8250FB76",
+    "message": "All Phase-2 artifacts regenerated.",
+    "case_id": "CASE_EE8250FB76",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 97,
+    "created_at": "2026-08-20T18:49:03.184Z",
+    "type": "report_generated",
+    "title": "Investigation analysis completed for CASE_185915593C",
+    "message": "All Phase-2 artifacts regenerated.",
+    "case_id": "CASE_185915593C",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 98,
+    "created_at": "2026-08-20T18:49:03.187Z",
+    "type": "high_priority",
+    "title": "CASE_185915593C flagged HIGH priority",
+    "message": "Engine priority score: 72.7.",
+    "case_id": "CASE_185915593C",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 99,
+    "created_at": "2026-08-20T18:49:03.494Z",
+    "type": "report_generated",
+    "title": "Investigation analysis completed with warnings for CASE_2CF24DBA5F",
+    "message": "Phase-2 artifacts regenerated with 1 warning(s).",
+    "case_id": "CASE_2CF24DBA5F",
+    "evidence_id": "",
+    "read": false
   }
 ]

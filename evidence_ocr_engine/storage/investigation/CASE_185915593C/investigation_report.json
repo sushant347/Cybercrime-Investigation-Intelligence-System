@@ -1,11 +1,11 @@
 {
   "report_type": "investigation_report",
-  "report_version": 23,
+  "report_version": 25,
   "schema_version": "2.0",
   "case_id": "CASE_185915593C",
-  "generated_at": "2026-08-20T18:18:43.372Z",
+  "generated_at": "2026-08-20T18:49:02.780Z",
   "report": {
-    "report_id": "RPT-185915593C-DE53F337",
+    "report_id": "RPT-185915593C-DC04170C",
     "sections": {
       "executive_summary": [
         "Case CASE_185915593C contains 8 evidence items; 8/8 passed the stored SHA-256 integrity check.",
@@ -1496,8 +1496,8 @@
             "spf_present": true,
             "dmarc_present": true,
             "ssl_days_left": 69,
-            "hosting": "Google LLC, India",
-            "ip_address": "142.250.182.101",
+            "hosting": "Google LLC, United States",
+            "ip_address": "142.250.29.19",
             "reasons": [
               "The hybrid decision engine confirmed this URL is legitimate based on trusted signals and ML model agreement.",
               "The URL does not use HTTPS, meaning data is transmitted without encryption."
@@ -1522,7 +1522,8 @@
         "mean_forgery_score": 17.18,
         "max_forgery_score": 25.2,
         "mean_ocr_confidence": 0.91,
-        "hash_verified_count": 8.0
+        "hash_verified_count": 8.0,
+        "evidence_with_ocr_result": 8.0
       },
       "metadata_summary": [
         {
@@ -1909,7 +1910,7 @@
         ],
         "caveat": "This is an automated mapping from technical findings to statutory provisions, provided to assist the investigating officer. It is not legal advice and not a charging decision. A provision is listed because the evidence contains the features described, not because an offence has been proved: intent, authorisation and identity are matters for investigation. Provisions of the Act not listed here were not assessed.",
         "summary": "The findings engage 7 provisions of the Electronic Transactions Act, 2063 (2008): s.52, s.47, s.53, s.54, s.55, s.19, s.56. Each is listed with the finding that engaged it and the evidence behind that finding.",
-        "analysis_time_ms": 1.6
+        "analysis_time_ms": 0.4
       },
       "recommendations": [
         "Issue preservation requests to the relevant hosting providers, then seek suspension of the suspected domains: esewa-cashback-offer.xyz,...",
@@ -1923,20 +1924,20 @@
         "Assign high queue priority (rated 73 out of 100)."
       ],
       "report_provenance": {
-        "report_id": "RPT-185915593C-DE53F337",
-        "generated_at": "2026-08-20T18:18:43.365Z",
+        "report_id": "RPT-185915593C-DC04170C",
+        "generated_at": "2026-08-20T18:49:02.776Z",
         "generator": "CIIS Phase-2 reporting module (template-over-data; no free-text generation)",
         "evidence_set_digest": "623b9e5e28815e86892679dc56e1ac545ea1fddc4590023db83275c6bf9c8b61",
         "evidence_set_digest_note": "SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.",
         "source_artifact_hashes": {
-          "correlation_analysis.json": "e51330e0ee7e9a746cf351f67232652687955b82b5b407ba9939bf08041f8816",
+          "correlation_analysis.json": "36f7b97c0f1233d8b8fbaaf2d9b960b2d78bb6e07adcfd6d661632de2f950735",
           "cross_case_correlation.json": "c732a2bfe3c5b97e8f15edc5d141b146245e3c2ce435f0ac7d4425c7210854ee",
-          "campaign_analysis.json": "387559239a061e7e924911b9d00215e863c109a90afcdc391e3a66ed5da728e7",
-          "suspect_assessment.json": "9b6f8ee9ebdf5efeecd20264457d11800e0d0ff32406749d9a94ed63728b59ed",
-          "timeline_analysis.json": "7d04b37ce61d5f6ad1f6377eb38bf18ad6a2c2819167fd08908f3c68353ce85f",
-          "analytics.json": "86ff3e1fc28aba0d250137dafb7ae2704428918ddd3863ea4da5124e838cf5f8",
-          "case_priority.json": "bdf1d1ebcff9cc7829ed374d462dc7f2a6f989754ea28dc6aec7c1bd72d49563",
-          "graph.json": "96978b7bb9d1b24800f541959ee3500720b5683c1a0181408b27170360b210ea"
+          "campaign_analysis.json": "87e459d180612b5b918839340de138a5998263146028f51da9ab5883224ce7b1",
+          "suspect_assessment.json": "df6c38c5b555d87e9ad2bafae13d0828c4933535971a8b6c8d559e5514fd74b0",
+          "timeline_analysis.json": "70ca6c22e41fa34d6227e137e45c7ec1445a34520dc87c42e2584db2b94b480f",
+          "analytics.json": "5bdb28ce4803ebd21f45c91faff767b17e31f3056464f5d54b6493809a99e878",
+          "case_priority.json": "0df87de368b309b3370072dff7ba606d21630476756f9a30123be1d72374fd26",
+          "graph.json": "ed52a93e46e55afd897590aabc2e57fa9ba119caac381cf2e2834c29ed3f238e"
         }
       },
       "appendix": {

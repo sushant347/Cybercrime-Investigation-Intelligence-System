@@ -114,3 +114,13 @@ id,created_at,username,module,action,case_id,detail
 113,2026-08-20T18:18:42.994Z,,investigation,run_analysis,CASE_185915593C,
 114,2026-08-20T18:18:43.083Z,,investigation,run_analysis,CASE_2CF24DBA5F,
 115,2026-08-20T18:18:43.191Z,,investigation,run_analysis,CASE_EE8250FB76,
+116,2026-08-20T18:32:12.391Z,,investigation,run_analysis,CASE_1A1BF573F3,
+117,2026-08-20T18:32:32.870Z,,reports,download,CASE_1A1BF573F3,investigation_report.pdf
+118,2026-08-20T18:46:46.346Z,,investigation,run_analysis,CASE_1A1BF573F3,
+119,2026-08-20T18:46:46.374Z,,investigation,run_analysis,CASE_EE8250FB76,
+120,2026-08-20T18:46:46.395Z,,investigation,run_analysis,CASE_185915593C,
+121,2026-08-20T18:46:46.416Z,,investigation,run_analysis,CASE_2CF24DBA5F,
+122,2026-08-20T18:48:34.380Z,,investigation,run_analysis,CASE_1A1BF573F3,
+123,2026-08-20T18:48:34.404Z,,investigation,run_analysis,CASE_EE8250FB76,
+124,2026-08-20T18:48:34.439Z,,investigation,run_analysis,CASE_185915593C,
+125,2026-08-20T18:48:34.456Z,,investigation,run_analysis,CASE_2CF24DBA5F,
