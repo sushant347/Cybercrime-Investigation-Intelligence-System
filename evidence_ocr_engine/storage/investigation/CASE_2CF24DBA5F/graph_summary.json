@@ -1,20 +1,22 @@
 {
   "report_type": "graph_summary",
-  "report_version": 21,
+  "report_version": 23,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-08-04T08:17:40.223Z",
+  "generated_at": "2026-08-20T12:27:45.396Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
-    "headline": "15 nodes and 18 edges across 1 component",
+    "headline": "15 nodes and 15 edges across 1 component",
     "key_connectors": [
       "money:npr 2000",
+      "money:npr 500000",
       "date:2026-01-04",
       "time:09:12",
-      "time:09:14",
-      "time:09:15"
+      "time:09:14"
     ],
     "observations": [
+      "NetworkX identified 3 communities and retained 14 key edges for simplified investigation views.",
+      "11 bridge connections can separate otherwise distinct portions of the relationship graph.",
       "All entities and evidence form a single connected component - consistent with one coordinated activity."
     ]
   }

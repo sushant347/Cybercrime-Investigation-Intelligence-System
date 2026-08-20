@@ -1,490 +1,127 @@
 # Forensic Investigation Report - CASE_EE8250FB76
 
-Generated: 2026-08-04T08:17:41.031Z  
+Generated: 2026-08-20T12:27:34.496Z  
 Produced by: Cybercrime Investigation Intelligence Engine (CIIS), Phase 2  
-Basis: every statement below references stored forensic findings; no content is generated outside computed results.
+Status: Automated analytical draft - investigator review required  
+Basis: every statement below references stored forensic findings; accuracy depends on the source evidence and upstream extraction.
 
 ## Executive Summary
 
-- Case CASE_EE8250FB76 contains 2 evidence items, each acquired under SHA-256 chain-of-custody verification.
-- This case is linked to 2 other cases through shared entities: CASE_185915593C, CASE_1A1BF573F3 [cross_case_correlation.json].
-- The weighted correlation engine found 1 related evidence pair out of 1 analysed [correlation_analysis.json].
-- The strongest suspect anchor is '05019012345678' (bank_accounts) with confidence 68/100 [suspect_assessment.json].
-- Observed attack progression: initial_contact -> social_engineering -> financial_transaction -> post_attack [timeline_analysis.json].
+| # | Finding |
+| --- | --- |
+| 1 | Case CASE_EE8250FB76 contains 2 evidence items; 1/2 passed the stored SHA-256 integrity check. |
+| 2 | This case was automatically linked to 2 other cases; these are candidate shared-entity associations: CASE_185915593C, CASE_1A1BF573F3 [cross_case_correlation.json]. |
+| 3 | The weighted correlation engine found 0 related evidence pairs out of 1 analysed [correlation_analysis.json]. |
+| 4 | The highest-scoring identity lead is '05019012345678' (bank_accounts), supported by 1 evidence item and scored 68/100; this is a lead, not identity attribution [suspect_assessment.json]. |
+| 5 | Chronology contains 1 evidence-derived event time (1 inferred), 1 acquisition-only record and 0 unresolved records [timeline_analysis.json]. |
+| 6 | Evidence-timed stage order: initial_contact -> social_engineering -> financial_transaction -> post_attack [timeline_analysis.json]. |
 
 ## Scope & Methodology
 
-- **objective**: Acquire, verify, correlate and reconstruct the digital evidence for this case, and derive investigative leads (suspect anchors, campaigns, cross-case links) strictly from stored, hash-verified artifacts.
-- **evidence scope**: 2 evidence items acquired through the CIIS intake pipeline under SHA-256 chain-of-custody control.
-- **methodology**:
-  - Phase 1 - Acquisition & OCR: PaddleOCR PP-OCRv5 text extraction with per-item confidence scoring; SHA-256 fingerprint recorded at intake and re-verified at read.
-  - Phase 1 - Forensics: metadata/EXIF consistency, forgery signals, logo detection and evidence-confidence scoring stored per item under storage/forensics/.
-  - Phase 2 - Correlation: weighted entity-overlap engine scoring every evidence pair; results in correlation_analysis.json.
-  - Phase 2 - Cross-case: shared-entity matching against every other analysed case (cross_case_correlation.json).
-  - Phase 2 - Campaigns / Suspects / Timeline: clustering, anchor derivation and event reconstruction over the correlated evidence set.
-  - Threat intelligence: URL/domain indicators scored by the configured provider (static indicator file, or the trained phishing classifier when CIIS_ML_THREAT_INTEL=1); per-indicator results in 'Model Prediction Results'.
-  - Reporting: this document is assembled exclusively from the stored outputs above; it contains no free-text generation.
-- **reproducibility**: Re-running the analysis against the same stored evidence reproduces every figure herein; artifacts are versioned and never overwritten.
+| Scope | Recorded basis |
+| --- | --- |
+| Objective | Acquire, verify, correlate and reconstruct the digital evidence for this case, and derive investigative leads (identity anchors, candidate clusters and cross-case links) from stored artifacts while preserving each item's recorded integrity status. |
+| Evidence scope | 2 evidence items acquired through the CIIS intake pipeline with a recorded SHA-256 digest. |
+| Reproducibility | Re-running the analysis against the same stored evidence recomputes the canonical artifacts; report control records the evidence-set digest and the stored JSON companion retains the complete source-artifact hash register. |
+
+### Processing stages
+
+| Stage | Method and stored output |
+| --- | --- |
+| Phase 1 - Acquisition & OCR | PaddleOCR PP-OCRv5 text extraction with per-item confidence scoring; SHA-256 fingerprint recorded at intake and re-verified at read. |
+| Phase 1 - Forensics | metadata/EXIF consistency, forgery signals, logo detection and evidence-confidence scoring stored per item under storage/forensics/. |
+| Phase 2 - Correlation | weighted entity-overlap engine scoring every evidence pair; results in correlation_analysis.json. |
+| Phase 2 - Cross-case | shared-entity matching against every other analysed case (cross_case_correlation.json). |
+| Phase 2 - Campaigns / Suspects / Timeline | clustering, anchor derivation and event reconstruction over the correlated evidence set. |
+| Threat intelligence | URL/domain indicators scored by the configured provider (static indicator file, or the trained phishing classifier when CIIS_ML_THREAT_INTEL=1); per-indicator results in 'Model Prediction Results'. |
+| Reporting | this document is assembled exclusively from the stored outputs above; it contains no free-text generation. |
 
 ## Case Overview
 
-- **case id**: CASE_EE8250FB76
-- **evidence count**: 2
-- **first evidence**: 2026-07-25T16:24:17.560Z
-- **last evidence**: 2026-07-25T16:24:18.091Z
-- **file types**:
-  - pdf
+| Case field | Recorded value |
+| --- | --- |
+| Case Id | CASE_EE8250FB76 |
+| Evidence Count | 2 |
+| First Evidence | 2026-07-25T16:24:17.560Z |
+| Last Evidence | 2026-07-25T16:24:18.091Z |
+| File Types | pdf |
 
 ## Evidence Summary
 
-- **evidence id**: EVID_00005
-- **file name**: 08_complaint_letter.pdf
-- **upload time**: 2026-07-25T16:24:17.560Z
-- **sha256**: fe644062bf75e62c8ae13ec24c7e0461491a5610095a50546c4fa757d98e866f
-- **hash verified**: True
-- **ocr confidence**: 1.0
-- **evidence confidence score**: 100.0
-- **entity count**: 25
-- **evidence id**: EVID_00006
-- **file name**: 07_bank_transfer_slip.pdf
-- **upload time**: 2026-07-25T16:24:18.091Z
-- **sha256**: 6f1cc10ae55d554c751ee1cbf688924c8962c5faebe87be8c457d077d6bc63c2
-- **hash verified**: False
-- **ocr confidence**: 0.0
-- **evidence confidence score**: not available
-- **entity count**: 0
+| Evidence | File | Acquired | OCR confidence | Entities | Integrity |
+| --- | --- | --- | --- | --- | --- |
+| EVID_00005 | 08_complaint_letter.pdf | 2026-07-25T16:24:17.560Z | 1.0 | 25 | VERIFIED |
+| EVID_00006 | 07_bank_transfer_slip.pdf | 2026-07-25T16:24:18.091Z | 0.0 | 0 | FAILED |
 
 ## Timeline Analysis
 
-- **summary**: 2 events spanning 0.0 hours; 0 timestamps unresolved. Observed scam progression: initial_contact -> social_engineering -> financial_transaction -> post_attack.
-- **stage progression**:
-  - initial_contact
-  - social_engineering
-  - financial_transaction
-  - post_attack
-- **progression consistent**: True
-- **milestones**:
-  - **timestamp**: 2026-07-25T16:24:17.560000+00:00
-  - **description**: Investigation start - first reconstructed evidence event
-  - **timestamp**: 2026-07-25T16:24:17.560000+00:00
-  - **description**: First observation of stage 'initial_contact' (EVID_00005)
-  - **timestamp**: 2026-07-25T16:24:17.560000+00:00
-  - **description**: First observation of stage 'social_engineering' (EVID_00005)
-  - **timestamp**: 2026-07-25T16:24:17.560000+00:00
-  - **description**: First observation of stage 'financial_transaction' (EVID_00005)
-  - **timestamp**: 2026-07-25T16:24:17.560000+00:00
-  - **description**: First observation of stage 'post_attack' (EVID_00005)
-- **critical events**:
-  - **timestamp**: 2026-07-25T16:24:17.560000+00:00
-  - **evidence id**: EVID_00005
-  - **reasons**:
-    - contains money entity/entities: NPR 1500, NPR 200, NPR 25000
-    - contains esewa_ids entity/entities: esewa.cashback99@gmail.com, sunita.gurung21@gmail.com
-    - contains khalti_ids entity/entities: +9779801122334
-    - contains bank_accounts entity/entities: 05019012345678
-    - contains transaction_ids entity/entities: 0119.0625.987456, CASE_2026_0088, KH-2026-0611-77245
+2 events; 2 timestamps resolved (0 non-inferred, 2 inferred, including 1 acquisition-time fallback); 0 timestamps unresolved. Keyword-derived stage order: initial_contact -> social_engineering -> financial_transaction -> post_attack.
+
+> Chronology is provisional: acquisition time is an intake timestamp, not proof of when the underlying event occurred. Every fallback and unresolved value must be checked against the source exhibit.
+
+| Events | Non-inferred | Inferred | Acquisition fallback | Unresolved |
+| ---: | ---: | ---: | ---: | ---: |
+| 2 | 0 | 2 | 1 | 0 |
+
+### Chronological Events
+
+| Timestamp (UTC) | Evidence | File | Source | Confidence | Inferred | Stages |
+| --- | --- | --- | --- | --- | --- | --- |
+| 2026-06-15T00:00:00+00:00 | EVID_00005 | 08_complaint_letter.pdf | content_labeled_date_only | medium | True | initial_contact, social_engineering, financial_transaction, post_attack |
+| 2026-07-25T16:24:18.091000+00:00 | EVID_00006 | 07_bank_transfer_slip.pdf | upload_time_fallback | low | True | none |
+
+### Stage Assessment
+
+- **Keyword-derived order:** initial_contact, social_engineering, financial_transaction, post_attack
+- **Order assessable:** True
+- **Matches configured sequence:** True
+
+### Critical Events
+
+- **EVID_00005** at 2026-06-15T00:00:00+00:00 (content_labeled_date_only, medium, inferred=True): contains money entity/entities: NPR 1500, NPR 200, NPR 25000; contains esewa_ids entity/entities: esewa.cashback99@gmail.com, sunita.gurung21@gmail.com; contains khalti_ids entity/entities: +9779801122334; contains bank_accounts entity/entities: 05019012345678; contains transaction_ids entity/entities: 0119.0625.987456, CASE_2026_0088, KH-2026-0611-77245
 
 ## Correlation Analysis
 
-- **pair count**: 1
-- **related pair count**: 1
-- **strength distribution**:
-  - **WEAK**: 1
-- **top relationships**:
-  - **pair**: EVID_00005 <-> EVID_00006
-  - **strength**: WEAK
-  - **confidence**: 0.2212
-  - **explanation**: EVID_00005 (08_complaint_letter.pdf) and EVID_00006 (07_bank_transfer_slip.pdf) show a weak relationship (confidence 0.22) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40].
+0 of 1 analysed pairs met a configured relationship threshold.
+
+| Evidence pair | Strength | Confidence | Computed basis |
+| --- | --- | --- | --- |
+| none | none | none | none |
 
 ## Cross-Case Correlation
 
-- **related case count**: 2
-- **related case ids**:
-  - CASE_185915593C
-  - CASE_1A1BF573F3
-- **links**:
-  - **other case id**: CASE_185915593C
-  - **relationship strength**: VERY_STRONG
-  - **match confidence**: 0.9992
-  - **match reason**: Shares 21 entity(ies) with CASE_185915593C: bank account 05019012345678, domain esewa-verify-kyc.com, email esewa.cashback99@gmail.com (+18 more). 17 of these are distinctive; the other 4 are common across the corpus and were discounted
-  - **matched entities**:
-    - **entity type**: bank_accounts
-    - **value**: 05019012345678
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00014
-    - **entity type**: domains
-    - **value**: esewa-verify-kyc.com
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00014
-    - **entity type**: emails
-    - **value**: esewa.cashback99@gmail.com
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00014
-    - **entity type**: emails
-    - **value**: support@esewa-verify-kyc.com
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00014
-    - **entity type**: esewa_ids
-    - **value**: esewa.cashback99@gmail.com
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00014
-    - **entity type**: transaction_ids
-    - **value**: case_2026_0088
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00014
-    - **entity type**: urls
-    - **value**: https://esewa-cashback-offer.xyz/claim
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00014
-    - **entity type**: emails
-    - **value**: sunita.gurung21@gmail.com
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00008
-      - EVID_00014
-    - **entity type**: esewa_ids
-    - **value**: sunita.gurung21@gmail.com
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00008
-      - EVID_00014
-    - **entity type**: khalti_ids
-    - **value**: +9779801122334
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00011
-      - EVID_00014
-    - **entity type**: transaction_ids
-    - **value**: 0119.0625.987456
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00010
-      - EVID_00014
-    - **entity type**: transaction_ids
-    - **value**: kh-2026-0611-77245
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00011
-      - EVID_00014
-    - **entity type**: transaction_ids
-    - **value**: mbl-2026-441829
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00013
-      - EVID_00014
-    - **entity type**: domains
-    - **value**: gmail.com
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00008
-      - EVID_00014
-    - **entity type**: domains
-    - **value**: esewa-cashback-offer.xyz
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00009
-      - EVID_00011
-      - EVID_00014
-    - **entity type**: phones
-    - **value**: +9779801122334
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00011
-      - EVID_00012
-      - EVID_00014
-    - **entity type**: phones
-    - **value**: +9779847011223
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00011
-      - EVID_00013
-      - EVID_00014
-    - **entity type**: money
-    - **value**: npr 1500
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00011
-      - EVID_00014
-    - **entity type**: money
-    - **value**: npr 25000
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00013
-      - EVID_00014
-    - **entity type**: money
-    - **value**: npr 200
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00008
-      - EVID_00010
-      - EVID_00014
-    - **entity type**: money
-    - **value**: npr 5000
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00009
-      - EVID_00014
-  - **other case id**: CASE_1A1BF573F3
-  - **relationship strength**: VERY_STRONG
-  - **match confidence**: 0.9992
-  - **match reason**: Shares 21 entity(ies) with CASE_1A1BF573F3: bank account 05019012345678, domain esewa-verify-kyc.com, email esewa.cashback99@gmail.com (+18 more). 17 of these are distinctive; the other 4 are common across the corpus and were discounted
-  - **matched entities**:
-    - **entity type**: bank_accounts
-    - **value**: 05019012345678
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00022
-    - **entity type**: domains
-    - **value**: esewa-verify-kyc.com
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00022
-    - **entity type**: emails
-    - **value**: esewa.cashback99@gmail.com
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00022
-    - **entity type**: emails
-    - **value**: support@esewa-verify-kyc.com
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00022
-    - **entity type**: esewa_ids
-    - **value**: esewa.cashback99@gmail.com
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00022
-    - **entity type**: transaction_ids
-    - **value**: case_2026_0088
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00022
-    - **entity type**: urls
-    - **value**: https://esewa-cashback-offer.xyz/claim
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00022
-    - **entity type**: emails
-    - **value**: sunita.gurung21@gmail.com
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00016
-      - EVID_00022
-    - **entity type**: esewa_ids
-    - **value**: sunita.gurung21@gmail.com
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00016
-      - EVID_00022
-    - **entity type**: khalti_ids
-    - **value**: +9779801122334
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00019
-      - EVID_00022
-    - **entity type**: transaction_ids
-    - **value**: 0119.0625.987456
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00018
-      - EVID_00022
-    - **entity type**: transaction_ids
-    - **value**: kh-2026-0611-77245
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00019
-      - EVID_00022
-    - **entity type**: transaction_ids
-    - **value**: mbl-2026-441829
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00021
-      - EVID_00022
-    - **entity type**: domains
-    - **value**: gmail.com
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00016
-      - EVID_00022
-    - **entity type**: domains
-    - **value**: esewa-cashback-offer.xyz
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00017
-      - EVID_00019
-      - EVID_00022
-    - **entity type**: phones
-    - **value**: +9779801122334
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00019
-      - EVID_00020
-      - EVID_00022
-    - **entity type**: phones
-    - **value**: +9779847011223
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00019
-      - EVID_00021
-      - EVID_00022
-    - **entity type**: money
-    - **value**: npr 1500
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00019
-      - EVID_00022
-    - **entity type**: money
-    - **value**: npr 25000
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00021
-      - EVID_00022
-    - **entity type**: money
-    - **value**: npr 200
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00016
-      - EVID_00018
-      - EVID_00022
-    - **entity type**: money
-    - **value**: npr 5000
-    - **this evidence ids**:
-      - EVID_00005
-    - **other evidence ids**:
-      - EVID_00017
-      - EVID_00022
+These are automated shared-entity associations and require independent corroboration.
+
+| Other case | Strength | Confidence | Matched indicators | Basis |
+| --- | --- | --- | --- | --- |
+| CASE_185915593C | VERY_STRONG | 0.9992 | bank_accounts:05019012345678, domains:esewa-verify-kyc.com, emails:esewa.cashback99@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, +16 more | Shares 21 entity(ies) with CASE_185915593C: bank account 05019012345678, domain esewa-verify-kyc.com, email esewa.cashback99@gmail.com (+18 more). 17 of these are distinctive;… |
+| CASE_1A1BF573F3 | VERY_STRONG | 0.9992 | bank_accounts:05019012345678, domains:esewa-verify-kyc.com, emails:esewa.cashback99@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, +16 more | Shares 21 entity(ies) with CASE_1A1BF573F3: bank account 05019012345678, domain esewa-verify-kyc.com, email esewa.cashback99@gmail.com (+18 more). 17 of these are distinctive;… |
 
 ## Campaign Analysis
 
-- **campaign count**: 0
-- **unclustered evidence**:
-  - EVID_00005
-  - EVID_00006
-- **campaigns**:
-  - none
+Clusters are candidate groupings produced by configured thresholds; they do not by themselves establish coordination.
+
+| Candidate cluster | Evidence | Confidence | Shared signature |
+| --- | --- | --- | --- |
+| none | none | none | none |
+
+**Unclustered evidence:** EVID_00005, EVID_00006
 
 ## Suspect Assessment
 
-- **suspect id**: SUSPECT_CASE_EE8250FB76_01
-- **identity**: bank_accounts:05019012345678
-- **confidence score**: 67.5
-- **confidence level**: HIGH
-- **risk level**: HIGH
-- **evidence ids**:
-  - EVID_00005
-- **explanation**: Suspect anchor '05019012345678' (bank_accounts) scores 67.5/100 (HIGH, risk HIGH) across 1 evidence item: EVID_00005. Identity strength: 100/100 (weight 0.25) - '05019012345678' is a bank_account - identity weight 100/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence items. Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00005. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: emails:esewa.cashback99@gmail.com, emails:sunita.gurung21@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, esewa_ids:sunita.gurung21@gmail.com, khalti_ids:+9779801122334, phones:+9779801122334, phones:+9779847011223.
-- **suspect id**: SUSPECT_CASE_EE8250FB76_05
-- **identity**: esewa_ids:esewa.cashback99@gmail.com
-- **confidence score**: 67.5
-- **confidence level**: HIGH
-- **risk level**: HIGH
-- **evidence ids**:
-  - EVID_00005
-- **explanation**: Suspect anchor 'esewa.cashback99@gmail.com' (esewa_ids) scores 67.5/100 (HIGH, risk HIGH) across 1 evidence item: EVID_00005. Identity strength: 100/100 (weight 0.25) - 'esewa.cashback99@gmail.com' is a esewa_id - identity weight 100/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence items. Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00005. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:esewa.cashback99@gmail.com, emails:sunita.gurung21@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:sunita.gurung21@gmail.com, khalti_ids:+9779801122334, phones:+9779801122334, phones:+9779847011223.
-- **suspect id**: SUSPECT_CASE_EE8250FB76_06
-- **identity**: esewa_ids:sunita.gurung21@gmail.com
-- **confidence score**: 67.5
-- **confidence level**: HIGH
-- **risk level**: HIGH
-- **evidence ids**:
-  - EVID_00005
-- **explanation**: Suspect anchor 'sunita.gurung21@gmail.com' (esewa_ids) scores 67.5/100 (HIGH, risk HIGH) across 1 evidence item: EVID_00005. Identity strength: 100/100 (weight 0.25) - 'sunita.gurung21@gmail.com' is a esewa_id - identity weight 100/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence items. Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00005. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:esewa.cashback99@gmail.com, emails:sunita.gurung21@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, khalti_ids:+9779801122334, phones:+9779801122334, phones:+9779847011223.
-- **suspect id**: SUSPECT_CASE_EE8250FB76_07
-- **identity**: khalti_ids:+9779801122334
-- **confidence score**: 67.5
-- **confidence level**: HIGH
-- **risk level**: HIGH
-- **evidence ids**:
-  - EVID_00005
-- **explanation**: Suspect anchor '+9779801122334' (khalti_ids) scores 67.5/100 (HIGH, risk HIGH) across 1 evidence item: EVID_00005. Identity strength: 100/100 (weight 0.25) - '+9779801122334' is a khalti_id - identity weight 100/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence items. Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00005. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:esewa.cashback99@gmail.com, emails:sunita.gurung21@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, esewa_ids:sunita.gurung21@gmail.com, phones:+9779801122334, phones:+9779847011223.
-- **suspect id**: SUSPECT_CASE_EE8250FB76_08
-- **identity**: phones:+9779801122334
-- **confidence score**: 63.8
-- **confidence level**: HIGH
-- **risk level**: HIGH
-- **evidence ids**:
-  - EVID_00005
-- **explanation**: Suspect anchor '+9779801122334' (phones) scores 63.8/100 (HIGH, risk HIGH) across 1 evidence item: EVID_00005. Identity strength: 85/100 (weight 0.25) - '+9779801122334' is a phone - identity weight 85/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence items. Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00005. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:esewa.cashback99@gmail.com, emails:sunita.gurung21@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, esewa_ids:sunita.gurung21@gmail.com, khalti_ids:+9779801122334, phones:+9779847011223.
-- **suspect id**: SUSPECT_CASE_EE8250FB76_09
-- **identity**: phones:+9779847011223
-- **confidence score**: 63.8
-- **confidence level**: HIGH
-- **risk level**: HIGH
-- **evidence ids**:
-  - EVID_00005
-- **explanation**: Suspect anchor '+9779847011223' (phones) scores 63.8/100 (HIGH, risk HIGH) across 1 evidence item: EVID_00005. Identity strength: 85/100 (weight 0.25) - '+9779847011223' is a phone - identity weight 85/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence items. Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00005. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:esewa.cashback99@gmail.com, emails:sunita.gurung21@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, esewa_ids:sunita.gurung21@gmail.com, khalti_ids:+9779801122334, phones:+9779801122334.
-- **suspect id**: SUSPECT_CASE_EE8250FB76_02
-- **identity**: emails:esewa.cashback99@gmail.com
-- **confidence score**: 61.2
-- **confidence level**: HIGH
-- **risk level**: HIGH
-- **evidence ids**:
-  - EVID_00005
-- **explanation**: Suspect anchor 'esewa.cashback99@gmail.com' (emails) scores 61.2/100 (HIGH, risk HIGH) across 1 evidence item: EVID_00005. Identity strength: 75/100 (weight 0.25) - 'esewa.cashback99@gmail.com' is a email - identity weight 75/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence items. Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00005. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:sunita.gurung21@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, esewa_ids:sunita.gurung21@gmail.com, khalti_ids:+9779801122334, phones:+9779801122334, phones:+9779847011223.
-- **suspect id**: SUSPECT_CASE_EE8250FB76_03
-- **identity**: emails:sunita.gurung21@gmail.com
-- **confidence score**: 61.2
-- **confidence level**: HIGH
-- **risk level**: HIGH
-- **evidence ids**:
-  - EVID_00005
-- **explanation**: Suspect anchor 'sunita.gurung21@gmail.com' (emails) scores 61.2/100 (HIGH, risk HIGH) across 1 evidence item: EVID_00005. Identity strength: 75/100 (weight 0.25) - 'sunita.gurung21@gmail.com' is a email - identity weight 75/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence items. Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00005. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:esewa.cashback99@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, esewa_ids:sunita.gurung21@gmail.com, khalti_ids:+9779801122334, phones:+9779801122334, phones:+9779847011223.
-- **suspect id**: SUSPECT_CASE_EE8250FB76_04
-- **identity**: emails:support@esewa-verify-kyc.com
-- **confidence score**: 61.2
-- **confidence level**: HIGH
-- **risk level**: HIGH
-- **evidence ids**:
-  - EVID_00005
-- **explanation**: Suspect anchor 'support@esewa-verify-kyc.com' (emails) scores 61.2/100 (HIGH, risk HIGH) across 1 evidence item: EVID_00005. Identity strength: 75/100 (weight 0.25) - 'support@esewa-verify-kyc.com' is a email - identity weight 75/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 2 evidence items. Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - anchor 'support@esewa-verify-kyc.com' is flagged malicious by threat intelligence. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:esewa.cashback99@gmail.com, emails:sunita.gurung21@gmail.com, esewa_ids:esewa.cashback99@gmail.com, esewa_ids:sunita.gurung21@gmail.com, khalti_ids:+9779801122334, phones:+9779801122334, phones:+9779847011223.
+> Identity anchors are investigative leads, not legal attribution. Verify ownership and role using original exhibits and independent records.
+
+| Identity lead | Score | Confidence | Risk | Supporting evidence |
+| --- | --- | --- | --- | --- |
+| bank_accounts:05019012345678 | 67.5 | HIGH | HIGH | EVID_00005 |
+| esewa_ids:esewa.cashback99@gmail.com | 67.5 | HIGH | HIGH | EVID_00005 |
+| esewa_ids:sunita.gurung21@gmail.com | 67.5 | HIGH | HIGH | EVID_00005 |
+| khalti_ids:+9779801122334 | 67.5 | HIGH | HIGH | EVID_00005 |
+| phones:+9779801122334 | 63.8 | HIGH | HIGH | EVID_00005 |
+| phones:+9779847011223 | 63.8 | HIGH | HIGH | EVID_00005 |
+| emails:esewa.cashback99@gmail.com | 61.2 | HIGH | HIGH | EVID_00005 |
+| emails:sunita.gurung21@gmail.com | 61.2 | HIGH | HIGH | EVID_00005 |
+| emails:support@esewa-verify-kyc.com | 61.2 | HIGH | HIGH | EVID_00005 |
 
 ## Threat Intelligence Summary
 
@@ -563,12 +200,9 @@ Basis: every statement below references stored forensic findings; no content is 
 
 ## Metadata Summary
 
-- **evidence id**: EVID_00005
-- **has exif**: False
-- **device**: 
-- **software**: 
-- **consistency notes**:
-  - none
+| Evidence | EXIF | Device | Software | Consistency notes |
+| --- | --- | --- | --- | --- |
+| EVID_00005 | False | none | none | none |
 
 ## Investigation Statistics
 
@@ -594,31 +228,48 @@ Basis: every statement below references stored forensic findings; no content is 
   - **resolved event count**: 2.0
   - **unresolved event count**: 0.0
   - **inferred event count**: 2.0
+  - **non inferred event count**: 0.0
+  - **acquisition fallback count**: 1.0
+  - **progression assessable**: 1.0
   - **stage count**: 4.0
   - **critical event count**: 1.0
-  - **timeline span hours**: 0.0
+  - **timeline span hours**: 976.41
+  - **event time span hours**: 0.0
+  - **acquisition inclusive span hours**: 976.41
 - **correlation statistics**:
   - **pair count**: 1.0
-  - **related pair count**: 1.0
-  - **mean confidence**: 0.2212
-  - **max confidence**: 0.2212
+  - **related pair count**: 0.0
+  - **mean confidence**: 0.0
+  - **max confidence**: 0.0
 
 ## Confidence Analysis
 
-- **evidence id**: EVID_00005
-- **score**: 100.0
-- **level**: VERY_HIGH
-- **explanation**: Evidence confidence is 100.0/100 (VERY_HIGH), derived from 3 verified dimension(s). Strongest signal: hash_verification (100/100). Weakest signal: metadata (100/100).
+| Evidence | Score | Level | Computed explanation |
+| --- | --- | --- | --- |
+| EVID_00005 | 100.0 | VERY_HIGH | Evidence confidence is 100.0/100 (VERY_HIGH), derived from 3 verified dimension(s). Strongest signal: hash_verification (100/100). Weakest signal: metadata (100/100). |
+
+## Statement of Limitations
+
+| # | Review boundary |
+| --- | --- |
+| 1 | This automated report organises submitted material and computed leads. It does not determine guilt or attribute an offence to a person. |
+| 2 | OCR and entity extraction can omit, merge or misclassify text. Identifiers, amounts and names must be verified in the original exhibit before operational use. |
+| 3 | Timeline quality: 2 inferred timestamp(s), including 1 acquisition-time fallback(s), and 0 unresolved timestamp(s). Date-only values use 00:00 UTC; fallbacks describe intake time rather than event time. |
+| 4 | Correlation and cross-case scores measure shared features, not causation, common ownership or identity. |
+| 5 | Campaign clusters and identity-anchor scores are prioritisation aids that require independent corroboration. |
+| 6 | Threat-intelligence verdicts reflect the configured provider and its coverage at analysis time; no match does not prove safety. |
+| 7 | New evidence or corrected extraction may change any finding in this report. |
 
 ## Investigation Conclusion
 
-- 1/2 evidence items passed SHA-256 chain-of-custody verification.
-- The evidence set is internally connected (1 weighted relationship), consistent with related activity rather than isolated incidents.
-- Investigation should focus on anchor '05019012345678' (68/100 confidence).
+| # | Conclusion |
+| --- | --- |
+| 1 | 1/2 evidence items passed SHA-256 integrity verification; this establishes stored-file integrity, not the truth of its content. |
+| 2 | Validate the ownership and role of identity lead '05019012345678' (68/100 model score; 1 supporting evidence item) against provider records and the original exhibits. |
 
 ## Statutory Basis
 
-The findings engage 3 provisions of the Electronic Transactions Act, 2063 (2008): s.52, s.47, s.56. Each is listed with the finding that engaged it and the evidence behind that finding.
+The findings engage 4 provisions of the Electronic Transactions Act, 2063 (2008): s.52, s.47, s.55, s.56. Each is listed with the finding that engaged it and the evidence behind that finding.
 
 **Statute:** Electronic Transactions Act, 2063 (2008)  
 **ऐन:** विद्युतीय (इलेक्ट्रोनिक) कारोबार ऐन, २०६३  
@@ -630,67 +281,128 @@ The findings engage 3 provisions of the Electronic Transactions Act, 2063 (2008)
 
 *Section 52, Electronic Transactions Act, 2063 (2008)*
 
-**Conduct.** Acquiring a financial benefit by fraud through a computer, including from the payment of any bill, the balance of another person's account, or an ATM card. The amount obtained is recoverable.
-
-**Penalty.** fine not exceeding one hundred thousand Rupees or imprisonment not exceeding two years or both
-
-**Why this is engaged.** 8 payment identifiers (0119.0625.987456, 0501-9012345678 and 9801122334) appear alongside 4 money values (NPR 1,500, NPR 200 and NPR 25,000) in the same case, evidencing a financial benefit moving through a payment rail.
-
-**Evidence.** EVID_00005
+| Field | Recorded value |
+| --- | --- |
+| Conduct | Acquiring a financial benefit by fraud through a computer, including from the payment of any bill, the balance of another person's account, or an ATM card. The amount obtained is recoverable. |
+| Penalty | fine not exceeding one hundred thousand Rupees or imprisonment not exceeding two years or both |
+| Evidence-based match | 8 payment identifiers (0119.0625.987456, 0501-9012345678 and 9801122334) appear alongside 4 money values (NPR 1,500, NPR 200 and NPR 25,000) in the same case, evidencing a financial benefit moving through a payment rail. |
+| Supporting evidence | EVID_00005 |
 
 ### Section 47 — Publication of illegal materials in electronic form
 
 *Section 47, Electronic Transactions Act, 2063 (2008)*
 
-**Conduct.** Publishing or displaying material in electronic media, including on the internet, which is prohibited by prevailing law or is contrary to public morality or decent behaviour.
+| Field | Recorded value |
+| --- | --- |
+| Conduct | Publishing or displaying material in electronic media, including on the internet, which is prohibited by prevailing law or is contrary to public morality or decent behaviour. |
+| Penalty | fine not exceeding one hundred thousand Rupees or imprisonment not exceeding five years or both |
+| Evidence-based match | threat intelligence flagged 3 indicators in this case; the evidence carries 4 web addresses (esewa-cashback-offer.xyz and esewa-verify-kyc.com), i.e. material published in electronic form. |
+| Supporting evidence | EVID_00005 |
 
-**Penalty.** fine not exceeding one hundred thousand Rupees or imprisonment not exceeding five years or both
+### Section 55 — Punishment in an offence committed outside Nepal
 
-**Why this is engaged.** threat intelligence flagged 3 indicators in this case; the evidence carries 4 web addresses (esewa-cashback-offer.xyz and esewa-verify-kyc.com), i.e. material published in electronic form.
+*Section 55, Electronic Transactions Act, 2063 (2008)*
 
-**Evidence.** EVID_00005
+| Field | Recorded value |
+| --- | --- |
+| Conduct | An offence under the Act involving a computer, computer system or network located in Nepal may be prosecuted even where the act was committed by a person residing outside Nepal. |
+| Penalty | as for the underlying offence |
+| Evidence-based match | this case shares identifiers with 2 other cases (CASE_185915593C and CASE_1A1BF573F3). Where any part of the conduct occurred outside Nepal, the Act still applies to systems located in Nepal. |
+| Supporting evidence | none |
 
 ### Section 56 — Confiscation
 
 *Section 56, Electronic Transactions Act, 2063 (2008)*
 
-**Conduct.** Any computer, computer system, disk, software or accessory device used to commit an offence relating to computer under the Act is liable to confiscation.
+| Field | Recorded value |
+| --- | --- |
+| Conduct | Any computer, computer system, disk, software or accessory device used to commit an offence relating to computer under the Act is liable to confiscation. |
+| Penalty | confiscation of the computer, computer system, disks, software or other accessory devices used |
+| Evidence-based match | the findings engage 3 provisions of the Act (s.47, s.52 and s.55). Any computer, device or storage medium used to commit those acts falls within the confiscation power and should be identified for seizure. |
+| Supporting evidence | none |
 
-**Penalty.** confiscation of the computer, computer system, disks, software or other accessory devices used
+### Evidentiary and regulatory follow-up
 
-**Why this is engaged.** the findings engage 2 provisions of the Act (s.47 and s.52). Any computer, device or storage medium used to commit those acts falls within the confiscation power and should be identified for seizure.
+These entries are preservation or investigative actions, not findings that an institution violated a rule.
+
+#### Legal recognition and preservation of electronic records
+
+*Sections 4, 6, Electronic Transactions Act, 2063 (2008)*
+
+| Field | Recorded value |
+| --- | --- |
+| Status | evidence_handling_requirement |
+| Expectation | Where the law requires a record to be retained, an electronic record is recognised when it remains accessible, can be reproduced in its original format, and retains available origin, destination, date and time information. |
+| Why relevant | This report relies on 2 electronic evidence items; preservation and reproducibility therefore remain material to later verification. |
+| Recommended action | Retain the original files, acquisition metadata, SHA-256 values and chain-of-custody history. A file hash supports integrity checking but is not by itself a statutory digital signature under ETA sections 3 and 5. |
+| Applicability | Applies where an electronic record is retained or relied on under the Electronic Transactions Act and prevailing law. |
+| Supporting evidence | EVID_00005, EVID_00006 |
+
+#### Preserve and correlate forensic logs
+
+*Controls 83, 84, 85, 86, Nepal Rastra Bank Cyber Resilience Guidelines 2023*
+
+| Field | Recorded value |
+| --- | --- |
+| Status | investigative_follow_up |
+| Expectation | Detected events should be recorded with information such as event type, time and user or address; audit data should be protected, logs securely backed up, timestamps synchronised, and events centralised and correlated across relevant systems. |
+| Why relevant | The case contains 8 payment identifiers across 1 evidence item; the corresponding institution-side records may establish transaction sequence, account activity, source address and timing. |
+| Recommended action | Send a preservation request for transaction, authentication, application, system and network logs, including timezone and clock-synchronisation details, before normal retention or rotation removes them. |
+| Applicability | Conditional: confirm that the affected organisation is an institution within the Guidelines' scope, including an A, B, C or D class BFI, Payment System Operator or Payment Service Provider licensed by NRB's Payment Systems Department. |
+| Supporting evidence | EVID_00005 |
+
+### Provisions requiring manual review
+
+The current evidence model does not automatically assess these provisions:
+
+- **Section 44 — To Pirate, Destroy or Alter computer source code:** manual review requires source-code versions, repository history or another technical comparison establishing alteration
+- **Section 48 — Breach of confidentiality:** manual review must establish both the person's authorised access and disclosure to an unauthorised recipient
+- **Section 57 — Offences committed by a corporate body:** manual review requires attribution to a corporate body and evidence of responsibility, consent, knowledge or negligence
+
+### Primary sources
+
+- **Nepal Law Commission — Electronic Transactions Act, 2063 (2008)**  
+  https://lawcommission.gov.np/content/13397/  
+  Used for: Statutory offence mapping and electronic-record preservation guidance.
+  Note: The Nepali text is authoritative where it differs from the English translation.
+- **Nepal Rastra Bank, Payment Systems Department — Nepal Rastra Bank Cyber Resilience Guidelines 2023**  
+  https://www.nrb.org.np/contents/uploads/2023/08/Cyber-Resilience-Guidelines-2023.pdf  
+  Used for: Conditional investigative follow-up for authentication and forensic logging; never used as an offence finding.
+  Note: Repository copy verified byte-for-byte against the official NRB download. Applicability to the affected institution must be confirmed by the investigator.
 
 > This is an automated mapping from technical findings to statutory provisions, provided to assist the investigating officer. It is not legal advice and not a charging decision. A provision is listed because the evidence contains the features described, not because an offence has been proved: intent, authorisation and identity are matters for investigation. Provisions of the Act not listed here were not assessed.
 
 
 ## Recommendations
 
-- Get the fake websites shut down: esewa-cashback-offer.xyz, esewa-verify-kyc.com. Ask the hosting company to save its records first.
-- Tell eSewa their name is being used in this scam, so they can warn other customers.
-- Ask eSewa who owns these wallets (KYC) and their payment history: sunita.gurung21@gmail.com, esewa.cashback99@gmail.com.
-- Ask Khalti who owns these wallets (KYC) and their payment history: +9779801122334.
-- Ask the bank who owns these accounts and their statements: 05019012345678.
-- Include these payment reference numbers in those requests so the transfers are easy to find: 0119.0625.987456, KH-2026-0611-77245, MBL-2026-441829.
-- Ask the phone/wallet company who is registered to 05019012345678, esewa.cashback99@gmail.com - it appears again and again across this evidence.
-- Go through the 1 key moment - when money moved and codes were shared - with the victim, and record what they lost.
-- Handle this case in the normal queue (rated 38 out of 100).
+| # | Investigator action |
+| --- | --- |
+| 1 | Issue preservation requests to the relevant hosting providers, then seek suspension of the suspected domains: esewa-cashback-offer.xyz,... |
+| 2 | Notify eSewa of suspected brand impersonation and request preservation of any related abuse records. |
+| 3 | Request subscriber/KYC ownership and transaction history from eSewa for: sunita.gurung21@gmail.com, esewa.cashback99@gmail.com. |
+| 4 | Request subscriber/KYC ownership and transaction history from Khalti for: +9779801122334. |
+| 5 | Request account-holder identity and statements from the relevant bank for: 05019012345678. |
+| 6 | Verify these extracted payment references against the source exhibits before including them in record requests: 0119.0625.987456,... |
+| 7 | Ask the relevant provider to verify registration, ownership and transaction records for 05019012345678, esewa.cashback99@gmail.com; confirm each... |
+| 8 | Review the 1 flagged event with the source exhibits; confirm each event's time, participants and any loss with the complainant. |
+| 9 | Assign standard queue priority (rated 35 out of 100). |
 
 ## Report Provenance & Integrity
 
-- **report id**: RPT-EE8250FB76-916F4241
-- **generated at**: 2026-08-04T08:17:40.900Z
+- **report id**: RPT-EE8250FB76-7D320887
+- **generated at**: 2026-08-20T12:27:34.494Z
 - **generator**: CIIS Phase-2 reporting module (template-over-data; no free-text generation)
 - **evidence set digest**: 0f6afe626b2e5e1c4bb70b2efae2d8aea52ca3d8d38b481532cc8e4ff88c3ff6
 - **evidence set digest note**: SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.
 - **source artifact hashes**:
-  - **correlation analysis.json**: 4217d05345085ff0af647306f93058a933ed81de012cfe80a4cff2d293f5a48d
+  - **correlation analysis.json**: 852c827c6fcbe48f4030627f026a0a37e8a11fec71475e2dd3f34b0b6b2eb88a
   - **cross case correlation.json**: eb69d4047d8579e0bc5f6954ea3d2fb83b3f633333637e84c7f0eefd53b6e690
-  - **campaign analysis.json**: da576901d722734dcd0b18314f7587787c7d893edecc01b6388582a05f315326
-  - **suspect assessment.json**: 92aca77ed02ad593a0112dc47ef3b1823104d6d7f94f9676b120a9b3a4a4b121
-  - **timeline analysis.json**: cb98b075f0d96e56c56a82970a62f0a1d5589ff4f9e132b2046a4b763f9a4166
-  - **analytics.json**: 6ac15d2afd34c207b49a299c28de3120bfd9f00c864b91a58665868d260a1629
-  - **case priority.json**: b113e7a69b1bfc8faf180a7084731ae409a40101b9be5c6b8d39788626ada355
-  - **graph.json**: d2566cb9c410f481f365376a8506416fc09e1e52bd023d0bd2c4b9e51217f504
+  - **campaign analysis.json**: adcb501bc65285e4a489b5bd418ffe313d7e1eae80ede01e7f82d793ea4b7785
+  - **suspect assessment.json**: fbff2a0655f126c3ee7dcceb5cc0b068003595ef78897c84cf1b6fc8a435ac4e
+  - **timeline analysis.json**: e56ff0a041ceb8185249170d111d48da69a8dda973e8cef8256cb53c81588dd8
+  - **analytics.json**: 3494908ea3bb45d6778d204370b157bef175a73146c34e79b0cf2938df698a91
+  - **case priority.json**: 9a178a38f8effab3ec4db50429a328b19f3172e7c085164311b1297b029f3ff8
+  - **graph.json**: 36f5e85fa445b04ab793122fab9435dc358b660f4a35cff8a1659305576dd37e
 
 ## Appendix
 

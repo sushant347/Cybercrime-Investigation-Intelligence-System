@@ -1,13 +1,13 @@
 {
   "report_type": "graph_statistics",
-  "report_version": 21,
+  "report_version": 23,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-08-04T08:17:40.206Z",
+  "generated_at": "2026-08-20T12:27:45.395Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
     "node_count": 15,
-    "edge_count": 18,
+    "edge_count": 15,
     "nodes_by_type": {
       "case": 1,
       "evidence": 4,
@@ -19,36 +19,35 @@
     "edges_by_type": {
       "contains": 4,
       "shared_entity": 7,
-      "timeline_event": 4,
-      "temporal_relationship": 3
+      "timeline_event": 4
     },
-    "density": 0.1714,
+    "density": 0.1429,
     "connected_components": 1,
     "largest_component_size": 15,
-    "average_degree": 2.4,
+    "average_degree": 2.0,
     "top_hubs": [
       {
         "node": "evidence:EVID_00001",
         "degree": "7"
       },
       {
-        "node": "evidence:EVID_00002",
-        "degree": "6"
-      },
-      {
         "node": "case:CASE_2CF24DBA5F",
         "degree": "4"
       },
       {
-        "node": "evidence:EVID_00003",
-        "degree": "4"
-      },
-      {
-        "node": "evidence:EVID_00004",
+        "node": "evidence:EVID_00002",
         "degree": "4"
       },
       {
         "node": "money:npr 2000",
+        "degree": "2"
+      },
+      {
+        "node": "evidence:EVID_00003",
+        "degree": "2"
+      },
+      {
+        "node": "evidence:EVID_00004",
         "degree": "2"
       },
       {
@@ -66,6 +65,62 @@
       {
         "node": "time:09:15",
         "degree": "1"
+      }
+    ],
+    "community_count": 3,
+    "bridge_count": 11,
+    "backbone_edge_count": 14,
+    "analytics_engine": "networkx-3.6.1",
+    "top_central_nodes": [
+      {
+        "node": "evidence:EVID_00001",
+        "importance": "0.771154",
+        "community": "1"
+      },
+      {
+        "node": "evidence:EVID_00002",
+        "importance": "0.393162",
+        "community": "3"
+      },
+      {
+        "node": "case:CASE_2CF24DBA5F",
+        "importance": "0.341749",
+        "community": "2"
+      },
+      {
+        "node": "money:npr 2000",
+        "importance": "0.279241",
+        "community": "3"
+      },
+      {
+        "node": "evidence:EVID_00003",
+        "importance": "0.156278",
+        "community": "2"
+      },
+      {
+        "node": "evidence:EVID_00004",
+        "importance": "0.156278",
+        "community": "2"
+      },
+      {
+        "node": "money:npr 500000",
+        "importance": "0.122662",
+        "community": "3"
+      },
+      {
+        "node": "date:2026-01-04",
+        "importance": "0.104720",
+        "community": "1"
+      },
+      {
+        "node": "time:09:12",
+        "importance": "0.104720",
+        "community": "1"
+      },
+      {
+        "node": "time:09:14",
+        "importance": "0.104720",
+        "community": "1"
       }
     ]
   }

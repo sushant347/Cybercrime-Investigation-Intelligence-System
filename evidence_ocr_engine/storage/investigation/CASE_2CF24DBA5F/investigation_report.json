@@ -1,20 +1,21 @@
 {
   "report_type": "investigation_report",
-  "report_version": 12,
+  "report_version": 16,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-08-04T08:17:40.447Z",
+  "generated_at": "2026-08-20T12:27:45.415Z",
   "report": {
-    "report_id": "RPT-2CF24DBA5F-31F7E052",
+    "report_id": "RPT-2CF24DBA5F-93BC991E",
     "sections": {
       "executive_summary": [
-        "Case CASE_2CF24DBA5F contains 4 evidence items, each acquired under SHA-256 chain-of-custody verification.",
-        "The weighted correlation engine found 6 related evidence pairs out of 6 analysed [correlation_analysis.json].",
-        "Observed attack progression: financial_transaction -> post_attack -> initial_contact -> social_engineering -> credential_theft [timeline_analysis.json]."
+        "Case CASE_2CF24DBA5F contains 4 evidence items; 4/4 passed the stored SHA-256 integrity check.",
+        "The weighted correlation engine found 0 related evidence pairs out of 6 analysed [correlation_analysis.json].",
+        "Chronology contains 1 evidence-derived event time (0 inferred), 3 acquisition-only records and 0 unresolved records [timeline_analysis.json].",
+        "Attack stages were detected, but no evidence-derived event times were available to order them [timeline_analysis.json]."
       ],
       "scope_and_methodology": {
-        "objective": "Acquire, verify, correlate and reconstruct the digital evidence for this case, and derive investigative leads (suspect anchors, campaigns, cross-case links) strictly from stored, hash-verified artifacts.",
-        "evidence_scope": "4 evidence items acquired through the CIIS intake pipeline under SHA-256 chain-of-custody control.",
+        "objective": "Acquire, verify, correlate and reconstruct the digital evidence for this case, and derive investigative leads (identity anchors, candidate clusters and cross-case links) from stored artifacts while preserving each item's recorded integrity status.",
+        "evidence_scope": "4 evidence items acquired through the CIIS intake pipeline with a recorded SHA-256 digest.",
         "methodology": [
           "Phase 1 - Acquisition & OCR: PaddleOCR PP-OCRv5 text extraction with per-item confidence scoring; SHA-256 fingerprint recorded at intake and re-verified at read.",
           "Phase 1 - Forensics: metadata/EXIF consistency, forgery signals, logo detection and evidence-confidence scoring stored per item under storage/forensics/.",
@@ -24,7 +25,7 @@
           "Threat intelligence: URL/domain indicators scored by the configured provider (static indicator file, or the trained phishing classifier when CIIS_ML_THREAT_INTEL=1); per-indicator results in 'Model Prediction Results'.",
           "Reporting: this document is assembled exclusively from the stored outputs above; it contains no free-text generation."
         ],
-        "reproducibility": "Re-running the analysis against the same stored evidence reproduces every figure herein; artifacts are versioned and never overwritten."
+        "reproducibility": "Re-running the analysis against the same stored evidence recomputes the canonical artifacts; report control records the evidence-set digest and the stored JSON companion retains the complete source-artifact hash register."
       },
       "case_overview": {
         "case_id": "CASE_2CF24DBA5F",
@@ -45,7 +46,7 @@
           "sha256": "8f2e60ea6fc0eeffd209e28eb29228797104b60a2505934fc3d42642c100ea79",
           "hash_verified": true,
           "ocr_confidence": 1.0,
-          "evidence_confidence_score": 77.5,
+          "evidence_confidence_score": "not available",
           "entity_count": 5
         },
         {
@@ -55,7 +56,7 @@
           "sha256": "c7ab347cfbd2b80c944c85b3442f3b2c400da1d3b92962f9ded8598e1e06cfb2",
           "hash_verified": true,
           "ocr_confidence": 1.0,
-          "evidence_confidence_score": 82.5,
+          "evidence_confidence_score": "not available",
           "entity_count": 2
         },
         {
@@ -65,7 +66,7 @@
           "sha256": "0340d5863313f4cc0b9b40ed835a77a71b8304d2e08eb32f08a56ed93a6e0b10",
           "hash_verified": true,
           "ocr_confidence": 0.9859,
-          "evidence_confidence_score": 77.5,
+          "evidence_confidence_score": "not available",
           "entity_count": 0
         },
         {
@@ -75,49 +76,173 @@
           "sha256": "8ef0f27a84960b656d9051892e36096ce56fe9f30eb9a935d4d4330a002b9b7f",
           "hash_verified": true,
           "ocr_confidence": 0.9014,
-          "evidence_confidence_score": 77.5,
+          "evidence_confidence_score": "not available",
           "entity_count": 0
         }
       ],
       "timeline_analysis": {
-        "summary": "4 events spanning 4851.7 hours; 0 timestamps unresolved. Observed scam progression: financial_transaction -> post_attack -> initial_contact -> social_engineering -> credential_theft.",
-        "stage_progression": [
-          "financial_transaction",
-          "post_attack",
-          "initial_contact",
-          "social_engineering",
-          "credential_theft"
+        "summary": "4 events; 4 timestamps resolved (1 non-inferred, 3 inferred, including 3 acquisition-time fallbacks); 0 timestamps unresolved. Attack stages were detected, but no evidence-derived event times were available to order them.",
+        "timestamp_quality": {
+          "event_count": 4,
+          "non_inferred_count": 1,
+          "inferred_count": 3,
+          "acquisition_fallback_count": 3,
+          "unresolved_count": 0,
+          "reliability_note": "Chronology is provisional: acquisition time is an intake timestamp, not proof of when the underlying event occurred. Every fallback and unresolved value must be checked against the source exhibit."
+        },
+        "stage_progression": [],
+        "progression_consistent": true,
+        "progression_assessable": false,
+        "chronological_events": [
+          {
+            "timestamp": "2026-01-04T09:12:00+00:00",
+            "evidence_id": "EVID_00001",
+            "file_name": "yeti.jpg",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00001 (yeti.jpg)",
+            "timestamp_source": "content_date_time",
+            "timestamp_confidence": "high",
+            "timestamp_inferred": false,
+            "stages": [],
+            "critical": true,
+            "critical_reasons": [
+              "contains money entity/entities: NPR 2000"
+            ]
+          },
+          {
+            "timestamp": "2026-07-25T12:53:07.182000+00:00",
+            "evidence_id": "EVID_00002",
+            "file_name": "whatsapp_chat_export.txt",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00002 (whatsapp_chat_export.txt); stages: financial_transaction, post_attack",
+            "timestamp_source": "upload_time_fallback",
+            "timestamp_confidence": "low",
+            "timestamp_inferred": true,
+            "stages": [
+              "financial_transaction",
+              "post_attack"
+            ],
+            "critical": true,
+            "critical_reasons": [
+              "contains money entity/entities: NPR 2000, NPR 500000"
+            ]
+          },
+          {
+            "timestamp": "2026-07-25T12:53:23.174000+00:00",
+            "evidence_id": "EVID_00003",
+            "file_name": "romanchat.jpg",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00003 (romanchat.jpg); stages: initial_contact, social_engineering, credential_theft, financial_transaction",
+            "timestamp_source": "upload_time_fallback",
+            "timestamp_confidence": "low",
+            "timestamp_inferred": true,
+            "stages": [
+              "initial_contact",
+              "social_engineering",
+              "credential_theft",
+              "financial_transaction"
+            ],
+            "critical": false,
+            "critical_reasons": []
+          },
+          {
+            "timestamp": "2026-07-25T12:53:47.011000+00:00",
+            "evidence_id": "EVID_00004",
+            "file_name": "phishing_email_screenshot.png",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00004 (phishing_email_screenshot.png)",
+            "timestamp_source": "upload_time_fallback",
+            "timestamp_confidence": "low",
+            "timestamp_inferred": true,
+            "stages": [],
+            "critical": false,
+            "critical_reasons": []
+          }
         ],
-        "progression_consistent": false,
+        "event_time_events": [
+          {
+            "timestamp": "2026-01-04T09:12:00+00:00",
+            "evidence_id": "EVID_00001",
+            "file_name": "yeti.jpg",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00001 (yeti.jpg)",
+            "timestamp_source": "content_date_time",
+            "timestamp_confidence": "high",
+            "timestamp_inferred": false,
+            "stages": [],
+            "critical": true,
+            "critical_reasons": [
+              "contains money entity/entities: NPR 2000"
+            ]
+          }
+        ],
+        "acquisition_records": [
+          {
+            "timestamp": "2026-07-25T12:53:07.182000+00:00",
+            "evidence_id": "EVID_00002",
+            "file_name": "whatsapp_chat_export.txt",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00002 (whatsapp_chat_export.txt); stages: financial_transaction, post_attack",
+            "timestamp_source": "upload_time_fallback",
+            "timestamp_confidence": "low",
+            "timestamp_inferred": true,
+            "stages": [
+              "financial_transaction",
+              "post_attack"
+            ],
+            "critical": true,
+            "critical_reasons": [
+              "contains money entity/entities: NPR 2000, NPR 500000"
+            ]
+          },
+          {
+            "timestamp": "2026-07-25T12:53:23.174000+00:00",
+            "evidence_id": "EVID_00003",
+            "file_name": "romanchat.jpg",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00003 (romanchat.jpg); stages: initial_contact, social_engineering, credential_theft, financial_transaction",
+            "timestamp_source": "upload_time_fallback",
+            "timestamp_confidence": "low",
+            "timestamp_inferred": true,
+            "stages": [
+              "initial_contact",
+              "social_engineering",
+              "credential_theft",
+              "financial_transaction"
+            ],
+            "critical": false,
+            "critical_reasons": []
+          },
+          {
+            "timestamp": "2026-07-25T12:53:47.011000+00:00",
+            "evidence_id": "EVID_00004",
+            "file_name": "phishing_email_screenshot.png",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00004 (phishing_email_screenshot.png)",
+            "timestamp_source": "upload_time_fallback",
+            "timestamp_confidence": "low",
+            "timestamp_inferred": true,
+            "stages": [],
+            "critical": false,
+            "critical_reasons": []
+          }
+        ],
+        "unresolved_records": [],
         "milestones": [
           {
             "timestamp": "2026-01-04T09:12:00+00:00",
-            "description": "Investigation start - first reconstructed evidence event"
-          },
-          {
-            "timestamp": "2026-07-25T12:53:07.182000+00:00",
-            "description": "First observation of stage 'financial_transaction' (EVID_00002)"
-          },
-          {
-            "timestamp": "2026-07-25T12:53:07.182000+00:00",
-            "description": "First observation of stage 'post_attack' (EVID_00002)"
-          },
-          {
-            "timestamp": "2026-07-25T12:53:23.174000+00:00",
-            "description": "First observation of stage 'initial_contact' (EVID_00003)"
-          },
-          {
-            "timestamp": "2026-07-25T12:53:23.174000+00:00",
-            "description": "First observation of stage 'social_engineering' (EVID_00003)"
-          },
-          {
-            "timestamp": "2026-07-25T12:53:23.174000+00:00",
-            "description": "First observation of stage 'credential_theft' (EVID_00003)"
+            "timestamp_source": "content_date_time",
+            "timestamp_confidence": "high",
+            "timestamp_inferred": false,
+            "description": "First reconstructed incident event"
           }
         ],
         "critical_events": [
           {
             "timestamp": "2026-01-04T09:12:00+00:00",
+            "timestamp_source": "content_date_time",
+            "timestamp_confidence": "high",
+            "timestamp_inferred": false,
             "evidence_id": "EVID_00001",
             "reasons": [
               "contains money entity/entities: NPR 2000"
@@ -125,6 +250,9 @@
           },
           {
             "timestamp": "2026-07-25T12:53:07.182000+00:00",
+            "timestamp_source": "upload_time_fallback",
+            "timestamp_confidence": "low",
+            "timestamp_inferred": true,
             "evidence_id": "EVID_00002",
             "reasons": [
               "contains money entity/entities: NPR 2000, NPR 500000"
@@ -134,42 +262,11 @@
       },
       "correlation_analysis": {
         "pair_count": 6,
-        "related_pair_count": 6,
+        "related_pair_count": 0,
         "strength_distribution": {
-          "WEAK": 6
+          "NO_RELATIONSHIP": 6
         },
-        "top_relationships": [
-          {
-            "pair": "EVID_00001 <-> EVID_00002",
-            "strength": "WEAK",
-            "confidence": 0.2545,
-            "explanation": "EVID_00001 (yeti.jpg) and EVID_00002 (whatsapp_chat_export.txt) show a weak relationship (confidence 0.25) based on 2 independent factors. Both items reference the same money: npr 2000 [weight 0.07]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
-          },
-          {
-            "pair": "EVID_00001 <-> EVID_00003",
-            "strength": "WEAK",
-            "confidence": 0.2212,
-            "explanation": "EVID_00001 (yeti.jpg) and EVID_00003 (romanchat.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
-          },
-          {
-            "pair": "EVID_00001 <-> EVID_00004",
-            "strength": "WEAK",
-            "confidence": 0.2212,
-            "explanation": "EVID_00001 (yeti.jpg) and EVID_00004 (phishing_email_screenshot.png) show a weak relationship (confidence 0.22) based on 1 independent factor. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
-          },
-          {
-            "pair": "EVID_00002 <-> EVID_00003",
-            "strength": "WEAK",
-            "confidence": 0.2212,
-            "explanation": "EVID_00002 (whatsapp_chat_export.txt) and EVID_00003 (romanchat.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
-          },
-          {
-            "pair": "EVID_00002 <-> EVID_00004",
-            "strength": "WEAK",
-            "confidence": 0.2212,
-            "explanation": "EVID_00002 (whatsapp_chat_export.txt) and EVID_00004 (phishing_email_screenshot.png) show a weak relationship (confidence 0.22) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
-          }
-        ]
+        "top_relationships": []
       },
       "cross_case_correlation": "No cross-case correlations were found for this case.",
       "campaign_analysis": {
@@ -195,7 +292,7 @@
       "model_predictions": "The active threat-intelligence provider returned no classification for any URL/domain indicator in this case's evidence.",
       "evidence_quality_summary": {
         "mean_image_quality": 0.0,
-        "mean_evidence_confidence": 78.75,
+        "mean_evidence_confidence": 0.0,
         "mean_forgery_score": 0.0,
         "max_forgery_score": 0.0,
         "mean_ocr_confidence": 0.97,
@@ -203,38 +300,7 @@
       },
       "metadata_summary": [
         {
-          "evidence_id": "EVID_00001",
-          "has_exif": false,
-          "device": "",
-          "software": "",
-          "consistency_notes": [
-            "Image carries no EXIF metadata (typical for screenshots and messaging-app exports; one less authenticity signal)."
-          ]
-        },
-        {
-          "evidence_id": "EVID_00002",
-          "has_exif": false,
-          "device": "",
-          "software": "",
-          "consistency_notes": []
-        },
-        {
-          "evidence_id": "EVID_00003",
-          "has_exif": false,
-          "device": "",
-          "software": "",
-          "consistency_notes": [
-            "Image carries no EXIF metadata (typical for screenshots and messaging-app exports; one less authenticity signal)."
-          ]
-        },
-        {
-          "evidence_id": "EVID_00004",
-          "has_exif": false,
-          "device": "",
-          "software": "",
-          "consistency_notes": [
-            "Image carries no EXIF metadata (typical for screenshots and messaging-app exports; one less authenticity signal)."
-          ]
+          "note": "No Phase-1 metadata reports stored for this case."
         }
       ],
       "investigation_statistics": {
@@ -255,47 +321,39 @@
           "resolved_event_count": 4.0,
           "unresolved_event_count": 0.0,
           "inferred_event_count": 3.0,
+          "non_inferred_event_count": 1.0,
+          "acquisition_fallback_count": 3.0,
+          "progression_assessable": 0.0,
           "stage_count": 5.0,
           "critical_event_count": 2.0,
-          "timeline_span_hours": 4851.7
+          "timeline_span_hours": 4851.7,
+          "event_time_span_hours": 0.0,
+          "acquisition_inclusive_span_hours": 4851.7
         },
         "correlation_statistics": {
           "pair_count": 6.0,
-          "related_pair_count": 6.0,
-          "mean_confidence": 0.2268,
-          "max_confidence": 0.2545
+          "related_pair_count": 0.0,
+          "mean_confidence": 0.0071,
+          "max_confidence": 0.0428
         }
       },
       "confidence_analysis": [
         {
-          "evidence_id": "EVID_00001",
-          "score": 77.5,
-          "level": "HIGH",
-          "explanation": "Evidence confidence is 77.5/100 (HIGH), derived from 3 verified dimension(s). Strongest signal: hash_verification (100/100). Weakest signal: processing (30/100)."
-        },
-        {
-          "evidence_id": "EVID_00002",
-          "score": 82.5,
-          "level": "VERY_HIGH",
-          "explanation": "Evidence confidence is 82.5/100 (VERY_HIGH), derived from 3 verified dimension(s). Strongest signal: hash_verification (100/100). Weakest signal: processing (30/100)."
-        },
-        {
-          "evidence_id": "EVID_00003",
-          "score": 77.5,
-          "level": "HIGH",
-          "explanation": "Evidence confidence is 77.5/100 (HIGH), derived from 3 verified dimension(s). Strongest signal: hash_verification (100/100). Weakest signal: processing (30/100)."
-        },
-        {
-          "evidence_id": "EVID_00004",
-          "score": 77.5,
-          "level": "HIGH",
-          "explanation": "Evidence confidence is 77.5/100 (HIGH), derived from 3 verified dimension(s). Strongest signal: hash_verification (100/100). Weakest signal: processing (30/100)."
+          "note": "No Phase-1 confidence scores stored for this case."
         }
       ],
+      "limitations": [
+        "This automated report organises submitted material and computed leads. It does not determine guilt or attribute an offence to a person.",
+        "OCR and entity extraction can omit, merge or misclassify text. Identifiers, amounts and names must be verified in the original exhibit before operational use.",
+        "Timeline quality: 3 inferred timestamp(s), including 3 acquisition-time fallback(s), and 0 unresolved timestamp(s). Date-only values use 00:00 UTC; fallbacks describe intake time rather than event time.",
+        "Correlation and cross-case scores measure shared features, not causation, common ownership or identity.",
+        "Campaign clusters and identity-anchor scores are prioritisation aids that require independent corroboration.",
+        "Threat-intelligence verdicts reflect the configured provider and its coverage at analysis time; no match does not prove safety.",
+        "New evidence or corrected extraction may change any finding in this report."
+      ],
       "investigation_conclusion": [
-        "4/4 evidence items passed SHA-256 chain-of-custody verification.",
-        "The evidence set is internally connected (6 weighted relationships), consistent with related activity rather than isolated incidents.",
-        "Observed stage order deviates from the canonical scam sequence; evidence acquisition order should be reviewed."
+        "4/4 evidence items passed SHA-256 integrity verification; this establishes stored-file integrity, not the truth of its content.",
+        "The keyword-derived stage order is provisional because one or more stage-bearing items lack a reliable event time."
       ],
       "legal_basis": {
         "case_id": "CASE_2CF24DBA5F",
@@ -325,29 +383,90 @@
             "evidence_ids": []
           }
         ],
+        "manual_review_provisions": [
+          {
+            "section": "44",
+            "title": "To Pirate, Destroy or Alter computer source code",
+            "citation": "Section 44, Electronic Transactions Act, 2063 (2008)",
+            "reason": "manual review requires source-code versions, repository history or another technical comparison establishing alteration"
+          },
+          {
+            "section": "48",
+            "title": "Breach of confidentiality",
+            "citation": "Section 48, Electronic Transactions Act, 2063 (2008)",
+            "reason": "manual review must establish both the person's authorised access and disclosure to an unauthorised recipient"
+          },
+          {
+            "section": "57",
+            "title": "Offences committed by a corporate body",
+            "citation": "Section 57, Electronic Transactions Act, 2063 (2008)",
+            "reason": "manual review requires attribution to a corporate body and evidence of responsibility, consent, knowledge or negligence"
+          }
+        ],
+        "investigative_guidance": [
+          {
+            "category": "evidence_preservation",
+            "control_ids": [
+              "4",
+              "6"
+            ],
+            "title": "Legal recognition and preservation of electronic records",
+            "citation": "Sections 4, 6, Electronic Transactions Act, 2063 (2008)",
+            "expectation": "Where the law requires a record to be retained, an electronic record is recognised when it remains accessible, can be reproduced in its original format, and retains available origin, destination, date and time information.",
+            "basis": "This report relies on 4 electronic evidence items; preservation and reproducibility therefore remain material to later verification.",
+            "recommended_action": "Retain the original files, acquisition metadata, SHA-256 values and chain-of-custody history. A file hash supports integrity checking but is not by itself a statutory digital signature under ETA sections 3 and 5.",
+            "applicability": "Applies where an electronic record is retained or relied on under the Electronic Transactions Act and prevailing law.",
+            "status": "evidence_handling_requirement",
+            "evidence_ids": [
+              "EVID_00001",
+              "EVID_00002",
+              "EVID_00003",
+              "EVID_00004"
+            ],
+            "source_id": "eta_2063"
+          }
+        ],
+        "sources": [
+          {
+            "source_id": "eta_2063",
+            "authority": "Nepal Law Commission",
+            "title": "Electronic Transactions Act, 2063 (2008)",
+            "url": "https://lawcommission.gov.np/content/13397/",
+            "local_documents": [
+              "2.1 The Electronic Transactions Act, 2063 (2008).pdf",
+              "2.1 विद्युतीय (इलेक्ट्रोनिक) कारोबार ऐन, २०६३ (नेपाली).pdf"
+            ],
+            "sha256": {
+              "2.1 The Electronic Transactions Act, 2063 (2008).pdf": "7f68a8b66adf579b5ba595f9062abcd8c61f9fddfaadffe06c8e4b752d76b4b6",
+              "2.1 विद्युतीय (इलेक्ट्रोनिक) कारोबार ऐन, २०६३ (नेपाली).pdf": "5b5cd8d72da9da73d6932ea227ec79cb65e19d5ca1ef3aa6f02f3dcef76bc723"
+            },
+            "usage": "Statutory offence mapping and electronic-record preservation guidance.",
+            "note": "The Nepali text is authoritative where it differs from the English translation."
+          }
+        ],
         "caveat": "This is an automated mapping from technical findings to statutory provisions, provided to assist the investigating officer. It is not legal advice and not a charging decision. A provision is listed because the evidence contains the features described, not because an offence has been proved: intent, authorisation and identity are matters for investigation. Provisions of the Act not listed here were not assessed.",
         "summary": "The findings engage 2 provisions of the Electronic Transactions Act, 2063 (2008): s.45, s.56. Each is listed with the finding that engaged it and the evidence behind that finding.",
-        "analysis_time_ms": 0.2
+        "analysis_time_ms": 0.1
       },
       "recommendations": [
-        "Go through the 2 key moments - when money moved and codes were shared - with the victim, and record what they lost.",
-        "Low urgency - handle after the others (rated 30 out of 100)."
+        "Review the 1 flagged event with the source exhibits; confirm each event's time, participants and any loss with the complainant.",
+        "Assign low queue priority (rated 13 out of 100)."
       ],
       "report_provenance": {
-        "report_id": "RPT-2CF24DBA5F-31F7E052",
-        "generated_at": "2026-08-04T08:17:40.297Z",
+        "report_id": "RPT-2CF24DBA5F-93BC991E",
+        "generated_at": "2026-08-20T12:27:45.405Z",
         "generator": "CIIS Phase-2 reporting module (template-over-data; no free-text generation)",
         "evidence_set_digest": "845d2580a93c7505d88a3b735dd3a956db233d26f779d05f4a85f60abfe82c3f",
         "evidence_set_digest_note": "SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.",
         "source_artifact_hashes": {
-          "correlation_analysis.json": "80600ed590b4b6f84bf207d6fc46117276055980a4525548524f5f0483e19dc0",
+          "correlation_analysis.json": "c52ca61d6338e5e85c8c6c61be754fc22bb94eeaf01466f9058f0f841a626d41",
           "cross_case_correlation.json": "6c4b7e022465546d0555c8cb462748c5b6c81a0b9a0b5bdb505f7587bf91bc63",
-          "campaign_analysis.json": "8b2dd267e8a9fade193f1298efe16cacdc716a9c659894be262d8ed889717bd5",
-          "suspect_assessment.json": "0943595a2395c0e656e9781f28a901bc36305ed2324ea62ef1856393a593ef5d",
-          "timeline_analysis.json": "e4c60659f83b851d060ff39e1af2fa8d3998ab078c1d6c742fb887b2cd0a0f24",
-          "analytics.json": "0eea77d525df8a22967b1c7a30caea048a927306b16481d22f6c94dec2945ff9",
-          "case_priority.json": "4c0a02165052f74097f1a3a32dc85abeffd045862d7ab6a02595594df34b9b29",
-          "graph.json": "c33293147f41a5f595e63885e4c2994d90df5d1ee1a1e3c4a96013b9c44bced3"
+          "campaign_analysis.json": "4a5c659cf8ec9a5da2ef7c5403fec21b4e89a9cdac5d2f44a29f89afe885aa71",
+          "suspect_assessment.json": "2567d48c8fc1fdefda25095b6bcac57b0b92a323f8eeb95233356d5eb237b3df",
+          "timeline_analysis.json": "b563866b771983d4c99a848e674e7a97ae540888cfb914ae992fafe356cb009c",
+          "analytics.json": "2cc98c8fe250ad2642d85d4d7af9d30c2a568dcf8814cba83610adb1813d8840",
+          "case_priority.json": "52903fb6e00af5819e655157c8d3f4be318484380ba9d0b3e0484810575cfbd0",
+          "graph.json": "6a91df7d05f7e789d8269ccd1ec8a9354d01bfda489868caa774a9e10a5425ba"
         }
       },
       "appendix": {

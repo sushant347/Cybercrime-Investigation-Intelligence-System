@@ -1,9 +1,9 @@
 {
   "report_type": "correlation_analysis",
-  "report_version": 21,
+  "report_version": 25,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-08-04T08:17:40.165Z",
+  "generated_at": "2026-08-20T12:27:45.379Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
     "evidence_ids": [
@@ -13,14 +13,14 @@
       "EVID_00004"
     ],
     "pair_count": 6,
-    "related_pair_count": 6,
+    "related_pair_count": 0,
     "pairs": [
       {
         "evidence_a": "EVID_00001",
         "evidence_b": "EVID_00002",
-        "correlation_weight": 0.47,
-        "correlation_confidence": 0.2545,
-        "relationship_strength": "WEAK",
+        "correlation_weight": 0.07,
+        "correlation_confidence": 0.0428,
+        "relationship_strength": "NO_RELATIONSHIP",
         "factors": [
           {
             "factor": "money",
@@ -44,9 +44,9 @@
           },
           {
             "factor": "timeline_proximity",
-            "weight": 0.4,
+            "weight": 0.0,
             "matches": 1,
-            "contribution": 0.4,
+            "contribution": 0.0,
             "supporting_evidence": [
               "0.1h apart"
             ],
@@ -59,20 +59,20 @@
           "Both items reference the same money: npr 2000",
           "Acquired 0.1 hours apart (within the 48h proximity window)"
         ],
-        "explanation": "EVID_00001 (yeti.jpg) and EVID_00002 (whatsapp_chat_export.txt) show a weak relationship (confidence 0.25) based on 2 independent factors. Both items reference the same money: npr 2000 [weight 0.07]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
+        "explanation": "EVID_00001 (yeti.jpg) and EVID_00002 (whatsapp_chat_export.txt) show a no relationship relationship (confidence 0.04) based on 2 independent factors. Both items reference the same money: npr 2000 [weight 0.07]. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.00]."
       },
       {
         "evidence_a": "EVID_00001",
         "evidence_b": "EVID_00003",
-        "correlation_weight": 0.4,
-        "correlation_confidence": 0.2212,
-        "relationship_strength": "WEAK",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
         "factors": [
           {
             "factor": "timeline_proximity",
-            "weight": 0.4,
+            "weight": 0.0,
             "matches": 1,
-            "contribution": 0.4,
+            "contribution": 0.0,
             "supporting_evidence": [
               "0.1h apart"
             ],
@@ -84,20 +84,20 @@
         "correlation_reasons": [
           "Acquired 0.1 hours apart (within the 48h proximity window)"
         ],
-        "explanation": "EVID_00001 (yeti.jpg) and EVID_00003 (romanchat.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
+        "explanation": "EVID_00001 (yeti.jpg) and EVID_00003 (romanchat.jpg) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.00]."
       },
       {
         "evidence_a": "EVID_00001",
         "evidence_b": "EVID_00004",
-        "correlation_weight": 0.4,
-        "correlation_confidence": 0.2212,
-        "relationship_strength": "WEAK",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
         "factors": [
           {
             "factor": "timeline_proximity",
-            "weight": 0.4,
+            "weight": 0.0,
             "matches": 1,
-            "contribution": 0.4,
+            "contribution": 0.0,
             "supporting_evidence": [
               "0.1h apart"
             ],
@@ -109,20 +109,20 @@
         "correlation_reasons": [
           "Acquired 0.1 hours apart (within the 48h proximity window)"
         ],
-        "explanation": "EVID_00001 (yeti.jpg) and EVID_00004 (phishing_email_screenshot.png) show a weak relationship (confidence 0.22) based on 1 independent factor. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.40]."
+        "explanation": "EVID_00001 (yeti.jpg) and EVID_00004 (phishing_email_screenshot.png) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.1 hours apart (within the 48h proximity window) [weight 0.00]."
       },
       {
         "evidence_a": "EVID_00002",
         "evidence_b": "EVID_00003",
-        "correlation_weight": 0.4,
-        "correlation_confidence": 0.2212,
-        "relationship_strength": "WEAK",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
         "factors": [
           {
             "factor": "timeline_proximity",
-            "weight": 0.4,
+            "weight": 0.0,
             "matches": 1,
-            "contribution": 0.4,
+            "contribution": 0.0,
             "supporting_evidence": [
               "0.0h apart"
             ],
@@ -134,20 +134,20 @@
         "correlation_reasons": [
           "Acquired 0.0 hours apart (within the 48h proximity window)"
         ],
-        "explanation": "EVID_00002 (whatsapp_chat_export.txt) and EVID_00003 (romanchat.jpg) show a weak relationship (confidence 0.22) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+        "explanation": "EVID_00002 (whatsapp_chat_export.txt) and EVID_00003 (romanchat.jpg) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
       },
       {
         "evidence_a": "EVID_00002",
         "evidence_b": "EVID_00004",
-        "correlation_weight": 0.4,
-        "correlation_confidence": 0.2212,
-        "relationship_strength": "WEAK",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
         "factors": [
           {
             "factor": "timeline_proximity",
-            "weight": 0.4,
+            "weight": 0.0,
             "matches": 1,
-            "contribution": 0.4,
+            "contribution": 0.0,
             "supporting_evidence": [
               "0.0h apart"
             ],
@@ -159,20 +159,20 @@
         "correlation_reasons": [
           "Acquired 0.0 hours apart (within the 48h proximity window)"
         ],
-        "explanation": "EVID_00002 (whatsapp_chat_export.txt) and EVID_00004 (phishing_email_screenshot.png) show a weak relationship (confidence 0.22) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+        "explanation": "EVID_00002 (whatsapp_chat_export.txt) and EVID_00004 (phishing_email_screenshot.png) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
       },
       {
         "evidence_a": "EVID_00003",
         "evidence_b": "EVID_00004",
-        "correlation_weight": 0.4,
-        "correlation_confidence": 0.2212,
-        "relationship_strength": "WEAK",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
         "factors": [
           {
             "factor": "timeline_proximity",
-            "weight": 0.4,
+            "weight": 0.0,
             "matches": 1,
-            "contribution": 0.4,
+            "contribution": 0.0,
             "supporting_evidence": [
               "0.0h apart"
             ],
@@ -184,13 +184,13 @@
         "correlation_reasons": [
           "Acquired 0.0 hours apart (within the 48h proximity window)"
         ],
-        "explanation": "EVID_00003 (romanchat.jpg) and EVID_00004 (phishing_email_screenshot.png) show a weak relationship (confidence 0.22) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
+        "explanation": "EVID_00003 (romanchat.jpg) and EVID_00004 (phishing_email_screenshot.png) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
       }
     ],
     "strength_distribution": {
-      "WEAK": 6
+      "NO_RELATIONSHIP": 6
     },
     "strongest_pair": "EVID_00001|EVID_00002",
-    "analysis_time_ms": 3.0
+    "analysis_time_ms": 1.5
   }
 }

@@ -1,12 +1,102 @@
 {
   "report_type": "timeline_analysis",
-  "report_version": 24,
+  "report_version": 25,
   "schema_version": "2.0",
   "case_id": "CASE_185915593C",
-  "generated_at": "2026-08-04T08:17:41.834Z",
+  "generated_at": "2026-08-20T12:49:15.545Z",
   "report": {
     "case_id": "CASE_185915593C",
     "events": [
+      {
+        "timestamp": "2026-06-11T10:42:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00010",
+        "case_id": "CASE_185915593C",
+        "file_name": "04_esewa_payment_screenshot.jpg",
+        "description": "Evidence EVID_00010 (04_esewa_payment_screenshot.jpg); stages: initial_contact, financial_transaction",
+        "time_source": "content_labeled_date_time",
+        "confidence": "high",
+        "timestamp_inferred": false,
+        "source_evidence_ids": [
+          "EVID_00010"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00014",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3929,
+            "confidence": 0.3929
+          }
+        ],
+        "text_preview": "eSewa\nPayment Successful\nRs.200.00\nTansatianD\n0119.0625.987456\nDate & Time\n2026-06-1110:42AM\nPaidTe\nesewa.cashbacko90gma",
+        "risk_signals": {},
+        "stages": [
+          "initial_contact",
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 200",
+          "contains transaction_ids entity/entities: 0119.0625.987456"
+        ]
+      },
+      {
+        "timestamp": "2026-06-11T11:15:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00011",
+        "case_id": "CASE_185915593C",
+        "file_name": "05_khalti_receipt.jpg",
+        "description": "Evidence EVID_00011 (05_khalti_receipt.jpg); stages: initial_contact, financial_transaction",
+        "time_source": "content_labeled_date_time",
+        "confidence": "high",
+        "timestamp_inferred": false,
+        "source_evidence_ids": [
+          "EVID_00011"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00014",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.9215,
+            "confidence": 0.9215
+          },
+          {
+            "linked_to": "EVID_00009",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5334,
+            "confidence": 0.5334
+          },
+          {
+            "linked_to": "EVID_00012",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3253,
+            "confidence": 0.3253
+          },
+          {
+            "linked_to": "EVID_00013",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3253,
+            "confidence": 0.3253
+          }
+        ],
+        "text_preview": "Khalti\nPayment Receipt\nAmount\nRs. 1,500.00\nSent To (Khalti ID)\n9801122334\nRecipient Name\nRabin Thapa\nSender (Khalti ID)\n",
+        "risk_signals": {},
+        "stages": [
+          "initial_contact",
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 1500",
+          "contains khalti_ids entity/entities: +9779801122334, +9779847011223",
+          "contains transaction_ids entity/entities: 0SN2026, KH-2026-0611-77245"
+        ]
+      },
       {
         "timestamp": "2026-06-14T00:00:00+00:00",
         "event_type": "evidence_event",
@@ -25,50 +115,22 @@
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.6815,
-            "confidence": 0.6815
+            "weight": 0.591,
+            "confidence": 0.591
           },
           {
             "linked_to": "EVID_00009",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5013,
-            "confidence": 0.5013
+            "weight": 0.3596,
+            "confidence": 0.3596
           },
           {
             "linked_to": "EVID_00011",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.4745,
-            "confidence": 0.4745
-          },
-          {
-            "linked_to": "EVID_00007",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00008",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00010",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00012",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
+            "weight": 0.3253,
+            "confidence": 0.3253
           }
         ],
         "text_preview": "MACHHAPUCHHRE BANK LIMITED\nFund Transfer/ Deposit Voucher\nBranch:\nPokhara Lakeside Branch\nDate:\n2026-06-14\nVoucher No.:\n",
@@ -85,80 +147,77 @@
         ]
       },
       {
-        "timestamp": "2026-07-25T11:15:00+00:00",
+        "timestamp": "2026-06-15T00:00:00+00:00",
         "event_type": "evidence_event",
-        "evidence_id": "EVID_00011",
+        "evidence_id": "EVID_00014",
         "case_id": "CASE_185915593C",
-        "file_name": "05_khalti_receipt.jpg",
-        "description": "Evidence EVID_00011 (05_khalti_receipt.jpg); stages: initial_contact, financial_transaction",
-        "time_source": "content_time_only",
+        "file_name": "08_complaint_letter.pdf",
+        "description": "Evidence EVID_00014 (08_complaint_letter.pdf); stages: initial_contact, social_engineering, financial_transaction, post_attack",
+        "time_source": "content_labeled_date_only",
         "confidence": "medium",
         "timestamp_inferred": true,
         "source_evidence_ids": [
-          "EVID_00011"
+          "EVID_00014"
         ],
         "correlated_with": [
           {
-            "linked_to": "EVID_00014",
+            "linked_to": "EVID_00011",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.9389,
-            "confidence": 0.9389
-          },
-          {
-            "linked_to": "EVID_00009",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.6366,
-            "confidence": 0.6366
-          },
-          {
-            "linked_to": "EVID_00012",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.4745,
-            "confidence": 0.4745
-          },
-          {
-            "linked_to": "EVID_00013",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.4745,
-            "confidence": 0.4745
-          },
-          {
-            "linked_to": "EVID_00007",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
+            "weight": 0.9215,
+            "confidence": 0.9215
           },
           {
             "linked_to": "EVID_00008",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
+            "weight": 0.7059,
+            "confidence": 0.7059
+          },
+          {
+            "linked_to": "EVID_00013",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.591,
+            "confidence": 0.591
+          },
+          {
+            "linked_to": "EVID_00009",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.549,
+            "confidence": 0.549
           },
           {
             "linked_to": "EVID_00010",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
+            "weight": 0.3929,
+            "confidence": 0.3929
+          },
+          {
+            "linked_to": "EVID_00012",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3253,
+            "confidence": 0.3253
           }
         ],
-        "text_preview": "Khalti\nPayment Receipt\nAmount\nRs. 1,500.00\nSent To (Khalti ID)\n9801122334\nRecipient Name\nRabin Thapa\nSender (Khalti ID)\n",
+        "text_preview": "To,\nThe Chief, Cyber Bureau,\nNepal Police, Bhotahity, Kathmandu.\nSubject: Complaint regarding online fraud impersonating",
         "risk_signals": {},
         "stages": [
           "initial_contact",
-          "financial_transaction"
+          "social_engineering",
+          "financial_transaction",
+          "post_attack"
         ],
         "critical": true,
         "critical_reasons": [
-          "contains money entity/entities: NPR 1500",
-          "contains khalti_ids entity/entities: +9779801122334, +9779847011223",
-          "contains transaction_ids entity/entities: 0SN2026, KH-2026-0611-77245"
+          "contains money entity/entities: NPR 1500, NPR 200, NPR 25000",
+          "contains esewa_ids entity/entities: esewa.cashback99@gmail.com, sunita.gurung21@gmail.com",
+          "contains khalti_ids entity/entities: +9779801122334",
+          "contains bank_accounts entity/entities: 05019012345678",
+          "contains transaction_ids entity/entities: 0119.0625.987456, CASE_2026_0088, KH-2026-0611-77245"
         ]
       },
       {
@@ -174,57 +233,7 @@
         "source_evidence_ids": [
           "EVID_00007"
         ],
-        "correlated_with": [
-          {
-            "linked_to": "EVID_00008",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00009",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00010",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00011",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00012",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00013",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00014",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          }
-        ],
+        "correlated_with": [],
         "text_preview": "EX\n3D\nemaSo\nR\np#o rWr4d u4d ems\npox sqwnu na vogjn:touo)\nfor Npa 5.ooo co:hback lucky draw.\nTpilo sowd l0 confrm oarn ra",
         "risk_signals": {},
         "stages": [],
@@ -249,50 +258,8 @@
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.7709,
-            "confidence": 0.7709
-          },
-          {
-            "linked_to": "EVID_00010",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2486,
-            "confidence": 0.2486
-          },
-          {
-            "linked_to": "EVID_00007",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00009",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00011",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00012",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00013",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
+            "weight": 0.7059,
+            "confidence": 0.7059
           }
         ],
         "text_preview": "eSewa Cashback Support\nActive now\n0000000100 00000 42 0000000 00000000 00000\n000000.\n00000 00000 000000 K- 000 5,000 000",
@@ -325,50 +292,22 @@
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.6488,
-            "confidence": 0.6488
+            "weight": 0.549,
+            "confidence": 0.549
           },
           {
             "linked_to": "EVID_00011",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.6366,
-            "confidence": 0.6366
+            "weight": 0.5334,
+            "confidence": 0.5334
           },
           {
             "linked_to": "EVID_00013",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5013,
-            "confidence": 0.5013
-          },
-          {
-            "linked_to": "EVID_00007",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00008",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00010",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00012",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
+            "weight": 0.3596,
+            "confidence": 0.3596
           }
         ],
         "text_preview": "DASHAIN CASHBACK OFFER\nScan & Claim NPR 5000 Cashback\nScan garera claim garnuhos!\nOffer valid for eSewa/Khalti users onl",
@@ -381,82 +320,6 @@
         "critical_reasons": [
           "contains money entity/entities: NPR 5000",
           "contains transaction_ids entity/entities: DSN2026"
-        ]
-      },
-      {
-        "timestamp": "2026-07-25T17:18:54.475000+00:00",
-        "event_type": "evidence_event",
-        "evidence_id": "EVID_00010",
-        "case_id": "CASE_185915593C",
-        "file_name": "04_esewa_payment_screenshot.jpg",
-        "description": "Evidence EVID_00010 (04_esewa_payment_screenshot.jpg); stages: initial_contact, financial_transaction",
-        "time_source": "upload_time_fallback",
-        "confidence": "low",
-        "timestamp_inferred": true,
-        "source_evidence_ids": [
-          "EVID_00010"
-        ],
-        "correlated_with": [
-          {
-            "linked_to": "EVID_00014",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.5272,
-            "confidence": 0.5272
-          },
-          {
-            "linked_to": "EVID_00008",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2486,
-            "confidence": 0.2486
-          },
-          {
-            "linked_to": "EVID_00007",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00009",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00011",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00012",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00013",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          }
-        ],
-        "text_preview": "eSewa\nPayment Successful\nRs.200.00\nTansatianD\n0119.0625.987456\nDate & Time\n2026-06-1110:42AM\nPaidTe\nesewa.cashbacko90gma",
-        "risk_signals": {},
-        "stages": [
-          "initial_contact",
-          "financial_transaction"
-        ],
-        "critical": true,
-        "critical_reasons": [
-          "contains money entity/entities: NPR 200",
-          "contains transaction_ids entity/entities: 0119.0625.987456"
         ]
       },
       {
@@ -477,50 +340,15 @@
             "linked_to": "EVID_00011",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.4745,
-            "confidence": 0.4745
+            "weight": 0.3253,
+            "confidence": 0.3253
           },
           {
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.4745,
-            "confidence": 0.4745
-          },
-          {
-            "linked_to": "EVID_00007",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00008",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00009",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00010",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00013",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
+            "weight": 0.3253,
+            "confidence": 0.3253
           }
         ],
         "text_preview": "1nbox\nFromt asawa Ofrkclal Support <wugportQojwavortty yc.con>\nTα surka.gurung21oonmrom\nSubfject: UrGent: Your •Srw• Krc",
@@ -533,137 +361,56 @@
         "critical_reasons": [
           "contains money entity/entities: NPR 5"
         ]
-      },
-      {
-        "timestamp": "2026-07-25T17:26:20.455000+00:00",
-        "event_type": "evidence_event",
-        "evidence_id": "EVID_00014",
-        "case_id": "CASE_185915593C",
-        "file_name": "08_complaint_letter.pdf",
-        "description": "Evidence EVID_00014 (08_complaint_letter.pdf); stages: initial_contact, social_engineering, financial_transaction, post_attack",
-        "time_source": "upload_time_fallback",
-        "confidence": "low",
-        "timestamp_inferred": true,
-        "source_evidence_ids": [
-          "EVID_00014"
-        ],
-        "correlated_with": [
-          {
-            "linked_to": "EVID_00011",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.9389,
-            "confidence": 0.9389
-          },
-          {
-            "linked_to": "EVID_00008",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.7709,
-            "confidence": 0.7709
-          },
-          {
-            "linked_to": "EVID_00013",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.6815,
-            "confidence": 0.6815
-          },
-          {
-            "linked_to": "EVID_00009",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.6488,
-            "confidence": 0.6488
-          },
-          {
-            "linked_to": "EVID_00010",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.5272,
-            "confidence": 0.5272
-          },
-          {
-            "linked_to": "EVID_00012",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.4745,
-            "confidence": 0.4745
-          },
-          {
-            "linked_to": "EVID_00007",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          }
-        ],
-        "text_preview": "To,\nThe Chief, Cyber Bureau,\nNepal Police, Bhotahity, Kathmandu.\nSubject: Complaint regarding online fraud impersonating",
-        "risk_signals": {},
-        "stages": [
-          "initial_contact",
-          "social_engineering",
-          "financial_transaction",
-          "post_attack"
-        ],
-        "critical": true,
-        "critical_reasons": [
-          "contains money entity/entities: NPR 1500, NPR 200, NPR 25000",
-          "contains esewa_ids entity/entities: esewa.cashback99@gmail.com, sunita.gurung21@gmail.com",
-          "contains khalti_ids entity/entities: +9779801122334",
-          "contains bank_accounts entity/entities: 05019012345678",
-          "contains transaction_ids entity/entities: 0119.0625.987456, CASE_2026_0088, KH-2026-0611-77245"
-        ]
       }
     ],
     "attack_stages": [
       {
         "stage": "initial_contact",
         "evidence_ids": [
-          "EVID_00013",
-          "EVID_00011",
-          "EVID_00008",
-          "EVID_00009",
           "EVID_00010",
-          "EVID_00014"
+          "EVID_00011",
+          "EVID_00013",
+          "EVID_00014",
+          "EVID_00008",
+          "EVID_00009"
         ],
-        "first_seen": "2026-06-14T00:00:00+00:00",
-        "last_seen": "2026-07-25T17:26:20.455000+00:00",
+        "first_seen": "2026-06-11T10:42:00+00:00",
+        "last_seen": "2026-06-15T00:00:00+00:00",
         "matched_keywords": [
           "hi",
           "offer",
           "prize"
         ],
-        "explanation": "Stage 'initial_contact' is evidenced by keyword matches (hi, offer, prize) in EVID_00013, EVID_00011, EVID_00008, EVID_00009, EVID_00010, EVID_00014."
+        "explanation": "Stage 'initial_contact' is evidenced by keyword matches (hi, offer, prize) in EVID_00010, EVID_00011, EVID_00013, EVID_00014, EVID_00008, EVID_00009."
       },
       {
         "stage": "social_engineering",
         "evidence_ids": [
-          "EVID_00012",
-          "EVID_00014"
+          "EVID_00014",
+          "EVID_00012"
         ],
-        "first_seen": "2026-07-25T17:20:21.991000+00:00",
-        "last_seen": "2026-07-25T17:26:20.455000+00:00",
+        "first_seen": "2026-06-15T00:00:00+00:00",
+        "last_seen": "2026-06-15T00:00:00+00:00",
         "matched_keywords": [
           "suspended",
           "urgent",
           "verify"
         ],
-        "explanation": "Stage 'social_engineering' is evidenced by keyword matches (suspended, urgent, verify) in EVID_00012, EVID_00014."
+        "explanation": "Stage 'social_engineering' is evidenced by keyword matches (suspended, urgent, verify) in EVID_00014, EVID_00012."
       },
       {
         "stage": "financial_transaction",
         "evidence_ids": [
-          "EVID_00013",
+          "EVID_00010",
           "EVID_00011",
+          "EVID_00013",
+          "EVID_00014",
           "EVID_00008",
           "EVID_00009",
-          "EVID_00010",
-          "EVID_00012",
-          "EVID_00014"
+          "EVID_00012"
         ],
-        "first_seen": "2026-06-14T00:00:00+00:00",
-        "last_seen": "2026-07-25T17:26:20.455000+00:00",
+        "first_seen": "2026-06-11T10:42:00+00:00",
+        "last_seen": "2026-06-15T00:00:00+00:00",
         "matched_keywords": [
           "account number",
           "bank",
@@ -675,15 +422,15 @@
           "rs.",
           "transfer"
         ],
-        "explanation": "Stage 'financial_transaction' is evidenced by keyword matches (account number, bank, esewa, khalti, npr) in EVID_00013, EVID_00011, EVID_00008, EVID_00009, EVID_00010, EVID_00012, EVID_00014."
+        "explanation": "Stage 'financial_transaction' is evidenced by keyword matches (account number, bank, esewa, khalti, npr) in EVID_00010, EVID_00011, EVID_00013, EVID_00014, EVID_00008, EVID_00009, EVID_00012."
       },
       {
         "stage": "post_attack",
         "evidence_ids": [
           "EVID_00014"
         ],
-        "first_seen": "2026-07-25T17:26:20.455000+00:00",
-        "last_seen": "2026-07-25T17:26:20.455000+00:00",
+        "first_seen": "2026-06-15T00:00:00+00:00",
+        "last_seen": "2026-06-15T00:00:00+00:00",
         "matched_keywords": [
           "fraud",
           "police"
@@ -700,140 +447,56 @@
     "progression_consistent": false,
     "milestones": [
       {
-        "timestamp": "2026-06-14T00:00:00+00:00",
+        "timestamp": "2026-06-11T10:42:00+00:00",
         "event_type": "milestone",
-        "evidence_id": "EVID_00013",
+        "evidence_id": "EVID_00010",
         "case_id": "CASE_185915593C",
-        "file_name": "07_bank_transfer_slip.pdf",
-        "description": "Investigation start - first reconstructed evidence event",
-        "time_source": "content_date_only",
-        "confidence": "medium",
-        "timestamp_inferred": true,
+        "file_name": "04_esewa_payment_screenshot.jpg",
+        "description": "First reconstructed incident event",
+        "time_source": "content_labeled_date_time",
+        "confidence": "high",
+        "timestamp_inferred": false,
         "source_evidence_ids": [
-          "EVID_00013"
+          "EVID_00010"
         ],
         "correlated_with": [
           {
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.6815,
-            "confidence": 0.6815
-          },
-          {
-            "linked_to": "EVID_00009",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.5013,
-            "confidence": 0.5013
-          },
-          {
-            "linked_to": "EVID_00011",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.4745,
-            "confidence": 0.4745
-          },
-          {
-            "linked_to": "EVID_00007",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00008",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00010",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00012",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
+            "weight": 0.3929,
+            "confidence": 0.3929
           }
         ],
-        "text_preview": "MACHHAPUCHHRE BANK LIMITED\nFund Transfer/ Deposit Voucher\nBranch:\nPokhara Lakeside Branch\nDate:\n2026-06-14\nVoucher No.:\n",
+        "text_preview": "eSewa\nPayment Successful\nRs.200.00\nTansatianD\n0119.0625.987456\nDate & Time\n2026-06-1110:42AM\nPaidTe\nesewa.cashbacko90gma",
         "risk_signals": {},
         "stages": [],
         "critical": false,
         "critical_reasons": []
       },
       {
-        "timestamp": "2026-06-14T00:00:00+00:00",
+        "timestamp": "2026-06-11T10:42:00+00:00",
         "event_type": "milestone",
-        "evidence_id": "EVID_00013",
+        "evidence_id": "EVID_00010",
         "case_id": "CASE_185915593C",
-        "file_name": "07_bank_transfer_slip.pdf",
-        "description": "First observation of stage 'initial_contact' (EVID_00013)",
-        "time_source": "content_date_only",
-        "confidence": "medium",
-        "timestamp_inferred": true,
+        "file_name": "04_esewa_payment_screenshot.jpg",
+        "description": "First observation of stage 'initial_contact' (EVID_00010)",
+        "time_source": "content_labeled_date_time",
+        "confidence": "high",
+        "timestamp_inferred": false,
         "source_evidence_ids": [
-          "EVID_00013"
+          "EVID_00010"
         ],
         "correlated_with": [
           {
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.6815,
-            "confidence": 0.6815
-          },
-          {
-            "linked_to": "EVID_00009",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.5013,
-            "confidence": 0.5013
-          },
-          {
-            "linked_to": "EVID_00011",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.4745,
-            "confidence": 0.4745
-          },
-          {
-            "linked_to": "EVID_00007",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00008",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00010",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00012",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
+            "weight": 0.3929,
+            "confidence": 0.3929
           }
         ],
-        "text_preview": "MACHHAPUCHHRE BANK LIMITED\nFund Transfer/ Deposit Voucher\nBranch:\nPokhara Lakeside Branch\nDate:\n2026-06-14\nVoucher No.:\n",
+        "text_preview": "eSewa\nPayment Successful\nRs.200.00\nTansatianD\n0119.0625.987456\nDate & Time\n2026-06-1110:42AM\nPaidTe\nesewa.cashbacko90gma",
         "risk_signals": {},
         "stages": [
           "initial_contact"
@@ -842,70 +505,28 @@
         "critical_reasons": []
       },
       {
-        "timestamp": "2026-06-14T00:00:00+00:00",
+        "timestamp": "2026-06-11T10:42:00+00:00",
         "event_type": "milestone",
-        "evidence_id": "EVID_00013",
+        "evidence_id": "EVID_00010",
         "case_id": "CASE_185915593C",
-        "file_name": "07_bank_transfer_slip.pdf",
-        "description": "First observation of stage 'financial_transaction' (EVID_00013)",
-        "time_source": "content_date_only",
-        "confidence": "medium",
-        "timestamp_inferred": true,
+        "file_name": "04_esewa_payment_screenshot.jpg",
+        "description": "First observation of stage 'financial_transaction' (EVID_00010)",
+        "time_source": "content_labeled_date_time",
+        "confidence": "high",
+        "timestamp_inferred": false,
         "source_evidence_ids": [
-          "EVID_00013"
+          "EVID_00010"
         ],
         "correlated_with": [
           {
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.6815,
-            "confidence": 0.6815
-          },
-          {
-            "linked_to": "EVID_00009",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.5013,
-            "confidence": 0.5013
-          },
-          {
-            "linked_to": "EVID_00011",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.4745,
-            "confidence": 0.4745
-          },
-          {
-            "linked_to": "EVID_00007",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00008",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00010",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00012",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
+            "weight": 0.3929,
+            "confidence": 0.3929
           }
         ],
-        "text_preview": "MACHHAPUCHHRE BANK LIMITED\nFund Transfer/ Deposit Voucher\nBranch:\nPokhara Lakeside Branch\nDate:\n2026-06-14\nVoucher No.:\n",
+        "text_preview": "eSewa\nPayment Successful\nRs.200.00\nTansatianD\n0119.0625.987456\nDate & Time\n2026-06-1110:42AM\nPaidTe\nesewa.cashbacko90gma",
         "risk_signals": {},
         "stages": [
           "financial_transaction"
@@ -914,86 +535,14 @@
         "critical_reasons": []
       },
       {
-        "timestamp": "2026-07-25T17:20:21.991000+00:00",
-        "event_type": "milestone",
-        "evidence_id": "EVID_00012",
-        "case_id": "CASE_185915593C",
-        "file_name": "06_phishing_email_screenshot.jpg",
-        "description": "First observation of stage 'social_engineering' (EVID_00012)",
-        "time_source": "upload_time_fallback",
-        "confidence": "low",
-        "timestamp_inferred": true,
-        "source_evidence_ids": [
-          "EVID_00012"
-        ],
-        "correlated_with": [
-          {
-            "linked_to": "EVID_00011",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.4745,
-            "confidence": 0.4745
-          },
-          {
-            "linked_to": "EVID_00014",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.4745,
-            "confidence": 0.4745
-          },
-          {
-            "linked_to": "EVID_00007",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00008",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00009",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00010",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00013",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          }
-        ],
-        "text_preview": "1nbox\nFromt asawa Ofrkclal Support <wugportQojwavortty yc.con>\nTα surka.gurung21oonmrom\nSubfject: UrGent: Your •Srw• Krc",
-        "risk_signals": {},
-        "stages": [
-          "social_engineering"
-        ],
-        "critical": false,
-        "critical_reasons": []
-      },
-      {
-        "timestamp": "2026-07-25T17:26:20.455000+00:00",
+        "timestamp": "2026-06-15T00:00:00+00:00",
         "event_type": "milestone",
         "evidence_id": "EVID_00014",
         "case_id": "CASE_185915593C",
         "file_name": "08_complaint_letter.pdf",
-        "description": "First observation of stage 'post_attack' (EVID_00014)",
-        "time_source": "upload_time_fallback",
-        "confidence": "low",
+        "description": "First observation of stage 'social_engineering' (EVID_00014)",
+        "time_source": "content_labeled_date_only",
+        "confidence": "medium",
         "timestamp_inferred": true,
         "source_evidence_ids": [
           "EVID_00014"
@@ -1003,50 +552,108 @@
             "linked_to": "EVID_00011",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.9389,
-            "confidence": 0.9389
+            "weight": 0.9215,
+            "confidence": 0.9215
           },
           {
             "linked_to": "EVID_00008",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.7709,
-            "confidence": 0.7709
+            "weight": 0.7059,
+            "confidence": 0.7059
           },
           {
             "linked_to": "EVID_00013",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.6815,
-            "confidence": 0.6815
+            "weight": 0.591,
+            "confidence": 0.591
           },
           {
             "linked_to": "EVID_00009",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.6488,
-            "confidence": 0.6488
+            "weight": 0.549,
+            "confidence": 0.549
           },
           {
             "linked_to": "EVID_00010",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5272,
-            "confidence": 0.5272
+            "weight": 0.3929,
+            "confidence": 0.3929
           },
           {
             "linked_to": "EVID_00012",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.4745,
-            "confidence": 0.4745
-          },
+            "weight": 0.3253,
+            "confidence": 0.3253
+          }
+        ],
+        "text_preview": "To,\nThe Chief, Cyber Bureau,\nNepal Police, Bhotahity, Kathmandu.\nSubject: Complaint regarding online fraud impersonating",
+        "risk_signals": {},
+        "stages": [
+          "social_engineering"
+        ],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "event_type": "milestone",
+        "evidence_id": "EVID_00014",
+        "case_id": "CASE_185915593C",
+        "file_name": "08_complaint_letter.pdf",
+        "description": "First observation of stage 'post_attack' (EVID_00014)",
+        "time_source": "content_labeled_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00014"
+        ],
+        "correlated_with": [
           {
-            "linked_to": "EVID_00007",
+            "linked_to": "EVID_00011",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
+            "weight": 0.9215,
+            "confidence": 0.9215
+          },
+          {
+            "linked_to": "EVID_00008",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7059,
+            "confidence": 0.7059
+          },
+          {
+            "linked_to": "EVID_00013",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.591,
+            "confidence": 0.591
+          },
+          {
+            "linked_to": "EVID_00009",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.549,
+            "confidence": 0.549
+          },
+          {
+            "linked_to": "EVID_00010",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3929,
+            "confidence": 0.3929
+          },
+          {
+            "linked_to": "EVID_00012",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3253,
+            "confidence": 0.3253
           }
         ],
         "text_preview": "To,\nThe Chief, Cyber Bureau,\nNepal Police, Bhotahity, Kathmandu.\nSubject: Complaint regarding online fraud impersonating",
@@ -1059,6 +666,96 @@
       }
     ],
     "critical_events": [
+      {
+        "timestamp": "2026-06-11T10:42:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00010",
+        "case_id": "CASE_185915593C",
+        "file_name": "04_esewa_payment_screenshot.jpg",
+        "description": "Evidence EVID_00010 (04_esewa_payment_screenshot.jpg); stages: initial_contact, financial_transaction",
+        "time_source": "content_labeled_date_time",
+        "confidence": "high",
+        "timestamp_inferred": false,
+        "source_evidence_ids": [
+          "EVID_00010"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00014",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3929,
+            "confidence": 0.3929
+          }
+        ],
+        "text_preview": "eSewa\nPayment Successful\nRs.200.00\nTansatianD\n0119.0625.987456\nDate & Time\n2026-06-1110:42AM\nPaidTe\nesewa.cashbacko90gma",
+        "risk_signals": {},
+        "stages": [
+          "initial_contact",
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 200",
+          "contains transaction_ids entity/entities: 0119.0625.987456"
+        ]
+      },
+      {
+        "timestamp": "2026-06-11T11:15:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00011",
+        "case_id": "CASE_185915593C",
+        "file_name": "05_khalti_receipt.jpg",
+        "description": "Evidence EVID_00011 (05_khalti_receipt.jpg); stages: initial_contact, financial_transaction",
+        "time_source": "content_labeled_date_time",
+        "confidence": "high",
+        "timestamp_inferred": false,
+        "source_evidence_ids": [
+          "EVID_00011"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00014",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.9215,
+            "confidence": 0.9215
+          },
+          {
+            "linked_to": "EVID_00009",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5334,
+            "confidence": 0.5334
+          },
+          {
+            "linked_to": "EVID_00012",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3253,
+            "confidence": 0.3253
+          },
+          {
+            "linked_to": "EVID_00013",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3253,
+            "confidence": 0.3253
+          }
+        ],
+        "text_preview": "Khalti\nPayment Receipt\nAmount\nRs. 1,500.00\nSent To (Khalti ID)\n9801122334\nRecipient Name\nRabin Thapa\nSender (Khalti ID)\n",
+        "risk_signals": {},
+        "stages": [
+          "initial_contact",
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 1500",
+          "contains khalti_ids entity/entities: +9779801122334, +9779847011223",
+          "contains transaction_ids entity/entities: 0SN2026, KH-2026-0611-77245"
+        ]
+      },
       {
         "timestamp": "2026-06-14T00:00:00+00:00",
         "event_type": "evidence_event",
@@ -1077,50 +774,22 @@
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.6815,
-            "confidence": 0.6815
+            "weight": 0.591,
+            "confidence": 0.591
           },
           {
             "linked_to": "EVID_00009",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5013,
-            "confidence": 0.5013
+            "weight": 0.3596,
+            "confidence": 0.3596
           },
           {
             "linked_to": "EVID_00011",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.4745,
-            "confidence": 0.4745
-          },
-          {
-            "linked_to": "EVID_00007",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00008",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00010",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00012",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
+            "weight": 0.3253,
+            "confidence": 0.3253
           }
         ],
         "text_preview": "MACHHAPUCHHRE BANK LIMITED\nFund Transfer/ Deposit Voucher\nBranch:\nPokhara Lakeside Branch\nDate:\n2026-06-14\nVoucher No.:\n",
@@ -1137,80 +806,77 @@
         ]
       },
       {
-        "timestamp": "2026-07-25T11:15:00+00:00",
+        "timestamp": "2026-06-15T00:00:00+00:00",
         "event_type": "evidence_event",
-        "evidence_id": "EVID_00011",
+        "evidence_id": "EVID_00014",
         "case_id": "CASE_185915593C",
-        "file_name": "05_khalti_receipt.jpg",
-        "description": "Evidence EVID_00011 (05_khalti_receipt.jpg); stages: initial_contact, financial_transaction",
-        "time_source": "content_time_only",
+        "file_name": "08_complaint_letter.pdf",
+        "description": "Evidence EVID_00014 (08_complaint_letter.pdf); stages: initial_contact, social_engineering, financial_transaction, post_attack",
+        "time_source": "content_labeled_date_only",
         "confidence": "medium",
         "timestamp_inferred": true,
         "source_evidence_ids": [
-          "EVID_00011"
+          "EVID_00014"
         ],
         "correlated_with": [
           {
-            "linked_to": "EVID_00014",
+            "linked_to": "EVID_00011",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.9389,
-            "confidence": 0.9389
-          },
-          {
-            "linked_to": "EVID_00009",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.6366,
-            "confidence": 0.6366
-          },
-          {
-            "linked_to": "EVID_00012",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.4745,
-            "confidence": 0.4745
-          },
-          {
-            "linked_to": "EVID_00013",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.4745,
-            "confidence": 0.4745
-          },
-          {
-            "linked_to": "EVID_00007",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
+            "weight": 0.9215,
+            "confidence": 0.9215
           },
           {
             "linked_to": "EVID_00008",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
+            "weight": 0.7059,
+            "confidence": 0.7059
+          },
+          {
+            "linked_to": "EVID_00013",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.591,
+            "confidence": 0.591
+          },
+          {
+            "linked_to": "EVID_00009",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.549,
+            "confidence": 0.549
           },
           {
             "linked_to": "EVID_00010",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
+            "weight": 0.3929,
+            "confidence": 0.3929
+          },
+          {
+            "linked_to": "EVID_00012",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3253,
+            "confidence": 0.3253
           }
         ],
-        "text_preview": "Khalti\nPayment Receipt\nAmount\nRs. 1,500.00\nSent To (Khalti ID)\n9801122334\nRecipient Name\nRabin Thapa\nSender (Khalti ID)\n",
+        "text_preview": "To,\nThe Chief, Cyber Bureau,\nNepal Police, Bhotahity, Kathmandu.\nSubject: Complaint regarding online fraud impersonating",
         "risk_signals": {},
         "stages": [
           "initial_contact",
-          "financial_transaction"
+          "social_engineering",
+          "financial_transaction",
+          "post_attack"
         ],
         "critical": true,
         "critical_reasons": [
-          "contains money entity/entities: NPR 1500",
-          "contains khalti_ids entity/entities: +9779801122334, +9779847011223",
-          "contains transaction_ids entity/entities: 0SN2026, KH-2026-0611-77245"
+          "contains money entity/entities: NPR 1500, NPR 200, NPR 25000",
+          "contains esewa_ids entity/entities: esewa.cashback99@gmail.com, sunita.gurung21@gmail.com",
+          "contains khalti_ids entity/entities: +9779801122334",
+          "contains bank_accounts entity/entities: 05019012345678",
+          "contains transaction_ids entity/entities: 0119.0625.987456, CASE_2026_0088, KH-2026-0611-77245"
         ]
       },
       {
@@ -1231,50 +897,8 @@
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.7709,
-            "confidence": 0.7709
-          },
-          {
-            "linked_to": "EVID_00010",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2486,
-            "confidence": 0.2486
-          },
-          {
-            "linked_to": "EVID_00007",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00009",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00011",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00012",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00013",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
+            "weight": 0.7059,
+            "confidence": 0.7059
           }
         ],
         "text_preview": "eSewa Cashback Support\nActive now\n0000000100 00000 42 0000000 00000000 00000\n000000.\n00000 00000 000000 K- 000 5,000 000",
@@ -1307,50 +931,22 @@
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.6488,
-            "confidence": 0.6488
+            "weight": 0.549,
+            "confidence": 0.549
           },
           {
             "linked_to": "EVID_00011",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.6366,
-            "confidence": 0.6366
+            "weight": 0.5334,
+            "confidence": 0.5334
           },
           {
             "linked_to": "EVID_00013",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.5013,
-            "confidence": 0.5013
-          },
-          {
-            "linked_to": "EVID_00007",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00008",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00010",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00012",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
+            "weight": 0.3596,
+            "confidence": 0.3596
           }
         ],
         "text_preview": "DASHAIN CASHBACK OFFER\nScan & Claim NPR 5000 Cashback\nScan garera claim garnuhos!\nOffer valid for eSewa/Khalti users onl",
@@ -1363,82 +959,6 @@
         "critical_reasons": [
           "contains money entity/entities: NPR 5000",
           "contains transaction_ids entity/entities: DSN2026"
-        ]
-      },
-      {
-        "timestamp": "2026-07-25T17:18:54.475000+00:00",
-        "event_type": "evidence_event",
-        "evidence_id": "EVID_00010",
-        "case_id": "CASE_185915593C",
-        "file_name": "04_esewa_payment_screenshot.jpg",
-        "description": "Evidence EVID_00010 (04_esewa_payment_screenshot.jpg); stages: initial_contact, financial_transaction",
-        "time_source": "upload_time_fallback",
-        "confidence": "low",
-        "timestamp_inferred": true,
-        "source_evidence_ids": [
-          "EVID_00010"
-        ],
-        "correlated_with": [
-          {
-            "linked_to": "EVID_00014",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.5272,
-            "confidence": 0.5272
-          },
-          {
-            "linked_to": "EVID_00008",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2486,
-            "confidence": 0.2486
-          },
-          {
-            "linked_to": "EVID_00007",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00009",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00011",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00012",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00013",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          }
-        ],
-        "text_preview": "eSewa\nPayment Successful\nRs.200.00\nTansatianD\n0119.0625.987456\nDate & Time\n2026-06-1110:42AM\nPaidTe\nesewa.cashbacko90gma",
-        "risk_signals": {},
-        "stages": [
-          "initial_contact",
-          "financial_transaction"
-        ],
-        "critical": true,
-        "critical_reasons": [
-          "contains money entity/entities: NPR 200",
-          "contains transaction_ids entity/entities: 0119.0625.987456"
         ]
       },
       {
@@ -1459,50 +979,15 @@
             "linked_to": "EVID_00011",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.4745,
-            "confidence": 0.4745
+            "weight": 0.3253,
+            "confidence": 0.3253
           },
           {
             "linked_to": "EVID_00014",
             "type": "behavioral_relationship",
             "shared_entities": [],
-            "weight": 0.4745,
-            "confidence": 0.4745
-          },
-          {
-            "linked_to": "EVID_00007",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00008",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00009",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00010",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          },
-          {
-            "linked_to": "EVID_00013",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
+            "weight": 0.3253,
+            "confidence": 0.3253
           }
         ],
         "text_preview": "1nbox\nFromt asawa Ofrkclal Support <wugportQojwavortty yc.con>\nTα surka.gurung21oonmrom\nSubfject: UrGent: Your •Srw• Krc",
@@ -1515,99 +1000,23 @@
         "critical_reasons": [
           "contains money entity/entities: NPR 5"
         ]
-      },
-      {
-        "timestamp": "2026-07-25T17:26:20.455000+00:00",
-        "event_type": "evidence_event",
-        "evidence_id": "EVID_00014",
-        "case_id": "CASE_185915593C",
-        "file_name": "08_complaint_letter.pdf",
-        "description": "Evidence EVID_00014 (08_complaint_letter.pdf); stages: initial_contact, social_engineering, financial_transaction, post_attack",
-        "time_source": "upload_time_fallback",
-        "confidence": "low",
-        "timestamp_inferred": true,
-        "source_evidence_ids": [
-          "EVID_00014"
-        ],
-        "correlated_with": [
-          {
-            "linked_to": "EVID_00011",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.9389,
-            "confidence": 0.9389
-          },
-          {
-            "linked_to": "EVID_00008",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.7709,
-            "confidence": 0.7709
-          },
-          {
-            "linked_to": "EVID_00013",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.6815,
-            "confidence": 0.6815
-          },
-          {
-            "linked_to": "EVID_00009",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.6488,
-            "confidence": 0.6488
-          },
-          {
-            "linked_to": "EVID_00010",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.5272,
-            "confidence": 0.5272
-          },
-          {
-            "linked_to": "EVID_00012",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.4745,
-            "confidence": 0.4745
-          },
-          {
-            "linked_to": "EVID_00007",
-            "type": "behavioral_relationship",
-            "shared_entities": [],
-            "weight": 0.2212,
-            "confidence": 0.2212
-          }
-        ],
-        "text_preview": "To,\nThe Chief, Cyber Bureau,\nNepal Police, Bhotahity, Kathmandu.\nSubject: Complaint regarding online fraud impersonating",
-        "risk_signals": {},
-        "stages": [
-          "initial_contact",
-          "social_engineering",
-          "financial_transaction",
-          "post_attack"
-        ],
-        "critical": true,
-        "critical_reasons": [
-          "contains money entity/entities: NPR 1500, NPR 200, NPR 25000",
-          "contains esewa_ids entity/entities: esewa.cashback99@gmail.com, sunita.gurung21@gmail.com",
-          "contains khalti_ids entity/entities: +9779801122334",
-          "contains bank_accounts entity/entities: 05019012345678",
-          "contains transaction_ids entity/entities: 0119.0625.987456, CASE_2026_0088, KH-2026-0611-77245"
-        ]
       }
     ],
-    "summary": "8 events spanning 1001.4 hours; 0 timestamps unresolved. Observed scam progression: initial_contact -> financial_transaction -> social_engineering -> post_attack.",
+    "summary": "8 events; 8 timestamps resolved (2 non-inferred, 6 inferred, including 4 acquisition-time fallbacks); 0 timestamps unresolved. Content/metadata event times span 85.3 hours. Keyword-derived stage order: initial_contact -> financial_transaction -> social_engineering -> post_attack. This order is incomplete because one or more detected stages have acquisition time only.",
     "statistics": {
       "event_count": 8.0,
       "resolved_event_count": 8.0,
       "unresolved_event_count": 0.0,
-      "inferred_event_count": 8.0,
+      "inferred_event_count": 6.0,
+      "non_inferred_event_count": 2.0,
+      "acquisition_fallback_count": 4.0,
+      "progression_assessable": 0.0,
       "stage_count": 4.0,
       "critical_event_count": 7.0,
-      "timeline_span_hours": 1001.44
+      "timeline_span_hours": 1062.64,
+      "event_time_span_hours": 85.3,
+      "acquisition_inclusive_span_hours": 1062.64
     },
-    "analysis_time_ms": 2.0
+    "analysis_time_ms": 4.2
   }
 }

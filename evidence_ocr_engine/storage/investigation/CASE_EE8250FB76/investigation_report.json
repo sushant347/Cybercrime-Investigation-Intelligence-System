@@ -1,22 +1,23 @@
 {
   "report_type": "investigation_report",
-  "report_version": 9,
+  "report_version": 10,
   "schema_version": "2.0",
   "case_id": "CASE_EE8250FB76",
-  "generated_at": "2026-08-04T08:17:41.034Z",
+  "generated_at": "2026-08-20T12:27:34.497Z",
   "report": {
-    "report_id": "RPT-EE8250FB76-916F4241",
+    "report_id": "RPT-EE8250FB76-7D320887",
     "sections": {
       "executive_summary": [
-        "Case CASE_EE8250FB76 contains 2 evidence items, each acquired under SHA-256 chain-of-custody verification.",
-        "This case is linked to 2 other cases through shared entities: CASE_185915593C, CASE_1A1BF573F3 [cross_case_correlation.json].",
-        "The weighted correlation engine found 1 related evidence pair out of 1 analysed [correlation_analysis.json].",
-        "The strongest suspect anchor is '05019012345678' (bank_accounts) with confidence 68/100 [suspect_assessment.json].",
-        "Observed attack progression: initial_contact -> social_engineering -> financial_transaction -> post_attack [timeline_analysis.json]."
+        "Case CASE_EE8250FB76 contains 2 evidence items; 1/2 passed the stored SHA-256 integrity check.",
+        "This case was automatically linked to 2 other cases; these are candidate shared-entity associations: CASE_185915593C, CASE_1A1BF573F3 [cross_case_correlation.json].",
+        "The weighted correlation engine found 0 related evidence pairs out of 1 analysed [correlation_analysis.json].",
+        "The highest-scoring identity lead is '05019012345678' (bank_accounts), supported by 1 evidence item and scored 68/100; this is a lead, not identity attribution [suspect_assessment.json].",
+        "Chronology contains 1 evidence-derived event time (1 inferred), 1 acquisition-only record and 0 unresolved records [timeline_analysis.json].",
+        "Evidence-timed stage order: initial_contact -> social_engineering -> financial_transaction -> post_attack [timeline_analysis.json]."
       ],
       "scope_and_methodology": {
-        "objective": "Acquire, verify, correlate and reconstruct the digital evidence for this case, and derive investigative leads (suspect anchors, campaigns, cross-case links) strictly from stored, hash-verified artifacts.",
-        "evidence_scope": "2 evidence items acquired through the CIIS intake pipeline under SHA-256 chain-of-custody control.",
+        "objective": "Acquire, verify, correlate and reconstruct the digital evidence for this case, and derive investigative leads (identity anchors, candidate clusters and cross-case links) from stored artifacts while preserving each item's recorded integrity status.",
+        "evidence_scope": "2 evidence items acquired through the CIIS intake pipeline with a recorded SHA-256 digest.",
         "methodology": [
           "Phase 1 - Acquisition & OCR: PaddleOCR PP-OCRv5 text extraction with per-item confidence scoring; SHA-256 fingerprint recorded at intake and re-verified at read.",
           "Phase 1 - Forensics: metadata/EXIF consistency, forgery signals, logo detection and evidence-confidence scoring stored per item under storage/forensics/.",
@@ -26,7 +27,7 @@
           "Threat intelligence: URL/domain indicators scored by the configured provider (static indicator file, or the trained phishing classifier when CIIS_ML_THREAT_INTEL=1); per-indicator results in 'Model Prediction Results'.",
           "Reporting: this document is assembled exclusively from the stored outputs above; it contains no free-text generation."
         ],
-        "reproducibility": "Re-running the analysis against the same stored evidence reproduces every figure herein; artifacts are versioned and never overwritten."
+        "reproducibility": "Re-running the analysis against the same stored evidence recomputes the canonical artifacts; report control records the evidence-set digest and the stored JSON companion retains the complete source-artifact hash register."
       },
       "case_overview": {
         "case_id": "CASE_EE8250FB76",
@@ -60,7 +61,15 @@
         }
       ],
       "timeline_analysis": {
-        "summary": "2 events spanning 0.0 hours; 0 timestamps unresolved. Observed scam progression: initial_contact -> social_engineering -> financial_transaction -> post_attack.",
+        "summary": "2 events; 2 timestamps resolved (0 non-inferred, 2 inferred, including 1 acquisition-time fallback); 0 timestamps unresolved. Keyword-derived stage order: initial_contact -> social_engineering -> financial_transaction -> post_attack.",
+        "timestamp_quality": {
+          "event_count": 2,
+          "non_inferred_count": 0,
+          "inferred_count": 2,
+          "acquisition_fallback_count": 1,
+          "unresolved_count": 0,
+          "reliability_note": "Chronology is provisional: acquisition time is an intake timestamp, not proof of when the underlying event occurred. Every fallback and unresolved value must be checked against the source exhibit."
+        },
         "stage_progression": [
           "initial_contact",
           "social_engineering",
@@ -68,31 +77,131 @@
           "post_attack"
         ],
         "progression_consistent": true,
-        "milestones": [
+        "progression_assessable": true,
+        "chronological_events": [
           {
-            "timestamp": "2026-07-25T16:24:17.560000+00:00",
-            "description": "Investigation start - first reconstructed evidence event"
+            "timestamp": "2026-06-15T00:00:00+00:00",
+            "evidence_id": "EVID_00005",
+            "file_name": "08_complaint_letter.pdf",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00005 (08_complaint_letter.pdf); stages: initial_contact, social_engineering, financial_transaction, post_attack",
+            "timestamp_source": "content_labeled_date_only",
+            "timestamp_confidence": "medium",
+            "timestamp_inferred": true,
+            "stages": [
+              "initial_contact",
+              "social_engineering",
+              "financial_transaction",
+              "post_attack"
+            ],
+            "critical": true,
+            "critical_reasons": [
+              "contains money entity/entities: NPR 1500, NPR 200, NPR 25000",
+              "contains esewa_ids entity/entities: esewa.cashback99@gmail.com, sunita.gurung21@gmail.com",
+              "contains khalti_ids entity/entities: +9779801122334",
+              "contains bank_accounts entity/entities: 05019012345678",
+              "contains transaction_ids entity/entities: 0119.0625.987456, CASE_2026_0088, KH-2026-0611-77245"
+            ]
           },
           {
-            "timestamp": "2026-07-25T16:24:17.560000+00:00",
+            "timestamp": "2026-07-25T16:24:18.091000+00:00",
+            "evidence_id": "EVID_00006",
+            "file_name": "07_bank_transfer_slip.pdf",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00006 (07_bank_transfer_slip.pdf)",
+            "timestamp_source": "upload_time_fallback",
+            "timestamp_confidence": "low",
+            "timestamp_inferred": true,
+            "stages": [],
+            "critical": false,
+            "critical_reasons": []
+          }
+        ],
+        "event_time_events": [
+          {
+            "timestamp": "2026-06-15T00:00:00+00:00",
+            "evidence_id": "EVID_00005",
+            "file_name": "08_complaint_letter.pdf",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00005 (08_complaint_letter.pdf); stages: initial_contact, social_engineering, financial_transaction, post_attack",
+            "timestamp_source": "content_labeled_date_only",
+            "timestamp_confidence": "medium",
+            "timestamp_inferred": true,
+            "stages": [
+              "initial_contact",
+              "social_engineering",
+              "financial_transaction",
+              "post_attack"
+            ],
+            "critical": true,
+            "critical_reasons": [
+              "contains money entity/entities: NPR 1500, NPR 200, NPR 25000",
+              "contains esewa_ids entity/entities: esewa.cashback99@gmail.com, sunita.gurung21@gmail.com",
+              "contains khalti_ids entity/entities: +9779801122334",
+              "contains bank_accounts entity/entities: 05019012345678",
+              "contains transaction_ids entity/entities: 0119.0625.987456, CASE_2026_0088, KH-2026-0611-77245"
+            ]
+          }
+        ],
+        "acquisition_records": [
+          {
+            "timestamp": "2026-07-25T16:24:18.091000+00:00",
+            "evidence_id": "EVID_00006",
+            "file_name": "07_bank_transfer_slip.pdf",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00006 (07_bank_transfer_slip.pdf)",
+            "timestamp_source": "upload_time_fallback",
+            "timestamp_confidence": "low",
+            "timestamp_inferred": true,
+            "stages": [],
+            "critical": false,
+            "critical_reasons": []
+          }
+        ],
+        "unresolved_records": [],
+        "milestones": [
+          {
+            "timestamp": "2026-06-15T00:00:00+00:00",
+            "timestamp_source": "content_labeled_date_only",
+            "timestamp_confidence": "medium",
+            "timestamp_inferred": true,
+            "description": "First reconstructed incident event"
+          },
+          {
+            "timestamp": "2026-06-15T00:00:00+00:00",
+            "timestamp_source": "content_labeled_date_only",
+            "timestamp_confidence": "medium",
+            "timestamp_inferred": true,
             "description": "First observation of stage 'initial_contact' (EVID_00005)"
           },
           {
-            "timestamp": "2026-07-25T16:24:17.560000+00:00",
+            "timestamp": "2026-06-15T00:00:00+00:00",
+            "timestamp_source": "content_labeled_date_only",
+            "timestamp_confidence": "medium",
+            "timestamp_inferred": true,
             "description": "First observation of stage 'social_engineering' (EVID_00005)"
           },
           {
-            "timestamp": "2026-07-25T16:24:17.560000+00:00",
+            "timestamp": "2026-06-15T00:00:00+00:00",
+            "timestamp_source": "content_labeled_date_only",
+            "timestamp_confidence": "medium",
+            "timestamp_inferred": true,
             "description": "First observation of stage 'financial_transaction' (EVID_00005)"
           },
           {
-            "timestamp": "2026-07-25T16:24:17.560000+00:00",
+            "timestamp": "2026-06-15T00:00:00+00:00",
+            "timestamp_source": "content_labeled_date_only",
+            "timestamp_confidence": "medium",
+            "timestamp_inferred": true,
             "description": "First observation of stage 'post_attack' (EVID_00005)"
           }
         ],
         "critical_events": [
           {
-            "timestamp": "2026-07-25T16:24:17.560000+00:00",
+            "timestamp": "2026-06-15T00:00:00+00:00",
+            "timestamp_source": "content_labeled_date_only",
+            "timestamp_confidence": "medium",
+            "timestamp_inferred": true,
             "evidence_id": "EVID_00005",
             "reasons": [
               "contains money entity/entities: NPR 1500, NPR 200, NPR 25000",
@@ -106,18 +215,11 @@
       },
       "correlation_analysis": {
         "pair_count": 1,
-        "related_pair_count": 1,
+        "related_pair_count": 0,
         "strength_distribution": {
-          "WEAK": 1
+          "NO_RELATIONSHIP": 1
         },
-        "top_relationships": [
-          {
-            "pair": "EVID_00005 <-> EVID_00006",
-            "strength": "WEAK",
-            "confidence": 0.2212,
-            "explanation": "EVID_00005 (08_complaint_letter.pdf) and EVID_00006 (07_bank_transfer_slip.pdf) show a weak relationship (confidence 0.22) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.40]."
-          }
-        ]
+        "top_relationships": []
       },
       "cross_case_correlation": {
         "related_case_count": 2,
@@ -828,15 +930,20 @@
           "resolved_event_count": 2.0,
           "unresolved_event_count": 0.0,
           "inferred_event_count": 2.0,
+          "non_inferred_event_count": 0.0,
+          "acquisition_fallback_count": 1.0,
+          "progression_assessable": 1.0,
           "stage_count": 4.0,
           "critical_event_count": 1.0,
-          "timeline_span_hours": 0.0
+          "timeline_span_hours": 976.41,
+          "event_time_span_hours": 0.0,
+          "acquisition_inclusive_span_hours": 976.41
         },
         "correlation_statistics": {
           "pair_count": 1.0,
-          "related_pair_count": 1.0,
-          "mean_confidence": 0.2212,
-          "max_confidence": 0.2212
+          "related_pair_count": 0.0,
+          "mean_confidence": 0.0,
+          "max_confidence": 0.0
         }
       },
       "confidence_analysis": [
@@ -847,10 +954,18 @@
           "explanation": "Evidence confidence is 100.0/100 (VERY_HIGH), derived from 3 verified dimension(s). Strongest signal: hash_verification (100/100). Weakest signal: metadata (100/100)."
         }
       ],
+      "limitations": [
+        "This automated report organises submitted material and computed leads. It does not determine guilt or attribute an offence to a person.",
+        "OCR and entity extraction can omit, merge or misclassify text. Identifiers, amounts and names must be verified in the original exhibit before operational use.",
+        "Timeline quality: 2 inferred timestamp(s), including 1 acquisition-time fallback(s), and 0 unresolved timestamp(s). Date-only values use 00:00 UTC; fallbacks describe intake time rather than event time.",
+        "Correlation and cross-case scores measure shared features, not causation, common ownership or identity.",
+        "Campaign clusters and identity-anchor scores are prioritisation aids that require independent corroboration.",
+        "Threat-intelligence verdicts reflect the configured provider and its coverage at analysis time; no match does not prove safety.",
+        "New evidence or corrected extraction may change any finding in this report."
+      ],
       "investigation_conclusion": [
-        "1/2 evidence items passed SHA-256 chain-of-custody verification.",
-        "The evidence set is internally connected (1 weighted relationship), consistent with related activity rather than isolated incidents.",
-        "Investigation should focus on anchor '05019012345678' (68/100 confidence)."
+        "1/2 evidence items passed SHA-256 integrity verification; this establishes stored-file integrity, not the truth of its content.",
+        "Validate the ownership and role of identity lead '05019012345678' (68/100 model score; 1 supporting evidence item) against provider records and the original exhibits."
       ],
       "legal_basis": {
         "case_id": "CASE_EE8250FB76",
@@ -882,45 +997,147 @@
             ]
           },
           {
+            "section": "55",
+            "title": "Punishment in an offence committed outside Nepal",
+            "citation": "Section 55, Electronic Transactions Act, 2063 (2008)",
+            "conduct": "An offence under the Act involving a computer, computer system or network located in Nepal may be prosecuted even where the act was committed by a person residing outside Nepal.",
+            "penalty": "as for the underlying offence",
+            "basis": "this case shares identifiers with 2 other cases (CASE_185915593C and CASE_1A1BF573F3). Where any part of the conduct occurred outside Nepal, the Act still applies to systems located in Nepal.",
+            "evidence_ids": []
+          },
+          {
             "section": "56",
             "title": "Confiscation",
             "citation": "Section 56, Electronic Transactions Act, 2063 (2008)",
             "conduct": "Any computer, computer system, disk, software or accessory device used to commit an offence relating to computer under the Act is liable to confiscation.",
             "penalty": "confiscation of the computer, computer system, disks, software or other accessory devices used",
-            "basis": "the findings engage 2 provisions of the Act (s.47 and s.52). Any computer, device or storage medium used to commit those acts falls within the confiscation power and should be identified for seizure.",
+            "basis": "the findings engage 3 provisions of the Act (s.47, s.52 and s.55). Any computer, device or storage medium used to commit those acts falls within the confiscation power and should be identified for seizure.",
             "evidence_ids": []
           }
         ],
+        "manual_review_provisions": [
+          {
+            "section": "44",
+            "title": "To Pirate, Destroy or Alter computer source code",
+            "citation": "Section 44, Electronic Transactions Act, 2063 (2008)",
+            "reason": "manual review requires source-code versions, repository history or another technical comparison establishing alteration"
+          },
+          {
+            "section": "48",
+            "title": "Breach of confidentiality",
+            "citation": "Section 48, Electronic Transactions Act, 2063 (2008)",
+            "reason": "manual review must establish both the person's authorised access and disclosure to an unauthorised recipient"
+          },
+          {
+            "section": "57",
+            "title": "Offences committed by a corporate body",
+            "citation": "Section 57, Electronic Transactions Act, 2063 (2008)",
+            "reason": "manual review requires attribution to a corporate body and evidence of responsibility, consent, knowledge or negligence"
+          }
+        ],
+        "investigative_guidance": [
+          {
+            "category": "evidence_preservation",
+            "control_ids": [
+              "4",
+              "6"
+            ],
+            "title": "Legal recognition and preservation of electronic records",
+            "citation": "Sections 4, 6, Electronic Transactions Act, 2063 (2008)",
+            "expectation": "Where the law requires a record to be retained, an electronic record is recognised when it remains accessible, can be reproduced in its original format, and retains available origin, destination, date and time information.",
+            "basis": "This report relies on 2 electronic evidence items; preservation and reproducibility therefore remain material to later verification.",
+            "recommended_action": "Retain the original files, acquisition metadata, SHA-256 values and chain-of-custody history. A file hash supports integrity checking but is not by itself a statutory digital signature under ETA sections 3 and 5.",
+            "applicability": "Applies where an electronic record is retained or relied on under the Electronic Transactions Act and prevailing law.",
+            "status": "evidence_handling_requirement",
+            "evidence_ids": [
+              "EVID_00005",
+              "EVID_00006"
+            ],
+            "source_id": "eta_2063"
+          },
+          {
+            "category": "regulatory_follow_up",
+            "control_ids": [
+              "83",
+              "84",
+              "85",
+              "86"
+            ],
+            "title": "Preserve and correlate forensic logs",
+            "citation": "Controls 83, 84, 85, 86, Nepal Rastra Bank Cyber Resilience Guidelines 2023",
+            "expectation": "Detected events should be recorded with information such as event type, time and user or address; audit data should be protected, logs securely backed up, timestamps synchronised, and events centralised and correlated across relevant systems.",
+            "basis": "The case contains 8 payment identifiers across 1 evidence item; the corresponding institution-side records may establish transaction sequence, account activity, source address and timing.",
+            "recommended_action": "Send a preservation request for transaction, authentication, application, system and network logs, including timezone and clock-synchronisation details, before normal retention or rotation removes them.",
+            "applicability": "Conditional: confirm that the affected organisation is an institution within the Guidelines' scope, including an A, B, C or D class BFI, Payment System Operator or Payment Service Provider licensed by NRB's Payment Systems Department.",
+            "status": "investigative_follow_up",
+            "evidence_ids": [
+              "EVID_00005"
+            ],
+            "source_id": "nrb_crg_2023"
+          }
+        ],
+        "sources": [
+          {
+            "source_id": "eta_2063",
+            "authority": "Nepal Law Commission",
+            "title": "Electronic Transactions Act, 2063 (2008)",
+            "url": "https://lawcommission.gov.np/content/13397/",
+            "local_documents": [
+              "2.1 The Electronic Transactions Act, 2063 (2008).pdf",
+              "2.1 विद्युतीय (इलेक्ट्रोनिक) कारोबार ऐन, २०६३ (नेपाली).pdf"
+            ],
+            "sha256": {
+              "2.1 The Electronic Transactions Act, 2063 (2008).pdf": "7f68a8b66adf579b5ba595f9062abcd8c61f9fddfaadffe06c8e4b752d76b4b6",
+              "2.1 विद्युतीय (इलेक्ट्रोनिक) कारोबार ऐन, २०६३ (नेपाली).pdf": "5b5cd8d72da9da73d6932ea227ec79cb65e19d5ca1ef3aa6f02f3dcef76bc723"
+            },
+            "usage": "Statutory offence mapping and electronic-record preservation guidance.",
+            "note": "The Nepali text is authoritative where it differs from the English translation."
+          },
+          {
+            "source_id": "nrb_crg_2023",
+            "authority": "Nepal Rastra Bank, Payment Systems Department",
+            "title": "Nepal Rastra Bank Cyber Resilience Guidelines 2023",
+            "url": "https://www.nrb.org.np/contents/uploads/2023/08/Cyber-Resilience-Guidelines-2023.pdf",
+            "local_documents": [
+              "4.5 NRB Cyber-Resilience-Guidelines-2023.pdf"
+            ],
+            "sha256": {
+              "4.5 NRB Cyber-Resilience-Guidelines-2023.pdf": "191eaea1bdb20cf4c50374d6173d0c1ee4476ae4145e6e1309ea26e097c7a8ff"
+            },
+            "usage": "Conditional investigative follow-up for authentication and forensic logging; never used as an offence finding.",
+            "note": "Repository copy verified byte-for-byte against the official NRB download. Applicability to the affected institution must be confirmed by the investigator."
+          }
+        ],
         "caveat": "This is an automated mapping from technical findings to statutory provisions, provided to assist the investigating officer. It is not legal advice and not a charging decision. A provision is listed because the evidence contains the features described, not because an offence has been proved: intent, authorisation and identity are matters for investigation. Provisions of the Act not listed here were not assessed.",
-        "summary": "The findings engage 3 provisions of the Electronic Transactions Act, 2063 (2008): s.52, s.47, s.56. Each is listed with the finding that engaged it and the evidence behind that finding.",
-        "analysis_time_ms": 0.4
+        "summary": "The findings engage 4 provisions of the Electronic Transactions Act, 2063 (2008): s.52, s.47, s.55, s.56. Each is listed with the finding that engaged it and the evidence behind that finding.",
+        "analysis_time_ms": 0.2
       },
       "recommendations": [
-        "Get the fake websites shut down: esewa-cashback-offer.xyz, esewa-verify-kyc.com. Ask the hosting company to save its records first.",
-        "Tell eSewa their name is being used in this scam, so they can warn other customers.",
-        "Ask eSewa who owns these wallets (KYC) and their payment history: sunita.gurung21@gmail.com, esewa.cashback99@gmail.com.",
-        "Ask Khalti who owns these wallets (KYC) and their payment history: +9779801122334.",
-        "Ask the bank who owns these accounts and their statements: 05019012345678.",
-        "Include these payment reference numbers in those requests so the transfers are easy to find: 0119.0625.987456, KH-2026-0611-77245, MBL-2026-441829.",
-        "Ask the phone/wallet company who is registered to 05019012345678, esewa.cashback99@gmail.com - it appears again and again across this evidence.",
-        "Go through the 1 key moment - when money moved and codes were shared - with the victim, and record what they lost.",
-        "Handle this case in the normal queue (rated 38 out of 100)."
+        "Issue preservation requests to the relevant hosting providers, then seek suspension of the suspected domains: esewa-cashback-offer.xyz,...",
+        "Notify eSewa of suspected brand impersonation and request preservation of any related abuse records.",
+        "Request subscriber/KYC ownership and transaction history from eSewa for: sunita.gurung21@gmail.com, esewa.cashback99@gmail.com.",
+        "Request subscriber/KYC ownership and transaction history from Khalti for: +9779801122334.",
+        "Request account-holder identity and statements from the relevant bank for: 05019012345678.",
+        "Verify these extracted payment references against the source exhibits before including them in record requests: 0119.0625.987456,...",
+        "Ask the relevant provider to verify registration, ownership and transaction records for 05019012345678, esewa.cashback99@gmail.com; confirm each...",
+        "Review the 1 flagged event with the source exhibits; confirm each event's time, participants and any loss with the complainant.",
+        "Assign standard queue priority (rated 35 out of 100)."
       ],
       "report_provenance": {
-        "report_id": "RPT-EE8250FB76-916F4241",
-        "generated_at": "2026-08-04T08:17:40.900Z",
+        "report_id": "RPT-EE8250FB76-7D320887",
+        "generated_at": "2026-08-20T12:27:34.494Z",
         "generator": "CIIS Phase-2 reporting module (template-over-data; no free-text generation)",
         "evidence_set_digest": "0f6afe626b2e5e1c4bb70b2efae2d8aea52ca3d8d38b481532cc8e4ff88c3ff6",
         "evidence_set_digest_note": "SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.",
         "source_artifact_hashes": {
-          "correlation_analysis.json": "4217d05345085ff0af647306f93058a933ed81de012cfe80a4cff2d293f5a48d",
+          "correlation_analysis.json": "852c827c6fcbe48f4030627f026a0a37e8a11fec71475e2dd3f34b0b6b2eb88a",
           "cross_case_correlation.json": "eb69d4047d8579e0bc5f6954ea3d2fb83b3f633333637e84c7f0eefd53b6e690",
-          "campaign_analysis.json": "da576901d722734dcd0b18314f7587787c7d893edecc01b6388582a05f315326",
-          "suspect_assessment.json": "92aca77ed02ad593a0112dc47ef3b1823104d6d7f94f9676b120a9b3a4a4b121",
-          "timeline_analysis.json": "cb98b075f0d96e56c56a82970a62f0a1d5589ff4f9e132b2046a4b763f9a4166",
-          "analytics.json": "6ac15d2afd34c207b49a299c28de3120bfd9f00c864b91a58665868d260a1629",
-          "case_priority.json": "b113e7a69b1bfc8faf180a7084731ae409a40101b9be5c6b8d39788626ada355",
-          "graph.json": "d2566cb9c410f481f365376a8506416fc09e1e52bd023d0bd2c4b9e51217f504"
+          "campaign_analysis.json": "adcb501bc65285e4a489b5bd418ffe313d7e1eae80ede01e7f82d793ea4b7785",
+          "suspect_assessment.json": "fbff2a0655f126c3ee7dcceb5cc0b068003595ef78897c84cf1b6fc8a435ac4e",
+          "timeline_analysis.json": "e56ff0a041ceb8185249170d111d48da69a8dda973e8cef8256cb53c81588dd8",
+          "analytics.json": "3494908ea3bb45d6778d204370b157bef175a73146c34e79b0cf2938df698a91",
+          "case_priority.json": "9a178a38f8effab3ec4db50429a328b19f3172e7c085164311b1297b029f3ff8",
+          "graph.json": "36f5e85fa445b04ab793122fab9435dc358b660f4a35cff8a1659305576dd37e"
         }
       },
       "appendix": {

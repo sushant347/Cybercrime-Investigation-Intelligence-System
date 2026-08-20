@@ -1,9 +1,9 @@
 {
   "report_type": "graph",
-  "report_version": 21,
+  "report_version": 23,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-08-04T08:17:40.183Z",
+  "generated_at": "2026-08-20T12:27:45.393Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
     "directed": false,
@@ -12,7 +12,14 @@
         "id": "case:CASE_2CF24DBA5F",
         "node_type": "case",
         "label": "CASE_2CF24DBA5F",
-        "properties": {}
+        "properties": {
+          "degree_centrality": "0.285714",
+          "betweenness_centrality": "0.483516",
+          "pagerank": "0.066420",
+          "graph_importance": "0.341749",
+          "community_id": "2",
+          "community_size": "5"
+        }
       },
       {
         "id": "evidence:EVID_00001",
@@ -20,38 +27,79 @@
         "label": "EVID_00001",
         "properties": {
           "file_name": "yeti.jpg",
-          "upload_time": "2026-07-25T12:50:00.695Z"
+          "upload_time": "2026-07-25T12:50:00.695Z",
+          "degree_centrality": "0.500000",
+          "betweenness_centrality": "0.631868",
+          "pagerank": "0.259058",
+          "graph_importance": "0.771154",
+          "community_id": "1",
+          "community_size": "6"
         }
       },
       {
         "id": "date:2026-01-04",
         "node_type": "date",
         "label": "2026-01-04",
-        "properties": {}
+        "properties": {
+          "degree_centrality": "0.071429",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.052061",
+          "graph_importance": "0.104720",
+          "community_id": "1",
+          "community_size": "6"
+        }
       },
       {
         "id": "money:npr 2000",
         "node_type": "money",
         "label": "NPR 2000",
-        "properties": {}
+        "properties": {
+          "degree_centrality": "0.142857",
+          "betweenness_centrality": "0.197802",
+          "pagerank": "0.104452",
+          "graph_importance": "0.279241",
+          "community_id": "3",
+          "community_size": "4"
+        }
       },
       {
         "id": "time:09:12",
         "node_type": "time",
         "label": "09:12",
-        "properties": {}
+        "properties": {
+          "degree_centrality": "0.071429",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.052061",
+          "graph_importance": "0.104720",
+          "community_id": "1",
+          "community_size": "6"
+        }
       },
       {
         "id": "time:09:14",
         "node_type": "time",
         "label": "09:14",
-        "properties": {}
+        "properties": {
+          "degree_centrality": "0.071429",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.052061",
+          "graph_importance": "0.104720",
+          "community_id": "1",
+          "community_size": "6"
+        }
       },
       {
         "id": "time:09:15",
         "node_type": "time",
         "label": "09:15",
-        "properties": {}
+        "properties": {
+          "degree_centrality": "0.071429",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.052061",
+          "graph_importance": "0.104720",
+          "community_id": "1",
+          "community_size": "6"
+        }
       },
       {
         "id": "evidence:EVID_00002",
@@ -59,14 +107,27 @@
         "label": "EVID_00002",
         "properties": {
           "file_name": "whatsapp_chat_export.txt",
-          "upload_time": "2026-07-25T12:53:07.182Z"
+          "upload_time": "2026-07-25T12:53:07.182Z",
+          "degree_centrality": "0.285714",
+          "betweenness_centrality": "0.302198",
+          "pagerank": "0.132551",
+          "graph_importance": "0.393162",
+          "community_id": "3",
+          "community_size": "4"
         }
       },
       {
         "id": "money:npr 500000",
         "node_type": "money",
         "label": "NPR 500000",
-        "properties": {}
+        "properties": {
+          "degree_centrality": "0.071429",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.062390",
+          "graph_importance": "0.122662",
+          "community_id": "3",
+          "community_size": "4"
+        }
       },
       {
         "id": "evidence:EVID_00003",
@@ -74,7 +135,13 @@
         "label": "EVID_00003",
         "properties": {
           "file_name": "romanchat.jpg",
-          "upload_time": "2026-07-25T12:53:23.174Z"
+          "upload_time": "2026-07-25T12:53:23.174Z",
+          "degree_centrality": "0.142857",
+          "betweenness_centrality": "0.142857",
+          "pagerank": "0.044734",
+          "graph_importance": "0.156278",
+          "community_id": "2",
+          "community_size": "5"
         }
       },
       {
@@ -83,7 +150,13 @@
         "label": "EVID_00004",
         "properties": {
           "file_name": "phishing_email_screenshot.png",
-          "upload_time": "2026-07-25T12:53:47.011Z"
+          "upload_time": "2026-07-25T12:53:47.011Z",
+          "degree_centrality": "0.142857",
+          "betweenness_centrality": "0.142857",
+          "pagerank": "0.044734",
+          "graph_importance": "0.156278",
+          "community_id": "2",
+          "community_size": "5"
         }
       },
       {
@@ -93,7 +166,13 @@
         "properties": {
           "timestamp": "2026-01-04T09:12:00+00:00",
           "time_source": "content_date_time",
-          "timestamp_inferred": "false"
+          "timestamp_inferred": "false",
+          "degree_centrality": "0.071429",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.015938",
+          "graph_importance": "0.041971",
+          "community_id": "1",
+          "community_size": "6"
         }
       },
       {
@@ -103,7 +182,13 @@
         "properties": {
           "timestamp": "2026-07-25T12:53:07.182000+00:00",
           "time_source": "upload_time_fallback",
-          "timestamp_inferred": "true"
+          "timestamp_inferred": "true",
+          "degree_centrality": "0.071429",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.012959",
+          "graph_importance": "0.036795",
+          "community_id": "3",
+          "community_size": "4"
         }
       },
       {
@@ -113,7 +198,13 @@
         "properties": {
           "timestamp": "2026-07-25T12:53:23.174000+00:00",
           "time_source": "upload_time_fallback",
-          "timestamp_inferred": "true"
+          "timestamp_inferred": "true",
+          "degree_centrality": "0.071429",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.024259",
+          "graph_importance": "0.056425",
+          "community_id": "2",
+          "community_size": "5"
         }
       },
       {
@@ -123,7 +214,13 @@
         "properties": {
           "timestamp": "2026-07-25T12:53:47.011000+00:00",
           "time_source": "upload_time_fallback",
-          "timestamp_inferred": "true"
+          "timestamp_inferred": "true",
+          "degree_centrality": "0.071429",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.024259",
+          "graph_importance": "0.056425",
+          "community_id": "2",
+          "community_size": "5"
         }
       }
     ],
@@ -140,7 +237,8 @@
         "timestamp": "2026-01-04T09:12:00+00:00",
         "timestamp_source": "content_date_time",
         "timestamp_inferred": false,
-        "explanation": "EVID_00001 belongs to CASE_2CF24DBA5F"
+        "explanation": "EVID_00001 belongs to CASE_2CF24DBA5F",
+        "backbone": true
       },
       {
         "source": "evidence:EVID_00001",
@@ -154,7 +252,8 @@
         "timestamp": "2026-01-04T09:12:00+00:00",
         "timestamp_source": "content_date_time",
         "timestamp_inferred": false,
-        "explanation": "EVID_00001 mentions 2026-01-04"
+        "explanation": "EVID_00001 mentions 2026-01-04",
+        "backbone": true
       },
       {
         "source": "evidence:EVID_00001",
@@ -168,7 +267,8 @@
         "timestamp": "2026-01-04T09:12:00+00:00",
         "timestamp_source": "content_date_time",
         "timestamp_inferred": false,
-        "explanation": "EVID_00001 mentions NPR 2000"
+        "explanation": "EVID_00001 mentions NPR 2000",
+        "backbone": true
       },
       {
         "source": "evidence:EVID_00001",
@@ -182,7 +282,8 @@
         "timestamp": "2026-01-04T09:12:00+00:00",
         "timestamp_source": "content_date_time",
         "timestamp_inferred": false,
-        "explanation": "EVID_00001 mentions 09:12"
+        "explanation": "EVID_00001 mentions 09:12",
+        "backbone": true
       },
       {
         "source": "evidence:EVID_00001",
@@ -196,7 +297,8 @@
         "timestamp": "2026-01-04T09:12:00+00:00",
         "timestamp_source": "content_date_time",
         "timestamp_inferred": false,
-        "explanation": "EVID_00001 mentions 09:14"
+        "explanation": "EVID_00001 mentions 09:14",
+        "backbone": true
       },
       {
         "source": "evidence:EVID_00001",
@@ -210,7 +312,8 @@
         "timestamp": "2026-01-04T09:12:00+00:00",
         "timestamp_source": "content_date_time",
         "timestamp_inferred": false,
-        "explanation": "EVID_00001 mentions 09:15"
+        "explanation": "EVID_00001 mentions 09:15",
+        "backbone": true
       },
       {
         "source": "case:CASE_2CF24DBA5F",
@@ -224,7 +327,8 @@
         "timestamp": "2026-07-25T12:53:07.182000+00:00",
         "timestamp_source": "upload_time_fallback",
         "timestamp_inferred": true,
-        "explanation": "EVID_00002 belongs to CASE_2CF24DBA5F"
+        "explanation": "EVID_00002 belongs to CASE_2CF24DBA5F",
+        "backbone": false
       },
       {
         "source": "evidence:EVID_00002",
@@ -238,7 +342,8 @@
         "timestamp": "2026-07-25T12:53:07.182000+00:00",
         "timestamp_source": "upload_time_fallback",
         "timestamp_inferred": true,
-        "explanation": "EVID_00002 mentions NPR 2000"
+        "explanation": "EVID_00002 mentions NPR 2000",
+        "backbone": true
       },
       {
         "source": "evidence:EVID_00002",
@@ -252,7 +357,8 @@
         "timestamp": "2026-07-25T12:53:07.182000+00:00",
         "timestamp_source": "upload_time_fallback",
         "timestamp_inferred": true,
-        "explanation": "EVID_00002 mentions NPR 500000"
+        "explanation": "EVID_00002 mentions NPR 500000",
+        "backbone": true
       },
       {
         "source": "case:CASE_2CF24DBA5F",
@@ -266,7 +372,8 @@
         "timestamp": "2026-07-25T12:53:23.174000+00:00",
         "timestamp_source": "upload_time_fallback",
         "timestamp_inferred": true,
-        "explanation": "EVID_00003 belongs to CASE_2CF24DBA5F"
+        "explanation": "EVID_00003 belongs to CASE_2CF24DBA5F",
+        "backbone": true
       },
       {
         "source": "case:CASE_2CF24DBA5F",
@@ -280,7 +387,8 @@
         "timestamp": "2026-07-25T12:53:47.011000+00:00",
         "timestamp_source": "upload_time_fallback",
         "timestamp_inferred": true,
-        "explanation": "EVID_00004 belongs to CASE_2CF24DBA5F"
+        "explanation": "EVID_00004 belongs to CASE_2CF24DBA5F",
+        "backbone": true
       },
       {
         "source": "evidence:EVID_00001",
@@ -294,7 +402,8 @@
         "timestamp": "2026-01-04T09:12:00+00:00",
         "timestamp_source": "content_date_time",
         "timestamp_inferred": false,
-        "explanation": "Reconstructed event for EVID_00001"
+        "explanation": "Reconstructed event for EVID_00001",
+        "backbone": true
       },
       {
         "source": "evidence:EVID_00002",
@@ -308,7 +417,8 @@
         "timestamp": "2026-07-25T12:53:07.182000+00:00",
         "timestamp_source": "upload_time_fallback",
         "timestamp_inferred": true,
-        "explanation": "Reconstructed event for EVID_00002"
+        "explanation": "Reconstructed event for EVID_00002",
+        "backbone": true
       },
       {
         "source": "evidence:EVID_00003",
@@ -322,7 +432,8 @@
         "timestamp": "2026-07-25T12:53:23.174000+00:00",
         "timestamp_source": "upload_time_fallback",
         "timestamp_inferred": true,
-        "explanation": "Reconstructed event for EVID_00003"
+        "explanation": "Reconstructed event for EVID_00003",
+        "backbone": true
       },
       {
         "source": "evidence:EVID_00004",
@@ -336,52 +447,8 @@
         "timestamp": "2026-07-25T12:53:47.011000+00:00",
         "timestamp_source": "upload_time_fallback",
         "timestamp_inferred": true,
-        "explanation": "Reconstructed event for EVID_00004"
-      },
-      {
-        "source": "evidence:EVID_00002",
-        "target": "evidence:EVID_00003",
-        "edge_type": "temporal_relationship",
-        "weight": 0.9999,
-        "confidence": 0.9999,
-        "source_evidence_ids": [
-          "EVID_00002",
-          "EVID_00003"
-        ],
-        "timestamp": "2026-07-25T12:53:07.182000+00:00",
-        "timestamp_source": "upload_time_fallback",
-        "timestamp_inferred": true,
-        "explanation": "Acquired 0.0h apart (window 48h)"
-      },
-      {
-        "source": "evidence:EVID_00002",
-        "target": "evidence:EVID_00004",
-        "edge_type": "temporal_relationship",
-        "weight": 0.9998,
-        "confidence": 0.9998,
-        "source_evidence_ids": [
-          "EVID_00002",
-          "EVID_00004"
-        ],
-        "timestamp": "2026-07-25T12:53:07.182000+00:00",
-        "timestamp_source": "upload_time_fallback",
-        "timestamp_inferred": true,
-        "explanation": "Acquired 0.0h apart (window 48h)"
-      },
-      {
-        "source": "evidence:EVID_00003",
-        "target": "evidence:EVID_00004",
-        "edge_type": "temporal_relationship",
-        "weight": 0.9999,
-        "confidence": 0.9999,
-        "source_evidence_ids": [
-          "EVID_00003",
-          "EVID_00004"
-        ],
-        "timestamp": "2026-07-25T12:53:23.174000+00:00",
-        "timestamp_source": "upload_time_fallback",
-        "timestamp_inferred": true,
-        "explanation": "Acquired 0.0h apart (window 48h)"
+        "explanation": "Reconstructed event for EVID_00004",
+        "backbone": true
       }
     ]
   }

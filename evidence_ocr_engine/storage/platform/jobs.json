@@ -1017,5 +1017,21 @@
     "stage_label": "",
     "stage_note": "",
     "stages": []
+  },
+  {
+    "id": 38,
+    "created_at": "2026-08-20T11:47:52.194Z",
+    "job_type": "case_analysis",
+    "status": "completed_with_warnings",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "",
+    "detail": "phase2_failures=[\"graph: module 'numpy' has no attribute 'long'\"]; warnings=Original evidence files unavailable for 11 item(s): EVID_00015, EVID_00016, EVID_00017, EVID_00018, EVID_00019, EVID_00020, EVID_00021, EVID_00022, EVID_00023, EVID_00024, EVID_00025; Phase-2 graph: module 'numpy' has no attribute 'long'; rag_index=unavailable",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-20T11:48:28.971Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": []
   }
 ]
