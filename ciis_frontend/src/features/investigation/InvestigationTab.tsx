@@ -23,11 +23,103 @@ import { useQuery } from "@tanstack/react-query";
 
 import { investigationApi } from "@/api";
 import { ConfidenceBar } from "@/components/common/ConfidenceBar";
+import { EntityChip, entityTypeLabel } from "@/components/common/EntityChip";
 import { EmptyState } from "@/components/common/EmptyState";
 import { DetailSkeleton } from "@/components/common/LoadingSkeleton";
 import { StatusChip } from "@/components/common/StatusChip";
 import { formatDateTime } from "@/lib/format";
+import type { SuspectProfile } from "@/types";
+import { CorrelationTable } from "./CorrelationTable";
 import { BRAND } from "@/theme/theme";
+
+/**
+ * Every suspect anchor in the case, grouped by identifier family.
+ *
+ * The assessment below is one accordion per suspect, so the question an
+ * investigator actually opens this card to answer — *what kinds of identity is
+ * this case built on?* — required expanding every row to find out. This strip
+ * answers it before anything is expanded, and flags the threat-intelligence
+ * hits in the same glance.
+ */
+function CapturedIdentities({ suspects }: { suspects: SuspectProfile[] }) {
+  const byType = new Map<string, SuspectProfile[]>();
+  for (const suspect of suspects) {
+    const bucket = byType.get(suspect.identity_type) ?? [];
+    bucket.push(suspect);
+    byType.set(suspect.identity_type, bucket);
+  }
+  const flaggedCount = suspects.filter((s) => s.threat_flagged).length;
+
+  return (
+    <Box
+      sx={{
+        p: 2,
+        mb: 2,
+        borderRadius: 1,
+        border: 1,
+        borderColor: "divider",
+        bgcolor: "action.hover",
+      }}
+    >
+      <Stack
+        direction="row"
+        alignItems="center"
+        spacing={1}
+        flexWrap="wrap"
+        useFlexGap
+        sx={{ mb: 1.5 }}
+      >
+        <Typography variant="overline" color="text.secondary">
+          Identities captured
+        </Typography>
+        <Chip
+          size="small"
+          label={`${suspects.length} total`}
+          sx={{ height: 20, fontWeight: 700 }}
+        />
+        {flaggedCount > 0 && (
+          <StatusChip value="critical" label={`${flaggedCount} threat-flagged`} />
+        )}
+      </Stack>
+
+      <Stack spacing={1.25}>
+        {[...byType.entries()].map(([type, group]) => (
+          <Stack
+            key={type}
+            direction={{ xs: "column", sm: "row" }}
+            spacing={1}
+            alignItems={{ xs: "flex-start", sm: "center" }}
+          >
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              sx={{ minWidth: 120, fontWeight: 600 }}
+            >
+              {entityTypeLabel(type)} ({group.length})
+            </Typography>
+            <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ minWidth: 0 }}>
+              {group.map((suspect) => (
+                <EntityChip
+                  key={suspect.suspect_id}
+                  entityType={suspect.identity_type}
+                  value={suspect.identity_value}
+                  size="small"
+                  flagged={suspect.threat_flagged}
+                  title={
+                    `${entityTypeLabel(suspect.identity_type)}: ${suspect.identity_value}` +
+                    ` — ${suspect.confidence_score.toFixed(0)}% confidence` +
+                    ` across ${suspect.evidence_count} evidence item(s)` +
+                    (suspect.threat_flagged ? " · flagged by threat intelligence" : "")
+                  }
+                />
+              ))}
+            </Stack>
+          </Stack>
+        ))}
+      </Stack>
+    </Box>
+  );
+}
 
 /**
  * Module 5 - Investigation View.
@@ -108,126 +200,10 @@ export function InvestigationTab({ caseId }: { caseId: string }) {
           </CardContent>
         ) : (
           <CardContent>
-            <Stack direction="row" spacing={1} sx={{ mb: 2 }} flexWrap="wrap" useFlexGap>
-              {Object.entries(corr.strength_distribution).map(([strength, count]) => (
-                <Chip
-                  key={strength}
-                  size="small"
-                  label={`${strength}: ${count}`}
-                  variant="outlined"
-                  sx={{ textTransform: "capitalize" }}
-                />
-              ))}
-            </Stack>
-            {corr.pairs.map((pair) => (
-              <Accordion key={`${pair.evidence_a}-${pair.evidence_b}`} disableGutters>
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  <Stack
-                    direction="row"
-                    spacing={2}
-                    alignItems="center"
-                    sx={{ flex: 1, minWidth: 0 }}
-                  >
-                    <Typography
-                      variant="body2"
-                      sx={{ fontFamily: '"JetBrains Mono", monospace', fontWeight: 700 }}
-                    >
-                      {pair.evidence_a} ↔ {pair.evidence_b}
-                    </Typography>
-                    <StatusChip value={pair.relationship_strength} />
-                    <ConfidenceBar
-                      value={pair.correlation_confidence}
-                      scale="fraction"
-                      label="Correlation confidence"
-                    />
-                  </Stack>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Stack spacing={1.5}>
-                    <Typography variant="body2">{pair.explanation}</Typography>
-                    {pair.correlation_reasons.length > 0 && (
-                      <Stack spacing={0.5}>
-                        {pair.correlation_reasons.map((reason, i) => (
-                          <Typography key={i} variant="body2" color="text.secondary">
-                            • {reason}
-                          </Typography>
-                        ))}
-                      </Stack>
-                    )}
-                    {pair.factors.length > 0 && (
-                      <Table size="small">
-                        <TableHead>
-                          <TableRow>
-                            <TableCell>Factor</TableCell>
-                            <TableCell>Matches</TableCell>
-                            <TableCell>Weight</TableCell>
-                            <Tooltip title="How identifying the matched values are. 1.00 means the value appears almost nowhere else in the corpus; a low figure means it is common, so it barely supports a link.">
-                              <TableCell>Specificity</TableCell>
-                            </Tooltip>
-                            <TableCell>Contribution</TableCell>
-                            <TableCell>Reason</TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {pair.factors.map((factor) => {
-                            const details = factor.value_details ?? [];
-                            // Mean specificity of the values actually counted;
-                            // non-entity factors (hash, proximity) have none.
-                            const specificity = details.length
-                              ? details.reduce((sum, d) => sum + d.specificity, 0) /
-                                details.length
-                              : null;
-                            return (
-                              <TableRow key={factor.factor}>
-                                <TableCell sx={{ textTransform: "capitalize" }}>
-                                  {factor.factor.replace(/_/g, " ")}
-                                </TableCell>
-                                <TableCell>{factor.matches}</TableCell>
-                                <TableCell>{factor.weight}</TableCell>
-                                <TableCell>
-                                  {specificity === null ? (
-                                    "—"
-                                  ) : (
-                                    <Tooltip
-                                      title={
-                                        <Stack spacing={0.5}>
-                                          {details.map((d) => (
-                                            <Typography key={d.value} variant="caption">
-                                              {d.reason}
-                                            </Typography>
-                                          ))}
-                                        </Stack>
-                                      }
-                                    >
-                                      <Box
-                                        component="span"
-                                        sx={{
-                                          fontWeight: 700,
-                                          color:
-                                            specificity >= 0.7
-                                              ? BRAND.low
-                                              : specificity >= 0.4
-                                                ? BRAND.high
-                                                : BRAND.critical,
-                                        }}
-                                      >
-                                        {specificity.toFixed(2)}
-                                      </Box>
-                                    </Tooltip>
-                                  )}
-                                </TableCell>
-                                <TableCell>{factor.contribution.toFixed(2)}</TableCell>
-                                <TableCell>{factor.reason}</TableCell>
-                              </TableRow>
-                            );
-                          })}
-                        </TableBody>
-                      </Table>
-                    )}
-                  </Stack>
-                </AccordionDetails>
-              </Accordion>
-            ))}
+            <CorrelationTable
+              pairs={corr.pairs}
+              strengthDistribution={corr.strength_distribution}
+            />
           </CardContent>
         )}
       </Card>
@@ -442,6 +418,7 @@ export function InvestigationTab({ caseId }: { caseId: string }) {
             </Typography>
           ) : (
             <>
+              <CapturedIdentities suspects={susp.suspects} />
               {susp.methodology && (
                 <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 2 }}>
                   Methodology (engine): {susp.methodology}
@@ -456,14 +433,11 @@ export function InvestigationTab({ caseId }: { caseId: string }) {
                       alignItems="center"
                       sx={{ flex: 1, minWidth: 0 }}
                     >
-                      <Typography
-                        variant="body2"
-                        sx={{ fontFamily: '"JetBrains Mono", monospace', fontWeight: 700 }}
-                        noWrap
-                      >
-                        {suspect.identity_value}
-                      </Typography>
-                      <Chip size="small" label={suspect.identity_type} variant="outlined" />
+                      <EntityChip
+                        entityType={suspect.identity_type}
+                        value={suspect.identity_value}
+                        flagged={suspect.threat_flagged}
+                      />
                       {suspect.threat_flagged && <StatusChip value="critical" label="threat intel" />}
                       <StatusChip value={suspect.risk_level || suspect.confidence_level} />
                       <ConfidenceBar
