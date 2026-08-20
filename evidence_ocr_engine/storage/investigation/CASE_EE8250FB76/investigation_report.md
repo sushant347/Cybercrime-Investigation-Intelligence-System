@@ -1,6 +1,6 @@
 # Forensic Investigation Report - CASE_EE8250FB76
 
-Generated: 2026-08-20T14:46:36.107Z  
+Generated: 2026-08-20T18:18:43.931Z  
 Produced by: Cybercrime Investigation Intelligence Engine (CIIS), Phase 2  
 Status: Automated analytical draft - investigator review required  
 Basis: every statement below references stored forensic findings; accuracy depends on the source evidence and upstream extraction.
@@ -208,8 +208,8 @@ Clusters are candidate groupings produced by configured thresholds; they do not 
   - **spf present**: True
   - **dmarc present**: True
   - **ssl days left**: 69
-  - **hosting**: Google LLC, United States
-  - **ip address**: 142.250.29.19
+  - **hosting**: Google LLC, India
+  - **ip address**: 142.250.182.101
   - **reasons**:
     - The hybrid decision engine confirmed this URL is legitimate based on trusted signals and ML model agreement.
     - The URL does not use HTTPS, meaning data is transmitted without encryption.
@@ -424,20 +424,20 @@ The current evidence model does not automatically assess these provisions:
 
 ## Report Provenance & Integrity
 
-- **report id**: RPT-EE8250FB76-B127702F
-- **generated at**: 2026-08-20T14:46:36.104Z
+- **report id**: RPT-EE8250FB76-A2A93F5D
+- **generated at**: 2026-08-20T18:18:43.924Z
 - **generator**: CIIS Phase-2 reporting module (template-over-data; no free-text generation)
 - **evidence set digest**: 0f6afe626b2e5e1c4bb70b2efae2d8aea52ca3d8d38b481532cc8e4ff88c3ff6
 - **evidence set digest note**: SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.
 - **source artifact hashes**:
-  - **correlation analysis.json**: b571e616ce7eb58be417faa1aab547078ce1b9a11a58076fbfd240470be370ce
+  - **correlation analysis.json**: 36a1e8076239dadc5dccf24f9c288b6ef790ab74a4adf4ae8bab86b8bfca0769
   - **cross case correlation.json**: eb69d4047d8579e0bc5f6954ea3d2fb83b3f633333637e84c7f0eefd53b6e690
-  - **campaign analysis.json**: d9ae1b22c02ab4337c2fe43c3813b68a54ad059fc04e2ebd61245e8e651352aa
-  - **suspect assessment.json**: dd6d85e85b0eb26a01e950d10dfb523279e7adf5c98c12a38c17e941f55fe1e3
-  - **timeline analysis.json**: ab1a26d0583167b37ab3006cdab642cc9b072532e07efcc8c415850df3fb1d82
-  - **analytics.json**: d646e67b45aef3d1198f02a217bae0f541015c1c8005e40a61973e74eb7aba98
-  - **case priority.json**: ccd2dd49749a03ea33d3f4968f7a9d3ef1ec0e381c24c6465220d555f092603e
-  - **graph.json**: 0449737927e3d59eeb9762f8015bae0b4c8630c2cd194c7749d08183e70214dc
+  - **campaign analysis.json**: 5b7123b106467ea7d40b19ae8f109c6797d62e8b0a156add5b88690ad4fd08a9
+  - **suspect assessment.json**: e5b46de171df226df405aad4692db8e8b6509895fdc3894b499aa0318d095e79
+  - **timeline analysis.json**: 12ed6415569cbb4f900bc3187491af56d12f843ccbd3d653db36bc934d14d2b7
+  - **analytics.json**: ad3b6fd16e8f0e16613f0b79bb74ec9102194cdc60de6ec1127fd781ae6653ea
+  - **case priority.json**: c78ccb54ba2adb1ac4743dfe1837c2ffaa45e109968a869bf3dcb49b7e165dca
+  - **graph.json**: 062155fdc06d92349b8ed39219e93fa5497076cd5330a0466d6d743633835a91
 
 ## Appendix
 

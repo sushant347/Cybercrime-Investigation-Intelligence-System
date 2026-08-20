@@ -1,11 +1,11 @@
 {
   "report_type": "investigation_report",
-  "report_version": 12,
+  "report_version": 14,
   "schema_version": "2.0",
   "case_id": "CASE_EE8250FB76",
-  "generated_at": "2026-08-20T14:46:36.109Z",
+  "generated_at": "2026-08-20T18:18:43.933Z",
   "report": {
-    "report_id": "RPT-EE8250FB76-B127702F",
+    "report_id": "RPT-EE8250FB76-A2A93F5D",
     "sections": {
       "executive_summary": [
         "Case CASE_EE8250FB76 contains 2 evidence items; 1/2 passed the stored SHA-256 integrity check.",
@@ -902,8 +902,8 @@
             "spf_present": true,
             "dmarc_present": true,
             "ssl_days_left": 69,
-            "hosting": "Google LLC, United States",
-            "ip_address": "142.250.29.19",
+            "hosting": "Google LLC, India",
+            "ip_address": "142.250.182.101",
             "reasons": [
               "The hybrid decision engine confirmed this URL is legitimate based on trusted signals and ML model agreement.",
               "The URL does not use HTTPS, meaning data is transmitted without encryption."
@@ -1157,7 +1157,7 @@
         ],
         "caveat": "This is an automated mapping from technical findings to statutory provisions, provided to assist the investigating officer. It is not legal advice and not a charging decision. A provision is listed because the evidence contains the features described, not because an offence has been proved: intent, authorisation and identity are matters for investigation. Provisions of the Act not listed here were not assessed.",
         "summary": "The findings engage 4 provisions of the Electronic Transactions Act, 2063 (2008): s.52, s.47, s.55, s.56. Each is listed with the finding that engaged it and the evidence behind that finding.",
-        "analysis_time_ms": 0.3
+        "analysis_time_ms": 0.4
       },
       "recommendations": [
         "Issue preservation requests to the relevant hosting providers, then seek suspension of the suspected domains: esewa-cashback-offer.xyz,...",
@@ -1170,20 +1170,20 @@
         "Assign standard queue priority (rated 30 out of 100)."
       ],
       "report_provenance": {
-        "report_id": "RPT-EE8250FB76-B127702F",
-        "generated_at": "2026-08-20T14:46:36.104Z",
+        "report_id": "RPT-EE8250FB76-A2A93F5D",
+        "generated_at": "2026-08-20T18:18:43.924Z",
         "generator": "CIIS Phase-2 reporting module (template-over-data; no free-text generation)",
         "evidence_set_digest": "0f6afe626b2e5e1c4bb70b2efae2d8aea52ca3d8d38b481532cc8e4ff88c3ff6",
         "evidence_set_digest_note": "SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.",
         "source_artifact_hashes": {
-          "correlation_analysis.json": "b571e616ce7eb58be417faa1aab547078ce1b9a11a58076fbfd240470be370ce",
+          "correlation_analysis.json": "36a1e8076239dadc5dccf24f9c288b6ef790ab74a4adf4ae8bab86b8bfca0769",
           "cross_case_correlation.json": "eb69d4047d8579e0bc5f6954ea3d2fb83b3f633333637e84c7f0eefd53b6e690",
-          "campaign_analysis.json": "d9ae1b22c02ab4337c2fe43c3813b68a54ad059fc04e2ebd61245e8e651352aa",
-          "suspect_assessment.json": "dd6d85e85b0eb26a01e950d10dfb523279e7adf5c98c12a38c17e941f55fe1e3",
-          "timeline_analysis.json": "ab1a26d0583167b37ab3006cdab642cc9b072532e07efcc8c415850df3fb1d82",
-          "analytics.json": "d646e67b45aef3d1198f02a217bae0f541015c1c8005e40a61973e74eb7aba98",
-          "case_priority.json": "ccd2dd49749a03ea33d3f4968f7a9d3ef1ec0e381c24c6465220d555f092603e",
-          "graph.json": "0449737927e3d59eeb9762f8015bae0b4c8630c2cd194c7749d08183e70214dc"
+          "campaign_analysis.json": "5b7123b106467ea7d40b19ae8f109c6797d62e8b0a156add5b88690ad4fd08a9",
+          "suspect_assessment.json": "e5b46de171df226df405aad4692db8e8b6509895fdc3894b499aa0318d095e79",
+          "timeline_analysis.json": "12ed6415569cbb4f900bc3187491af56d12f843ccbd3d653db36bc934d14d2b7",
+          "analytics.json": "ad3b6fd16e8f0e16613f0b79bb74ec9102194cdc60de6ec1127fd781ae6653ea",
+          "case_priority.json": "c78ccb54ba2adb1ac4743dfe1837c2ffaa45e109968a869bf3dcb49b7e165dca",
+          "graph.json": "062155fdc06d92349b8ed39219e93fa5497076cd5330a0466d6d743633835a91"
         }
       },
       "appendix": {

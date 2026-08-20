@@ -1,6 +1,6 @@
 # Forensic Investigation Report - CASE_2CF24DBA5F
 
-Generated: 2026-08-20T14:46:35.294Z  
+Generated: 2026-08-20T18:18:43.668Z  
 Produced by: Cybercrime Investigation Intelligence Engine (CIIS), Phase 2  
 Status: Automated analytical draft - investigator review required  
 Basis: every statement below references stored forensic findings; accuracy depends on the source evidence and upstream extraction.
@@ -266,20 +266,20 @@ The current evidence model does not automatically assess these provisions:
 
 ## Report Provenance & Integrity
 
-- **report id**: RPT-2CF24DBA5F-8B9EB33D
-- **generated at**: 2026-08-20T14:46:35.291Z
+- **report id**: RPT-2CF24DBA5F-DBCF4641
+- **generated at**: 2026-08-20T18:18:43.665Z
 - **generator**: CIIS Phase-2 reporting module (template-over-data; no free-text generation)
 - **evidence set digest**: 845d2580a93c7505d88a3b735dd3a956db233d26f779d05f4a85f60abfe82c3f
 - **evidence set digest note**: SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.
 - **source artifact hashes**:
-  - **correlation analysis.json**: 1228831a1611726fbd5e664ef884147673b9d872321c6659d5ff5df1f9b81288
+  - **correlation analysis.json**: 2a98d312153d280236bf5b706b53dc0026731d3c5c577efe5fbba64649a8c698
   - **cross case correlation.json**: 6c4b7e022465546d0555c8cb462748c5b6c81a0b9a0b5bdb505f7587bf91bc63
-  - **campaign analysis.json**: 56cdaeb9dc918d3c956f9da9b7a3f6f920d903a5f5d4b684b0e3f6c453209e71
-  - **suspect assessment.json**: 8d3e382d3c8de17e9bafae0f9eb52336ac5cdcaf2c402e4af138d39c4f266aef
-  - **timeline analysis.json**: 6fe056bdd864349e606328ea6e8f74afdf3fe53e7a6f6cd536111cb3b7b9f5a8
-  - **analytics.json**: 907115a71cbdea9527d44df68b5ba22c8379359d7706d969f121a85fdd5824b9
-  - **case priority.json**: f6411fad6eac0b4f62523803791f11143ffb11e4af5fa9e796988fb7e740141c
-  - **graph.json**: 20a6b700f5d7d2a3e790e65c3a51eb5be164baef6e3510368db288b7dec81610
+  - **campaign analysis.json**: 4f15f2b1c560f47704292e20e16f5204944e4481f7756efb0991508ad96cb4b7
+  - **suspect assessment.json**: 7e256eb097795f2980e24067a5a1e12a5553a84f64ce6bf31d452b20d6302f39
+  - **timeline analysis.json**: ac134c682c8edbe1182bafca640715bc5dfa2802d7d32e3415529eff3d005810
+  - **analytics.json**: c609f6e5804a944d1c46831c499343c317534f62a5029f8cde330a5f78089dc1
+  - **case priority.json**: 16aeb6b8e96214cfa8e965be02aed73f5f36505386bb50e85436155a382e9481
+  - **graph.json**: 700d848299758890a0ae3b8aa9145a39c0c9780e3c2e67641c0525b8f49c9d0f
 
 ## Appendix
 

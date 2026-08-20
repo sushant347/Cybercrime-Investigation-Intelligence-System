@@ -1,9 +1,9 @@
 {
   "report_type": "case_priority",
-  "report_version": 19,
+  "report_version": 21,
   "schema_version": "2.0",
   "case_id": "CASE_185915593C",
-  "generated_at": "2026-08-20T14:46:35.019Z",
+  "generated_at": "2026-08-20T18:18:43.364Z",
   "report": {
     "case_id": "CASE_185915593C",
     "components": [
@@ -58,6 +58,6 @@
     ],
     "investigation_recommendation": "Expedite: schedule active investigation within 48 hours; high-risk indicators warrant prompt action.",
     "explanation": "Case priority is 72.7/100 (HIGH), computed from 6 available dimensions with renormalised weights. Evidence confidence: 90/100 (weight 0.20) - mean Phase-1 evidence confidence 90.19. Timeline criticality: 100/100 (weight 0.15) - 7 critical timeline events. Correlation strength: 92/100 (weight 0.15) - strongest evidence-pair confidence 0.92. Campaign size: 80/100 (weight 0.15) - largest campaign groups 4 items. Threat intelligence: 50/100 (weight 0.20) - 50% of evidence touches flagged indicators. Forgery risk: 25/100 (weight 0.15) - max Phase-1 forgery score 25.2.",
-    "computed_at": "2026-08-20T14:46:35.019Z"
+    "computed_at": "2026-08-20T18:18:43.363Z"
   }
 }
