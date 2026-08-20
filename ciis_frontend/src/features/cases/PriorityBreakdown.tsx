@@ -209,6 +209,14 @@ export function PriorityBreakdown({ priority }: { priority: CasePriority }) {
     return { component, share, points: component.score * share };
   });
   const summed = rows.reduce((sum, r) => sum + r.points, 0);
+  // Each row's points are shown to one decimal, so a reader adding the column
+  // by hand can land a rounding step away from the total. Say so when it
+  // happens rather than letting the panel look like it cannot add up.
+  const roundedSum = rows.reduce(
+    (sum, r) => sum + Number(r.points.toFixed(1)),
+    0,
+  );
+  const roundingDrift = Math.abs(roundedSum - summed) >= 0.05;
 
   return (
     <Stack spacing={2}>
@@ -330,6 +338,15 @@ export function PriorityBreakdown({ priority }: { priority: CasePriority }) {
                 </TableBody>
               </Table>
             </Box>
+
+            {roundingDrift && (
+              <Typography variant="caption" color="text.secondary">
+                Each row is shown to one decimal place, so adding the points
+                column by hand can land one rounding step away from the total.
+                The total is computed from the unrounded figures and matches the
+                score above exactly.
+              </Typography>
+            )}
 
             {excluded.length > 0 && (
               <>
