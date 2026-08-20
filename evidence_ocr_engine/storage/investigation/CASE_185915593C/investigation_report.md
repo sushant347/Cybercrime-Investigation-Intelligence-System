@@ -1,6 +1,6 @@
 # Forensic Investigation Report - CASE_185915593C
 
-Generated: 2026-08-20T14:37:36.663Z  
+Generated: 2026-08-20T14:46:35.025Z  
 Produced by: Cybercrime Investigation Intelligence Engine (CIIS), Phase 2  
 Status: Automated analytical draft - investigator review required  
 Basis: every statement below references stored forensic findings; accuracy depends on the source evidence and upstream extraction.
@@ -151,98 +151,152 @@ Clusters are candidate groupings produced by configured thresholds; they do not 
 
 - **intel available**: 1.0
 - **indicators checked**: 7.0
-- **malicious indicators**: 5.0
+- **malicious indicators**: 6.0
 - **suspicious indicators**: 0.0
-- **benign indicators**: 2.0
+- **benign indicators**: 1.0
 - **evidence with threats**: 4.0
 - **threat evidence ratio**: 0.5
 
 ## Model Prediction Results
 
 - **indicators classified**: 5
-- **flagged malicious**: 3
+- **flagged malicious**: 4
 - **predictions**:
   - **indicator**: https://esewa-cashback-offer.xyz/claim?ref=DsN2026
   - **evidence id**: EVID_00009
   - **verdict**: malicious
-  - **risk score**: 100
-  - **confidence**: 1.0
-  - **risk level**: malicious
-  - **source**: heuristics
-  - **model version**: 
+  - **risk score**: 83
+  - **confidence**: 0.83
+  - **risk level**: Critical
+  - **source**: ml:xgboost
+  - **model version**: 4.0.0
   - **domain**: esewa-cashback-offer.xyz
-  - **brand impersonated**: esewa
+  - **trust score**: 20
   - **official domain**: False
+  - **ssl status**: UNKNOWN
+  - **spf present**: False
+  - **dmarc present**: False
   - **reasons**:
-    - hostname contains the brand 'esewa' but is not an official esewa domain
-    - registered under '.xyz', a TLD with a high abuse rate
-    - reward/prize wording in the link: cashback, claim, offer
+    - The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.
+    - AI model classified this URL as phishing with 100% confidence.
+    - The top-level domain is frequently associated with phishing and spam campaigns (risk score: 0.7).
+    - SSL status could not be verified.
+    - The domain or URL has high character entropy, suggesting a randomly-generated string often used in phishing.
+    - The URL contains suspicious keyword(s) associated with phishing.
   - **threat signals**:
-    - hostname contains the brand 'esewa' but is not an official esewa domain
-    - registered under '.xyz', a TLD with a high abuse rate
-    - reward/prize wording in the link: cashback, claim, offer
+    - ✗ Missing SPF record (facilitates email spoofing)
+    - ✗ Missing DMARC record (facilitates email spoofing)
+    - ✗ High-abuse top-level domain
+    - ✗ High character entropy (suspicious random string)
+    - ✗ Phishing-associated keyword(s) in URL
   - **indicator**: esewa.cashbacko90gmail.com
   - **evidence id**: EVID_00010
   - **verdict**: malicious
-  - **risk score**: 75
-  - **confidence**: 0.75
-  - **risk level**: malicious
-  - **source**: heuristics
-  - **model version**: 
+  - **risk score**: 79
+  - **confidence**: 0.79
+  - **risk level**: High
+  - **source**: ml:xgboost
+  - **model version**: 4.0.0
   - **domain**: esewa.cashbacko90gmail.com
-  - **brand impersonated**: esewa
+  - **trust score**: 50
   - **official domain**: False
+  - **ssl status**: UNKNOWN
+  - **spf present**: False
+  - **dmarc present**: False
   - **reasons**:
-    - hostname contains the brand 'esewa' but is not an official esewa domain
-    - reward/prize wording in the link: cashback
+    - The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.
+    - AI model classified this URL as phishing with 100% confidence.
+    - SSL status could not be verified.
+    - The URL does not use HTTPS, meaning data is transmitted without encryption.
+    - The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure.
+    - Brand 'Google' referenced in hostname, but registrable domain 'cashbacko90gmail.com' does not belong to the official Google infrastructure.
   - **threat signals**:
-    - hostname contains the brand 'esewa' but is not an official esewa domain
-    - reward/prize wording in the link: cashback
+    - ✗ Plain HTTP protocol used (unencrypted connections)
+    - ✗ Missing SPF record (facilitates email spoofing)
+    - ✗ Missing DMARC record (facilitates email spoofing)
+  - **indicator**: sunita.gurung216gmail.com
+  - **evidence id**: EVID_00010
+  - **verdict**: malicious
+  - **risk score**: 79
+  - **confidence**: 0.79
+  - **risk level**: High
+  - **source**: ml:xgboost
+  - **model version**: 4.0.0
+  - **domain**: sunita.gurung216gmail.com
+  - **trust score**: 50
+  - **official domain**: False
+  - **ssl status**: UNKNOWN
+  - **spf present**: False
+  - **dmarc present**: False
+  - **reasons**:
+    - The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.
+    - AI model classified this URL as phishing with 100% confidence.
+    - SSL status could not be verified.
+    - The URL does not use HTTPS, meaning data is transmitted without encryption.
+    - The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure.
+    - Brand 'Google' referenced in hostname, but registrable domain 'gurung216gmail.com' does not belong to the official Google infrastructure.
+  - **threat signals**:
+    - ✗ Plain HTTP protocol used (unencrypted connections)
+    - ✗ Missing SPF record (facilitates email spoofing)
+    - ✗ Missing DMARC record (facilitates email spoofing)
   - **indicator**: esewa-verify-kyc.com
   - **evidence id**: EVID_00014
   - **verdict**: malicious
-  - **risk score**: 75
-  - **confidence**: 0.75
-  - **risk level**: malicious
-  - **source**: heuristics
-  - **model version**: 
+  - **risk score**: 79
+  - **confidence**: 0.79
+  - **risk level**: High
+  - **source**: ml:xgboost
+  - **model version**: 4.0.0
   - **domain**: esewa-verify-kyc.com
-  - **brand impersonated**: esewa
+  - **trust score**: 50
   - **official domain**: False
+  - **ssl status**: UNKNOWN
+  - **spf present**: False
+  - **dmarc present**: False
   - **reasons**:
-    - hostname contains the brand 'esewa' but is not an official esewa domain
-    - credential/verification wording in the link: kyc, verify
+    - The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.
+    - AI model classified this URL as phishing with 100% confidence.
+    - SSL status could not be verified.
+    - The URL does not use HTTPS, meaning data is transmitted without encryption.
+    - The URL contains suspicious keyword(s) associated with phishing.
+    - The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure.
   - **threat signals**:
-    - hostname contains the brand 'esewa' but is not an official esewa domain
-    - credential/verification wording in the link: kyc, verify
+    - ✗ Plain HTTP protocol used (unencrypted connections)
+    - ✗ Missing SPF record (facilitates email spoofing)
+    - ✗ Missing DMARC record (facilitates email spoofing)
+    - ✗ Phishing-associated keyword(s) in URL
   - **indicator**: gmail.com
   - **evidence id**: EVID_00008
   - **verdict**: benign
-  - **risk score**: 0
-  - **confidence**: 0.0
-  - **risk level**: benign
-  - **source**: heuristics
-  - **model version**: 
+  - **risk score**: 20
+  - **confidence**: 0.8
+  - **risk level**: Low
+  - **source**: ml:xgboost
+  - **model version**: 4.0.0
   - **domain**: gmail.com
+  - **trust score**: 100
+  - **brand impersonated**: google
   - **official domain**: True
+  - **ssl status**: VALID
+  - **domain age days**: 11330
+  - **registrar**: MarkMonitor, Inc.
+  - **spf present**: True
+  - **dmarc present**: True
+  - **ssl days left**: 69
+  - **hosting**: Google LLC, United States
+  - **ip address**: 142.250.29.19
   - **reasons**:
-    - gmail.com is an official gmail domain
+    - The hybrid decision engine confirmed this URL is legitimate based on trusted signals and ML model agreement.
+    - The URL does not use HTTPS, meaning data is transmitted without encryption.
+  - **threat signals**:
+    - ✗ Plain HTTP protocol used (unencrypted connections)
   - **trust signals**:
-    - gmail.com is an official gmail domain
-  - **indicator**: sunita.gurung216gmail.com
-  - **evidence id**: EVID_00010
-  - **verdict**: benign
-  - **risk score**: 0
-  - **confidence**: 0.0
-  - **risk level**: benign
-  - **source**: heuristics
-  - **model version**: 
-  - **domain**: sunita.gurung216gmail.com
-  - **official domain**: False
-  - **reasons**:
-    - no risk signal matched
-  - **trust signals**:
-    - no risk signal matched
+    - ✓ Official registered domain of trusted brand: google
+    - ✓ Valid SSL certificate
+    - ✓ HTTPS Strict-Transport-Security (HSTS) active
+    - ✓ Established domain age (31.0 years old)
+    - ✓ Registered with trusted registrar (MarkMonitor, Inc.)
+    - ✓ SPF email authentication configured
 
 ## Evidence Quality Summary
 
@@ -369,7 +423,7 @@ The findings engage 7 provisions of the Electronic Transactions Act, 2063 (2008)
 | --- | --- |
 | Conduct | Publishing or displaying material in electronic media, including on the internet, which is prohibited by prevailing law or is contrary to public morality or decent behaviour. |
 | Penalty | fine not exceeding one hundred thousand Rupees or imprisonment not exceeding five years or both |
-| Evidence-based match | threat intelligence flagged 5 indicators in this case; the evidence carries 8 web addresses (eSewa-cashback-offer.xyz and esewa-cashback-offer.xyz), i.e. material published in electronic form. |
+| Evidence-based match | threat intelligence flagged 6 indicators in this case; the evidence carries 8 web addresses (eSewa-cashback-offer.xyz and esewa-cashback-offer.xyz), i.e. material published in electronic form. |
 | Supporting evidence | EVID_00008, EVID_00009, EVID_00010, EVID_00011, EVID_00014 |
 
 ### Section 53 — Punishment to the person who abets to commit computer related offence
@@ -484,32 +538,31 @@ The current evidence model does not automatically assess these provisions:
 | # | Investigator action |
 | --- | --- |
 | 1 | Issue preservation requests to the relevant hosting providers, then seek suspension of the suspected domains: esewa-cashback-offer.xyz,... |
-| 2 | Notify eSewa of suspected brand impersonation and request preservation of any related abuse records. |
-| 3 | Request subscriber/KYC ownership and transaction history from eSewa for: sunita.gurung21@gmail.com, esewa.cashback99@gmail.com. |
-| 4 | Request subscriber/KYC ownership and transaction history from Khalti for: +9779801122334, +9779847011223. |
-| 5 | Request account-holder identity and statements from the relevant bank for: 05010198765432, 9847011223 (+1 more). |
-| 6 | Verify these extracted payment references against the source exhibits before including them in record requests: DSN2026, 0119.0625.987456,... |
-| 7 | Ask the relevant provider to verify registration, ownership and transaction records for +9779801122334, +9779847011223; confirm each party's role. |
-| 8 | Review 4 items as a candidate cluster because they share a website; corroborate the link before combining incidents. |
-| 9 | Review the 4 flagged events with the source exhibits; confirm each event's time, participants and any loss with the complainant. |
-| 10 | Assign high queue priority (rated 73 out of 100). |
+| 2 | Request subscriber/KYC ownership and transaction history from eSewa for: sunita.gurung21@gmail.com, esewa.cashback99@gmail.com. |
+| 3 | Request subscriber/KYC ownership and transaction history from Khalti for: +9779801122334, +9779847011223. |
+| 4 | Request account-holder identity and statements from the relevant bank for: 05010198765432, 9847011223 (+1 more). |
+| 5 | Verify these extracted payment references against the source exhibits before including them in record requests: DSN2026, 0119.0625.987456,... |
+| 6 | Ask the relevant provider to verify registration, ownership and transaction records for +9779801122334, +9779847011223; confirm each party's role. |
+| 7 | Review 4 items as a candidate cluster because they share a website; corroborate the link before combining incidents. |
+| 8 | Review the 4 flagged events with the source exhibits; confirm each event's time, participants and any loss with the complainant. |
+| 9 | Assign high queue priority (rated 73 out of 100). |
 
 ## Report Provenance & Integrity
 
-- **report id**: RPT-185915593C-E17EB5B7
-- **generated at**: 2026-08-20T14:37:36.660Z
+- **report id**: RPT-185915593C-15F26A82
+- **generated at**: 2026-08-20T14:46:35.020Z
 - **generator**: CIIS Phase-2 reporting module (template-over-data; no free-text generation)
 - **evidence set digest**: 623b9e5e28815e86892679dc56e1ac545ea1fddc4590023db83275c6bf9c8b61
 - **evidence set digest note**: SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.
 - **source artifact hashes**:
-  - **correlation analysis.json**: 9757224a52d4bcafd723b968f9b4eb7ea3087c6114708c6ed8674af0bb6a9046
+  - **correlation analysis.json**: ace936cae86c1271087c5ddd81c8c311ab93a0d6523ccce11745ccf678d4693d
   - **cross case correlation.json**: c732a2bfe3c5b97e8f15edc5d141b146245e3c2ce435f0ac7d4425c7210854ee
-  - **campaign analysis.json**: 05d1be10d72591e4884d31f468f1099e8dde687f781af65a7dbb5dd0a0cfcc4b
-  - **suspect assessment.json**: 1a299f2002a5a8b61b35cd54098eff6dee5febb18a96a7c1a70f13514288fa5b
-  - **timeline analysis.json**: 9568c6699de1ba663a4c1cd1c1d65345131137a13c2539a97e3d2f3bc2d67df3
-  - **analytics.json**: 41da3724d72034e1138d340d4ee1d1d95bce1a06aad56ee1bedf4c7e9c0d2c69
-  - **case priority.json**: c8d3a8004ca15e69f0be11b20c4b74aea2f055c9d4c319de4bfda2aa1633c036
-  - **graph.json**: 1507f39e6b2ff34789d0d56da888dfb63cdb45ee12476a7a93e2dcfc6af50bf6
+  - **campaign analysis.json**: a0dcd4b0f23b169cd72aca37f95a43c09a808c1bad24263293f9dd9c3d775b37
+  - **suspect assessment.json**: 5b8b02bc86b58c874786738751edd53d4734adbfd73bf3fe57315c80d482c38d
+  - **timeline analysis.json**: d72fcda7e9d5084ea951ebe1ab1ae9c47f2b4146b6e0db5c7a6ab0ed02d8798c
+  - **analytics.json**: 9779bc84c4c8e11dc429d4e0120050c5bf352b1f5a189d5086c49f5bc9efde40
+  - **case priority.json**: 792f19f3fb4326d50211f0df8af67cfd416f622c46719d2ccbe76688a1e17179
+  - **graph.json**: 65ac50f2cc57ff1bcf1851dcf0d5165f573277fe18173984691ef2ecb8f7980c
 
 ## Appendix
 

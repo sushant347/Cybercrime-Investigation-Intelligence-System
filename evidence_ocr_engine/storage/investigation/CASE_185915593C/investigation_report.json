@@ -1,11 +1,11 @@
 {
   "report_type": "investigation_report",
-  "report_version": 20,
+  "report_version": 21,
   "schema_version": "2.0",
   "case_id": "CASE_185915593C",
-  "generated_at": "2026-08-20T14:37:36.665Z",
+  "generated_at": "2026-08-20T14:46:35.027Z",
   "report": {
-    "report_id": "RPT-185915593C-E17EB5B7",
+    "report_id": "RPT-185915593C-15F26A82",
     "sections": {
       "executive_summary": [
         "Case CASE_185915593C contains 8 evidence items; 8/8 passed the stored SHA-256 integrity check.",
@@ -1348,115 +1348,170 @@
       "threat_intelligence_summary": {
         "intel_available": 1.0,
         "indicators_checked": 7.0,
-        "malicious_indicators": 5.0,
+        "malicious_indicators": 6.0,
         "suspicious_indicators": 0.0,
-        "benign_indicators": 2.0,
+        "benign_indicators": 1.0,
         "evidence_with_threats": 4.0,
         "threat_evidence_ratio": 0.5
       },
       "model_predictions": {
         "indicators_classified": 5,
-        "flagged_malicious": 3,
+        "flagged_malicious": 4,
         "predictions": [
           {
             "indicator": "https://esewa-cashback-offer.xyz/claim?ref=DsN2026",
             "evidence_id": "EVID_00009",
             "verdict": "malicious",
-            "risk_score": 100,
-            "confidence": 1.0,
-            "risk_level": "malicious",
-            "source": "heuristics",
-            "model_version": "",
+            "risk_score": 83,
+            "confidence": 0.83,
+            "risk_level": "Critical",
+            "source": "ml:xgboost",
+            "model_version": "4.0.0",
             "domain": "esewa-cashback-offer.xyz",
-            "brand_impersonated": "esewa",
+            "trust_score": 20,
             "official_domain": false,
+            "ssl_status": "UNKNOWN",
+            "spf_present": false,
+            "dmarc_present": false,
             "reasons": [
-              "hostname contains the brand 'esewa' but is not an official esewa domain",
-              "registered under '.xyz', a TLD with a high abuse rate",
-              "reward/prize wording in the link: cashback, claim, offer"
+              "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
+              "AI model classified this URL as phishing with 100% confidence.",
+              "The top-level domain is frequently associated with phishing and spam campaigns (risk score: 0.7).",
+              "SSL status could not be verified.",
+              "The domain or URL has high character entropy, suggesting a randomly-generated string often used in phishing.",
+              "The URL contains suspicious keyword(s) associated with phishing."
             ],
             "threat_signals": [
-              "hostname contains the brand 'esewa' but is not an official esewa domain",
-              "registered under '.xyz', a TLD with a high abuse rate",
-              "reward/prize wording in the link: cashback, claim, offer"
+              "✗ Missing SPF record (facilitates email spoofing)",
+              "✗ Missing DMARC record (facilitates email spoofing)",
+              "✗ High-abuse top-level domain",
+              "✗ High character entropy (suspicious random string)",
+              "✗ Phishing-associated keyword(s) in URL"
             ]
           },
           {
             "indicator": "esewa.cashbacko90gmail.com",
             "evidence_id": "EVID_00010",
             "verdict": "malicious",
-            "risk_score": 75,
-            "confidence": 0.75,
-            "risk_level": "malicious",
-            "source": "heuristics",
-            "model_version": "",
+            "risk_score": 79,
+            "confidence": 0.79,
+            "risk_level": "High",
+            "source": "ml:xgboost",
+            "model_version": "4.0.0",
             "domain": "esewa.cashbacko90gmail.com",
-            "brand_impersonated": "esewa",
+            "trust_score": 50,
             "official_domain": false,
+            "ssl_status": "UNKNOWN",
+            "spf_present": false,
+            "dmarc_present": false,
             "reasons": [
-              "hostname contains the brand 'esewa' but is not an official esewa domain",
-              "reward/prize wording in the link: cashback"
+              "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
+              "AI model classified this URL as phishing with 100% confidence.",
+              "SSL status could not be verified.",
+              "The URL does not use HTTPS, meaning data is transmitted without encryption.",
+              "The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure.",
+              "Brand 'Google' referenced in hostname, but registrable domain 'cashbacko90gmail.com' does not belong to the official Google infrastructure."
             ],
             "threat_signals": [
-              "hostname contains the brand 'esewa' but is not an official esewa domain",
-              "reward/prize wording in the link: cashback"
+              "✗ Plain HTTP protocol used (unencrypted connections)",
+              "✗ Missing SPF record (facilitates email spoofing)",
+              "✗ Missing DMARC record (facilitates email spoofing)"
+            ]
+          },
+          {
+            "indicator": "sunita.gurung216gmail.com",
+            "evidence_id": "EVID_00010",
+            "verdict": "malicious",
+            "risk_score": 79,
+            "confidence": 0.79,
+            "risk_level": "High",
+            "source": "ml:xgboost",
+            "model_version": "4.0.0",
+            "domain": "sunita.gurung216gmail.com",
+            "trust_score": 50,
+            "official_domain": false,
+            "ssl_status": "UNKNOWN",
+            "spf_present": false,
+            "dmarc_present": false,
+            "reasons": [
+              "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
+              "AI model classified this URL as phishing with 100% confidence.",
+              "SSL status could not be verified.",
+              "The URL does not use HTTPS, meaning data is transmitted without encryption.",
+              "The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure.",
+              "Brand 'Google' referenced in hostname, but registrable domain 'gurung216gmail.com' does not belong to the official Google infrastructure."
+            ],
+            "threat_signals": [
+              "✗ Plain HTTP protocol used (unencrypted connections)",
+              "✗ Missing SPF record (facilitates email spoofing)",
+              "✗ Missing DMARC record (facilitates email spoofing)"
             ]
           },
           {
             "indicator": "esewa-verify-kyc.com",
             "evidence_id": "EVID_00014",
             "verdict": "malicious",
-            "risk_score": 75,
-            "confidence": 0.75,
-            "risk_level": "malicious",
-            "source": "heuristics",
-            "model_version": "",
+            "risk_score": 79,
+            "confidence": 0.79,
+            "risk_level": "High",
+            "source": "ml:xgboost",
+            "model_version": "4.0.0",
             "domain": "esewa-verify-kyc.com",
-            "brand_impersonated": "esewa",
+            "trust_score": 50,
             "official_domain": false,
+            "ssl_status": "UNKNOWN",
+            "spf_present": false,
+            "dmarc_present": false,
             "reasons": [
-              "hostname contains the brand 'esewa' but is not an official esewa domain",
-              "credential/verification wording in the link: kyc, verify"
+              "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
+              "AI model classified this URL as phishing with 100% confidence.",
+              "SSL status could not be verified.",
+              "The URL does not use HTTPS, meaning data is transmitted without encryption.",
+              "The URL contains suspicious keyword(s) associated with phishing.",
+              "The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure."
             ],
             "threat_signals": [
-              "hostname contains the brand 'esewa' but is not an official esewa domain",
-              "credential/verification wording in the link: kyc, verify"
+              "✗ Plain HTTP protocol used (unencrypted connections)",
+              "✗ Missing SPF record (facilitates email spoofing)",
+              "✗ Missing DMARC record (facilitates email spoofing)",
+              "✗ Phishing-associated keyword(s) in URL"
             ]
           },
           {
             "indicator": "gmail.com",
             "evidence_id": "EVID_00008",
             "verdict": "benign",
-            "risk_score": 0,
-            "confidence": 0.0,
-            "risk_level": "benign",
-            "source": "heuristics",
-            "model_version": "",
+            "risk_score": 20,
+            "confidence": 0.8,
+            "risk_level": "Low",
+            "source": "ml:xgboost",
+            "model_version": "4.0.0",
             "domain": "gmail.com",
+            "trust_score": 100,
+            "brand_impersonated": "google",
             "official_domain": true,
+            "ssl_status": "VALID",
+            "domain_age_days": 11330,
+            "registrar": "MarkMonitor, Inc.",
+            "spf_present": true,
+            "dmarc_present": true,
+            "ssl_days_left": 69,
+            "hosting": "Google LLC, United States",
+            "ip_address": "142.250.29.19",
             "reasons": [
-              "gmail.com is an official gmail domain"
+              "The hybrid decision engine confirmed this URL is legitimate based on trusted signals and ML model agreement.",
+              "The URL does not use HTTPS, meaning data is transmitted without encryption."
+            ],
+            "threat_signals": [
+              "✗ Plain HTTP protocol used (unencrypted connections)"
             ],
             "trust_signals": [
-              "gmail.com is an official gmail domain"
-            ]
-          },
-          {
-            "indicator": "sunita.gurung216gmail.com",
-            "evidence_id": "EVID_00010",
-            "verdict": "benign",
-            "risk_score": 0,
-            "confidence": 0.0,
-            "risk_level": "benign",
-            "source": "heuristics",
-            "model_version": "",
-            "domain": "sunita.gurung216gmail.com",
-            "official_domain": false,
-            "reasons": [
-              "no risk signal matched"
-            ],
-            "trust_signals": [
-              "no risk signal matched"
+              "✓ Official registered domain of trusted brand: google",
+              "✓ Valid SSL certificate",
+              "✓ HTTPS Strict-Transport-Security (HSTS) active",
+              "✓ Established domain age (31.0 years old)",
+              "✓ Registered with trusted registrar (MarkMonitor, Inc.)",
+              "✓ SPF email authentication configured"
             ]
           }
         ]
@@ -1676,7 +1731,7 @@
             "citation": "Section 47, Electronic Transactions Act, 2063 (2008)",
             "conduct": "Publishing or displaying material in electronic media, including on the internet, which is prohibited by prevailing law or is contrary to public morality or decent behaviour.",
             "penalty": "fine not exceeding one hundred thousand Rupees or imprisonment not exceeding five years or both",
-            "basis": "threat intelligence flagged 5 indicators in this case; the evidence carries 8 web addresses (eSewa-cashback-offer.xyz and esewa-cashback-offer.xyz), i.e. material published in electronic form.",
+            "basis": "threat intelligence flagged 6 indicators in this case; the evidence carries 8 web addresses (eSewa-cashback-offer.xyz and esewa-cashback-offer.xyz), i.e. material published in electronic form.",
             "evidence_ids": [
               "EVID_00008",
               "EVID_00009",
@@ -1854,11 +1909,10 @@
         ],
         "caveat": "This is an automated mapping from technical findings to statutory provisions, provided to assist the investigating officer. It is not legal advice and not a charging decision. A provision is listed because the evidence contains the features described, not because an offence has been proved: intent, authorisation and identity are matters for investigation. Provisions of the Act not listed here were not assessed.",
         "summary": "The findings engage 7 provisions of the Electronic Transactions Act, 2063 (2008): s.52, s.47, s.53, s.54, s.55, s.19, s.56. Each is listed with the finding that engaged it and the evidence behind that finding.",
-        "analysis_time_ms": 0.6
+        "analysis_time_ms": 0.4
       },
       "recommendations": [
         "Issue preservation requests to the relevant hosting providers, then seek suspension of the suspected domains: esewa-cashback-offer.xyz,...",
-        "Notify eSewa of suspected brand impersonation and request preservation of any related abuse records.",
         "Request subscriber/KYC ownership and transaction history from eSewa for: sunita.gurung21@gmail.com, esewa.cashback99@gmail.com.",
         "Request subscriber/KYC ownership and transaction history from Khalti for: +9779801122334, +9779847011223.",
         "Request account-holder identity and statements from the relevant bank for: 05010198765432, 9847011223 (+1 more).",
@@ -1869,20 +1923,20 @@
         "Assign high queue priority (rated 73 out of 100)."
       ],
       "report_provenance": {
-        "report_id": "RPT-185915593C-E17EB5B7",
-        "generated_at": "2026-08-20T14:37:36.660Z",
+        "report_id": "RPT-185915593C-15F26A82",
+        "generated_at": "2026-08-20T14:46:35.020Z",
         "generator": "CIIS Phase-2 reporting module (template-over-data; no free-text generation)",
         "evidence_set_digest": "623b9e5e28815e86892679dc56e1ac545ea1fddc4590023db83275c6bf9c8b61",
         "evidence_set_digest_note": "SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.",
         "source_artifact_hashes": {
-          "correlation_analysis.json": "9757224a52d4bcafd723b968f9b4eb7ea3087c6114708c6ed8674af0bb6a9046",
+          "correlation_analysis.json": "ace936cae86c1271087c5ddd81c8c311ab93a0d6523ccce11745ccf678d4693d",
           "cross_case_correlation.json": "c732a2bfe3c5b97e8f15edc5d141b146245e3c2ce435f0ac7d4425c7210854ee",
-          "campaign_analysis.json": "05d1be10d72591e4884d31f468f1099e8dde687f781af65a7dbb5dd0a0cfcc4b",
-          "suspect_assessment.json": "1a299f2002a5a8b61b35cd54098eff6dee5febb18a96a7c1a70f13514288fa5b",
-          "timeline_analysis.json": "9568c6699de1ba663a4c1cd1c1d65345131137a13c2539a97e3d2f3bc2d67df3",
-          "analytics.json": "41da3724d72034e1138d340d4ee1d1d95bce1a06aad56ee1bedf4c7e9c0d2c69",
-          "case_priority.json": "c8d3a8004ca15e69f0be11b20c4b74aea2f055c9d4c319de4bfda2aa1633c036",
-          "graph.json": "1507f39e6b2ff34789d0d56da888dfb63cdb45ee12476a7a93e2dcfc6af50bf6"
+          "campaign_analysis.json": "a0dcd4b0f23b169cd72aca37f95a43c09a808c1bad24263293f9dd9c3d775b37",
+          "suspect_assessment.json": "5b8b02bc86b58c874786738751edd53d4734adbfd73bf3fe57315c80d482c38d",
+          "timeline_analysis.json": "d72fcda7e9d5084ea951ebe1ab1ae9c47f2b4146b6e0db5c7a6ab0ed02d8798c",
+          "analytics.json": "9779bc84c4c8e11dc429d4e0120050c5bf352b1f5a189d5086c49f5bc9efde40",
+          "case_priority.json": "792f19f3fb4326d50211f0df8af67cfd416f622c46719d2ccbe76688a1e17179",
+          "graph.json": "65ac50f2cc57ff1bcf1851dcf0d5165f573277fe18173984691ef2ecb8f7980c"
         }
       },
       "appendix": {

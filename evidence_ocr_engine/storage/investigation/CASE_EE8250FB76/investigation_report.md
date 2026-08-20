@@ -1,6 +1,6 @@
 # Forensic Investigation Report - CASE_EE8250FB76
 
-Generated: 2026-08-20T14:37:37.406Z  
+Generated: 2026-08-20T14:46:36.107Z  
 Produced by: Cybercrime Investigation Intelligence Engine (CIIS), Phase 2  
 Status: Automated analytical draft - investigator review required  
 Basis: every statement below references stored forensic findings; accuracy depends on the source evidence and upstream extraction.
@@ -13,7 +13,7 @@ Basis: every statement below references stored forensic findings; accuracy depen
 | 2 | This case was automatically linked to 2 other cases; these are candidate shared-entity associations: CASE_185915593C, CASE_1A1BF573F3 [cross_case_correlation.json]. |
 | 3 | The weighted correlation engine found 0 related evidence pairs out of 1 analysed [correlation_analysis.json]. |
 | 4 | The highest-scoring identity lead is '05019012345678' (bank_accounts), supported by 1 evidence item and scored 68/100; this is a lead, not identity attribution [suspect_assessment.json]. |
-| 5 | Chronology contains 1 evidence-derived event time (1 inferred), 1 acquisition-only record and 0 unresolved records [timeline_analysis.json]. |
+| 5 | Chronology contains 2 evidence-derived event times (1 inferred), 0 acquisition-only records and 0 unresolved records [timeline_analysis.json]. |
 | 6 | Evidence-timed stage order: initial_contact -> social_engineering -> financial_transaction -> post_attack [timeline_analysis.json]. |
 
 ## Scope & Methodology
@@ -55,20 +55,20 @@ Basis: every statement below references stored forensic findings; accuracy depen
 
 ## Timeline Analysis
 
-2 events; 2 timestamps resolved (0 non-inferred, 2 inferred, including 1 acquisition-time fallback); 0 timestamps unresolved. Keyword-derived stage order: initial_contact -> social_engineering -> financial_transaction -> post_attack.
+2 events; 2 timestamps resolved (1 non-inferred, 1 inferred, including 0 acquisition-time fallbacks); 0 timestamps unresolved. Content/metadata event times span 972.1 hours. Keyword-derived stage order: initial_contact -> social_engineering -> financial_transaction -> post_attack.
 
-> Chronology is provisional: acquisition time is an intake timestamp, not proof of when the underlying event occurred. Every fallback and unresolved value must be checked against the source exhibit.
+> Chronology includes inferred values. Date-only values are normalised to 00:00 UTC and do not establish an exact time.
 
 | Events | Non-inferred | Inferred | Acquisition fallback | Unresolved |
 | ---: | ---: | ---: | ---: | ---: |
-| 2 | 0 | 2 | 1 | 0 |
+| 2 | 1 | 1 | 0 | 0 |
 
 ### Chronological Events
 
 | Timestamp (UTC) | Evidence | File | Source | Confidence | Inferred | Stages |
 | --- | --- | --- | --- | --- | --- | --- |
 | 2026-06-15T00:00:00+00:00 | EVID_00005 | 08_complaint_letter.pdf | content_labeled_date_only | medium | True | initial_contact, social_engineering, financial_transaction, post_attack |
-| 2026-07-25T16:24:18.091000+00:00 | EVID_00006 | 07_bank_transfer_slip.pdf | upload_time_fallback | low | True | none |
+| 2026-07-25T12:06:25+00:00 | EVID_00006 | 07_bank_transfer_slip.pdf | metadata_pdf_created | medium | False | none |
 
 ### Stage Assessment
 
@@ -141,58 +141,92 @@ Clusters are candidate groupings produced by configured thresholds; they do not 
   - **indicator**: https://esewa-cashback-offer.xyz/claim
   - **evidence id**: EVID_00005
   - **verdict**: malicious
-  - **risk score**: 100
-  - **confidence**: 1.0
-  - **risk level**: malicious
-  - **source**: heuristics
-  - **model version**: 
+  - **risk score**: 81
+  - **confidence**: 0.81
+  - **risk level**: Critical
+  - **source**: ml:xgboost
+  - **model version**: 4.0.0
   - **domain**: esewa-cashback-offer.xyz
-  - **brand impersonated**: esewa
+  - **trust score**: 35
   - **official domain**: False
+  - **ssl status**: UNKNOWN
+  - **spf present**: False
+  - **dmarc present**: False
   - **reasons**:
-    - hostname contains the brand 'esewa' but is not an official esewa domain
-    - registered under '.xyz', a TLD with a high abuse rate
-    - reward/prize wording in the link: cashback, claim, offer
+    - The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.
+    - AI model classified this URL as phishing with 100% confidence.
+    - The top-level domain is frequently associated with phishing and spam campaigns (risk score: 0.7).
+    - SSL status could not be verified.
+    - The URL contains suspicious keyword(s) associated with phishing.
+    - The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure.
   - **threat signals**:
-    - hostname contains the brand 'esewa' but is not an official esewa domain
-    - registered under '.xyz', a TLD with a high abuse rate
-    - reward/prize wording in the link: cashback, claim, offer
+    - ✗ Missing SPF record (facilitates email spoofing)
+    - ✗ Missing DMARC record (facilitates email spoofing)
+    - ✗ High-abuse top-level domain
+    - ✗ Phishing-associated keyword(s) in URL
   - **indicator**: esewa-verify-kyc.com
   - **evidence id**: EVID_00005
   - **verdict**: malicious
-  - **risk score**: 75
-  - **confidence**: 0.75
-  - **risk level**: malicious
-  - **source**: heuristics
-  - **model version**: 
+  - **risk score**: 79
+  - **confidence**: 0.79
+  - **risk level**: High
+  - **source**: ml:xgboost
+  - **model version**: 4.0.0
   - **domain**: esewa-verify-kyc.com
-  - **brand impersonated**: esewa
+  - **trust score**: 50
   - **official domain**: False
+  - **ssl status**: UNKNOWN
+  - **spf present**: False
+  - **dmarc present**: False
   - **reasons**:
-    - hostname contains the brand 'esewa' but is not an official esewa domain
-    - credential/verification wording in the link: kyc, verify
+    - The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.
+    - AI model classified this URL as phishing with 100% confidence.
+    - SSL status could not be verified.
+    - The URL does not use HTTPS, meaning data is transmitted without encryption.
+    - The URL contains suspicious keyword(s) associated with phishing.
+    - The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure.
   - **threat signals**:
-    - hostname contains the brand 'esewa' but is not an official esewa domain
-    - credential/verification wording in the link: kyc, verify
+    - ✗ Plain HTTP protocol used (unencrypted connections)
+    - ✗ Missing SPF record (facilitates email spoofing)
+    - ✗ Missing DMARC record (facilitates email spoofing)
+    - ✗ Phishing-associated keyword(s) in URL
   - **indicator**: gmail.com
   - **evidence id**: EVID_00005
   - **verdict**: benign
-  - **risk score**: 0
-  - **confidence**: 0.0
-  - **risk level**: benign
-  - **source**: heuristics
-  - **model version**: 
+  - **risk score**: 20
+  - **confidence**: 0.8
+  - **risk level**: Low
+  - **source**: ml:xgboost
+  - **model version**: 4.0.0
   - **domain**: gmail.com
+  - **trust score**: 100
+  - **brand impersonated**: google
   - **official domain**: True
+  - **ssl status**: VALID
+  - **domain age days**: 11330
+  - **registrar**: MarkMonitor, Inc.
+  - **spf present**: True
+  - **dmarc present**: True
+  - **ssl days left**: 69
+  - **hosting**: Google LLC, United States
+  - **ip address**: 142.250.29.19
   - **reasons**:
-    - gmail.com is an official gmail domain
+    - The hybrid decision engine confirmed this URL is legitimate based on trusted signals and ML model agreement.
+    - The URL does not use HTTPS, meaning data is transmitted without encryption.
+  - **threat signals**:
+    - ✗ Plain HTTP protocol used (unencrypted connections)
   - **trust signals**:
-    - gmail.com is an official gmail domain
+    - ✓ Official registered domain of trusted brand: google
+    - ✓ Valid SSL certificate
+    - ✓ HTTPS Strict-Transport-Security (HSTS) active
+    - ✓ Established domain age (31.0 years old)
+    - ✓ Registered with trusted registrar (MarkMonitor, Inc.)
+    - ✓ SPF email authentication configured
 
 ## Evidence Quality Summary
 
 - **mean image quality**: 0.0
-- **mean evidence confidence**: 100.0
+- **mean evidence confidence**: 75.0
 - **mean forgery score**: 0.0
 - **max forgery score**: 0.0
 - **mean ocr confidence**: 0.5
@@ -203,6 +237,7 @@ Clusters are candidate groupings produced by configured thresholds; they do not 
 | Evidence | EXIF | Device | Software | Consistency notes |
 | --- | --- | --- | --- | --- |
 | EVID_00005 | False | none | none | none |
+| EVID_00006 | False | none | none | none |
 
 ## Investigation Statistics
 
@@ -227,15 +262,15 @@ Clusters are candidate groupings produced by configured thresholds; they do not 
   - **event count**: 2.0
   - **resolved event count**: 2.0
   - **unresolved event count**: 0.0
-  - **inferred event count**: 2.0
-  - **non inferred event count**: 0.0
-  - **acquisition fallback count**: 1.0
+  - **inferred event count**: 1.0
+  - **non inferred event count**: 1.0
+  - **acquisition fallback count**: 0.0
   - **progression assessable**: 1.0
   - **stage count**: 4.0
   - **critical event count**: 1.0
-  - **timeline span hours**: 976.41
-  - **event time span hours**: 0.0
-  - **acquisition inclusive span hours**: 976.41
+  - **timeline span hours**: 972.11
+  - **event time span hours**: 972.11
+  - **acquisition inclusive span hours**: 972.11
 - **correlation statistics**:
   - **pair count**: 1.0
   - **related pair count**: 0.0
@@ -247,6 +282,7 @@ Clusters are candidate groupings produced by configured thresholds; they do not 
 | Evidence | Score | Level | Computed explanation |
 | --- | --- | --- | --- |
 | EVID_00005 | 100.0 | VERY_HIGH | Evidence confidence is 100.0/100 (VERY_HIGH), derived from 3 verified dimension(s). Strongest signal: hash_verification (100/100). Weakest signal: metadata (100/100). |
+| EVID_00006 | 50.0 | MODERATE | Evidence confidence is 50.0/100 (MODERATE), derived from 3 verified dimensions. Strongest signal: metadata (100/100). Weakest signal: hash_verification (0/100). |
 
 ## Statement of Limitations
 
@@ -254,7 +290,7 @@ Clusters are candidate groupings produced by configured thresholds; they do not 
 | --- | --- |
 | 1 | This automated report organises submitted material and computed leads. It does not determine guilt or attribute an offence to a person. |
 | 2 | OCR and entity extraction can omit, merge or misclassify text. Identifiers, amounts and names must be verified in the original exhibit before operational use. |
-| 3 | Timeline quality: 2 inferred timestamp(s), including 1 acquisition-time fallback(s), and 0 unresolved timestamp(s). Date-only values use 00:00 UTC; fallbacks describe intake time rather than event time. |
+| 3 | Timeline quality: 1 inferred timestamp(s), including 0 acquisition-time fallback(s), and 0 unresolved timestamp(s). Date-only values use 00:00 UTC; fallbacks describe intake time rather than event time. |
 | 4 | Correlation and cross-case scores measure shared features, not causation, common ownership or identity. |
 | 5 | Campaign clusters and identity-anchor scores are prioritisation aids that require independent corroboration. |
 | 6 | Threat-intelligence verdicts reflect the configured provider and its coverage at analysis time; no match does not prove safety. |
@@ -378,31 +414,30 @@ The current evidence model does not automatically assess these provisions:
 | # | Investigator action |
 | --- | --- |
 | 1 | Issue preservation requests to the relevant hosting providers, then seek suspension of the suspected domains: esewa-cashback-offer.xyz,... |
-| 2 | Notify eSewa of suspected brand impersonation and request preservation of any related abuse records. |
-| 3 | Request subscriber/KYC ownership and transaction history from eSewa for: sunita.gurung21@gmail.com, esewa.cashback99@gmail.com. |
-| 4 | Request subscriber/KYC ownership and transaction history from Khalti for: +9779801122334. |
-| 5 | Request account-holder identity and statements from the relevant bank for: 05019012345678. |
-| 6 | Verify these extracted payment references against the source exhibits before including them in record requests: 0119.0625.987456,... |
-| 7 | Ask the relevant provider to verify registration, ownership and transaction records for 05019012345678, esewa.cashback99@gmail.com; confirm each... |
-| 8 | Review the 1 flagged event with the source exhibits; confirm each event's time, participants and any loss with the complainant. |
-| 9 | Assign standard queue priority (rated 35 out of 100). |
+| 2 | Request subscriber/KYC ownership and transaction history from eSewa for: sunita.gurung21@gmail.com, esewa.cashback99@gmail.com. |
+| 3 | Request subscriber/KYC ownership and transaction history from Khalti for: +9779801122334. |
+| 4 | Request account-holder identity and statements from the relevant bank for: 05019012345678. |
+| 5 | Verify these extracted payment references against the source exhibits before including them in record requests: 0119.0625.987456,... |
+| 6 | Ask the relevant provider to verify registration, ownership and transaction records for 05019012345678, esewa.cashback99@gmail.com; confirm each... |
+| 7 | Review the 1 flagged event with the source exhibits; confirm each event's time, participants and any loss with the complainant. |
+| 8 | Assign standard queue priority (rated 30 out of 100). |
 
 ## Report Provenance & Integrity
 
-- **report id**: RPT-EE8250FB76-79999E09
-- **generated at**: 2026-08-20T14:37:37.398Z
+- **report id**: RPT-EE8250FB76-B127702F
+- **generated at**: 2026-08-20T14:46:36.104Z
 - **generator**: CIIS Phase-2 reporting module (template-over-data; no free-text generation)
 - **evidence set digest**: 0f6afe626b2e5e1c4bb70b2efae2d8aea52ca3d8d38b481532cc8e4ff88c3ff6
 - **evidence set digest note**: SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.
 - **source artifact hashes**:
-  - **correlation analysis.json**: 2992fd26e4f31a525ba1ed0a8ee36360b760fb0b62c184322686e34968db573a
+  - **correlation analysis.json**: b571e616ce7eb58be417faa1aab547078ce1b9a11a58076fbfd240470be370ce
   - **cross case correlation.json**: eb69d4047d8579e0bc5f6954ea3d2fb83b3f633333637e84c7f0eefd53b6e690
-  - **campaign analysis.json**: 05bf323ee75d1b82d4d7c144c1a3344c4d9c86e9a1f937a366bd12f96234ac40
-  - **suspect assessment.json**: 3325cadf2262580a12a901fd38e41ad8e08324625ed24cf5b8b72d6303a2ad00
-  - **timeline analysis.json**: 494c34b2438e269a435c4cba35b4c3611ef0cabe7c48a1c9edcafd24dc13ffd9
-  - **analytics.json**: 7e0e538463e6f4f3b0faec53ab089adf5c1977ef82423be462e8616678069169
-  - **case priority.json**: ed8109c5c1107cd3ac2b8bb056f09c39bc7ca8f55c5a4439ceab27c996dc5687
-  - **graph.json**: 54af2b5455a0fa4dda4e19f4e7bc1fafc6477e03403cd127a5c9c46d4088dae9
+  - **campaign analysis.json**: d9ae1b22c02ab4337c2fe43c3813b68a54ad059fc04e2ebd61245e8e651352aa
+  - **suspect assessment.json**: dd6d85e85b0eb26a01e950d10dfb523279e7adf5c98c12a38c17e941f55fe1e3
+  - **timeline analysis.json**: ab1a26d0583167b37ab3006cdab642cc9b072532e07efcc8c415850df3fb1d82
+  - **analytics.json**: d646e67b45aef3d1198f02a217bae0f541015c1c8005e40a61973e74eb7aba98
+  - **case priority.json**: ccd2dd49749a03ea33d3f4968f7a9d3ef1ec0e381c24c6465220d555f092603e
+  - **graph.json**: 0449737927e3d59eeb9762f8015bae0b4c8630c2cd194c7749d08183e70214dc
 
 ## Appendix
 

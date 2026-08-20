@@ -1,18 +1,18 @@
 {
   "report_type": "case_statistics",
-  "report_version": 18,
+  "report_version": 19,
   "schema_version": "2.0",
   "case_id": "CASE_185915593C",
-  "generated_at": "2026-08-20T14:37:36.655Z",
+  "generated_at": "2026-08-20T14:46:35.017Z",
   "report": {
     "case_id": "CASE_185915593C",
     "evidence_count": 8,
     "threat_statistics": {
       "intel_available": 1.0,
       "indicators_checked": 7.0,
-      "malicious_indicators": 5.0,
+      "malicious_indicators": 6.0,
       "suspicious_indicators": 0.0,
-      "benign_indicators": 2.0,
+      "benign_indicators": 1.0,
       "evidence_with_threats": 4.0,
       "threat_evidence_ratio": 0.5
     },

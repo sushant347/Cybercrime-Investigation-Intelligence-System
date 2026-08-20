@@ -190,3 +190,8 @@ timestamp,case_id,evidence_id,module,action,level,message,duration_ms
 2026-08-03T14:01:00.834Z,CASE_1A1BF573F3,EVID_00025,logo_detection,detected,INFO,brands=none,25.6
 2026-08-03T14:01:00.841Z,CASE_1A1BF573F3,EVID_00025,confidence_scoring,scored,INFO,score=89.1 level=VERY_HIGH components=5/6,0.0
 2026-08-03T14:01:00.842Z,CASE_1A1BF573F3,EVID_00025,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'forgery', 'logos', 'metadata', 'quality'] failures=none",225.7
+2026-08-20T14:46:35.752Z,CASE_EE8250FB76,EVID_00006,phase1_pipeline,started,INFO,file=07_bank_transfer_slip.pdf image=False,0.0
+2026-08-20T14:46:35.801Z,CASE_EE8250FB76,EVID_00006,file_integrity,fingerprinted,INFO,sha256=6f1cc10ae55d554c... entropy=7.8274 magic=PDF document duplicate=True,16.4
+2026-08-20T14:46:36.046Z,CASE_EE8250FB76,EVID_00006,metadata_extraction,extracted,INFO,type=pdf notes=0 errors=0,243.1
+2026-08-20T14:46:36.048Z,CASE_EE8250FB76,EVID_00006,confidence_scoring,scored,INFO,score=50.0 level=MODERATE components=3/6,0.0
+2026-08-20T14:46:36.048Z,CASE_EE8250FB76,EVID_00006,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'metadata'] failures=none",296.7

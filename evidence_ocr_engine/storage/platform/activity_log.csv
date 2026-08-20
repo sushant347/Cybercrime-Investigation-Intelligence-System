@@ -98,3 +98,7 @@ id,created_at,username,module,action,case_id,detail
 97,2026-08-20T14:39:18.037Z,,reports,download,CASE_1A1BF573F3,investigation_report.pdf
 98,2026-08-20T14:39:18.084Z,,reports,download,CASE_185915593C,investigation_report.pdf
 99,2026-08-20T14:39:18.132Z,,reports,download,CASE_EE8250FB76,investigation_report.pdf
+100,2026-08-20T14:46:12.614Z,,investigation,run_analysis,CASE_1A1BF573F3,
+101,2026-08-20T14:46:12.638Z,,investigation,run_analysis,CASE_185915593C,
+102,2026-08-20T14:46:12.686Z,,investigation,run_analysis,CASE_2CF24DBA5F,
+103,2026-08-20T14:46:12.708Z,,investigation,run_analysis,CASE_EE8250FB76,

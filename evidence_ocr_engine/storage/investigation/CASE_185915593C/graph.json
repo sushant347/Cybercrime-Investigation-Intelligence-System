@@ -1,9 +1,9 @@
 {
   "report_type": "graph",
-  "report_version": 26,
+  "report_version": 27,
   "schema_version": "2.0",
   "case_id": "CASE_185915593C",
-  "generated_at": "2026-08-20T14:37:36.623Z",
+  "generated_at": "2026-08-20T14:46:34.998Z",
   "report": {
     "case_id": "CASE_185915593C",
     "directed": false,
@@ -15,8 +15,8 @@
         "properties": {
           "degree_centrality": "0.138889",
           "betweenness_centrality": "0.032081",
-          "pagerank": "0.014597",
-          "graph_importance": "0.128053",
+          "pagerank": "0.014588",
+          "graph_importance": "0.128063",
           "community_id": "6",
           "community_size": "3"
         }
@@ -30,8 +30,8 @@
           "upload_time": "2026-07-25T17:16:30.233Z",
           "degree_centrality": "0.041667",
           "betweenness_centrality": "0.027973",
-          "pagerank": "0.007800",
-          "graph_importance": "0.065704",
+          "pagerank": "0.007794",
+          "graph_importance": "0.065706",
           "community_id": "2",
           "community_size": "18"
         }
@@ -43,8 +43,8 @@
         "properties": {
           "degree_centrality": "0.083333",
           "betweenness_centrality": "0.116458",
-          "pagerank": "0.023617",
-          "graph_importance": "0.201497",
+          "pagerank": "0.023583",
+          "graph_importance": "0.201393",
           "community_id": "2",
           "community_size": "18"
         }
@@ -58,8 +58,8 @@
           "upload_time": "2026-07-25T17:17:07.920Z",
           "degree_centrality": "0.194444",
           "betweenness_centrality": "0.178743",
-          "pagerank": "0.044097",
-          "graph_importance": "0.370454",
+          "pagerank": "0.044056",
+          "graph_importance": "0.370403",
           "community_id": "1",
           "community_size": "25"
         }
@@ -71,8 +71,8 @@
         "properties": {
           "degree_centrality": "0.069444",
           "betweenness_centrality": "0.007309",
-          "pagerank": "0.014882",
-          "graph_importance": "0.107229",
+          "pagerank": "0.014870",
+          "graph_importance": "0.107225",
           "community_id": "1",
           "community_size": "25"
         }
@@ -84,8 +84,8 @@
         "properties": {
           "degree_centrality": "0.069444",
           "betweenness_centrality": "0.007309",
-          "pagerank": "0.014882",
-          "graph_importance": "0.107229",
+          "pagerank": "0.014870",
+          "graph_importance": "0.107225",
           "community_id": "1",
           "community_size": "25"
         }
@@ -97,8 +97,8 @@
         "properties": {
           "degree_centrality": "0.069444",
           "betweenness_centrality": "0.007309",
-          "pagerank": "0.014882",
-          "graph_importance": "0.107229",
+          "pagerank": "0.014870",
+          "graph_importance": "0.107225",
           "community_id": "1",
           "community_size": "25"
         }
@@ -110,8 +110,8 @@
         "properties": {
           "degree_centrality": "0.097222",
           "betweenness_centrality": "0.046443",
-          "pagerank": "0.021016",
-          "graph_importance": "0.163902",
+          "pagerank": "0.020958",
+          "graph_importance": "0.163642",
           "community_id": "4",
           "community_size": "8"
         }
@@ -123,8 +123,8 @@
         "properties": {
           "degree_centrality": "0.013889",
           "betweenness_centrality": "0.000000",
-          "pagerank": "0.005205",
-          "graph_importance": "0.034531",
+          "pagerank": "0.005202",
+          "graph_importance": "0.034537",
           "community_id": "1",
           "community_size": "25"
         }
@@ -136,8 +136,8 @@
         "properties": {
           "degree_centrality": "0.027778",
           "betweenness_centrality": "0.001826",
-          "pagerank": "0.008142",
-          "graph_importance": "0.055866",
+          "pagerank": "0.008118",
+          "graph_importance": "0.055755",
           "community_id": "4",
           "community_size": "8"
         }
@@ -149,8 +149,8 @@
         "properties": {
           "degree_centrality": "0.013889",
           "betweenness_centrality": "0.000000",
-          "pagerank": "0.005205",
-          "graph_importance": "0.034531",
+          "pagerank": "0.005202",
+          "graph_importance": "0.034537",
           "community_id": "1",
           "community_size": "25"
         }
@@ -162,8 +162,8 @@
         "properties": {
           "degree_centrality": "0.013889",
           "betweenness_centrality": "0.000000",
-          "pagerank": "0.005205",
-          "graph_importance": "0.034531",
+          "pagerank": "0.005202",
+          "graph_importance": "0.034537",
           "community_id": "1",
           "community_size": "25"
         }
@@ -175,8 +175,8 @@
         "properties": {
           "degree_centrality": "0.013889",
           "betweenness_centrality": "0.000000",
-          "pagerank": "0.005205",
-          "graph_importance": "0.034531",
+          "pagerank": "0.005202",
+          "graph_importance": "0.034537",
           "community_id": "1",
           "community_size": "25"
         }
@@ -188,8 +188,8 @@
         "properties": {
           "degree_centrality": "0.013889",
           "betweenness_centrality": "0.000000",
-          "pagerank": "0.005205",
-          "graph_importance": "0.034531",
+          "pagerank": "0.005202",
+          "graph_importance": "0.034537",
           "community_id": "1",
           "community_size": "25"
         }
@@ -203,8 +203,8 @@
           "upload_time": "2026-07-25T17:18:32.458Z",
           "degree_centrality": "0.125000",
           "betweenness_centrality": "0.090240",
-          "pagerank": "0.026113",
-          "graph_importance": "0.215883",
+          "pagerank": "0.026100",
+          "graph_importance": "0.215919",
           "community_id": "5",
           "community_size": "8"
         }
@@ -216,8 +216,8 @@
         "properties": {
           "degree_centrality": "0.097222",
           "betweenness_centrality": "0.093352",
-          "pagerank": "0.021396",
-          "graph_importance": "0.182638",
+          "pagerank": "0.021383",
+          "graph_importance": "0.182654",
           "community_id": "5",
           "community_size": "8"
         }
@@ -229,8 +229,8 @@
         "properties": {
           "degree_centrality": "0.069444",
           "betweenness_centrality": "0.007155",
-          "pagerank": "0.014898",
-          "graph_importance": "0.107276",
+          "pagerank": "0.014890",
+          "graph_importance": "0.107292",
           "community_id": "5",
           "community_size": "8"
         }
@@ -242,8 +242,8 @@
         "properties": {
           "degree_centrality": "0.069444",
           "betweenness_centrality": "0.028126",
-          "pagerank": "0.016033",
-          "graph_importance": "0.121539",
+          "pagerank": "0.016027",
+          "graph_importance": "0.121575",
           "community_id": "3",
           "community_size": "11"
         }
@@ -255,8 +255,8 @@
         "properties": {
           "degree_centrality": "0.027778",
           "betweenness_centrality": "0.001109",
-          "pagerank": "0.008499",
-          "graph_importance": "0.057791",
+          "pagerank": "0.008496",
+          "graph_importance": "0.057811",
           "community_id": "5",
           "community_size": "8"
         }
@@ -268,8 +268,8 @@
         "properties": {
           "degree_centrality": "0.027778",
           "betweenness_centrality": "0.000000",
-          "pagerank": "0.007583",
-          "graph_importance": "0.051814",
+          "pagerank": "0.007579",
+          "graph_importance": "0.051824",
           "community_id": "5",
           "community_size": "8"
         }
@@ -281,8 +281,8 @@
         "properties": {
           "degree_centrality": "0.013889",
           "betweenness_centrality": "0.000000",
-          "pagerank": "0.005013",
-          "graph_importance": "0.033359",
+          "pagerank": "0.005012",
+          "graph_importance": "0.033373",
           "community_id": "5",
           "community_size": "8"
         }
@@ -295,9 +295,9 @@
           "file_name": "04_esewa_payment_screenshot.jpg",
           "upload_time": "2026-07-25T17:18:54.475Z",
           "degree_centrality": "0.125000",
-          "betweenness_centrality": "0.072300",
-          "pagerank": "0.024968",
-          "graph_importance": "0.202615",
+          "betweenness_centrality": "0.072496",
+          "pagerank": "0.025393",
+          "graph_importance": "0.205391",
           "community_id": "4",
           "community_size": "8"
         }
@@ -308,9 +308,9 @@
         "label": "esewa.cashbacko90gmail.com",
         "properties": {
           "degree_centrality": "0.027778",
-          "betweenness_centrality": "0.002347",
-          "pagerank": "0.008707",
-          "graph_importance": "0.059495",
+          "betweenness_centrality": "0.001174",
+          "pagerank": "0.008657",
+          "graph_importance": "0.058816",
           "community_id": "4",
           "community_size": "8"
         }
@@ -321,9 +321,9 @@
         "label": "sunita.gurung216gmail.com",
         "properties": {
           "degree_centrality": "0.027778",
-          "betweenness_centrality": "0.000000",
-          "pagerank": "0.008189",
-          "graph_importance": "0.055511",
+          "betweenness_centrality": "0.001174",
+          "pagerank": "0.008657",
+          "graph_importance": "0.058816",
           "community_id": "4",
           "community_size": "8"
         }
@@ -335,8 +335,8 @@
         "properties": {
           "degree_centrality": "0.069444",
           "betweenness_centrality": "0.024817",
-          "pagerank": "0.015110",
-          "graph_importance": "0.114751",
+          "pagerank": "0.015058",
+          "graph_importance": "0.114500",
           "community_id": "4",
           "community_size": "8"
         }
@@ -350,8 +350,8 @@
           "upload_time": "2026-07-25T17:19:57.040Z",
           "degree_centrality": "0.222222",
           "betweenness_centrality": "0.184657",
-          "pagerank": "0.042935",
-          "graph_importance": "0.370991",
+          "pagerank": "0.042893",
+          "graph_importance": "0.370925",
           "community_id": "2",
           "community_size": "18"
         }
@@ -363,8 +363,8 @@
         "properties": {
           "degree_centrality": "0.027778",
           "betweenness_centrality": "0.000000",
-          "pagerank": "0.006845",
-          "graph_importance": "0.047310",
+          "pagerank": "0.006840",
+          "graph_importance": "0.047315",
           "community_id": "2",
           "community_size": "18"
         }
@@ -376,8 +376,8 @@
         "properties": {
           "degree_centrality": "0.069444",
           "betweenness_centrality": "0.001884",
-          "pagerank": "0.014106",
-          "graph_importance": "0.100600",
+          "pagerank": "0.014097",
+          "graph_importance": "0.100605",
           "community_id": "2",
           "community_size": "18"
         }
@@ -389,8 +389,8 @@
         "properties": {
           "degree_centrality": "0.027778",
           "betweenness_centrality": "0.000000",
-          "pagerank": "0.007185",
-          "graph_importance": "0.049387",
+          "pagerank": "0.007181",
+          "graph_importance": "0.049396",
           "community_id": "2",
           "community_size": "18"
         }
@@ -402,8 +402,8 @@
         "properties": {
           "degree_centrality": "0.069444",
           "betweenness_centrality": "0.001884",
-          "pagerank": "0.014106",
-          "graph_importance": "0.100600",
+          "pagerank": "0.014097",
+          "graph_importance": "0.100605",
           "community_id": "2",
           "community_size": "18"
         }
@@ -415,8 +415,8 @@
         "properties": {
           "degree_centrality": "0.097222",
           "betweenness_centrality": "0.078967",
-          "pagerank": "0.022494",
-          "graph_importance": "0.184305",
+          "pagerank": "0.022481",
+          "graph_importance": "0.184324",
           "community_id": "2",
           "community_size": "18"
         }
@@ -428,8 +428,8 @@
         "properties": {
           "degree_centrality": "0.097222",
           "betweenness_centrality": "0.051212",
-          "pagerank": "0.019602",
-          "graph_importance": "0.156944",
+          "pagerank": "0.019590",
+          "graph_importance": "0.156963",
           "community_id": "3",
           "community_size": "11"
         }
@@ -441,8 +441,8 @@
         "properties": {
           "degree_centrality": "0.013889",
           "betweenness_centrality": "0.000000",
-          "pagerank": "0.004625",
-          "graph_importance": "0.030990",
+          "pagerank": "0.004622",
+          "graph_importance": "0.030995",
           "community_id": "2",
           "community_size": "18"
         }
@@ -454,8 +454,8 @@
         "properties": {
           "degree_centrality": "0.013889",
           "betweenness_centrality": "0.000000",
-          "pagerank": "0.004625",
-          "graph_importance": "0.030990",
+          "pagerank": "0.004622",
+          "graph_importance": "0.030995",
           "community_id": "2",
           "community_size": "18"
         }
@@ -467,8 +467,8 @@
         "properties": {
           "degree_centrality": "0.069444",
           "betweenness_centrality": "0.001884",
-          "pagerank": "0.014106",
-          "graph_importance": "0.100600",
+          "pagerank": "0.014097",
+          "graph_importance": "0.100605",
           "community_id": "2",
           "community_size": "18"
         }
@@ -482,8 +482,8 @@
           "upload_time": "2026-07-25T17:20:21.991Z",
           "degree_centrality": "0.069444",
           "betweenness_centrality": "0.056664",
-          "pagerank": "0.015508",
-          "graph_importance": "0.128325",
+          "pagerank": "0.015499",
+          "graph_importance": "0.128341",
           "community_id": "2",
           "community_size": "18"
         }
@@ -495,8 +495,8 @@
         "properties": {
           "degree_centrality": "0.013889",
           "betweenness_centrality": "0.000000",
-          "pagerank": "0.006239",
-          "graph_importance": "0.040837",
+          "pagerank": "0.006237",
+          "graph_importance": "0.040851",
           "community_id": "2",
           "community_size": "18"
         }
@@ -510,8 +510,8 @@
           "upload_time": "2026-07-25T17:20:51.466Z",
           "degree_centrality": "0.152778",
           "betweenness_centrality": "0.073683",
-          "pagerank": "0.027731",
-          "graph_importance": "0.225512",
+          "pagerank": "0.027723",
+          "graph_importance": "0.225584",
           "community_id": "3",
           "community_size": "11"
         }
@@ -523,8 +523,8 @@
         "properties": {
           "degree_centrality": "0.027778",
           "betweenness_centrality": "0.000168",
-          "pagerank": "0.007550",
-          "graph_importance": "0.051672",
+          "pagerank": "0.007548",
+          "graph_importance": "0.051695",
           "community_id": "3",
           "community_size": "11"
         }
@@ -536,8 +536,8 @@
         "properties": {
           "degree_centrality": "0.027778",
           "betweenness_centrality": "0.000168",
-          "pagerank": "0.007550",
-          "graph_importance": "0.051672",
+          "pagerank": "0.007548",
+          "graph_importance": "0.051695",
           "community_id": "3",
           "community_size": "11"
         }
@@ -549,8 +549,8 @@
         "properties": {
           "degree_centrality": "0.013889",
           "betweenness_centrality": "0.000000",
-          "pagerank": "0.004728",
-          "graph_importance": "0.031619",
+          "pagerank": "0.004727",
+          "graph_importance": "0.031635",
           "community_id": "3",
           "community_size": "11"
         }
@@ -562,8 +562,8 @@
         "properties": {
           "degree_centrality": "0.069444",
           "betweenness_centrality": "0.014707",
-          "pagerank": "0.014471",
-          "graph_importance": "0.107314",
+          "pagerank": "0.014464",
+          "graph_importance": "0.107334",
           "community_id": "3",
           "community_size": "11"
         }
@@ -575,8 +575,8 @@
         "properties": {
           "degree_centrality": "0.027778",
           "betweenness_centrality": "0.000168",
-          "pagerank": "0.007550",
-          "graph_importance": "0.051672",
+          "pagerank": "0.007548",
+          "graph_importance": "0.051695",
           "community_id": "3",
           "community_size": "11"
         }
@@ -588,8 +588,8 @@
         "properties": {
           "degree_centrality": "0.069444",
           "betweenness_centrality": "0.014707",
-          "pagerank": "0.014471",
-          "graph_importance": "0.107314",
+          "pagerank": "0.014464",
+          "graph_importance": "0.107334",
           "community_id": "3",
           "community_size": "11"
         }
@@ -603,7 +603,7 @@
           "upload_time": "2026-07-25T17:26:20.455Z",
           "degree_centrality": "0.416667",
           "betweenness_centrality": "0.291774",
-          "pagerank": "0.073767",
+          "pagerank": "0.073713",
           "graph_importance": "0.635454",
           "community_id": "1",
           "community_size": "25"
@@ -616,8 +616,8 @@
         "properties": {
           "degree_centrality": "0.041667",
           "betweenness_centrality": "0.000029",
-          "pagerank": "0.008976",
-          "graph_importance": "0.063098",
+          "pagerank": "0.008970",
+          "graph_importance": "0.063104",
           "community_id": "1",
           "community_size": "25"
         }
@@ -629,8 +629,8 @@
         "properties": {
           "degree_centrality": "0.013889",
           "betweenness_centrality": "0.000000",
-          "pagerank": "0.004275",
-          "graph_importance": "0.028855",
+          "pagerank": "0.004273",
+          "graph_importance": "0.028864",
           "community_id": "1",
           "community_size": "25"
         }
@@ -642,8 +642,8 @@
         "properties": {
           "degree_centrality": "0.013889",
           "betweenness_centrality": "0.000000",
-          "pagerank": "0.004275",
-          "graph_importance": "0.028855",
+          "pagerank": "0.004273",
+          "graph_importance": "0.028864",
           "community_id": "1",
           "community_size": "25"
         }
@@ -655,8 +655,8 @@
         "properties": {
           "degree_centrality": "0.013889",
           "betweenness_centrality": "0.000000",
-          "pagerank": "0.004275",
-          "graph_importance": "0.028855",
+          "pagerank": "0.004273",
+          "graph_importance": "0.028864",
           "community_id": "1",
           "community_size": "25"
         }
@@ -668,8 +668,8 @@
         "properties": {
           "degree_centrality": "0.041667",
           "betweenness_centrality": "0.001163",
-          "pagerank": "0.009368",
-          "graph_importance": "0.065885",
+          "pagerank": "0.009362",
+          "graph_importance": "0.065891",
           "community_id": "1",
           "community_size": "25"
         }
@@ -681,8 +681,8 @@
         "properties": {
           "degree_centrality": "0.041667",
           "betweenness_centrality": "0.000029",
-          "pagerank": "0.008976",
-          "graph_importance": "0.063098",
+          "pagerank": "0.008970",
+          "graph_importance": "0.063104",
           "community_id": "1",
           "community_size": "25"
         }
@@ -694,8 +694,8 @@
         "properties": {
           "degree_centrality": "0.041667",
           "betweenness_centrality": "0.001163",
-          "pagerank": "0.009368",
-          "graph_importance": "0.065885",
+          "pagerank": "0.009362",
+          "graph_importance": "0.065891",
           "community_id": "1",
           "community_size": "25"
         }
@@ -707,8 +707,8 @@
         "properties": {
           "degree_centrality": "0.041667",
           "betweenness_centrality": "0.000029",
-          "pagerank": "0.008976",
-          "graph_importance": "0.063098",
+          "pagerank": "0.008970",
+          "graph_importance": "0.063104",
           "community_id": "1",
           "community_size": "25"
         }
@@ -720,8 +720,8 @@
         "properties": {
           "degree_centrality": "0.041667",
           "betweenness_centrality": "0.000029",
-          "pagerank": "0.008976",
-          "graph_importance": "0.063098",
+          "pagerank": "0.008970",
+          "graph_importance": "0.063104",
           "community_id": "1",
           "community_size": "25"
         }
@@ -733,8 +733,8 @@
         "properties": {
           "degree_centrality": "0.041667",
           "betweenness_centrality": "0.001163",
-          "pagerank": "0.009368",
-          "graph_importance": "0.065885",
+          "pagerank": "0.009362",
+          "graph_importance": "0.065891",
           "community_id": "1",
           "community_size": "25"
         }
@@ -749,8 +749,8 @@
           "timestamp_inferred": "false",
           "degree_centrality": "0.013889",
           "betweenness_centrality": "0.000000",
-          "pagerank": "0.002469",
-          "graph_importance": "0.017842",
+          "pagerank": "0.002466",
+          "graph_importance": "0.017835",
           "community_id": "4",
           "community_size": "8"
         }
@@ -765,8 +765,8 @@
           "timestamp_inferred": "false",
           "degree_centrality": "0.013889",
           "betweenness_centrality": "0.000000",
-          "pagerank": "0.002418",
-          "graph_importance": "0.017526",
+          "pagerank": "0.002417",
+          "graph_importance": "0.017534",
           "community_id": "2",
           "community_size": "18"
         }
@@ -782,7 +782,7 @@
           "degree_centrality": "0.013889",
           "betweenness_centrality": "0.000000",
           "pagerank": "0.002319",
-          "graph_importance": "0.016924",
+          "graph_importance": "0.016934",
           "community_id": "3",
           "community_size": "11"
         }
@@ -798,7 +798,7 @@
           "degree_centrality": "0.013889",
           "betweenness_centrality": "0.000000",
           "pagerank": "0.002274",
-          "graph_importance": "0.016651",
+          "graph_importance": "0.016660",
           "community_id": "1",
           "community_size": "25"
         }
@@ -814,7 +814,7 @@
           "degree_centrality": "0.013889",
           "betweenness_centrality": "0.000000",
           "pagerank": "0.002380",
-          "graph_importance": "0.017298",
+          "graph_importance": "0.017307",
           "community_id": "2",
           "community_size": "18"
         }
@@ -830,7 +830,7 @@
           "degree_centrality": "0.013889",
           "betweenness_centrality": "0.000000",
           "pagerank": "0.002233",
-          "graph_importance": "0.016398",
+          "graph_importance": "0.016407",
           "community_id": "1",
           "community_size": "25"
         }
@@ -846,7 +846,7 @@
           "degree_centrality": "0.013889",
           "betweenness_centrality": "0.000000",
           "pagerank": "0.002222",
-          "graph_importance": "0.016332",
+          "graph_importance": "0.016341",
           "community_id": "5",
           "community_size": "8"
         }
@@ -862,7 +862,7 @@
           "degree_centrality": "0.013889",
           "betweenness_centrality": "0.000000",
           "pagerank": "0.002291",
-          "graph_importance": "0.016754",
+          "graph_importance": "0.016763",
           "community_id": "2",
           "community_size": "18"
         }
@@ -874,8 +874,8 @@
         "properties": {
           "degree_centrality": "0.111111",
           "betweenness_centrality": "0.005477",
-          "pagerank": "0.008424",
-          "graph_importance": "0.075530",
+          "pagerank": "0.008419",
+          "graph_importance": "0.075532",
           "community_id": "6",
           "community_size": "3"
         }
@@ -888,8 +888,8 @@
           "case_id": "CASE_1A1BF573F3",
           "degree_centrality": "0.111111",
           "betweenness_centrality": "0.065724",
-          "pagerank": "0.023506",
-          "graph_importance": "0.188619",
+          "pagerank": "0.023498",
+          "graph_importance": "0.188676",
           "community_id": "3",
           "community_size": "11"
         }
@@ -901,9 +901,9 @@
         "properties": {
           "case_id": "CASE_1A1BF573F3",
           "degree_centrality": "0.069444",
-          "betweenness_centrality": "0.025268",
-          "pagerank": "0.015345",
-          "graph_importance": "0.116342",
+          "betweenness_centrality": "0.025072",
+          "pagerank": "0.015223",
+          "graph_importance": "0.115598",
           "community_id": "4",
           "community_size": "8"
         }
@@ -916,8 +916,8 @@
           "case_id": "CASE_1A1BF573F3",
           "degree_centrality": "0.125000",
           "betweenness_centrality": "0.038989",
-          "pagerank": "0.024338",
-          "graph_importance": "0.187112",
+          "pagerank": "0.024325",
+          "graph_importance": "0.187142",
           "community_id": "2",
           "community_size": "18"
         }
@@ -930,8 +930,8 @@
           "case_id": "CASE_1A1BF573F3",
           "degree_centrality": "0.069444",
           "betweenness_centrality": "0.018012",
-          "pagerank": "0.014226",
-          "graph_importance": "0.106975",
+          "pagerank": "0.014220",
+          "graph_importance": "0.107004",
           "community_id": "5",
           "community_size": "8"
         }
@@ -944,8 +944,8 @@
           "case_id": "CASE_1A1BF573F3",
           "degree_centrality": "0.305556",
           "betweenness_centrality": "0.221711",
-          "pagerank": "0.058275",
-          "graph_importance": "0.494205",
+          "pagerank": "0.058226",
+          "graph_importance": "0.494165",
           "community_id": "1",
           "community_size": "25"
         }
@@ -958,8 +958,8 @@
           "case_id": "CASE_1A1BF573F3",
           "degree_centrality": "0.069444",
           "betweenness_centrality": "0.003887",
-          "pagerank": "0.013224",
-          "graph_importance": "0.095920",
+          "pagerank": "0.013210",
+          "graph_importance": "0.095894",
           "community_id": "1",
           "community_size": "25"
         }
@@ -972,8 +972,8 @@
           "case_id": "CASE_1A1BF573F3",
           "degree_centrality": "0.027778",
           "betweenness_centrality": "0.000140",
-          "pagerank": "0.005341",
-          "graph_importance": "0.038188",
+          "pagerank": "0.005339",
+          "graph_importance": "0.038200",
           "community_id": "2",
           "community_size": "18"
         }
@@ -985,8 +985,8 @@
         "properties": {
           "degree_centrality": "0.027778",
           "betweenness_centrality": "0.000391",
-          "pagerank": "0.006940",
-          "graph_importance": "0.048030",
+          "pagerank": "0.006937",
+          "graph_importance": "0.048043",
           "community_id": "6",
           "community_size": "3"
         }
@@ -999,8 +999,8 @@
           "case_id": "CASE_EE8250FB76",
           "degree_centrality": "0.305556",
           "betweenness_centrality": "0.008216",
-          "pagerank": "0.058300",
-          "graph_importance": "0.419635",
+          "pagerank": "0.058251",
+          "graph_importance": "0.419596",
           "community_id": "1",
           "community_size": "25"
         }
@@ -1259,7 +1259,7 @@
         "timestamp": "2026-07-25T17:18:32.458000+00:00",
         "timestamp_source": "upload_time_fallback",
         "timestamp_inferred": true,
-        "explanation": "esewa-cashback-offer.xyz is flagged malicious by threat intelligence (heuristics)",
+        "explanation": "esewa-cashback-offer.xyz is flagged malicious by threat intelligence (ml:xgboost)",
         "backbone": true
       },
       {
@@ -1319,7 +1319,7 @@
         "timestamp": "2026-07-25T17:18:32.458000+00:00",
         "timestamp_source": "upload_time_fallback",
         "timestamp_inferred": true,
-        "explanation": "https://esewa-cashback-offer.xyz/claim?ref=DsN2026 is flagged malicious by threat intelligence (heuristics)",
+        "explanation": "https://esewa-cashback-offer.xyz/claim?ref=DsN2026 is flagged malicious by threat intelligence (ml:xgboost)",
         "backbone": true
       },
       {
@@ -1409,7 +1409,7 @@
         "timestamp": "2026-06-11T10:42:00+00:00",
         "timestamp_source": "content_labeled_date_time",
         "timestamp_inferred": false,
-        "explanation": "esewa.cashbacko90gmail.com is flagged malicious by threat intelligence (heuristics)",
+        "explanation": "esewa.cashbacko90gmail.com is flagged malicious by threat intelligence (ml:xgboost)",
         "backbone": true
       },
       {
@@ -1426,6 +1426,21 @@
         "timestamp_inferred": false,
         "explanation": "EVID_00010 mentions sunita.gurung216gmail.com",
         "backbone": false
+      },
+      {
+        "source": "domain:sunita.gurung216gmail.com",
+        "target": "evidence:EVID_00010",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00010"
+        ],
+        "timestamp": "2026-06-11T10:42:00+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "sunita.gurung216gmail.com is flagged malicious by threat intelligence (ml:xgboost)",
+        "backbone": true
       },
       {
         "source": "evidence:EVID_00010",
@@ -1544,7 +1559,7 @@
         "timestamp": "2026-06-11T11:15:00+00:00",
         "timestamp_source": "content_labeled_date_time",
         "timestamp_inferred": false,
-        "explanation": "esewa-cashback-offer.xyz is flagged malicious by threat intelligence (heuristics)",
+        "explanation": "esewa-cashback-offer.xyz is flagged malicious by threat intelligence (ml:xgboost)",
         "backbone": true
       },
       {
@@ -2009,7 +2024,7 @@
         "timestamp": "2026-06-15T00:00:00+00:00",
         "timestamp_source": "content_labeled_date_only",
         "timestamp_inferred": true,
-        "explanation": "esewa-cashback-offer.xyz is flagged malicious by threat intelligence (heuristics)",
+        "explanation": "esewa-cashback-offer.xyz is flagged malicious by threat intelligence (ml:xgboost)",
         "backbone": true
       },
       {
@@ -2039,7 +2054,7 @@
         "timestamp": "2026-06-15T00:00:00+00:00",
         "timestamp_source": "content_labeled_date_only",
         "timestamp_inferred": true,
-        "explanation": "esewa-verify-kyc.com is flagged malicious by threat intelligence (heuristics)",
+        "explanation": "esewa-verify-kyc.com is flagged malicious by threat intelligence (ml:xgboost)",
         "backbone": true
       },
       {
@@ -2339,7 +2354,7 @@
         "timestamp": "2026-06-15T00:00:00+00:00",
         "timestamp_source": "content_labeled_date_only",
         "timestamp_inferred": true,
-        "explanation": "https://esewa-cashback-offer.xyz/claim is flagged malicious by threat intelligence (heuristics)",
+        "explanation": "https://esewa-cashback-offer.xyz/claim is flagged malicious by threat intelligence (ml:xgboost)",
         "backbone": true
       },
       {

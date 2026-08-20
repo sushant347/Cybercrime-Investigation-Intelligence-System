@@ -1,9 +1,9 @@
 {
   "report_type": "case_priority",
-  "report_version": 15,
+  "report_version": 16,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-08-20T14:37:37.081Z",
+  "generated_at": "2026-08-20T14:46:35.290Z",
   "report": {
     "case_id": "CASE_2CF24DBA5F",
     "components": [
@@ -57,6 +57,6 @@
     ],
     "investigation_recommendation": "Low urgency: archive-ready unless new evidence raises the correlation or threat picture.",
     "explanation": "Case priority is 13.3/100 (LOW), computed from 5 available dimensions with renormalised weights. Timeline criticality: 67/100 (weight 0.15) - 2 critical timeline events. Correlation strength: 4/100 (weight 0.15) - strongest evidence-pair confidence 0.04. Threat intelligence: 0/100 (weight 0.20) - 0% of evidence touches flagged indicators. Forgery risk: 0/100 (weight 0.15) - max Phase-1 forgery score 0.0. Campaign size: 0/100 (weight 0.15) - largest campaign groups 0 items.",
-    "computed_at": "2026-08-20T14:37:37.080Z"
+    "computed_at": "2026-08-20T14:46:35.289Z"
   }
 }

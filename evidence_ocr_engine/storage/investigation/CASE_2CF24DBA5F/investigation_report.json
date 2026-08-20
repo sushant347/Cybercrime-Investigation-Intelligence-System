@@ -1,11 +1,11 @@
 {
   "report_type": "investigation_report",
-  "report_version": 17,
+  "report_version": 18,
   "schema_version": "2.0",
   "case_id": "CASE_2CF24DBA5F",
-  "generated_at": "2026-08-20T14:37:37.088Z",
+  "generated_at": "2026-08-20T14:46:35.295Z",
   "report": {
-    "report_id": "RPT-2CF24DBA5F-189CEC52",
+    "report_id": "RPT-2CF24DBA5F-8B9EB33D",
     "sections": {
       "executive_summary": [
         "Case CASE_2CF24DBA5F contains 4 evidence items; 4/4 passed the stored SHA-256 integrity check.",
@@ -446,27 +446,27 @@
         ],
         "caveat": "This is an automated mapping from technical findings to statutory provisions, provided to assist the investigating officer. It is not legal advice and not a charging decision. A provision is listed because the evidence contains the features described, not because an offence has been proved: intent, authorisation and identity are matters for investigation. Provisions of the Act not listed here were not assessed.",
         "summary": "The findings engage 2 provisions of the Electronic Transactions Act, 2063 (2008): s.45, s.56. Each is listed with the finding that engaged it and the evidence behind that finding.",
-        "analysis_time_ms": 0.4
+        "analysis_time_ms": 0.2
       },
       "recommendations": [
         "Review the 1 flagged event with the source exhibits; confirm each event's time, participants and any loss with the complainant.",
         "Assign low queue priority (rated 13 out of 100)."
       ],
       "report_provenance": {
-        "report_id": "RPT-2CF24DBA5F-189CEC52",
-        "generated_at": "2026-08-20T14:37:37.083Z",
+        "report_id": "RPT-2CF24DBA5F-8B9EB33D",
+        "generated_at": "2026-08-20T14:46:35.291Z",
         "generator": "CIIS Phase-2 reporting module (template-over-data; no free-text generation)",
         "evidence_set_digest": "845d2580a93c7505d88a3b735dd3a956db233d26f779d05f4a85f60abfe82c3f",
         "evidence_set_digest_note": "SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.",
         "source_artifact_hashes": {
-          "correlation_analysis.json": "98f4f28043a1689bf54a6fcb32e9cf0e4f3250dd842228d053a521953fb3b738",
+          "correlation_analysis.json": "1228831a1611726fbd5e664ef884147673b9d872321c6659d5ff5df1f9b81288",
           "cross_case_correlation.json": "6c4b7e022465546d0555c8cb462748c5b6c81a0b9a0b5bdb505f7587bf91bc63",
-          "campaign_analysis.json": "f5438185d371fd6f977deaead131559bdf8e5f5bbfdc030c867be9ddc99c5225",
-          "suspect_assessment.json": "e4ca740966182819e99dfe7eee9ad16736c504f074fa80e6b1214731b0c9b546",
-          "timeline_analysis.json": "0a6af080bccd78f4e825576bade0d476914ec590a633ea41dbb252bb5015c8da",
-          "analytics.json": "d1f103cdab50c9dcc6493e405fb3c54a6cb678fd03ddd674f18485a62b2b22b7",
-          "case_priority.json": "e9a4f29e5eddb0a04d933aa6f75764e277856332f2b5fc57d1bf4737069a5546",
-          "graph.json": "a29945638104beac4f39da9a596bdeaa412cdf305484849aa8504cd01f095b1f"
+          "campaign_analysis.json": "56cdaeb9dc918d3c956f9da9b7a3f6f920d903a5f5d4b684b0e3f6c453209e71",
+          "suspect_assessment.json": "8d3e382d3c8de17e9bafae0f9eb52336ac5cdcaf2c402e4af138d39c4f266aef",
+          "timeline_analysis.json": "6fe056bdd864349e606328ea6e8f74afdf3fe53e7a6f6cd536111cb3b7b9f5a8",
+          "analytics.json": "907115a71cbdea9527d44df68b5ba22c8379359d7706d969f121a85fdd5824b9",
+          "case_priority.json": "f6411fad6eac0b4f62523803791f11143ffb11e4af5fa9e796988fb7e740141c",
+          "graph.json": "20a6b700f5d7d2a3e790e65c3a51eb5be164baef6e3510368db288b7dec81610"
         }
       },
       "appendix": {
