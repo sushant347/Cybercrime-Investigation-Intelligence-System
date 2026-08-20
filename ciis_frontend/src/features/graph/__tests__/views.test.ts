@@ -7,6 +7,7 @@ import {
   buildEvidenceProjection,
   buildSearchGraphView,
   buildThreatView,
+  buildTimelineView,
   edgePassesRelationshipFilters,
   filterGraphRelationships,
   pairKey,
@@ -147,6 +148,15 @@ describe("buildEvidenceProjection", () => {
 });
 
 describe("special investigation views", () => {
+  it("shows chronology without unrelated entity noise", () => {
+    const view = buildTimelineView(sample());
+    expect(view.nodes.map((item) => item.id)).toContain("timeline_event:T1");
+    expect(view.nodes.map((item) => item.id)).toContain("evidence:E1");
+    expect(view.edges.map((item) => item.edge_type)).toContain("timeline_event");
+    expect(view.edges.map((item) => item.edge_type)).toContain("temporal_relationship");
+    expect(view.nodes.map((item) => item.id)).not.toContain("wallet:W1");
+  });
+
   it("shows threat findings with their immediate evidence context", () => {
     const view = buildThreatView(sample());
     expect(view.nodes.map((item) => item.id)).toContain("url:BAD");

@@ -23,7 +23,7 @@ import { STRUCTURAL_TYPES, type NodeSignals } from "./relevance";
 cytoscape.use(fcose);
 
 /** Layout modes offered to the investigator. */
-export type LayoutMode = "structure" | "force" | "circle";
+export type LayoutMode = "structure" | "timeline" | "force" | "circle";
 
 /**
  * Node sizing model. Kept at module scope (rather than inline in the
@@ -115,6 +115,33 @@ function edgeElementId(edge: RelationshipGraph["edges"][number]): string {
   return `edge:${edge.source}|${edge.target}|${edge.edge_type}`;
 }
 
+function timelineOrderFor(graph: RelationshipGraph): Map<string, number> {
+  const events = graph.nodes
+    .filter((node) => node.node_type === "timeline_event")
+    .sort(
+      (a, b) =>
+        (a.properties.timestamp ?? "~").localeCompare(b.properties.timestamp ?? "~") ||
+        a.id.localeCompare(b.id),
+    );
+  const order = new Map(events.map((node, index) => [node.id, index]));
+  graph.edges
+    .filter((edge) => edge.edge_type === "timeline_event")
+    .forEach((edge) => {
+      const eventId = edge.source.startsWith("timeline_event:") ? edge.source : edge.target;
+      const evidenceId = eventId === edge.source ? edge.target : edge.source;
+      const eventOrder = order.get(eventId);
+      if (eventOrder !== undefined) order.set(evidenceId, eventOrder);
+    });
+  return order;
+}
+
+function timelineClass(type: string, properties: Record<string, string>): string | null {
+  if (type !== "timeline_event") return null;
+  if (properties.time_source === "upload_time_fallback") return "timeline-fallback";
+  if (properties.timestamp_inferred === "true") return "timeline-inferred";
+  return "timeline-actual";
+}
+
 function applySearchState(cy: Core, search: string) {
   cy.elements().removeClass("highlighted dimmed");
   const query = search.trim().toLowerCase();
@@ -146,6 +173,12 @@ function displayLabel(
   const raw = label || id.split(":").slice(1).join(":") || id;
   if (type === "case") return truncate(raw, 22);
   if (type === "evidence") return truncate(properties.file_name || raw, 24);
+  if (type === "timeline_event") {
+    const date = properties.timestamp && properties.timestamp !== "unresolved"
+      ? properties.timestamp.slice(0, 10)
+      : "time unresolved";
+    return truncate(`${date} · ${raw}`, 34);
+  }
   return truncate(raw, 22);
 }
 
@@ -230,6 +263,21 @@ export function GraphCanvas({
             (b.data("degree") as number) - (a.data("degree") as number),
         } as cytoscape.LayoutOptions;
       }
+      if (mode === "timeline") {
+        return {
+          name: "preset",
+          fit: true,
+          padding: 58,
+          positions: (node: NodeSingular) => {
+            const order = Number(node.data("timelineOrder") ?? 0);
+            const type = node.data("type") as string;
+            return {
+              x: 90 + order * 190,
+              y: type === "timeline_event" ? 90 : type === "evidence" ? 260 : 390,
+            };
+          },
+        } as unknown as cytoscape.LayoutOptions;
+      }
       // "force": fcose, not cytoscape's built-in cose. cose has no overlap
       // avoidance at all; fcose's nodeDimensionsIncludeLabels folds each
       // node's rendered label into its physical size during the repulsion
@@ -273,6 +321,7 @@ export function GraphCanvas({
       degree.set(e.source, (degree.get(e.source) ?? 0) + 1);
       degree.set(e.target, (degree.get(e.target) ?? 0) + 1);
     });
+    const timelineOrder = timelineOrderFor(graph);
 
     const crowded = graph.nodes.length > CROWDED_NODE_COUNT;
 
@@ -295,6 +344,8 @@ export function GraphCanvas({
             classes.push("show-label");
           }
           if (node.id === focusNodeId) classes.push("focus-root");
+          const chronologyClass = timelineClass(node.node_type, node.properties);
+          if (chronologyClass) classes.push(chronologyClass);
           return {
             data: {
               id: node.id,
@@ -306,6 +357,7 @@ export function GraphCanvas({
               ),
               type: node.node_type,
               degree: degree.get(node.id) ?? 0,
+              timelineOrder: timelineOrder.get(node.id) ?? timelineOrder.size,
             },
             // On an overview, label the skeleton and only the strongest hubs.
             // Two-evidence leads remain visible but reveal their label on
@@ -374,6 +426,27 @@ export function GraphCanvas({
               )
                 ? 700
                 : 500,
+          },
+        },
+        {
+          selector: "node.timeline-actual",
+          style: { "border-color": "#15803d", "border-width": 3 },
+        },
+        {
+          selector: "node.timeline-inferred",
+          style: {
+            "border-color": "#d97706",
+            "border-width": 3,
+            "border-style": "dashed",
+          },
+        },
+        {
+          selector: "node.timeline-fallback",
+          style: {
+            "border-color": "#64748b",
+            "border-width": 3,
+            "border-style": "dotted",
+            opacity: 0.72,
           },
         },
         {
@@ -693,6 +766,7 @@ export function GraphCanvas({
       degree.set(edge.source, (degree.get(edge.source) ?? 0) + 1);
       degree.set(edge.target, (degree.get(edge.target) ?? 0) + 1);
     });
+    const timelineOrder = timelineOrderFor(graph);
     const crowded = graph.nodes.length > CROWDED_NODE_COUNT;
     const desiredNodeIds = new Set(graph.nodes.map((node) => node.id));
     const desiredEdgeIds = new Set(graph.edges.map(edgeElementId));
@@ -726,6 +800,8 @@ export function GraphCanvas({
           classes.push("show-label");
         }
         if (node.id === focusNodeId) classes.push("focus-root");
+        const chronologyClass = timelineClass(node.node_type, node.properties);
+        if (chronologyClass) classes.push(chronologyClass);
         const data = {
           id: node.id,
           label: displayLabel(
@@ -736,6 +812,7 @@ export function GraphCanvas({
           ),
           type: node.node_type,
           degree: degree.get(node.id) ?? 0,
+          timelineOrder: timelineOrder.get(node.id) ?? timelineOrder.size,
         };
         const existing = cy.getElementById(node.id);
         if (existing.empty()) {
@@ -763,11 +840,13 @@ export function GraphCanvas({
           index,
         };
         const existing = cy.getElementById(id);
+        const classes = edge.backbone ? "backbone" : "";
         if (existing.empty()) {
-          cy.add({ group: "edges", data });
+          cy.add({ group: "edges", data, classes });
           structureChanged = true;
         } else {
           existing.data(data);
+          existing.classes(classes);
         }
       });
 

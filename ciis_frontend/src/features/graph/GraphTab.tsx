@@ -3,6 +3,7 @@ import CenterFocusStrongIcon from "@mui/icons-material/CenterFocusStrong";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import HubIcon from "@mui/icons-material/Hub";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import RestartAltIcon from "@mui/icons-material/RestartAlt";
 import {
   Alert,
   Box,
@@ -50,6 +51,7 @@ import {
   buildCrossCaseView,
   buildEvidenceProjection,
   buildSearchGraphView,
+  buildTimelineView,
   buildThreatView,
   filterGraphRelationships,
   GRAPH_MODES,
@@ -86,6 +88,11 @@ const LAYOUT_LABELS: { value: LayoutMode; label: string; hint: string }[] = [
     hint: "Case at the centre, evidence around it, entities on the outer ring",
   },
   {
+    value: "timeline",
+    label: "Chronology",
+    hint: "Events left-to-right by resolved time, with the source evidence below",
+  },
+  {
     value: "force",
     label: "Clusters",
     hint: "Force-directed with overlap avoidance (fcose) — related items group together. Best on a large case.",
@@ -107,6 +114,7 @@ const TIMESTAMP_FILTERS: { value: TimestampFilter; label: string; hint: string }
 ];
 
 interface GraphPreferences {
+  version?: number;
   mode?: GraphMode;
   density?: Density;
   layout?: LayoutMode;
@@ -118,10 +126,15 @@ interface GraphPreferences {
   focusNodeId?: string | null;
 }
 
+const GRAPH_PREFERENCES_VERSION = 2;
+
 function readGraphPreferences(caseId: string): GraphPreferences {
   if (typeof window === "undefined") return {};
   try {
-    return JSON.parse(window.localStorage.getItem(`ciis:graph:${caseId}`) ?? "{}");
+    const preferences = JSON.parse(
+      window.localStorage.getItem(`ciis:graph:${caseId}`) ?? "{}",
+    ) as GraphPreferences;
+    return preferences.version === GRAPH_PREFERENCES_VERSION ? preferences : {};
   } catch {
     return {};
   }
@@ -152,7 +165,7 @@ export function GraphTab({ caseId }: { caseId: string }) {
     new Set(initialPreferences.hiddenEdgeTypes ?? []),
   );
   const [selection, setSelection] = useState<Selection>(null);
-  const [layout, setLayout] = useState<LayoutMode>(initialPreferences.layout ?? "force");
+  const [layout, setLayout] = useState<LayoutMode>(initialPreferences.layout ?? "structure");
   const [density, setDensity] = useState<Density>(initialPreferences.density ?? "leads");
   const [mode, setMode] = useState<GraphMode>(initialPreferences.mode ?? "evidence");
   const [showUploadBatch, setShowUploadBatch] = useState(false);
@@ -191,6 +204,7 @@ export function GraphTab({ caseId }: { caseId: string }) {
   useEffect(() => {
     if (typeof window === "undefined") return;
     const preferences: GraphPreferences = {
+      version: GRAPH_PREFERENCES_VERSION,
       mode,
       density,
       layout,
@@ -256,6 +270,8 @@ export function GraphTab({ caseId }: { caseId: string }) {
         minimumConfidence,
         includeUploadBatch: showUploadBatch,
       });
+    } else if (mode === "timeline") {
+      result = buildTimelineView(filteredGraph, minimumConfidence);
     } else if (mode === "cross_case") {
       result = buildCrossCaseView(filteredGraph, minimumConfidence);
     } else if (mode === "threats") {
@@ -401,6 +417,8 @@ export function GraphTab({ caseId }: { caseId: string }) {
 
   const selectMode = (next: GraphMode) => {
     setMode(next);
+    if (next === "timeline") setLayout("timeline");
+    else if (layout === "timeline") setLayout("structure");
     setFocusNodeId(null);
     setSelection(null);
     setSearch("");
@@ -437,7 +455,8 @@ export function GraphTab({ caseId }: { caseId: string }) {
       return;
     }
     if (preset === "actual_time") {
-      setMode("evidence");
+      setMode("timeline");
+      setLayout("timeline");
       setMinimumConfidence(0.5);
       setTimestampFilter("actual");
       return;
@@ -456,6 +475,27 @@ export function GraphTab({ caseId }: { caseId: string }) {
     setHiddenTypes(
       new Set(graph.nodes.map((node) => node.node_type).filter((type) => !cryptoTypes.has(type))),
     );
+  };
+
+  const resetView = () => {
+    setSearch("");
+    setSelection(null);
+    setFocusNodeId(null);
+    setMode("evidence");
+    setDensity("leads");
+    setLayout("structure");
+    setMinimumConfidence(0);
+    setTimestampFilter("all");
+    setHiddenTypes(new Set());
+    setHiddenEdgeTypes(new Set());
+    setExpandedPairs(new Set());
+    setShowUploadBatch(false);
+    setShowFilters(false);
+    if (typeof window !== "undefined") {
+      Object.keys(window.localStorage)
+        .filter((key) => key.startsWith(`ciis:graph:viewport:${caseId}:`))
+        .forEach((key) => window.localStorage.removeItem(key));
+    }
   };
 
   const toggleExpandedPair = (key: string) => {
@@ -625,6 +665,16 @@ export function GraphTab({ caseId }: { caseId: string }) {
             >
               Filters
             </Button>
+            <Tooltip title="Restore the readable evidence overview and clear saved filters">
+              <Button
+                size="small"
+                variant="text"
+                startIcon={<RestartAltIcon />}
+                onClick={resetView}
+              >
+                Reset view
+              </Button>
+            </Tooltip>
           </Stack>
           <Box sx={{ flex: 1 }} />
           <Typography variant="caption" color="text.secondary" sx={{ whiteSpace: "nowrap" }}>
@@ -876,6 +926,11 @@ export function GraphTab({ caseId }: { caseId: string }) {
                   timestamp and correlation between the same evidence pair into
                   one labelled line. Click that line to reveal the underlying findings.
                 </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Timeline Flow places reconstructed events from left to right.
+                  A green outline is an actual timestamp, amber dashed is inferred,
+                  and grey dotted means the upload time was used as a fallback.
+                </Typography>
                 <Stack spacing={0.75}>
                   {[
                     ["Hover", "highlights an item and lists what it links to"],
@@ -883,6 +938,7 @@ export function GraphTab({ caseId }: { caseId: string }) {
                     ["Explore", "shows only that item and its immediate relationships"],
                     ["Search", "searches the complete artifact, including hidden items"],
                     ["Views", "switches between evidence, entities, cross-case, threats and full data"],
+                    ["Timeline", "orders reconstructed events and keeps each source exhibit directly below it"],
                     ["Scroll / drag", "zooms and pans; zoom in to reveal every label"],
                   ].map(([action, meaning]) => (
                     <Stack key={action} direction="row" spacing={1}>

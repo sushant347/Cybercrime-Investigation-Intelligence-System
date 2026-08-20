@@ -2,7 +2,13 @@ import type { GraphEdge, GraphNode, RelationshipGraph } from "@/types";
 
 import { confidenceOf, isUploadBatchEdge } from "./relevance";
 
-export type GraphMode = "evidence" | "entities" | "cross_case" | "threats" | "full";
+export type GraphMode =
+  | "evidence"
+  | "timeline"
+  | "entities"
+  | "cross_case"
+  | "threats"
+  | "full";
 export type TimestampFilter = "all" | "actual" | "inferred" | "unresolved";
 
 export const GRAPH_MODES: {
@@ -14,6 +20,11 @@ export const GRAPH_MODES: {
     value: "evidence",
     label: "Evidence map",
     hint: "One node per evidence item and one combined link per related pair",
+  },
+  {
+    value: "timeline",
+    label: "Timeline flow",
+    hint: "Reconstructed events in chronological order with their source evidence",
   },
   {
     value: "entities",
@@ -313,6 +324,47 @@ export function buildEvidenceProjection(
     hiddenNodes: Math.max(0, localIds.size - visibleEvidenceIds.size),
     hiddenEdges: Math.max(0, graph.edges.length - liveEdges.length),
     message: `${aggregates.size} evidence relationship${aggregates.size === 1 ? "" : "s"} summarised from the complete graph`,
+  };
+}
+
+/**
+ * A chronology-first projection of the stored graph. Timeline-event nodes are
+ * paired with their source evidence and direct temporal relationships. Entity
+ * detail remains available in the Entity and Full views, avoiding the dense
+ * hairball that results when every extracted value is drawn beside chronology.
+ */
+export function buildTimelineView(
+  graph: RelationshipGraph,
+  minimumConfidence = 0,
+): DisplayGraphView {
+  const byId = new Map(graph.nodes.map((node) => [node.id, node]));
+  const edges = graph.edges.filter(
+    (edge) =>
+      ["timeline_event", "temporal_relationship"].includes(edge.edge_type) &&
+      confidenceOf(edge) >= minimumConfidence,
+  );
+  const visibleIds = new Set<string>();
+  edges.forEach((edge) => {
+    visibleIds.add(edge.source);
+    visibleIds.add(edge.target);
+  });
+
+  const nodes = [...visibleIds]
+    .map((id) => byId.get(id))
+    .filter((node): node is GraphNode => Boolean(node))
+    .sort((a, b) => {
+      const aTime = a.node_type === "timeline_event" ? a.properties.timestamp ?? "~" : "~~";
+      const bTime = b.node_type === "timeline_event" ? b.properties.timestamp ?? "~" : "~~";
+      return aTime.localeCompare(bTime) || a.id.localeCompare(b.id);
+    });
+  const eventCount = nodes.filter((node) => node.node_type === "timeline_event").length;
+
+  return {
+    nodes,
+    edges,
+    hiddenNodes: Math.max(0, graph.nodes.length - nodes.length),
+    hiddenEdges: Math.max(0, graph.edges.length - edges.length),
+    message: `${eventCount} reconstructed event${eventCount === 1 ? "" : "s"} shown with timestamp provenance and source evidence`,
   };
 }
 
