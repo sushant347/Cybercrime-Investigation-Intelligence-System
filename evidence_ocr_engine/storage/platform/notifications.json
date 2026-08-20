@@ -568,5 +568,25 @@
     "case_id": "CASE_1A1BF573F3",
     "evidence_id": "",
     "read": false
+  },
+  {
+    "id": 62,
+    "created_at": "2026-08-20T13:02:26.281Z",
+    "type": "report_generated",
+    "title": "Investigation analysis completed with warnings for CASE_1A1BF573F3",
+    "message": "Phase-2 artifacts regenerated with 1 warning(s).",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 63,
+    "created_at": "2026-08-20T13:02:26.283Z",
+    "type": "high_priority",
+    "title": "CASE_1A1BF573F3 flagged HIGH priority",
+    "message": "Engine priority score: 74.7.",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "",
+    "read": false
   }
 ]
