@@ -265,3 +265,19 @@ timestamp,case_id,evidence_id,module,action,level,message,duration_ms
 2026-08-21T03:27:26.051Z,CASE_1A1BF573F3,EVID_00019,logo_detection,detected,INFO,brands=['Khalti'],17.8
 2026-08-21T03:27:26.052Z,CASE_1A1BF573F3,EVID_00019,confidence_scoring,scored,INFO,score=83.2 level=VERY_HIGH components=5/6,0.0
 2026-08-21T03:27:26.052Z,CASE_1A1BF573F3,EVID_00019,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'forgery', 'logos', 'metadata', 'quality'] failures=none",82.8
+2026-08-21T03:49:09.846Z,CASE_1669573023,EVID_00026,phase1_pipeline,started,INFO,file=demo_receipt.jpg image=True,0.0
+2026-08-21T03:49:09.851Z,CASE_1669573023,EVID_00026,file_integrity,fingerprinted,INFO,sha256=54a62cd3ad10a85b... entropy=7.215 magic=JPEG image duplicate=True,3.7
+2026-08-21T03:49:09.853Z,CASE_1669573023,EVID_00026,metadata_extraction,extracted,INFO,type=image notes=1 errors=0,0.9
+2026-08-21T03:49:09.883Z,CASE_1669573023,EVID_00026,quality_assessment,assessed,INFO,score=68.2 grade=GOOD expected_ocr=84.1%,24.3
+2026-08-21T03:49:09.937Z,CASE_1669573023,EVID_00026,forgery_detection,analyzed,INFO,score=25.2 risk=MEDIUM status=INDETERMINATE,51.0
+2026-08-21T03:49:09.958Z,CASE_1669573023,EVID_00026,logo_detection,detected,INFO,brands=['Khalti'],19.7
+2026-08-21T03:49:09.959Z,CASE_1669573023,EVID_00026,confidence_scoring,scored,INFO,score=83.2 level=VERY_HIGH components=5/6,0.0
+2026-08-21T03:49:09.959Z,CASE_1669573023,EVID_00026,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'forgery', 'logos', 'metadata', 'quality'] failures=none",113.6
+2026-08-21T04:00:23.484Z,CASE_C88AEF6AA3,EVID_00026,phase1_pipeline,started,INFO,file=demo_receipt.jpg image=True,0.0
+2026-08-21T04:00:23.491Z,CASE_C88AEF6AA3,EVID_00026,file_integrity,fingerprinted,INFO,sha256=54a62cd3ad10a85b... entropy=7.215 magic=JPEG image duplicate=True,5.2
+2026-08-21T04:00:23.494Z,CASE_C88AEF6AA3,EVID_00026,metadata_extraction,extracted,INFO,type=image notes=1 errors=0,1.6
+2026-08-21T04:00:23.525Z,CASE_C88AEF6AA3,EVID_00026,quality_assessment,assessed,INFO,score=68.2 grade=GOOD expected_ocr=84.1%,23.5
+2026-08-21T04:00:24.003Z,CASE_C88AEF6AA3,EVID_00026,forgery_detection,analyzed,INFO,score=25.2 risk=MEDIUM status=INDETERMINATE,477.2
+2026-08-21T04:00:24.038Z,CASE_C88AEF6AA3,EVID_00026,logo_detection,detected,INFO,brands=['Khalti'],19.5
+2026-08-21T04:00:24.039Z,CASE_C88AEF6AA3,EVID_00026,confidence_scoring,scored,INFO,score=83.2 level=VERY_HIGH components=5/6,0.0
+2026-08-21T04:00:24.040Z,CASE_C88AEF6AA3,EVID_00026,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'forgery', 'logos', 'metadata', 'quality'] failures=none",555.9

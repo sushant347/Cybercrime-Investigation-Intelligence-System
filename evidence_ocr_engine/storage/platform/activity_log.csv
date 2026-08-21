@@ -128,3 +128,11 @@ id,created_at,username,module,action,case_id,detail
 127,2026-08-21T03:05:22.371Z,,investigation,run_analysis,CASE_1A1BF573F3,
 128,2026-08-21T03:25:43.744Z,,investigation,run_analysis,CASE_1A1BF573F3,
 129,2026-08-21T03:27:24.942Z,,investigation,run_analysis,CASE_1A1BF573F3,
+130,2026-08-21T03:48:51.367Z,,intake,created,CASE_1669573023,DEMO-SMOKE-1
+131,2026-08-21T03:48:51.525Z,,evidence,upload,CASE_1669573023,demo_receipt.jpg
+132,2026-08-21T03:49:42.030Z,,admin,login,,
+133,2026-08-21T03:49:43.013Z,,admin,delete_case,CASE_1669573023,deleted; refreshed 3 linked case(s)
+134,2026-08-21T04:00:07.869Z,,intake,created,CASE_C88AEF6AA3,DEMO-DELETE-2
+135,2026-08-21T04:00:07.996Z,,evidence,upload,CASE_C88AEF6AA3,demo_receipt.jpg
+136,2026-08-21T04:00:48.061Z,,admin,login,,
+137,2026-08-21T04:01:18.659Z,,admin,delete_case,CASE_C88AEF6AA3,deleted; refreshed 3 linked case(s)

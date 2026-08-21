@@ -993,3 +993,39 @@ timestamp,case_id,module,action,level,message,duration_ms
 2026-08-21T03:27:53.245Z,CASE_1A1BF573F3,legal_basis,assessed,INFO,7 provisions engaged,0.2
 2026-08-21T03:27:53.485Z,CASE_1A1BF573F3,reporting,generated,INFO,21 sections,13.8
 2026-08-21T03:27:53.519Z,CASE_1A1BF573F3,phase2_pipeline,completed,INFO,"modules_ok=['analytics', 'campaigns', 'correlation', 'cross_case', 'graph', 'priority', 'report', 'suspects', 'timeline'] failures=none",26816.8
+2026-08-21T03:49:42.235Z,CASE_185915593C,correlation,analyzed,INFO,"10/28 related pairs, strongest=EVID_00011|EVID_00014",4.7
+2026-08-21T03:49:42.245Z,CASE_185915593C,timeline,analyzed,INFO,"8 events, resolved=8, inferred=6",1.5
+2026-08-21T03:49:42.294Z,CASE_185915593C,graph,built,INFO,"73 nodes, 183 edges, 1 component",37.5
+2026-08-21T03:49:42.295Z,CASE_185915593C,phase2_pipeline,timeline_graph_refreshed,INFO,"8 evidence items, 8 events, 73 graph nodes",0.0
+2026-08-21T03:49:42.303Z,CASE_185915593C,legal_basis,assessed,INFO,7 provisions engaged,0.5
+2026-08-21T03:49:42.518Z,CASE_185915593C,reporting,generated,INFO,21 sections,6.6
+2026-08-21T03:49:42.530Z,CASE_1A1BF573F3,correlation,analyzed,INFO,"10/55 related pairs, strongest=EVID_00019|EVID_00022",3.2
+2026-08-21T03:49:42.538Z,CASE_1A1BF573F3,timeline,analyzed,INFO,"11 events, resolved=11, inferred=10",0.6
+2026-08-21T03:49:42.588Z,CASE_1A1BF573F3,graph,built,INFO,"83 nodes, 191 edges, 1 component",40.1
+2026-08-21T03:49:42.588Z,CASE_1A1BF573F3,phase2_pipeline,timeline_graph_refreshed,INFO,"11 evidence items, 11 events, 83 graph nodes",0.0
+2026-08-21T03:49:42.595Z,CASE_1A1BF573F3,legal_basis,assessed,INFO,7 provisions engaged,0.2
+2026-08-21T03:49:42.809Z,CASE_1A1BF573F3,reporting,generated,INFO,21 sections,5.3
+2026-08-21T03:49:42.812Z,CASE_EE8250FB76,correlation,analyzed,INFO,"0/1 related pairs, strongest=EVID_00005|EVID_00006",0.1
+2026-08-21T03:49:42.818Z,CASE_EE8250FB76,timeline,analyzed,INFO,"2 events, resolved=2, inferred=1",0.7
+2026-08-21T03:49:42.844Z,CASE_EE8250FB76,graph,built,INFO,"46 nodes, 127 edges, 1 component",18.7
+2026-08-21T03:49:42.844Z,CASE_EE8250FB76,phase2_pipeline,timeline_graph_refreshed,INFO,"2 evidence items, 2 events, 46 graph nodes",0.0
+2026-08-21T03:49:42.848Z,CASE_EE8250FB76,legal_basis,assessed,INFO,4 provisions engaged,0.2
+2026-08-21T03:49:43.008Z,CASE_EE8250FB76,reporting,generated,INFO,21 sections,3.3
+2026-08-21T04:00:56.031Z,CASE_185915593C,correlation,analyzed,INFO,"10/28 related pairs, strongest=EVID_00011|EVID_00014",7760.9
+2026-08-21T04:00:56.040Z,CASE_185915593C,timeline,analyzed,INFO,"8 events, resolved=8, inferred=6",1.7
+2026-08-21T04:00:56.233Z,CASE_185915593C,graph,built,INFO,"73 nodes, 183 edges, 1 component",183.3
+2026-08-21T04:00:56.233Z,CASE_185915593C,phase2_pipeline,timeline_graph_refreshed,INFO,"8 evidence items, 8 events, 73 graph nodes",0.0
+2026-08-21T04:00:56.248Z,CASE_185915593C,legal_basis,assessed,INFO,7 provisions engaged,0.4
+2026-08-21T04:00:56.463Z,CASE_185915593C,reporting,generated,INFO,21 sections,13.7
+2026-08-21T04:01:17.992Z,CASE_1A1BF573F3,correlation,analyzed,INFO,"10/55 related pairs, strongest=EVID_00019|EVID_00022",21501.1
+2026-08-21T04:01:18.004Z,CASE_1A1BF573F3,timeline,analyzed,INFO,"11 events, resolved=11, inferred=10",0.8
+2026-08-21T04:01:18.058Z,CASE_1A1BF573F3,graph,built,INFO,"83 nodes, 191 edges, 1 component",45.0
+2026-08-21T04:01:18.059Z,CASE_1A1BF573F3,phase2_pipeline,timeline_graph_refreshed,INFO,"11 evidence items, 11 events, 83 graph nodes",0.0
+2026-08-21T04:01:18.066Z,CASE_1A1BF573F3,legal_basis,assessed,INFO,7 provisions engaged,0.3
+2026-08-21T04:01:18.284Z,CASE_1A1BF573F3,reporting,generated,INFO,21 sections,4.9
+2026-08-21T04:01:18.293Z,CASE_EE8250FB76,correlation,analyzed,INFO,"0/1 related pairs, strongest=EVID_00005|EVID_00006",0.1
+2026-08-21T04:01:18.298Z,CASE_EE8250FB76,timeline,analyzed,INFO,"2 events, resolved=2, inferred=1",0.7
+2026-08-21T04:01:18.325Z,CASE_EE8250FB76,graph,built,INFO,"46 nodes, 127 edges, 1 component",19.0
+2026-08-21T04:01:18.325Z,CASE_EE8250FB76,phase2_pipeline,timeline_graph_refreshed,INFO,"2 evidence items, 2 events, 46 graph nodes",0.0
+2026-08-21T04:01:18.329Z,CASE_EE8250FB76,legal_basis,assessed,INFO,4 provisions engaged,0.2
+2026-08-21T04:01:18.654Z,CASE_EE8250FB76,reporting,generated,INFO,21 sections,3.1
