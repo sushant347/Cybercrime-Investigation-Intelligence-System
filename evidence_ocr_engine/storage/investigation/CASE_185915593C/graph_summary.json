@@ -1,9 +1,9 @@
 {
   "report_type": "graph_summary",
-  "report_version": 33,
+  "report_version": 34,
   "schema_version": "2.0",
   "case_id": "CASE_185915593C",
-  "generated_at": "2026-08-21T04:00:56.233Z",
+  "generated_at": "2026-08-21T05:16:34.433Z",
   "report": {
     "case_id": "CASE_185915593C",
     "headline": "73 nodes and 183 edges across 1 component",

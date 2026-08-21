@@ -1,9 +1,9 @@
 {
   "report_type": "cross_case_correlation",
-  "report_version": 3,
+  "report_version": 5,
   "schema_version": "2.0",
   "case_id": "CASE_EE8250FB76",
-  "generated_at": "2026-08-03T14:03:42.722Z",
+  "generated_at": "2026-08-21T05:16:32.054Z",
   "report": {
     "case_id": "CASE_EE8250FB76",
     "related_case_ids": [
@@ -677,6 +677,6 @@
         "match_reason": "Shares 21 entity(ies) with CASE_1A1BF573F3: bank account 05019012345678, domain esewa-verify-kyc.com, email esewa.cashback99@gmail.com (+18 more). 17 of these are distinctive; the other 4 are common across the corpus and were discounted"
       }
     ],
-    "analysis_time_ms": 67.4
+    "analysis_time_ms": 4.0
   }
 }

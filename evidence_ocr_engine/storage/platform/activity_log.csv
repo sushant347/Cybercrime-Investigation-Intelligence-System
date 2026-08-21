@@ -136,3 +136,26 @@ id,created_at,username,module,action,case_id,detail
 135,2026-08-21T04:00:07.996Z,,evidence,upload,CASE_C88AEF6AA3,demo_receipt.jpg
 136,2026-08-21T04:00:48.061Z,,admin,login,,
 137,2026-08-21T04:01:18.659Z,,admin,delete_case,CASE_C88AEF6AA3,deleted; refreshed 3 linked case(s)
+138,2026-08-21T04:34:02.045Z,,intake,created,CASE_09C3784530,DEMO-LOTTERY-2026
+139,2026-08-21T04:34:02.189Z,,evidence,upload,CASE_09C3784530,01_sms_lottery.jpg
+140,2026-08-21T04:34:02.375Z,,evidence,upload,CASE_09C3784530,02_whatsapp_thread.jpg
+141,2026-08-21T04:34:02.551Z,,evidence,upload,CASE_09C3784530,03_payment_receipt.jpg
+142,2026-08-21T04:34:02.814Z,,evidence,upload,CASE_09C3784530,04_bank_statement.csv
+143,2026-08-21T04:34:03.020Z,,evidence,upload,CASE_09C3784530,05_complaint.txt
+144,2026-08-21T04:34:53.436Z,,investigation,run_analysis,CASE_09C3784530,
+145,2026-08-21T04:43:28.969Z,,intake,created,CASE_1ABBBF68B9,EDGE-EMPTY
+146,2026-08-21T04:43:29.113Z,,investigation,run_analysis,CASE_1ABBBF68B9,
+147,2026-08-21T04:44:53.244Z,,investigation,run_analysis,CASE_09C3784530,
+148,2026-08-21T04:45:22.346Z,,intake,created,CASE_137B13D47D,EDGE-HOSTILE
+149,2026-08-21T04:45:22.503Z,,evidence,upload,CASE_137B13D47D,plain.txt
+150,2026-08-21T04:45:22.528Z,,evidence,upload,CASE_137B13D47D,tiny_blank.png
+151,2026-08-21T04:45:22.556Z,,evidence,upload,CASE_137B13D47D,notanimage.jpg
+152,2026-08-21T04:46:07.785Z,,investigation,run_analysis,CASE_137B13D47D,
+153,2026-08-21T04:47:55.879Z,,reports,download,CASE_09C3784530,investigation_report.pdf
+154,2026-08-21T04:47:55.897Z,,reports,download,CASE_137B13D47D,investigation_report.pdf
+155,2026-08-21T04:57:58.348Z,,investigation,run_analysis,CASE_09C3784530,
+156,2026-08-21T05:00:42.358Z,,rag_assistant,ask,CASE_09C3784530,insufficient=False; citations=0
+157,2026-08-21T05:16:22.037Z,,admin,login,,
+158,2026-08-21T05:16:41.347Z,,admin,delete_case,CASE_09C3784530,deleted; refreshed 3 linked case(s)
+159,2026-08-21T05:16:41.480Z,,admin,delete_case,CASE_137B13D47D,deleted; refreshed 0 linked case(s)
+160,2026-08-21T05:16:41.539Z,,admin,delete_case,CASE_1ABBBF68B9,deleted; refreshed 0 linked case(s)

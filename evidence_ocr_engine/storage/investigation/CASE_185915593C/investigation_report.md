@@ -1,6 +1,6 @@
 # Forensic Investigation Report - CASE_185915593C
 
-Generated: 2026-08-21T04:00:56.250Z  
+Generated: 2026-08-21T05:16:34.442Z  
 Produced by: Cybercrime Investigation Intelligence Engine (CIIS), Phase 2  
 Status: Automated analytical draft - investigator review required  
 Basis: every statement below references stored forensic findings; accuracy depends on the source evidence and upstream extraction.
@@ -496,20 +496,20 @@ The current evidence model does not automatically assess these provisions:
 
 ## Report Provenance & Integrity
 
-- **report id**: RPT-185915593C-7E6801F2
-- **generated at**: 2026-08-21T04:00:56.238Z
+- **report id**: RPT-185915593C-DB0752EF
+- **generated at**: 2026-08-21T05:16:34.439Z
 - **generator**: CIIS Phase-2 reporting module (template-over-data; no free-text generation)
 - **evidence set digest**: 623b9e5e28815e86892679dc56e1ac545ea1fddc4590023db83275c6bf9c8b61
 - **evidence set digest note**: SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.
 - **source artifact hashes**:
-  - **correlation analysis.json**: 50d7b7551ff7a033babfb95e8ff35b2282fe3e062a2468169c27f45c6a47cc37
-  - **cross case correlation.json**: c732a2bfe3c5b97e8f15edc5d141b146245e3c2ce435f0ac7d4425c7210854ee
+  - **correlation analysis.json**: 91666688ca3fdfb79e81bb4add33c8337a3316f59d8a06a6979d025ef03e429a
+  - **cross case correlation.json**: 936385220c7fe7dd8c51ba5aa2f29bc641a88a2cdeab36d5a2682aec8f213824
   - **campaign analysis.json**: 87e459d180612b5b918839340de138a5998263146028f51da9ab5883224ce7b1
   - **suspect assessment.json**: df6c38c5b555d87e9ad2bafae13d0828c4933535971a8b6c8d559e5514fd74b0
-  - **timeline analysis.json**: 2b57f704f493b31e1ad7590c77e04ee564e364f3e09778893107c3da937915de
+  - **timeline analysis.json**: 0e210c75a553a5175c9f9044a160086634c48143ecbb53b6b869923c634f3660
   - **analytics.json**: 5bdb28ce4803ebd21f45c91faff767b17e31f3056464f5d54b6493809a99e878
   - **case priority.json**: 0df87de368b309b3370072dff7ba606d21630476756f9a30123be1d72374fd26
-  - **graph.json**: f40522c70f90aab32e85fdb1cf21f4eaa8b893bfc6ad8934a163433d57c95d67
+  - **graph.json**: 4e57b9cd1e25741893946a32f57a36b20ce3d1d5672b40861a34aad6655b3a01
 
 ## Appendix
 

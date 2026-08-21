@@ -1028,5 +1028,35 @@
     "case_id": "",
     "evidence_id": "",
     "read": false
+  },
+  {
+    "id": 122,
+    "created_at": "2026-08-21T05:16:41.349Z",
+    "type": "case_deleted",
+    "title": "Case CASE_09C3784530 deleted",
+    "message": "Removed by an administrator. Linked cases refreshed: CASE_EE8250FB76, CASE_185915593C, CASE_1A1BF573F3",
+    "case_id": "",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 123,
+    "created_at": "2026-08-21T05:16:41.482Z",
+    "type": "case_deleted",
+    "title": "Case CASE_137B13D47D deleted",
+    "message": "Removed by an administrator. Linked cases refreshed: none",
+    "case_id": "",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 124,
+    "created_at": "2026-08-21T05:16:41.543Z",
+    "type": "case_deleted",
+    "title": "Case CASE_1ABBBF68B9 deleted",
+    "message": "Removed by an administrator. Linked cases refreshed: none",
+    "case_id": "",
+    "evidence_id": "",
+    "read": false
   }
 ]
