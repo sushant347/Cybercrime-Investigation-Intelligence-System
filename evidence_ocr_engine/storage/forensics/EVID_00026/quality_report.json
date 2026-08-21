@@ -1,0 +1,50 @@
+{
+  "report_type": "quality_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00026",
+  "case_id": "CASE_0CD406813C",
+  "generated_at": "2026-08-21T06:37:34.453Z",
+  "report": {
+    "evidence_id": "EVID_00026",
+    "case_id": "CASE_0CD406813C",
+    "source_file": "07_qr_flyer_poor_capture.jpg",
+    "metrics": {
+      "width": 1000,
+      "height": 250,
+      "megapixels": 0.25,
+      "blur_laplacian_variance": 0.593672,
+      "brightness_mean": 94.825952,
+      "contrast_std": 8.864864764546384,
+      "noise_residual": 0.016884,
+      "skew_angle_deg": 0.0,
+      "compression_quality": 97.76484375,
+      "edge_density": 0.0,
+      "text_like_components": 17
+    },
+    "sub_scores": {
+      "blur": 0.0,
+      "brightness": 84.0,
+      "contrast": 1.7,
+      "noise": 100.0,
+      "resolution": 0.0,
+      "skew": 100.0,
+      "compression": 97.8,
+      "readability": 15.5
+    },
+    "overall_score": 38.0,
+    "quality_grade": "POOR",
+    "expected_ocr_accuracy": 52.6,
+    "readability_score": 15.5,
+    "recommended_operations": [
+      "clahe",
+      "edge_enhancement",
+      "super_resolution",
+      "perspective_correction"
+    ],
+    "notes": [
+      "Severe blur detected - OCR output may be unreliable."
+    ],
+    "analysis_time_ms": 24.9
+  }
+}

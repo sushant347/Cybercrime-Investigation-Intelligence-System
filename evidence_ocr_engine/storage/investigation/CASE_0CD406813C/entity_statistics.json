@@ -1,0 +1,128 @@
+{
+  "report_type": "entity_statistics",
+  "report_version": 1,
+  "schema_version": "2.0",
+  "case_id": "CASE_0CD406813C",
+  "generated_at": "2026-08-21T06:39:12.129Z",
+  "report": {
+    "case_id": "CASE_0CD406813C",
+    "entity_statistics": {
+      "bank_accounts": 1,
+      "dates": 7,
+      "domains": 6,
+      "emails": 4,
+      "esewa_ids": 4,
+      "money": 10,
+      "phones": 8,
+      "times": 2,
+      "transaction_ids": 2,
+      "urls": 3
+    },
+    "top_entities": {
+      "bank_accounts": [
+        {
+          "value": "01903015472901",
+          "count": 1
+        }
+      ],
+      "dates": [
+        {
+          "value": "2026-07-14",
+          "count": 4
+        },
+        {
+          "value": "2026-07-15",
+          "count": 1
+        },
+        {
+          "value": "2026-07-01",
+          "count": 1
+        },
+        {
+          "value": "14 jul 2026",
+          "count": 1
+        }
+      ],
+      "domains": [
+        {
+          "value": "esewa-bonus-claim.xyz",
+          "count": 3
+        },
+        {
+          "value": "gmail.com",
+          "count": 3
+        }
+      ],
+      "emails": [
+        {
+          "value": "reward.center2026@gmail.com",
+          "count": 3
+        },
+        {
+          "value": "sunita.rai88@gmail.com",
+          "count": 1
+        }
+      ],
+      "esewa_ids": [
+        {
+          "value": "+9779812345678",
+          "count": 4
+        }
+      ],
+      "money": [
+        {
+          "value": "npr 500",
+          "count": 5
+        },
+        {
+          "value": "npr 15000",
+          "count": 2
+        },
+        {
+          "value": "npr 12000",
+          "count": 1
+        },
+        {
+          "value": "npr 12500",
+          "count": 1
+        },
+        {
+          "value": "npr 15",
+          "count": 1
+        }
+      ],
+      "phones": [
+        {
+          "value": "+9779812345678",
+          "count": 6
+        },
+        {
+          "value": "+9779841002233",
+          "count": 2
+        }
+      ],
+      "times": [
+        {
+          "value": "09:12:04",
+          "count": 1
+        },
+        {
+          "value": "11:42 am",
+          "count": 1
+        }
+      ],
+      "transaction_ids": [
+        {
+          "value": "esw-2026-0714-88231",
+          "count": 2
+        }
+      ],
+      "urls": [
+        {
+          "value": "https://esewa-bonus-claim.xyz/verify?ref=dsn2026",
+          "count": 3
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "report_type": "metadata_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00029",
+  "case_id": "CASE_0CD406813C",
+  "generated_at": "2026-08-21T06:37:35.825Z",
+  "report": {
+    "evidence_id": "EVID_00029",
+    "case_id": "CASE_0CD406813C",
+    "source_file": "EVID_00029__603b4019__04_phishing_email.txt",
+    "file_type": "text",
+    "filesystem": {
+      "file_size_bytes": 828,
+      "created": "2026-08-21T06:37:35.716039+00:00",
+      "modified": "2026-08-21T06:37:22.795514+00:00",
+      "accessed": "2026-08-21T06:37:35.715051+00:00"
+    },
+    "image": null,
+    "pdf": null,
+    "office": null,
+    "consistency_notes": [],
+    "extraction_errors": [],
+    "analysis_time_ms": 0.1
+  }
+}

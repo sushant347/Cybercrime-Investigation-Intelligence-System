@@ -1,0 +1,50 @@
+{
+  "report_type": "quality_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00040",
+  "case_id": "CASE_4B2A51A300",
+  "generated_at": "2026-08-21T06:43:14.951Z",
+  "report": {
+    "evidence_id": "EVID_00040",
+    "case_id": "CASE_4B2A51A300",
+    "source_file": "01_khalti_kyc_sms.jpg",
+    "metrics": {
+      "width": 1000,
+      "height": 284,
+      "megapixels": 0.284,
+      "blur_laplacian_variance": 10.747126760563381,
+      "brightness_mean": 246.16919366197183,
+      "contrast_std": 26.816134850001795,
+      "noise_residual": 0.14027464788732394,
+      "skew_angle_deg": 0.0,
+      "compression_quality": 97.76484375,
+      "edge_density": 0.023735915492957747,
+      "text_like_components": 57
+    },
+    "sub_scores": {
+      "blur": 0.0,
+      "brightness": 83.3,
+      "contrast": 36.2,
+      "noise": 100.0,
+      "resolution": 4.5,
+      "skew": 100.0,
+      "compression": 97.8,
+      "readability": 33.3
+    },
+    "overall_score": 45.2,
+    "quality_grade": "FAIR",
+    "expected_ocr_accuracy": 62.2,
+    "readability_score": 33.3,
+    "recommended_operations": [
+      "clahe",
+      "edge_enhancement",
+      "super_resolution",
+      "perspective_correction"
+    ],
+    "notes": [
+      "Severe blur detected - OCR output may be unreliable."
+    ],
+    "analysis_time_ms": 8.0
+  }
+}

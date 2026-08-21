@@ -1465,5 +1465,1093 @@
     "stage_label": "",
     "stage_note": "",
     "stages": []
+  },
+  {
+    "id": 66,
+    "created_at": "2026-08-21T06:37:22.689Z",
+    "job_type": "evidence_processing",
+    "status": "completed",
+    "case_id": "CASE_0CD406813C",
+    "evidence_id": "EVID_00026",
+    "detail": "Processed as EVID_00026; 0 entities extracted; forensic reports generated; timeline/graph refresh deferred (6 upload(s) still queued)",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-21T06:37:35.200Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": [
+      {
+        "key": "acquire",
+        "label": "Acquiring file, computing SHA-256",
+        "started_at": "2026-08-21T06:37:22.698Z",
+        "finished_at": "2026-08-21T06:37:22.711Z",
+        "duration_ms": 13
+      },
+      {
+        "key": "extract",
+        "label": "Extracting text",
+        "started_at": "2026-08-21T06:37:22.711Z",
+        "finished_at": "2026-08-21T06:37:34.270Z",
+        "duration_ms": 11559
+      },
+      {
+        "key": "verify",
+        "label": "Verifying hash integrity",
+        "started_at": "2026-08-21T06:37:34.270Z",
+        "finished_at": "2026-08-21T06:37:34.281Z",
+        "duration_ms": 11
+      },
+      {
+        "key": "store",
+        "label": "Storing OCR record",
+        "started_at": "2026-08-21T06:37:34.281Z",
+        "finished_at": "2026-08-21T06:37:34.290Z",
+        "duration_ms": 9
+      },
+      {
+        "key": "enrich",
+        "label": "Cleaning text, extracting entities",
+        "started_at": "2026-08-21T06:37:34.290Z",
+        "finished_at": "2026-08-21T06:37:34.307Z",
+        "duration_ms": 17
+      },
+      {
+        "key": "forensics",
+        "label": "Forensic analysis",
+        "started_at": "2026-08-21T06:37:34.307Z",
+        "finished_at": "2026-08-21T06:37:35.200Z",
+        "duration_ms": 893
+      }
+    ]
+  },
+  {
+    "id": 67,
+    "created_at": "2026-08-21T06:37:22.737Z",
+    "job_type": "evidence_processing",
+    "status": "completed",
+    "case_id": "CASE_0CD406813C",
+    "evidence_id": "EVID_00027",
+    "detail": "Processed as EVID_00027; 14 entities extracted; forensic reports generated; timeline/graph refresh deferred (5 upload(s) still queued)",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-21T06:37:35.589Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": [
+      {
+        "key": "acquire",
+        "label": "Acquiring file, computing SHA-256",
+        "started_at": "2026-08-21T06:37:35.202Z",
+        "finished_at": "2026-08-21T06:37:35.209Z",
+        "duration_ms": 7
+      },
+      {
+        "key": "extract",
+        "label": "Extracting text",
+        "started_at": "2026-08-21T06:37:35.209Z",
+        "finished_at": "2026-08-21T06:37:35.547Z",
+        "duration_ms": 338
+      },
+      {
+        "key": "verify",
+        "label": "Verifying hash integrity",
+        "started_at": "2026-08-21T06:37:35.547Z",
+        "finished_at": "2026-08-21T06:37:35.550Z",
+        "duration_ms": 3
+      },
+      {
+        "key": "store",
+        "label": "Storing OCR record",
+        "started_at": "2026-08-21T06:37:35.550Z",
+        "finished_at": "2026-08-21T06:37:35.554Z",
+        "duration_ms": 4
+      },
+      {
+        "key": "enrich",
+        "label": "Cleaning text, extracting entities",
+        "started_at": "2026-08-21T06:37:35.554Z",
+        "finished_at": "2026-08-21T06:37:35.580Z",
+        "duration_ms": 26
+      },
+      {
+        "key": "forensics",
+        "label": "Forensic analysis",
+        "started_at": "2026-08-21T06:37:35.580Z",
+        "finished_at": "2026-08-21T06:37:35.589Z",
+        "duration_ms": 9
+      }
+    ]
+  },
+  {
+    "id": 68,
+    "created_at": "2026-08-21T06:37:22.770Z",
+    "job_type": "evidence_processing",
+    "status": "completed",
+    "case_id": "CASE_0CD406813C",
+    "evidence_id": "EVID_00028",
+    "detail": "Processed as EVID_00028; 5 entities extracted; forensic reports generated; timeline/graph refresh deferred (4 upload(s) still queued)",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-21T06:37:35.628Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": [
+      {
+        "key": "acquire",
+        "label": "Acquiring file, computing SHA-256",
+        "started_at": "2026-08-21T06:37:35.592Z",
+        "finished_at": "2026-08-21T06:37:35.598Z",
+        "duration_ms": 6
+      },
+      {
+        "key": "extract",
+        "label": "Extracting text",
+        "started_at": "2026-08-21T06:37:35.598Z",
+        "finished_at": "2026-08-21T06:37:35.600Z",
+        "duration_ms": 2
+      },
+      {
+        "key": "verify",
+        "label": "Verifying hash integrity",
+        "started_at": "2026-08-21T06:37:35.600Z",
+        "finished_at": "2026-08-21T06:37:35.604Z",
+        "duration_ms": 4
+      },
+      {
+        "key": "store",
+        "label": "Storing OCR record",
+        "started_at": "2026-08-21T06:37:35.604Z",
+        "finished_at": "2026-08-21T06:37:35.608Z",
+        "duration_ms": 4
+      },
+      {
+        "key": "enrich",
+        "label": "Cleaning text, extracting entities",
+        "started_at": "2026-08-21T06:37:35.608Z",
+        "finished_at": "2026-08-21T06:37:35.624Z",
+        "duration_ms": 16
+      },
+      {
+        "key": "forensics",
+        "label": "Forensic analysis",
+        "started_at": "2026-08-21T06:37:35.624Z",
+        "finished_at": "2026-08-21T06:37:35.628Z",
+        "duration_ms": 4
+      }
+    ]
+  },
+  {
+    "id": 69,
+    "created_at": "2026-08-21T06:37:22.797Z",
+    "job_type": "evidence_processing",
+    "status": "completed",
+    "case_id": "CASE_0CD406813C",
+    "evidence_id": "EVID_00029",
+    "detail": "Processed as EVID_00029; 11 entities extracted; forensic reports generated; timeline/graph refresh deferred (3 upload(s) still queued)",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-21T06:37:35.830Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": [
+      {
+        "key": "acquire",
+        "label": "Acquiring file, computing SHA-256",
+        "started_at": "2026-08-21T06:37:35.631Z",
+        "finished_at": "2026-08-21T06:37:35.722Z",
+        "duration_ms": 91
+      },
+      {
+        "key": "extract",
+        "label": "Extracting text",
+        "started_at": "2026-08-21T06:37:35.722Z",
+        "finished_at": "2026-08-21T06:37:35.747Z",
+        "duration_ms": 25
+      },
+      {
+        "key": "verify",
+        "label": "Verifying hash integrity",
+        "started_at": "2026-08-21T06:37:35.747Z",
+        "finished_at": "2026-08-21T06:37:35.751Z",
+        "duration_ms": 4
+      },
+      {
+        "key": "store",
+        "label": "Storing OCR record",
+        "started_at": "2026-08-21T06:37:35.751Z",
+        "finished_at": "2026-08-21T06:37:35.768Z",
+        "duration_ms": 17
+      },
+      {
+        "key": "enrich",
+        "label": "Cleaning text, extracting entities",
+        "started_at": "2026-08-21T06:37:35.768Z",
+        "finished_at": "2026-08-21T06:37:35.820Z",
+        "duration_ms": 52
+      },
+      {
+        "key": "forensics",
+        "label": "Forensic analysis",
+        "started_at": "2026-08-21T06:37:35.820Z",
+        "finished_at": "2026-08-21T06:37:35.830Z",
+        "duration_ms": 10
+      }
+    ]
+  },
+  {
+    "id": 70,
+    "created_at": "2026-08-21T06:37:22.825Z",
+    "job_type": "evidence_processing",
+    "status": "completed",
+    "case_id": "CASE_0CD406813C",
+    "evidence_id": "EVID_00030",
+    "detail": "Processed as EVID_00030; 6 entities extracted; forensic reports generated; timeline/graph refresh deferred (2 upload(s) still queued)",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-21T06:37:39.849Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": [
+      {
+        "key": "acquire",
+        "label": "Acquiring file, computing SHA-256",
+        "started_at": "2026-08-21T06:37:35.836Z",
+        "finished_at": "2026-08-21T06:37:35.843Z",
+        "duration_ms": 7
+      },
+      {
+        "key": "extract",
+        "label": "Extracting text",
+        "started_at": "2026-08-21T06:37:35.843Z",
+        "finished_at": "2026-08-21T06:37:39.749Z",
+        "duration_ms": 3906
+      },
+      {
+        "key": "verify",
+        "label": "Verifying hash integrity",
+        "started_at": "2026-08-21T06:37:39.749Z",
+        "finished_at": "2026-08-21T06:37:39.753Z",
+        "duration_ms": 4
+      },
+      {
+        "key": "store",
+        "label": "Storing OCR record",
+        "started_at": "2026-08-21T06:37:39.753Z",
+        "finished_at": "2026-08-21T06:37:39.759Z",
+        "duration_ms": 6
+      },
+      {
+        "key": "enrich",
+        "label": "Cleaning text, extracting entities",
+        "started_at": "2026-08-21T06:37:39.759Z",
+        "finished_at": "2026-08-21T06:37:39.781Z",
+        "duration_ms": 22
+      },
+      {
+        "key": "forensics",
+        "label": "Forensic analysis",
+        "started_at": "2026-08-21T06:37:39.781Z",
+        "finished_at": "2026-08-21T06:37:39.849Z",
+        "duration_ms": 68
+      }
+    ]
+  },
+  {
+    "id": 71,
+    "created_at": "2026-08-21T06:37:22.843Z",
+    "job_type": "evidence_processing",
+    "status": "completed",
+    "case_id": "CASE_0CD406813C",
+    "evidence_id": "EVID_00031",
+    "detail": "Processed as EVID_00031; 6 entities extracted; forensic reports generated; timeline/graph refresh deferred (1 upload(s) still queued)",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-21T06:37:43.580Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": [
+      {
+        "key": "acquire",
+        "label": "Acquiring file, computing SHA-256",
+        "started_at": "2026-08-21T06:37:39.855Z",
+        "finished_at": "2026-08-21T06:37:39.864Z",
+        "duration_ms": 9
+      },
+      {
+        "key": "extract",
+        "label": "Extracting text",
+        "started_at": "2026-08-21T06:37:39.864Z",
+        "finished_at": "2026-08-21T06:37:43.468Z",
+        "duration_ms": 3604
+      },
+      {
+        "key": "verify",
+        "label": "Verifying hash integrity",
+        "started_at": "2026-08-21T06:37:43.468Z",
+        "finished_at": "2026-08-21T06:37:43.472Z",
+        "duration_ms": 4
+      },
+      {
+        "key": "store",
+        "label": "Storing OCR record",
+        "started_at": "2026-08-21T06:37:43.472Z",
+        "finished_at": "2026-08-21T06:37:43.479Z",
+        "duration_ms": 7
+      },
+      {
+        "key": "enrich",
+        "label": "Cleaning text, extracting entities",
+        "started_at": "2026-08-21T06:37:43.479Z",
+        "finished_at": "2026-08-21T06:37:43.506Z",
+        "duration_ms": 27
+      },
+      {
+        "key": "forensics",
+        "label": "Forensic analysis",
+        "started_at": "2026-08-21T06:37:43.506Z",
+        "finished_at": "2026-08-21T06:37:43.580Z",
+        "duration_ms": 74
+      }
+    ]
+  },
+  {
+    "id": 72,
+    "created_at": "2026-08-21T06:37:22.908Z",
+    "job_type": "evidence_processing",
+    "status": "completed",
+    "case_id": "CASE_0CD406813C",
+    "evidence_id": "EVID_00032",
+    "detail": "Processed as EVID_00032; 3 entities extracted; forensic reports generated; timeline and graph refreshed; case assistant index refreshed",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-21T06:38:16.584Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": [
+      {
+        "key": "acquire",
+        "label": "Acquiring file, computing SHA-256",
+        "started_at": "2026-08-21T06:37:43.583Z",
+        "finished_at": "2026-08-21T06:37:43.589Z",
+        "duration_ms": 6
+      },
+      {
+        "key": "extract",
+        "label": "Extracting text",
+        "started_at": "2026-08-21T06:37:43.589Z",
+        "finished_at": "2026-08-21T06:37:47.961Z",
+        "duration_ms": 4372
+      },
+      {
+        "key": "verify",
+        "label": "Verifying hash integrity",
+        "started_at": "2026-08-21T06:37:47.961Z",
+        "finished_at": "2026-08-21T06:37:47.965Z",
+        "duration_ms": 4
+      },
+      {
+        "key": "store",
+        "label": "Storing OCR record",
+        "started_at": "2026-08-21T06:37:47.965Z",
+        "finished_at": "2026-08-21T06:37:47.973Z",
+        "duration_ms": 8
+      },
+      {
+        "key": "enrich",
+        "label": "Cleaning text, extracting entities",
+        "started_at": "2026-08-21T06:37:47.973Z",
+        "finished_at": "2026-08-21T06:37:47.999Z",
+        "duration_ms": 26
+      },
+      {
+        "key": "forensics",
+        "label": "Forensic analysis",
+        "started_at": "2026-08-21T06:37:47.999Z",
+        "finished_at": "2026-08-21T06:37:48.062Z",
+        "duration_ms": 63
+      },
+      {
+        "key": "correlate",
+        "label": "Correlation, timeline and graph",
+        "started_at": "2026-08-21T06:37:48.062Z",
+        "finished_at": "2026-08-21T06:38:16.584Z",
+        "duration_ms": 28522
+      }
+    ]
+  },
+  {
+    "id": 73,
+    "created_at": "2026-08-21T06:38:44.575Z",
+    "job_type": "evidence_processing",
+    "status": "completed",
+    "case_id": "CASE_0CD406813C",
+    "evidence_id": "EVID_00033",
+    "detail": "Processed as EVID_00033; 2 entities extracted; forensic reports generated; timeline and graph refreshed; case assistant index refreshed",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-21T06:39:02.719Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": [
+      {
+        "key": "acquire",
+        "label": "Acquiring file, computing SHA-256",
+        "started_at": "2026-08-21T06:38:44.582Z",
+        "finished_at": "2026-08-21T06:38:44.589Z",
+        "duration_ms": 7
+      },
+      {
+        "key": "extract",
+        "label": "Extracting text",
+        "started_at": "2026-08-21T06:38:44.589Z",
+        "finished_at": "2026-08-21T06:38:44.593Z",
+        "duration_ms": 4
+      },
+      {
+        "key": "verify",
+        "label": "Verifying hash integrity",
+        "started_at": "2026-08-21T06:38:44.593Z",
+        "finished_at": "2026-08-21T06:38:44.600Z",
+        "duration_ms": 7
+      },
+      {
+        "key": "store",
+        "label": "Storing OCR record",
+        "started_at": "2026-08-21T06:38:44.600Z",
+        "finished_at": "2026-08-21T06:38:44.617Z",
+        "duration_ms": 17
+      },
+      {
+        "key": "enrich",
+        "label": "Cleaning text, extracting entities",
+        "started_at": "2026-08-21T06:38:44.617Z",
+        "finished_at": "2026-08-21T06:38:44.651Z",
+        "duration_ms": 34
+      },
+      {
+        "key": "forensics",
+        "label": "Forensic analysis",
+        "started_at": "2026-08-21T06:38:44.651Z",
+        "finished_at": "2026-08-21T06:38:44.661Z",
+        "duration_ms": 10
+      },
+      {
+        "key": "correlate",
+        "label": "Correlation, timeline and graph",
+        "started_at": "2026-08-21T06:38:44.661Z",
+        "finished_at": "2026-08-21T06:39:02.719Z",
+        "duration_ms": 18058
+      }
+    ]
+  },
+  {
+    "id": 74,
+    "created_at": "2026-08-21T06:39:12.016Z",
+    "job_type": "case_analysis",
+    "status": "completed",
+    "case_id": "CASE_0CD406813C",
+    "evidence_id": "",
+    "detail": "phase2_failures=none; rag_index=updated",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-21T06:39:42.464Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": []
+  },
+  {
+    "id": 75,
+    "created_at": "2026-08-21T06:42:54.737Z",
+    "job_type": "evidence_processing",
+    "status": "completed",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "EVID_00034",
+    "detail": "Processed as EVID_00034; 5 entities extracted; forensic reports generated; timeline/graph refresh deferred (8 upload(s) still queued)",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-21T06:43:01.052Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": [
+      {
+        "key": "acquire",
+        "label": "Acquiring file, computing SHA-256",
+        "started_at": "2026-08-21T06:42:54.744Z",
+        "finished_at": "2026-08-21T06:42:54.758Z",
+        "duration_ms": 14
+      },
+      {
+        "key": "extract",
+        "label": "Extracting text",
+        "started_at": "2026-08-21T06:42:54.758Z",
+        "finished_at": "2026-08-21T06:43:00.865Z",
+        "duration_ms": 6107
+      },
+      {
+        "key": "verify",
+        "label": "Verifying hash integrity",
+        "started_at": "2026-08-21T06:43:00.865Z",
+        "finished_at": "2026-08-21T06:43:00.870Z",
+        "duration_ms": 5
+      },
+      {
+        "key": "store",
+        "label": "Storing OCR record",
+        "started_at": "2026-08-21T06:43:00.870Z",
+        "finished_at": "2026-08-21T06:43:00.891Z",
+        "duration_ms": 21
+      },
+      {
+        "key": "enrich",
+        "label": "Cleaning text, extracting entities",
+        "started_at": "2026-08-21T06:43:00.891Z",
+        "finished_at": "2026-08-21T06:43:00.923Z",
+        "duration_ms": 32
+      },
+      {
+        "key": "forensics",
+        "label": "Forensic analysis",
+        "started_at": "2026-08-21T06:43:00.923Z",
+        "finished_at": "2026-08-21T06:43:01.052Z",
+        "duration_ms": 129
+      }
+    ]
+  },
+  {
+    "id": 76,
+    "created_at": "2026-08-21T06:42:54.767Z",
+    "job_type": "evidence_processing",
+    "status": "completed",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "EVID_00035",
+    "detail": "Processed as EVID_00035; 15 entities extracted; forensic reports generated; timeline/graph refresh deferred (7 upload(s) still queued)",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-21T06:43:01.315Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": [
+      {
+        "key": "acquire",
+        "label": "Acquiring file, computing SHA-256",
+        "started_at": "2026-08-21T06:43:01.056Z",
+        "finished_at": "2026-08-21T06:43:01.065Z",
+        "duration_ms": 9
+      },
+      {
+        "key": "extract",
+        "label": "Extracting text",
+        "started_at": "2026-08-21T06:43:01.065Z",
+        "finished_at": "2026-08-21T06:43:01.267Z",
+        "duration_ms": 202
+      },
+      {
+        "key": "verify",
+        "label": "Verifying hash integrity",
+        "started_at": "2026-08-21T06:43:01.267Z",
+        "finished_at": "2026-08-21T06:43:01.272Z",
+        "duration_ms": 5
+      },
+      {
+        "key": "store",
+        "label": "Storing OCR record",
+        "started_at": "2026-08-21T06:43:01.272Z",
+        "finished_at": "2026-08-21T06:43:01.277Z",
+        "duration_ms": 5
+      },
+      {
+        "key": "enrich",
+        "label": "Cleaning text, extracting entities",
+        "started_at": "2026-08-21T06:43:01.277Z",
+        "finished_at": "2026-08-21T06:43:01.302Z",
+        "duration_ms": 25
+      },
+      {
+        "key": "forensics",
+        "label": "Forensic analysis",
+        "started_at": "2026-08-21T06:43:01.302Z",
+        "finished_at": "2026-08-21T06:43:01.315Z",
+        "duration_ms": 13
+      }
+    ]
+  },
+  {
+    "id": 77,
+    "created_at": "2026-08-21T06:42:54.799Z",
+    "job_type": "evidence_processing",
+    "status": "completed",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "EVID_00036",
+    "detail": "Processed as EVID_00036; 5 entities extracted; forensic reports generated; timeline/graph refresh deferred (6 upload(s) still queued)",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-21T06:43:01.361Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": [
+      {
+        "key": "acquire",
+        "label": "Acquiring file, computing SHA-256",
+        "started_at": "2026-08-21T06:43:01.318Z",
+        "finished_at": "2026-08-21T06:43:01.326Z",
+        "duration_ms": 8
+      },
+      {
+        "key": "extract",
+        "label": "Extracting text",
+        "started_at": "2026-08-21T06:43:01.326Z",
+        "finished_at": "2026-08-21T06:43:01.329Z",
+        "duration_ms": 3
+      },
+      {
+        "key": "verify",
+        "label": "Verifying hash integrity",
+        "started_at": "2026-08-21T06:43:01.329Z",
+        "finished_at": "2026-08-21T06:43:01.333Z",
+        "duration_ms": 4
+      },
+      {
+        "key": "store",
+        "label": "Storing OCR record",
+        "started_at": "2026-08-21T06:43:01.333Z",
+        "finished_at": "2026-08-21T06:43:01.338Z",
+        "duration_ms": 5
+      },
+      {
+        "key": "enrich",
+        "label": "Cleaning text, extracting entities",
+        "started_at": "2026-08-21T06:43:01.338Z",
+        "finished_at": "2026-08-21T06:43:01.356Z",
+        "duration_ms": 18
+      },
+      {
+        "key": "forensics",
+        "label": "Forensic analysis",
+        "started_at": "2026-08-21T06:43:01.356Z",
+        "finished_at": "2026-08-21T06:43:01.361Z",
+        "duration_ms": 5
+      }
+    ]
+  },
+  {
+    "id": 78,
+    "created_at": "2026-08-21T06:42:54.822Z",
+    "job_type": "evidence_processing",
+    "status": "completed",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "EVID_00037",
+    "detail": "Processed as EVID_00037; 13 entities extracted; forensic reports generated; timeline/graph refresh deferred (5 upload(s) still queued)",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-21T06:43:01.424Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": [
+      {
+        "key": "acquire",
+        "label": "Acquiring file, computing SHA-256",
+        "started_at": "2026-08-21T06:43:01.364Z",
+        "finished_at": "2026-08-21T06:43:01.371Z",
+        "duration_ms": 7
+      },
+      {
+        "key": "extract",
+        "label": "Extracting text",
+        "started_at": "2026-08-21T06:43:01.371Z",
+        "finished_at": "2026-08-21T06:43:01.374Z",
+        "duration_ms": 3
+      },
+      {
+        "key": "verify",
+        "label": "Verifying hash integrity",
+        "started_at": "2026-08-21T06:43:01.374Z",
+        "finished_at": "2026-08-21T06:43:01.378Z",
+        "duration_ms": 4
+      },
+      {
+        "key": "store",
+        "label": "Storing OCR record",
+        "started_at": "2026-08-21T06:43:01.378Z",
+        "finished_at": "2026-08-21T06:43:01.384Z",
+        "duration_ms": 6
+      },
+      {
+        "key": "enrich",
+        "label": "Cleaning text, extracting entities",
+        "started_at": "2026-08-21T06:43:01.384Z",
+        "finished_at": "2026-08-21T06:43:01.418Z",
+        "duration_ms": 34
+      },
+      {
+        "key": "forensics",
+        "label": "Forensic analysis",
+        "started_at": "2026-08-21T06:43:01.418Z",
+        "finished_at": "2026-08-21T06:43:01.424Z",
+        "duration_ms": 6
+      }
+    ]
+  },
+  {
+    "id": 79,
+    "created_at": "2026-08-21T06:42:54.881Z",
+    "job_type": "evidence_processing",
+    "status": "completed",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "EVID_00038",
+    "detail": "Processed as EVID_00038; 6 entities extracted; forensic reports generated; timeline/graph refresh deferred (4 upload(s) still queued)",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-21T06:43:07.944Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": [
+      {
+        "key": "acquire",
+        "label": "Acquiring file, computing SHA-256",
+        "started_at": "2026-08-21T06:43:01.427Z",
+        "finished_at": "2026-08-21T06:43:01.435Z",
+        "duration_ms": 8
+      },
+      {
+        "key": "extract",
+        "label": "Extracting text",
+        "started_at": "2026-08-21T06:43:01.435Z",
+        "finished_at": "2026-08-21T06:43:07.785Z",
+        "duration_ms": 6350
+      },
+      {
+        "key": "verify",
+        "label": "Verifying hash integrity",
+        "started_at": "2026-08-21T06:43:07.785Z",
+        "finished_at": "2026-08-21T06:43:07.792Z",
+        "duration_ms": 7
+      },
+      {
+        "key": "store",
+        "label": "Storing OCR record",
+        "started_at": "2026-08-21T06:43:07.792Z",
+        "finished_at": "2026-08-21T06:43:07.804Z",
+        "duration_ms": 12
+      },
+      {
+        "key": "enrich",
+        "label": "Cleaning text, extracting entities",
+        "started_at": "2026-08-21T06:43:07.804Z",
+        "finished_at": "2026-08-21T06:43:07.827Z",
+        "duration_ms": 23
+      },
+      {
+        "key": "forensics",
+        "label": "Forensic analysis",
+        "started_at": "2026-08-21T06:43:07.827Z",
+        "finished_at": "2026-08-21T06:43:07.944Z",
+        "duration_ms": 117
+      }
+    ]
+  },
+  {
+    "id": 80,
+    "created_at": "2026-08-21T06:42:54.914Z",
+    "job_type": "evidence_processing",
+    "status": "completed",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "EVID_00039",
+    "detail": "Processed as EVID_00039; 5 entities extracted; forensic reports generated; timeline/graph refresh deferred (3 upload(s) still queued)",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-21T06:43:11.536Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": [
+      {
+        "key": "acquire",
+        "label": "Acquiring file, computing SHA-256",
+        "started_at": "2026-08-21T06:43:07.952Z",
+        "finished_at": "2026-08-21T06:43:07.961Z",
+        "duration_ms": 9
+      },
+      {
+        "key": "extract",
+        "label": "Extracting text",
+        "started_at": "2026-08-21T06:43:07.961Z",
+        "finished_at": "2026-08-21T06:43:11.432Z",
+        "duration_ms": 3471
+      },
+      {
+        "key": "verify",
+        "label": "Verifying hash integrity",
+        "started_at": "2026-08-21T06:43:11.432Z",
+        "finished_at": "2026-08-21T06:43:11.436Z",
+        "duration_ms": 4
+      },
+      {
+        "key": "store",
+        "label": "Storing OCR record",
+        "started_at": "2026-08-21T06:43:11.436Z",
+        "finished_at": "2026-08-21T06:43:11.444Z",
+        "duration_ms": 8
+      },
+      {
+        "key": "enrich",
+        "label": "Cleaning text, extracting entities",
+        "started_at": "2026-08-21T06:43:11.444Z",
+        "finished_at": "2026-08-21T06:43:11.471Z",
+        "duration_ms": 27
+      },
+      {
+        "key": "forensics",
+        "label": "Forensic analysis",
+        "started_at": "2026-08-21T06:43:11.471Z",
+        "finished_at": "2026-08-21T06:43:11.536Z",
+        "duration_ms": 65
+      }
+    ]
+  },
+  {
+    "id": 81,
+    "created_at": "2026-08-21T06:42:54.944Z",
+    "job_type": "evidence_processing",
+    "status": "completed",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "EVID_00040",
+    "detail": "Processed as EVID_00040; 0 entities extracted; forensic reports generated; timeline/graph refresh deferred (2 upload(s) still queued)",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-21T06:43:14.991Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": [
+      {
+        "key": "acquire",
+        "label": "Acquiring file, computing SHA-256",
+        "started_at": "2026-08-21T06:43:11.539Z",
+        "finished_at": "2026-08-21T06:43:11.548Z",
+        "duration_ms": 9
+      },
+      {
+        "key": "extract",
+        "label": "Extracting text",
+        "started_at": "2026-08-21T06:43:11.548Z",
+        "finished_at": "2026-08-21T06:43:14.898Z",
+        "duration_ms": 3350
+      },
+      {
+        "key": "verify",
+        "label": "Verifying hash integrity",
+        "started_at": "2026-08-21T06:43:14.898Z",
+        "finished_at": "2026-08-21T06:43:14.902Z",
+        "duration_ms": 4
+      },
+      {
+        "key": "store",
+        "label": "Storing OCR record",
+        "started_at": "2026-08-21T06:43:14.902Z",
+        "finished_at": "2026-08-21T06:43:14.911Z",
+        "duration_ms": 9
+      },
+      {
+        "key": "enrich",
+        "label": "Cleaning text, extracting entities",
+        "started_at": "2026-08-21T06:43:14.911Z",
+        "finished_at": "2026-08-21T06:43:14.936Z",
+        "duration_ms": 25
+      },
+      {
+        "key": "forensics",
+        "label": "Forensic analysis",
+        "started_at": "2026-08-21T06:43:14.936Z",
+        "finished_at": "2026-08-21T06:43:14.991Z",
+        "duration_ms": 55
+      }
+    ]
+  },
+  {
+    "id": 82,
+    "created_at": "2026-08-21T06:42:54.980Z",
+    "job_type": "evidence_processing",
+    "status": "completed",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "EVID_00041",
+    "detail": "Processed as EVID_00041; 2 entities extracted; forensic reports generated; timeline/graph refresh deferred (1 upload(s) still queued)",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-21T06:43:15.090Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": [
+      {
+        "key": "acquire",
+        "label": "Acquiring file, computing SHA-256",
+        "started_at": "2026-08-21T06:43:14.995Z",
+        "finished_at": "2026-08-21T06:43:15.003Z",
+        "duration_ms": 8
+      },
+      {
+        "key": "extract",
+        "label": "Extracting text",
+        "started_at": "2026-08-21T06:43:15.003Z",
+        "finished_at": "2026-08-21T06:43:15.006Z",
+        "duration_ms": 3
+      },
+      {
+        "key": "verify",
+        "label": "Verifying hash integrity",
+        "started_at": "2026-08-21T06:43:15.006Z",
+        "finished_at": "2026-08-21T06:43:15.010Z",
+        "duration_ms": 4
+      },
+      {
+        "key": "store",
+        "label": "Storing OCR record",
+        "started_at": "2026-08-21T06:43:15.010Z",
+        "finished_at": "2026-08-21T06:43:15.019Z",
+        "duration_ms": 9
+      },
+      {
+        "key": "enrich",
+        "label": "Cleaning text, extracting entities",
+        "started_at": "2026-08-21T06:43:15.019Z",
+        "finished_at": "2026-08-21T06:43:15.084Z",
+        "duration_ms": 65
+      },
+      {
+        "key": "forensics",
+        "label": "Forensic analysis",
+        "started_at": "2026-08-21T06:43:15.084Z",
+        "finished_at": "2026-08-21T06:43:15.090Z",
+        "duration_ms": 6
+      }
+    ]
+  },
+  {
+    "id": 83,
+    "created_at": "2026-08-21T06:42:55.025Z",
+    "job_type": "evidence_processing",
+    "status": "completed",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "EVID_00042",
+    "detail": "Processed as EVID_00042; 2 entities extracted; forensic reports generated; timeline and graph refreshed; case assistant index refreshed",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-21T06:43:37.863Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": [
+      {
+        "key": "acquire",
+        "label": "Acquiring file, computing SHA-256",
+        "started_at": "2026-08-21T06:43:15.093Z",
+        "finished_at": "2026-08-21T06:43:15.099Z",
+        "duration_ms": 6
+      },
+      {
+        "key": "extract",
+        "label": "Extracting text",
+        "started_at": "2026-08-21T06:43:15.099Z",
+        "finished_at": "2026-08-21T06:43:15.101Z",
+        "duration_ms": 2
+      },
+      {
+        "key": "verify",
+        "label": "Verifying hash integrity",
+        "started_at": "2026-08-21T06:43:15.101Z",
+        "finished_at": "2026-08-21T06:43:15.106Z",
+        "duration_ms": 5
+      },
+      {
+        "key": "store",
+        "label": "Storing OCR record",
+        "started_at": "2026-08-21T06:43:15.106Z",
+        "finished_at": "2026-08-21T06:43:15.115Z",
+        "duration_ms": 9
+      },
+      {
+        "key": "enrich",
+        "label": "Cleaning text, extracting entities",
+        "started_at": "2026-08-21T06:43:15.115Z",
+        "finished_at": "2026-08-21T06:43:15.141Z",
+        "duration_ms": 26
+      },
+      {
+        "key": "forensics",
+        "label": "Forensic analysis",
+        "started_at": "2026-08-21T06:43:15.141Z",
+        "finished_at": "2026-08-21T06:43:15.147Z",
+        "duration_ms": 6
+      },
+      {
+        "key": "correlate",
+        "label": "Correlation, timeline and graph",
+        "started_at": "2026-08-21T06:43:15.147Z",
+        "finished_at": "2026-08-21T06:43:37.863Z",
+        "duration_ms": 22716
+      }
+    ]
+  },
+  {
+    "id": 84,
+    "created_at": "2026-08-21T06:43:44.674Z",
+    "job_type": "case_analysis",
+    "status": "completed",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "",
+    "detail": "phase2_failures=none; rag_index=updated",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-21T06:44:03.815Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": []
+  },
+  {
+    "id": 85,
+    "created_at": "2026-08-21T17:28:49.379Z",
+    "job_type": "case_analysis",
+    "status": "completed",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "",
+    "detail": "phase2_failures=none; rag_index=updated",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-21T17:29:21.104Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": []
+  },
+  {
+    "id": 86,
+    "created_at": "2026-08-21T17:57:22.692Z",
+    "job_type": "case_analysis",
+    "status": "completed",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "",
+    "detail": "phase2_failures=none; rag_index=updated",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-21T17:57:43.234Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": []
   }
 ]

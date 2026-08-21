@@ -1,0 +1,53 @@
+{
+  "report_type": "analysis_manifest",
+  "report_version": 3,
+  "schema_version": "2.0",
+  "case_id": "CASE_4B2A51A300",
+  "generated_at": "2026-08-21T17:57:23.507Z",
+  "report": {
+    "status": "completed",
+    "input_quality": "complete",
+    "warnings": [],
+    "evidence_ids": [
+      "EVID_00034",
+      "EVID_00035",
+      "EVID_00036",
+      "EVID_00037",
+      "EVID_00038",
+      "EVID_00039",
+      "EVID_00040",
+      "EVID_00041",
+      "EVID_00042"
+    ],
+    "evidence_count": 9,
+    "semantic_validator": "heuristic",
+    "threat_provider": "MLThreatIntelProvider+heuristics",
+    "graph_analytics": "networkx-3.6.1",
+    "runtime": {
+      "python": "3.12.13",
+      "pydantic": "2.13.4",
+      "networkx": "3.6.1"
+    },
+    "correlation_configuration": {
+      "confidence_normaliser": 1.6,
+      "relationship_bands": {
+        "NO_RELATIONSHIP": 0.05,
+        "WEAK": 0.3,
+        "MEDIUM": 0.55,
+        "STRONG": 0.8,
+        "VERY_STRONG": 1.01
+      },
+      "timeline_proximity_weight": 0.0
+    },
+    "timeline_configuration": {
+      "proximity_hours": 48.0,
+      "stage_order": [
+        "initial_contact",
+        "social_engineering",
+        "credential_theft",
+        "financial_transaction",
+        "post_attack"
+      ]
+    }
+  }
+}

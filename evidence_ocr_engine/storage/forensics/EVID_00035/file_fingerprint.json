@@ -1,0 +1,30 @@
+{
+  "report_type": "file_fingerprint",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00035",
+  "case_id": "CASE_4B2A51A300",
+  "generated_at": "2026-08-21T06:43:01.308Z",
+  "report": {
+    "evidence_id": "EVID_00035",
+    "case_id": "CASE_4B2A51A300",
+    "source_file": "EVID_00035__8b8ce479__06_police_complaint.pdf",
+    "md5": "4cb227b70454f358573c79a1a040a2d0",
+    "sha1": "c0b44ce27617e270ce93c659733285453b1c4b87",
+    "sha256": "1faf503b6bb893fe3af90c59467475a200c619c14640adef12710a7417cb1fca",
+    "sha512": "542a60fc7abcb12add7507bbde8399c317b9cde7898dde947638628df369d5e46aab02009b8375bf0a6ac3f540a1cb083a6f7e55c8f1a7f482d0de265d5d1200",
+    "crc32": "668d8de1",
+    "file_size_bytes": 79303,
+    "entropy_bits_per_byte": 7.9525,
+    "high_entropy": true,
+    "magic_number_hex": "255044462d312e33",
+    "magic_format": "PDF document",
+    "declared_extension": ".pdf",
+    "mime_type": "application/pdf",
+    "extension_matches_magic": true,
+    "sha256_matches_acquisition": true,
+    "duplicates": [],
+    "is_duplicate": false,
+    "analysis_time_ms": 3.9
+  }
+}

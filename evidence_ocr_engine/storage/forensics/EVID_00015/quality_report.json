@@ -1,0 +1,47 @@
+{
+  "report_type": "quality_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00015",
+  "case_id": "CASE_1A1BF573F3",
+  "generated_at": "2026-08-21T03:27:25.382Z",
+  "report": {
+    "evidence_id": "EVID_00015",
+    "case_id": "CASE_1A1BF573F3",
+    "source_file": "01_sms_screenshot.jpg",
+    "metrics": {
+      "width": 720,
+      "height": 500,
+      "megapixels": 0.36,
+      "blur_laplacian_variance": 39.277944444444444,
+      "brightness_mean": 213.57276944444445,
+      "contrast_std": 60.78818538487339,
+      "noise_residual": 0.3733638888888889,
+      "skew_angle_deg": 0.0,
+      "compression_quality": 74.5171875,
+      "edge_density": 0.03731388888888889,
+      "text_like_components": 202
+    },
+    "sub_scores": {
+      "blur": 5.0,
+      "brightness": 100.0,
+      "contrast": 100.0,
+      "noise": 100.0,
+      "resolution": 33.3,
+      "skew": 100.0,
+      "compression": 74.5,
+      "readability": 65.6
+    },
+    "overall_score": 62.4,
+    "quality_grade": "FAIR",
+    "expected_ocr_accuracy": 79.4,
+    "readability_score": 65.6,
+    "recommended_operations": [
+      "edge_enhancement",
+      "super_resolution",
+      "perspective_correction"
+    ],
+    "notes": [],
+    "analysis_time_ms": 15.4
+  }
+}

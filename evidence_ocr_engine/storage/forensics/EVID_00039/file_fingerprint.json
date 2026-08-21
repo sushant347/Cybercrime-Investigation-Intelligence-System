@@ -1,0 +1,30 @@
+{
+  "report_type": "file_fingerprint",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00039",
+  "case_id": "CASE_4B2A51A300",
+  "generated_at": "2026-08-21T06:43:11.477Z",
+  "report": {
+    "evidence_id": "EVID_00039",
+    "case_id": "CASE_4B2A51A300",
+    "source_file": "EVID_00039__c84460c4__02_whatsapp_chat.jpg",
+    "md5": "096985091b4ff5e900be1b9f140e7242",
+    "sha1": "f28600f1209637f3446ead4c9325302ffc0cdee5",
+    "sha256": "4418cd74971cd5335563109352c019c8ddf261179ecac874392fe1474f74cc31",
+    "sha512": "abe5a530d4cd80252aa8f47b5cb2176d8ef4c0b878b1610515459cef44678614c3f8a182ec693ccc8a4975fe1f643a800f7d72bc6150cdb661378e35c639b08f",
+    "crc32": "d381c85d",
+    "file_size_bytes": 48078,
+    "entropy_bits_per_byte": 7.7568,
+    "high_entropy": true,
+    "magic_number_hex": "ffd8ffe000104a46",
+    "magic_format": "JPEG image",
+    "declared_extension": ".jpg",
+    "mime_type": "image/jpeg",
+    "extension_matches_magic": true,
+    "sha256_matches_acquisition": true,
+    "duplicates": [],
+    "is_duplicate": false,
+    "analysis_time_ms": 2.6
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "report_type": "logo_detections",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00038",
+  "case_id": "CASE_4B2A51A300",
+  "generated_at": "2026-08-21T06:43:07.943Z",
+  "report": {
+    "evidence_id": "EVID_00038",
+    "case_id": "CASE_4B2A51A300",
+    "source_file": "03_khalti_receipt.jpg",
+    "brands_checked": [
+      "eSewa",
+      "Khalti",
+      "IME Pay",
+      "Facebook",
+      "Messenger",
+      "WhatsApp",
+      "Telegram",
+      "Gmail",
+      "Outlook",
+      "Google",
+      "Microsoft"
+    ],
+    "detections": [],
+    "detected_brands": [],
+    "template_assets_available": false,
+    "analysis_time_ms": 11.8
+  }
+}

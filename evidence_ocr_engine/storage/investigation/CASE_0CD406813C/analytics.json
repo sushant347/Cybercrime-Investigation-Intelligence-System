@@ -1,0 +1,273 @@
+{
+  "report_type": "analytics",
+  "report_version": 1,
+  "schema_version": "2.0",
+  "case_id": "CASE_0CD406813C",
+  "generated_at": "2026-08-21T06:39:12.126Z",
+  "report": {
+    "case_id": "CASE_0CD406813C",
+    "evidence_count": 8,
+    "entity_statistics": {
+      "bank_accounts": 1,
+      "dates": 7,
+      "domains": 6,
+      "emails": 4,
+      "esewa_ids": 4,
+      "money": 10,
+      "phones": 8,
+      "times": 2,
+      "transaction_ids": 2,
+      "urls": 3
+    },
+    "entity_types_supported": 30,
+    "entity_types_found": 10,
+    "top_entities": {
+      "bank_accounts": [
+        {
+          "value": "01903015472901",
+          "count": 1
+        }
+      ],
+      "dates": [
+        {
+          "value": "2026-07-14",
+          "count": 4
+        },
+        {
+          "value": "2026-07-15",
+          "count": 1
+        },
+        {
+          "value": "2026-07-01",
+          "count": 1
+        },
+        {
+          "value": "14 jul 2026",
+          "count": 1
+        }
+      ],
+      "domains": [
+        {
+          "value": "esewa-bonus-claim.xyz",
+          "count": 3
+        },
+        {
+          "value": "gmail.com",
+          "count": 3
+        }
+      ],
+      "emails": [
+        {
+          "value": "reward.center2026@gmail.com",
+          "count": 3
+        },
+        {
+          "value": "sunita.rai88@gmail.com",
+          "count": 1
+        }
+      ],
+      "esewa_ids": [
+        {
+          "value": "+9779812345678",
+          "count": 4
+        }
+      ],
+      "money": [
+        {
+          "value": "npr 500",
+          "count": 5
+        },
+        {
+          "value": "npr 15000",
+          "count": 2
+        },
+        {
+          "value": "npr 12000",
+          "count": 1
+        },
+        {
+          "value": "npr 12500",
+          "count": 1
+        },
+        {
+          "value": "npr 15",
+          "count": 1
+        }
+      ],
+      "phones": [
+        {
+          "value": "+9779812345678",
+          "count": 6
+        },
+        {
+          "value": "+9779841002233",
+          "count": 2
+        }
+      ],
+      "times": [
+        {
+          "value": "09:12:04",
+          "count": 1
+        },
+        {
+          "value": "11:42 am",
+          "count": 1
+        }
+      ],
+      "transaction_ids": [
+        {
+          "value": "esw-2026-0714-88231",
+          "count": 2
+        }
+      ],
+      "urls": [
+        {
+          "value": "https://esewa-bonus-claim.xyz/verify?ref=dsn2026",
+          "count": 3
+        }
+      ]
+    },
+    "threat_statistics": {
+      "intel_available": 1.0,
+      "indicators_checked": 3.0,
+      "malicious_indicators": 2.0,
+      "suspicious_indicators": 0.0,
+      "benign_indicators": 1.0,
+      "evidence_with_threats": 3.0,
+      "threat_evidence_ratio": 0.375
+    },
+    "threat_indicators": [
+      {
+        "value": "https://esewa-bonus-claim.xyz/verify?ref=dsn2026",
+        "verdict": "malicious",
+        "source": "ml:xgboost",
+        "risk_score": 83.0,
+        "confidence": 0.83,
+        "brand_impersonated": "",
+        "reasons": [
+          "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
+          "AI model classified this URL as phishing with 100% confidence.",
+          "The top-level domain is frequently associated with phishing and spam campaigns (risk score: 0.7).",
+          "SSL status could not be verified.",
+          "The domain or URL has high character entropy, suggesting a randomly-generated string often used in phishing.",
+          "The URL contains suspicious keyword(s) associated with phishing."
+        ],
+        "evidence_ids": [
+          "EVID_00027",
+          "EVID_00029",
+          "EVID_00033"
+        ]
+      },
+      {
+        "value": "esewa-bonus-claim.xyz",
+        "verdict": "malicious",
+        "source": "ml:xgboost",
+        "risk_score": 81.0,
+        "confidence": 0.81,
+        "brand_impersonated": "",
+        "reasons": [
+          "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
+          "AI model classified this URL as phishing with 100% confidence.",
+          "The top-level domain is frequently associated with phishing and spam campaigns (risk score: 0.7).",
+          "SSL status could not be verified.",
+          "The URL does not use HTTPS, meaning data is transmitted without encryption.",
+          "The URL contains suspicious keyword(s) associated with phishing."
+        ],
+        "evidence_ids": [
+          "EVID_00027",
+          "EVID_00029",
+          "EVID_00033"
+        ]
+      }
+    ],
+    "threat_source": "MLThreatIntelProvider+heuristics",
+    "brand_statistics": [
+      {
+        "value": "eSewa",
+        "count": 7
+      },
+      {
+        "value": "Gmail",
+        "count": 3
+      },
+      {
+        "value": "Nabil Bank",
+        "count": 1
+      }
+    ],
+    "wallet_statistics": [
+      {
+        "value": "+9779812345678",
+        "count": 4
+      },
+      {
+        "value": "01903015472901",
+        "count": 1
+      }
+    ],
+    "wallet_statistics_by_rail": {
+      "esewa_ids": [
+        {
+          "value": "+9779812345678",
+          "count": 4
+        }
+      ],
+      "bank_accounts": [
+        {
+          "value": "01903015472901",
+          "count": 1
+        }
+      ]
+    },
+    "url_statistics": [
+      {
+        "value": "https://esewa-bonus-claim.xyz/verify?ref=dsn2026",
+        "count": 3
+      }
+    ],
+    "device_statistics": [],
+    "metadata_statistics": {
+      "evidence_with_metadata_report": 8.0,
+      "evidence_with_exif": 0.0,
+      "evidence_with_gps": 0.0,
+      "evidence_with_editing_software": 0.0
+    },
+    "campaign_statistics": {
+      "campaign_count": 1.0,
+      "largest_campaign_size": 6.0,
+      "clustered_evidence": 6.0,
+      "unclustered_evidence": 2.0,
+      "mean_campaign_confidence": 0.7646
+    },
+    "timeline_statistics": {
+      "event_count": 8.0,
+      "resolved_event_count": 8.0,
+      "unresolved_event_count": 0.0,
+      "inferred_event_count": 6.0,
+      "non_inferred_event_count": 2.0,
+      "acquisition_fallback_count": 3.0,
+      "progression_assessable": 0.0,
+      "stage_count": 4.0,
+      "critical_event_count": 6.0,
+      "timeline_span_hours": 918.65,
+      "event_time_span_hours": 11.7,
+      "acquisition_inclusive_span_hours": 918.65
+    },
+    "evidence_quality_statistics": {
+      "mean_image_quality": 61.12,
+      "mean_evidence_confidence": 91.88,
+      "mean_forgery_score": 16.25,
+      "max_forgery_score": 23.7,
+      "mean_ocr_confidence": 0.98,
+      "hash_verified_count": 8.0,
+      "evidence_with_ocr_result": 8.0
+    },
+    "correlation_statistics": {
+      "pair_count": 28.0,
+      "related_pair_count": 17.0,
+      "mean_confidence": 0.3487,
+      "max_confidence": 0.9704
+    },
+    "analysis_time_ms": 31.1
+  }
+}

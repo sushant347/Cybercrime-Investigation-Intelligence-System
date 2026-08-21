@@ -1,0 +1,3925 @@
+{
+  "case_id": "CASE_4B2A51A300",
+  "created_at": "2026-08-21T06:43:00.885Z",
+  "updated_at": "2026-08-21T06:43:15.136Z",
+  "evidence_count": 9,
+  "evidence": [
+    {
+      "case_id": "CASE_4B2A51A300",
+      "evidence_id": "EVID_00034",
+      "file_name": "07_fake_support_profile.jpg",
+      "file_hash": "6d92c801ed6d05fa286c12f47ae02d132bead9fbdb9bff677ee09c9d75b9182f",
+      "file_size": "23573",
+      "upload_time": "2026-08-21T06:42:54.755Z",
+      "processing_time_ms": 6129.5,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 0.9934,
+          "text": "Khalti Official Support\nआधिकारिक सहायता खाता\nPhone\n+9779812345678\nEmail\nreward.center2026@gmail.com\nPortal khalti-kyc-verify.top\nWallet 9812345678",
+          "lines": [
+            {
+              "text": "Khalti Official Support",
+              "confidence": 0.9995,
+              "bbox": [
+                [
+                  40.0,
+                  38.0
+                ],
+                [
+                  361.0,
+                  42.0
+                ],
+                [
+                  361.0,
+                  72.0
+                ],
+                [
+                  39.0,
+                  69.0
+                ]
+              ]
+            },
+            {
+              "text": "आधिकारिक सहायता खाता",
+              "confidence": 0.9629,
+              "bbox": [
+                [
+                  40.0,
+                  81.0
+                ],
+                [
+                  243.0,
+                  85.0
+                ],
+                [
+                  243.0,
+                  110.0
+                ],
+                [
+                  39.0,
+                  105.0
+                ]
+              ]
+            },
+            {
+              "text": "Phone",
+              "confidence": 0.9998,
+              "bbox": [
+                [
+                  41.0,
+                  121.0
+                ],
+                [
+                  105.0,
+                  121.0
+                ],
+                [
+                  105.0,
+                  139.0
+                ],
+                [
+                  41.0,
+                  139.0
+                ]
+              ]
+            },
+            {
+              "text": "+9779812345678",
+              "confidence": 0.9997,
+              "bbox": [
+                [
+                  104.0,
+                  119.0
+                ],
+                [
+                  285.0,
+                  119.0
+                ],
+                [
+                  285.0,
+                  139.0
+                ],
+                [
+                  104.0,
+                  139.0
+                ]
+              ]
+            },
+            {
+              "text": "Email",
+              "confidence": 0.9999,
+              "bbox": [
+                [
+                  40.0,
+                  154.0
+                ],
+                [
+                  99.0,
+                  154.0
+                ],
+                [
+                  99.0,
+                  175.0
+                ],
+                [
+                  40.0,
+                  175.0
+                ]
+              ]
+            },
+            {
+              "text": "reward.center2026@gmail.com",
+              "confidence": 0.9909,
+              "bbox": [
+                [
+                  105.0,
+                  154.0
+                ],
+                [
+                  403.0,
+                  155.0
+                ],
+                [
+                  403.0,
+                  176.0
+                ],
+                [
+                  105.0,
+                  175.0
+                ]
+              ]
+            },
+            {
+              "text": "Portal khalti-kyc-verify.top",
+              "confidence": 0.9944,
+              "bbox": [
+                [
+                  38.0,
+                  186.0
+                ],
+                [
+                  287.0,
+                  188.0
+                ],
+                [
+                  287.0,
+                  211.0
+                ],
+                [
+                  38.0,
+                  209.0
+                ]
+              ]
+            },
+            {
+              "text": "Wallet 9812345678",
+              "confidence": 0.9999,
+              "bbox": [
+                [
+                  39.0,
+                  222.0
+                ],
+                [
+                  228.0,
+                  222.0
+                ],
+                [
+                  228.0,
+                  242.0
+                ],
+                [
+                  39.0,
+                  242.0
+                ]
+              ]
+            }
+          ],
+          "bounding_boxes": [
+            [
+              [
+                40.0,
+                38.0
+              ],
+              [
+                361.0,
+                42.0
+              ],
+              [
+                361.0,
+                72.0
+              ],
+              [
+                39.0,
+                69.0
+              ]
+            ],
+            [
+              [
+                40.0,
+                81.0
+              ],
+              [
+                243.0,
+                85.0
+              ],
+              [
+                243.0,
+                110.0
+              ],
+              [
+                39.0,
+                105.0
+              ]
+            ],
+            [
+              [
+                41.0,
+                121.0
+              ],
+              [
+                105.0,
+                121.0
+              ],
+              [
+                105.0,
+                139.0
+              ],
+              [
+                41.0,
+                139.0
+              ]
+            ],
+            [
+              [
+                104.0,
+                119.0
+              ],
+              [
+                285.0,
+                119.0
+              ],
+              [
+                285.0,
+                139.0
+              ],
+              [
+                104.0,
+                139.0
+              ]
+            ],
+            [
+              [
+                40.0,
+                154.0
+              ],
+              [
+                99.0,
+                154.0
+              ],
+              [
+                99.0,
+                175.0
+              ],
+              [
+                40.0,
+                175.0
+              ]
+            ],
+            [
+              [
+                105.0,
+                154.0
+              ],
+              [
+                403.0,
+                155.0
+              ],
+              [
+                403.0,
+                176.0
+              ],
+              [
+                105.0,
+                175.0
+              ]
+            ],
+            [
+              [
+                38.0,
+                186.0
+              ],
+              [
+                287.0,
+                188.0
+              ],
+              [
+                287.0,
+                211.0
+              ],
+              [
+                38.0,
+                209.0
+              ]
+            ],
+            [
+              [
+                39.0,
+                222.0
+              ],
+              [
+                228.0,
+                222.0
+              ],
+              [
+                228.0,
+                242.0
+              ],
+              [
+                39.0,
+                242.0
+              ]
+            ]
+          ],
+          "preprocessing_steps": [
+            "convert_rgb",
+            "exif_orientation",
+            "clahe"
+          ]
+        }
+      ],
+      "raw_text": "Khalti Official Support\nआधिकारिक सहायता खाता\nPhone\n+9779812345678\nEmail\nreward.center2026@gmail.com\nPortal khalti-kyc-verify.top\nWallet 9812345678",
+      "average_confidence": 0.9934,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00034",
+        "raw_text": "Khalti Official Support\nआधिकारिक सहायता खाता\nPhone\n+9779812345678\nEmail\nreward.center2026@gmail.com\nPortal khalti-kyc-verify.top\nWallet 9812345678",
+        "cleaned_text": "Khalti Official Support\nआधिकारिक सहायता खाता\nPhone\n+9779812345678\nEmail\nreward.center2026@gmail.com\nPortal khalti-kyc-verify.top\nWallet 9812345678",
+        "language": "mixed",
+        "line_languages": {
+          "1": "english",
+          "2": "nepali_unicode",
+          "3": "english",
+          "4": "unknown",
+          "5": "english",
+          "6": "english",
+          "7": "english",
+          "8": "english"
+        },
+        "entities": {
+          "urls": [],
+          "domains": [
+            {
+              "value": "gmail.com",
+              "normalized": "gmail.com"
+            },
+            {
+              "value": "khalti-kyc-verify.top",
+              "normalized": "khalti-kyc-verify.top"
+            }
+          ],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "emails": [
+            {
+              "value": "reward.center2026@gmail.com",
+              "normalized": "reward.center2026@gmail.com"
+            }
+          ],
+          "phones": [
+            {
+              "value": "+9779812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "dates": [],
+          "times": [],
+          "money": [],
+          "bank_accounts": [],
+          "card_numbers": [],
+          "transaction_ids": [],
+          "esewa_ids": [],
+          "khalti_ids": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "imepay_ids": [],
+          "otp": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "hashes_md5": [],
+          "hashes_sha1": [],
+          "hashes_sha256": [],
+          "hashes_sha512": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {
+          "wallet": 3,
+          "verify": 1,
+          "kyc": 1,
+          "account": 1,
+          "reward": 1
+        },
+        "risk_signals": {
+          "urgency": 0,
+          "financial": 4,
+          "credential": 3,
+          "threat": 0
+        },
+        "statistics": {
+          "characters": 146,
+          "words": 14,
+          "lines": 8,
+          "average_line_length": 17.4,
+          "languages_detected": [
+            "english",
+            "nepali_unicode"
+          ],
+          "entity_count": 5,
+          "cleaning_operations": [
+            "entities_protected(3)"
+          ],
+          "ocr_corrections": [],
+          "protected_entities": 3
+        },
+        "processing_time_ms": 6.22
+      },
+      "enhancement": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00034",
+        "cleaned_text": "Khalti Official Support\nआधिकारिक सहायता खाता\nPhone\n+9779812345678\nEmail\nreward.center2026@gmail.com\nPortal khalti-kyc-verify.top\nWallet 9812345678",
+        "enhanced_text": "Khalti Official Support\nआधिकारिक सहायता खाता\nPhone\n+9779812345678\nEmail\nreward.center2026@gmail.com\nPortal khalti-kyc-verify.top\nWallet 9812345678",
+        "ui_text": "",
+        "message_text": "Khalti Official Support\nआधिकारिक सहायता खाता\nPhone\n+9779812345678\nEmail\nreward.center2026@gmail.com\nPortal khalti-kyc-verify.top\nWallet 9812345678",
+        "layout": [
+          {
+            "line": 1,
+            "role": "sender",
+            "text": "Khalti Official Support"
+          },
+          {
+            "line": 2,
+            "role": "message",
+            "text": "आधिकारिक सहायता खाता"
+          },
+          {
+            "line": 3,
+            "role": "sender",
+            "text": "Phone"
+          },
+          {
+            "line": 4,
+            "role": "sender",
+            "text": "+9779812345678"
+          },
+          {
+            "line": 5,
+            "role": "sender",
+            "text": "Email"
+          },
+          {
+            "line": 6,
+            "role": "message",
+            "text": "reward.center2026@gmail.com"
+          },
+          {
+            "line": 7,
+            "role": "message",
+            "text": "Portal khalti-kyc-verify.top"
+          },
+          {
+            "line": 8,
+            "role": "message",
+            "text": "Wallet 9812345678"
+          }
+        ],
+        "corrections": [],
+        "correction_statistics": {
+          "total_corrections": 0,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 0,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 8,
+          "lines_high_confidence": 8,
+          "lines_correctable": 0,
+          "document_confidence": 0.9934,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 2.11
+      },
+      "semantic_correction": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00034",
+        "enhanced_text": "Khalti Official Support\nआधिकारिक सहायता खाता\nPhone\n+9779812345678\nEmail\nreward.center2026@gmail.com\nPortal khalti-kyc-verify.top\nWallet 9812345678",
+        "semantic_text": "Khalti Official Support आधिकारिक सहायता खाता\nPhone\n+9779812345678\nEmail\nreward.center2026@gmail.com\nPortal khalti-kyc-verify.top\nWallet 9812345678",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {
+          "domains": [
+            {
+              "value": "gmail.com",
+              "normalized": "gmail.com"
+            },
+            {
+              "value": "khalti-kyc-verify.top",
+              "normalized": "khalti-kyc-verify.top"
+            }
+          ],
+          "emails": [
+            {
+              "value": "reward.center2026@gmail.com",
+              "normalized": "reward.center2026@gmail.com"
+            }
+          ],
+          "phones": [
+            {
+              "value": "+9779812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "khalti_ids": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ]
+        },
+        "statistics": {
+          "suspicious_tokens": 0,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 3,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english",
+            "nepali_unicode"
+          ]
+        },
+        "processing_time_ms": 0.72
+      }
+    },
+    {
+      "case_id": "CASE_4B2A51A300",
+      "evidence_id": "EVID_00035",
+      "file_name": "06_police_complaint.pdf",
+      "file_hash": "1faf503b6bb893fe3af90c59467475a200c619c14640adef12710a7417cb1fca",
+      "file_size": "79303",
+      "upload_time": "2026-08-21T06:43:01.064Z",
+      "processing_time_ms": 221.6,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 1.0,
+          "text": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: खल्ती KYC ठगी सम्बन्धमा उजुरी।\nI, Bikash Thapa (+9779856770011), received an SMS on 2026-08-02\nwarning that my Khalti account would be suspended unless KYC was completed.\nI was directed to http://khalti-kyc-verify.top/login and paid a verification fee of\nNPR 750 to Khalti ID 9812345678 (transaction KHL-2026-0802-44190). I was then\ninstructed to transfer NPR 9,500 to bank account 01903015472901.\nThe same helpdesk number +9779812345678 and email reward.center2026@gmail.com were used\nthroughout. I was also sent a second link,\nhttps://esewa-bonus-claim.xyz/verify?ref=KYC2026, when I hesitated.\nI request investigation and recovery of NPR 10,250.",
+          "lines": [
+            {
+              "text": "Complaint to Cyber Bureau, Nepal Police",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "श्रीमान् प्रमुख ज्यू,",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "साइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "विषय: खल्ती KYC ठगी सम्बन्धमा उजुरी।",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "I, Bikash Thapa (+9779856770011), received an SMS on 2026-08-02",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "warning that my Khalti account would be suspended unless KYC was completed.",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "I was directed to http://khalti-kyc-verify.top/login and paid a verification fee of",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "NPR 750 to Khalti ID 9812345678 (transaction KHL-2026-0802-44190). I was then",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "instructed to transfer NPR 9,500 to bank account 01903015472901.",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "The same helpdesk number +9779812345678 and email reward.center2026@gmail.com were used",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "throughout. I was also sent a second link,",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026, when I hesitated.",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "I request investigation and recovery of NPR 10,250.",
+              "confidence": 1.0,
+              "bbox": []
+            }
+          ],
+          "bounding_boxes": [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          "preprocessing_steps": [
+            "none(pdf_text_layer)"
+          ]
+        }
+      ],
+      "raw_text": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: खल्ती KYC ठगी सम्बन्धमा उजुरी।\nI, Bikash Thapa (+9779856770011), received an SMS on 2026-08-02\nwarning that my Khalti account would be suspended unless KYC was completed.\nI was directed to http://khalti-kyc-verify.top/login and paid a verification fee of\nNPR 750 to Khalti ID 9812345678 (transaction KHL-2026-0802-44190). I was then\ninstructed to transfer NPR 9,500 to bank account 01903015472901.\nThe same helpdesk number +9779812345678 and email reward.center2026@gmail.com were used\nthroughout. I was also sent a second link,\nhttps://esewa-bonus-claim.xyz/verify?ref=KYC2026, when I hesitated.\nI request investigation and recovery of NPR 10,250.",
+      "average_confidence": 1.0,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00035",
+        "raw_text": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: खल्ती KYC ठगी सम्बन्धमा उजुरी।\nI, Bikash Thapa (+9779856770011), received an SMS on 2026-08-02\nwarning that my Khalti account would be suspended unless KYC was completed.\nI was directed to http://khalti-kyc-verify.top/login and paid a verification fee of\nNPR 750 to Khalti ID 9812345678 (transaction KHL-2026-0802-44190). I was then\ninstructed to transfer NPR 9,500 to bank account 01903015472901.\nThe same helpdesk number +9779812345678 and email reward.center2026@gmail.com were used\nthroughout. I was also sent a second link,\nhttps://esewa-bonus-claim.xyz/verify?ref=KYC2026, when I hesitated.\nI request investigation and recovery of NPR 10,250.",
+        "cleaned_text": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: खल्ती KYC ठगी सम्बन्धमा उजुरी।\nI, Bikash Thapa (+9779856770011), received an SMS on 2026-08-02\nwarning that my Khalti account would be suspended unless KYC was completed.\nI was directed to http://khalti-kyc-verify.top/login and paid a verification fee of\nNPR 750 to Khalti ID 9812345678 (transaction KHL-2026-0802-44190). I was then instructed to transfer NPR 9,500 to bank account 01903015472901.\nThe same helpdesk number +9779812345678 and email reward.center2026@gmail.com were used throughout. I was also sent a second link,\nhttps://esewa-bonus-claim.xyz/verify?ref=KYC2026, when I hesitated.\nI request investigation and recovery of NPR 10,250.",
+        "language": "mixed",
+        "line_languages": {
+          "1": "english",
+          "2": "nepali_unicode",
+          "3": "nepali_unicode",
+          "4": "mixed",
+          "5": "english",
+          "6": "english",
+          "7": "english",
+          "8": "english",
+          "9": "english",
+          "10": "english",
+          "11": "english",
+          "12": "english",
+          "13": "english"
+        },
+        "entities": {
+          "urls": [
+            {
+              "value": "http://khalti-kyc-verify.top/login",
+              "normalized": "http://khalti-kyc-verify.top/login"
+            },
+            {
+              "value": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026",
+              "normalized": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026"
+            }
+          ],
+          "domains": [
+            {
+              "value": "khalti-kyc-verify.top",
+              "normalized": "khalti-kyc-verify.top"
+            },
+            {
+              "value": "esewa-bonus-claim.xyz",
+              "normalized": "esewa-bonus-claim.xyz"
+            },
+            {
+              "value": "gmail.com",
+              "normalized": "gmail.com"
+            }
+          ],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "emails": [
+            {
+              "value": "reward.center2026@gmail.com",
+              "normalized": "reward.center2026@gmail.com"
+            }
+          ],
+          "phones": [
+            {
+              "value": "+9779856770011",
+              "normalized": "+9779856770011"
+            },
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "dates": [
+            {
+              "value": "2026-08-02",
+              "normalized": "2026-08-02"
+            }
+          ],
+          "times": [],
+          "money": [
+            {
+              "value": "NPR 750",
+              "normalized": "NPR 750"
+            },
+            {
+              "value": "NPR 9,500",
+              "normalized": "NPR 9500"
+            },
+            {
+              "value": "NPR 10,250",
+              "normalized": "NPR 10250"
+            }
+          ],
+          "bank_accounts": [
+            {
+              "value": "01903015472901",
+              "normalized": "01903015472901"
+            }
+          ],
+          "card_numbers": [],
+          "transaction_ids": [
+            {
+              "value": "KHL-2026-0802-44190",
+              "normalized": "KHL-2026-0802-44190"
+            }
+          ],
+          "esewa_ids": [],
+          "khalti_ids": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "imepay_ids": [],
+          "otp": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "hashes_md5": [],
+          "hashes_sha1": [],
+          "hashes_sha256": [],
+          "hashes_sha512": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {
+          "wallet": 4,
+          "verify": 3,
+          "kyc": 3,
+          "account": 2,
+          "reward": 2,
+          "threat": 2,
+          "login": 1,
+          "suspended": 1,
+          "bank": 1,
+          "payment": 1
+        },
+        "risk_signals": {
+          "urgency": 1,
+          "financial": 8,
+          "credential": 9,
+          "threat": 2
+        },
+        "statistics": {
+          "characters": 754,
+          "words": 102,
+          "lines": 11,
+          "average_line_length": 67.6,
+          "languages_detected": [
+            "english",
+            "mixed",
+            "nepali_unicode"
+          ],
+          "entity_count": 15,
+          "cleaning_operations": [
+            "entities_protected(12)",
+            "lines_merged(2)"
+          ],
+          "ocr_corrections": [],
+          "protected_entities": 12
+        },
+        "processing_time_ms": 5.4
+      },
+      "enhancement": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00035",
+        "cleaned_text": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: खल्ती KYC ठगी सम्बन्धमा उजुरी।\nI, Bikash Thapa (+9779856770011), received an SMS on 2026-08-02\nwarning that my Khalti account would be suspended unless KYC was completed.\nI was directed to http://khalti-kyc-verify.top/login and paid a verification fee of\nNPR 750 to Khalti ID 9812345678 (transaction KHL-2026-0802-44190). I was then instructed to transfer NPR 9,500 to bank account 01903015472901.\nThe same helpdesk number +9779812345678 and email reward.center2026@gmail.com were used throughout. I was also sent a second link,\nhttps://esewa-bonus-claim.xyz/verify?ref=KYC2026, when I hesitated.\nI request investigation and recovery of NPR 10,250.",
+        "enhanced_text": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: खल्ती KYC ठगी सम्बन्धमा उजुरी।\nI, Bikash Thapa (+9779856770011), received an SMS on 2026-08-02\nwarning that my Khalti account would be suspended unless KYC was completed.\nI was directed to http://khalti-kyc-verify.top/login and paid a verification fee of\nNPR 750 to Khalti ID 9812345678 (transaction KHL-2026-0802-44190). I was then instructed to transfer NPR 9,500 to bank account 01903015472901.\nThe same helpdesk number +9779812345678 and email reward.center2026@gmail.com were used throughout. I was also sent a second link,\nhttps://esewa-bonus-claim.xyz/verify?ref=KYC2026, when I hesitated.\nI request investigation and recovery of NPR 10,250.",
+        "ui_text": "",
+        "message_text": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: खल्ती KYC ठगी सम्बन्धमा उजुरी।\nI, Bikash Thapa (+9779856770011), received an SMS on 2026-08-02\nwarning that my Khalti account would be suspended unless KYC was completed.\nI was directed to http://khalti-kyc-verify.top/login and paid a verification fee of\nNPR 750 to Khalti ID 9812345678 (transaction KHL-2026-0802-44190). I was then instructed to transfer NPR 9,500 to bank account 01903015472901.\nThe same helpdesk number +9779812345678 and email reward.center2026@gmail.com were used throughout. I was also sent a second link,\nhttps://esewa-bonus-claim.xyz/verify?ref=KYC2026, when I hesitated.\nI request investigation and recovery of NPR 10,250.",
+        "layout": [
+          {
+            "line": 1,
+            "role": "message",
+            "text": "Complaint to Cyber Bureau, Nepal Police"
+          },
+          {
+            "line": 2,
+            "role": "message",
+            "text": "श्रीमान् प्रमुख ज्यू,"
+          },
+          {
+            "line": 3,
+            "role": "message",
+            "text": "साइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।"
+          },
+          {
+            "line": 4,
+            "role": "message",
+            "text": "विषय: खल्ती KYC ठगी सम्बन्धमा उजुरी।"
+          },
+          {
+            "line": 5,
+            "role": "message",
+            "text": "I, Bikash Thapa (+9779856770011), received an SMS on 2026-08-02"
+          },
+          {
+            "line": 6,
+            "role": "message",
+            "text": "warning that my Khalti account would be suspended unless KYC was completed."
+          },
+          {
+            "line": 7,
+            "role": "message",
+            "text": "I was directed to http://khalti-kyc-verify.top/login and paid a verification fee of"
+          },
+          {
+            "line": 8,
+            "role": "message",
+            "text": "NPR 750 to Khalti ID 9812345678 (transaction KHL-2026-0802-44190). I was then instructed to transfer NPR 9,500 to bank account 01903015472901."
+          },
+          {
+            "line": 9,
+            "role": "message",
+            "text": "The same helpdesk number +9779812345678 and email reward.center2026@gmail.com were used throughout. I was also sent a second link,"
+          },
+          {
+            "line": 10,
+            "role": "message",
+            "text": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026, when I hesitated."
+          },
+          {
+            "line": 11,
+            "role": "message",
+            "text": "I request investigation and recovery of NPR 10,250."
+          }
+        ],
+        "corrections": [],
+        "correction_statistics": {
+          "total_corrections": 0,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 0,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 11,
+          "lines_high_confidence": 11,
+          "lines_correctable": 0,
+          "document_confidence": 1.0,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 1.97
+      },
+      "semantic_correction": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00035",
+        "enhanced_text": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: खल्ती KYC ठगी सम्बन्धमा उजुरी।\nI, Bikash Thapa (+9779856770011), received an SMS on 2026-08-02\nwarning that my Khalti account would be suspended unless KYC was completed.\nI was directed to http://khalti-kyc-verify.top/login and paid a verification fee of\nNPR 750 to Khalti ID 9812345678 (transaction KHL-2026-0802-44190). I was then instructed to transfer NPR 9,500 to bank account 01903015472901.\nThe same helpdesk number +9779812345678 and email reward.center2026@gmail.com were used throughout. I was also sent a second link,\nhttps://esewa-bonus-claim.xyz/verify?ref=KYC2026, when I hesitated.\nI request investigation and recovery of NPR 10,250.",
+        "semantic_text": "Complaint to Cyber Bureau, Nepal Police श्रीमान् प्रमुख ज्यू, साइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: खल्ती KYC ठगी सम्बन्धमा उजुरी।\nI, Bikash Thapa (+9779856770011), received an SMS on 2026-08-02 warning that my Khalti account would be suspended unless KYC was completed.\nI was directed to http://khalti-kyc-verify.top/login and paid a verification fee of\nNPR 750 to Khalti ID 9812345678 (transaction KHL-2026-0802-44190). I was then instructed to transfer NPR 9,500 to bank account 01903015472901.\nThe same helpdesk number +9779812345678 and email reward.center2026@gmail.com were used throughout. I was also sent a second link,\nhttps://esewa-bonus-claim.xyz/verify?ref=KYC2026, when I hesitated.\nI request investigation and recovery of NPR 10,250.",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {
+          "urls": [
+            {
+              "value": "http://khalti-kyc-verify.top/login",
+              "normalized": "http://khalti-kyc-verify.top/login"
+            },
+            {
+              "value": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026",
+              "normalized": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026"
+            }
+          ],
+          "domains": [
+            {
+              "value": "khalti-kyc-verify.top",
+              "normalized": "khalti-kyc-verify.top"
+            },
+            {
+              "value": "esewa-bonus-claim.xyz",
+              "normalized": "esewa-bonus-claim.xyz"
+            },
+            {
+              "value": "gmail.com",
+              "normalized": "gmail.com"
+            }
+          ],
+          "emails": [
+            {
+              "value": "reward.center2026@gmail.com",
+              "normalized": "reward.center2026@gmail.com"
+            }
+          ],
+          "phones": [
+            {
+              "value": "+9779856770011",
+              "normalized": "+9779856770011"
+            },
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "dates": [
+            {
+              "value": "2026-08-02",
+              "normalized": "2026-08-02"
+            }
+          ],
+          "money": [
+            {
+              "value": "NPR 750",
+              "normalized": "NPR 750"
+            },
+            {
+              "value": "NPR 9,500",
+              "normalized": "NPR 9500"
+            },
+            {
+              "value": "NPR 10,250",
+              "normalized": "NPR 10250"
+            }
+          ],
+          "bank_accounts": [
+            {
+              "value": "01903015472901",
+              "normalized": "01903015472901"
+            }
+          ],
+          "transaction_ids": [
+            {
+              "value": "KHL-2026-0802-44190",
+              "normalized": "KHL-2026-0802-44190"
+            }
+          ],
+          "khalti_ids": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ]
+        },
+        "statistics": {
+          "suspicious_tokens": 0,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 12,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english",
+            "mixed",
+            "nepali_unicode"
+          ]
+        },
+        "processing_time_ms": 2.67
+      }
+    },
+    {
+      "case_id": "CASE_4B2A51A300",
+      "evidence_id": "EVID_00036",
+      "file_name": "05_transactions.csv",
+      "file_hash": "6a007523d9087637c918cd46126302cc8a5173087004379c560c56299d68ddd0",
+      "file_size": "233",
+      "upload_time": "2026-08-21T06:43:01.325Z",
+      "processing_time_ms": 20.2,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 1.0,
+          "text": "date,description,amount_npr,channel\n2026-08-02,Khalti load to 9812345678,-750,wallet\n2026-08-03,IBFT to 01903015472901,-9500,mobile_banking\n2026-08-03,Balance inquiry,0,mobile_banking\n2026-07-28,Remittance credit,34000,transfer",
+          "lines": [
+            {
+              "text": "date,description,amount_npr,channel",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "2026-08-02,Khalti load to 9812345678,-750,wallet",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "2026-08-03,IBFT to 01903015472901,-9500,mobile_banking",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "2026-08-03,Balance inquiry,0,mobile_banking",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "2026-07-28,Remittance credit,34000,transfer",
+              "confidence": 1.0,
+              "bbox": []
+            }
+          ],
+          "bounding_boxes": [
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          "preprocessing_steps": [
+            "none(text_file)"
+          ]
+        }
+      ],
+      "raw_text": "date,description,amount_npr,channel\n2026-08-02,Khalti load to 9812345678,-750,wallet\n2026-08-03,IBFT to 01903015472901,-9500,mobile_banking\n2026-08-03,Balance inquiry,0,mobile_banking\n2026-07-28,Remittance credit,34000,transfer",
+      "average_confidence": 1.0,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00036",
+        "raw_text": "date,description,amount_npr,channel\n2026-08-02,Khalti load to 9812345678,-750,wallet\n2026-08-03,IBFT to 01903015472901,-9500,mobile_banking\n2026-08-03,Balance inquiry,0,mobile_banking\n2026-07-28,Remittance credit,34000,transfer",
+        "cleaned_text": "date,description,amount_npr,channel\n2026-08-02,Khalti load to 9812345678,-750,wallet\n2026-08-03,IBFT to 01903015472901,-9500,mobile_banking\n2026-08-03,Balance inquiry,0,mobile_banking\n2026-07-28,Remittance credit,34000,transfer",
+        "language": "english",
+        "line_languages": {
+          "1": "english",
+          "2": "english",
+          "3": "english",
+          "4": "english",
+          "5": "english"
+        },
+        "entities": {
+          "urls": [],
+          "domains": [],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "emails": [],
+          "phones": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "dates": [
+            {
+              "value": "2026-08-02",
+              "normalized": "2026-08-02"
+            },
+            {
+              "value": "2026-08-03",
+              "normalized": "2026-08-03"
+            },
+            {
+              "value": "2026-07-28",
+              "normalized": "2026-07-28"
+            }
+          ],
+          "times": [],
+          "money": [],
+          "bank_accounts": [],
+          "card_numbers": [],
+          "transaction_ids": [],
+          "esewa_ids": [],
+          "khalti_ids": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "imepay_ids": [],
+          "otp": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "hashes_md5": [],
+          "hashes_sha1": [],
+          "hashes_sha256": [],
+          "hashes_sha512": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {
+          "wallet": 2,
+          "payment": 1
+        },
+        "risk_signals": {
+          "urgency": 0,
+          "financial": 3,
+          "credential": 0,
+          "threat": 0
+        },
+        "statistics": {
+          "characters": 227,
+          "words": 12,
+          "lines": 5,
+          "average_line_length": 44.6,
+          "languages_detected": [
+            "english"
+          ],
+          "entity_count": 5,
+          "cleaning_operations": [
+            "entities_protected(6)"
+          ],
+          "ocr_corrections": [],
+          "protected_entities": 6
+        },
+        "processing_time_ms": 1.24
+      },
+      "enhancement": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00036",
+        "cleaned_text": "date,description,amount_npr,channel\n2026-08-02,Khalti load to 9812345678,-750,wallet\n2026-08-03,IBFT to 01903015472901,-9500,mobile_banking\n2026-08-03,Balance inquiry,0,mobile_banking\n2026-07-28,Remittance credit,34000,transfer",
+        "enhanced_text": "date,description,amount_npr,channel\n2026-08-02,Khalti load to 9812345678,-750,wallet\n2026-08-03,IBFT to 01903015472901,-9500,mobile_banking\n2026-08-03,Balance inquiry,0,mobile_banking\n2026-07-28,Remittance credit,34000,transfer",
+        "ui_text": "",
+        "message_text": "date,description,amount_npr,channel\n2026-08-02,Khalti load to 9812345678,-750,wallet\n2026-08-03,IBFT to 01903015472901,-9500,mobile_banking\n2026-08-03,Balance inquiry,0,mobile_banking\n2026-07-28,Remittance credit,34000,transfer",
+        "layout": [
+          {
+            "line": 1,
+            "role": "message",
+            "text": "date,description,amount_npr,channel"
+          },
+          {
+            "line": 2,
+            "role": "message",
+            "text": "2026-08-02,Khalti load to 9812345678,-750,wallet"
+          },
+          {
+            "line": 3,
+            "role": "message",
+            "text": "2026-08-03,IBFT to 01903015472901,-9500,mobile_banking"
+          },
+          {
+            "line": 4,
+            "role": "message",
+            "text": "2026-08-03,Balance inquiry,0,mobile_banking"
+          },
+          {
+            "line": 5,
+            "role": "message",
+            "text": "2026-07-28,Remittance credit,34000,transfer"
+          }
+        ],
+        "corrections": [],
+        "correction_statistics": {
+          "total_corrections": 0,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 0,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 5,
+          "lines_high_confidence": 5,
+          "lines_correctable": 0,
+          "document_confidence": 1.0,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 0.54
+      },
+      "semantic_correction": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00036",
+        "enhanced_text": "date,description,amount_npr,channel\n2026-08-02,Khalti load to 9812345678,-750,wallet\n2026-08-03,IBFT to 01903015472901,-9500,mobile_banking\n2026-08-03,Balance inquiry,0,mobile_banking\n2026-07-28,Remittance credit,34000,transfer",
+        "semantic_text": "date,description,amount_npr,channel\n2026-08-02,Khalti load to 9812345678,-750,wallet\n2026-08-03,IBFT to 01903015472901,-9500,mobile_banking\n2026-08-03,Balance inquiry,0,mobile_banking\n2026-07-28,Remittance credit,34000,transfer",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {
+          "phones": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "dates": [
+            {
+              "value": "2026-08-02",
+              "normalized": "2026-08-02"
+            },
+            {
+              "value": "2026-08-03",
+              "normalized": "2026-08-03"
+            },
+            {
+              "value": "2026-07-28",
+              "normalized": "2026-07-28"
+            }
+          ],
+          "khalti_ids": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ]
+        },
+        "statistics": {
+          "suspicious_tokens": 0,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 6,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english"
+          ]
+        },
+        "processing_time_ms": 0.74
+      }
+    },
+    {
+      "case_id": "CASE_4B2A51A300",
+      "evidence_id": "EVID_00037",
+      "file_name": "04_kyc_phishing_email.txt",
+      "file_hash": "c7e51499cd6ed8d389ba79bb4c8f8cf2dc9b70d569f950826478969dd685ff8d",
+      "file_size": "781",
+      "upload_time": "2026-08-21T06:43:01.370Z",
+      "processing_time_ms": 18.8,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 1.0,
+          "text": "From: Khalti Verification <reward.center2026@gmail.com>\nTo: bikash.thapa14@gmail.com\nDate: Sat, 02 Aug 2026 08:55:31 +0545\nSubject: FINAL NOTICE - Khalti KYC verification required\n\nDear Customer,\n\nतपाईंको खाता प्रमाणीकरण नगरेमा बन्द गरिनेछ।\n\nOur records show your Khalti KYC is incomplete. Accounts that remain\nunverified will be permanently suspended within 24 hours.\n\n  Verification portal : http://khalti-kyc-verify.top/login\n  Khalti ID           : 9812345678\n  Settlement account  : 01903015472901 (Nabil Bank)\n  Helpdesk            : +9779812345678\n  Escalation          : https://esewa-bonus-claim.xyz/verify?ref=KYC2026\n\nA refundable verification fee of NPR 750 applies.\n\nKhalti Verification Team",
+          "lines": [
+            {
+              "text": "From: Khalti Verification <reward.center2026@gmail.com>",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "To: bikash.thapa14@gmail.com",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "Date: Sat, 02 Aug 2026 08:55:31 +0545",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "Subject: FINAL NOTICE - Khalti KYC verification required",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "Dear Customer,",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "तपाईंको खाता प्रमाणीकरण नगरेमा बन्द गरिनेछ।",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "Our records show your Khalti KYC is incomplete. Accounts that remain",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "unverified will be permanently suspended within 24 hours.",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "  Verification portal : http://khalti-kyc-verify.top/login",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "  Khalti ID           : 9812345678",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "  Settlement account  : 01903015472901 (Nabil Bank)",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "  Helpdesk            : +9779812345678",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "  Escalation          : https://esewa-bonus-claim.xyz/verify?ref=KYC2026",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "A refundable verification fee of NPR 750 applies.",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "Khalti Verification Team",
+              "confidence": 1.0,
+              "bbox": []
+            }
+          ],
+          "bounding_boxes": [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          "preprocessing_steps": [
+            "none(text_file)"
+          ]
+        }
+      ],
+      "raw_text": "From: Khalti Verification <reward.center2026@gmail.com>\nTo: bikash.thapa14@gmail.com\nDate: Sat, 02 Aug 2026 08:55:31 +0545\nSubject: FINAL NOTICE - Khalti KYC verification required\n\nDear Customer,\n\nतपाईंको खाता प्रमाणीकरण नगरेमा बन्द गरिनेछ।\n\nOur records show your Khalti KYC is incomplete. Accounts that remain\nunverified will be permanently suspended within 24 hours.\n\n  Verification portal : http://khalti-kyc-verify.top/login\n  Khalti ID           : 9812345678\n  Settlement account  : 01903015472901 (Nabil Bank)\n  Helpdesk            : +9779812345678\n  Escalation          : https://esewa-bonus-claim.xyz/verify?ref=KYC2026\n\nA refundable verification fee of NPR 750 applies.\n\nKhalti Verification Team",
+      "average_confidence": 1.0,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00037",
+        "raw_text": "From: Khalti Verification <reward.center2026@gmail.com>\nTo: bikash.thapa14@gmail.com\nDate: Sat, 02 Aug 2026 08:55:31 +0545\nSubject: FINAL NOTICE - Khalti KYC verification required\n\nDear Customer,\n\nतपाईंको खाता प्रमाणीकरण नगरेमा बन्द गरिनेछ।\n\nOur records show your Khalti KYC is incomplete. Accounts that remain\nunverified will be permanently suspended within 24 hours.\n\n  Verification portal : http://khalti-kyc-verify.top/login\n  Khalti ID           : 9812345678\n  Settlement account  : 01903015472901 (Nabil Bank)\n  Helpdesk            : +9779812345678\n  Escalation          : https://esewa-bonus-claim.xyz/verify?ref=KYC2026\n\nA refundable verification fee of NPR 750 applies.\n\nKhalti Verification Team",
+        "cleaned_text": "From: Khalti Verification <reward.center2026@gmail.com>\nTo: bikash.thapa14@gmail.com\nDate: Sat, 02 Aug 2026 08:55:31 +0545\nSubject: FINAL NOTICE - Khalti KYC verification required\n\nDear Customer,\n\nतपाईंको खाता प्रमाणीकरण नगरेमा बन्द गरिनेछ।\n\nOur records show your Khalti KYC is incomplete. Accounts that remain unverified will be permanently suspended within 24 hours.\n\nVerification portal: http://khalti-kyc-verify.top/login\nKhalti ID: 9812345678\nSettlement account: 01903015472901 (Nabil Bank)\nHelpdesk: +9779812345678\nEscalation: https://esewa-bonus-claim.xyz/verify?ref=KYC2026\n\nA refundable verification fee of NPR 750 applies.\n\nKhalti Verification Team",
+        "language": "mixed",
+        "line_languages": {
+          "1": "english",
+          "2": "english",
+          "3": "english",
+          "4": "english",
+          "5": "unknown",
+          "6": "english",
+          "7": "unknown",
+          "8": "nepali_unicode",
+          "9": "unknown",
+          "10": "english",
+          "11": "english",
+          "12": "unknown",
+          "13": "english",
+          "14": "english",
+          "15": "english",
+          "16": "english",
+          "17": "english",
+          "18": "unknown",
+          "19": "english",
+          "20": "unknown",
+          "21": "english"
+        },
+        "entities": {
+          "urls": [
+            {
+              "value": "http://khalti-kyc-verify.top/login",
+              "normalized": "http://khalti-kyc-verify.top/login"
+            },
+            {
+              "value": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026",
+              "normalized": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026"
+            }
+          ],
+          "domains": [
+            {
+              "value": "khalti-kyc-verify.top",
+              "normalized": "khalti-kyc-verify.top"
+            },
+            {
+              "value": "esewa-bonus-claim.xyz",
+              "normalized": "esewa-bonus-claim.xyz"
+            },
+            {
+              "value": "gmail.com",
+              "normalized": "gmail.com"
+            }
+          ],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "emails": [
+            {
+              "value": "reward.center2026@gmail.com",
+              "normalized": "reward.center2026@gmail.com"
+            },
+            {
+              "value": "bikash.thapa14@gmail.com",
+              "normalized": "bikash.thapa14@gmail.com"
+            }
+          ],
+          "phones": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "dates": [
+            {
+              "value": "02 Aug 2026",
+              "normalized": "02 Aug 2026"
+            }
+          ],
+          "times": [
+            {
+              "value": "08:55:31",
+              "normalized": "08:55:31"
+            }
+          ],
+          "money": [
+            {
+              "value": "NPR 750",
+              "normalized": "NPR 750"
+            }
+          ],
+          "bank_accounts": [
+            {
+              "value": "01903015472901",
+              "normalized": "01903015472901"
+            }
+          ],
+          "card_numbers": [],
+          "transaction_ids": [],
+          "esewa_ids": [],
+          "khalti_ids": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "imepay_ids": [],
+          "otp": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "hashes_md5": [],
+          "hashes_sha1": [],
+          "hashes_sha256": [],
+          "hashes_sha512": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {
+          "verify": 7,
+          "wallet": 7,
+          "kyc": 3,
+          "account": 2,
+          "reward": 2,
+          "login": 1,
+          "suspended": 1,
+          "urgent": 1,
+          "bank": 1
+        },
+        "risk_signals": {
+          "urgency": 2,
+          "financial": 10,
+          "credential": 13,
+          "threat": 0
+        },
+        "statistics": {
+          "characters": 658,
+          "words": 74,
+          "lines": 14,
+          "average_line_length": 45.6,
+          "languages_detected": [
+            "english",
+            "nepali_unicode"
+          ],
+          "entity_count": 13,
+          "cleaning_operations": [
+            "entities_protected(10)",
+            "line_prefix_junk_removed",
+            "whitespace_normalized",
+            "lines_merged(1)"
+          ],
+          "ocr_corrections": [],
+          "protected_entities": 10
+        },
+        "processing_time_ms": 3.94
+      },
+      "enhancement": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00037",
+        "cleaned_text": "From: Khalti Verification <reward.center2026@gmail.com>\nTo: bikash.thapa14@gmail.com\nDate: Sat, 02 Aug 2026 08:55:31 +0545\nSubject: FINAL NOTICE - Khalti KYC verification required\n\nDear Customer,\n\nतपाईंको खाता प्रमाणीकरण नगरेमा बन्द गरिनेछ।\n\nOur records show your Khalti KYC is incomplete. Accounts that remain unverified will be permanently suspended within 24 hours.\n\nVerification portal: http://khalti-kyc-verify.top/login\nKhalti ID: 9812345678\nSettlement account: 01903015472901 (Nabil Bank)\nHelpdesk: +9779812345678\nEscalation: https://esewa-bonus-claim.xyz/verify?ref=KYC2026\n\nA refundable verification fee of NPR 750 applies.\n\nKhalti Verification Team",
+        "enhanced_text": "From: Khalti Verification <reward.center2026@gmail.com>\nTo: bikash.thapa14@gmail.com\nDate: Sat, 02 Aug 2026 08:55:31 +0545\nSubject: FINAL NOTICE - Khalti KYC verification required\n\nDear Customer,\n\nतपाईंको खाता प्रमाणीकरण नगरेमा बन्द गरिनेछ।\n\nOur records show your Khalti KYC is incomplete. Accounts that remain unverified will be permanently suspended within 24 hours.\n\nVerification portal: http://khalti-kyc-verify.top/login\nKhalti ID: 9812345678\nSettlement account: 01903015472901 (Nabil Bank)\nHelpdesk: +9779812345678\nEscalation: https://esewa-bonus-claim.xyz/verify?ref=KYC2026\n\nA refundable verification fee of NPR 750 applies.\n\nKhalti Verification Team",
+        "ui_text": "",
+        "message_text": "From: Khalti Verification <reward.center2026@gmail.com>\nTo: bikash.thapa14@gmail.com\nDate: Sat, 02 Aug 2026 08:55:31 +0545\nSubject: FINAL NOTICE - Khalti KYC verification required\nDear Customer,\nतपाईंको खाता प्रमाणीकरण नगरेमा बन्द गरिनेछ।\nOur records show your Khalti KYC is incomplete. Accounts that remain unverified will be permanently suspended within 24 hours.\nVerification portal: http://khalti-kyc-verify.top/login\nKhalti ID: 9812345678\nSettlement account: 01903015472901 (Nabil Bank)\nHelpdesk: +9779812345678\nEscalation: https://esewa-bonus-claim.xyz/verify?ref=KYC2026\nA refundable verification fee of NPR 750 applies.\nKhalti Verification Team",
+        "layout": [
+          {
+            "line": 1,
+            "role": "message",
+            "text": "From: Khalti Verification <reward.center2026@gmail.com>"
+          },
+          {
+            "line": 2,
+            "role": "message",
+            "text": "To: bikash.thapa14@gmail.com"
+          },
+          {
+            "line": 3,
+            "role": "message",
+            "text": "Date: Sat, 02 Aug 2026 08:55:31 +0545"
+          },
+          {
+            "line": 4,
+            "role": "message",
+            "text": "Subject: FINAL NOTICE - Khalti KYC verification required"
+          },
+          {
+            "line": 6,
+            "role": "message",
+            "text": "Dear Customer,"
+          },
+          {
+            "line": 8,
+            "role": "message",
+            "text": "तपाईंको खाता प्रमाणीकरण नगरेमा बन्द गरिनेछ।"
+          },
+          {
+            "line": 10,
+            "role": "message",
+            "text": "Our records show your Khalti KYC is incomplete. Accounts that remain unverified will be permanently suspended within 24 hours."
+          },
+          {
+            "line": 12,
+            "role": "message",
+            "text": "Verification portal: http://khalti-kyc-verify.top/login"
+          },
+          {
+            "line": 13,
+            "role": "message",
+            "text": "Khalti ID: 9812345678"
+          },
+          {
+            "line": 14,
+            "role": "message",
+            "text": "Settlement account: 01903015472901 (Nabil Bank)"
+          },
+          {
+            "line": 15,
+            "role": "message",
+            "text": "Helpdesk: +9779812345678"
+          },
+          {
+            "line": 16,
+            "role": "message",
+            "text": "Escalation: https://esewa-bonus-claim.xyz/verify?ref=KYC2026"
+          },
+          {
+            "line": 18,
+            "role": "message",
+            "text": "A refundable verification fee of NPR 750 applies."
+          },
+          {
+            "line": 20,
+            "role": "message",
+            "text": "Khalti Verification Team"
+          }
+        ],
+        "corrections": [],
+        "correction_statistics": {
+          "total_corrections": 0,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 0,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 14,
+          "lines_high_confidence": 14,
+          "lines_correctable": 0,
+          "document_confidence": 1.0,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 7.94
+      },
+      "semantic_correction": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00037",
+        "enhanced_text": "From: Khalti Verification <reward.center2026@gmail.com>\nTo: bikash.thapa14@gmail.com\nDate: Sat, 02 Aug 2026 08:55:31 +0545\nSubject: FINAL NOTICE - Khalti KYC verification required\n\nDear Customer,\n\nतपाईंको खाता प्रमाणीकरण नगरेमा बन्द गरिनेछ।\n\nOur records show your Khalti KYC is incomplete. Accounts that remain unverified will be permanently suspended within 24 hours.\n\nVerification portal: http://khalti-kyc-verify.top/login\nKhalti ID: 9812345678\nSettlement account: 01903015472901 (Nabil Bank)\nHelpdesk: +9779812345678\nEscalation: https://esewa-bonus-claim.xyz/verify?ref=KYC2026\n\nA refundable verification fee of NPR 750 applies.\n\nKhalti Verification Team",
+        "semantic_text": "From: Khalti Verification <reward.center2026@gmail.com>\nTo: bikash.thapa14@gmail.com\nDate: Sat, 02 Aug 2026 08:55:31 +0545\nSubject: FINAL NOTICE - Khalti KYC verification required\n\nDear Customer,\n\nतपाईंको खाता प्रमाणीकरण नगरेमा बन्द गरिनेछ।\n\nOur records show your Khalti KYC is incomplete. Accounts that remain unverified will be permanently suspended within 24 hours.\n\nVerification portal: http://khalti-kyc-verify.top/login\nKhalti ID: 9812345678\nSettlement account: 01903015472901 (Nabil Bank)\nHelpdesk: +9779812345678\nEscalation: https://esewa-bonus-claim.xyz/verify?ref=KYC2026\n\nA refundable verification fee of NPR 750 applies.\n\nKhalti Verification Team",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {
+          "urls": [
+            {
+              "value": "http://khalti-kyc-verify.top/login",
+              "normalized": "http://khalti-kyc-verify.top/login"
+            },
+            {
+              "value": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026",
+              "normalized": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026"
+            }
+          ],
+          "domains": [
+            {
+              "value": "khalti-kyc-verify.top",
+              "normalized": "khalti-kyc-verify.top"
+            },
+            {
+              "value": "esewa-bonus-claim.xyz",
+              "normalized": "esewa-bonus-claim.xyz"
+            },
+            {
+              "value": "gmail.com",
+              "normalized": "gmail.com"
+            }
+          ],
+          "emails": [
+            {
+              "value": "reward.center2026@gmail.com",
+              "normalized": "reward.center2026@gmail.com"
+            },
+            {
+              "value": "bikash.thapa14@gmail.com",
+              "normalized": "bikash.thapa14@gmail.com"
+            }
+          ],
+          "phones": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "dates": [
+            {
+              "value": "02 Aug 2026",
+              "normalized": "02 Aug 2026"
+            }
+          ],
+          "times": [
+            {
+              "value": "08:55:31",
+              "normalized": "08:55:31"
+            }
+          ],
+          "money": [
+            {
+              "value": "NPR 750",
+              "normalized": "NPR 750"
+            }
+          ],
+          "bank_accounts": [
+            {
+              "value": "01903015472901",
+              "normalized": "01903015472901"
+            }
+          ],
+          "khalti_ids": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ]
+        },
+        "statistics": {
+          "suspicious_tokens": 0,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 10,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english",
+            "nepali_unicode"
+          ]
+        },
+        "processing_time_ms": 2.35
+      }
+    },
+    {
+      "case_id": "CASE_4B2A51A300",
+      "evidence_id": "EVID_00038",
+      "file_name": "03_khalti_receipt.jpg",
+      "file_hash": "1257b4d56141a312458e7cb6d0150962bdd14c1c2a78fe36de7a8b58d0e472d1",
+      "file_size": "39966",
+      "upload_time": "2026-08-21T06:43:01.434Z",
+      "processing_time_ms": 6370.3,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 0.9962,
+          "text": "Khalti Payment Receipt\nAmount\nRs. 750.00\nTransaction KHL-2026-0802-44190\nDate & Time 2026-08-02 03:18 PM\nSent To\n9812345678\nPurpose\nKYC verification fee\nSender\n+9779856770011",
+          "lines": [
+            {
+              "text": "Khalti Payment Receipt",
+              "confidence": 0.9883,
+              "bbox": [
+                [
+                  40.0,
+                  41.0
+                ],
+                [
+                  376.0,
+                  41.0
+                ],
+                [
+                  376.0,
+                  72.0
+                ],
+                [
+                  40.0,
+                  72.0
+                ]
+              ]
+            },
+            {
+              "text": "Amount",
+              "confidence": 0.9999,
+              "bbox": [
+                [
+                  37.0,
+                  83.0
+                ],
+                [
+                  118.0,
+                  83.0
+                ],
+                [
+                  118.0,
+                  107.0
+                ],
+                [
+                  37.0,
+                  107.0
+                ]
+              ]
+            },
+            {
+              "text": "Rs. 750.00",
+              "confidence": 0.9879,
+              "bbox": [
+                [
+                  159.0,
+                  85.0
+                ],
+                [
+                  263.0,
+                  85.0
+                ],
+                [
+                  263.0,
+                  106.0
+                ],
+                [
+                  159.0,
+                  106.0
+                ]
+              ]
+            },
+            {
+              "text": "Transaction KHL-2026-0802-44190",
+              "confidence": 0.9987,
+              "bbox": [
+                [
+                  39.0,
+                  119.0
+                ],
+                [
+                  382.0,
+                  119.0
+                ],
+                [
+                  382.0,
+                  139.0
+                ],
+                [
+                  39.0,
+                  139.0
+                ]
+              ]
+            },
+            {
+              "text": "Date & Time 2026-08-02 03:18 PM",
+              "confidence": 0.9982,
+              "bbox": [
+                [
+                  39.0,
+                  154.0
+                ],
+                [
+                  379.0,
+                  154.0
+                ],
+                [
+                  379.0,
+                  174.0
+                ],
+                [
+                  39.0,
+                  174.0
+                ]
+              ]
+            },
+            {
+              "text": "Sent To",
+              "confidence": 0.9997,
+              "bbox": [
+                [
+                  38.0,
+                  187.0
+                ],
+                [
+                  114.0,
+                  187.0
+                ],
+                [
+                  114.0,
+                  209.0
+                ],
+                [
+                  38.0,
+                  209.0
+                ]
+              ]
+            },
+            {
+              "text": "9812345678",
+              "confidence": 0.9999,
+              "bbox": [
+                [
+                  152.0,
+                  188.0
+                ],
+                [
+                  271.0,
+                  188.0
+                ],
+                [
+                  271.0,
+                  208.0
+                ],
+                [
+                  152.0,
+                  208.0
+                ]
+              ]
+            },
+            {
+              "text": "Purpose",
+              "confidence": 1.0,
+              "bbox": [
+                [
+                  38.0,
+                  222.0
+                ],
+                [
+                  122.0,
+                  222.0
+                ],
+                [
+                  122.0,
+                  245.0
+                ],
+                [
+                  38.0,
+                  245.0
+                ]
+              ]
+            },
+            {
+              "text": "KYC verification fee",
+              "confidence": 0.9896,
+              "bbox": [
+                [
+                  158.0,
+                  222.0
+                ],
+                [
+                  346.0,
+                  222.0
+                ],
+                [
+                  346.0,
+                  242.0
+                ],
+                [
+                  158.0,
+                  242.0
+                ]
+              ]
+            },
+            {
+              "text": "Sender",
+              "confidence": 0.9999,
+              "bbox": [
+                [
+                  38.0,
+                  254.0
+                ],
+                [
+                  112.0,
+                  254.0
+                ],
+                [
+                  112.0,
+                  276.0
+                ],
+                [
+                  38.0,
+                  276.0
+                ]
+              ]
+            },
+            {
+              "text": "+9779856770011",
+              "confidence": 0.9962,
+              "bbox": [
+                [
+                  154.0,
+                  255.0
+                ],
+                [
+                  318.0,
+                  255.0
+                ],
+                [
+                  318.0,
+                  275.0
+                ],
+                [
+                  154.0,
+                  275.0
+                ]
+              ]
+            }
+          ],
+          "bounding_boxes": [
+            [
+              [
+                40.0,
+                41.0
+              ],
+              [
+                376.0,
+                41.0
+              ],
+              [
+                376.0,
+                72.0
+              ],
+              [
+                40.0,
+                72.0
+              ]
+            ],
+            [
+              [
+                37.0,
+                83.0
+              ],
+              [
+                118.0,
+                83.0
+              ],
+              [
+                118.0,
+                107.0
+              ],
+              [
+                37.0,
+                107.0
+              ]
+            ],
+            [
+              [
+                159.0,
+                85.0
+              ],
+              [
+                263.0,
+                85.0
+              ],
+              [
+                263.0,
+                106.0
+              ],
+              [
+                159.0,
+                106.0
+              ]
+            ],
+            [
+              [
+                39.0,
+                119.0
+              ],
+              [
+                382.0,
+                119.0
+              ],
+              [
+                382.0,
+                139.0
+              ],
+              [
+                39.0,
+                139.0
+              ]
+            ],
+            [
+              [
+                39.0,
+                154.0
+              ],
+              [
+                379.0,
+                154.0
+              ],
+              [
+                379.0,
+                174.0
+              ],
+              [
+                39.0,
+                174.0
+              ]
+            ],
+            [
+              [
+                38.0,
+                187.0
+              ],
+              [
+                114.0,
+                187.0
+              ],
+              [
+                114.0,
+                209.0
+              ],
+              [
+                38.0,
+                209.0
+              ]
+            ],
+            [
+              [
+                152.0,
+                188.0
+              ],
+              [
+                271.0,
+                188.0
+              ],
+              [
+                271.0,
+                208.0
+              ],
+              [
+                152.0,
+                208.0
+              ]
+            ],
+            [
+              [
+                38.0,
+                222.0
+              ],
+              [
+                122.0,
+                222.0
+              ],
+              [
+                122.0,
+                245.0
+              ],
+              [
+                38.0,
+                245.0
+              ]
+            ],
+            [
+              [
+                158.0,
+                222.0
+              ],
+              [
+                346.0,
+                222.0
+              ],
+              [
+                346.0,
+                242.0
+              ],
+              [
+                158.0,
+                242.0
+              ]
+            ],
+            [
+              [
+                38.0,
+                254.0
+              ],
+              [
+                112.0,
+                254.0
+              ],
+              [
+                112.0,
+                276.0
+              ],
+              [
+                38.0,
+                276.0
+              ]
+            ],
+            [
+              [
+                154.0,
+                255.0
+              ],
+              [
+                318.0,
+                255.0
+              ],
+              [
+                318.0,
+                275.0
+              ],
+              [
+                154.0,
+                275.0
+              ]
+            ]
+          ],
+          "preprocessing_steps": [
+            "convert_rgb",
+            "exif_orientation",
+            "clahe",
+            "adaptive_threshold"
+          ]
+        }
+      ],
+      "raw_text": "Khalti Payment Receipt\nAmount\nRs. 750.00\nTransaction KHL-2026-0802-44190\nDate & Time 2026-08-02 03:18 PM\nSent To\n9812345678\nPurpose\nKYC verification fee\nSender\n+9779856770011",
+      "average_confidence": 0.9962,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00038",
+        "raw_text": "Khalti Payment Receipt\nAmount\nRs. 750.00\nTransaction KHL-2026-0802-44190\nDate & Time 2026-08-02 03:18 PM\nSent To\n9812345678\nPurpose\nKYC verification fee\nSender\n+9779856770011",
+        "cleaned_text": "Khalti Payment Receipt\nAmount\nRs. 750.00\nTransaction KHL-2026-0802-44190\nDate & Time 2026-08-02 03:18 PM\nSent To\n9812345678\nPurpose\nKYC verification fee\nSender\n+9779856770011",
+        "language": "english",
+        "line_languages": {
+          "1": "english",
+          "2": "english",
+          "3": "english",
+          "4": "english",
+          "5": "english",
+          "6": "english",
+          "7": "unknown",
+          "8": "english",
+          "9": "english",
+          "10": "english",
+          "11": "unknown"
+        },
+        "entities": {
+          "urls": [],
+          "domains": [],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "emails": [],
+          "phones": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            },
+            {
+              "value": "+9779856770011",
+              "normalized": "+9779856770011"
+            }
+          ],
+          "dates": [
+            {
+              "value": "2026-08-02",
+              "normalized": "2026-08-02"
+            }
+          ],
+          "times": [
+            {
+              "value": "03:18 PM",
+              "normalized": "03:18 PM"
+            }
+          ],
+          "money": [
+            {
+              "value": "Rs. 750.00",
+              "normalized": "NPR 750"
+            }
+          ],
+          "bank_accounts": [],
+          "card_numbers": [],
+          "transaction_ids": [
+            {
+              "value": "KHL-2026-0802-44190",
+              "normalized": "KHL-2026-0802-44190"
+            }
+          ],
+          "esewa_ids": [],
+          "khalti_ids": [],
+          "imepay_ids": [],
+          "otp": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "hashes_md5": [],
+          "hashes_sha1": [],
+          "hashes_sha256": [],
+          "hashes_sha512": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {
+          "verify": 1,
+          "kyc": 1,
+          "wallet": 1,
+          "payment": 1
+        },
+        "risk_signals": {
+          "urgency": 0,
+          "financial": 2,
+          "credential": 2,
+          "threat": 0
+        },
+        "statistics": {
+          "characters": 174,
+          "words": 23,
+          "lines": 11,
+          "average_line_length": 14.9,
+          "languages_detected": [
+            "english"
+          ],
+          "entity_count": 6,
+          "cleaning_operations": [
+            "entities_protected(6)"
+          ],
+          "ocr_corrections": [],
+          "protected_entities": 6
+        },
+        "processing_time_ms": 1.99
+      },
+      "enhancement": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00038",
+        "cleaned_text": "Khalti Payment Receipt\nAmount\nRs. 750.00\nTransaction KHL-2026-0802-44190\nDate & Time 2026-08-02 03:18 PM\nSent To\n9812345678\nPurpose\nKYC verification fee\nSender\n+9779856770011",
+        "enhanced_text": "Khalti Payment Receipt\nAmount\nRs. 750.00\nTransaction KHL-2026-0802-44190\nDate & Time 2026-08-02 03:18 PM\nSent To\n9812345678\nPurpose\nKYC verification fee\nSender\n+9779856770011",
+        "ui_text": "",
+        "message_text": "Khalti Payment Receipt\nAmount\nRs. 750.00\nTransaction KHL-2026-0802-44190\nDate & Time 2026-08-02 03:18 PM\nSent To\n9812345678\nPurpose\nKYC verification fee\nSender\n+9779856770011",
+        "layout": [
+          {
+            "line": 1,
+            "role": "sender",
+            "text": "Khalti Payment Receipt"
+          },
+          {
+            "line": 2,
+            "role": "sender",
+            "text": "Amount"
+          },
+          {
+            "line": 3,
+            "role": "message",
+            "text": "Rs. 750.00"
+          },
+          {
+            "line": 4,
+            "role": "message",
+            "text": "Transaction KHL-2026-0802-44190"
+          },
+          {
+            "line": 5,
+            "role": "message",
+            "text": "Date & Time 2026-08-02 03:18 PM"
+          },
+          {
+            "line": 6,
+            "role": "sender",
+            "text": "Sent To"
+          },
+          {
+            "line": 7,
+            "role": "message",
+            "text": "9812345678"
+          },
+          {
+            "line": 8,
+            "role": "sender",
+            "text": "Purpose"
+          },
+          {
+            "line": 9,
+            "role": "message",
+            "text": "KYC verification fee"
+          },
+          {
+            "line": 10,
+            "role": "sender",
+            "text": "Sender"
+          },
+          {
+            "line": 11,
+            "role": "message",
+            "text": "+9779856770011"
+          }
+        ],
+        "corrections": [],
+        "correction_statistics": {
+          "total_corrections": 0,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 0,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 11,
+          "lines_high_confidence": 11,
+          "lines_correctable": 0,
+          "document_confidence": 0.9962,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 0.65
+      },
+      "semantic_correction": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00038",
+        "enhanced_text": "Khalti Payment Receipt\nAmount\nRs. 750.00\nTransaction KHL-2026-0802-44190\nDate & Time 2026-08-02 03:18 PM\nSent To\n9812345678\nPurpose\nKYC verification fee\nSender\n+9779856770011",
+        "semantic_text": "Khalti Payment Receipt\nAmount\nRs. 750.00\nTransaction KHL-2026-0802-44190\nDate & Time 2026-08-02 03:18 PM\nSent To\n9812345678\nPurpose\nKYC verification fee\nSender\n+9779856770011",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {
+          "phones": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            },
+            {
+              "value": "+9779856770011",
+              "normalized": "+9779856770011"
+            }
+          ],
+          "dates": [
+            {
+              "value": "2026-08-02",
+              "normalized": "2026-08-02"
+            }
+          ],
+          "times": [
+            {
+              "value": "03:18 PM",
+              "normalized": "03:18 PM"
+            }
+          ],
+          "money": [
+            {
+              "value": "Rs. 750.00",
+              "normalized": "NPR 750"
+            }
+          ],
+          "transaction_ids": [
+            {
+              "value": "KHL-2026-0802-44190",
+              "normalized": "KHL-2026-0802-44190"
+            }
+          ]
+        },
+        "statistics": {
+          "suspicious_tokens": 0,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 6,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english"
+          ]
+        },
+        "processing_time_ms": 0.73
+      }
+    },
+    {
+      "case_id": "CASE_4B2A51A300",
+      "evidence_id": "EVID_00039",
+      "file_name": "02_whatsapp_chat.jpg",
+      "file_hash": "4418cd74971cd5335563109352c019c8ddf261179ecac874392fe1474f74cc31",
+      "file_size": "48078",
+      "upload_time": "2026-08-21T06:43:07.959Z",
+      "processing_time_ms": 3493.6,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 0.9872,
+          "text": "WhatsApp - KYc Support\nSupport (+9779812345678)\nNamaste sir, KYC update garna\nप्रमाणीकरण भुल्क तिनुहोस्।\nKhalti ID: 9812345678\nBank: 01903015472901\nRs 750 pathaunu hos aile nai.\nBackup contact: reward.center2026@gmail.com",
+          "lines": [
+            {
+              "text": "WhatsApp - KYc Support",
+              "confidence": 0.9804,
+              "bbox": [
+                [
+                  7.0,
+                  7.0
+                ],
+                [
+                  373.0,
+                  8.0
+                ],
+                [
+                  373.0,
+                  39.0
+                ],
+                [
+                  7.0,
+                  38.0
+                ]
+              ]
+            },
+            {
+              "text": "Support (+9779812345678)",
+              "confidence": 0.9996,
+              "bbox": [
+                [
+                  8.0,
+                  52.0
+                ],
+                [
+                  267.0,
+                  51.0
+                ],
+                [
+                  267.0,
+                  75.0
+                ],
+                [
+                  8.0,
+                  76.0
+                ]
+              ]
+            },
+            {
+              "text": "Namaste sir, KYC update garna",
+              "confidence": 0.9959,
+              "bbox": [
+                [
+                  8.0,
+                  87.0
+                ],
+                [
+                  305.0,
+                  88.0
+                ],
+                [
+                  305.0,
+                  109.0
+                ],
+                [
+                  8.0,
+                  108.0
+                ]
+              ]
+            },
+            {
+              "text": "प्रमाणीकरण भुल्क तिनुहोस्।",
+              "confidence": 0.9605,
+              "bbox": [
+                [
+                  6.0,
+                  114.0
+                ],
+                [
+                  213.0,
+                  116.0
+                ],
+                [
+                  213.0,
+                  147.0
+                ],
+                [
+                  6.0,
+                  144.0
+                ]
+              ]
+            },
+            {
+              "text": "Khalti ID: 9812345678",
+              "confidence": 0.9804,
+              "bbox": [
+                [
+                  8.0,
+                  154.0
+                ],
+                [
+                  218.0,
+                  154.0
+                ],
+                [
+                  218.0,
+                  174.0
+                ],
+                [
+                  8.0,
+                  174.0
+                ]
+              ]
+            },
+            {
+              "text": "Bank: 01903015472901",
+              "confidence": 0.9978,
+              "bbox": [
+                [
+                  7.0,
+                  187.0
+                ],
+                [
+                  231.0,
+                  188.0
+                ],
+                [
+                  231.0,
+                  209.0
+                ],
+                [
+                  7.0,
+                  208.0
+                ]
+              ]
+            },
+            {
+              "text": "Rs 750 pathaunu hos aile nai.",
+              "confidence": 0.9907,
+              "bbox": [
+                [
+                  8.0,
+                  222.0
+                ],
+                [
+                  288.0,
+                  222.0
+                ],
+                [
+                  288.0,
+                  245.0
+                ],
+                [
+                  8.0,
+                  245.0
+                ]
+              ]
+            },
+            {
+              "text": "Backup contact: reward.center2026@gmail.com",
+              "confidence": 0.9922,
+              "bbox": [
+                [
+                  8.0,
+                  257.0
+                ],
+                [
+                  457.0,
+                  257.0
+                ],
+                [
+                  457.0,
+                  280.0
+                ],
+                [
+                  8.0,
+                  280.0
+                ]
+              ]
+            }
+          ],
+          "bounding_boxes": [
+            [
+              [
+                7.0,
+                7.0
+              ],
+              [
+                373.0,
+                8.0
+              ],
+              [
+                373.0,
+                39.0
+              ],
+              [
+                7.0,
+                38.0
+              ]
+            ],
+            [
+              [
+                8.0,
+                52.0
+              ],
+              [
+                267.0,
+                51.0
+              ],
+              [
+                267.0,
+                75.0
+              ],
+              [
+                8.0,
+                76.0
+              ]
+            ],
+            [
+              [
+                8.0,
+                87.0
+              ],
+              [
+                305.0,
+                88.0
+              ],
+              [
+                305.0,
+                109.0
+              ],
+              [
+                8.0,
+                108.0
+              ]
+            ],
+            [
+              [
+                6.0,
+                114.0
+              ],
+              [
+                213.0,
+                116.0
+              ],
+              [
+                213.0,
+                147.0
+              ],
+              [
+                6.0,
+                144.0
+              ]
+            ],
+            [
+              [
+                8.0,
+                154.0
+              ],
+              [
+                218.0,
+                154.0
+              ],
+              [
+                218.0,
+                174.0
+              ],
+              [
+                8.0,
+                174.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                187.0
+              ],
+              [
+                231.0,
+                188.0
+              ],
+              [
+                231.0,
+                209.0
+              ],
+              [
+                7.0,
+                208.0
+              ]
+            ],
+            [
+              [
+                8.0,
+                222.0
+              ],
+              [
+                288.0,
+                222.0
+              ],
+              [
+                288.0,
+                245.0
+              ],
+              [
+                8.0,
+                245.0
+              ]
+            ],
+            [
+              [
+                8.0,
+                257.0
+              ],
+              [
+                457.0,
+                257.0
+              ],
+              [
+                457.0,
+                280.0
+              ],
+              [
+                8.0,
+                280.0
+              ]
+            ]
+          ],
+          "preprocessing_steps": [
+            "convert_rgb",
+            "exif_orientation",
+            "clahe",
+            "border_removal+whitespace_trim",
+            "adaptive_threshold"
+          ]
+        }
+      ],
+      "raw_text": "WhatsApp - KYc Support\nSupport (+9779812345678)\nNamaste sir, KYC update garna\nप्रमाणीकरण भुल्क तिनुहोस्।\nKhalti ID: 9812345678\nBank: 01903015472901\nRs 750 pathaunu hos aile nai.\nBackup contact: reward.center2026@gmail.com",
+      "average_confidence": 0.9872,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00039",
+        "raw_text": "WhatsApp - KYc Support\nSupport (+9779812345678)\nNamaste sir, KYC update garna\nप्रमाणीकरण भुल्क तिनुहोस्।\nKhalti ID: 9812345678\nBank: 01903015472901\nRs 750 pathaunu hos aile nai.\nBackup contact: reward.center2026@gmail.com",
+        "cleaned_text": "WhatsApp - KYc Support\nSupport (+9779812345678)\nNamaste sir, KYC update garna\nप्रमाणीकरण भुल्क तिनुहोस्।\nKhalti ID: 9812345678\nBank: 01903015472901\nRs 750 pathaunu hos aile nai.\nBackup contact: reward.center2026@gmail.com",
+        "language": "mixed",
+        "line_languages": {
+          "1": "english",
+          "2": "english",
+          "3": "english",
+          "4": "nepali_unicode",
+          "5": "english",
+          "6": "english",
+          "7": "english",
+          "8": "english"
+        },
+        "entities": {
+          "urls": [],
+          "domains": [
+            {
+              "value": "gmail.com",
+              "normalized": "gmail.com"
+            }
+          ],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "emails": [
+            {
+              "value": "reward.center2026@gmail.com",
+              "normalized": "reward.center2026@gmail.com"
+            }
+          ],
+          "phones": [
+            {
+              "value": "+9779812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "dates": [],
+          "times": [],
+          "money": [
+            {
+              "value": "Rs 750",
+              "normalized": "NPR 750"
+            }
+          ],
+          "bank_accounts": [],
+          "card_numbers": [],
+          "transaction_ids": [],
+          "esewa_ids": [],
+          "khalti_ids": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "imepay_ids": [],
+          "otp": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "hashes_md5": [],
+          "hashes_sha1": [],
+          "hashes_sha256": [],
+          "hashes_sha512": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {
+          "kyc": 2,
+          "update": 1,
+          "bank": 1,
+          "reward": 1,
+          "wallet": 1
+        },
+        "risk_signals": {
+          "urgency": 1,
+          "financial": 3,
+          "credential": 2,
+          "threat": 0
+        },
+        "statistics": {
+          "characters": 221,
+          "words": 28,
+          "lines": 8,
+          "average_line_length": 26.8,
+          "languages_detected": [
+            "english",
+            "nepali_unicode"
+          ],
+          "entity_count": 5,
+          "cleaning_operations": [
+            "entities_protected(5)"
+          ],
+          "ocr_corrections": [],
+          "protected_entities": 5
+        },
+        "processing_time_ms": 1.71
+      },
+      "enhancement": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00039",
+        "cleaned_text": "WhatsApp - KYc Support\nSupport (+9779812345678)\nNamaste sir, KYC update garna\nप्रमाणीकरण भुल्क तिनुहोस्।\nKhalti ID: 9812345678\nBank: 01903015472901\nRs 750 pathaunu hos aile nai.\nBackup contact: reward.center2026@gmail.com",
+        "enhanced_text": "WhatsApp - KYc Support\nSupport (+9779812345678)\nNamaste sir, KYC update garna\nप्रमाणीकरण भुल्क तिनुहोस्।\nKhalti ID: 9812345678\nBank: 01903015472901\nRs 750 pathaunu hos aile nai.\nBackup contact: reward.center2026@gmail.com",
+        "ui_text": "",
+        "message_text": "WhatsApp - KYc Support\nSupport (+9779812345678)\nNamaste sir, KYC update garna\nप्रमाणीकरण भुल्क तिनुहोस्।\nKhalti ID: 9812345678\nBank: 01903015472901\nRs 750 pathaunu hos aile nai.\nBackup contact: reward.center2026@gmail.com",
+        "layout": [
+          {
+            "line": 1,
+            "role": "message",
+            "text": "WhatsApp - KYc Support"
+          },
+          {
+            "line": 2,
+            "role": "message",
+            "text": "Support (+9779812345678)"
+          },
+          {
+            "line": 3,
+            "role": "message",
+            "text": "Namaste sir, KYC update garna"
+          },
+          {
+            "line": 4,
+            "role": "message",
+            "text": "प्रमाणीकरण भुल्क तिनुहोस्।"
+          },
+          {
+            "line": 5,
+            "role": "message",
+            "text": "Khalti ID: 9812345678"
+          },
+          {
+            "line": 6,
+            "role": "message",
+            "text": "Bank: 01903015472901"
+          },
+          {
+            "line": 7,
+            "role": "message",
+            "text": "Rs 750 pathaunu hos aile nai."
+          },
+          {
+            "line": 8,
+            "role": "message",
+            "text": "Backup contact: reward.center2026@gmail.com"
+          }
+        ],
+        "corrections": [],
+        "correction_statistics": {
+          "total_corrections": 0,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 0,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 8,
+          "lines_high_confidence": 8,
+          "lines_correctable": 0,
+          "document_confidence": 0.9872,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 0.7
+      },
+      "semantic_correction": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00039",
+        "enhanced_text": "WhatsApp - KYc Support\nSupport (+9779812345678)\nNamaste sir, KYC update garna\nप्रमाणीकरण भुल्क तिनुहोस्।\nKhalti ID: 9812345678\nBank: 01903015472901\nRs 750 pathaunu hos aile nai.\nBackup contact: reward.center2026@gmail.com",
+        "semantic_text": "WhatsApp - KYc Support\nSupport (+9779812345678)\nNamaste sir, KYC update garna प्रमाणीकरण भुल्क तिनुहोस्।\nKhalti ID: 9812345678\nBank: 01903015472901\nRs 750 pathaunu hos aile nai.\nBackup contact: reward.center2026@gmail.com",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {
+          "domains": [
+            {
+              "value": "gmail.com",
+              "normalized": "gmail.com"
+            }
+          ],
+          "emails": [
+            {
+              "value": "reward.center2026@gmail.com",
+              "normalized": "reward.center2026@gmail.com"
+            }
+          ],
+          "phones": [
+            {
+              "value": "+9779812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "money": [
+            {
+              "value": "Rs 750",
+              "normalized": "NPR 750"
+            }
+          ],
+          "khalti_ids": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ]
+        },
+        "statistics": {
+          "suspicious_tokens": 0,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 5,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english",
+            "nepali_unicode"
+          ]
+        },
+        "processing_time_ms": 0.86
+      }
+    },
+    {
+      "case_id": "CASE_4B2A51A300",
+      "evidence_id": "EVID_00040",
+      "file_name": "01_khalti_kyc_sms.jpg",
+      "file_hash": "92e987df1a332874a7e5e78eee6b199d33a2cf9c68e657335adc33529cc7faae",
+      "file_size": "20162",
+      "upload_time": "2026-08-21T06:43:11.546Z",
+      "processing_time_ms": 3368.5,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 0.7512,
+          "text": "Khalú KYC Aiert\nहनोमत्र साप्टमलानररेल\nYov Kat xoont w bo twapondrd t 24 han.\nCorrpkta KYc vorcaban immod stely\nVwty. hep lAhad trowty boptoon\nHetpdeth +977x1234s471",
+          "lines": [
+            {
+              "text": "Khalú KYC Aiert",
+              "confidence": 0.899,
+              "bbox": [
+                [
+                  8.0,
+                  7.0
+                ],
+                [
+                  244.0,
+                  7.0
+                ],
+                [
+                  244.0,
+                  38.0
+                ],
+                [
+                  8.0,
+                  38.0
+                ]
+              ]
+            },
+            {
+              "text": "हनोमत्र साप्टमलानररेल",
+              "confidence": 0.5224,
+              "bbox": [
+                [
+                  7.0,
+                  47.0
+                ],
+                [
+                  293.0,
+                  49.0
+                ],
+                [
+                  293.0,
+                  77.0
+                ],
+                [
+                  7.0,
+                  75.0
+                ]
+              ]
+            },
+            {
+              "text": "Yov Kat xoont w bo twapondrd t 24 han.",
+              "confidence": 0.7919,
+              "bbox": [
+                [
+                  8.0,
+                  87.0
+                ],
+                [
+                  480.0,
+                  87.0
+                ],
+                [
+                  480.0,
+                  110.0
+                ],
+                [
+                  8.0,
+                  110.0
+                ]
+              ]
+            },
+            {
+              "text": "Corrpkta KYc vorcaban immod stely",
+              "confidence": 0.8216,
+              "bbox": [
+                [
+                  7.0,
+                  119.0
+                ],
+                [
+                  377.0,
+                  120.0
+                ],
+                [
+                  377.0,
+                  144.0
+                ],
+                [
+                  7.0,
+                  143.0
+                ]
+              ]
+            },
+            {
+              "text": "Vwty. hep lAhad trowty boptoon",
+              "confidence": 0.7678,
+              "bbox": [
+                [
+                  7.0,
+                  155.0
+                ],
+                [
+                  357.0,
+                  155.0
+                ],
+                [
+                  357.0,
+                  179.0
+                ],
+                [
+                  7.0,
+                  179.0
+                ]
+              ]
+            },
+            {
+              "text": "Hetpdeth +977x1234s471",
+              "confidence": 0.7045,
+              "bbox": [
+                [
+                  7.0,
+                  188.0
+                ],
+                [
+                  270.0,
+                  187.0
+                ],
+                [
+                  270.0,
+                  211.0
+                ],
+                [
+                  7.0,
+                  212.0
+                ]
+              ]
+            }
+          ],
+          "bounding_boxes": [
+            [
+              [
+                8.0,
+                7.0
+              ],
+              [
+                244.0,
+                7.0
+              ],
+              [
+                244.0,
+                38.0
+              ],
+              [
+                8.0,
+                38.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                47.0
+              ],
+              [
+                293.0,
+                49.0
+              ],
+              [
+                293.0,
+                77.0
+              ],
+              [
+                7.0,
+                75.0
+              ]
+            ],
+            [
+              [
+                8.0,
+                87.0
+              ],
+              [
+                480.0,
+                87.0
+              ],
+              [
+                480.0,
+                110.0
+              ],
+              [
+                8.0,
+                110.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                119.0
+              ],
+              [
+                377.0,
+                120.0
+              ],
+              [
+                377.0,
+                144.0
+              ],
+              [
+                7.0,
+                143.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                155.0
+              ],
+              [
+                357.0,
+                155.0
+              ],
+              [
+                357.0,
+                179.0
+              ],
+              [
+                7.0,
+                179.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                188.0
+              ],
+              [
+                270.0,
+                187.0
+              ],
+              [
+                270.0,
+                211.0
+              ],
+              [
+                7.0,
+                212.0
+              ]
+            ]
+          ],
+          "preprocessing_steps": [
+            "convert_rgb",
+            "exif_orientation",
+            "clahe",
+            "sharpen",
+            "border_removal+whitespace_trim",
+            "adaptive_threshold"
+          ]
+        }
+      ],
+      "raw_text": "Khalú KYC Aiert\nहनोमत्र साप्टमलानररेल\nYov Kat xoont w bo twapondrd t 24 han.\nCorrpkta KYc vorcaban immod stely\nVwty. hep lAhad trowty boptoon\nHetpdeth +977x1234s471",
+      "average_confidence": 0.7512,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00040",
+        "raw_text": "Khalú KYC Aiert\nहनोमत्र साप्टमलानररेल\nYov Kat xoont w bo twapondrd t 24 han.\nCorrpkta KYc vorcaban immod stely\nVwty. hep lAhad trowty boptoon\nHetpdeth +977x1234s471",
+        "cleaned_text": "Khalú KYC Aiert\nहनोमत्र साप्टमलानररेल\nYov Kat xoont w bo twapondrd t 24 han.\nCorrpkta KYc vorcaban immod stely\nVwty. hep lAhad trowty boptoon\nHetpdeth +977x1234s471",
+        "language": "mixed",
+        "line_languages": {
+          "1": "english",
+          "2": "nepali_unicode",
+          "3": "english",
+          "4": "english",
+          "5": "english",
+          "6": "english"
+        },
+        "entities": {
+          "urls": [],
+          "domains": [],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "emails": [],
+          "phones": [],
+          "dates": [],
+          "times": [],
+          "money": [],
+          "bank_accounts": [],
+          "card_numbers": [],
+          "transaction_ids": [],
+          "esewa_ids": [],
+          "khalti_ids": [],
+          "imepay_ids": [],
+          "otp": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "hashes_md5": [],
+          "hashes_sha1": [],
+          "hashes_sha256": [],
+          "hashes_sha512": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {
+          "kyc": 2
+        },
+        "risk_signals": {
+          "urgency": 0,
+          "financial": 0,
+          "credential": 2,
+          "threat": 0
+        },
+        "statistics": {
+          "characters": 164,
+          "words": 26,
+          "lines": 6,
+          "average_line_length": 26.5,
+          "languages_detected": [
+            "english",
+            "nepali_unicode"
+          ],
+          "entity_count": 0,
+          "cleaning_operations": [],
+          "ocr_corrections": [],
+          "protected_entities": 0
+        },
+        "processing_time_ms": 1.05
+      },
+      "enhancement": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00040",
+        "cleaned_text": "Khalú KYC Aiert\nहनोमत्र साप्टमलानररेल\nYov Kat xoont w bo twapondrd t 24 han.\nCorrpkta KYc vorcaban immod stely\nVwty. hep lAhad trowty boptoon\nHetpdeth +977x1234s471",
+        "enhanced_text": "Khalú KYC Aiert\nहनोमत्र साप्टमलानररेल\nYov Kat xoont w bo twapondrd t 24 han.\nCorrpkta KYc vorcaban immod stely\nVwty. hep lAhad trowty boptoon\nHetpdeth +977x1234s471",
+        "ui_text": "",
+        "message_text": "Khalú KYC Aiert\nहनोमत्र साप्टमलानररेल\nYov Kat xoont w bo twapondrd t 24 han.\nCorrpkta KYc vorcaban immod stely\nVwty. hep lAhad trowty boptoon\nHetpdeth +977x1234s471",
+        "layout": [
+          {
+            "line": 1,
+            "role": "message",
+            "text": "Khalú KYC Aiert"
+          },
+          {
+            "line": 2,
+            "role": "message",
+            "text": "हनोमत्र साप्टमलानररेल"
+          },
+          {
+            "line": 3,
+            "role": "message",
+            "text": "Yov Kat xoont w bo twapondrd t 24 han."
+          },
+          {
+            "line": 4,
+            "role": "message",
+            "text": "Corrpkta KYc vorcaban immod stely"
+          },
+          {
+            "line": 5,
+            "role": "message",
+            "text": "Vwty. hep lAhad trowty boptoon"
+          },
+          {
+            "line": 6,
+            "role": "message",
+            "text": "Hetpdeth +977x1234s471"
+          }
+        ],
+        "corrections": [],
+        "correction_statistics": {
+          "total_corrections": 0,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 0,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 6,
+          "lines_high_confidence": 0,
+          "lines_correctable": 6,
+          "document_confidence": 0.7512,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 0.53
+      },
+      "semantic_correction": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00040",
+        "enhanced_text": "Khalú KYC Aiert\nहनोमत्र साप्टमलानररेल\nYov Kat xoont w bo twapondrd t 24 han.\nCorrpkta KYc vorcaban immod stely\nVwty. hep lAhad trowty boptoon\nHetpdeth +977x1234s471",
+        "semantic_text": "Khalú KYC Aiert हनोमत्र साप्टमलानररेल\nYov Kat xoont w bo twapondrd t 24 han.\nCorrpkta KYc vorcaban immod stely\nVwty. hep lAhad trowty boptoon\nHetpdeth +977x1234s471",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {},
+        "statistics": {
+          "suspicious_tokens": 0,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 0,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english",
+            "nepali_unicode"
+          ]
+        },
+        "processing_time_ms": 0.56
+      }
+    },
+    {
+      "case_id": "CASE_4B2A51A300",
+      "evidence_id": "EVID_00041",
+      "file_name": "http_khalti-kyc-verify.top_login.url",
+      "file_hash": "2576cee0748325bb6eb525dcda7ed95b0115cac7336260f31149f15dd3e6e56a",
+      "file_size": "35",
+      "upload_time": "2026-08-21T06:43:15.002Z",
+      "processing_time_ms": 21.0,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 1.0,
+          "text": "http://khalti-kyc-verify.top/login",
+          "lines": [
+            {
+              "text": "http://khalti-kyc-verify.top/login",
+              "confidence": 1.0,
+              "bbox": []
+            }
+          ],
+          "bounding_boxes": [
+            []
+          ],
+          "preprocessing_steps": [
+            "none(url)"
+          ]
+        }
+      ],
+      "raw_text": "http://khalti-kyc-verify.top/login",
+      "average_confidence": 1.0,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00041",
+        "raw_text": "http://khalti-kyc-verify.top/login",
+        "cleaned_text": "http://khalti-kyc-verify.top/login",
+        "language": "english",
+        "line_languages": {
+          "1": "english"
+        },
+        "entities": {
+          "urls": [
+            {
+              "value": "http://khalti-kyc-verify.top/login",
+              "normalized": "http://khalti-kyc-verify.top/login"
+            }
+          ],
+          "domains": [
+            {
+              "value": "khalti-kyc-verify.top",
+              "normalized": "khalti-kyc-verify.top"
+            }
+          ],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "emails": [],
+          "phones": [],
+          "dates": [],
+          "times": [],
+          "money": [],
+          "bank_accounts": [],
+          "card_numbers": [],
+          "transaction_ids": [],
+          "esewa_ids": [],
+          "khalti_ids": [],
+          "imepay_ids": [],
+          "otp": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "hashes_md5": [],
+          "hashes_sha1": [],
+          "hashes_sha256": [],
+          "hashes_sha512": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {
+          "login": 1,
+          "verify": 1,
+          "kyc": 1,
+          "wallet": 1
+        },
+        "risk_signals": {
+          "urgency": 0,
+          "financial": 1,
+          "credential": 3,
+          "threat": 0
+        },
+        "statistics": {
+          "characters": 34,
+          "words": 1,
+          "lines": 1,
+          "average_line_length": 34.0,
+          "languages_detected": [
+            "english"
+          ],
+          "entity_count": 2,
+          "cleaning_operations": [
+            "entities_protected(1)"
+          ],
+          "ocr_corrections": [],
+          "protected_entities": 1
+        },
+        "processing_time_ms": 1.0
+      },
+      "enhancement": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00041",
+        "cleaned_text": "http://khalti-kyc-verify.top/login",
+        "enhanced_text": "http://khalti-kyc-verify.top/login",
+        "ui_text": "",
+        "message_text": "http://khalti-kyc-verify.top/login",
+        "layout": [
+          {
+            "line": 1,
+            "role": "message",
+            "text": "http://khalti-kyc-verify.top/login"
+          }
+        ],
+        "corrections": [],
+        "correction_statistics": {
+          "total_corrections": 0,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 0,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 1,
+          "lines_high_confidence": 1,
+          "lines_correctable": 0,
+          "document_confidence": 1.0,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 0.28
+      },
+      "semantic_correction": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00041",
+        "enhanced_text": "http://khalti-kyc-verify.top/login",
+        "semantic_text": "http://khalti-kyc-verify.top/login",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {
+          "urls": [
+            {
+              "value": "http://khalti-kyc-verify.top/login",
+              "normalized": "http://khalti-kyc-verify.top/login"
+            }
+          ],
+          "domains": [
+            {
+              "value": "khalti-kyc-verify.top",
+              "normalized": "khalti-kyc-verify.top"
+            }
+          ]
+        },
+        "statistics": {
+          "suspicious_tokens": 0,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 1,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english"
+          ]
+        },
+        "processing_time_ms": 0.27
+      }
+    },
+    {
+      "case_id": "CASE_4B2A51A300",
+      "evidence_id": "EVID_00042",
+      "file_name": "https_esewa-bonus-claim.xyz_verify_ref_KYC2026.url",
+      "file_hash": "e419582edacddd1546d5d02c7f831ac5deacb68e5936be289619a9f2f4839f33",
+      "file_size": "49",
+      "upload_time": "2026-08-21T06:43:15.097Z",
+      "processing_time_ms": 18.3,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 1.0,
+          "text": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026",
+          "lines": [
+            {
+              "text": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026",
+              "confidence": 1.0,
+              "bbox": []
+            }
+          ],
+          "bounding_boxes": [
+            []
+          ],
+          "preprocessing_steps": [
+            "none(url)"
+          ]
+        }
+      ],
+      "raw_text": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026",
+      "average_confidence": 1.0,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00042",
+        "raw_text": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026",
+        "cleaned_text": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026",
+        "language": "english",
+        "line_languages": {
+          "1": "english"
+        },
+        "entities": {
+          "urls": [
+            {
+              "value": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026",
+              "normalized": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026"
+            }
+          ],
+          "domains": [
+            {
+              "value": "esewa-bonus-claim.xyz",
+              "normalized": "esewa-bonus-claim.xyz"
+            }
+          ],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "emails": [],
+          "phones": [],
+          "dates": [],
+          "times": [],
+          "money": [],
+          "bank_accounts": [],
+          "card_numbers": [],
+          "transaction_ids": [],
+          "esewa_ids": [],
+          "khalti_ids": [],
+          "imepay_ids": [],
+          "otp": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "hashes_md5": [],
+          "hashes_sha1": [],
+          "hashes_sha256": [],
+          "hashes_sha512": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {
+          "verify": 1,
+          "reward": 1,
+          "wallet": 1
+        },
+        "risk_signals": {
+          "urgency": 0,
+          "financial": 2,
+          "credential": 1,
+          "threat": 0
+        },
+        "statistics": {
+          "characters": 48,
+          "words": 1,
+          "lines": 1,
+          "average_line_length": 48.0,
+          "languages_detected": [
+            "english"
+          ],
+          "entity_count": 2,
+          "cleaning_operations": [
+            "entities_protected(1)"
+          ],
+          "ocr_corrections": [],
+          "protected_entities": 1
+        },
+        "processing_time_ms": 0.47
+      },
+      "enhancement": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00042",
+        "cleaned_text": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026",
+        "enhanced_text": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026",
+        "ui_text": "",
+        "message_text": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026",
+        "layout": [
+          {
+            "line": 1,
+            "role": "message",
+            "text": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026"
+          }
+        ],
+        "corrections": [],
+        "correction_statistics": {
+          "total_corrections": 0,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 0,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 1,
+          "lines_high_confidence": 1,
+          "lines_correctable": 0,
+          "document_confidence": 1.0,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 0.21
+      },
+      "semantic_correction": {
+        "case_id": "CASE_4B2A51A300",
+        "evidence_id": "EVID_00042",
+        "enhanced_text": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026",
+        "semantic_text": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {
+          "urls": [
+            {
+              "value": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026",
+              "normalized": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026"
+            }
+          ],
+          "domains": [
+            {
+              "value": "esewa-bonus-claim.xyz",
+              "normalized": "esewa-bonus-claim.xyz"
+            }
+          ]
+        },
+        "statistics": {
+          "suspicious_tokens": 0,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 1,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english"
+          ]
+        },
+        "processing_time_ms": 0.28
+      }
+    }
+  ]
+}

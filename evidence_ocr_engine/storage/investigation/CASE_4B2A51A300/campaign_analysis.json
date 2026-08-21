@@ -1,0 +1,184 @@
+{
+  "report_type": "campaign_analysis",
+  "report_version": 3,
+  "schema_version": "2.0",
+  "case_id": "CASE_4B2A51A300",
+  "generated_at": "2026-08-21T17:57:23.057Z",
+  "report": {
+    "case_id": "CASE_4B2A51A300",
+    "campaign_count": 1,
+    "campaigns": [
+      {
+        "campaign_id": "CAMP_CASE_4B2A51A300_01",
+        "case_id": "CASE_4B2A51A300",
+        "members": [
+          "EVID_00034",
+          "EVID_00035",
+          "EVID_00036",
+          "EVID_00037",
+          "EVID_00038",
+          "EVID_00039",
+          "EVID_00041",
+          "EVID_00042"
+        ],
+        "memberships": [
+          {
+            "evidence_id": "EVID_00034",
+            "linked_via": [
+              "EVID_00035",
+              "EVID_00036",
+              "EVID_00037",
+              "EVID_00039",
+              "EVID_00041"
+            ],
+            "link_reasons": [
+              "linked to EVID_00035: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.89)",
+              "linked to EVID_00037: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.89)",
+              "linked to EVID_00039: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.75)",
+              "linked to EVID_00041: Both items reference the same domains: khalti-kyc-verify.top (confidence 0.56)",
+              "linked to EVID_00036: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.55)"
+            ],
+            "membership_explanation": "EVID_00034 belongs to this campaign through 5 weighted correlation links: linked to EVID_00035: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.89); linked to EVID_00037: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.89); linked to EVID_00039: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.75); and 2 more."
+          },
+          {
+            "evidence_id": "EVID_00035",
+            "linked_via": [
+              "EVID_00034",
+              "EVID_00036",
+              "EVID_00037",
+              "EVID_00038",
+              "EVID_00039",
+              "EVID_00041",
+              "EVID_00042"
+            ],
+            "link_reasons": [
+              "linked to EVID_00037: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.99)",
+              "linked to EVID_00034: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.89)",
+              "linked to EVID_00041: Both items reference the same urls: http://khalti-kyc-verify.top/login (confidence 0.82)",
+              "linked to EVID_00042: Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=kyc2026 (confidence 0.82)",
+              "linked to EVID_00038: Both items reference the same phones: +9779856770011, +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.79)",
+              "linked to EVID_00039: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.77)",
+              "linked to EVID_00036: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.55)"
+            ],
+            "membership_explanation": "EVID_00035 belongs to this campaign through 7 weighted correlation links: linked to EVID_00037: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.99); linked to EVID_00034: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.89); linked to EVID_00041: Both items reference the same urls: http://khalti-kyc-verify.top/login (confidence 0.82); and 4 more."
+          },
+          {
+            "evidence_id": "EVID_00036",
+            "linked_via": [
+              "EVID_00034",
+              "EVID_00035",
+              "EVID_00037",
+              "EVID_00039"
+            ],
+            "link_reasons": [
+              "linked to EVID_00034: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.55)",
+              "linked to EVID_00035: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.55)",
+              "linked to EVID_00037: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.55)",
+              "linked to EVID_00039: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.55)"
+            ],
+            "membership_explanation": "EVID_00036 belongs to this campaign through 4 weighted correlation links: linked to EVID_00034: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.55); linked to EVID_00035: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.55); linked to EVID_00037: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.55); and 1 more."
+          },
+          {
+            "evidence_id": "EVID_00037",
+            "linked_via": [
+              "EVID_00034",
+              "EVID_00035",
+              "EVID_00036",
+              "EVID_00039",
+              "EVID_00041",
+              "EVID_00042"
+            ],
+            "link_reasons": [
+              "linked to EVID_00035: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.99)",
+              "linked to EVID_00034: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.89)",
+              "linked to EVID_00041: Both items reference the same urls: http://khalti-kyc-verify.top/login (confidence 0.82)",
+              "linked to EVID_00042: Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=kyc2026 (confidence 0.82)",
+              "linked to EVID_00039: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.77)",
+              "linked to EVID_00036: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.55)"
+            ],
+            "membership_explanation": "EVID_00037 belongs to this campaign through 6 weighted correlation links: linked to EVID_00035: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.99); linked to EVID_00034: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.89); linked to EVID_00041: Both items reference the same urls: http://khalti-kyc-verify.top/login (confidence 0.82); and 3 more."
+          },
+          {
+            "evidence_id": "EVID_00038",
+            "linked_via": [
+              "EVID_00035"
+            ],
+            "link_reasons": [
+              "linked to EVID_00035: Both items reference the same phones: +9779856770011, +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.79)"
+            ],
+            "membership_explanation": "EVID_00038 belongs to this campaign through 1 weighted correlation link: linked to EVID_00035: Both items reference the same phones: +9779856770011, +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.79)."
+          },
+          {
+            "evidence_id": "EVID_00039",
+            "linked_via": [
+              "EVID_00034",
+              "EVID_00035",
+              "EVID_00036",
+              "EVID_00037"
+            ],
+            "link_reasons": [
+              "linked to EVID_00035: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.77)",
+              "linked to EVID_00037: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.77)",
+              "linked to EVID_00034: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.75)",
+              "linked to EVID_00036: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.55)"
+            ],
+            "membership_explanation": "EVID_00039 belongs to this campaign through 4 weighted correlation links: linked to EVID_00035: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.77); linked to EVID_00037: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.77); linked to EVID_00034: Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted (confidence 0.75); and 1 more."
+          },
+          {
+            "evidence_id": "EVID_00041",
+            "linked_via": [
+              "EVID_00034",
+              "EVID_00035",
+              "EVID_00037"
+            ],
+            "link_reasons": [
+              "linked to EVID_00035: Both items reference the same urls: http://khalti-kyc-verify.top/login (confidence 0.82)",
+              "linked to EVID_00037: Both items reference the same urls: http://khalti-kyc-verify.top/login (confidence 0.82)",
+              "linked to EVID_00034: Both items reference the same domains: khalti-kyc-verify.top (confidence 0.56)"
+            ],
+            "membership_explanation": "EVID_00041 belongs to this campaign through 3 weighted correlation links: linked to EVID_00035: Both items reference the same urls: http://khalti-kyc-verify.top/login (confidence 0.82); linked to EVID_00037: Both items reference the same urls: http://khalti-kyc-verify.top/login (confidence 0.82); linked to EVID_00034: Both items reference the same domains: khalti-kyc-verify.top (confidence 0.56)."
+          },
+          {
+            "evidence_id": "EVID_00042",
+            "linked_via": [
+              "EVID_00035",
+              "EVID_00037"
+            ],
+            "link_reasons": [
+              "linked to EVID_00035: Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=kyc2026 (confidence 0.82)",
+              "linked to EVID_00037: Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=kyc2026 (confidence 0.82)"
+            ],
+            "membership_explanation": "EVID_00042 belongs to this campaign through 2 weighted correlation links: linked to EVID_00035: Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=kyc2026 (confidence 0.82); linked to EVID_00037: Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=kyc2026 (confidence 0.82)."
+          }
+        ],
+        "campaign_confidence": 0.7428,
+        "signature": [
+          "phones:+9779812345678",
+          "khalti_ids:+9779812345678",
+          "domains:gmail.com",
+          "domains:khalti-kyc-verify.top",
+          "emails:reward.center2026@gmail.com"
+        ],
+        "shared_brands": [],
+        "shared_domains": [
+          "esewa-bonus-claim.xyz",
+          "gmail.com",
+          "khalti-kyc-verify.top"
+        ],
+        "timeline_start": "2026-08-21T06:42:54.755Z",
+        "timeline_end": "2026-08-21T06:43:15.097Z",
+        "statistics": {
+          "member_count": 8.0,
+          "internal_links": 16.0,
+          "mean_link_confidence": 0.7428,
+          "mean_ocr_confidence": 0.9971
+        },
+        "summary": "Campaign CAMP_CASE_4B2A51A300_01 groups 8 evidence items with mean link confidence 0.74. Shared indicators: phones:+9779812345678, khalti_ids:+9779812345678, domains:gmail.com, domains:khalti-kyc-verify.top, emails:reward.center2026@gmail.com. Active 2026-08-21T06:42:54.755Z to 2026-08-21T06:43:15.097Z."
+      }
+    ],
+    "unclustered_evidence": [
+      "EVID_00040"
+    ],
+    "analysis_time_ms": 0.8
+  }
+}

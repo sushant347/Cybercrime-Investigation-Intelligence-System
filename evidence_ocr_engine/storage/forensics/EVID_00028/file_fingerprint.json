@@ -1,0 +1,30 @@
+{
+  "report_type": "file_fingerprint",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00028",
+  "case_id": "CASE_0CD406813C",
+  "generated_at": "2026-08-21T06:37:35.626Z",
+  "report": {
+    "evidence_id": "EVID_00028",
+    "case_id": "CASE_0CD406813C",
+    "source_file": "EVID_00028__5065b14f__05_bank_statement.csv",
+    "md5": "9636ceb783470034b023f14b4cd7a792",
+    "sha1": "fa68f307df0de447afe111e9e6975a6e80f37a93",
+    "sha256": "4bf76c0070966e3953399f40b5e7e857385972901f7f0ec90d1f62a8883a1b2d",
+    "sha512": "569635998e88f8974988b0dae1b66df5dc876bb061b3203187bde962d3bce67914a507ec75d341e8121d39a2ca047d1adef92110f9c59617fc19c12654bad0d0",
+    "crc32": "252e0050",
+    "file_size_bytes": 237,
+    "entropy_bits_per_byte": 4.9774,
+    "high_entropy": false,
+    "magic_number_hex": "646174652c646573",
+    "magic_format": "",
+    "declared_extension": ".csv",
+    "mime_type": "text/csv",
+    "extension_matches_magic": true,
+    "sha256_matches_acquisition": true,
+    "duplicates": [],
+    "is_duplicate": false,
+    "analysis_time_ms": 0.5
+  }
+}

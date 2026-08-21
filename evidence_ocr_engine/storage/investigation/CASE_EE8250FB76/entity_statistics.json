@@ -1,0 +1,144 @@
+{
+  "report_type": "entity_statistics",
+  "report_version": 7,
+  "schema_version": "2.0",
+  "case_id": "CASE_EE8250FB76",
+  "generated_at": "2026-08-20T18:49:02.520Z",
+  "report": {
+    "case_id": "CASE_EE8250FB76",
+    "entity_statistics": {
+      "bank_accounts": 1,
+      "dates": 4,
+      "domains": 3,
+      "emails": 3,
+      "esewa_ids": 2,
+      "khalti_ids": 1,
+      "money": 4,
+      "phones": 2,
+      "transaction_ids": 4,
+      "urls": 1
+    },
+    "top_entities": {
+      "bank_accounts": [
+        {
+          "value": "05019012345678",
+          "count": 1
+        }
+      ],
+      "dates": [
+        {
+          "value": "10 june 2026",
+          "count": 1
+        },
+        {
+          "value": "14 june 2026",
+          "count": 1
+        },
+        {
+          "value": "11 june 2026",
+          "count": 1
+        },
+        {
+          "value": "15 june 2026",
+          "count": 1
+        }
+      ],
+      "domains": [
+        {
+          "value": "esewa-cashback-offer.xyz",
+          "count": 1
+        },
+        {
+          "value": "gmail.com",
+          "count": 1
+        },
+        {
+          "value": "esewa-verify-kyc.com",
+          "count": 1
+        }
+      ],
+      "emails": [
+        {
+          "value": "sunita.gurung21@gmail.com",
+          "count": 1
+        },
+        {
+          "value": "esewa.cashback99@gmail.com",
+          "count": 1
+        },
+        {
+          "value": "support@esewa-verify-kyc.com",
+          "count": 1
+        }
+      ],
+      "esewa_ids": [
+        {
+          "value": "sunita.gurung21@gmail.com",
+          "count": 1
+        },
+        {
+          "value": "esewa.cashback99@gmail.com",
+          "count": 1
+        }
+      ],
+      "khalti_ids": [
+        {
+          "value": "+9779801122334",
+          "count": 1
+        }
+      ],
+      "money": [
+        {
+          "value": "npr 5000",
+          "count": 1
+        },
+        {
+          "value": "npr 200",
+          "count": 1
+        },
+        {
+          "value": "npr 1500",
+          "count": 1
+        },
+        {
+          "value": "npr 25000",
+          "count": 1
+        }
+      ],
+      "phones": [
+        {
+          "value": "+9779847011223",
+          "count": 1
+        },
+        {
+          "value": "+9779801122334",
+          "count": 1
+        }
+      ],
+      "transaction_ids": [
+        {
+          "value": "0119.0625.987456",
+          "count": 1
+        },
+        {
+          "value": "kh-2026-0611-77245",
+          "count": 1
+        },
+        {
+          "value": "mbl-2026-441829",
+          "count": 1
+        },
+        {
+          "value": "case_2026_0088",
+          "count": 1
+        }
+      ],
+      "urls": [
+        {
+          "value": "https://esewa-cashback-offer.xyz/claim",
+          "count": 1
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "report_type": "metadata_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00041",
+  "case_id": "CASE_4B2A51A300",
+  "generated_at": "2026-08-21T06:43:15.088Z",
+  "report": {
+    "evidence_id": "EVID_00041",
+    "case_id": "CASE_4B2A51A300",
+    "source_file": "EVID_00041__d9394b91__http_khalti-kyc-verify.top_login.url",
+    "file_type": "other",
+    "filesystem": {
+      "file_size_bytes": 35,
+      "created": "2026-08-21T06:43:15.002250+00:00",
+      "modified": "2026-08-21T06:42:54.979578+00:00",
+      "accessed": "2026-08-21T06:43:15.001890+00:00"
+    },
+    "image": null,
+    "pdf": null,
+    "office": null,
+    "consistency_notes": [],
+    "extraction_errors": [],
+    "analysis_time_ms": 0.0
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "report_type": "campaign_analysis",
+  "report_version": 2,
+  "schema_version": "2.0",
+  "case_id": "CASE_665F85EBBC",
+  "generated_at": "2026-08-08T05:54:02.315Z",
+  "report": {
+    "case_id": "CASE_665F85EBBC",
+    "campaign_count": 1,
+    "campaigns": [
+      {
+        "campaign_id": "CAMP_CASE_665F85EBBC_01",
+        "case_id": "CASE_665F85EBBC",
+        "members": [
+          "EVID_00027",
+          "EVID_00028",
+          "EVID_00030",
+          "EVID_00032",
+          "EVID_00033"
+        ],
+        "memberships": [
+          {
+            "evidence_id": "EVID_00027",
+            "linked_via": [
+              "EVID_00033"
+            ],
+            "link_reasons": [
+              "linked to EVID_00033: Both items reference the same emails: sunita.gurung21@gmail.com (confidence 0.77)"
+            ],
+            "membership_explanation": "EVID_00027 belongs to this campaign through 1 weighted correlation link: linked to EVID_00033: Both items reference the same emails: sunita.gurung21@gmail.com (confidence 0.77)."
+          },
+          {
+            "evidence_id": "EVID_00028",
+            "linked_via": [
+              "EVID_00030",
+              "EVID_00033"
+            ],
+            "link_reasons": [
+              "linked to EVID_00033: Both items reference the same domains: esewa-cashback-offer.xyz (confidence 0.65)",
+              "linked to EVID_00030: Both items reference the same domains: esewa-cashback-offer.xyz (confidence 0.64)"
+            ],
+            "membership_explanation": "EVID_00028 belongs to this campaign through 2 weighted correlation links: linked to EVID_00033: Both items reference the same domains: esewa-cashback-offer.xyz (confidence 0.65); linked to EVID_00030: Both items reference the same domains: esewa-cashback-offer.xyz (confidence 0.64)."
+          },
+          {
+            "evidence_id": "EVID_00030",
+            "linked_via": [
+              "EVID_00028",
+              "EVID_00033"
+            ],
+            "link_reasons": [
+              "linked to EVID_00033: Both items reference the same phones: +9779801122334, +9779847011223 (confidence 0.94)",
+              "linked to EVID_00028: Both items reference the same domains: esewa-cashback-offer.xyz (confidence 0.64)"
+            ],
+            "membership_explanation": "EVID_00030 belongs to this campaign through 2 weighted correlation links: linked to EVID_00033: Both items reference the same phones: +9779801122334, +9779847011223 (confidence 0.94); linked to EVID_00028: Both items reference the same domains: esewa-cashback-offer.xyz (confidence 0.64)."
+          },
+          {
+            "evidence_id": "EVID_00032",
+            "linked_via": [
+              "EVID_00033"
+            ],
+            "link_reasons": [
+              "linked to EVID_00033: Both items reference the same phones: +9779847011223 (confidence 0.68)"
+            ],
+            "membership_explanation": "EVID_00032 belongs to this campaign through 1 weighted correlation link: linked to EVID_00033: Both items reference the same phones: +9779847011223 (confidence 0.68)."
+          },
+          {
+            "evidence_id": "EVID_00033",
+            "linked_via": [
+              "EVID_00027",
+              "EVID_00028",
+              "EVID_00030",
+              "EVID_00032"
+            ],
+            "link_reasons": [
+              "linked to EVID_00030: Both items reference the same phones: +9779801122334, +9779847011223 (confidence 0.94)",
+              "linked to EVID_00027: Both items reference the same emails: sunita.gurung21@gmail.com (confidence 0.77)",
+              "linked to EVID_00032: Both items reference the same phones: +9779847011223 (confidence 0.68)",
+              "linked to EVID_00028: Both items reference the same domains: esewa-cashback-offer.xyz (confidence 0.65)"
+            ],
+            "membership_explanation": "EVID_00033 belongs to this campaign through 4 weighted correlation links: linked to EVID_00030: Both items reference the same phones: +9779801122334, +9779847011223 (confidence 0.94); linked to EVID_00027: Both items reference the same emails: sunita.gurung21@gmail.com (confidence 0.77); linked to EVID_00032: Both items reference the same phones: +9779847011223 (confidence 0.68); and 1 more."
+          }
+        ],
+        "campaign_confidence": 0.7353,
+        "signature": [
+          "domains:esewa-cashback-offer.xyz",
+          "phones:+9779847011223",
+          "dates:11 june 2026",
+          "domains:gmail.com",
+          "emails:sunita.gurung21@gmail.com"
+        ],
+        "shared_brands": [],
+        "shared_domains": [
+          "esewa-cashback-offer.xyz",
+          "gmail.com"
+        ],
+        "timeline_start": "2026-08-08T01:56:19.932Z",
+        "timeline_end": "2026-08-08T01:59:04.172Z",
+        "statistics": {
+          "member_count": 5.0,
+          "internal_links": 5.0,
+          "mean_link_confidence": 0.7353,
+          "mean_ocr_confidence": 0.979
+        },
+        "summary": "Campaign CAMP_CASE_665F85EBBC_01 groups 5 evidence items with mean link confidence 0.74. Shared indicators: domains:esewa-cashback-offer.xyz, phones:+9779847011223, dates:11 june 2026, domains:gmail.com, emails:sunita.gurung21@gmail.com. Active 2026-08-08T01:56:19.932Z to 2026-08-08T01:59:04.172Z."
+      }
+    ],
+    "unclustered_evidence": [
+      "EVID_00026",
+      "EVID_00029",
+      "EVID_00031",
+      "EVID_00034"
+    ],
+    "analysis_time_ms": 0.5
+  }
+}

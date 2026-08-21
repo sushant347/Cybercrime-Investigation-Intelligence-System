@@ -1,0 +1,30 @@
+{
+  "report_type": "file_fingerprint",
+  "report_version": 2,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00034",
+  "case_id": "CASE_4B2A51A300",
+  "generated_at": "2026-08-21T06:43:00.946Z",
+  "report": {
+    "evidence_id": "EVID_00034",
+    "case_id": "CASE_4B2A51A300",
+    "source_file": "EVID_00034__976440e2__07_fake_support_profile.jpg",
+    "md5": "9a597012249517af9bc6394971b1d1d0",
+    "sha1": "426b073ec8f52d86da220620e918fdab03363ec7",
+    "sha256": "6d92c801ed6d05fa286c12f47ae02d132bead9fbdb9bff677ee09c9d75b9182f",
+    "sha512": "4b09bc61f318260f6db9e360362d906cbc0ad28d5abc85f374add51fe2dedb668ea95613dd6897ac54cec91587ce638c79071f7b7f68ca96c59f0a66c7e17b5b",
+    "crc32": "180e19eb",
+    "file_size_bytes": 23573,
+    "entropy_bits_per_byte": 7.7265,
+    "high_entropy": true,
+    "magic_number_hex": "ffd8ffe000104a46",
+    "magic_format": "JPEG image",
+    "declared_extension": ".jpg",
+    "mime_type": "image/jpeg",
+    "extension_matches_magic": true,
+    "sha256_matches_acquisition": true,
+    "duplicates": [],
+    "is_duplicate": false,
+    "analysis_time_ms": 10.2
+  }
+}

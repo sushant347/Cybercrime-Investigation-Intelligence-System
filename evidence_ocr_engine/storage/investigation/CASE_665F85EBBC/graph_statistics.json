@@ -1,0 +1,84 @@
+{
+  "report_type": "graph_statistics",
+  "report_version": 5,
+  "schema_version": "2.0",
+  "case_id": "CASE_665F85EBBC",
+  "generated_at": "2026-08-08T05:54:02.310Z",
+  "report": {
+    "case_id": "CASE_665F85EBBC",
+    "node_count": 76,
+    "edge_count": 207,
+    "nodes_by_type": {
+      "case": 3,
+      "evidence": 17,
+      "domain": 6,
+      "email": 3,
+      "wallet": 4,
+      "money": 5,
+      "brand": 8,
+      "transaction": 6,
+      "url": 3,
+      "date": 5,
+      "phone_number": 3,
+      "time": 1,
+      "bank_account": 3,
+      "timeline_event": 9
+    },
+    "edges_by_type": {
+      "contains": 17,
+      "shared_entity": 67,
+      "threat_relationship": 9,
+      "timeline_event": 9,
+      "cross_case_relationship": 2,
+      "cross_case_entity_match": 70,
+      "temporal_relationship": 28,
+      "behavioral_relationship": 5
+    },
+    "density": 0.0726,
+    "connected_components": 1,
+    "largest_component_size": 76,
+    "average_degree": 5.447,
+    "top_hubs": [
+      {
+        "node": "evidence:EVID_00033",
+        "degree": "42"
+      },
+      {
+        "node": "evidence:EVID_00030",
+        "degree": "23"
+      },
+      {
+        "node": "evidence:EVID_00022",
+        "degree": "22"
+      },
+      {
+        "node": "evidence:EVID_00005",
+        "degree": "22"
+      },
+      {
+        "node": "evidence:EVID_00027",
+        "degree": "19"
+      },
+      {
+        "node": "evidence:EVID_00028",
+        "degree": "18"
+      },
+      {
+        "node": "evidence:EVID_00029",
+        "degree": "16"
+      },
+      {
+        "node": "case:CASE_665F85EBBC",
+        "degree": "11"
+      },
+      {
+        "node": "evidence:EVID_00031",
+        "degree": "11"
+      },
+      {
+        "node": "evidence:EVID_00032",
+        "degree": "11"
+      }
+    ]
+  }
+}

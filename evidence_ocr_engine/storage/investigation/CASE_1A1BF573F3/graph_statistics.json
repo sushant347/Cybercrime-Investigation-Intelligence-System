@@ -1,0 +1,140 @@
+{
+  "report_type": "graph_statistics",
+  "report_version": 18,
+  "schema_version": "2.0",
+  "case_id": "CASE_1A1BF573F3",
+  "generated_at": "2026-08-21T05:16:40.256Z",
+  "report": {
+    "case_id": "CASE_1A1BF573F3",
+    "node_count": 83,
+    "edge_count": 191,
+    "nodes_by_type": {
+      "case": 3,
+      "evidence": 19,
+      "domain": 8,
+      "email": 4,
+      "wallet": 4,
+      "money": 4,
+      "brand": 8,
+      "transaction": 5,
+      "url": 3,
+      "date": 7,
+      "phone_number": 3,
+      "time": 1,
+      "bank_account": 3,
+      "timeline_event": 11
+    },
+    "edges_by_type": {
+      "contains": 19,
+      "shared_entity": 72,
+      "threat_relationship": 12,
+      "timeline_event": 11,
+      "cross_case_relationship": 2,
+      "cross_case_entity_match": 69,
+      "temporal_relationship": 1,
+      "behavioral_relationship": 5
+    },
+    "density": 0.0561,
+    "connected_components": 1,
+    "largest_component_size": 83,
+    "average_degree": 4.602,
+    "top_hubs": [
+      {
+        "node": "evidence:EVID_00022",
+        "degree": "35"
+      },
+      {
+        "node": "evidence:EVID_00014",
+        "degree": "22"
+      },
+      {
+        "node": "evidence:EVID_00005",
+        "degree": "22"
+      },
+      {
+        "node": "evidence:EVID_00019",
+        "degree": "18"
+      },
+      {
+        "node": "case:CASE_1A1BF573F3",
+        "degree": "13"
+      },
+      {
+        "node": "evidence:EVID_00016",
+        "degree": "12"
+      },
+      {
+        "node": "evidence:EVID_00021",
+        "degree": "12"
+      },
+      {
+        "node": "evidence:EVID_00017",
+        "degree": "10"
+      },
+      {
+        "node": "domain:esewa-cashback-offer.xyz",
+        "degree": "10"
+      },
+      {
+        "node": "evidence:EVID_00018",
+        "degree": "9"
+      }
+    ],
+    "community_count": 7,
+    "bridge_count": 34,
+    "backbone_edge_count": 120,
+    "analytics_engine": "networkx-3.6.1",
+    "top_central_nodes": [
+      {
+        "node": "evidence:EVID_00022",
+        "importance": "0.635894",
+        "community": "1"
+      },
+      {
+        "node": "evidence:EVID_00014",
+        "importance": "0.477212",
+        "community": "1"
+      },
+      {
+        "node": "evidence:EVID_00005",
+        "importance": "0.412814",
+        "community": "2"
+      },
+      {
+        "node": "evidence:EVID_00019",
+        "importance": "0.329460",
+        "community": "2"
+      },
+      {
+        "node": "evidence:EVID_00016",
+        "importance": "0.312302",
+        "community": "1"
+      },
+      {
+        "node": "case:CASE_1A1BF573F3",
+        "importance": "0.304295",
+        "community": "5"
+      },
+      {
+        "node": "evidence:EVID_00024",
+        "importance": "0.289662",
+        "community": "7"
+      },
+      {
+        "node": "evidence:EVID_00021",
+        "importance": "0.237636",
+        "community": "3"
+      },
+      {
+        "node": "evidence:EVID_00023",
+        "importance": "0.188331",
+        "community": "5"
+      },
+      {
+        "node": "phone_number:+9779801122334",
+        "importance": "0.183715",
+        "community": "2"
+      }
+    ]
+  }
+}

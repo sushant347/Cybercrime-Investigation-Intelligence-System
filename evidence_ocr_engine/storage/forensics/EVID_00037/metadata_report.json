@@ -1,0 +1,26 @@
+{
+  "report_type": "metadata_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00037",
+  "case_id": "CASE_4B2A51A300",
+  "generated_at": "2026-08-21T06:43:01.422Z",
+  "report": {
+    "evidence_id": "EVID_00037",
+    "case_id": "CASE_4B2A51A300",
+    "source_file": "EVID_00037__35e89c84__04_kyc_phishing_email.txt",
+    "file_type": "text",
+    "filesystem": {
+      "file_size_bytes": 781,
+      "created": "2026-08-21T06:43:01.370727+00:00",
+      "modified": "2026-08-21T06:42:54.821816+00:00",
+      "accessed": "2026-08-21T06:43:01.370375+00:00"
+    },
+    "image": null,
+    "pdf": null,
+    "office": null,
+    "consistency_notes": [],
+    "extraction_errors": [],
+    "analysis_time_ms": 0.1
+  }
+}

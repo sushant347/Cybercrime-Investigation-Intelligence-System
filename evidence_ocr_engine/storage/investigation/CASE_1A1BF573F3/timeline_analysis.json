@@ -1,0 +1,720 @@
+{
+  "report_type": "timeline_analysis",
+  "report_version": 19,
+  "schema_version": "2.0",
+  "case_id": "CASE_1A1BF573F3",
+  "generated_at": "2026-08-21T05:16:40.184Z",
+  "report": {
+    "case_id": "CASE_1A1BF573F3",
+    "events": [
+      {
+        "timestamp": "2026-01-04T00:00:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00023",
+        "case_id": "CASE_1A1BF573F3",
+        "file_name": "bank_transactions.csv",
+        "description": "Evidence EVID_00023 (bank_transactions.csv)",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00023"
+        ],
+        "correlated_with": [],
+        "text_preview": "",
+        "risk_signals": {},
+        "stages": [],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-06-10T00:00:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00022",
+        "case_id": "CASE_1A1BF573F3",
+        "file_name": "08_complaint_letter.pdf",
+        "description": "Evidence EVID_00022 (08_complaint_letter.pdf)",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00022"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00019",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.9215,
+            "confidence": 0.9215
+          },
+          {
+            "linked_to": "EVID_00016",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7059,
+            "confidence": 0.7059
+          },
+          {
+            "linked_to": "EVID_00021",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.591,
+            "confidence": 0.591
+          },
+          {
+            "linked_to": "EVID_00017",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.549,
+            "confidence": 0.549
+          },
+          {
+            "linked_to": "EVID_00018",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3929,
+            "confidence": 0.3929
+          },
+          {
+            "linked_to": "EVID_00020",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3253,
+            "confidence": 0.3253
+          }
+        ],
+        "text_preview": "",
+        "risk_signals": {},
+        "stages": [],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 1500, NPR 200, NPR 25000",
+          "contains esewa_ids entity/entities: esewa.cashback99@gmail.com, sunita.gurung21@gmail.com",
+          "contains khalti_ids entity/entities: +9779801122334",
+          "contains bank_accounts entity/entities: 05019012345678",
+          "contains transaction_ids entity/entities: 0119.0625.987456, CASE_2026_0088, KH-2026-0611-77245"
+        ]
+      },
+      {
+        "timestamp": "2026-06-11T11:15:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00019",
+        "case_id": "CASE_1A1BF573F3",
+        "file_name": "05_khalti_receipt.jpg",
+        "description": "Evidence EVID_00019 (05_khalti_receipt.jpg)",
+        "time_source": "content_date_time",
+        "confidence": "high",
+        "timestamp_inferred": false,
+        "source_evidence_ids": [
+          "EVID_00019"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00022",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.9215,
+            "confidence": 0.9215
+          },
+          {
+            "linked_to": "EVID_00017",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7012,
+            "confidence": 0.7012
+          },
+          {
+            "linked_to": "EVID_00021",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5679,
+            "confidence": 0.5679
+          },
+          {
+            "linked_to": "EVID_00020",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3253,
+            "confidence": 0.3253
+          }
+        ],
+        "text_preview": "",
+        "risk_signals": {},
+        "stages": [],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 1500",
+          "contains khalti_ids entity/entities: +9779801122334, +9779847011223",
+          "contains transaction_ids entity/entities: DSN2026, KH-2026-0611-77245"
+        ]
+      },
+      {
+        "timestamp": "2026-06-14T00:00:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00021",
+        "case_id": "CASE_1A1BF573F3",
+        "file_name": "07_bank_transfer_slip.pdf",
+        "description": "Evidence EVID_00021 (07_bank_transfer_slip.pdf)",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00021"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00022",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.591,
+            "confidence": 0.591
+          },
+          {
+            "linked_to": "EVID_00019",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5679,
+            "confidence": 0.5679
+          },
+          {
+            "linked_to": "EVID_00017",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3596,
+            "confidence": 0.3596
+          }
+        ],
+        "text_preview": "",
+        "risk_signals": {},
+        "stages": [],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 25000",
+          "contains bank_accounts entity/entities: 05010198765432, 9847011223",
+          "contains transaction_ids entity/entities: DSN2026, MBL-2026-441829"
+        ]
+      },
+      {
+        "timestamp": "2026-08-03T13:59:40.493000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00015",
+        "case_id": "CASE_1A1BF573F3",
+        "file_name": "01_sms_screenshot.jpg",
+        "description": "Evidence EVID_00015 (01_sms_screenshot.jpg)",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00015"
+        ],
+        "correlated_with": [],
+        "text_preview": "",
+        "risk_signals": {},
+        "stages": [],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-08-03T14:00:03.497000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00016",
+        "case_id": "CASE_1A1BF573F3",
+        "file_name": "02_messenger_chat.jpg",
+        "description": "Evidence EVID_00016 (02_messenger_chat.jpg)",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00016"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00022",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7059,
+            "confidence": 0.7059
+          }
+        ],
+        "text_preview": "",
+        "risk_signals": {},
+        "stages": [],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 200",
+          "contains esewa_ids entity/entities: sunita.gurung21@gmail.com"
+        ]
+      },
+      {
+        "timestamp": "2026-08-03T14:00:14.886000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00017",
+        "case_id": "CASE_1A1BF573F3",
+        "file_name": "03_qr_code_flyer.png",
+        "description": "Evidence EVID_00017 (03_qr_code_flyer.png)",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00017"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00019",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7012,
+            "confidence": 0.7012
+          },
+          {
+            "linked_to": "EVID_00022",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.549,
+            "confidence": 0.549
+          },
+          {
+            "linked_to": "EVID_00021",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3596,
+            "confidence": 0.3596
+          }
+        ],
+        "text_preview": "",
+        "risk_signals": {},
+        "stages": [],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 5000",
+          "contains transaction_ids entity/entities: DSN2026"
+        ]
+      },
+      {
+        "timestamp": "2026-08-03T14:00:18.299000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00018",
+        "case_id": "CASE_1A1BF573F3",
+        "file_name": "04_esewa_payment_screenshot.jpg",
+        "description": "Evidence EVID_00018 (04_esewa_payment_screenshot.jpg)",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00018"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00022",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3929,
+            "confidence": 0.3929
+          }
+        ],
+        "text_preview": "",
+        "risk_signals": {},
+        "stages": [],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 200",
+          "contains transaction_ids entity/entities: 0119.0625.987456"
+        ]
+      },
+      {
+        "timestamp": "2026-08-03T14:00:26.419000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00020",
+        "case_id": "CASE_1A1BF573F3",
+        "file_name": "06_phishing_email_screenshot.jpg",
+        "description": "Evidence EVID_00020 (06_phishing_email_screenshot.jpg)",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00020"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00019",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3253,
+            "confidence": 0.3253
+          },
+          {
+            "linked_to": "EVID_00022",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3253,
+            "confidence": 0.3253
+          }
+        ],
+        "text_preview": "",
+        "risk_signals": {},
+        "stages": [],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-08-03T14:00:55.234000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00024",
+        "case_id": "CASE_1A1BF573F3",
+        "file_name": "phishing_email_screenshot.png",
+        "description": "Evidence EVID_00024 (phishing_email_screenshot.png)",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00024"
+        ],
+        "correlated_with": [],
+        "text_preview": "",
+        "risk_signals": {},
+        "stages": [],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-08-03T14:00:57.616000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00025",
+        "case_id": "CASE_1A1BF573F3",
+        "file_name": "romanchat.jpg",
+        "description": "Evidence EVID_00025 (romanchat.jpg)",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00025"
+        ],
+        "correlated_with": [],
+        "text_preview": "",
+        "risk_signals": {},
+        "stages": [],
+        "critical": false,
+        "critical_reasons": []
+      }
+    ],
+    "attack_stages": [],
+    "stage_progression": [],
+    "progression_consistent": true,
+    "milestones": [
+      {
+        "timestamp": "2026-01-04T00:00:00+00:00",
+        "event_type": "milestone",
+        "evidence_id": "EVID_00023",
+        "case_id": "CASE_1A1BF573F3",
+        "file_name": "bank_transactions.csv",
+        "description": "First reconstructed incident event",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00023"
+        ],
+        "correlated_with": [],
+        "text_preview": "",
+        "risk_signals": {},
+        "stages": [],
+        "critical": false,
+        "critical_reasons": []
+      }
+    ],
+    "critical_events": [
+      {
+        "timestamp": "2026-06-10T00:00:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00022",
+        "case_id": "CASE_1A1BF573F3",
+        "file_name": "08_complaint_letter.pdf",
+        "description": "Evidence EVID_00022 (08_complaint_letter.pdf)",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00022"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00019",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.9215,
+            "confidence": 0.9215
+          },
+          {
+            "linked_to": "EVID_00016",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7059,
+            "confidence": 0.7059
+          },
+          {
+            "linked_to": "EVID_00021",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.591,
+            "confidence": 0.591
+          },
+          {
+            "linked_to": "EVID_00017",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.549,
+            "confidence": 0.549
+          },
+          {
+            "linked_to": "EVID_00018",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3929,
+            "confidence": 0.3929
+          },
+          {
+            "linked_to": "EVID_00020",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3253,
+            "confidence": 0.3253
+          }
+        ],
+        "text_preview": "",
+        "risk_signals": {},
+        "stages": [],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 1500, NPR 200, NPR 25000",
+          "contains esewa_ids entity/entities: esewa.cashback99@gmail.com, sunita.gurung21@gmail.com",
+          "contains khalti_ids entity/entities: +9779801122334",
+          "contains bank_accounts entity/entities: 05019012345678",
+          "contains transaction_ids entity/entities: 0119.0625.987456, CASE_2026_0088, KH-2026-0611-77245"
+        ]
+      },
+      {
+        "timestamp": "2026-06-11T11:15:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00019",
+        "case_id": "CASE_1A1BF573F3",
+        "file_name": "05_khalti_receipt.jpg",
+        "description": "Evidence EVID_00019 (05_khalti_receipt.jpg)",
+        "time_source": "content_date_time",
+        "confidence": "high",
+        "timestamp_inferred": false,
+        "source_evidence_ids": [
+          "EVID_00019"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00022",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.9215,
+            "confidence": 0.9215
+          },
+          {
+            "linked_to": "EVID_00017",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7012,
+            "confidence": 0.7012
+          },
+          {
+            "linked_to": "EVID_00021",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5679,
+            "confidence": 0.5679
+          },
+          {
+            "linked_to": "EVID_00020",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3253,
+            "confidence": 0.3253
+          }
+        ],
+        "text_preview": "",
+        "risk_signals": {},
+        "stages": [],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 1500",
+          "contains khalti_ids entity/entities: +9779801122334, +9779847011223",
+          "contains transaction_ids entity/entities: DSN2026, KH-2026-0611-77245"
+        ]
+      },
+      {
+        "timestamp": "2026-06-14T00:00:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00021",
+        "case_id": "CASE_1A1BF573F3",
+        "file_name": "07_bank_transfer_slip.pdf",
+        "description": "Evidence EVID_00021 (07_bank_transfer_slip.pdf)",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00021"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00022",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.591,
+            "confidence": 0.591
+          },
+          {
+            "linked_to": "EVID_00019",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5679,
+            "confidence": 0.5679
+          },
+          {
+            "linked_to": "EVID_00017",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3596,
+            "confidence": 0.3596
+          }
+        ],
+        "text_preview": "",
+        "risk_signals": {},
+        "stages": [],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 25000",
+          "contains bank_accounts entity/entities: 05010198765432, 9847011223",
+          "contains transaction_ids entity/entities: DSN2026, MBL-2026-441829"
+        ]
+      },
+      {
+        "timestamp": "2026-08-03T14:00:03.497000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00016",
+        "case_id": "CASE_1A1BF573F3",
+        "file_name": "02_messenger_chat.jpg",
+        "description": "Evidence EVID_00016 (02_messenger_chat.jpg)",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00016"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00022",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7059,
+            "confidence": 0.7059
+          }
+        ],
+        "text_preview": "",
+        "risk_signals": {},
+        "stages": [],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 200",
+          "contains esewa_ids entity/entities: sunita.gurung21@gmail.com"
+        ]
+      },
+      {
+        "timestamp": "2026-08-03T14:00:14.886000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00017",
+        "case_id": "CASE_1A1BF573F3",
+        "file_name": "03_qr_code_flyer.png",
+        "description": "Evidence EVID_00017 (03_qr_code_flyer.png)",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00017"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00019",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7012,
+            "confidence": 0.7012
+          },
+          {
+            "linked_to": "EVID_00022",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.549,
+            "confidence": 0.549
+          },
+          {
+            "linked_to": "EVID_00021",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3596,
+            "confidence": 0.3596
+          }
+        ],
+        "text_preview": "",
+        "risk_signals": {},
+        "stages": [],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 5000",
+          "contains transaction_ids entity/entities: DSN2026"
+        ]
+      },
+      {
+        "timestamp": "2026-08-03T14:00:18.299000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00018",
+        "case_id": "CASE_1A1BF573F3",
+        "file_name": "04_esewa_payment_screenshot.jpg",
+        "description": "Evidence EVID_00018 (04_esewa_payment_screenshot.jpg)",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00018"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00022",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3929,
+            "confidence": 0.3929
+          }
+        ],
+        "text_preview": "",
+        "risk_signals": {},
+        "stages": [],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 200",
+          "contains transaction_ids entity/entities: 0119.0625.987456"
+        ]
+      }
+    ],
+    "summary": "11 events; 11 timestamps resolved (1 non-inferred, 10 inferred, including 7 acquisition-time fallbacks); 0 timestamps unresolved. Content/metadata event times span 3864.0 hours.",
+    "statistics": {
+      "event_count": 11.0,
+      "resolved_event_count": 11.0,
+      "unresolved_event_count": 0.0,
+      "inferred_event_count": 10.0,
+      "non_inferred_event_count": 1.0,
+      "acquisition_fallback_count": 7.0,
+      "progression_assessable": 0.0,
+      "stage_count": 0.0,
+      "critical_event_count": 6.0,
+      "timeline_span_hours": 5078.02,
+      "event_time_span_hours": 3864.0,
+      "acquisition_inclusive_span_hours": 5078.02
+    },
+    "analysis_time_ms": 2.9
+  }
+}

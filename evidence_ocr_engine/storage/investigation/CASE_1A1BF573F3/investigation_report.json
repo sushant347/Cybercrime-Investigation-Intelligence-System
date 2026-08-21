@@ -1,0 +1,2192 @@
+{
+  "report_type": "investigation_report",
+  "report_version": 23,
+  "schema_version": "2.0",
+  "case_id": "CASE_1A1BF573F3",
+  "generated_at": "2026-08-21T06:43:46.288Z",
+  "report": {
+    "report_id": "RPT-1A1BF573F3-71234FBF",
+    "sections": {
+      "executive_summary": [
+        "Case CASE_1A1BF573F3 contains 11 evidence items; 11/11 passed the stored SHA-256 integrity check.",
+        "This case was automatically linked to 4 other cases; these are candidate shared-entity associations: CASE_185915593C, CASE_EE8250FB76, CASE_0CD406813C, CASE_4B2A51A300 [cross_case_correlation.json].",
+        "The weighted correlation engine found 10 related evidence pairs out of 55 analysed [correlation_analysis.json].",
+        "Clustering produced 1 candidate campaign; the largest (CAMP_CASE_1A1BF573F3_01) groups 5 items for investigator review [campaign_analysis.json].",
+        "The highest-scoring identity lead is '+9779801122334' (khalti_ids), supported by 2 evidence items and scored 78/100; this is a lead, not identity attribution [suspect_assessment.json].",
+        "Chronology contains 4 evidence-derived event times (3 inferred), 7 acquisition-only records and 0 unresolved records [timeline_analysis.json]."
+      ],
+      "scope_and_methodology": {
+        "objective": "Acquire, verify, correlate and reconstruct the digital evidence for this case, and derive investigative leads (identity anchors, candidate clusters and cross-case links) from stored artifacts while preserving each item's recorded integrity status.",
+        "evidence_scope": "11 evidence items acquired through the CIIS intake pipeline with a recorded SHA-256 digest.",
+        "methodology": [
+          "Phase 1 - Acquisition & OCR: PaddleOCR PP-OCRv5 text extraction with per-item confidence scoring; SHA-256 fingerprint recorded at intake and re-verified at read.",
+          "Phase 1 - Forensics: metadata/EXIF consistency, forgery signals, logo detection and evidence-confidence scoring stored per item under storage/forensics/.",
+          "Phase 2 - Correlation: weighted entity-overlap engine scoring every evidence pair; results in correlation_analysis.json.",
+          "Phase 2 - Cross-case: shared-entity matching against every other analysed case (cross_case_correlation.json).",
+          "Phase 2 - Campaigns / Suspects / Timeline: clustering, anchor derivation and event reconstruction over the correlated evidence set.",
+          "Threat intelligence: URL/domain indicators scored by the configured provider (static indicator file, or the trained phishing classifier when CIIS_ML_THREAT_INTEL=1); per-indicator results in 'Model Prediction Results'.",
+          "Reporting: this document is assembled exclusively from the stored outputs above; it contains no free-text generation."
+        ],
+        "reproducibility": "Re-running the analysis against the same stored evidence recomputes the canonical artifacts; report control records the evidence-set digest and the stored JSON companion retains the complete source-artifact hash register."
+      },
+      "case_overview": {
+        "case_id": "CASE_1A1BF573F3",
+        "evidence_count": 11,
+        "first_evidence": "2026-08-03T13:59:40.493Z",
+        "last_evidence": "2026-08-03T14:00:57.616Z",
+        "file_types": [
+          "csv",
+          "jpg",
+          "pdf",
+          "png"
+        ]
+      },
+      "evidence_summary": [
+        {
+          "evidence_id": "EVID_00015",
+          "file_name": "01_sms_screenshot.jpg",
+          "upload_time": "2026-08-03T13:59:40.493Z",
+          "sha256": "905b21d603ca0a6f49fd226e46470c85d509dce56f8ab68edce76b6b7ff8cec7",
+          "hash_verified": true,
+          "ocr_confidence": 0.7538,
+          "evidence_confidence_score": 83.6,
+          "entity_count": 0
+        },
+        {
+          "evidence_id": "EVID_00016",
+          "file_name": "02_messenger_chat.jpg",
+          "upload_time": "2026-08-03T14:00:03.497Z",
+          "sha256": "bb246839287ca1bcc1f6a38bbdf26489ef6eb74213b7fc2d224597a910bf4ef4",
+          "hash_verified": true,
+          "ocr_confidence": 0.9356,
+          "evidence_confidence_score": 84.7,
+          "entity_count": 4
+        },
+        {
+          "evidence_id": "EVID_00017",
+          "file_name": "03_qr_code_flyer.png",
+          "upload_time": "2026-08-03T14:00:14.886Z",
+          "sha256": "6f712c8b0e4fb6c50d156a1bf002713b4bbd60bf7db0a9cf7fbe3ea04b2cbdf9",
+          "hash_verified": true,
+          "ocr_confidence": 0.9829,
+          "evidence_confidence_score": 92.9,
+          "entity_count": 4
+        },
+        {
+          "evidence_id": "EVID_00018",
+          "file_name": "04_esewa_payment_screenshot.jpg",
+          "upload_time": "2026-08-03T14:00:18.299Z",
+          "sha256": "3a19295ff003a894311ef7efcf80bb94c8feec5a69590c3052f7f8d60ce7217b",
+          "hash_verified": true,
+          "ocr_confidence": 0.9116,
+          "evidence_confidence_score": 82.8,
+          "entity_count": 4
+        },
+        {
+          "evidence_id": "EVID_00019",
+          "file_name": "05_khalti_receipt.jpg",
+          "upload_time": "2026-08-03T14:00:22.470Z",
+          "sha256": "54a62cd3ad10a85b9b060ff73dcab3d5fb2bb3f073f3bcab66f90ae45d7d779b",
+          "hash_verified": true,
+          "ocr_confidence": 0.9871,
+          "evidence_confidence_score": 83.2,
+          "entity_count": 10
+        },
+        {
+          "evidence_id": "EVID_00020",
+          "file_name": "06_phishing_email_screenshot.jpg",
+          "upload_time": "2026-08-03T14:00:26.419Z",
+          "sha256": "b6ec522eddc05475f9ec7671ec46098a129fa8be863cc270c97b42b702e71134",
+          "hash_verified": true,
+          "ocr_confidence": 0.8658,
+          "evidence_confidence_score": 84.4,
+          "entity_count": 2
+        },
+        {
+          "evidence_id": "EVID_00021",
+          "file_name": "07_bank_transfer_slip.pdf",
+          "upload_time": "2026-08-03T14:00:31.273Z",
+          "sha256": "6f1cc10ae55d554c751ee1cbf688924c8962c5faebe87be8c457d077d6bc63c2",
+          "hash_verified": true,
+          "ocr_confidence": 0.9918,
+          "evidence_confidence_score": 100.0,
+          "entity_count": 8
+        },
+        {
+          "evidence_id": "EVID_00022",
+          "file_name": "08_complaint_letter.pdf",
+          "upload_time": "2026-08-03T14:00:53.814Z",
+          "sha256": "fe644062bf75e62c8ae13ec24c7e0461491a5610095a50546c4fa757d98e866f",
+          "hash_verified": true,
+          "ocr_confidence": 1.0,
+          "evidence_confidence_score": 100.0,
+          "entity_count": 25
+        },
+        {
+          "evidence_id": "EVID_00023",
+          "file_name": "bank_transactions.csv",
+          "upload_time": "2026-08-03T14:00:54.574Z",
+          "sha256": "fbc5fcf7403a5aa8c042baed4343d0162e8d3506ff5d1163864662d25602e87e",
+          "hash_verified": true,
+          "ocr_confidence": 1.0,
+          "evidence_confidence_score": "not available",
+          "entity_count": 2
+        },
+        {
+          "evidence_id": "EVID_00024",
+          "file_name": "phishing_email_screenshot.png",
+          "upload_time": "2026-08-03T14:00:55.234Z",
+          "sha256": "8ef0f27a84960b656d9051892e36096ce56fe9f30eb9a935d4d4330a002b9b7f",
+          "hash_verified": true,
+          "ocr_confidence": 0.9864,
+          "evidence_confidence_score": "not available",
+          "entity_count": 4
+        },
+        {
+          "evidence_id": "EVID_00025",
+          "file_name": "romanchat.jpg",
+          "upload_time": "2026-08-03T14:00:57.616Z",
+          "sha256": "0340d5863313f4cc0b9b40ed835a77a71b8304d2e08eb32f08a56ed93a6e0b10",
+          "hash_verified": true,
+          "ocr_confidence": 0.9655,
+          "evidence_confidence_score": "not available",
+          "entity_count": 0
+        }
+      ],
+      "timeline_analysis": {
+        "summary": "11 events; 11 timestamps resolved (1 non-inferred, 10 inferred, including 7 acquisition-time fallbacks); 0 timestamps unresolved. Content/metadata event times span 3864.0 hours.",
+        "timestamp_quality": {
+          "event_count": 11,
+          "non_inferred_count": 1,
+          "inferred_count": 10,
+          "acquisition_fallback_count": 7,
+          "unresolved_count": 0,
+          "reliability_note": "Chronology is provisional: acquisition time is an intake timestamp, not proof of when the underlying event occurred. Every fallback and unresolved value must be checked against the source exhibit."
+        },
+        "stage_progression": [],
+        "progression_consistent": true,
+        "progression_assessable": false,
+        "chronological_events": [
+          {
+            "timestamp": "2026-01-04T00:00:00+00:00",
+            "evidence_id": "EVID_00023",
+            "file_name": "bank_transactions.csv",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00023 (bank_transactions.csv)",
+            "timestamp_source": "content_date_only",
+            "timestamp_confidence": "medium",
+            "timestamp_inferred": true,
+            "stages": [],
+            "critical": false,
+            "critical_reasons": []
+          },
+          {
+            "timestamp": "2026-06-10T00:00:00+00:00",
+            "evidence_id": "EVID_00022",
+            "file_name": "08_complaint_letter.pdf",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00022 (08_complaint_letter.pdf)",
+            "timestamp_source": "content_date_only",
+            "timestamp_confidence": "medium",
+            "timestamp_inferred": true,
+            "stages": [],
+            "critical": true,
+            "critical_reasons": [
+              "contains money entity/entities: NPR 1500, NPR 200, NPR 25000",
+              "contains esewa_ids entity/entities: esewa.cashback99@gmail.com, sunita.gurung21@gmail.com",
+              "contains khalti_ids entity/entities: +9779801122334",
+              "contains bank_accounts entity/entities: 05019012345678",
+              "contains transaction_ids entity/entities: 0119.0625.987456, CASE_2026_0088, KH-2026-0611-77245"
+            ]
+          },
+          {
+            "timestamp": "2026-06-11T11:15:00+00:00",
+            "evidence_id": "EVID_00019",
+            "file_name": "05_khalti_receipt.jpg",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00019 (05_khalti_receipt.jpg)",
+            "timestamp_source": "content_date_time",
+            "timestamp_confidence": "high",
+            "timestamp_inferred": false,
+            "stages": [],
+            "critical": true,
+            "critical_reasons": [
+              "contains money entity/entities: NPR 1500",
+              "contains khalti_ids entity/entities: +9779801122334, +9779847011223",
+              "contains transaction_ids entity/entities: DSN2026, KH-2026-0611-77245"
+            ]
+          },
+          {
+            "timestamp": "2026-06-14T00:00:00+00:00",
+            "evidence_id": "EVID_00021",
+            "file_name": "07_bank_transfer_slip.pdf",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00021 (07_bank_transfer_slip.pdf)",
+            "timestamp_source": "content_date_only",
+            "timestamp_confidence": "medium",
+            "timestamp_inferred": true,
+            "stages": [],
+            "critical": true,
+            "critical_reasons": [
+              "contains money entity/entities: NPR 25000",
+              "contains bank_accounts entity/entities: 05010198765432, 9847011223",
+              "contains transaction_ids entity/entities: DSN2026, MBL-2026-441829"
+            ]
+          },
+          {
+            "timestamp": "2026-08-03T13:59:40.493000+00:00",
+            "evidence_id": "EVID_00015",
+            "file_name": "01_sms_screenshot.jpg",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00015 (01_sms_screenshot.jpg)",
+            "timestamp_source": "upload_time_fallback",
+            "timestamp_confidence": "low",
+            "timestamp_inferred": true,
+            "stages": [],
+            "critical": false,
+            "critical_reasons": []
+          },
+          {
+            "timestamp": "2026-08-03T14:00:03.497000+00:00",
+            "evidence_id": "EVID_00016",
+            "file_name": "02_messenger_chat.jpg",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00016 (02_messenger_chat.jpg)",
+            "timestamp_source": "upload_time_fallback",
+            "timestamp_confidence": "low",
+            "timestamp_inferred": true,
+            "stages": [],
+            "critical": true,
+            "critical_reasons": [
+              "contains money entity/entities: NPR 200",
+              "contains esewa_ids entity/entities: sunita.gurung21@gmail.com"
+            ]
+          },
+          {
+            "timestamp": "2026-08-03T14:00:14.886000+00:00",
+            "evidence_id": "EVID_00017",
+            "file_name": "03_qr_code_flyer.png",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00017 (03_qr_code_flyer.png)",
+            "timestamp_source": "upload_time_fallback",
+            "timestamp_confidence": "low",
+            "timestamp_inferred": true,
+            "stages": [],
+            "critical": true,
+            "critical_reasons": [
+              "contains money entity/entities: NPR 5000",
+              "contains transaction_ids entity/entities: DSN2026"
+            ]
+          },
+          {
+            "timestamp": "2026-08-03T14:00:18.299000+00:00",
+            "evidence_id": "EVID_00018",
+            "file_name": "04_esewa_payment_screenshot.jpg",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00018 (04_esewa_payment_screenshot.jpg)",
+            "timestamp_source": "upload_time_fallback",
+            "timestamp_confidence": "low",
+            "timestamp_inferred": true,
+            "stages": [],
+            "critical": true,
+            "critical_reasons": [
+              "contains money entity/entities: NPR 200",
+              "contains transaction_ids entity/entities: 0119.0625.987456"
+            ]
+          },
+          {
+            "timestamp": "2026-08-03T14:00:26.419000+00:00",
+            "evidence_id": "EVID_00020",
+            "file_name": "06_phishing_email_screenshot.jpg",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00020 (06_phishing_email_screenshot.jpg)",
+            "timestamp_source": "upload_time_fallback",
+            "timestamp_confidence": "low",
+            "timestamp_inferred": true,
+            "stages": [],
+            "critical": false,
+            "critical_reasons": []
+          },
+          {
+            "timestamp": "2026-08-03T14:00:55.234000+00:00",
+            "evidence_id": "EVID_00024",
+            "file_name": "phishing_email_screenshot.png",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00024 (phishing_email_screenshot.png)",
+            "timestamp_source": "upload_time_fallback",
+            "timestamp_confidence": "low",
+            "timestamp_inferred": true,
+            "stages": [],
+            "critical": false,
+            "critical_reasons": []
+          },
+          {
+            "timestamp": "2026-08-03T14:00:57.616000+00:00",
+            "evidence_id": "EVID_00025",
+            "file_name": "romanchat.jpg",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00025 (romanchat.jpg)",
+            "timestamp_source": "upload_time_fallback",
+            "timestamp_confidence": "low",
+            "timestamp_inferred": true,
+            "stages": [],
+            "critical": false,
+            "critical_reasons": []
+          }
+        ],
+        "event_time_events": [
+          {
+            "timestamp": "2026-01-04T00:00:00+00:00",
+            "evidence_id": "EVID_00023",
+            "file_name": "bank_transactions.csv",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00023 (bank_transactions.csv)",
+            "timestamp_source": "content_date_only",
+            "timestamp_confidence": "medium",
+            "timestamp_inferred": true,
+            "stages": [],
+            "critical": false,
+            "critical_reasons": []
+          },
+          {
+            "timestamp": "2026-06-10T00:00:00+00:00",
+            "evidence_id": "EVID_00022",
+            "file_name": "08_complaint_letter.pdf",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00022 (08_complaint_letter.pdf)",
+            "timestamp_source": "content_date_only",
+            "timestamp_confidence": "medium",
+            "timestamp_inferred": true,
+            "stages": [],
+            "critical": true,
+            "critical_reasons": [
+              "contains money entity/entities: NPR 1500, NPR 200, NPR 25000",
+              "contains esewa_ids entity/entities: esewa.cashback99@gmail.com, sunita.gurung21@gmail.com",
+              "contains khalti_ids entity/entities: +9779801122334",
+              "contains bank_accounts entity/entities: 05019012345678",
+              "contains transaction_ids entity/entities: 0119.0625.987456, CASE_2026_0088, KH-2026-0611-77245"
+            ]
+          },
+          {
+            "timestamp": "2026-06-11T11:15:00+00:00",
+            "evidence_id": "EVID_00019",
+            "file_name": "05_khalti_receipt.jpg",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00019 (05_khalti_receipt.jpg)",
+            "timestamp_source": "content_date_time",
+            "timestamp_confidence": "high",
+            "timestamp_inferred": false,
+            "stages": [],
+            "critical": true,
+            "critical_reasons": [
+              "contains money entity/entities: NPR 1500",
+              "contains khalti_ids entity/entities: +9779801122334, +9779847011223",
+              "contains transaction_ids entity/entities: DSN2026, KH-2026-0611-77245"
+            ]
+          },
+          {
+            "timestamp": "2026-06-14T00:00:00+00:00",
+            "evidence_id": "EVID_00021",
+            "file_name": "07_bank_transfer_slip.pdf",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00021 (07_bank_transfer_slip.pdf)",
+            "timestamp_source": "content_date_only",
+            "timestamp_confidence": "medium",
+            "timestamp_inferred": true,
+            "stages": [],
+            "critical": true,
+            "critical_reasons": [
+              "contains money entity/entities: NPR 25000",
+              "contains bank_accounts entity/entities: 05010198765432, 9847011223",
+              "contains transaction_ids entity/entities: DSN2026, MBL-2026-441829"
+            ]
+          }
+        ],
+        "acquisition_records": [
+          {
+            "timestamp": "2026-08-03T13:59:40.493000+00:00",
+            "evidence_id": "EVID_00015",
+            "file_name": "01_sms_screenshot.jpg",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00015 (01_sms_screenshot.jpg)",
+            "timestamp_source": "upload_time_fallback",
+            "timestamp_confidence": "low",
+            "timestamp_inferred": true,
+            "stages": [],
+            "critical": false,
+            "critical_reasons": []
+          },
+          {
+            "timestamp": "2026-08-03T14:00:03.497000+00:00",
+            "evidence_id": "EVID_00016",
+            "file_name": "02_messenger_chat.jpg",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00016 (02_messenger_chat.jpg)",
+            "timestamp_source": "upload_time_fallback",
+            "timestamp_confidence": "low",
+            "timestamp_inferred": true,
+            "stages": [],
+            "critical": true,
+            "critical_reasons": [
+              "contains money entity/entities: NPR 200",
+              "contains esewa_ids entity/entities: sunita.gurung21@gmail.com"
+            ]
+          },
+          {
+            "timestamp": "2026-08-03T14:00:14.886000+00:00",
+            "evidence_id": "EVID_00017",
+            "file_name": "03_qr_code_flyer.png",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00017 (03_qr_code_flyer.png)",
+            "timestamp_source": "upload_time_fallback",
+            "timestamp_confidence": "low",
+            "timestamp_inferred": true,
+            "stages": [],
+            "critical": true,
+            "critical_reasons": [
+              "contains money entity/entities: NPR 5000",
+              "contains transaction_ids entity/entities: DSN2026"
+            ]
+          },
+          {
+            "timestamp": "2026-08-03T14:00:18.299000+00:00",
+            "evidence_id": "EVID_00018",
+            "file_name": "04_esewa_payment_screenshot.jpg",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00018 (04_esewa_payment_screenshot.jpg)",
+            "timestamp_source": "upload_time_fallback",
+            "timestamp_confidence": "low",
+            "timestamp_inferred": true,
+            "stages": [],
+            "critical": true,
+            "critical_reasons": [
+              "contains money entity/entities: NPR 200",
+              "contains transaction_ids entity/entities: 0119.0625.987456"
+            ]
+          },
+          {
+            "timestamp": "2026-08-03T14:00:26.419000+00:00",
+            "evidence_id": "EVID_00020",
+            "file_name": "06_phishing_email_screenshot.jpg",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00020 (06_phishing_email_screenshot.jpg)",
+            "timestamp_source": "upload_time_fallback",
+            "timestamp_confidence": "low",
+            "timestamp_inferred": true,
+            "stages": [],
+            "critical": false,
+            "critical_reasons": []
+          },
+          {
+            "timestamp": "2026-08-03T14:00:55.234000+00:00",
+            "evidence_id": "EVID_00024",
+            "file_name": "phishing_email_screenshot.png",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00024 (phishing_email_screenshot.png)",
+            "timestamp_source": "upload_time_fallback",
+            "timestamp_confidence": "low",
+            "timestamp_inferred": true,
+            "stages": [],
+            "critical": false,
+            "critical_reasons": []
+          },
+          {
+            "timestamp": "2026-08-03T14:00:57.616000+00:00",
+            "evidence_id": "EVID_00025",
+            "file_name": "romanchat.jpg",
+            "event_type": "evidence_event",
+            "description": "Evidence EVID_00025 (romanchat.jpg)",
+            "timestamp_source": "upload_time_fallback",
+            "timestamp_confidence": "low",
+            "timestamp_inferred": true,
+            "stages": [],
+            "critical": false,
+            "critical_reasons": []
+          }
+        ],
+        "unresolved_records": [],
+        "milestones": [
+          {
+            "timestamp": "2026-01-04T00:00:00+00:00",
+            "timestamp_source": "content_date_only",
+            "timestamp_confidence": "medium",
+            "timestamp_inferred": true,
+            "description": "First reconstructed incident event"
+          }
+        ],
+        "critical_events": [
+          {
+            "timestamp": "2026-06-10T00:00:00+00:00",
+            "timestamp_source": "content_date_only",
+            "timestamp_confidence": "medium",
+            "timestamp_inferred": true,
+            "evidence_id": "EVID_00022",
+            "reasons": [
+              "contains money entity/entities: NPR 1500, NPR 200, NPR 25000",
+              "contains esewa_ids entity/entities: esewa.cashback99@gmail.com, sunita.gurung21@gmail.com",
+              "contains khalti_ids entity/entities: +9779801122334",
+              "contains bank_accounts entity/entities: 05019012345678",
+              "contains transaction_ids entity/entities: 0119.0625.987456, CASE_2026_0088, KH-2026-0611-77245"
+            ]
+          },
+          {
+            "timestamp": "2026-06-11T11:15:00+00:00",
+            "timestamp_source": "content_date_time",
+            "timestamp_confidence": "high",
+            "timestamp_inferred": false,
+            "evidence_id": "EVID_00019",
+            "reasons": [
+              "contains money entity/entities: NPR 1500",
+              "contains khalti_ids entity/entities: +9779801122334, +9779847011223",
+              "contains transaction_ids entity/entities: DSN2026, KH-2026-0611-77245"
+            ]
+          },
+          {
+            "timestamp": "2026-06-14T00:00:00+00:00",
+            "timestamp_source": "content_date_only",
+            "timestamp_confidence": "medium",
+            "timestamp_inferred": true,
+            "evidence_id": "EVID_00021",
+            "reasons": [
+              "contains money entity/entities: NPR 25000",
+              "contains bank_accounts entity/entities: 05010198765432, 9847011223",
+              "contains transaction_ids entity/entities: DSN2026, MBL-2026-441829"
+            ]
+          },
+          {
+            "timestamp": "2026-08-03T14:00:03.497000+00:00",
+            "timestamp_source": "upload_time_fallback",
+            "timestamp_confidence": "low",
+            "timestamp_inferred": true,
+            "evidence_id": "EVID_00016",
+            "reasons": [
+              "contains money entity/entities: NPR 200",
+              "contains esewa_ids entity/entities: sunita.gurung21@gmail.com"
+            ]
+          },
+          {
+            "timestamp": "2026-08-03T14:00:14.886000+00:00",
+            "timestamp_source": "upload_time_fallback",
+            "timestamp_confidence": "low",
+            "timestamp_inferred": true,
+            "evidence_id": "EVID_00017",
+            "reasons": [
+              "contains money entity/entities: NPR 5000",
+              "contains transaction_ids entity/entities: DSN2026"
+            ]
+          },
+          {
+            "timestamp": "2026-08-03T14:00:18.299000+00:00",
+            "timestamp_source": "upload_time_fallback",
+            "timestamp_confidence": "low",
+            "timestamp_inferred": true,
+            "evidence_id": "EVID_00018",
+            "reasons": [
+              "contains money entity/entities: NPR 200",
+              "contains transaction_ids entity/entities: 0119.0625.987456"
+            ]
+          }
+        ]
+      },
+      "correlation_analysis": {
+        "pair_count": 55,
+        "related_pair_count": 10,
+        "strength_distribution": {
+          "VERY_STRONG": 1,
+          "STRONG": 4,
+          "MEDIUM": 5,
+          "NO_RELATIONSHIP": 45
+        },
+        "top_relationships": [
+          {
+            "pair": "EVID_00019 <-> EVID_00022",
+            "strength": "VERY_STRONG",
+            "confidence": 0.9215,
+            "explanation": "EVID_00019 (05_khalti_receipt.jpg) and EVID_00022 (08_complaint_letter.pdf) show a very strong relationship (confidence 0.92) based on 7 independent factors. Both items reference the same phones: +9779801122334, +9779847011223 [weight 1.26]. Both items reference the same khalti ids: +9779801122334 [weight 0.78]. Both items reference the same transaction ids: kh-2026-0611-77245 [weight 0.74]. Both items reference the same domains: esewa-cashback-offer.xyz [weight 0.42]. Both items reference the same money: npr 1500 [weight 0.07]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]. Threat intelligence flags the same malicious indicator in both items: esewa-cashback-offer.xyz [weight 0.80]."
+          },
+          {
+            "pair": "EVID_00016 <-> EVID_00022",
+            "strength": "STRONG",
+            "confidence": 0.7059,
+            "explanation": "EVID_00016 (02_messenger_chat.jpg) and EVID_00022 (08_complaint_letter.pdf) show a strong relationship (confidence 0.71) based on 5 independent factors. Both items reference the same emails: sunita.gurung21@gmail.com [weight 0.66]. Both items reference the same esewa ids: sunita.gurung21@gmail.com [weight 0.78]. Both items reference the same domains: gmail.com [weight 0.46]. Both items reference the same money: npr 200 [weight 0.06]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+          },
+          {
+            "pair": "EVID_00017 <-> EVID_00019",
+            "strength": "STRONG",
+            "confidence": 0.7012,
+            "explanation": "EVID_00017 (03_qr_code_flyer.png) and EVID_00019 (05_khalti_receipt.jpg) show a strong relationship (confidence 0.70) based on 4 independent factors. Both items reference the same transaction ids: dsn2026 [weight 0.71]. Both items reference the same domains: esewa-cashback-offer.xyz [weight 0.42]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]. Threat intelligence flags the same malicious indicator in both items: esewa-cashback-offer.xyz [weight 0.80]."
+          },
+          {
+            "pair": "EVID_00021 <-> EVID_00022",
+            "strength": "STRONG",
+            "confidence": 0.591,
+            "explanation": "EVID_00021 (07_bank_transfer_slip.pdf) and EVID_00022 (08_complaint_letter.pdf) show a strong relationship (confidence 0.59) based on 4 independent factors. Both items reference the same phones: +9779847011223 [weight 0.63]. Both items reference the same transaction ids: mbl-2026-441829 [weight 0.74]. Both items reference the same money: npr 25000 [weight 0.06]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+          },
+          {
+            "pair": "EVID_00019 <-> EVID_00021",
+            "strength": "STRONG",
+            "confidence": 0.5679,
+            "explanation": "EVID_00019 (05_khalti_receipt.jpg) and EVID_00021 (07_bank_transfer_slip.pdf) show a strong relationship (confidence 0.57) based on 3 independent factors. Both items reference the same phones: +9779847011223 [weight 0.63]. Both items reference the same transaction ids: dsn2026 [weight 0.71]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+          }
+        ]
+      },
+      "cross_case_correlation": {
+        "related_case_count": 4,
+        "related_case_ids": [
+          "CASE_185915593C",
+          "CASE_EE8250FB76",
+          "CASE_0CD406813C",
+          "CASE_4B2A51A300"
+        ],
+        "links": [
+          {
+            "other_case_id": "CASE_185915593C",
+            "relationship_strength": "VERY_STRONG",
+            "match_confidence": 1.0,
+            "match_reason": "Shares 29 entity(ies) with CASE_185915593C: bank account 05010198765432, domain esewa.cashbacko90gmail.com, domain sunita.gurung216gmail.com (+26 more). 25 of these are distinctive; the other 4 are common across the corpus and were discounted",
+            "matched_entities": [
+              {
+                "entity_type": "bank_accounts",
+                "value": "05010198765432",
+                "this_evidence_ids": [
+                  "EVID_00021"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00013"
+                ]
+              },
+              {
+                "entity_type": "domains",
+                "value": "esewa.cashbacko90gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00018"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00010"
+                ]
+              },
+              {
+                "entity_type": "domains",
+                "value": "sunita.gurung216gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00018"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00010"
+                ]
+              },
+              {
+                "entity_type": "khalti_ids",
+                "value": "+9779847011223",
+                "this_evidence_ids": [
+                  "EVID_00019"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00011"
+                ]
+              },
+              {
+                "entity_type": "urls",
+                "value": "https://esewa-cashback-offer.xyz/claim?ref=dsn2026",
+                "this_evidence_ids": [
+                  "EVID_00017"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00009"
+                ]
+              },
+              {
+                "entity_type": "bank_accounts",
+                "value": "9847011223",
+                "this_evidence_ids": [
+                  "EVID_00021"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00013"
+                ]
+              },
+              {
+                "entity_type": "phones",
+                "value": "0198765432",
+                "this_evidence_ids": [
+                  "EVID_00021"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00013"
+                ]
+              },
+              {
+                "entity_type": "bank_accounts",
+                "value": "05019012345678",
+                "this_evidence_ids": [
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "domains",
+                "value": "esewa-verify-kyc.com",
+                "this_evidence_ids": [
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "emails",
+                "value": "esewa.cashback99@gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "emails",
+                "value": "support@esewa-verify-kyc.com",
+                "this_evidence_ids": [
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "esewa_ids",
+                "value": "esewa.cashback99@gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "transaction_ids",
+                "value": "case_2026_0088",
+                "this_evidence_ids": [
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "urls",
+                "value": "https://esewa-cashback-offer.xyz/claim",
+                "this_evidence_ids": [
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "emails",
+                "value": "sunita.gurung21@gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00016",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00008",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "esewa_ids",
+                "value": "sunita.gurung21@gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00016",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00008",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "khalti_ids",
+                "value": "+9779801122334",
+                "this_evidence_ids": [
+                  "EVID_00019",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00011",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "transaction_ids",
+                "value": "0119.0625.987456",
+                "this_evidence_ids": [
+                  "EVID_00018",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00010",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "transaction_ids",
+                "value": "kh-2026-0611-77245",
+                "this_evidence_ids": [
+                  "EVID_00019",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00011",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "transaction_ids",
+                "value": "mbl-2026-441829",
+                "this_evidence_ids": [
+                  "EVID_00021",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00013",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "transaction_ids",
+                "value": "dsn2026",
+                "this_evidence_ids": [
+                  "EVID_00017",
+                  "EVID_00019",
+                  "EVID_00021"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00009",
+                  "EVID_00013"
+                ]
+              },
+              {
+                "entity_type": "domains",
+                "value": "esewa-cashback-offer.xyz",
+                "this_evidence_ids": [
+                  "EVID_00017",
+                  "EVID_00019",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00009",
+                  "EVID_00011",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "phones",
+                "value": "+9779801122334",
+                "this_evidence_ids": [
+                  "EVID_00019",
+                  "EVID_00020",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00011",
+                  "EVID_00012",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "phones",
+                "value": "+9779847011223",
+                "this_evidence_ids": [
+                  "EVID_00019",
+                  "EVID_00021",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00011",
+                  "EVID_00013",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "domains",
+                "value": "gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00016",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00008",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "money",
+                "value": "npr 1500",
+                "this_evidence_ids": [
+                  "EVID_00019",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00011",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "money",
+                "value": "npr 25000",
+                "this_evidence_ids": [
+                  "EVID_00021",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00013",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "money",
+                "value": "npr 5000",
+                "this_evidence_ids": [
+                  "EVID_00017",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00009",
+                  "EVID_00014"
+                ]
+              },
+              {
+                "entity_type": "money",
+                "value": "npr 200",
+                "this_evidence_ids": [
+                  "EVID_00016",
+                  "EVID_00018",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00008",
+                  "EVID_00010",
+                  "EVID_00014"
+                ]
+              }
+            ]
+          },
+          {
+            "other_case_id": "CASE_EE8250FB76",
+            "relationship_strength": "VERY_STRONG",
+            "match_confidence": 0.9992,
+            "match_reason": "Shares 21 entity(ies) with CASE_EE8250FB76: bank account 05019012345678, domain esewa-verify-kyc.com, email esewa.cashback99@gmail.com (+18 more). 17 of these are distinctive; the other 4 are common across the corpus and were discounted",
+            "matched_entities": [
+              {
+                "entity_type": "bank_accounts",
+                "value": "05019012345678",
+                "this_evidence_ids": [
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "domains",
+                "value": "esewa-verify-kyc.com",
+                "this_evidence_ids": [
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "emails",
+                "value": "esewa.cashback99@gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "emails",
+                "value": "support@esewa-verify-kyc.com",
+                "this_evidence_ids": [
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "esewa_ids",
+                "value": "esewa.cashback99@gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "transaction_ids",
+                "value": "case_2026_0088",
+                "this_evidence_ids": [
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "urls",
+                "value": "https://esewa-cashback-offer.xyz/claim",
+                "this_evidence_ids": [
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "emails",
+                "value": "sunita.gurung21@gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00016",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "esewa_ids",
+                "value": "sunita.gurung21@gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00016",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "khalti_ids",
+                "value": "+9779801122334",
+                "this_evidence_ids": [
+                  "EVID_00019",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "transaction_ids",
+                "value": "0119.0625.987456",
+                "this_evidence_ids": [
+                  "EVID_00018",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "transaction_ids",
+                "value": "kh-2026-0611-77245",
+                "this_evidence_ids": [
+                  "EVID_00019",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "transaction_ids",
+                "value": "mbl-2026-441829",
+                "this_evidence_ids": [
+                  "EVID_00021",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "domains",
+                "value": "esewa-cashback-offer.xyz",
+                "this_evidence_ids": [
+                  "EVID_00017",
+                  "EVID_00019",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "phones",
+                "value": "+9779801122334",
+                "this_evidence_ids": [
+                  "EVID_00019",
+                  "EVID_00020",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "phones",
+                "value": "+9779847011223",
+                "this_evidence_ids": [
+                  "EVID_00019",
+                  "EVID_00021",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "domains",
+                "value": "gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00016",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "money",
+                "value": "npr 1500",
+                "this_evidence_ids": [
+                  "EVID_00019",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "money",
+                "value": "npr 25000",
+                "this_evidence_ids": [
+                  "EVID_00021",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "money",
+                "value": "npr 5000",
+                "this_evidence_ids": [
+                  "EVID_00017",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              },
+              {
+                "entity_type": "money",
+                "value": "npr 200",
+                "this_evidence_ids": [
+                  "EVID_00016",
+                  "EVID_00018",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00005"
+                ]
+              }
+            ]
+          },
+          {
+            "other_case_id": "CASE_0CD406813C",
+            "relationship_strength": "WEAK",
+            "match_confidence": 0.189,
+            "match_reason": "Shares 1 entity(ies) with CASE_0CD406813C: domain gmail.com",
+            "matched_entities": [
+              {
+                "entity_type": "domains",
+                "value": "gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00016",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00027",
+                  "EVID_00029",
+                  "EVID_00031"
+                ]
+              }
+            ]
+          },
+          {
+            "other_case_id": "CASE_4B2A51A300",
+            "relationship_strength": "WEAK",
+            "match_confidence": 0.189,
+            "match_reason": "Shares 1 entity(ies) with CASE_4B2A51A300: domain gmail.com",
+            "matched_entities": [
+              {
+                "entity_type": "domains",
+                "value": "gmail.com",
+                "this_evidence_ids": [
+                  "EVID_00016",
+                  "EVID_00022"
+                ],
+                "other_evidence_ids": [
+                  "EVID_00034",
+                  "EVID_00035",
+                  "EVID_00037",
+                  "EVID_00039"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "campaign_analysis": {
+        "campaign_count": 1,
+        "unclustered_evidence": [
+          "EVID_00015",
+          "EVID_00018",
+          "EVID_00020",
+          "EVID_00023",
+          "EVID_00024",
+          "EVID_00025"
+        ],
+        "campaigns": [
+          {
+            "campaign_id": "CAMP_CASE_1A1BF573F3_01",
+            "members": [
+              "EVID_00016",
+              "EVID_00017",
+              "EVID_00019",
+              "EVID_00021",
+              "EVID_00022"
+            ],
+            "confidence": 0.6975,
+            "signature": [
+              "domains:esewa-cashback-offer.xyz",
+              "phones:+9779847011223",
+              "transaction_ids:dsn2026",
+              "dates:11 june 2026",
+              "domains:gmail.com"
+            ],
+            "summary": "Campaign CAMP_CASE_1A1BF573F3_01 groups 5 evidence items with mean link confidence 0.70. Shared indicators: domains:esewa-cashback-offer.xyz, phones:+9779847011223, transaction_ids:dsn2026, dates:11 june 2026, domains:gmail.com. Active 2026-08-03T14:00:03.497Z to 2026-08-03T14:00:53.814Z."
+          }
+        ]
+      },
+      "suspect_assessment": [
+        {
+          "suspect_id": "SUSPECT_CASE_1A1BF573F3_10",
+          "identity": "khalti_ids:+9779801122334",
+          "confidence_score": 77.6,
+          "confidence_level": "HIGH",
+          "risk_level": "HIGH",
+          "evidence_ids": [
+            "EVID_00019",
+            "EVID_00022"
+          ],
+          "explanation": "Suspect anchor '+9779801122334' (khalti_ids) scores 77.6/100 (HIGH, risk HIGH) across 2 evidence items: EVID_00019, EVID_00022. Identity strength: 100/100 (weight 0.25) - '+9779801122334' is a khalti_id - identity weight 100/100 for this anchor type. Evidence count: 50/100 (weight 0.20) - appears in 2 of 11 evidence items. Evidence confidence: 92/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 92/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'esewa-cashback-offer.xyz' in EVID_00019. Correlation strength: 92/100 (weight 0.15) - its 2 evidence items are inter-linked with mean correlation confidence 0.92 (strongest: VERY_STRONG). Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: phones:+9779801122334, phones:+9779847011223."
+        },
+        {
+          "suspect_id": "SUSPECT_CASE_1A1BF573F3_13",
+          "identity": "phones:+9779847011223",
+          "confidence_score": 75.8,
+          "confidence_level": "HIGH",
+          "risk_level": "HIGH",
+          "evidence_ids": [
+            "EVID_00019",
+            "EVID_00021",
+            "EVID_00022"
+          ],
+          "explanation": "Suspect anchor '+9779847011223' (phones) scores 75.8/100 (HIGH, risk HIGH) across 3 evidence items: EVID_00019, EVID_00021, EVID_00022. Identity strength: 85/100 (weight 0.25) - '+9779847011223' is a phone - identity weight 85/100 for this anchor type. Evidence count: 75/100 (weight 0.20) - appears in 3 of 11 evidence items. Evidence confidence: 94/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 94/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'esewa-cashback-offer.xyz' in EVID_00019. Correlation strength: 69/100 (weight 0.15) - its 3 evidence items are inter-linked with mean correlation confidence 0.69 (strongest: VERY_STRONG). Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: khalti_ids:+9779801122334, phones:+9779801122334."
+        },
+        {
+          "suspect_id": "SUSPECT_CASE_1A1BF573F3_09",
+          "identity": "esewa_ids:sunita.gurung21@gmail.com",
+          "confidence_score": 74.4,
+          "confidence_level": "HIGH",
+          "risk_level": "HIGH",
+          "evidence_ids": [
+            "EVID_00016",
+            "EVID_00022"
+          ],
+          "explanation": "Suspect anchor 'sunita.gurung21@gmail.com' (esewa_ids) scores 74.4/100 (HIGH, risk HIGH) across 2 evidence items: EVID_00016, EVID_00022. Identity strength: 100/100 (weight 0.25) - 'sunita.gurung21@gmail.com' is a esewa_id - identity weight 100/100 for this anchor type. Evidence count: 50/100 (weight 0.20) - appears in 2 of 11 evidence items. Evidence confidence: 92/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 92/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00022. Correlation strength: 71/100 (weight 0.15) - its 2 evidence items are inter-linked with mean correlation confidence 0.71 (strongest: STRONG). Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: emails:sunita.gurung21@gmail.com."
+        },
+        {
+          "suspect_id": "SUSPECT_CASE_1A1BF573F3_12",
+          "identity": "phones:+9779801122334",
+          "confidence_score": 72.5,
+          "confidence_level": "HIGH",
+          "risk_level": "HIGH",
+          "evidence_ids": [
+            "EVID_00019",
+            "EVID_00020",
+            "EVID_00022"
+          ],
+          "explanation": "Suspect anchor '+9779801122334' (phones) scores 72.5/100 (HIGH, risk HIGH) across 3 evidence items: EVID_00019, EVID_00020, EVID_00022. Identity strength: 85/100 (weight 0.25) - '+9779801122334' is a phone - identity weight 85/100 for this anchor type. Evidence count: 75/100 (weight 0.20) - appears in 3 of 11 evidence items. Evidence confidence: 89/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 89/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'esewa-cashback-offer.xyz' in EVID_00019. Correlation strength: 52/100 (weight 0.15) - its 3 evidence items are inter-linked with mean correlation confidence 0.52 (strongest: VERY_STRONG). Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: khalti_ids:+9779801122334, phones:+9779847011223."
+        },
+        {
+          "suspect_id": "SUSPECT_CASE_1A1BF573F3_06",
+          "identity": "emails:sunita.gurung21@gmail.com",
+          "confidence_score": 68.2,
+          "confidence_level": "HIGH",
+          "risk_level": "HIGH",
+          "evidence_ids": [
+            "EVID_00016",
+            "EVID_00022"
+          ],
+          "explanation": "Suspect anchor 'sunita.gurung21@gmail.com' (emails) scores 68.2/100 (HIGH, risk HIGH) across 2 evidence items: EVID_00016, EVID_00022. Identity strength: 75/100 (weight 0.25) - 'sunita.gurung21@gmail.com' is a email - identity weight 75/100 for this anchor type. Evidence count: 50/100 (weight 0.20) - appears in 2 of 11 evidence items. Evidence confidence: 92/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 92/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00022. Correlation strength: 71/100 (weight 0.15) - its 2 evidence items are inter-linked with mean correlation confidence 0.71 (strongest: STRONG). Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: esewa_ids:sunita.gurung21@gmail.com."
+        },
+        {
+          "suspect_id": "SUSPECT_CASE_1A1BF573F3_02",
+          "identity": "bank_accounts:05019012345678",
+          "confidence_score": 67.5,
+          "confidence_level": "HIGH",
+          "risk_level": "HIGH",
+          "evidence_ids": [
+            "EVID_00022"
+          ],
+          "explanation": "Suspect anchor '05019012345678' (bank_accounts) scores 67.5/100 (HIGH, risk HIGH) across 1 evidence item: EVID_00022. Identity strength: 100/100 (weight 0.25) - '05019012345678' is a bank_account - identity weight 100/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 11 evidence items. Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00022. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: emails:esewa.cashback99@gmail.com, emails:sunita.gurung21@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, esewa_ids:sunita.gurung21@gmail.com, khalti_ids:+9779801122334, phones:+9779801122334, phones:+9779847011223."
+        },
+        {
+          "suspect_id": "SUSPECT_CASE_1A1BF573F3_08",
+          "identity": "esewa_ids:esewa.cashback99@gmail.com",
+          "confidence_score": 67.5,
+          "confidence_level": "HIGH",
+          "risk_level": "HIGH",
+          "evidence_ids": [
+            "EVID_00022"
+          ],
+          "explanation": "Suspect anchor 'esewa.cashback99@gmail.com' (esewa_ids) scores 67.5/100 (HIGH, risk HIGH) across 1 evidence item: EVID_00022. Identity strength: 100/100 (weight 0.25) - 'esewa.cashback99@gmail.com' is a esewa_id - identity weight 100/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 11 evidence items. Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00022. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:esewa.cashback99@gmail.com, emails:sunita.gurung21@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:sunita.gurung21@gmail.com, khalti_ids:+9779801122334, phones:+9779801122334, phones:+9779847011223."
+        },
+        {
+          "suspect_id": "SUSPECT_CASE_1A1BF573F3_11",
+          "identity": "khalti_ids:+9779847011223",
+          "confidence_score": 65.0,
+          "confidence_level": "HIGH",
+          "risk_level": "HIGH",
+          "evidence_ids": [
+            "EVID_00019"
+          ],
+          "explanation": "Suspect anchor '+9779847011223' (khalti_ids) scores 65.0/100 (HIGH, risk HIGH) across 1 evidence item: EVID_00019. Identity strength: 100/100 (weight 0.25) - '+9779847011223' is a khalti_id - identity weight 100/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 11 evidence items. Evidence confidence: 83/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 83/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'esewa-cashback-offer.xyz' in EVID_00019. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: khalti_ids:+9779801122334, phones:+9779801122334, phones:+9779847011223."
+        },
+        {
+          "suspect_id": "SUSPECT_CASE_1A1BF573F3_04",
+          "identity": "emails:esewa.cashback99@gmail.com",
+          "confidence_score": 61.2,
+          "confidence_level": "HIGH",
+          "risk_level": "HIGH",
+          "evidence_ids": [
+            "EVID_00022"
+          ],
+          "explanation": "Suspect anchor 'esewa.cashback99@gmail.com' (emails) scores 61.2/100 (HIGH, risk HIGH) across 1 evidence item: EVID_00022. Identity strength: 75/100 (weight 0.25) - 'esewa.cashback99@gmail.com' is a email - identity weight 75/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 11 evidence items. Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-cashback-offer.xyz/claim' in EVID_00022. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:sunita.gurung21@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, esewa_ids:sunita.gurung21@gmail.com, khalti_ids:+9779801122334, phones:+9779801122334, phones:+9779847011223."
+        },
+        {
+          "suspect_id": "SUSPECT_CASE_1A1BF573F3_07",
+          "identity": "emails:support@esewa-verify-kyc.com",
+          "confidence_score": 61.2,
+          "confidence_level": "HIGH",
+          "risk_level": "HIGH",
+          "evidence_ids": [
+            "EVID_00022"
+          ],
+          "explanation": "Suspect anchor 'support@esewa-verify-kyc.com' (emails) scores 61.2/100 (HIGH, risk HIGH) across 1 evidence item: EVID_00022. Identity strength: 75/100 (weight 0.25) - 'support@esewa-verify-kyc.com' is a email - identity weight 75/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 11 evidence items. Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - anchor 'support@esewa-verify-kyc.com' is flagged malicious by threat intelligence. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: bank_accounts:05019012345678, emails:esewa.cashback99@gmail.com, emails:sunita.gurung21@gmail.com, esewa_ids:esewa.cashback99@gmail.com, esewa_ids:sunita.gurung21@gmail.com, khalti_ids:+9779801122334, phones:+9779801122334, phones:+9779847011223."
+        }
+      ],
+      "threat_intelligence_summary": {
+        "intel_available": 1.0,
+        "indicators_checked": 11.0,
+        "malicious_indicators": 9.0,
+        "suspicious_indicators": 1.0,
+        "benign_indicators": 1.0,
+        "evidence_with_threats": 5.0,
+        "threat_evidence_ratio": 0.4545
+      },
+      "model_predictions": {
+        "indicators_classified": 8,
+        "flagged_malicious": 6,
+        "predictions": [
+          {
+            "indicator": "https://esewa-cashback-offer.xyz/claim?ref=DsN2026",
+            "evidence_id": "EVID_00017",
+            "verdict": "malicious",
+            "risk_score": 83,
+            "confidence": 0.83,
+            "risk_level": "Critical",
+            "source": "ml:xgboost",
+            "model_version": "4.0.0",
+            "domain": "esewa-cashback-offer.xyz",
+            "trust_score": 20,
+            "official_domain": false,
+            "ssl_status": "UNKNOWN",
+            "spf_present": false,
+            "dmarc_present": false,
+            "reasons": [
+              "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
+              "AI model classified this URL as phishing with 100% confidence.",
+              "The top-level domain is frequently associated with phishing and spam campaigns (risk score: 0.7).",
+              "SSL status could not be verified.",
+              "The domain or URL has high character entropy, suggesting a randomly-generated string often used in phishing.",
+              "The URL contains suspicious keyword(s) associated with phishing."
+            ],
+            "threat_signals": [
+              "✗ Missing SPF record (facilitates email spoofing)",
+              "✗ Missing DMARC record (facilitates email spoofing)",
+              "✗ High-abuse top-level domain",
+              "✗ High character entropy (suspicious random string)",
+              "✗ Phishing-associated keyword(s) in URL"
+            ]
+          },
+          {
+            "indicator": "http://nabil-verify.example-scam.top/login",
+            "evidence_id": "EVID_00024",
+            "verdict": "malicious",
+            "risk_score": 81,
+            "confidence": 0.81,
+            "risk_level": "Critical",
+            "source": "ml:xgboost",
+            "model_version": "4.0.0",
+            "domain": "nabil-verify.example-scam.top",
+            "trust_score": 35,
+            "official_domain": false,
+            "ssl_status": "UNKNOWN",
+            "spf_present": false,
+            "dmarc_present": false,
+            "reasons": [
+              "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
+              "AI model classified this URL as phishing with 100% confidence.",
+              "The top-level domain is frequently associated with phishing and spam campaigns (risk score: 0.7).",
+              "SSL status could not be verified.",
+              "The URL does not use HTTPS, meaning data is transmitted without encryption.",
+              "The URL contains suspicious keyword(s) associated with phishing."
+            ],
+            "threat_signals": [
+              "✗ Plain HTTP protocol used (unencrypted connections)",
+              "✗ Missing SPF record (facilitates email spoofing)",
+              "✗ Missing DMARC record (facilitates email spoofing)",
+              "✗ High-abuse top-level domain",
+              "✗ Phishing-associated keyword(s) in URL"
+            ]
+          },
+          {
+            "indicator": "esewa.cashbacko90gmail.com",
+            "evidence_id": "EVID_00018",
+            "verdict": "malicious",
+            "risk_score": 79,
+            "confidence": 0.79,
+            "risk_level": "High",
+            "source": "ml:xgboost",
+            "model_version": "4.0.0",
+            "domain": "esewa.cashbacko90gmail.com",
+            "trust_score": 50,
+            "official_domain": false,
+            "ssl_status": "UNKNOWN",
+            "spf_present": false,
+            "dmarc_present": false,
+            "reasons": [
+              "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
+              "AI model classified this URL as phishing with 100% confidence.",
+              "SSL status could not be verified.",
+              "The URL does not use HTTPS, meaning data is transmitted without encryption.",
+              "The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure.",
+              "Brand 'Google' referenced in hostname, but registrable domain 'cashbacko90gmail.com' does not belong to the official Google infrastructure."
+            ],
+            "threat_signals": [
+              "✗ Plain HTTP protocol used (unencrypted connections)",
+              "✗ Missing SPF record (facilitates email spoofing)",
+              "✗ Missing DMARC record (facilitates email spoofing)"
+            ]
+          },
+          {
+            "indicator": "sunita.gurung216gmail.com",
+            "evidence_id": "EVID_00018",
+            "verdict": "malicious",
+            "risk_score": 79,
+            "confidence": 0.79,
+            "risk_level": "High",
+            "source": "ml:xgboost",
+            "model_version": "4.0.0",
+            "domain": "sunita.gurung216gmail.com",
+            "trust_score": 50,
+            "official_domain": false,
+            "ssl_status": "UNKNOWN",
+            "spf_present": false,
+            "dmarc_present": false,
+            "reasons": [
+              "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
+              "AI model classified this URL as phishing with 100% confidence.",
+              "SSL status could not be verified.",
+              "The URL does not use HTTPS, meaning data is transmitted without encryption.",
+              "The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure.",
+              "Brand 'Google' referenced in hostname, but registrable domain 'gurung216gmail.com' does not belong to the official Google infrastructure."
+            ],
+            "threat_signals": [
+              "✗ Plain HTTP protocol used (unencrypted connections)",
+              "✗ Missing SPF record (facilitates email spoofing)",
+              "✗ Missing DMARC record (facilitates email spoofing)"
+            ]
+          },
+          {
+            "indicator": "esewa-verify-kyc.com",
+            "evidence_id": "EVID_00022",
+            "verdict": "malicious",
+            "risk_score": 79,
+            "confidence": 0.79,
+            "risk_level": "High",
+            "source": "ml:xgboost",
+            "model_version": "4.0.0",
+            "domain": "esewa-verify-kyc.com",
+            "trust_score": 50,
+            "official_domain": false,
+            "ssl_status": "UNKNOWN",
+            "spf_present": false,
+            "dmarc_present": false,
+            "reasons": [
+              "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
+              "AI model classified this URL as phishing with 100% confidence.",
+              "SSL status could not be verified.",
+              "The URL does not use HTTPS, meaning data is transmitted without encryption.",
+              "The URL contains suspicious keyword(s) associated with phishing.",
+              "The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure."
+            ],
+            "threat_signals": [
+              "✗ Plain HTTP protocol used (unencrypted connections)",
+              "✗ Missing SPF record (facilitates email spoofing)",
+              "✗ Missing DMARC record (facilitates email spoofing)",
+              "✗ Phishing-associated keyword(s) in URL"
+            ]
+          },
+          {
+            "indicator": "nabil-bank-alerts.com",
+            "evidence_id": "EVID_00024",
+            "verdict": "malicious",
+            "risk_score": 79,
+            "confidence": 0.79,
+            "risk_level": "High",
+            "source": "ml:xgboost",
+            "model_version": "4.0.0",
+            "domain": "nabil-bank-alerts.com",
+            "trust_score": 50,
+            "official_domain": false,
+            "ssl_status": "UNKNOWN",
+            "spf_present": false,
+            "dmarc_present": false,
+            "reasons": [
+              "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
+              "AI model classified this URL as phishing with 100% confidence.",
+              "SSL status could not be verified.",
+              "The URL does not use HTTPS, meaning data is transmitted without encryption.",
+              "The URL contains suspicious keyword(s) associated with phishing.",
+              "The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure."
+            ],
+            "threat_signals": [
+              "✗ Plain HTTP protocol used (unencrypted connections)",
+              "✗ Missing SPF record (facilitates email spoofing)",
+              "✗ Missing DMARC record (facilitates email spoofing)",
+              "✗ Phishing-associated keyword(s) in URL"
+            ]
+          },
+          {
+            "indicator": "kyc.co",
+            "evidence_id": "EVID_00020",
+            "verdict": "suspicious",
+            "risk_score": 42,
+            "confidence": 0.94,
+            "risk_level": "Medium",
+            "source": "ml:xgboost",
+            "model_version": "4.0.0",
+            "domain": "kyc.co",
+            "trust_score": 100,
+            "official_domain": false,
+            "ssl_status": "VALID",
+            "domain_age_days": 3939,
+            "registrar": "NAMECHEAP INC",
+            "spf_present": true,
+            "dmarc_present": true,
+            "ssl_days_left": 31,
+            "hosting": "Akamai Connected Cloud, United Kingdom",
+            "ip_address": "172.237.118.36",
+            "reasons": [
+              "The hybrid decision engine flagged this URL as suspicious due to mixed signals between the ML model, active rules, and threat intelligence.",
+              "The URL does not use HTTPS, meaning data is transmitted without encryption."
+            ],
+            "threat_signals": [
+              "✗ Plain HTTP protocol used (unencrypted connections)"
+            ],
+            "trust_signals": [
+              "✓ Valid SSL certificate",
+              "✓ Established domain age (10.8 years old)",
+              "✓ Registered with trusted registrar (NAMECHEAP INC)",
+              "✓ SPF email authentication configured",
+              "✓ DMARC email authentication configured",
+              "✓ Hosted on a trusted enterprise network (Akamai Connected Cloud)"
+            ]
+          },
+          {
+            "indicator": "gmail.com",
+            "evidence_id": "EVID_00016",
+            "verdict": "benign",
+            "risk_score": 20,
+            "confidence": 0.8,
+            "risk_level": "Low",
+            "source": "ml:xgboost",
+            "model_version": "4.0.0",
+            "domain": "gmail.com",
+            "trust_score": 100,
+            "brand_impersonated": "google",
+            "official_domain": true,
+            "ssl_status": "VALID",
+            "domain_age_days": 11331,
+            "registrar": "MarkMonitor, Inc.",
+            "spf_present": true,
+            "dmarc_present": true,
+            "ssl_days_left": 68,
+            "hosting": "Google LLC, United States",
+            "ip_address": "192.178.177.18",
+            "reasons": [
+              "The hybrid decision engine confirmed this URL is legitimate based on trusted signals and ML model agreement.",
+              "The URL does not use HTTPS, meaning data is transmitted without encryption."
+            ],
+            "threat_signals": [
+              "✗ Plain HTTP protocol used (unencrypted connections)"
+            ],
+            "trust_signals": [
+              "✓ Official registered domain of trusted brand: google",
+              "✓ Valid SSL certificate",
+              "✓ HTTPS Strict-Transport-Security (HSTS) active",
+              "✓ Established domain age (31.0 years old)",
+              "✓ Registered with trusted registrar (MarkMonitor, Inc.)",
+              "✓ SPF email authentication configured"
+            ]
+          }
+        ]
+      },
+      "evidence_quality_summary": {
+        "mean_image_quality": 66.38,
+        "mean_evidence_confidence": 88.95,
+        "mean_forgery_score": 17.18,
+        "max_forgery_score": 25.2,
+        "mean_ocr_confidence": 0.94,
+        "hash_verified_count": 11.0,
+        "evidence_with_ocr_result": 11.0
+      },
+      "metadata_summary": [
+        {
+          "evidence_id": "EVID_00015",
+          "has_exif": false,
+          "device": "",
+          "software": "",
+          "consistency_notes": [
+            "Image carries no EXIF metadata (typical for screenshots and messaging-app exports; one less authenticity signal)."
+          ]
+        },
+        {
+          "evidence_id": "EVID_00016",
+          "has_exif": false,
+          "device": "",
+          "software": "",
+          "consistency_notes": [
+            "Image carries no EXIF metadata (typical for screenshots and messaging-app exports; one less authenticity signal)."
+          ]
+        },
+        {
+          "evidence_id": "EVID_00017",
+          "has_exif": false,
+          "device": "",
+          "software": "",
+          "consistency_notes": [
+            "Image carries no EXIF metadata (typical for screenshots and messaging-app exports; one less authenticity signal)."
+          ]
+        },
+        {
+          "evidence_id": "EVID_00018",
+          "has_exif": false,
+          "device": "",
+          "software": "",
+          "consistency_notes": [
+            "Image carries no EXIF metadata (typical for screenshots and messaging-app exports; one less authenticity signal)."
+          ]
+        },
+        {
+          "evidence_id": "EVID_00019",
+          "has_exif": false,
+          "device": "",
+          "software": "",
+          "consistency_notes": [
+            "Image carries no EXIF metadata (typical for screenshots and messaging-app exports; one less authenticity signal)."
+          ]
+        },
+        {
+          "evidence_id": "EVID_00020",
+          "has_exif": false,
+          "device": "",
+          "software": "",
+          "consistency_notes": [
+            "Image carries no EXIF metadata (typical for screenshots and messaging-app exports; one less authenticity signal)."
+          ]
+        },
+        {
+          "evidence_id": "EVID_00021",
+          "has_exif": false,
+          "device": "",
+          "software": "",
+          "consistency_notes": []
+        },
+        {
+          "evidence_id": "EVID_00022",
+          "has_exif": false,
+          "device": "",
+          "software": "",
+          "consistency_notes": []
+        }
+      ],
+      "investigation_statistics": {
+        "entity_statistics": {
+          "bank_accounts": 3,
+          "dates": 8,
+          "domains": 11,
+          "emails": 5,
+          "esewa_ids": 3,
+          "khalti_ids": 3,
+          "money": 9,
+          "phones": 7,
+          "times": 1,
+          "transaction_ids": 10,
+          "urls": 3
+        },
+        "campaign_statistics": {
+          "campaign_count": 1.0,
+          "largest_campaign_size": 5.0,
+          "clustered_evidence": 5.0,
+          "unclustered_evidence": 6.0,
+          "mean_campaign_confidence": 0.6975
+        },
+        "timeline_statistics": {
+          "event_count": 11.0,
+          "resolved_event_count": 11.0,
+          "unresolved_event_count": 0.0,
+          "inferred_event_count": 10.0,
+          "non_inferred_event_count": 1.0,
+          "acquisition_fallback_count": 7.0,
+          "progression_assessable": 0.0,
+          "stage_count": 0.0,
+          "critical_event_count": 6.0,
+          "timeline_span_hours": 5078.02,
+          "event_time_span_hours": 3864.0,
+          "acquisition_inclusive_span_hours": 5078.02
+        },
+        "correlation_statistics": {
+          "pair_count": 55.0,
+          "related_pair_count": 10.0,
+          "mean_confidence": 0.0995,
+          "max_confidence": 0.9215
+        }
+      },
+      "confidence_analysis": [
+        {
+          "evidence_id": "EVID_00015",
+          "score": 83.6,
+          "level": "VERY_HIGH",
+          "explanation": "Evidence confidence is 83.6/100 (VERY_HIGH), derived from 5 verified dimensions. Strongest signal: hash_verification (100/100). Weakest signal: image_quality (62/100)."
+        },
+        {
+          "evidence_id": "EVID_00016",
+          "score": 84.7,
+          "level": "VERY_HIGH",
+          "explanation": "Evidence confidence is 84.7/100 (VERY_HIGH), derived from 5 verified dimensions. Strongest signal: hash_verification (100/100). Weakest signal: image_quality (66/100)."
+        },
+        {
+          "evidence_id": "EVID_00017",
+          "score": 92.9,
+          "level": "VERY_HIGH",
+          "explanation": "Evidence confidence is 92.9/100 (VERY_HIGH), derived from 5 verified dimensions. Strongest signal: hash_verification (100/100). Weakest signal: metadata (80/100)."
+        },
+        {
+          "evidence_id": "EVID_00018",
+          "score": 82.8,
+          "level": "VERY_HIGH",
+          "explanation": "Evidence confidence is 82.8/100 (VERY_HIGH), derived from 5 verified dimensions. Strongest signal: hash_verification (100/100). Weakest signal: image_quality (56/100)."
+        },
+        {
+          "evidence_id": "EVID_00019",
+          "score": 83.2,
+          "level": "VERY_HIGH",
+          "explanation": "Evidence confidence is 83.2/100 (VERY_HIGH), derived from 5 verified dimensions. Strongest signal: hash_verification (100/100). Weakest signal: image_quality (68/100)."
+        },
+        {
+          "evidence_id": "EVID_00020",
+          "score": 84.4,
+          "level": "VERY_HIGH",
+          "explanation": "Evidence confidence is 84.4/100 (VERY_HIGH), derived from 6 verified dimension(s). Strongest signal: hash_verification (100/100). Weakest signal: image_quality (55/100)."
+        },
+        {
+          "evidence_id": "EVID_00021",
+          "score": 100.0,
+          "level": "VERY_HIGH",
+          "explanation": "Evidence confidence is 100.0/100 (VERY_HIGH), derived from 3 verified dimension(s). Strongest signal: hash_verification (100/100). Weakest signal: metadata (100/100)."
+        },
+        {
+          "evidence_id": "EVID_00022",
+          "score": 100.0,
+          "level": "VERY_HIGH",
+          "explanation": "Evidence confidence is 100.0/100 (VERY_HIGH), derived from 3 verified dimension(s). Strongest signal: hash_verification (100/100). Weakest signal: metadata (100/100)."
+        }
+      ],
+      "limitations": [
+        "This automated report organises submitted material and computed leads. It does not determine guilt or attribute an offence to a person.",
+        "OCR and entity extraction can omit, merge or misclassify text. Identifiers, amounts and names must be verified in the original exhibit before operational use.",
+        "Timeline quality: 10 inferred timestamp(s), including 7 acquisition-time fallback(s), and 0 unresolved timestamp(s). Date-only values use 00:00 UTC; fallbacks describe intake time rather than event time.",
+        "Correlation and cross-case scores measure shared features, not causation, common ownership or identity.",
+        "Campaign clusters and identity-anchor scores are prioritisation aids that require independent corroboration.",
+        "Threat-intelligence verdicts reflect the configured provider and its coverage at analysis time; no match does not prove safety.",
+        "New evidence or corrected extraction may change any finding in this report."
+      ],
+      "investigation_conclusion": [
+        "11/11 evidence items passed SHA-256 integrity verification; this establishes stored-file integrity, not the truth of its content.",
+        "The engine identified 10 weighted associations for manual corroboration; shared features alone do not prove that the items have a common actor or cause.",
+        "1 candidate campaign cluster met the configured clustering criteria and requires investigator review before being treated as coordinated activity.",
+        "Validate the ownership and role of identity lead '+9779801122334' (78/100 model score; 2 supporting evidence items) against provider records and the original exhibits.",
+        "The keyword-derived stage order is provisional because one or more stage-bearing items lack a reliable event time."
+      ],
+      "legal_basis": {
+        "case_id": "CASE_1A1BF573F3",
+        "statute": "Electronic Transactions Act, 2063 (2008)",
+        "statute_nepali": "विद्युतीय (इलेक्ट्रोनिक) कारोबार ऐन, २०६३",
+        "jurisdiction": "Nepal",
+        "language_note": "Cited from the English text of the Act. The Nepali text is authoritative where the two differ; verify any provision against विद्युतीय (इलेक्ट्रोनिक) कारोबार ऐन, २०६३ before relying on it in a filing.",
+        "provisions": [
+          {
+            "section": "52",
+            "title": "To commit computer fraud",
+            "citation": "Section 52, Electronic Transactions Act, 2063 (2008)",
+            "conduct": "Acquiring a financial benefit by fraud through a computer, including from the payment of any bill, the balance of another person's account, or an ATM card. The amount obtained is recoverable.",
+            "penalty": "fine not exceeding one hundred thousand Rupees or imprisonment not exceeding two years or both",
+            "basis": "12 payment identifiers (0119.0625.987456, 0501-0198765432 and 0501-9012345678) appear alongside 8 money values (NPR 1,500, NPR 200 and NPR 25,000) in the same case, evidencing a financial benefit moving through a payment rail.",
+            "evidence_ids": [
+              "EVID_00016",
+              "EVID_00017",
+              "EVID_00018",
+              "EVID_00019",
+              "EVID_00021",
+              "EVID_00022"
+            ]
+          },
+          {
+            "section": "47",
+            "title": "Publication of illegal materials in electronic form",
+            "citation": "Section 47, Electronic Transactions Act, 2063 (2008)",
+            "conduct": "Publishing or displaying material in electronic media, including on the internet, which is prohibited by prevailing law or is contrary to public morality or decent behaviour.",
+            "penalty": "fine not exceeding one hundred thousand Rupees or imprisonment not exceeding five years or both",
+            "basis": "threat intelligence flagged 9 indicators in this case; the evidence carries 12 web addresses (eSewa-cashback-offer.xyz and esewa-cashback-offer.xyz), i.e. material published in electronic form.",
+            "evidence_ids": [
+              "EVID_00016",
+              "EVID_00017",
+              "EVID_00018",
+              "EVID_00019",
+              "EVID_00020",
+              "EVID_00022",
+              "EVID_00024"
+            ]
+          },
+          {
+            "section": "53",
+            "title": "Punishment to the person who abets to commit computer related offence",
+            "citation": "Section 53, Electronic Transactions Act, 2063 (2008)",
+            "conduct": "Abetting another to commit an offence under the Act, or attempting or being involved in a conspiracy to commit one.",
+            "penalty": "fine not exceeding fifty thousand Rupees or imprisonment not exceeding six months or both, depending on the degree of the offence",
+            "basis": "campaign CAMP_CASE_1A1BF573F3_01 groups 5 evidence items by shared indicators, which evidences coordinated activity rather than a single isolated act.",
+            "evidence_ids": [
+              "EVID_00016",
+              "EVID_00017",
+              "EVID_00019",
+              "EVID_00021",
+              "EVID_00022"
+            ]
+          },
+          {
+            "section": "54",
+            "title": "Punishment to the Accomplice",
+            "citation": "Section 54, Electronic Transactions Act, 2063 (2008)",
+            "conduct": "Assisting another to commit an offence under the Act, or acting as an accomplice by any means.",
+            "penalty": "one half of the punishment for which the principal is liable",
+            "basis": "campaign CAMP_CASE_1A1BF573F3_01 evidences coordination across 5 evidence items. Where more than one person acted, anyone who assisted is liable to one half of the principal's punishment.",
+            "evidence_ids": [
+              "EVID_00016",
+              "EVID_00017",
+              "EVID_00019",
+              "EVID_00021",
+              "EVID_00022"
+            ]
+          },
+          {
+            "section": "55",
+            "title": "Punishment in an offence committed outside Nepal",
+            "citation": "Section 55, Electronic Transactions Act, 2063 (2008)",
+            "conduct": "An offence under the Act involving a computer, computer system or network located in Nepal may be prosecuted even where the act was committed by a person residing outside Nepal.",
+            "penalty": "as for the underlying offence",
+            "basis": "this case shares identifiers with 4 other cases (CASE_185915593C, CASE_EE8250FB76 and CASE_0CD406813C). Where any part of the conduct occurred outside Nepal, the Act still applies to systems located in Nepal.",
+            "evidence_ids": []
+          },
+          {
+            "section": "19",
+            "title": "Punishment for illegal use of trade-marks",
+            "citation": "Section 19, Patent, Design and Trade Mark Act, 2022 (1965)",
+            "conduct": "Using a trade-mark that is not registered to the user, using one whose registration has been cancelled, or otherwise using a registered mark without authority (s.18B).",
+            "penalty": "fine not exceeding one hundred thousand Rupees, and confiscation of articles and goods connected with the offence, as per its gravity",
+            "basis": "brand marks were detected in the evidence (Facebook, Google, Khalti and 5 more) across 5 evidence items. Where the material was not published by the mark's owner, its use is unauthorised. Registration and authority are matters of record to be confirmed.",
+            "evidence_ids": [
+              "EVID_00016",
+              "EVID_00017",
+              "EVID_00018",
+              "EVID_00019",
+              "EVID_00020"
+            ]
+          },
+          {
+            "section": "56",
+            "title": "Confiscation",
+            "citation": "Section 56, Electronic Transactions Act, 2063 (2008)",
+            "conduct": "Any computer, computer system, disk, software or accessory device used to commit an offence relating to computer under the Act is liable to confiscation.",
+            "penalty": "confiscation of the computer, computer system, disks, software or other accessory devices used",
+            "basis": "the findings engage 5 provisions of the Act (s.47, s.52, s.53 and 2 more). Any computer, device or storage medium used to commit those acts falls within the confiscation power and should be identified for seizure.",
+            "evidence_ids": []
+          }
+        ],
+        "manual_review_provisions": [
+          {
+            "section": "44",
+            "title": "To Pirate, Destroy or Alter computer source code",
+            "citation": "Section 44, Electronic Transactions Act, 2063 (2008)",
+            "reason": "manual review requires source-code versions, repository history or another technical comparison establishing alteration"
+          },
+          {
+            "section": "48",
+            "title": "Breach of confidentiality",
+            "citation": "Section 48, Electronic Transactions Act, 2063 (2008)",
+            "reason": "manual review must establish both the person's authorised access and disclosure to an unauthorised recipient"
+          },
+          {
+            "section": "57",
+            "title": "Offences committed by a corporate body",
+            "citation": "Section 57, Electronic Transactions Act, 2063 (2008)",
+            "reason": "manual review requires attribution to a corporate body and evidence of responsibility, consent, knowledge or negligence"
+          }
+        ],
+        "investigative_guidance": [
+          {
+            "category": "evidence_preservation",
+            "control_ids": [
+              "4",
+              "6"
+            ],
+            "title": "Legal recognition and preservation of electronic records",
+            "citation": "Sections 4, 6, Electronic Transactions Act, 2063 (2008)",
+            "expectation": "Where the law requires a record to be retained, an electronic record is recognised when it remains accessible, can be reproduced in its original format, and retains available origin, destination, date and time information.",
+            "basis": "This report relies on 11 electronic evidence items; preservation and reproducibility therefore remain material to later verification.",
+            "recommended_action": "Retain the original files, acquisition metadata, SHA-256 values and chain-of-custody history. A file hash supports integrity checking but is not by itself a statutory digital signature under ETA sections 3 and 5.",
+            "applicability": "Applies where an electronic record is retained or relied on under the Electronic Transactions Act and prevailing law.",
+            "status": "evidence_handling_requirement",
+            "evidence_ids": [
+              "EVID_00015",
+              "EVID_00016",
+              "EVID_00017",
+              "EVID_00018",
+              "EVID_00019",
+              "EVID_00020",
+              "EVID_00021",
+              "EVID_00022",
+              "EVID_00023",
+              "EVID_00024",
+              "EVID_00025"
+            ],
+            "source_id": "eta_2063"
+          },
+          {
+            "category": "regulatory_follow_up",
+            "control_ids": [
+              "83",
+              "84",
+              "85",
+              "86"
+            ],
+            "title": "Preserve and correlate forensic logs",
+            "citation": "Controls 83, 84, 85, 86, Nepal Rastra Bank Cyber Resilience Guidelines 2023",
+            "expectation": "Detected events should be recorded with information such as event type, time and user or address; audit data should be protected, logs securely backed up, timestamps synchronised, and events centralised and correlated across relevant systems.",
+            "basis": "The case contains 12 payment identifiers across 6 evidence items; the corresponding institution-side records may establish transaction sequence, account activity, source address and timing.",
+            "recommended_action": "Send a preservation request for transaction, authentication, application, system and network logs, including timezone and clock-synchronisation details, before normal retention or rotation removes them.",
+            "applicability": "Conditional: confirm that the affected organisation is an institution within the Guidelines' scope, including an A, B, C or D class BFI, Payment System Operator or Payment Service Provider licensed by NRB's Payment Systems Department.",
+            "status": "investigative_follow_up",
+            "evidence_ids": [
+              "EVID_00016",
+              "EVID_00017",
+              "EVID_00018",
+              "EVID_00019",
+              "EVID_00021",
+              "EVID_00022"
+            ],
+            "source_id": "nrb_crg_2023"
+          }
+        ],
+        "sources": [
+          {
+            "source_id": "eta_2063",
+            "authority": "Nepal Law Commission",
+            "title": "Electronic Transactions Act, 2063 (2008)",
+            "url": "https://lawcommission.gov.np/content/13397/",
+            "local_documents": [
+              "2.1 The Electronic Transactions Act, 2063 (2008).pdf",
+              "2.1 विद्युतीय (इलेक्ट्रोनिक) कारोबार ऐन, २०६३ (नेपाली).pdf"
+            ],
+            "sha256": {
+              "2.1 The Electronic Transactions Act, 2063 (2008).pdf": "7f68a8b66adf579b5ba595f9062abcd8c61f9fddfaadffe06c8e4b752d76b4b6",
+              "2.1 विद्युतीय (इलेक्ट्रोनिक) कारोबार ऐन, २०६३ (नेपाली).pdf": "5b5cd8d72da9da73d6932ea227ec79cb65e19d5ca1ef3aa6f02f3dcef76bc723"
+            },
+            "usage": "Statutory offence mapping and electronic-record preservation guidance.",
+            "note": "The Nepali text is authoritative where it differs from the English translation."
+          },
+          {
+            "source_id": "nrb_crg_2023",
+            "authority": "Nepal Rastra Bank, Payment Systems Department",
+            "title": "Nepal Rastra Bank Cyber Resilience Guidelines 2023",
+            "url": "https://www.nrb.org.np/contents/uploads/2023/08/Cyber-Resilience-Guidelines-2023.pdf",
+            "local_documents": [
+              "4.5 NRB Cyber-Resilience-Guidelines-2023.pdf"
+            ],
+            "sha256": {
+              "4.5 NRB Cyber-Resilience-Guidelines-2023.pdf": "191eaea1bdb20cf4c50374d6173d0c1ee4476ae4145e6e1309ea26e097c7a8ff"
+            },
+            "usage": "Conditional investigative follow-up for authentication and forensic logging; never used as an offence finding.",
+            "note": "Repository copy verified byte-for-byte against the official NRB download. Applicability to the affected institution must be confirmed by the investigator."
+          }
+        ],
+        "caveat": "This is an automated mapping from technical findings to statutory provisions, provided to assist the investigating officer. It is not legal advice and not a charging decision. A provision is listed because the evidence contains the features described, not because an offence has been proved: intent, authorisation and identity are matters for investigation. Provisions of the Act not listed here were not assessed.",
+        "summary": "The findings engage 7 provisions of the Electronic Transactions Act, 2063 (2008): s.52, s.47, s.53, s.54, s.55, s.19, s.56. Each is listed with the finding that engaged it and the evidence behind that finding.",
+        "analysis_time_ms": 0.2
+      },
+      "recommendations": [
+        "Issue preservation requests to the relevant hosting providers, then seek suspension of the suspected domains: esewa-cashback-offer.xyz,...",
+        "Request subscriber/KYC ownership and transaction history from eSewa for: sunita.gurung21@gmail.com, esewa.cashback99@gmail.com.",
+        "Request subscriber/KYC ownership and transaction history from Khalti for: +9779801122334, +9779847011223.",
+        "Request account-holder identity and statements from the relevant bank for: 05010198765432, 9847011223 (+1 more).",
+        "Verify these extracted payment references against the source exhibits before including them in record requests: DSN2026, 0119.0625.987456,...",
+        "Ask the relevant provider to verify registration, ownership and transaction records for +9779801122334, +9779847011223; confirm each party's role.",
+        "Review 5 items as a candidate cluster because they share a website; corroborate the link before combining incidents.",
+        "Review the 3 flagged events with the source exhibits; confirm each event's time, participants and any loss with the complainant.",
+        "Assign high queue priority (rated 74 out of 100)."
+      ],
+      "report_provenance": {
+        "report_id": "RPT-1A1BF573F3-71234FBF",
+        "generated_at": "2026-08-21T06:43:46.284Z",
+        "generator": "CIIS Phase-2 reporting module (template-over-data; no free-text generation)",
+        "evidence_set_digest": "ff76872a369b037cef84962251b454278645bda635b6ce681161ac5bcf3a8370",
+        "evidence_set_digest_note": "SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.",
+        "source_artifact_hashes": {
+          "correlation_analysis.json": "6cb1432c2dde4e9ad0e8a0922e4660fd65a03b778d7915447b11e4acdbd35817",
+          "cross_case_correlation.json": "d2781fa70fb0b4ec099c1bc586b9b7ed8fb65395a0ee7064461dd658895bb3bf",
+          "campaign_analysis.json": "a8dc664e7128d8ddf380b4cbdbdf33a08e3618e007fb9d1c636b08994c7c4493",
+          "suspect_assessment.json": "5fa89df230e70606dfc5594ff279417d783ecc9555a4dbc7cc5349f979f94eec",
+          "timeline_analysis.json": "67ea3c6a3eca6a0c24365281c3c42fef59e66847ecbe0ca5ed04ceab2871085c",
+          "analytics.json": "bdf69ca51930410a3f2343f9291ce936b90e6c466f2b2d61ab3f8bab17e89852",
+          "case_priority.json": "e588020d38007250daa1f1cecae19dba02d80b0fa6f68c1d579aff31989c7e65",
+          "graph.json": "d13730f14f42dde66b47deec2c56a53bb462d015cd948456460615f0293f6e48"
+        }
+      },
+      "appendix": {
+        "chain_of_custody": [
+          {
+            "evidence_id": "EVID_00015",
+            "sha256": "905b21d603ca0a6f49fd226e46470c85d509dce56f8ab68edce76b6b7ff8cec7",
+            "upload_time": "2026-08-03T13:59:40.493Z",
+            "status": "processed"
+          },
+          {
+            "evidence_id": "EVID_00016",
+            "sha256": "bb246839287ca1bcc1f6a38bbdf26489ef6eb74213b7fc2d224597a910bf4ef4",
+            "upload_time": "2026-08-03T14:00:03.497Z",
+            "status": "processed"
+          },
+          {
+            "evidence_id": "EVID_00017",
+            "sha256": "6f712c8b0e4fb6c50d156a1bf002713b4bbd60bf7db0a9cf7fbe3ea04b2cbdf9",
+            "upload_time": "2026-08-03T14:00:14.886Z",
+            "status": "processed"
+          },
+          {
+            "evidence_id": "EVID_00018",
+            "sha256": "3a19295ff003a894311ef7efcf80bb94c8feec5a69590c3052f7f8d60ce7217b",
+            "upload_time": "2026-08-03T14:00:18.299Z",
+            "status": "processed"
+          },
+          {
+            "evidence_id": "EVID_00019",
+            "sha256": "54a62cd3ad10a85b9b060ff73dcab3d5fb2bb3f073f3bcab66f90ae45d7d779b",
+            "upload_time": "2026-08-03T14:00:22.470Z",
+            "status": "processed"
+          },
+          {
+            "evidence_id": "EVID_00020",
+            "sha256": "b6ec522eddc05475f9ec7671ec46098a129fa8be863cc270c97b42b702e71134",
+            "upload_time": "2026-08-03T14:00:26.419Z",
+            "status": "processed"
+          },
+          {
+            "evidence_id": "EVID_00021",
+            "sha256": "6f1cc10ae55d554c751ee1cbf688924c8962c5faebe87be8c457d077d6bc63c2",
+            "upload_time": "2026-08-03T14:00:31.273Z",
+            "status": "processed"
+          },
+          {
+            "evidence_id": "EVID_00022",
+            "sha256": "fe644062bf75e62c8ae13ec24c7e0461491a5610095a50546c4fa757d98e866f",
+            "upload_time": "2026-08-03T14:00:53.814Z",
+            "status": "processed"
+          },
+          {
+            "evidence_id": "EVID_00023",
+            "sha256": "fbc5fcf7403a5aa8c042baed4343d0162e8d3506ff5d1163864662d25602e87e",
+            "upload_time": "2026-08-03T14:00:54.574Z",
+            "status": "processed"
+          },
+          {
+            "evidence_id": "EVID_00024",
+            "sha256": "8ef0f27a84960b656d9051892e36096ce56fe9f30eb9a935d4d4330a002b9b7f",
+            "upload_time": "2026-08-03T14:00:55.234Z",
+            "status": "processed"
+          },
+          {
+            "evidence_id": "EVID_00025",
+            "sha256": "0340d5863313f4cc0b9b40ed835a77a71b8304d2e08eb32f08a56ed93a6e0b10",
+            "upload_time": "2026-08-03T14:00:57.616Z",
+            "status": "processed"
+          }
+        ],
+        "stored_artifacts_root": "storage/investigation/<CASE_ID>/",
+        "phase1_artifacts_root": "storage/forensics/<EVIDENCE_ID>/"
+      }
+    },
+    "generated_from": {
+      "correlation": true,
+      "cross_case": true,
+      "campaigns": true,
+      "suspects": true,
+      "timeline": true,
+      "analytics": true,
+      "priority": true
+    }
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "report_type": "correlation_analysis",
+  "report_version": 13,
+  "schema_version": "2.0",
+  "case_id": "CASE_EE8250FB76",
+  "generated_at": "2026-08-21T05:16:32.046Z",
+  "report": {
+    "case_id": "CASE_EE8250FB76",
+    "evidence_ids": [
+      "EVID_00005",
+      "EVID_00006"
+    ],
+    "pair_count": 1,
+    "related_pair_count": 0,
+    "pairs": [
+      {
+        "evidence_a": "EVID_00005",
+        "evidence_b": "EVID_00006",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00005 (08_complaint_letter.pdf) and EVID_00006 (07_bank_transfer_slip.pdf) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      }
+    ],
+    "strength_distribution": {
+      "NO_RELATIONSHIP": 1
+    },
+    "strongest_pair": "EVID_00005|EVID_00006",
+    "analysis_time_ms": 8712.9
+  }
+}

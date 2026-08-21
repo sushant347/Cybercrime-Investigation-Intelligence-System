@@ -1,0 +1,23 @@
+{
+  "report_type": "graph_summary",
+  "report_version": 13,
+  "schema_version": "2.0",
+  "case_id": "CASE_EE8250FB76",
+  "generated_at": "2026-08-21T05:16:32.238Z",
+  "report": {
+    "case_id": "CASE_EE8250FB76",
+    "headline": "46 nodes and 127 edges across 1 component",
+    "key_connectors": [
+      "phone_number:+9779801122334",
+      "domain:esewa-cashback-offer.xyz",
+      "money:npr 200",
+      "phone_number:+9779847011223"
+    ],
+    "observations": [
+      "NetworkX identified 7 communities and retained 92 key edges for simplified investigation views.",
+      "7 bridge connections can separate otherwise distinct portions of the relationship graph.",
+      "4 threat-intelligence edges link flagged indicators to evidence.",
+      "All entities and evidence form a single connected component - consistent with one coordinated activity."
+    ]
+  }
+}

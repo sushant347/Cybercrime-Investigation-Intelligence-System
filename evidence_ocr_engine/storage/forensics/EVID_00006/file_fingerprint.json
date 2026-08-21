@@ -1,0 +1,41 @@
+{
+  "report_type": "file_fingerprint",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00006",
+  "case_id": "CASE_EE8250FB76",
+  "generated_at": "2026-08-20T14:46:35.791Z",
+  "report": {
+    "evidence_id": "EVID_00006",
+    "case_id": "CASE_EE8250FB76",
+    "source_file": "EVID_00006__ae2ee49e__07_bank_transfer_slip.pdf",
+    "md5": "038170639b0630f855effff4f2bfe16d",
+    "sha1": "4dc644c9d3d27e91a88067693ab50f392614e3c7",
+    "sha256": "6f1cc10ae55d554c751ee1cbf688924c8962c5faebe87be8c457d077d6bc63c2",
+    "sha512": "9200b4048f9063ef40a7e71f32f1ca300edfdecb892b11763ff7eda013f8163d64d547092bd3794b736d5bb1d37d6372f62b398d13ce051f9592839e47560346",
+    "crc32": "d2bb295c",
+    "file_size_bytes": 108986,
+    "entropy_bits_per_byte": 7.8274,
+    "high_entropy": true,
+    "magic_number_hex": "255044462d312e34",
+    "magic_format": "PDF document",
+    "declared_extension": ".pdf",
+    "mime_type": "application/pdf",
+    "extension_matches_magic": true,
+    "sha256_matches_acquisition": true,
+    "duplicates": [
+      {
+        "evidence_id": "EVID_00013",
+        "case_id": "CASE_185915593C",
+        "source": "evidence_register"
+      },
+      {
+        "evidence_id": "EVID_00021",
+        "case_id": "CASE_1A1BF573F3",
+        "source": "evidence_register"
+      }
+    ],
+    "is_duplicate": true,
+    "analysis_time_ms": 16.4
+  }
+}

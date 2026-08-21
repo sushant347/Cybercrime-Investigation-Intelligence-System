@@ -1,0 +1,478 @@
+{
+  "report_type": "analytics",
+  "report_version": 1,
+  "schema_version": "2.0",
+  "case_id": "CASE_D6A81F224B",
+  "generated_at": "2026-07-25T17:46:27.996Z",
+  "report": {
+    "case_id": "CASE_D6A81F224B",
+    "evidence_count": 8,
+    "entity_statistics": {
+      "bank_accounts": 3,
+      "dates": 6,
+      "domains": 8,
+      "emails": 4,
+      "esewa_ids": 3,
+      "khalti_ids": 3,
+      "money": 10,
+      "phones": 7,
+      "times": 1,
+      "transaction_ids": 10,
+      "urls": 2
+    },
+    "entity_types_supported": 30,
+    "entity_types_found": 11,
+    "top_entities": {
+      "bank_accounts": [
+        {
+          "value": "05010198765432",
+          "count": 1
+        },
+        {
+          "value": "9847011223",
+          "count": 1
+        },
+        {
+          "value": "05019012345678",
+          "count": 1
+        }
+      ],
+      "dates": [
+        {
+          "value": "11 june 2026",
+          "count": 2
+        },
+        {
+          "value": "2026-06-14",
+          "count": 1
+        },
+        {
+          "value": "10 june 2026",
+          "count": 1
+        },
+        {
+          "value": "14 june 2026",
+          "count": 1
+        },
+        {
+          "value": "15 june 2026",
+          "count": 1
+        }
+      ],
+      "domains": [
+        {
+          "value": "esewa-cashback-offer.xyz",
+          "count": 3
+        },
+        {
+          "value": "gmail.com",
+          "count": 2
+        },
+        {
+          "value": "esewa.cashbacko90gmail.com",
+          "count": 1
+        },
+        {
+          "value": "sunita.gurung216gmail.com",
+          "count": 1
+        },
+        {
+          "value": "esewa-verify-kyc.com",
+          "count": 1
+        }
+      ],
+      "emails": [
+        {
+          "value": "sunita.gurung21@gmail.com",
+          "count": 2
+        },
+        {
+          "value": "esewa.cashback99@gmail.com",
+          "count": 1
+        },
+        {
+          "value": "support@esewa-verify-kyc.com",
+          "count": 1
+        }
+      ],
+      "esewa_ids": [
+        {
+          "value": "sunita.gurung21@gmail.com",
+          "count": 2
+        },
+        {
+          "value": "esewa.cashback99@gmail.com",
+          "count": 1
+        }
+      ],
+      "khalti_ids": [
+        {
+          "value": "+9779801122334",
+          "count": 2
+        },
+        {
+          "value": "+9779847011223",
+          "count": 1
+        }
+      ],
+      "money": [
+        {
+          "value": "npr 200",
+          "count": 3
+        },
+        {
+          "value": "npr 5000",
+          "count": 2
+        },
+        {
+          "value": "npr 1500",
+          "count": 2
+        },
+        {
+          "value": "npr 25000",
+          "count": 2
+        },
+        {
+          "value": "npr 5",
+          "count": 1
+        }
+      ],
+      "phones": [
+        {
+          "value": "+9779801122334",
+          "count": 3
+        },
+        {
+          "value": "+9779847011223",
+          "count": 3
+        },
+        {
+          "value": "0198765432",
+          "count": 1
+        }
+      ],
+      "times": [
+        {
+          "value": "11:15 am",
+          "count": 1
+        }
+      ],
+      "transaction_ids": [
+        {
+          "value": "dsn2026",
+          "count": 2
+        },
+        {
+          "value": "0119.0625.987456",
+          "count": 2
+        },
+        {
+          "value": "kh-2026-0611-77245",
+          "count": 2
+        },
+        {
+          "value": "mbl-2026-441829",
+          "count": 2
+        },
+        {
+          "value": "0sn2026",
+          "count": 1
+        },
+        {
+          "value": "case_2026_0088",
+          "count": 1
+        }
+      ],
+      "urls": [
+        {
+          "value": "https://esewa-cashback-offer.xyz/claim?ref=dsn2026",
+          "count": 1
+        },
+        {
+          "value": "https://esewa-cashback-offer.xyz/claim",
+          "count": 1
+        }
+      ]
+    },
+    "threat_statistics": {
+      "intel_available": 1.0,
+      "indicators_checked": 7.0,
+      "malicious_indicators": 6.0,
+      "suspicious_indicators": 0.0,
+      "benign_indicators": 1.0,
+      "evidence_with_threats": 4.0,
+      "threat_evidence_ratio": 0.5
+    },
+    "threat_indicators": [
+      {
+        "value": "https://esewa-cashback-offer.xyz/claim?ref=dsn2026",
+        "verdict": "malicious",
+        "source": "ml:xgboost",
+        "risk_score": 83.0,
+        "confidence": 0.83,
+        "brand_impersonated": "",
+        "reasons": [
+          "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
+          "AI model classified this URL as phishing with 100% confidence.",
+          "The top-level domain is frequently associated with phishing and spam campaigns (risk score: 0.7).",
+          "SSL status could not be verified.",
+          "The domain or URL has high character entropy, suggesting a randomly-generated string often used in phishing.",
+          "The URL contains suspicious keyword(s) associated with phishing."
+        ],
+        "evidence_ids": [
+          "EVID_00017"
+        ]
+      },
+      {
+        "value": "esewa-cashback-offer.xyz",
+        "verdict": "malicious",
+        "source": "ml:xgboost",
+        "risk_score": 81.0,
+        "confidence": 0.81,
+        "brand_impersonated": "",
+        "reasons": [
+          "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
+          "AI model classified this URL as phishing with 100% confidence.",
+          "The top-level domain is frequently associated with phishing and spam campaigns (risk score: 0.7).",
+          "SSL status could not be verified.",
+          "The URL does not use HTTPS, meaning data is transmitted without encryption.",
+          "The URL contains suspicious keyword(s) associated with phishing."
+        ],
+        "evidence_ids": [
+          "EVID_00017",
+          "EVID_00019",
+          "EVID_00022"
+        ]
+      },
+      {
+        "value": "https://esewa-cashback-offer.xyz/claim",
+        "verdict": "malicious",
+        "source": "ml:xgboost",
+        "risk_score": 81.0,
+        "confidence": 0.81,
+        "brand_impersonated": "",
+        "reasons": [
+          "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
+          "AI model classified this URL as phishing with 100% confidence.",
+          "The top-level domain is frequently associated with phishing and spam campaigns (risk score: 0.7).",
+          "SSL status could not be verified.",
+          "The URL contains suspicious keyword(s) associated with phishing.",
+          "The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure."
+        ],
+        "evidence_ids": [
+          "EVID_00022"
+        ]
+      },
+      {
+        "value": "esewa-verify-kyc.com",
+        "verdict": "malicious",
+        "source": "ml:xgboost",
+        "risk_score": 79.0,
+        "confidence": 0.79,
+        "brand_impersonated": "",
+        "reasons": [
+          "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
+          "AI model classified this URL as phishing with 100% confidence.",
+          "SSL status could not be verified.",
+          "The URL does not use HTTPS, meaning data is transmitted without encryption.",
+          "The URL contains suspicious keyword(s) associated with phishing.",
+          "The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure."
+        ],
+        "evidence_ids": [
+          "EVID_00022"
+        ]
+      },
+      {
+        "value": "esewa.cashbacko90gmail.com",
+        "verdict": "malicious",
+        "source": "ml:xgboost",
+        "risk_score": 79.0,
+        "confidence": 0.79,
+        "brand_impersonated": "",
+        "reasons": [
+          "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
+          "AI model classified this URL as phishing with 100% confidence.",
+          "SSL status could not be verified.",
+          "The URL does not use HTTPS, meaning data is transmitted without encryption.",
+          "The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure.",
+          "Brand 'Google' referenced in hostname, but registrable domain 'cashbacko90gmail.com' does not belong to the official Google infrastructure."
+        ],
+        "evidence_ids": [
+          "EVID_00018"
+        ]
+      },
+      {
+        "value": "sunita.gurung216gmail.com",
+        "verdict": "malicious",
+        "source": "ml:xgboost",
+        "risk_score": 79.0,
+        "confidence": 0.79,
+        "brand_impersonated": "",
+        "reasons": [
+          "The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.",
+          "AI model classified this URL as phishing with 100% confidence.",
+          "SSL status could not be verified.",
+          "The URL does not use HTTPS, meaning data is transmitted without encryption.",
+          "The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure.",
+          "Brand 'Google' referenced in hostname, but registrable domain 'gurung216gmail.com' does not belong to the official Google infrastructure."
+        ],
+        "evidence_ids": [
+          "EVID_00018"
+        ]
+      }
+    ],
+    "threat_source": "MLThreatIntelProvider+heuristics",
+    "brand_statistics": [
+      {
+        "value": "eSewa",
+        "count": 6
+      },
+      {
+        "value": "Gmail",
+        "count": 2
+      },
+      {
+        "value": "Khalti",
+        "count": 2
+      },
+      {
+        "value": "Facebook",
+        "count": 1
+      },
+      {
+        "value": "Google",
+        "count": 1
+      },
+      {
+        "value": "Messenger",
+        "count": 1
+      },
+      {
+        "value": "Outlook",
+        "count": 1
+      },
+      {
+        "value": "Telegram",
+        "count": 1
+      },
+      {
+        "value": "WhatsApp",
+        "count": 1
+      }
+    ],
+    "wallet_statistics": [
+      {
+        "value": "sunita.gurung21@gmail.com",
+        "count": 2
+      },
+      {
+        "value": "+9779801122334",
+        "count": 2
+      },
+      {
+        "value": "esewa.cashback99@gmail.com",
+        "count": 1
+      },
+      {
+        "value": "+9779847011223",
+        "count": 1
+      },
+      {
+        "value": "05010198765432",
+        "count": 1
+      },
+      {
+        "value": "9847011223",
+        "count": 1
+      },
+      {
+        "value": "05019012345678",
+        "count": 1
+      }
+    ],
+    "wallet_statistics_by_rail": {
+      "esewa_ids": [
+        {
+          "value": "sunita.gurung21@gmail.com",
+          "count": 2
+        },
+        {
+          "value": "esewa.cashback99@gmail.com",
+          "count": 1
+        }
+      ],
+      "khalti_ids": [
+        {
+          "value": "+9779801122334",
+          "count": 2
+        },
+        {
+          "value": "+9779847011223",
+          "count": 1
+        }
+      ],
+      "bank_accounts": [
+        {
+          "value": "05010198765432",
+          "count": 1
+        },
+        {
+          "value": "9847011223",
+          "count": 1
+        },
+        {
+          "value": "05019012345678",
+          "count": 1
+        }
+      ]
+    },
+    "url_statistics": [
+      {
+        "value": "https://esewa-cashback-offer.xyz/claim?ref=dsn2026",
+        "count": 1
+      },
+      {
+        "value": "https://esewa-cashback-offer.xyz/claim",
+        "count": 1
+      }
+    ],
+    "device_statistics": [],
+    "metadata_statistics": {
+      "evidence_with_metadata_report": 8.0,
+      "evidence_with_exif": 0.0,
+      "evidence_with_gps": 0.0,
+      "evidence_with_editing_software": 0.0
+    },
+    "campaign_statistics": {
+      "campaign_count": 1.0,
+      "largest_campaign_size": 7.0,
+      "clustered_evidence": 7.0,
+      "unclustered_evidence": 1.0,
+      "mean_campaign_confidence": 0.6856
+    },
+    "timeline_statistics": {
+      "event_count": 8.0,
+      "resolved_event_count": 8.0,
+      "unresolved_event_count": 0.0,
+      "inferred_event_count": 8.0,
+      "stage_count": 4.0,
+      "critical_event_count": 7.0,
+      "timeline_span_hours": 1001.77
+    },
+    "evidence_quality_statistics": {
+      "mean_image_quality": 66.38,
+      "mean_evidence_confidence": 90.19,
+      "mean_forgery_score": 17.18,
+      "max_forgery_score": 25.2,
+      "mean_ocr_confidence": 0.91,
+      "hash_verified_count": 8.0
+    },
+    "correlation_statistics": {
+      "pair_count": 28.0,
+      "related_pair_count": 28.0,
+      "mean_confidence": 0.3903,
+      "max_confidence": 0.9725
+    },
+    "analysis_time_ms": 34.7
+  }
+}

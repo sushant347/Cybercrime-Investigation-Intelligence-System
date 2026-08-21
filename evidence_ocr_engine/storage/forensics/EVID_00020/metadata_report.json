@@ -1,0 +1,39 @@
+{
+  "report_type": "metadata_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00020",
+  "case_id": "CASE_D6A81F224B",
+  "generated_at": "2026-07-25T17:39:38.139Z",
+  "report": {
+    "evidence_id": "EVID_00020",
+    "case_id": "CASE_D6A81F224B",
+    "source_file": "EVID_00020__026034d1__06_phishing_email_screenshot.jpg",
+    "file_type": "image",
+    "filesystem": {
+      "file_size_bytes": 25904,
+      "created": "2026-07-25T17:39:24.493347+00:00",
+      "modified": "2026-07-25T17:34:54.435528+00:00",
+      "accessed": "2026-07-25T17:39:28.296484+00:00"
+    },
+    "image": {
+      "has_exif": false,
+      "camera_make": "",
+      "camera_model": "",
+      "device": "",
+      "software": "",
+      "date_created": "",
+      "date_modified": "",
+      "orientation": "",
+      "gps": null,
+      "all_tags": {}
+    },
+    "pdf": null,
+    "office": null,
+    "consistency_notes": [
+      "Image carries no EXIF metadata (typical for screenshots and messaging-app exports; one less authenticity signal)."
+    ],
+    "extraction_errors": [],
+    "analysis_time_ms": 1.9
+  }
+}

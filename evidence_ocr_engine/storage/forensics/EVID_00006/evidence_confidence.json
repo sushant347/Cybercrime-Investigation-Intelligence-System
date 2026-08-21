@@ -1,0 +1,60 @@
+{
+  "report_type": "evidence_confidence",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00006",
+  "case_id": "CASE_EE8250FB76",
+  "generated_at": "2026-08-20T14:46:36.047Z",
+  "report": {
+    "evidence_id": "EVID_00006",
+    "case_id": "CASE_EE8250FB76",
+    "components": [
+      {
+        "name": "image_quality",
+        "score": 0.0,
+        "weight": 0.2,
+        "available": false,
+        "explanation": "analysis not available"
+      },
+      {
+        "name": "forgery",
+        "score": 0.0,
+        "weight": 0.2,
+        "available": false,
+        "explanation": "analysis not available"
+      },
+      {
+        "name": "metadata",
+        "score": 100.0,
+        "weight": 0.1,
+        "available": true,
+        "explanation": "0 metadata consistency finding(s), -20 each"
+      },
+      {
+        "name": "hash_verification",
+        "score": 0.0,
+        "weight": 0.2,
+        "available": true,
+        "explanation": "chain-of-custody SHA-256 MISMATCH (2 independent check(s))"
+      },
+      {
+        "name": "ocr_confidence",
+        "score": 0.0,
+        "weight": 0.2,
+        "available": false,
+        "explanation": "analysis not available"
+      },
+      {
+        "name": "processing",
+        "score": 100.0,
+        "weight": 0.1,
+        "available": true,
+        "explanation": "all pipeline stages completed"
+      }
+    ],
+    "confidence_score": 50.0,
+    "confidence_level": "MODERATE",
+    "explanation": "Evidence confidence is 50.0/100 (MODERATE), derived from 3 verified dimensions. Strongest signal: metadata (100/100). Weakest signal: hash_verification (0/100).",
+    "computed_at": "2026-08-20T14:46:36.047Z"
+  }
+}

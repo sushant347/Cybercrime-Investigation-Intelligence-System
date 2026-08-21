@@ -1,0 +1,26 @@
+{
+  "report_type": "metadata_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00033",
+  "case_id": "CASE_0CD406813C",
+  "generated_at": "2026-08-21T06:38:44.657Z",
+  "report": {
+    "evidence_id": "EVID_00033",
+    "case_id": "CASE_0CD406813C",
+    "source_file": "EVID_00033__209f721a__https_esewa-bonus-claim.xyz_verify_ref_DSN2026.url",
+    "file_type": "other",
+    "filesystem": {
+      "file_size_bytes": 49,
+      "created": "2026-08-21T06:38:44.587841+00:00",
+      "modified": "2026-08-21T06:38:44.574358+00:00",
+      "accessed": "2026-08-21T06:38:44.587227+00:00"
+    },
+    "image": null,
+    "pdf": null,
+    "office": null,
+    "consistency_notes": [],
+    "extraction_errors": [],
+    "analysis_time_ms": 0.1
+  }
+}

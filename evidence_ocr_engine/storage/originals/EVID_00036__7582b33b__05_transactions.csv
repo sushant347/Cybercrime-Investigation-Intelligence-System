@@ -1,0 +1,5 @@
+date,description,amount_npr,channel
+2026-08-02,Khalti load to 9812345678,-750,wallet
+2026-08-03,IBFT to 01903015472901,-9500,mobile_banking
+2026-08-03,Balance inquiry,0,mobile_banking
+2026-07-28,Remittance credit,34000,transfer

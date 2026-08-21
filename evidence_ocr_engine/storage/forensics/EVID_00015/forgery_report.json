@@ -1,0 +1,67 @@
+{
+  "report_type": "forgery_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00015",
+  "case_id": "CASE_1A1BF573F3",
+  "generated_at": "2026-08-21T03:27:25.516Z",
+  "report": {
+    "evidence_id": "EVID_00015",
+    "case_id": "CASE_1A1BF573F3",
+    "source_file": "01_sms_screenshot.jpg",
+    "ela": {
+      "mean_difference": 0.056,
+      "max_difference": 2.0,
+      "hotspot_region_fraction": 0.0,
+      "suspicious": false
+    },
+    "compression": {
+      "blockiness": 1.277,
+      "grid_inconsistency": 0.784,
+      "estimated_recompressions": 0,
+      "suspicious": false
+    },
+    "metadata": {
+      "has_exif": false,
+      "software_tags": [],
+      "editing_software_detected": false,
+      "datetime_original": "",
+      "datetime_modified": "",
+      "datetime_mismatch": false,
+      "issues": [
+        "no EXIF metadata (normal for screenshots/social-media exports; removes one authenticity signal)"
+      ],
+      "suspicious": false
+    },
+    "copy_move": {
+      "keypoints_analyzed": 1200,
+      "self_matches": 631,
+      "consistent_offset_clusters": 1,
+      "largest_cluster_size": 8,
+      "suspicious": true
+    },
+    "noise": {
+      "block_count": 77,
+      "noise_mean": 0.407,
+      "noise_std": 0.459,
+      "inconsistency_ratio": 1.129,
+      "suspicious": false
+    },
+    "component_scores": {
+      "ela": 0.2,
+      "compression": 3.1,
+      "metadata": 0.0,
+      "copy_move": 66.0,
+      "noise": 25.9
+    },
+    "forgery_score": 17.8,
+    "forgery_risk": "LOW",
+    "authenticity_status": "LIKELY_AUTHENTIC",
+    "findings": [
+      "no EXIF metadata (normal for screenshots/social-media exports; removes one authenticity signal)",
+      "Copy-move indicator: 1 consistent offset cluster(s), largest 8 matches."
+    ],
+    "analysis_time_ms": 132.0,
+    "note": "Findings are investigative indicators only; evidence is never rejected."
+  }
+}

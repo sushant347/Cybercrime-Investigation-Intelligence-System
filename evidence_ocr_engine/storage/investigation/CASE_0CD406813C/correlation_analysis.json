@@ -1,0 +1,1702 @@
+{
+  "report_type": "correlation_analysis",
+  "report_version": 4,
+  "schema_version": "2.0",
+  "case_id": "CASE_0CD406813C",
+  "generated_at": "2026-08-21T17:13:55.988Z",
+  "report": {
+    "case_id": "CASE_0CD406813C",
+    "evidence_ids": [
+      "EVID_00026",
+      "EVID_00027",
+      "EVID_00028",
+      "EVID_00029",
+      "EVID_00030",
+      "EVID_00031",
+      "EVID_00032",
+      "EVID_00033"
+    ],
+    "pair_count": 28,
+    "related_pair_count": 17,
+    "pairs": [
+      {
+        "evidence_a": "EVID_00027",
+        "evidence_b": "EVID_00029",
+        "correlation_weight": 5.1738,
+        "correlation_confidence": 0.9606,
+        "relationship_strength": "VERY_STRONG",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "emails",
+            "weight": 0.85,
+            "matches": 1,
+            "contribution": 0.591,
+            "supporting_evidence": [
+              "reward.center2026@gmail.com"
+            ],
+            "reason": "Both items reference the same emails: reward.center2026@gmail.com",
+            "value_details": [
+              {
+                "value": "reward.center2026@gmail.com",
+                "specificity": 0.6953,
+                "document_frequency": 7,
+                "corpus_size": 34,
+                "reason": "'reward.center2026@gmail.com' is moderately common (seen in 7 of 34 evidence items in the corpus); specificity 0.70"
+              }
+            ],
+            "effective_matches": 0.6953
+          },
+          {
+            "factor": "esewa_ids",
+            "weight": 1.0,
+            "matches": 1,
+            "contribution": 0.8314,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same esewa ids: +9779812345678",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.8314,
+                "document_frequency": 4,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is moderately common (seen in 4 of 34 evidence items in the corpus); specificity 0.83"
+              }
+            ],
+            "effective_matches": 0.8314
+          },
+          {
+            "factor": "urls",
+            "weight": 0.75,
+            "matches": 1,
+            "contribution": 0.6762,
+            "supporting_evidence": [
+              "https://esewa-bonus-claim.xyz/verify?ref=dsn2026"
+            ],
+            "reason": "Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=dsn2026",
+            "value_details": [
+              {
+                "value": "https://esewa-bonus-claim.xyz/verify?ref=dsn2026",
+                "specificity": 0.9016,
+                "document_frequency": 3,
+                "corpus_size": 34,
+                "reason": "'https://esewa-bonus-claim.xyz/verify?ref=dsn2026' is distinctive (seen in 3 of 34 evidence items in the corpus); specificity 0.90"
+              }
+            ],
+            "effective_matches": 0.9016
+          },
+          {
+            "factor": "domains",
+            "weight": 0.6,
+            "matches": 2,
+            "contribution": 0.7747,
+            "supporting_evidence": [
+              "esewa-bonus-claim.xyz",
+              "gmail.com"
+            ],
+            "reason": "Both items reference the same domains: esewa-bonus-claim.xyz, gmail.com - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "esewa-bonus-claim.xyz",
+                "specificity": 0.7326,
+                "document_frequency": 6,
+                "corpus_size": 34,
+                "reason": "'esewa-bonus-claim.xyz' is moderately common (seen in 6 of 34 evidence items in the corpus); specificity 0.73"
+              },
+              {
+                "value": "gmail.com",
+                "specificity": 0.5586,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'gmail.com' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.56"
+              }
+            ],
+            "effective_matches": 1.2912
+          },
+          {
+            "factor": "money",
+            "weight": 0.2,
+            "matches": 2,
+            "contribution": 0.1896,
+            "supporting_evidence": [
+              "npr 15000",
+              "npr 500"
+            ],
+            "reason": "Both items reference the same money: npr 15000, npr 500",
+            "value_details": [
+              {
+                "value": "npr 15000",
+                "specificity": 0.5225,
+                "document_frequency": 2,
+                "corpus_size": 34,
+                "reason": "'npr 15000' is distinctive (seen in 2 of 34 evidence items in the corpus); specificity 0.52"
+              },
+              {
+                "value": "npr 500",
+                "specificity": 0.4257,
+                "document_frequency": 5,
+                "corpus_size": 34,
+                "reason": "'npr 500' is moderately common (seen in 5 of 34 evidence items in the corpus); specificity 0.43"
+              }
+            ],
+            "effective_matches": 0.9482
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          },
+          {
+            "factor": "threat_intelligence",
+            "weight": 0.8,
+            "matches": 2,
+            "contribution": 1.6,
+            "supporting_evidence": [
+              "esewa-bonus-claim.xyz",
+              "https://esewa-bonus-claim.xyz/verify?ref=dsn2026"
+            ],
+            "reason": "Threat intelligence flags the same malicious indicators in both items: esewa-bonus-claim.xyz, https://esewa-bonus-claim.xyz/verify?ref=dsn2026",
+            "value_details": [],
+            "effective_matches": 2.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same emails: reward.center2026@gmail.com",
+          "Both items reference the same esewa ids: +9779812345678",
+          "Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=dsn2026",
+          "Both items reference the same domains: esewa-bonus-claim.xyz, gmail.com - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same money: npr 15000, npr 500",
+          "Acquired 0.0 hours apart (within the 48h proximity window)",
+          "Threat intelligence flags the same malicious indicators in both items: esewa-bonus-claim.xyz, https://esewa-bonus-claim.xyz/verify?ref=dsn2026"
+        ],
+        "explanation": "EVID_00027 (06_complaint_letter.pdf) and EVID_00029 (04_phishing_email.txt) show a very strong relationship (confidence 0.96) based on 8 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Both items reference the same emails: reward.center2026@gmail.com [weight 0.59]. Both items reference the same esewa ids: +9779812345678 [weight 0.83]. Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=dsn2026 [weight 0.68]. Both items reference the same domains: esewa-bonus-claim.xyz, gmail.com - but 1 of these are common across the corpus and were discounted [weight 0.77]. Both items reference the same money: npr 15000, npr 500 [weight 0.19]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]. Threat intelligence flags the same malicious indicators in both items: esewa-bonus-claim.xyz, https://esewa-bonus-claim.xyz/verify?ref=dsn2026 [weight 1.60]."
+      },
+      {
+        "evidence_a": "EVID_00027",
+        "evidence_b": "EVID_00033",
+        "correlation_weight": 2.7158,
+        "correlation_confidence": 0.8168,
+        "relationship_strength": "VERY_STRONG",
+        "factors": [
+          {
+            "factor": "urls",
+            "weight": 0.75,
+            "matches": 1,
+            "contribution": 0.6762,
+            "supporting_evidence": [
+              "https://esewa-bonus-claim.xyz/verify?ref=dsn2026"
+            ],
+            "reason": "Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=dsn2026",
+            "value_details": [
+              {
+                "value": "https://esewa-bonus-claim.xyz/verify?ref=dsn2026",
+                "specificity": 0.9016,
+                "document_frequency": 3,
+                "corpus_size": 34,
+                "reason": "'https://esewa-bonus-claim.xyz/verify?ref=dsn2026' is distinctive (seen in 3 of 34 evidence items in the corpus); specificity 0.90"
+              }
+            ],
+            "effective_matches": 0.9016
+          },
+          {
+            "factor": "domains",
+            "weight": 0.6,
+            "matches": 1,
+            "contribution": 0.4396,
+            "supporting_evidence": [
+              "esewa-bonus-claim.xyz"
+            ],
+            "reason": "Both items reference the same domains: esewa-bonus-claim.xyz",
+            "value_details": [
+              {
+                "value": "esewa-bonus-claim.xyz",
+                "specificity": 0.7326,
+                "document_frequency": 6,
+                "corpus_size": 34,
+                "reason": "'esewa-bonus-claim.xyz' is moderately common (seen in 6 of 34 evidence items in the corpus); specificity 0.73"
+              }
+            ],
+            "effective_matches": 0.7326
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          },
+          {
+            "factor": "threat_intelligence",
+            "weight": 0.8,
+            "matches": 2,
+            "contribution": 1.6,
+            "supporting_evidence": [
+              "esewa-bonus-claim.xyz",
+              "https://esewa-bonus-claim.xyz/verify?ref=dsn2026"
+            ],
+            "reason": "Threat intelligence flags the same malicious indicators in both items: esewa-bonus-claim.xyz, https://esewa-bonus-claim.xyz/verify?ref=dsn2026",
+            "value_details": [],
+            "effective_matches": 2.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=dsn2026",
+          "Both items reference the same domains: esewa-bonus-claim.xyz",
+          "Acquired 0.0 hours apart (within the 48h proximity window)",
+          "Threat intelligence flags the same malicious indicators in both items: esewa-bonus-claim.xyz, https://esewa-bonus-claim.xyz/verify?ref=dsn2026"
+        ],
+        "explanation": "EVID_00027 (06_complaint_letter.pdf) and EVID_00033 (https_esewa-bonus-claim.xyz_verify_ref_DSN2026.url) show a very strong relationship (confidence 0.82) based on 4 independent factors. Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=dsn2026 [weight 0.68]. Both items reference the same domains: esewa-bonus-claim.xyz [weight 0.44]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]. Threat intelligence flags the same malicious indicators in both items: esewa-bonus-claim.xyz, https://esewa-bonus-claim.xyz/verify?ref=dsn2026 [weight 1.60]."
+      },
+      {
+        "evidence_a": "EVID_00029",
+        "evidence_b": "EVID_00033",
+        "correlation_weight": 2.7158,
+        "correlation_confidence": 0.8168,
+        "relationship_strength": "VERY_STRONG",
+        "factors": [
+          {
+            "factor": "urls",
+            "weight": 0.75,
+            "matches": 1,
+            "contribution": 0.6762,
+            "supporting_evidence": [
+              "https://esewa-bonus-claim.xyz/verify?ref=dsn2026"
+            ],
+            "reason": "Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=dsn2026",
+            "value_details": [
+              {
+                "value": "https://esewa-bonus-claim.xyz/verify?ref=dsn2026",
+                "specificity": 0.9016,
+                "document_frequency": 3,
+                "corpus_size": 34,
+                "reason": "'https://esewa-bonus-claim.xyz/verify?ref=dsn2026' is distinctive (seen in 3 of 34 evidence items in the corpus); specificity 0.90"
+              }
+            ],
+            "effective_matches": 0.9016
+          },
+          {
+            "factor": "domains",
+            "weight": 0.6,
+            "matches": 1,
+            "contribution": 0.4396,
+            "supporting_evidence": [
+              "esewa-bonus-claim.xyz"
+            ],
+            "reason": "Both items reference the same domains: esewa-bonus-claim.xyz",
+            "value_details": [
+              {
+                "value": "esewa-bonus-claim.xyz",
+                "specificity": 0.7326,
+                "document_frequency": 6,
+                "corpus_size": 34,
+                "reason": "'esewa-bonus-claim.xyz' is moderately common (seen in 6 of 34 evidence items in the corpus); specificity 0.73"
+              }
+            ],
+            "effective_matches": 0.7326
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          },
+          {
+            "factor": "threat_intelligence",
+            "weight": 0.8,
+            "matches": 2,
+            "contribution": 1.6,
+            "supporting_evidence": [
+              "esewa-bonus-claim.xyz",
+              "https://esewa-bonus-claim.xyz/verify?ref=dsn2026"
+            ],
+            "reason": "Threat intelligence flags the same malicious indicators in both items: esewa-bonus-claim.xyz, https://esewa-bonus-claim.xyz/verify?ref=dsn2026",
+            "value_details": [],
+            "effective_matches": 2.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=dsn2026",
+          "Both items reference the same domains: esewa-bonus-claim.xyz",
+          "Acquired 0.0 hours apart (within the 48h proximity window)",
+          "Threat intelligence flags the same malicious indicators in both items: esewa-bonus-claim.xyz, https://esewa-bonus-claim.xyz/verify?ref=dsn2026"
+        ],
+        "explanation": "EVID_00029 (04_phishing_email.txt) and EVID_00033 (https_esewa-bonus-claim.xyz_verify_ref_DSN2026.url) show a very strong relationship (confidence 0.82) based on 4 independent factors. Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=dsn2026 [weight 0.68]. Both items reference the same domains: esewa-bonus-claim.xyz [weight 0.44]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]. Threat intelligence flags the same malicious indicators in both items: esewa-bonus-claim.xyz, https://esewa-bonus-claim.xyz/verify?ref=dsn2026 [weight 1.60]."
+      },
+      {
+        "evidence_a": "EVID_00027",
+        "evidence_b": "EVID_00030",
+        "correlation_weight": 2.446,
+        "correlation_confidence": 0.7832,
+        "relationship_strength": "STRONG",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 2,
+            "contribution": 1.4109,
+            "supporting_evidence": [
+              "+9779841002233",
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779841002233, +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779841002233",
+                "specificity": 1.0,
+                "document_frequency": 2,
+                "corpus_size": 34,
+                "reason": "'+9779841002233' is distinctive (seen in 2 of 34 evidence items in the corpus); specificity 1.00"
+              },
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 1.5677
+          },
+          {
+            "factor": "transaction_ids",
+            "weight": 0.95,
+            "matches": 1,
+            "contribution": 0.95,
+            "supporting_evidence": [
+              "esw-2026-0714-88231"
+            ],
+            "reason": "Both items reference the same transaction ids: esw-2026-0714-88231",
+            "value_details": [
+              {
+                "value": "esw-2026-0714-88231",
+                "specificity": 1.0,
+                "document_frequency": 2,
+                "corpus_size": 34,
+                "reason": "'esw-2026-0714-88231' is distinctive (seen in 2 of 34 evidence items in the corpus); specificity 1.00"
+              }
+            ],
+            "effective_matches": 1.0
+          },
+          {
+            "factor": "money",
+            "weight": 0.2,
+            "matches": 1,
+            "contribution": 0.0851,
+            "supporting_evidence": [
+              "npr 500"
+            ],
+            "reason": "Both items reference the same money: npr 500",
+            "value_details": [
+              {
+                "value": "npr 500",
+                "specificity": 0.4257,
+                "document_frequency": 5,
+                "corpus_size": 34,
+                "reason": "'npr 500' is moderately common (seen in 5 of 34 evidence items in the corpus); specificity 0.43"
+              }
+            ],
+            "effective_matches": 0.4257
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779841002233, +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same transaction ids: esw-2026-0714-88231",
+          "Both items reference the same money: npr 500",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00027 (06_complaint_letter.pdf) and EVID_00030 (03_esewa_payment_receipt.jpg) show a strong relationship (confidence 0.78) based on 4 independent factors. Both items reference the same phones: +9779841002233, +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 1.41]. Both items reference the same transaction ids: esw-2026-0714-88231 [weight 0.95]. Both items reference the same money: npr 500 [weight 0.09]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00027",
+        "evidence_b": "EVID_00031",
+        "correlation_weight": 2.3536,
+        "correlation_confidence": 0.7703,
+        "relationship_strength": "STRONG",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "emails",
+            "weight": 0.85,
+            "matches": 1,
+            "contribution": 0.591,
+            "supporting_evidence": [
+              "reward.center2026@gmail.com"
+            ],
+            "reason": "Both items reference the same emails: reward.center2026@gmail.com",
+            "value_details": [
+              {
+                "value": "reward.center2026@gmail.com",
+                "specificity": 0.6953,
+                "document_frequency": 7,
+                "corpus_size": 34,
+                "reason": "'reward.center2026@gmail.com' is moderately common (seen in 7 of 34 evidence items in the corpus); specificity 0.70"
+              }
+            ],
+            "effective_matches": 0.6953
+          },
+          {
+            "factor": "esewa_ids",
+            "weight": 1.0,
+            "matches": 1,
+            "contribution": 0.8314,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same esewa ids: +9779812345678",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.8314,
+                "document_frequency": 4,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is moderately common (seen in 4 of 34 evidence items in the corpus); specificity 0.83"
+              }
+            ],
+            "effective_matches": 0.8314
+          },
+          {
+            "factor": "domains",
+            "weight": 0.6,
+            "matches": 1,
+            "contribution": 0.3352,
+            "supporting_evidence": [
+              "gmail.com"
+            ],
+            "reason": "Both items reference the same domains: gmail.com - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "gmail.com",
+                "specificity": 0.5586,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'gmail.com' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.56"
+              }
+            ],
+            "effective_matches": 0.5586
+          },
+          {
+            "factor": "money",
+            "weight": 0.2,
+            "matches": 1,
+            "contribution": 0.0851,
+            "supporting_evidence": [
+              "npr 500"
+            ],
+            "reason": "Both items reference the same money: npr 500",
+            "value_details": [
+              {
+                "value": "npr 500",
+                "specificity": 0.4257,
+                "document_frequency": 5,
+                "corpus_size": 34,
+                "reason": "'npr 500' is moderately common (seen in 5 of 34 evidence items in the corpus); specificity 0.43"
+              }
+            ],
+            "effective_matches": 0.4257
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same emails: reward.center2026@gmail.com",
+          "Both items reference the same esewa ids: +9779812345678",
+          "Both items reference the same domains: gmail.com - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same money: npr 500",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00027 (06_complaint_letter.pdf) and EVID_00031 (02_messenger_chat.jpg) show a strong relationship (confidence 0.77) based on 6 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Both items reference the same emails: reward.center2026@gmail.com [weight 0.59]. Both items reference the same esewa ids: +9779812345678 [weight 0.83]. Both items reference the same domains: gmail.com - but 1 of these are common across the corpus and were discounted [weight 0.34]. Both items reference the same money: npr 500 [weight 0.09]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00029",
+        "evidence_b": "EVID_00031",
+        "correlation_weight": 2.3536,
+        "correlation_confidence": 0.7703,
+        "relationship_strength": "STRONG",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "emails",
+            "weight": 0.85,
+            "matches": 1,
+            "contribution": 0.591,
+            "supporting_evidence": [
+              "reward.center2026@gmail.com"
+            ],
+            "reason": "Both items reference the same emails: reward.center2026@gmail.com",
+            "value_details": [
+              {
+                "value": "reward.center2026@gmail.com",
+                "specificity": 0.6953,
+                "document_frequency": 7,
+                "corpus_size": 34,
+                "reason": "'reward.center2026@gmail.com' is moderately common (seen in 7 of 34 evidence items in the corpus); specificity 0.70"
+              }
+            ],
+            "effective_matches": 0.6953
+          },
+          {
+            "factor": "esewa_ids",
+            "weight": 1.0,
+            "matches": 1,
+            "contribution": 0.8314,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same esewa ids: +9779812345678",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.8314,
+                "document_frequency": 4,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is moderately common (seen in 4 of 34 evidence items in the corpus); specificity 0.83"
+              }
+            ],
+            "effective_matches": 0.8314
+          },
+          {
+            "factor": "domains",
+            "weight": 0.6,
+            "matches": 1,
+            "contribution": 0.3352,
+            "supporting_evidence": [
+              "gmail.com"
+            ],
+            "reason": "Both items reference the same domains: gmail.com - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "gmail.com",
+                "specificity": 0.5586,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'gmail.com' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.56"
+              }
+            ],
+            "effective_matches": 0.5586
+          },
+          {
+            "factor": "money",
+            "weight": 0.2,
+            "matches": 1,
+            "contribution": 0.0851,
+            "supporting_evidence": [
+              "npr 500"
+            ],
+            "reason": "Both items reference the same money: npr 500",
+            "value_details": [
+              {
+                "value": "npr 500",
+                "specificity": 0.4257,
+                "document_frequency": 5,
+                "corpus_size": 34,
+                "reason": "'npr 500' is moderately common (seen in 5 of 34 evidence items in the corpus); specificity 0.43"
+              }
+            ],
+            "effective_matches": 0.4257
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same emails: reward.center2026@gmail.com",
+          "Both items reference the same esewa ids: +9779812345678",
+          "Both items reference the same domains: gmail.com - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same money: npr 500",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00029 (04_phishing_email.txt) and EVID_00031 (02_messenger_chat.jpg) show a strong relationship (confidence 0.77) based on 6 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Both items reference the same emails: reward.center2026@gmail.com [weight 0.59]. Both items reference the same esewa ids: +9779812345678 [weight 0.83]. Both items reference the same domains: gmail.com - but 1 of these are common across the corpus and were discounted [weight 0.34]. Both items reference the same money: npr 500 [weight 0.09]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00027",
+        "evidence_b": "EVID_00028",
+        "correlation_weight": 1.3423,
+        "correlation_confidence": 0.5678,
+        "relationship_strength": "STRONG",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "esewa_ids",
+            "weight": 1.0,
+            "matches": 1,
+            "contribution": 0.8314,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same esewa ids: +9779812345678",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.8314,
+                "document_frequency": 4,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is moderately common (seen in 4 of 34 evidence items in the corpus); specificity 0.83"
+              }
+            ],
+            "effective_matches": 0.8314
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same esewa ids: +9779812345678",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00027 (06_complaint_letter.pdf) and EVID_00028 (05_bank_statement.csv) show a strong relationship (confidence 0.57) based on 3 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Both items reference the same esewa ids: +9779812345678 [weight 0.83]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00028",
+        "evidence_b": "EVID_00029",
+        "correlation_weight": 1.3423,
+        "correlation_confidence": 0.5678,
+        "relationship_strength": "STRONG",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "esewa_ids",
+            "weight": 1.0,
+            "matches": 1,
+            "contribution": 0.8314,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same esewa ids: +9779812345678",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.8314,
+                "document_frequency": 4,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is moderately common (seen in 4 of 34 evidence items in the corpus); specificity 0.83"
+              }
+            ],
+            "effective_matches": 0.8314
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same esewa ids: +9779812345678",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00028 (05_bank_statement.csv) and EVID_00029 (04_phishing_email.txt) show a strong relationship (confidence 0.57) based on 3 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Both items reference the same esewa ids: +9779812345678 [weight 0.83]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00028",
+        "evidence_b": "EVID_00031",
+        "correlation_weight": 1.3423,
+        "correlation_confidence": 0.5678,
+        "relationship_strength": "STRONG",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "esewa_ids",
+            "weight": 1.0,
+            "matches": 1,
+            "contribution": 0.8314,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same esewa ids: +9779812345678",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.8314,
+                "document_frequency": 4,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is moderately common (seen in 4 of 34 evidence items in the corpus); specificity 0.83"
+              }
+            ],
+            "effective_matches": 0.8314
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same esewa ids: +9779812345678",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00028 (05_bank_statement.csv) and EVID_00031 (02_messenger_chat.jpg) show a strong relationship (confidence 0.57) based on 3 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Both items reference the same esewa ids: +9779812345678 [weight 0.83]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00027",
+        "evidence_b": "EVID_00032",
+        "correlation_weight": 0.596,
+        "correlation_confidence": 0.311,
+        "relationship_strength": "MEDIUM",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "money",
+            "weight": 0.2,
+            "matches": 1,
+            "contribution": 0.0851,
+            "supporting_evidence": [
+              "npr 500"
+            ],
+            "reason": "Both items reference the same money: npr 500",
+            "value_details": [
+              {
+                "value": "npr 500",
+                "specificity": 0.4257,
+                "document_frequency": 5,
+                "corpus_size": 34,
+                "reason": "'npr 500' is moderately common (seen in 5 of 34 evidence items in the corpus); specificity 0.43"
+              }
+            ],
+            "effective_matches": 0.4257
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same money: npr 500",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00027 (06_complaint_letter.pdf) and EVID_00032 (01_sms_cashback_offer.jpg) show a medium relationship (confidence 0.31) based on 3 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Both items reference the same money: npr 500 [weight 0.09]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00029",
+        "evidence_b": "EVID_00030",
+        "correlation_weight": 0.596,
+        "correlation_confidence": 0.311,
+        "relationship_strength": "MEDIUM",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "money",
+            "weight": 0.2,
+            "matches": 1,
+            "contribution": 0.0851,
+            "supporting_evidence": [
+              "npr 500"
+            ],
+            "reason": "Both items reference the same money: npr 500",
+            "value_details": [
+              {
+                "value": "npr 500",
+                "specificity": 0.4257,
+                "document_frequency": 5,
+                "corpus_size": 34,
+                "reason": "'npr 500' is moderately common (seen in 5 of 34 evidence items in the corpus); specificity 0.43"
+              }
+            ],
+            "effective_matches": 0.4257
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same money: npr 500",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00029 (04_phishing_email.txt) and EVID_00030 (03_esewa_payment_receipt.jpg) show a medium relationship (confidence 0.31) based on 3 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Both items reference the same money: npr 500 [weight 0.09]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00029",
+        "evidence_b": "EVID_00032",
+        "correlation_weight": 0.596,
+        "correlation_confidence": 0.311,
+        "relationship_strength": "MEDIUM",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "money",
+            "weight": 0.2,
+            "matches": 1,
+            "contribution": 0.0851,
+            "supporting_evidence": [
+              "npr 500"
+            ],
+            "reason": "Both items reference the same money: npr 500",
+            "value_details": [
+              {
+                "value": "npr 500",
+                "specificity": 0.4257,
+                "document_frequency": 5,
+                "corpus_size": 34,
+                "reason": "'npr 500' is moderately common (seen in 5 of 34 evidence items in the corpus); specificity 0.43"
+              }
+            ],
+            "effective_matches": 0.4257
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same money: npr 500",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00029 (04_phishing_email.txt) and EVID_00032 (01_sms_cashback_offer.jpg) show a medium relationship (confidence 0.31) based on 3 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Both items reference the same money: npr 500 [weight 0.09]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00030",
+        "evidence_b": "EVID_00031",
+        "correlation_weight": 0.596,
+        "correlation_confidence": 0.311,
+        "relationship_strength": "MEDIUM",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "money",
+            "weight": 0.2,
+            "matches": 1,
+            "contribution": 0.0851,
+            "supporting_evidence": [
+              "npr 500"
+            ],
+            "reason": "Both items reference the same money: npr 500",
+            "value_details": [
+              {
+                "value": "npr 500",
+                "specificity": 0.4257,
+                "document_frequency": 5,
+                "corpus_size": 34,
+                "reason": "'npr 500' is moderately common (seen in 5 of 34 evidence items in the corpus); specificity 0.43"
+              }
+            ],
+            "effective_matches": 0.4257
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same money: npr 500",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00030 (03_esewa_payment_receipt.jpg) and EVID_00031 (02_messenger_chat.jpg) show a medium relationship (confidence 0.31) based on 3 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Both items reference the same money: npr 500 [weight 0.09]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00030",
+        "evidence_b": "EVID_00032",
+        "correlation_weight": 0.596,
+        "correlation_confidence": 0.311,
+        "relationship_strength": "MEDIUM",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "money",
+            "weight": 0.2,
+            "matches": 1,
+            "contribution": 0.0851,
+            "supporting_evidence": [
+              "npr 500"
+            ],
+            "reason": "Both items reference the same money: npr 500",
+            "value_details": [
+              {
+                "value": "npr 500",
+                "specificity": 0.4257,
+                "document_frequency": 5,
+                "corpus_size": 34,
+                "reason": "'npr 500' is moderately common (seen in 5 of 34 evidence items in the corpus); specificity 0.43"
+              }
+            ],
+            "effective_matches": 0.4257
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same money: npr 500",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00030 (03_esewa_payment_receipt.jpg) and EVID_00032 (01_sms_cashback_offer.jpg) show a medium relationship (confidence 0.31) based on 3 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Both items reference the same money: npr 500 [weight 0.09]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00031",
+        "evidence_b": "EVID_00032",
+        "correlation_weight": 0.596,
+        "correlation_confidence": 0.311,
+        "relationship_strength": "MEDIUM",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "money",
+            "weight": 0.2,
+            "matches": 1,
+            "contribution": 0.0851,
+            "supporting_evidence": [
+              "npr 500"
+            ],
+            "reason": "Both items reference the same money: npr 500",
+            "value_details": [
+              {
+                "value": "npr 500",
+                "specificity": 0.4257,
+                "document_frequency": 5,
+                "corpus_size": 34,
+                "reason": "'npr 500' is moderately common (seen in 5 of 34 evidence items in the corpus); specificity 0.43"
+              }
+            ],
+            "effective_matches": 0.4257
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same money: npr 500",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00031 (02_messenger_chat.jpg) and EVID_00032 (01_sms_cashback_offer.jpg) show a medium relationship (confidence 0.31) based on 3 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Both items reference the same money: npr 500 [weight 0.09]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00028",
+        "evidence_b": "EVID_00030",
+        "correlation_weight": 0.5109,
+        "correlation_confidence": 0.2734,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00028 (05_bank_statement.csv) and EVID_00030 (03_esewa_payment_receipt.jpg) show a weak relationship (confidence 0.27) based on 2 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00028",
+        "evidence_b": "EVID_00032",
+        "correlation_weight": 0.5109,
+        "correlation_confidence": 0.2734,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00028 (05_bank_statement.csv) and EVID_00032 (01_sms_cashback_offer.jpg) show a weak relationship (confidence 0.27) based on 2 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00026",
+        "evidence_b": "EVID_00027",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00026 (07_qr_flyer_poor_capture.jpg) and EVID_00027 (06_complaint_letter.pdf) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00026",
+        "evidence_b": "EVID_00028",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00026 (07_qr_flyer_poor_capture.jpg) and EVID_00028 (05_bank_statement.csv) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00026",
+        "evidence_b": "EVID_00029",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00026 (07_qr_flyer_poor_capture.jpg) and EVID_00029 (04_phishing_email.txt) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00026",
+        "evidence_b": "EVID_00030",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00026 (07_qr_flyer_poor_capture.jpg) and EVID_00030 (03_esewa_payment_receipt.jpg) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00026",
+        "evidence_b": "EVID_00031",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00026 (07_qr_flyer_poor_capture.jpg) and EVID_00031 (02_messenger_chat.jpg) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00026",
+        "evidence_b": "EVID_00032",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00026 (07_qr_flyer_poor_capture.jpg) and EVID_00032 (01_sms_cashback_offer.jpg) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00026",
+        "evidence_b": "EVID_00033",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00026 (07_qr_flyer_poor_capture.jpg) and EVID_00033 (https_esewa-bonus-claim.xyz_verify_ref_DSN2026.url) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00028",
+        "evidence_b": "EVID_00033",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00028 (05_bank_statement.csv) and EVID_00033 (https_esewa-bonus-claim.xyz_verify_ref_DSN2026.url) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00030",
+        "evidence_b": "EVID_00033",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00030 (03_esewa_payment_receipt.jpg) and EVID_00033 (https_esewa-bonus-claim.xyz_verify_ref_DSN2026.url) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00031",
+        "evidence_b": "EVID_00033",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00031 (02_messenger_chat.jpg) and EVID_00033 (https_esewa-bonus-claim.xyz_verify_ref_DSN2026.url) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00032",
+        "evidence_b": "EVID_00033",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00032 (01_sms_cashback_offer.jpg) and EVID_00033 (https_esewa-bonus-claim.xyz_verify_ref_DSN2026.url) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      }
+    ],
+    "strength_distribution": {
+      "VERY_STRONG": 3,
+      "STRONG": 6,
+      "MEDIUM": 6,
+      "WEAK": 2,
+      "NO_RELATIONSHIP": 11
+    },
+    "strongest_pair": "EVID_00027|EVID_00029",
+    "analysis_time_ms": 4.6
+  }
+}

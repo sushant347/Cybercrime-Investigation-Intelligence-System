@@ -1,0 +1,64 @@
+{
+  "report_type": "case_priority",
+  "report_version": 3,
+  "schema_version": "2.0",
+  "case_id": "CASE_4B2A51A300",
+  "generated_at": "2026-08-21T17:57:23.074Z",
+  "report": {
+    "case_id": "CASE_4B2A51A300",
+    "components": [
+      {
+        "name": "evidence_confidence",
+        "score": 92.8,
+        "weight": 0.2,
+        "available": true,
+        "explanation": "mean Phase-1 evidence confidence 92.77"
+      },
+      {
+        "name": "threat_intelligence",
+        "score": 55.6,
+        "weight": 0.2,
+        "available": true,
+        "explanation": "56% of evidence touches flagged indicators"
+      },
+      {
+        "name": "forgery_risk",
+        "score": 26.0,
+        "weight": 0.15,
+        "available": true,
+        "explanation": "max Phase-1 forgery score 26.0"
+      },
+      {
+        "name": "campaign_size",
+        "score": 100.0,
+        "weight": 0.15,
+        "available": true,
+        "explanation": "largest campaign groups 8 items"
+      },
+      {
+        "name": "correlation_strength",
+        "score": 99.3,
+        "weight": 0.15,
+        "available": true,
+        "explanation": "strongest evidence-pair confidence 0.99"
+      },
+      {
+        "name": "timeline_criticality",
+        "score": 100.0,
+        "weight": 0.15,
+        "available": true,
+        "explanation": "6 critical timeline events"
+      }
+    ],
+    "priority_score": 78.5,
+    "priority_level": "CRITICAL",
+    "high_risk_indicators": [
+      "4 threat-flagged indicators present in the evidence",
+      "large coordinated campaign of 8 evidence items",
+      "6 critical events involving OTP/financial entities"
+    ],
+    "investigation_recommendation": "Immediate escalation recommended: assign a lead investigator and initiate legal preservation requests now.",
+    "explanation": "Case priority is 78.5/100 (CRITICAL), computed from 6 available dimensions with renormalised weights. Evidence confidence: 93/100 (weight 0.20) - mean Phase-1 evidence confidence 92.77. Campaign size: 100/100 (weight 0.15) - largest campaign groups 8 items. Timeline criticality: 100/100 (weight 0.15) - 6 critical timeline events. Correlation strength: 99/100 (weight 0.15) - strongest evidence-pair confidence 0.99. Threat intelligence: 56/100 (weight 0.20) - 56% of evidence touches flagged indicators. Forgery risk: 26/100 (weight 0.15) - max Phase-1 forgery score 26.0.",
+    "computed_at": "2026-08-21T17:57:23.074Z"
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "report_type": "file_fingerprint",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00041",
+  "case_id": "CASE_4B2A51A300",
+  "generated_at": "2026-08-21T06:43:15.087Z",
+  "report": {
+    "evidence_id": "EVID_00041",
+    "case_id": "CASE_4B2A51A300",
+    "source_file": "EVID_00041__d9394b91__http_khalti-kyc-verify.top_login.url",
+    "md5": "e2d2981d658e2a21b186573f3a18b6b0",
+    "sha1": "17967902ae8e8369fa6d39ae1c1f1b98c2ba9d7d",
+    "sha256": "2576cee0748325bb6eb525dcda7ed95b0115cac7336260f31149f15dd3e6e56a",
+    "sha512": "3527ceb1d13288b346c864c9310995694d8abc07e15f21d2e9e5988fa16ca2c92c8f0b5ad84443ed1f6e29f791c500db85d9d6cb9a6faa28f7af7410604fb0b8",
+    "crc32": "5a2e6e1c",
+    "file_size_bytes": 35,
+    "entropy_bits_per_byte": 4.229,
+    "high_entropy": false,
+    "magic_number_hex": "687474703a2f2f6b",
+    "magic_format": "",
+    "declared_extension": ".url",
+    "mime_type": "application/octet-stream",
+    "extension_matches_magic": true,
+    "sha256_matches_acquisition": true,
+    "duplicates": [],
+    "is_duplicate": false,
+    "analysis_time_ms": 0.6
+  }
+}

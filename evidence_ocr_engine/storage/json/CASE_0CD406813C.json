@@ -1,0 +1,3460 @@
+{
+  "case_id": "CASE_0CD406813C",
+  "created_at": "2026-08-21T06:37:34.287Z",
+  "updated_at": "2026-08-21T06:38:44.645Z",
+  "evidence_count": 8,
+  "evidence": [
+    {
+      "case_id": "CASE_0CD406813C",
+      "evidence_id": "EVID_00026",
+      "file_name": "07_qr_flyer_poor_capture.jpg",
+      "file_hash": "54ecd6f0726dc06df8a4080f5377ce550949435850008b0cb18beeb199da5cdc",
+      "file_size": "10725",
+      "upload_time": "2026-08-21T06:37:22.707Z",
+      "processing_time_ms": 11587.6,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 0.9819,
+          "text": "DASHAIN CASHBACK OFFER",
+          "lines": [
+            {
+              "text": "DASHAIN CASHBACK OFFER",
+              "confidence": 0.9819,
+              "bbox": [
+                [
+                  37.0,
+                  35.0
+                ],
+                [
+                  473.0,
+                  35.0
+                ],
+                [
+                  473.0,
+                  74.0
+                ],
+                [
+                  37.0,
+                  74.0
+                ]
+              ]
+            }
+          ],
+          "bounding_boxes": [
+            [
+              [
+                37.0,
+                35.0
+              ],
+              [
+                473.0,
+                35.0
+              ],
+              [
+                473.0,
+                74.0
+              ],
+              [
+                37.0,
+                74.0
+              ]
+            ]
+          ],
+          "preprocessing_steps": [
+            "convert_rgb",
+            "exif_orientation",
+            "clahe",
+            "sharpen"
+          ]
+        }
+      ],
+      "raw_text": "DASHAIN CASHBACK OFFER",
+      "average_confidence": 0.9819,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_0CD406813C",
+        "evidence_id": "EVID_00026",
+        "raw_text": "DASHAIN CASHBACK OFFER",
+        "cleaned_text": "DASHAIN CASHBACK OFFER",
+        "language": "english",
+        "line_languages": {
+          "1": "english"
+        },
+        "entities": {
+          "urls": [],
+          "domains": [],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "emails": [],
+          "phones": [],
+          "dates": [],
+          "times": [],
+          "money": [],
+          "bank_accounts": [],
+          "card_numbers": [],
+          "transaction_ids": [],
+          "esewa_ids": [],
+          "khalti_ids": [],
+          "imepay_ids": [],
+          "otp": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "hashes_md5": [],
+          "hashes_sha1": [],
+          "hashes_sha256": [],
+          "hashes_sha512": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {
+          "reward": 1
+        },
+        "risk_signals": {
+          "urgency": 0,
+          "financial": 1,
+          "credential": 0,
+          "threat": 0
+        },
+        "statistics": {
+          "characters": 22,
+          "words": 3,
+          "lines": 1,
+          "average_line_length": 22.0,
+          "languages_detected": [
+            "english"
+          ],
+          "entity_count": 0,
+          "cleaning_operations": [],
+          "ocr_corrections": [],
+          "protected_entities": 0
+        },
+        "processing_time_ms": 2.68
+      },
+      "enhancement": {
+        "case_id": "CASE_0CD406813C",
+        "evidence_id": "EVID_00026",
+        "cleaned_text": "DASHAIN CASHBACK OFFER",
+        "enhanced_text": "DASHAIN CASHBACK OFFER",
+        "ui_text": "",
+        "message_text": "DASHAIN CASHBACK OFFER",
+        "layout": [
+          {
+            "line": 1,
+            "role": "message",
+            "text": "DASHAIN CASHBACK OFFER"
+          }
+        ],
+        "corrections": [],
+        "correction_statistics": {
+          "total_corrections": 0,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 0,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 1,
+          "lines_high_confidence": 1,
+          "lines_correctable": 0,
+          "document_confidence": 0.9819,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 0.3
+      },
+      "semantic_correction": {
+        "case_id": "CASE_0CD406813C",
+        "evidence_id": "EVID_00026",
+        "enhanced_text": "DASHAIN CASHBACK OFFER",
+        "semantic_text": "DASHAIN CASHBACK OFFER",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {},
+        "statistics": {
+          "suspicious_tokens": 0,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 0,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english"
+          ]
+        },
+        "processing_time_ms": 0.18
+      }
+    },
+    {
+      "case_id": "CASE_0CD406813C",
+      "evidence_id": "EVID_00027",
+      "file_name": "06_complaint_letter.pdf",
+      "file_hash": "92af393efbe4f1c68816dd41fe4f22a3c92fb51aabd653c9a733e51f432579d1",
+      "file_size": "79378",
+      "upload_time": "2026-08-21T06:37:35.208Z",
+      "processing_time_ms": 352.0,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 1.0,
+          "text": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: अनलाइन ठगी सम्बन्धमा उजुरी।\nI, Sunita Rai (+9779841002233), received an SMS on 2026-07-14\nclaiming I had won NPR 15,000 in an eSewa Dashain cashback draw.\nI was directed to https://esewa-bonus-claim.xyz/verify?ref=DSN2026 and asked to pay\na service fee of NPR 500 to eSewa ID 9812345678. I paid this amount\n(transaction ESW-2026-0714-88231). I was then asked for a further NPR 12,000 to the bank\naccount 01903015472901, which I also paid.\nThe contact number used was +9779812345678 and the email address was\nreward.center2026@gmail.com. No cashback was ever received.\nI request investigation and recovery of NPR 12,500.",
+          "lines": [
+            {
+              "text": "Complaint to Cyber Bureau, Nepal Police",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "श्रीमान् प्रमुख ज्यू,",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "साइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "विषय: अनलाइन ठगी सम्बन्धमा उजुरी।",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "I, Sunita Rai (+9779841002233), received an SMS on 2026-07-14",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "claiming I had won NPR 15,000 in an eSewa Dashain cashback draw.",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "I was directed to https://esewa-bonus-claim.xyz/verify?ref=DSN2026 and asked to pay",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "a service fee of NPR 500 to eSewa ID 9812345678. I paid this amount",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "(transaction ESW-2026-0714-88231). I was then asked for a further NPR 12,000 to the bank",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "account 01903015472901, which I also paid.",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "The contact number used was +9779812345678 and the email address was",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "reward.center2026@gmail.com. No cashback was ever received.",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "I request investigation and recovery of NPR 12,500.",
+              "confidence": 1.0,
+              "bbox": []
+            }
+          ],
+          "bounding_boxes": [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          "preprocessing_steps": [
+            "none(pdf_text_layer)"
+          ]
+        }
+      ],
+      "raw_text": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: अनलाइन ठगी सम्बन्धमा उजुरी।\nI, Sunita Rai (+9779841002233), received an SMS on 2026-07-14\nclaiming I had won NPR 15,000 in an eSewa Dashain cashback draw.\nI was directed to https://esewa-bonus-claim.xyz/verify?ref=DSN2026 and asked to pay\na service fee of NPR 500 to eSewa ID 9812345678. I paid this amount\n(transaction ESW-2026-0714-88231). I was then asked for a further NPR 12,000 to the bank\naccount 01903015472901, which I also paid.\nThe contact number used was +9779812345678 and the email address was\nreward.center2026@gmail.com. No cashback was ever received.\nI request investigation and recovery of NPR 12,500.",
+      "average_confidence": 1.0,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_0CD406813C",
+        "evidence_id": "EVID_00027",
+        "raw_text": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: अनलाइन ठगी सम्बन्धमा उजुरी।\nI, Sunita Rai (+9779841002233), received an SMS on 2026-07-14\nclaiming I had won NPR 15,000 in an eSewa Dashain cashback draw.\nI was directed to https://esewa-bonus-claim.xyz/verify?ref=DSN2026 and asked to pay\na service fee of NPR 500 to eSewa ID 9812345678. I paid this amount\n(transaction ESW-2026-0714-88231). I was then asked for a further NPR 12,000 to the bank\naccount 01903015472901, which I also paid.\nThe contact number used was +9779812345678 and the email address was\nreward.center2026@gmail.com. No cashback was ever received.\nI request investigation and recovery of NPR 12,500.",
+        "cleaned_text": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: अनलाइन ठगी सम्बन्धमा उजुरी।\nI, Sunita Rai (+9779841002233), received an SMS on 2026-07-14\nclaiming I had won NPR 15,000 in an eSewa Dashain cashback draw.\nI was directed to https://esewa-bonus-claim.xyz/verify?ref=DSN2026 and asked to pay a service fee of NPR 500 to eSewa ID 9812345678. I paid this amount\n(transaction ESW-2026-0714-88231). I was then asked for a further NPR 12,000 to the bank account 01903015472901, which I also paid.\nThe contact number used was +9779812345678 and the email address was\nreward.center2026@gmail.com. No cashback was ever received.\nI request investigation and recovery of NPR 12,500.",
+        "language": "mixed",
+        "line_languages": {
+          "1": "english",
+          "2": "nepali_unicode",
+          "3": "nepali_unicode",
+          "4": "nepali_unicode",
+          "5": "english",
+          "6": "english",
+          "7": "english",
+          "8": "english",
+          "9": "english",
+          "10": "english",
+          "11": "english",
+          "12": "english",
+          "13": "english"
+        },
+        "entities": {
+          "urls": [
+            {
+              "value": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026",
+              "normalized": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026"
+            }
+          ],
+          "domains": [
+            {
+              "value": "esewa-bonus-claim.xyz",
+              "normalized": "esewa-bonus-claim.xyz"
+            },
+            {
+              "value": "gmail.com",
+              "normalized": "gmail.com"
+            }
+          ],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "emails": [
+            {
+              "value": "reward.center2026@gmail.com",
+              "normalized": "reward.center2026@gmail.com"
+            }
+          ],
+          "phones": [
+            {
+              "value": "+9779841002233",
+              "normalized": "+9779841002233"
+            },
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "dates": [
+            {
+              "value": "2026-07-14",
+              "normalized": "2026-07-14"
+            }
+          ],
+          "times": [],
+          "money": [
+            {
+              "value": "NPR 15,000",
+              "normalized": "NPR 15000"
+            },
+            {
+              "value": "NPR 500",
+              "normalized": "NPR 500"
+            },
+            {
+              "value": "NPR 12,000",
+              "normalized": "NPR 12000"
+            },
+            {
+              "value": "NPR 12,500",
+              "normalized": "NPR 12500"
+            }
+          ],
+          "bank_accounts": [
+            {
+              "value": "01903015472901",
+              "normalized": "01903015472901"
+            }
+          ],
+          "card_numbers": [],
+          "transaction_ids": [
+            {
+              "value": "ESW-2026-0714-88231",
+              "normalized": "ESW-2026-0714-88231"
+            }
+          ],
+          "esewa_ids": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "khalti_ids": [],
+          "imepay_ids": [],
+          "otp": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "hashes_md5": [],
+          "hashes_sha1": [],
+          "hashes_sha256": [],
+          "hashes_sha512": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {
+          "reward": 4,
+          "wallet": 3,
+          "threat": 2,
+          "verify": 1,
+          "account": 1,
+          "bank": 1,
+          "winner": 1
+        },
+        "risk_signals": {
+          "urgency": 0,
+          "financial": 9,
+          "credential": 2,
+          "threat": 2
+        },
+        "statistics": {
+          "characters": 725,
+          "words": 108,
+          "lines": 11,
+          "average_line_length": 65.0,
+          "languages_detected": [
+            "english",
+            "nepali_unicode"
+          ],
+          "entity_count": 14,
+          "cleaning_operations": [
+            "entities_protected(12)",
+            "lines_merged(2)"
+          ],
+          "ocr_corrections": [],
+          "protected_entities": 12
+        },
+        "processing_time_ms": 4.93
+      },
+      "enhancement": {
+        "case_id": "CASE_0CD406813C",
+        "evidence_id": "EVID_00027",
+        "cleaned_text": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: अनलाइन ठगी सम्बन्धमा उजुरी।\nI, Sunita Rai (+9779841002233), received an SMS on 2026-07-14\nclaiming I had won NPR 15,000 in an eSewa Dashain cashback draw.\nI was directed to https://esewa-bonus-claim.xyz/verify?ref=DSN2026 and asked to pay a service fee of NPR 500 to eSewa ID 9812345678. I paid this amount\n(transaction ESW-2026-0714-88231). I was then asked for a further NPR 12,000 to the bank account 01903015472901, which I also paid.\nThe contact number used was +9779812345678 and the email address was\nreward.center2026@gmail.com. No cashback was ever received.\nI request investigation and recovery of NPR 12,500.",
+        "enhanced_text": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: अनलाइन ठगी सम्बन्धमा उजुरी।\nI, Sunita Rai (+9779841002233), received an SMS on 2026-07-14\nclaiming I had won NPR 15,000 in an eSewa Dashain cashback draw.\nI was directed to https://esewa-bonus-claim.xyz/verify?ref=DSN2026 and asked to pay a service fee of NPR 500 to eSewa ID 9812345678. I paid this amount\n(transaction ESW-2026-0714-88231). I was then asked for a further NPR 12,000 to the bank account 01903015472901, which I also paid.\nThe contact number used was +9779812345678 and the email address was\nreward.center2026@gmail.com. No cashback was ever received.\nI request investigation and recovery of NPR 12,500.",
+        "ui_text": "",
+        "message_text": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: अनलाइन ठगी सम्बन्धमा उजुरी।\nI, Sunita Rai (+9779841002233), received an SMS on 2026-07-14\nclaiming I had won NPR 15,000 in an eSewa Dashain cashback draw.\nI was directed to https://esewa-bonus-claim.xyz/verify?ref=DSN2026 and asked to pay a service fee of NPR 500 to eSewa ID 9812345678. I paid this amount\n(transaction ESW-2026-0714-88231). I was then asked for a further NPR 12,000 to the bank account 01903015472901, which I also paid.\nThe contact number used was +9779812345678 and the email address was\nreward.center2026@gmail.com. No cashback was ever received.\nI request investigation and recovery of NPR 12,500.",
+        "layout": [
+          {
+            "line": 1,
+            "role": "message",
+            "text": "Complaint to Cyber Bureau, Nepal Police"
+          },
+          {
+            "line": 2,
+            "role": "message",
+            "text": "श्रीमान् प्रमुख ज्यू,"
+          },
+          {
+            "line": 3,
+            "role": "message",
+            "text": "साइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।"
+          },
+          {
+            "line": 4,
+            "role": "message",
+            "text": "विषय: अनलाइन ठगी सम्बन्धमा उजुरी।"
+          },
+          {
+            "line": 5,
+            "role": "message",
+            "text": "I, Sunita Rai (+9779841002233), received an SMS on 2026-07-14"
+          },
+          {
+            "line": 6,
+            "role": "message",
+            "text": "claiming I had won NPR 15,000 in an eSewa Dashain cashback draw."
+          },
+          {
+            "line": 7,
+            "role": "message",
+            "text": "I was directed to https://esewa-bonus-claim.xyz/verify?ref=DSN2026 and asked to pay a service fee of NPR 500 to eSewa ID 9812345678. I paid this amount"
+          },
+          {
+            "line": 8,
+            "role": "message",
+            "text": "(transaction ESW-2026-0714-88231). I was then asked for a further NPR 12,000 to the bank account 01903015472901, which I also paid."
+          },
+          {
+            "line": 9,
+            "role": "message",
+            "text": "The contact number used was +9779812345678 and the email address was"
+          },
+          {
+            "line": 10,
+            "role": "message",
+            "text": "reward.center2026@gmail.com. No cashback was ever received."
+          },
+          {
+            "line": 11,
+            "role": "message",
+            "text": "I request investigation and recovery of NPR 12,500."
+          }
+        ],
+        "corrections": [],
+        "correction_statistics": {
+          "total_corrections": 0,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 0,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 11,
+          "lines_high_confidence": 11,
+          "lines_correctable": 0,
+          "document_confidence": 1.0,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 2.05
+      },
+      "semantic_correction": {
+        "case_id": "CASE_0CD406813C",
+        "evidence_id": "EVID_00027",
+        "enhanced_text": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: अनलाइन ठगी सम्बन्धमा उजुरी।\nI, Sunita Rai (+9779841002233), received an SMS on 2026-07-14\nclaiming I had won NPR 15,000 in an eSewa Dashain cashback draw.\nI was directed to https://esewa-bonus-claim.xyz/verify?ref=DSN2026 and asked to pay a service fee of NPR 500 to eSewa ID 9812345678. I paid this amount\n(transaction ESW-2026-0714-88231). I was then asked for a further NPR 12,000 to the bank account 01903015472901, which I also paid.\nThe contact number used was +9779812345678 and the email address was\nreward.center2026@gmail.com. No cashback was ever received.\nI request investigation and recovery of NPR 12,500.",
+        "semantic_text": "Complaint to Cyber Bureau, Nepal Police श्रीमान् प्रमुख ज्यू, साइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: अनलाइन ठगी सम्बन्धमा उजुरी।\nI, Sunita Rai (+9779841002233), received an SMS on 2026-07-14 claiming I had won NPR 15,000 in an eSewa Dashain cashback draw.\nI was directed to https://esewa-bonus-claim.xyz/verify?ref=DSN2026 and asked to pay a service fee of NPR 500 to eSewa ID 9812345678. I paid this amount\n(transaction ESW-2026-0714-88231). I was then asked for a further NPR 12,000 to the bank account 01903015472901, which I also paid.\nThe contact number used was +9779812345678 and the email address was\nreward.center2026@gmail.com. No cashback was ever received.\nI request investigation and recovery of NPR 12,500.",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {
+          "urls": [
+            {
+              "value": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026",
+              "normalized": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026"
+            }
+          ],
+          "domains": [
+            {
+              "value": "esewa-bonus-claim.xyz",
+              "normalized": "esewa-bonus-claim.xyz"
+            },
+            {
+              "value": "gmail.com",
+              "normalized": "gmail.com"
+            }
+          ],
+          "emails": [
+            {
+              "value": "reward.center2026@gmail.com",
+              "normalized": "reward.center2026@gmail.com"
+            }
+          ],
+          "phones": [
+            {
+              "value": "+9779841002233",
+              "normalized": "+9779841002233"
+            },
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "dates": [
+            {
+              "value": "2026-07-14",
+              "normalized": "2026-07-14"
+            }
+          ],
+          "money": [
+            {
+              "value": "NPR 15,000",
+              "normalized": "NPR 15000"
+            },
+            {
+              "value": "NPR 500",
+              "normalized": "NPR 500"
+            },
+            {
+              "value": "NPR 12,000",
+              "normalized": "NPR 12000"
+            },
+            {
+              "value": "NPR 12,500",
+              "normalized": "NPR 12500"
+            }
+          ],
+          "bank_accounts": [
+            {
+              "value": "01903015472901",
+              "normalized": "01903015472901"
+            }
+          ],
+          "transaction_ids": [
+            {
+              "value": "ESW-2026-0714-88231",
+              "normalized": "ESW-2026-0714-88231"
+            }
+          ],
+          "esewa_ids": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ]
+        },
+        "statistics": {
+          "suspicious_tokens": 0,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 12,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english",
+            "nepali_unicode"
+          ]
+        },
+        "processing_time_ms": 2.55
+      }
+    },
+    {
+      "case_id": "CASE_0CD406813C",
+      "evidence_id": "EVID_00028",
+      "file_name": "05_bank_statement.csv",
+      "file_hash": "4bf76c0070966e3953399f40b5e7e857385972901f7f0ec90d1f62a8883a1b2d",
+      "file_size": "237",
+      "upload_time": "2026-08-21T06:37:35.597Z",
+      "processing_time_ms": 15.9,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 1.0,
+          "text": "date,description,amount_npr,channel\n2026-07-14,eSewa load to 9812345678,-500,mobile_banking\n2026-07-15,IBFT to 01903015472901,-12000,mobile_banking\n2026-07-15,Balance inquiry,0,mobile_banking\n2026-07-01,Salary credit,52000,transfer",
+          "lines": [
+            {
+              "text": "date,description,amount_npr,channel",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "2026-07-14,eSewa load to 9812345678,-500,mobile_banking",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "2026-07-15,IBFT to 01903015472901,-12000,mobile_banking",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "2026-07-15,Balance inquiry,0,mobile_banking",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "2026-07-01,Salary credit,52000,transfer",
+              "confidence": 1.0,
+              "bbox": []
+            }
+          ],
+          "bounding_boxes": [
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          "preprocessing_steps": [
+            "none(text_file)"
+          ]
+        }
+      ],
+      "raw_text": "date,description,amount_npr,channel\n2026-07-14,eSewa load to 9812345678,-500,mobile_banking\n2026-07-15,IBFT to 01903015472901,-12000,mobile_banking\n2026-07-15,Balance inquiry,0,mobile_banking\n2026-07-01,Salary credit,52000,transfer",
+      "average_confidence": 1.0,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_0CD406813C",
+        "evidence_id": "EVID_00028",
+        "raw_text": "date,description,amount_npr,channel\n2026-07-14,eSewa load to 9812345678,-500,mobile_banking\n2026-07-15,IBFT to 01903015472901,-12000,mobile_banking\n2026-07-15,Balance inquiry,0,mobile_banking\n2026-07-01,Salary credit,52000,transfer",
+        "cleaned_text": "date,description,amount_npr,channel\n2026-07-14,eSewa load to 9812345678,-500,mobile_banking\n2026-07-15,IBFT to 01903015472901,-12000,mobile_banking\n2026-07-15,Balance inquiry,0,mobile_banking\n2026-07-01,Salary credit,52000,transfer",
+        "language": "english",
+        "line_languages": {
+          "1": "english",
+          "2": "english",
+          "3": "english",
+          "4": "english",
+          "5": "english"
+        },
+        "entities": {
+          "urls": [],
+          "domains": [],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "emails": [],
+          "phones": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "dates": [
+            {
+              "value": "2026-07-14",
+              "normalized": "2026-07-14"
+            },
+            {
+              "value": "2026-07-15",
+              "normalized": "2026-07-15"
+            },
+            {
+              "value": "2026-07-01",
+              "normalized": "2026-07-01"
+            }
+          ],
+          "times": [],
+          "money": [],
+          "bank_accounts": [],
+          "card_numbers": [],
+          "transaction_ids": [],
+          "esewa_ids": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "khalti_ids": [],
+          "imepay_ids": [],
+          "otp": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "hashes_md5": [],
+          "hashes_sha1": [],
+          "hashes_sha256": [],
+          "hashes_sha512": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {
+          "wallet": 1,
+          "payment": 1
+        },
+        "risk_signals": {
+          "urgency": 0,
+          "financial": 2,
+          "credential": 0,
+          "threat": 0
+        },
+        "statistics": {
+          "characters": 231,
+          "words": 12,
+          "lines": 5,
+          "average_line_length": 45.4,
+          "languages_detected": [
+            "english"
+          ],
+          "entity_count": 5,
+          "cleaning_operations": [
+            "entities_protected(6)"
+          ],
+          "ocr_corrections": [],
+          "protected_entities": 6
+        },
+        "processing_time_ms": 1.25
+      },
+      "enhancement": {
+        "case_id": "CASE_0CD406813C",
+        "evidence_id": "EVID_00028",
+        "cleaned_text": "date,description,amount_npr,channel\n2026-07-14,eSewa load to 9812345678,-500,mobile_banking\n2026-07-15,IBFT to 01903015472901,-12000,mobile_banking\n2026-07-15,Balance inquiry,0,mobile_banking\n2026-07-01,Salary credit,52000,transfer",
+        "enhanced_text": "date,description,amount_npr,channel\n2026-07-14,eSewa load to 9812345678,-500,mobile_banking\n2026-07-15,IBFT to 01903015472901,-12000,mobile_banking\n2026-07-15,Balance inquiry,0,mobile_banking\n2026-07-01,Salary credit,52000,transfer",
+        "ui_text": "",
+        "message_text": "date,description,amount_npr,channel\n2026-07-14,eSewa load to 9812345678,-500,mobile_banking\n2026-07-15,IBFT to 01903015472901,-12000,mobile_banking\n2026-07-15,Balance inquiry,0,mobile_banking\n2026-07-01,Salary credit,52000,transfer",
+        "layout": [
+          {
+            "line": 1,
+            "role": "message",
+            "text": "date,description,amount_npr,channel"
+          },
+          {
+            "line": 2,
+            "role": "message",
+            "text": "2026-07-14,eSewa load to 9812345678,-500,mobile_banking"
+          },
+          {
+            "line": 3,
+            "role": "message",
+            "text": "2026-07-15,IBFT to 01903015472901,-12000,mobile_banking"
+          },
+          {
+            "line": 4,
+            "role": "message",
+            "text": "2026-07-15,Balance inquiry,0,mobile_banking"
+          },
+          {
+            "line": 5,
+            "role": "message",
+            "text": "2026-07-01,Salary credit,52000,transfer"
+          }
+        ],
+        "corrections": [],
+        "correction_statistics": {
+          "total_corrections": 0,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 0,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 5,
+          "lines_high_confidence": 5,
+          "lines_correctable": 0,
+          "document_confidence": 1.0,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 0.6
+      },
+      "semantic_correction": {
+        "case_id": "CASE_0CD406813C",
+        "evidence_id": "EVID_00028",
+        "enhanced_text": "date,description,amount_npr,channel\n2026-07-14,eSewa load to 9812345678,-500,mobile_banking\n2026-07-15,IBFT to 01903015472901,-12000,mobile_banking\n2026-07-15,Balance inquiry,0,mobile_banking\n2026-07-01,Salary credit,52000,transfer",
+        "semantic_text": "date,description,amount_npr,channel\n2026-07-14,eSewa load to 9812345678,-500,mobile_banking\n2026-07-15,IBFT to 01903015472901,-12000,mobile_banking\n2026-07-15,Balance inquiry,0,mobile_banking\n2026-07-01,Salary credit,52000,transfer",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {
+          "phones": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "dates": [
+            {
+              "value": "2026-07-14",
+              "normalized": "2026-07-14"
+            },
+            {
+              "value": "2026-07-15",
+              "normalized": "2026-07-15"
+            },
+            {
+              "value": "2026-07-01",
+              "normalized": "2026-07-01"
+            }
+          ],
+          "esewa_ids": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ]
+        },
+        "statistics": {
+          "suspicious_tokens": 0,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 6,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english"
+          ]
+        },
+        "processing_time_ms": 0.77
+      }
+    },
+    {
+      "case_id": "CASE_0CD406813C",
+      "evidence_id": "EVID_00029",
+      "file_name": "04_phishing_email.txt",
+      "file_hash": "e094c54741fc7f917edb2ed1de466f4b06e7db8a51ef1414d85eb77fa4bda9f8",
+      "file_size": "828",
+      "upload_time": "2026-08-21T06:37:35.716Z",
+      "processing_time_ms": 124.6,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 1.0,
+          "text": "From: eSewa Reward Center <reward.center2026@gmail.com>\nTo: sunita.rai88@gmail.com\nDate: Mon, 14 Jul 2026 09:12:04 +0545\nSubject: URGENT - Claim your Dashain cashback of NPR 15,000\n\nDear Valued Customer,\n\nतपाईंले दशैं क्यासब्याक जित्नुभएको छ। कृपया २४ घण्टाभित्र दाबी गर्नुहोस्।\n\nYou have won a Dashain cashback of NPR 15,000. To release the amount we must\nfirst verify your wallet with a refundable service fee of NPR 500.\n\n  Verification link : https://esewa-bonus-claim.xyz/verify?ref=DSN2026\n  eSewa ID          : 9812345678\n  Alternate bank    : 01903015472901 (Nabil Bank)\n  Support hotline   : +9779812345678\n\nFailure to verify within 24 hours will forfeit the reward.\n\nRegards,\nReward Center",
+          "lines": [
+            {
+              "text": "From: eSewa Reward Center <reward.center2026@gmail.com>",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "To: sunita.rai88@gmail.com",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "Date: Mon, 14 Jul 2026 09:12:04 +0545",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "Subject: URGENT - Claim your Dashain cashback of NPR 15,000",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "Dear Valued Customer,",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "तपाईंले दशैं क्यासब्याक जित्नुभएको छ। कृपया २४ घण्टाभित्र दाबी गर्नुहोस्।",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "You have won a Dashain cashback of NPR 15,000. To release the amount we must",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "first verify your wallet with a refundable service fee of NPR 500.",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "  Verification link : https://esewa-bonus-claim.xyz/verify?ref=DSN2026",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "  eSewa ID          : 9812345678",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "  Alternate bank    : 01903015472901 (Nabil Bank)",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "  Support hotline   : +9779812345678",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "Failure to verify within 24 hours will forfeit the reward.",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "Regards,",
+              "confidence": 1.0,
+              "bbox": []
+            },
+            {
+              "text": "Reward Center",
+              "confidence": 1.0,
+              "bbox": []
+            }
+          ],
+          "bounding_boxes": [
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+          ],
+          "preprocessing_steps": [
+            "none(text_file)"
+          ]
+        }
+      ],
+      "raw_text": "From: eSewa Reward Center <reward.center2026@gmail.com>\nTo: sunita.rai88@gmail.com\nDate: Mon, 14 Jul 2026 09:12:04 +0545\nSubject: URGENT - Claim your Dashain cashback of NPR 15,000\n\nDear Valued Customer,\n\nतपाईंले दशैं क्यासब्याक जित्नुभएको छ। कृपया २४ घण्टाभित्र दाबी गर्नुहोस्।\n\nYou have won a Dashain cashback of NPR 15,000. To release the amount we must\nfirst verify your wallet with a refundable service fee of NPR 500.\n\n  Verification link : https://esewa-bonus-claim.xyz/verify?ref=DSN2026\n  eSewa ID          : 9812345678\n  Alternate bank    : 01903015472901 (Nabil Bank)\n  Support hotline   : +9779812345678\n\nFailure to verify within 24 hours will forfeit the reward.\n\nRegards,\nReward Center",
+      "average_confidence": 1.0,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_0CD406813C",
+        "evidence_id": "EVID_00029",
+        "raw_text": "From: eSewa Reward Center <reward.center2026@gmail.com>\nTo: sunita.rai88@gmail.com\nDate: Mon, 14 Jul 2026 09:12:04 +0545\nSubject: URGENT - Claim your Dashain cashback of NPR 15,000\n\nDear Valued Customer,\n\nतपाईंले दशैं क्यासब्याक जित्नुभएको छ। कृपया २४ घण्टाभित्र दाबी गर्नुहोस्।\n\nYou have won a Dashain cashback of NPR 15,000. To release the amount we must\nfirst verify your wallet with a refundable service fee of NPR 500.\n\n  Verification link : https://esewa-bonus-claim.xyz/verify?ref=DSN2026\n  eSewa ID          : 9812345678\n  Alternate bank    : 01903015472901 (Nabil Bank)\n  Support hotline   : +9779812345678\n\nFailure to verify within 24 hours will forfeit the reward.\n\nRegards,\nReward Center",
+        "cleaned_text": "From: eSewa Reward Center <reward.center2026@gmail.com>\nTo: sunita.rai88@gmail.com\nDate: Mon, 14 Jul 2026 09:12:04 +0545\nSubject: URGENT - Claim your Dashain cashback of NPR 15,000\n\nDear Valued Customer,\n\nतपाईंले दशैं क्यासब्याक जित्नुभएको छ। कृपया २४ घण्टाभित्र दाबी गर्नुहोस्।\n\nYou have won a Dashain cashback of NPR 15,000. To release the amount we must first verify your wallet with a refundable service fee of NPR 500.\n\nVerification link: https://esewa-bonus-claim.xyz/verify?ref=DSN2026\neSewa ID: 9812345678\nAlternate bank: 01903015472901 (Nabil Bank)\nSupport hotline: +9779812345678\n\nFailure to verify within 24 hours will forfeit the reward.\n\nRegards,\nReward Center",
+        "language": "mixed",
+        "line_languages": {
+          "1": "english",
+          "2": "english",
+          "3": "english",
+          "4": "english",
+          "5": "unknown",
+          "6": "english",
+          "7": "unknown",
+          "8": "nepali_unicode",
+          "9": "unknown",
+          "10": "english",
+          "11": "english",
+          "12": "unknown",
+          "13": "english",
+          "14": "english",
+          "15": "english",
+          "16": "english",
+          "17": "unknown",
+          "18": "english",
+          "19": "unknown",
+          "20": "english",
+          "21": "english"
+        },
+        "entities": {
+          "urls": [
+            {
+              "value": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026",
+              "normalized": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026"
+            }
+          ],
+          "domains": [
+            {
+              "value": "esewa-bonus-claim.xyz",
+              "normalized": "esewa-bonus-claim.xyz"
+            },
+            {
+              "value": "gmail.com",
+              "normalized": "gmail.com"
+            }
+          ],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "emails": [
+            {
+              "value": "reward.center2026@gmail.com",
+              "normalized": "reward.center2026@gmail.com"
+            },
+            {
+              "value": "sunita.rai88@gmail.com",
+              "normalized": "sunita.rai88@gmail.com"
+            }
+          ],
+          "phones": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "dates": [
+            {
+              "value": "14 Jul 2026",
+              "normalized": "14 Jul 2026"
+            }
+          ],
+          "times": [
+            {
+              "value": "09:12:04",
+              "normalized": "09:12:04"
+            }
+          ],
+          "money": [
+            {
+              "value": "NPR 15,000",
+              "normalized": "NPR 15000"
+            },
+            {
+              "value": "NPR 500",
+              "normalized": "NPR 500"
+            }
+          ],
+          "bank_accounts": [],
+          "card_numbers": [],
+          "transaction_ids": [],
+          "esewa_ids": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "khalti_ids": [],
+          "imepay_ids": [],
+          "otp": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "hashes_md5": [],
+          "hashes_sha1": [],
+          "hashes_sha256": [],
+          "hashes_sha512": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {
+          "reward": 7,
+          "verify": 4,
+          "wallet": 4,
+          "urgent": 2,
+          "bank": 2,
+          "winner": 1
+        },
+        "risk_signals": {
+          "urgency": 2,
+          "financial": 14,
+          "credential": 4,
+          "threat": 0
+        },
+        "statistics": {
+          "characters": 673,
+          "words": 91,
+          "lines": 14,
+          "average_line_length": 46.7,
+          "languages_detected": [
+            "english",
+            "nepali_unicode"
+          ],
+          "entity_count": 11,
+          "cleaning_operations": [
+            "entities_protected(11)",
+            "line_prefix_junk_removed",
+            "whitespace_normalized",
+            "lines_merged(1)"
+          ],
+          "ocr_corrections": [],
+          "protected_entities": 11
+        },
+        "processing_time_ms": 4.46
+      },
+      "enhancement": {
+        "case_id": "CASE_0CD406813C",
+        "evidence_id": "EVID_00029",
+        "cleaned_text": "From: eSewa Reward Center <reward.center2026@gmail.com>\nTo: sunita.rai88@gmail.com\nDate: Mon, 14 Jul 2026 09:12:04 +0545\nSubject: URGENT - Claim your Dashain cashback of NPR 15,000\n\nDear Valued Customer,\n\nतपाईंले दशैं क्यासब्याक जित्नुभएको छ। कृपया २४ घण्टाभित्र दाबी गर्नुहोस्।\n\nYou have won a Dashain cashback of NPR 15,000. To release the amount we must first verify your wallet with a refundable service fee of NPR 500.\n\nVerification link: https://esewa-bonus-claim.xyz/verify?ref=DSN2026\neSewa ID: 9812345678\nAlternate bank: 01903015472901 (Nabil Bank)\nSupport hotline: +9779812345678\n\nFailure to verify within 24 hours will forfeit the reward.\n\nRegards,\nReward Center",
+        "enhanced_text": "From: eSewa Reward Center <reward.center2026@gmail.com>\nTo: sunita.rai88@gmail.com\nDate: Mon, 14 Jul 2026 09:12:04 +0545\nSubject: URGENT - Claim your Dashain cashback of NPR 15,000\n\nDear Valued Customer,\n\nतपाईंले दशैं क्यासब्याक जित्नुभएको छ। कृपया २४ घण्टाभित्र दाबी गर्नुहोस्।\n\nYou have won a Dashain cashback of NPR 15,000. To release the amount we must first verify your wallet with a refundable service fee of NPR 500.\n\nVerification link: https://esewa-bonus-claim.xyz/verify?ref=DSN2026\neSewa ID: 9812345678\nAlternate bank: 01903015472901 (Nabil Bank)\nSupport hotline: +9779812345678\n\nFailure to verify within 24 hours will forfeit the reward.\n\nRegards,\nReward Center",
+        "ui_text": "",
+        "message_text": "From: eSewa Reward Center <reward.center2026@gmail.com>\nTo: sunita.rai88@gmail.com\nDate: Mon, 14 Jul 2026 09:12:04 +0545\nSubject: URGENT - Claim your Dashain cashback of NPR 15,000\nDear Valued Customer,\nतपाईंले दशैं क्यासब्याक जित्नुभएको छ। कृपया २४ घण्टाभित्र दाबी गर्नुहोस्।\nYou have won a Dashain cashback of NPR 15,000. To release the amount we must first verify your wallet with a refundable service fee of NPR 500.\nVerification link: https://esewa-bonus-claim.xyz/verify?ref=DSN2026\neSewa ID: 9812345678\nAlternate bank: 01903015472901 (Nabil Bank)\nSupport hotline: +9779812345678\nFailure to verify within 24 hours will forfeit the reward.\nRegards,\nReward Center",
+        "layout": [
+          {
+            "line": 1,
+            "role": "message",
+            "text": "From: eSewa Reward Center <reward.center2026@gmail.com>"
+          },
+          {
+            "line": 2,
+            "role": "message",
+            "text": "To: sunita.rai88@gmail.com"
+          },
+          {
+            "line": 3,
+            "role": "message",
+            "text": "Date: Mon, 14 Jul 2026 09:12:04 +0545"
+          },
+          {
+            "line": 4,
+            "role": "message",
+            "text": "Subject: URGENT - Claim your Dashain cashback of NPR 15,000"
+          },
+          {
+            "line": 6,
+            "role": "message",
+            "text": "Dear Valued Customer,"
+          },
+          {
+            "line": 8,
+            "role": "message",
+            "text": "तपाईंले दशैं क्यासब्याक जित्नुभएको छ। कृपया २४ घण्टाभित्र दाबी गर्नुहोस्।"
+          },
+          {
+            "line": 10,
+            "role": "message",
+            "text": "You have won a Dashain cashback of NPR 15,000. To release the amount we must first verify your wallet with a refundable service fee of NPR 500."
+          },
+          {
+            "line": 12,
+            "role": "message",
+            "text": "Verification link: https://esewa-bonus-claim.xyz/verify?ref=DSN2026"
+          },
+          {
+            "line": 13,
+            "role": "message",
+            "text": "eSewa ID: 9812345678"
+          },
+          {
+            "line": 14,
+            "role": "message",
+            "text": "Alternate bank: 01903015472901 (Nabil Bank)"
+          },
+          {
+            "line": 15,
+            "role": "message",
+            "text": "Support hotline: +9779812345678"
+          },
+          {
+            "line": 17,
+            "role": "message",
+            "text": "Failure to verify within 24 hours will forfeit the reward."
+          },
+          {
+            "line": 19,
+            "role": "message",
+            "text": "Regards,"
+          },
+          {
+            "line": 20,
+            "role": "message",
+            "text": "Reward Center"
+          }
+        ],
+        "corrections": [],
+        "correction_statistics": {
+          "total_corrections": 0,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 0,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 14,
+          "lines_high_confidence": 14,
+          "lines_correctable": 0,
+          "document_confidence": 1.0,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 7.24
+      },
+      "semantic_correction": {
+        "case_id": "CASE_0CD406813C",
+        "evidence_id": "EVID_00029",
+        "enhanced_text": "From: eSewa Reward Center <reward.center2026@gmail.com>\nTo: sunita.rai88@gmail.com\nDate: Mon, 14 Jul 2026 09:12:04 +0545\nSubject: URGENT - Claim your Dashain cashback of NPR 15,000\n\nDear Valued Customer,\n\nतपाईंले दशैं क्यासब्याक जित्नुभएको छ। कृपया २४ घण्टाभित्र दाबी गर्नुहोस्।\n\nYou have won a Dashain cashback of NPR 15,000. To release the amount we must first verify your wallet with a refundable service fee of NPR 500.\n\nVerification link: https://esewa-bonus-claim.xyz/verify?ref=DSN2026\neSewa ID: 9812345678\nAlternate bank: 01903015472901 (Nabil Bank)\nSupport hotline: +9779812345678\n\nFailure to verify within 24 hours will forfeit the reward.\n\nRegards,\nReward Center",
+        "semantic_text": "From: eSewa Reward Center <reward.center2026@gmail.com>\nTo: sunita.rai88@gmail.com\nDate: Mon, 14 Jul 2026 09:12:04 +0545\nSubject: URGENT - Claim your Dashain cashback of NPR 15,000\n\nDear Valued Customer,\n\nतपाईंले दशैं क्यासब्याक जित्नुभएको छ। कृपया २४ घण्टाभित्र दाबी गर्नुहोस्।\n\nYou have won a Dashain cashback of NPR 15,000. To release the amount we must first verify your wallet with a refundable service fee of NPR 500.\n\nVerification link: https://esewa-bonus-claim.xyz/verify?ref=DSN2026 eSewa ID: 9812345678\nAlternate bank: 01903015472901 (Nabil Bank)\nSupport hotline: +9779812345678\n\nFailure to verify within 24 hours will forfeit the reward.\n\nRegards,\nReward Center",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {
+          "urls": [
+            {
+              "value": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026",
+              "normalized": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026"
+            }
+          ],
+          "domains": [
+            {
+              "value": "esewa-bonus-claim.xyz",
+              "normalized": "esewa-bonus-claim.xyz"
+            },
+            {
+              "value": "gmail.com",
+              "normalized": "gmail.com"
+            }
+          ],
+          "emails": [
+            {
+              "value": "reward.center2026@gmail.com",
+              "normalized": "reward.center2026@gmail.com"
+            },
+            {
+              "value": "sunita.rai88@gmail.com",
+              "normalized": "sunita.rai88@gmail.com"
+            }
+          ],
+          "phones": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "dates": [
+            {
+              "value": "14 Jul 2026",
+              "normalized": "14 Jul 2026"
+            }
+          ],
+          "times": [
+            {
+              "value": "09:12:04",
+              "normalized": "09:12:04"
+            }
+          ],
+          "money": [
+            {
+              "value": "NPR 15,000",
+              "normalized": "NPR 15000"
+            },
+            {
+              "value": "NPR 500",
+              "normalized": "NPR 500"
+            }
+          ],
+          "esewa_ids": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ]
+        },
+        "statistics": {
+          "suspicious_tokens": 0,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 11,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english",
+            "nepali_unicode"
+          ]
+        },
+        "processing_time_ms": 2.64
+      }
+    },
+    {
+      "case_id": "CASE_0CD406813C",
+      "evidence_id": "EVID_00030",
+      "file_name": "03_esewa_payment_receipt.jpg",
+      "file_hash": "82cca081731e572e0951071a23a00ca1ae6d34c40af85a267239d6972f35a028",
+      "file_size": "41556",
+      "upload_time": "2026-08-21T06:37:35.842Z",
+      "processing_time_ms": 3923.0,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 0.9956,
+          "text": "eSewa Payment Successful\nAmount\nRs. 500.00\nTransaction\nESW-2026-0714-88231\nDate & Time 2026-07-14 11:42 AM\nPaid To\n9812345678\nPurpose\nCashback service fee\nSender\n+9779841002233",
+          "lines": [
+            {
+              "text": "eSewa Payment Successful",
+              "confidence": 0.9998,
+              "bbox": [
+                [
+                  8.0,
+                  6.0
+                ],
+                [
+                  404.0,
+                  6.0
+                ],
+                [
+                  404.0,
+                  36.0
+                ],
+                [
+                  8.0,
+                  36.0
+                ]
+              ]
+            },
+            {
+              "text": "Amount",
+              "confidence": 0.9999,
+              "bbox": [
+                [
+                  7.0,
+                  50.0
+                ],
+                [
+                  86.0,
+                  50.0
+                ],
+                [
+                  86.0,
+                  71.0
+                ],
+                [
+                  7.0,
+                  71.0
+                ]
+              ]
+            },
+            {
+              "text": "Rs. 500.00",
+              "confidence": 0.9891,
+              "bbox": [
+                [
+                  127.0,
+                  50.0
+                ],
+                [
+                  231.0,
+                  50.0
+                ],
+                [
+                  231.0,
+                  71.0
+                ],
+                [
+                  127.0,
+                  71.0
+                ]
+              ]
+            },
+            {
+              "text": "Transaction",
+              "confidence": 1.0,
+              "bbox": [
+                [
+                  8.0,
+                  85.0
+                ],
+                [
+                  123.0,
+                  85.0
+                ],
+                [
+                  123.0,
+                  104.0
+                ],
+                [
+                  8.0,
+                  104.0
+                ]
+              ]
+            },
+            {
+              "text": "ESW-2026-0714-88231",
+              "confidence": 0.9994,
+              "bbox": [
+                [
+                  124.0,
+                  85.0
+                ],
+                [
+                  355.0,
+                  85.0
+                ],
+                [
+                  355.0,
+                  104.0
+                ],
+                [
+                  124.0,
+                  104.0
+                ]
+              ]
+            },
+            {
+              "text": "Date & Time 2026-07-14 11:42 AM",
+              "confidence": 0.9691,
+              "bbox": [
+                [
+                  8.0,
+                  119.0
+                ],
+                [
+                  343.0,
+                  119.0
+                ],
+                [
+                  343.0,
+                  139.0
+                ],
+                [
+                  8.0,
+                  139.0
+                ]
+              ]
+            },
+            {
+              "text": "Paid To",
+              "confidence": 0.9992,
+              "bbox": [
+                [
+                  7.0,
+                  152.0
+                ],
+                [
+                  80.0,
+                  152.0
+                ],
+                [
+                  80.0,
+                  172.0
+                ],
+                [
+                  7.0,
+                  172.0
+                ]
+              ]
+            },
+            {
+              "text": "9812345678",
+              "confidence": 1.0,
+              "bbox": [
+                [
+                  119.0,
+                  153.0
+                ],
+                [
+                  237.0,
+                  153.0
+                ],
+                [
+                  237.0,
+                  172.0
+                ],
+                [
+                  119.0,
+                  172.0
+                ]
+              ]
+            },
+            {
+              "text": "Purpose",
+              "confidence": 1.0,
+              "bbox": [
+                [
+                  7.0,
+                  187.0
+                ],
+                [
+                  91.0,
+                  187.0
+                ],
+                [
+                  91.0,
+                  211.0
+                ],
+                [
+                  7.0,
+                  211.0
+                ]
+              ]
+            },
+            {
+              "text": "Cashback service fee",
+              "confidence": 0.9912,
+              "bbox": [
+                [
+                  128.0,
+                  189.0
+                ],
+                [
+                  329.0,
+                  189.0
+                ],
+                [
+                  329.0,
+                  206.0
+                ],
+                [
+                  128.0,
+                  206.0
+                ]
+              ]
+            },
+            {
+              "text": "Sender",
+              "confidence": 1.0,
+              "bbox": [
+                [
+                  7.0,
+                  220.0
+                ],
+                [
+                  80.0,
+                  220.0
+                ],
+                [
+                  80.0,
+                  241.0
+                ],
+                [
+                  7.0,
+                  241.0
+                ]
+              ]
+            },
+            {
+              "text": "+9779841002233",
+              "confidence": 0.9992,
+              "bbox": [
+                [
+                  124.0,
+                  222.0
+                ],
+                [
+                  288.0,
+                  222.0
+                ],
+                [
+                  288.0,
+                  239.0
+                ],
+                [
+                  124.0,
+                  239.0
+                ]
+              ]
+            }
+          ],
+          "bounding_boxes": [
+            [
+              [
+                8.0,
+                6.0
+              ],
+              [
+                404.0,
+                6.0
+              ],
+              [
+                404.0,
+                36.0
+              ],
+              [
+                8.0,
+                36.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                50.0
+              ],
+              [
+                86.0,
+                50.0
+              ],
+              [
+                86.0,
+                71.0
+              ],
+              [
+                7.0,
+                71.0
+              ]
+            ],
+            [
+              [
+                127.0,
+                50.0
+              ],
+              [
+                231.0,
+                50.0
+              ],
+              [
+                231.0,
+                71.0
+              ],
+              [
+                127.0,
+                71.0
+              ]
+            ],
+            [
+              [
+                8.0,
+                85.0
+              ],
+              [
+                123.0,
+                85.0
+              ],
+              [
+                123.0,
+                104.0
+              ],
+              [
+                8.0,
+                104.0
+              ]
+            ],
+            [
+              [
+                124.0,
+                85.0
+              ],
+              [
+                355.0,
+                85.0
+              ],
+              [
+                355.0,
+                104.0
+              ],
+              [
+                124.0,
+                104.0
+              ]
+            ],
+            [
+              [
+                8.0,
+                119.0
+              ],
+              [
+                343.0,
+                119.0
+              ],
+              [
+                343.0,
+                139.0
+              ],
+              [
+                8.0,
+                139.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                152.0
+              ],
+              [
+                80.0,
+                152.0
+              ],
+              [
+                80.0,
+                172.0
+              ],
+              [
+                7.0,
+                172.0
+              ]
+            ],
+            [
+              [
+                119.0,
+                153.0
+              ],
+              [
+                237.0,
+                153.0
+              ],
+              [
+                237.0,
+                172.0
+              ],
+              [
+                119.0,
+                172.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                187.0
+              ],
+              [
+                91.0,
+                187.0
+              ],
+              [
+                91.0,
+                211.0
+              ],
+              [
+                7.0,
+                211.0
+              ]
+            ],
+            [
+              [
+                128.0,
+                189.0
+              ],
+              [
+                329.0,
+                189.0
+              ],
+              [
+                329.0,
+                206.0
+              ],
+              [
+                128.0,
+                206.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                220.0
+              ],
+              [
+                80.0,
+                220.0
+              ],
+              [
+                80.0,
+                241.0
+              ],
+              [
+                7.0,
+                241.0
+              ]
+            ],
+            [
+              [
+                124.0,
+                222.0
+              ],
+              [
+                288.0,
+                222.0
+              ],
+              [
+                288.0,
+                239.0
+              ],
+              [
+                124.0,
+                239.0
+              ]
+            ]
+          ],
+          "preprocessing_steps": [
+            "convert_rgb",
+            "exif_orientation",
+            "clahe",
+            "border_removal+whitespace_trim",
+            "adaptive_threshold"
+          ]
+        }
+      ],
+      "raw_text": "eSewa Payment Successful\nAmount\nRs. 500.00\nTransaction\nESW-2026-0714-88231\nDate & Time 2026-07-14 11:42 AM\nPaid To\n9812345678\nPurpose\nCashback service fee\nSender\n+9779841002233",
+      "average_confidence": 0.9956,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_0CD406813C",
+        "evidence_id": "EVID_00030",
+        "raw_text": "eSewa Payment Successful\nAmount\nRs. 500.00\nTransaction\nESW-2026-0714-88231\nDate & Time 2026-07-14 11:42 AM\nPaid To\n9812345678\nPurpose\nCashback service fee\nSender\n+9779841002233",
+        "cleaned_text": "eSewa Payment Successful\nAmount\nRs. 500.00\nTransaction\nESW-2026-0714-88231\nDate & Time 2026-07-14 11:42 AM\nPaid To\n9812345678\nPurpose\nCashback service fee\nSender\n+9779841002233",
+        "language": "english",
+        "line_languages": {
+          "1": "english",
+          "2": "english",
+          "3": "english",
+          "4": "english",
+          "5": "english",
+          "6": "english",
+          "7": "english",
+          "8": "unknown",
+          "9": "english",
+          "10": "english",
+          "11": "english",
+          "12": "unknown"
+        },
+        "entities": {
+          "urls": [],
+          "domains": [],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "emails": [],
+          "phones": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            },
+            {
+              "value": "+9779841002233",
+              "normalized": "+9779841002233"
+            }
+          ],
+          "dates": [
+            {
+              "value": "2026-07-14",
+              "normalized": "2026-07-14"
+            }
+          ],
+          "times": [
+            {
+              "value": "11:42 AM",
+              "normalized": "11:42 AM"
+            }
+          ],
+          "money": [
+            {
+              "value": "Rs. 500.00",
+              "normalized": "NPR 500"
+            }
+          ],
+          "bank_accounts": [],
+          "card_numbers": [],
+          "transaction_ids": [
+            {
+              "value": "ESW-2026-0714-88231",
+              "normalized": "ESW-2026-0714-88231"
+            }
+          ],
+          "esewa_ids": [],
+          "khalti_ids": [],
+          "imepay_ids": [],
+          "otp": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "hashes_md5": [],
+          "hashes_sha1": [],
+          "hashes_sha256": [],
+          "hashes_sha512": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {
+          "reward": 1,
+          "wallet": 1,
+          "payment": 1
+        },
+        "risk_signals": {
+          "urgency": 0,
+          "financial": 3,
+          "credential": 0,
+          "threat": 0
+        },
+        "statistics": {
+          "characters": 176,
+          "words": 23,
+          "lines": 12,
+          "average_line_length": 13.8,
+          "languages_detected": [
+            "english"
+          ],
+          "entity_count": 6,
+          "cleaning_operations": [
+            "entities_protected(6)"
+          ],
+          "ocr_corrections": [],
+          "protected_entities": 6
+        },
+        "processing_time_ms": 1.13
+      },
+      "enhancement": {
+        "case_id": "CASE_0CD406813C",
+        "evidence_id": "EVID_00030",
+        "cleaned_text": "eSewa Payment Successful\nAmount\nRs. 500.00\nTransaction\nESW-2026-0714-88231\nDate & Time 2026-07-14 11:42 AM\nPaid To\n9812345678\nPurpose\nCashback service fee\nSender\n+9779841002233",
+        "enhanced_text": "eSewa Payment Successful\nAmount\nRs. 500.00\nTransaction\nESW-2026-0714-88231\nDate & Time 2026-07-14 11:42 AM\nPaid To\n9812345678\nPurpose\nCashback service fee\nSender\n+9779841002233",
+        "ui_text": "",
+        "message_text": "eSewa Payment Successful\nAmount\nRs. 500.00\nTransaction\nESW-2026-0714-88231\nDate & Time 2026-07-14 11:42 AM\nPaid To\n9812345678\nPurpose\nCashback service fee\nSender\n+9779841002233",
+        "layout": [
+          {
+            "line": 1,
+            "role": "message",
+            "text": "eSewa Payment Successful"
+          },
+          {
+            "line": 2,
+            "role": "sender",
+            "text": "Amount"
+          },
+          {
+            "line": 3,
+            "role": "message",
+            "text": "Rs. 500.00"
+          },
+          {
+            "line": 4,
+            "role": "sender",
+            "text": "Transaction"
+          },
+          {
+            "line": 5,
+            "role": "message",
+            "text": "ESW-2026-0714-88231"
+          },
+          {
+            "line": 6,
+            "role": "message",
+            "text": "Date & Time 2026-07-14 11:42 AM"
+          },
+          {
+            "line": 7,
+            "role": "sender",
+            "text": "Paid To"
+          },
+          {
+            "line": 8,
+            "role": "message",
+            "text": "9812345678"
+          },
+          {
+            "line": 9,
+            "role": "sender",
+            "text": "Purpose"
+          },
+          {
+            "line": 10,
+            "role": "message",
+            "text": "Cashback service fee"
+          },
+          {
+            "line": 11,
+            "role": "sender",
+            "text": "Sender"
+          },
+          {
+            "line": 12,
+            "role": "message",
+            "text": "+9779841002233"
+          }
+        ],
+        "corrections": [],
+        "correction_statistics": {
+          "total_corrections": 0,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 0,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 12,
+          "lines_high_confidence": 12,
+          "lines_correctable": 0,
+          "document_confidence": 0.9956,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 0.56
+      },
+      "semantic_correction": {
+        "case_id": "CASE_0CD406813C",
+        "evidence_id": "EVID_00030",
+        "enhanced_text": "eSewa Payment Successful\nAmount\nRs. 500.00\nTransaction\nESW-2026-0714-88231\nDate & Time 2026-07-14 11:42 AM\nPaid To\n9812345678\nPurpose\nCashback service fee\nSender\n+9779841002233",
+        "semantic_text": "eSewa Payment Successful\nAmount\nRs. 500.00\nTransaction\nESW-2026-0714-88231\nDate & Time 2026-07-14 11:42 AM\nPaid To\n9812345678\nPurpose\nCashback service fee\nSender\n+9779841002233",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {
+          "phones": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            },
+            {
+              "value": "+9779841002233",
+              "normalized": "+9779841002233"
+            }
+          ],
+          "dates": [
+            {
+              "value": "2026-07-14",
+              "normalized": "2026-07-14"
+            }
+          ],
+          "times": [
+            {
+              "value": "11:42 AM",
+              "normalized": "11:42 AM"
+            }
+          ],
+          "money": [
+            {
+              "value": "Rs. 500.00",
+              "normalized": "NPR 500"
+            }
+          ],
+          "transaction_ids": [
+            {
+              "value": "ESW-2026-0714-88231",
+              "normalized": "ESW-2026-0714-88231"
+            }
+          ]
+        },
+        "statistics": {
+          "suspicious_tokens": 0,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 6,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english"
+          ]
+        },
+        "processing_time_ms": 0.77
+      }
+    },
+    {
+      "case_id": "CASE_0CD406813C",
+      "evidence_id": "EVID_00031",
+      "file_name": "02_messenger_chat.jpg",
+      "file_hash": "7624533fbd367356fab83feb47c09adcfd469d85541e4304f4cd6b9871c4a1c3",
+      "file_size": "48706",
+      "upload_time": "2026-08-21T06:37:39.863Z",
+      "processing_time_ms": 3624.5,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 0.9871,
+          "text": "Messenger - Reward Center\nAgent (+9779812345678)\nSir tapai ko cashback process garna\nसेवा शुल्क पठाउनु पर्छ।\neSewa ID: 9812345678\nYa bank ma: 01903015472901\nMaile Rs 500 pathaye 2026-07-14 ma.\nEmail: reward.center2026@gmail.com",
+          "lines": [
+            {
+              "text": "Messenger - Reward Center",
+              "confidence": 0.9893,
+              "bbox": [
+                [
+                  7.0,
+                  5.0
+                ],
+                [
+                  405.0,
+                  7.0
+                ],
+                [
+                  405.0,
+                  38.0
+                ],
+                [
+                  7.0,
+                  36.0
+                ]
+              ]
+            },
+            {
+              "text": "Agent (+9779812345678)",
+              "confidence": 0.9998,
+              "bbox": [
+                [
+                  8.0,
+                  53.0
+                ],
+                [
+                  247.0,
+                  53.0
+                ],
+                [
+                  247.0,
+                  73.0
+                ],
+                [
+                  8.0,
+                  73.0
+                ]
+              ]
+            },
+            {
+              "text": "Sir tapai ko cashback process garna",
+              "confidence": 0.9919,
+              "bbox": [
+                [
+                  6.0,
+                  83.0
+                ],
+                [
+                  349.0,
+                  85.0
+                ],
+                [
+                  348.0,
+                  109.0
+                ],
+                [
+                  6.0,
+                  107.0
+                ]
+              ]
+            },
+            {
+              "text": "सेवा शुल्क पठाउनु पर्छ।",
+              "confidence": 0.9698,
+              "bbox": [
+                [
+                  5.0,
+                  117.0
+                ],
+                [
+                  180.0,
+                  115.0
+                ],
+                [
+                  181.0,
+                  143.0
+                ],
+                [
+                  5.0,
+                  145.0
+                ]
+              ]
+            },
+            {
+              "text": "eSewa ID: 9812345678",
+              "confidence": 0.9967,
+              "bbox": [
+                [
+                  7.0,
+                  153.0
+                ],
+                [
+                  227.0,
+                  153.0
+                ],
+                [
+                  227.0,
+                  173.0
+                ],
+                [
+                  7.0,
+                  173.0
+                ]
+              ]
+            },
+            {
+              "text": "Ya bank ma: 01903015472901",
+              "confidence": 0.9984,
+              "bbox": [
+                [
+                  7.0,
+                  188.0
+                ],
+                [
+                  293.0,
+                  188.0
+                ],
+                [
+                  293.0,
+                  208.0
+                ],
+                [
+                  7.0,
+                  208.0
+                ]
+              ]
+            },
+            {
+              "text": "Maile Rs 500 pathaye 2026-07-14 ma.",
+              "confidence": 0.9776,
+              "bbox": [
+                [
+                  7.0,
+                  221.0
+                ],
+                [
+                  365.0,
+                  221.0
+                ],
+                [
+                  365.0,
+                  244.0
+                ],
+                [
+                  7.0,
+                  244.0
+                ]
+              ]
+            },
+            {
+              "text": "Email: reward.center2026@gmail.com",
+              "confidence": 0.9734,
+              "bbox": [
+                [
+                  6.0,
+                  254.0
+                ],
+                [
+                  366.0,
+                  255.0
+                ],
+                [
+                  366.0,
+                  279.0
+                ],
+                [
+                  6.0,
+                  278.0
+                ]
+              ]
+            }
+          ],
+          "bounding_boxes": [
+            [
+              [
+                7.0,
+                5.0
+              ],
+              [
+                405.0,
+                7.0
+              ],
+              [
+                405.0,
+                38.0
+              ],
+              [
+                7.0,
+                36.0
+              ]
+            ],
+            [
+              [
+                8.0,
+                53.0
+              ],
+              [
+                247.0,
+                53.0
+              ],
+              [
+                247.0,
+                73.0
+              ],
+              [
+                8.0,
+                73.0
+              ]
+            ],
+            [
+              [
+                6.0,
+                83.0
+              ],
+              [
+                349.0,
+                85.0
+              ],
+              [
+                348.0,
+                109.0
+              ],
+              [
+                6.0,
+                107.0
+              ]
+            ],
+            [
+              [
+                5.0,
+                117.0
+              ],
+              [
+                180.0,
+                115.0
+              ],
+              [
+                181.0,
+                143.0
+              ],
+              [
+                5.0,
+                145.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                153.0
+              ],
+              [
+                227.0,
+                153.0
+              ],
+              [
+                227.0,
+                173.0
+              ],
+              [
+                7.0,
+                173.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                188.0
+              ],
+              [
+                293.0,
+                188.0
+              ],
+              [
+                293.0,
+                208.0
+              ],
+              [
+                7.0,
+                208.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                221.0
+              ],
+              [
+                365.0,
+                221.0
+              ],
+              [
+                365.0,
+                244.0
+              ],
+              [
+                7.0,
+                244.0
+              ]
+            ],
+            [
+              [
+                6.0,
+                254.0
+              ],
+              [
+                366.0,
+                255.0
+              ],
+              [
+                366.0,
+                279.0
+              ],
+              [
+                6.0,
+                278.0
+              ]
+            ]
+          ],
+          "preprocessing_steps": [
+            "convert_rgb",
+            "exif_orientation",
+            "clahe",
+            "border_removal+whitespace_trim",
+            "adaptive_threshold"
+          ]
+        }
+      ],
+      "raw_text": "Messenger - Reward Center\nAgent (+9779812345678)\nSir tapai ko cashback process garna\nसेवा शुल्क पठाउनु पर्छ।\neSewa ID: 9812345678\nYa bank ma: 01903015472901\nMaile Rs 500 pathaye 2026-07-14 ma.\nEmail: reward.center2026@gmail.com",
+      "average_confidence": 0.9871,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_0CD406813C",
+        "evidence_id": "EVID_00031",
+        "raw_text": "Messenger - Reward Center\nAgent (+9779812345678)\nSir tapai ko cashback process garna\nसेवा शुल्क पठाउनु पर्छ।\neSewa ID: 9812345678\nYa bank ma: 01903015472901\nMaile Rs 500 pathaye 2026-07-14 ma.\nEmail: reward.center2026@gmail.com",
+        "cleaned_text": "Messenger - Reward Center\nAgent (+9779812345678)\nsir tapai ko cashback process garna\nसेवा शुल्क पठाउनु पर्छ।\neSewa ID: 9812345678\nya bank ma: 01903015472901\nmaile Rs 500 pathaye 2026-07-14 ma.\nEmail: reward.center2026@gmail.com",
+        "language": "mixed",
+        "line_languages": {
+          "1": "english",
+          "2": "english",
+          "3": "roman_nepali",
+          "4": "nepali_unicode",
+          "5": "english",
+          "6": "roman_nepali",
+          "7": "english",
+          "8": "english"
+        },
+        "entities": {
+          "urls": [],
+          "domains": [
+            {
+              "value": "gmail.com",
+              "normalized": "gmail.com"
+            }
+          ],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "emails": [
+            {
+              "value": "reward.center2026@gmail.com",
+              "normalized": "reward.center2026@gmail.com"
+            }
+          ],
+          "phones": [
+            {
+              "value": "+9779812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "dates": [
+            {
+              "value": "2026-07-14",
+              "normalized": "2026-07-14"
+            }
+          ],
+          "times": [],
+          "money": [
+            {
+              "value": "Rs 500",
+              "normalized": "NPR 500"
+            }
+          ],
+          "bank_accounts": [],
+          "card_numbers": [],
+          "transaction_ids": [],
+          "esewa_ids": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "khalti_ids": [],
+          "imepay_ids": [],
+          "otp": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "hashes_md5": [],
+          "hashes_sha1": [],
+          "hashes_sha256": [],
+          "hashes_sha512": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {
+          "reward": 3,
+          "bank": 1,
+          "wallet": 1
+        },
+        "risk_signals": {
+          "urgency": 0,
+          "financial": 5,
+          "credential": 0,
+          "threat": 0
+        },
+        "statistics": {
+          "characters": 227,
+          "words": 31,
+          "lines": 8,
+          "average_line_length": 27.5,
+          "languages_detected": [
+            "english",
+            "nepali_unicode",
+            "roman_nepali"
+          ],
+          "entity_count": 6,
+          "cleaning_operations": [
+            "entities_protected(6)",
+            "roman_nepali_lines_normalized(3)"
+          ],
+          "ocr_corrections": [],
+          "protected_entities": 6
+        },
+        "processing_time_ms": 2.4
+      },
+      "enhancement": {
+        "case_id": "CASE_0CD406813C",
+        "evidence_id": "EVID_00031",
+        "cleaned_text": "Messenger - Reward Center\nAgent (+9779812345678)\nsir tapai ko cashback process garna\nसेवा शुल्क पठाउनु पर्छ।\neSewa ID: 9812345678\nya bank ma: 01903015472901\nmaile Rs 500 pathaye 2026-07-14 ma.\nEmail: reward.center2026@gmail.com",
+        "enhanced_text": "Messenger - Reward Center\nAgent (+9779812345678)\nsir tapai ko cashback process garna\nसेवा शुल्क पठाउनु पर्छ।\neSewa ID: 9812345678\nya bank ma: 01903015472901\nmaile Rs 500 pathaye 2026-07-14 ma.\nEmail: reward.center2026@gmail.com",
+        "ui_text": "",
+        "message_text": "Messenger - Reward Center\nAgent (+9779812345678)\nsir tapai ko cashback process garna\nसेवा शुल्क पठाउनु पर्छ।\neSewa ID: 9812345678\nya bank ma: 01903015472901\nmaile Rs 500 pathaye 2026-07-14 ma.\nEmail: reward.center2026@gmail.com",
+        "layout": [
+          {
+            "line": 1,
+            "role": "message",
+            "text": "Messenger - Reward Center"
+          },
+          {
+            "line": 2,
+            "role": "message",
+            "text": "Agent (+9779812345678)"
+          },
+          {
+            "line": 3,
+            "role": "message",
+            "text": "sir tapai ko cashback process garna"
+          },
+          {
+            "line": 4,
+            "role": "message",
+            "text": "सेवा शुल्क पठाउनु पर्छ।"
+          },
+          {
+            "line": 5,
+            "role": "message",
+            "text": "eSewa ID: 9812345678"
+          },
+          {
+            "line": 6,
+            "role": "message",
+            "text": "ya bank ma: 01903015472901"
+          },
+          {
+            "line": 7,
+            "role": "message",
+            "text": "maile Rs 500 pathaye 2026-07-14 ma."
+          },
+          {
+            "line": 8,
+            "role": "message",
+            "text": "Email: reward.center2026@gmail.com"
+          }
+        ],
+        "corrections": [],
+        "correction_statistics": {
+          "total_corrections": 0,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 0,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 8,
+          "lines_high_confidence": 8,
+          "lines_correctable": 0,
+          "document_confidence": 0.9871,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 2.01
+      },
+      "semantic_correction": {
+        "case_id": "CASE_0CD406813C",
+        "evidence_id": "EVID_00031",
+        "enhanced_text": "Messenger - Reward Center\nAgent (+9779812345678)\nsir tapai ko cashback process garna\nसेवा शुल्क पठाउनु पर्छ।\neSewa ID: 9812345678\nya bank ma: 01903015472901\nmaile Rs 500 pathaye 2026-07-14 ma.\nEmail: reward.center2026@gmail.com",
+        "semantic_text": "Messenger - Reward Center\nAgent (+9779812345678) sir tapai ko cashback process garna सेवा शुल्क पठाउनु पर्छ।\neSewa ID: 9812345678 ya bank ma: 01903015472901 maile Rs 500 pathaye 2026-07-14 ma.\nEmail: reward.center2026@gmail.com",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {
+          "domains": [
+            {
+              "value": "gmail.com",
+              "normalized": "gmail.com"
+            }
+          ],
+          "emails": [
+            {
+              "value": "reward.center2026@gmail.com",
+              "normalized": "reward.center2026@gmail.com"
+            }
+          ],
+          "phones": [
+            {
+              "value": "+9779812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "dates": [
+            {
+              "value": "2026-07-14",
+              "normalized": "2026-07-14"
+            }
+          ],
+          "money": [
+            {
+              "value": "Rs 500",
+              "normalized": "NPR 500"
+            }
+          ],
+          "esewa_ids": [
+            {
+              "value": "9812345678",
+              "normalized": "+9779812345678"
+            }
+          ]
+        },
+        "statistics": {
+          "suspicious_tokens": 0,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 6,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english",
+            "nepali_unicode",
+            "roman_nepali"
+          ]
+        },
+        "processing_time_ms": 1.07
+      }
+    },
+    {
+      "case_id": "CASE_0CD406813C",
+      "evidence_id": "EVID_00032",
+      "file_name": "01_sms_cashback_offer.jpg",
+      "file_hash": "24fbac36402807e454b2f69df2a9b2a6c5379acd13b062ed1a98f54b0205947e",
+      "file_size": "29601",
+      "upload_time": "2026-08-21T06:37:43.588Z",
+      "processing_time_ms": 4386.4,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 0.8675,
+          "text": "eSewa Dashain Cashback\nर५् छ! वपईनो ममर छनेट पएो छ।\nCongatationst Your rumbx has been seiected.\nCashbxck NPR 15.000 - claim witin 24 hours.\nSend NPR 500 mrvice fxe to Sewa 9s12345678\nCkain hore: https:Fexwa -bonus-caimxyrverify(rt=Dsn202s\nHelplinm +9779812345678",
+          "lines": [
+            {
+              "text": "eSewa Dashain Cashback",
+              "confidence": 0.9833,
+              "bbox": [
+                [
+                  8.0,
+                  3.0
+                ],
+                [
+                  384.0,
+                  7.0
+                ],
+                [
+                  384.0,
+                  41.0
+                ],
+                [
+                  8.0,
+                  37.0
+                ]
+              ]
+            },
+            {
+              "text": "र५् छ! वपईनो ममर छनेट पएो छ।",
+              "confidence": 0.6528,
+              "bbox": [
+                [
+                  9.0,
+                  45.0
+                ],
+                [
+                  321.0,
+                  50.0
+                ],
+                [
+                  321.0,
+                  78.0
+                ],
+                [
+                  9.0,
+                  73.0
+                ]
+              ]
+            },
+            {
+              "text": "Congatationst Your rumbx has been seiected.",
+              "confidence": 0.8857,
+              "bbox": [
+                [
+                  8.0,
+                  84.0
+                ],
+                [
+                  473.0,
+                  89.0
+                ],
+                [
+                  472.0,
+                  113.0
+                ],
+                [
+                  8.0,
+                  107.0
+                ]
+              ]
+            },
+            {
+              "text": "Cashbxck NPR 15.000 - claim witin 24 hours.",
+              "confidence": 0.9397,
+              "bbox": [
+                [
+                  8.0,
+                  117.0
+                ],
+                [
+                  445.0,
+                  123.0
+                ],
+                [
+                  444.0,
+                  147.0
+                ],
+                [
+                  8.0,
+                  141.0
+                ]
+              ]
+            },
+            {
+              "text": "Send NPR 500 mrvice fxe to Sewa 9s12345678",
+              "confidence": 0.8921,
+              "bbox": [
+                [
+                  8.0,
+                  151.0
+                ],
+                [
+                  476.0,
+                  156.0
+                ],
+                [
+                  475.0,
+                  180.0
+                ],
+                [
+                  8.0,
+                  175.0
+                ]
+              ]
+            },
+            {
+              "text": "Ckain hore: https:Fexwa -bonus-caimxyrverify(rt=Dsn202s",
+              "confidence": 0.7832,
+              "bbox": [
+                [
+                  7.0,
+                  185.0
+                ],
+                [
+                  600.0,
+                  193.0
+                ],
+                [
+                  600.0,
+                  217.0
+                ],
+                [
+                  7.0,
+                  209.0
+                ]
+              ]
+            },
+            {
+              "text": "Helplinm +9779812345678",
+              "confidence": 0.9359,
+              "bbox": [
+                [
+                  7.0,
+                  220.0
+                ],
+                [
+                  258.0,
+                  222.0
+                ],
+                [
+                  258.0,
+                  246.0
+                ],
+                [
+                  7.0,
+                  244.0
+                ]
+              ]
+            }
+          ],
+          "bounding_boxes": [
+            [
+              [
+                8.0,
+                3.0
+              ],
+              [
+                384.0,
+                7.0
+              ],
+              [
+                384.0,
+                41.0
+              ],
+              [
+                8.0,
+                37.0
+              ]
+            ],
+            [
+              [
+                9.0,
+                45.0
+              ],
+              [
+                321.0,
+                50.0
+              ],
+              [
+                321.0,
+                78.0
+              ],
+              [
+                9.0,
+                73.0
+              ]
+            ],
+            [
+              [
+                8.0,
+                84.0
+              ],
+              [
+                473.0,
+                89.0
+              ],
+              [
+                472.0,
+                113.0
+              ],
+              [
+                8.0,
+                107.0
+              ]
+            ],
+            [
+              [
+                8.0,
+                117.0
+              ],
+              [
+                445.0,
+                123.0
+              ],
+              [
+                444.0,
+                147.0
+              ],
+              [
+                8.0,
+                141.0
+              ]
+            ],
+            [
+              [
+                8.0,
+                151.0
+              ],
+              [
+                476.0,
+                156.0
+              ],
+              [
+                475.0,
+                180.0
+              ],
+              [
+                8.0,
+                175.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                185.0
+              ],
+              [
+                600.0,
+                193.0
+              ],
+              [
+                600.0,
+                217.0
+              ],
+              [
+                7.0,
+                209.0
+              ]
+            ],
+            [
+              [
+                7.0,
+                220.0
+              ],
+              [
+                258.0,
+                222.0
+              ],
+              [
+                258.0,
+                246.0
+              ],
+              [
+                7.0,
+                244.0
+              ]
+            ]
+          ],
+          "preprocessing_steps": [
+            "convert_rgb",
+            "exif_orientation",
+            "deskew(-0.67deg)",
+            "clahe",
+            "sharpen",
+            "border_removal+whitespace_trim",
+            "adaptive_threshold"
+          ]
+        }
+      ],
+      "raw_text": "eSewa Dashain Cashback\nर५् छ! वपईनो ममर छनेट पएो छ।\nCongatationst Your rumbx has been seiected.\nCashbxck NPR 15.000 - claim witin 24 hours.\nSend NPR 500 mrvice fxe to Sewa 9s12345678\nCkain hore: https:Fexwa -bonus-caimxyrverify(rt=Dsn202s\nHelplinm +9779812345678",
+      "average_confidence": 0.8675,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_0CD406813C",
+        "evidence_id": "EVID_00032",
+        "raw_text": "eSewa Dashain Cashback\nर५् छ! वपईनो ममर छनेट पएो छ।\nCongatationst Your rumbx has been seiected.\nCashbxck NPR 15.000 - claim witin 24 hours.\nSend NPR 500 mrvice fxe to Sewa 9s12345678\nCkain hore: https:Fexwa -bonus-caimxyrverify(rt=Dsn202s\nHelplinm +9779812345678",
+        "cleaned_text": "eSewa Dashain Cashback\nर५् छ! वपईनो ममर छनेट पएो छ।\nCongatationst Your rumbx has been seiected.\nCashbxck NPR 15.000 - claim witin 24 hours.\nSend NPR 500 mrvice fxe to Sewa 9s12345678\nCkain hore: https:Fexwa -bonus-caimxyrverify(rt=Dsn202s\nHelplinm +9779812345678",
+        "language": "mixed",
+        "line_languages": {
+          "1": "english",
+          "2": "nepali_unicode",
+          "3": "english",
+          "4": "english",
+          "5": "english",
+          "6": "english",
+          "7": "english"
+        },
+        "entities": {
+          "urls": [],
+          "domains": [],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "emails": [],
+          "phones": [
+            {
+              "value": "+9779812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "dates": [],
+          "times": [],
+          "money": [
+            {
+              "value": "NPR 15.00",
+              "normalized": "NPR 15"
+            },
+            {
+              "value": "NPR 500",
+              "normalized": "NPR 500"
+            }
+          ],
+          "bank_accounts": [],
+          "card_numbers": [],
+          "transaction_ids": [],
+          "esewa_ids": [],
+          "khalti_ids": [],
+          "imepay_ids": [],
+          "otp": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "hashes_md5": [],
+          "hashes_sha1": [],
+          "hashes_sha256": [],
+          "hashes_sha512": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {
+          "reward": 2,
+          "wallet": 1
+        },
+        "risk_signals": {
+          "urgency": 0,
+          "financial": 3,
+          "credential": 0,
+          "threat": 0
+        },
+        "statistics": {
+          "characters": 262,
+          "words": 38,
+          "lines": 7,
+          "average_line_length": 36.6,
+          "languages_detected": [
+            "english",
+            "nepali_unicode"
+          ],
+          "entity_count": 3,
+          "cleaning_operations": [
+            "entities_protected(3)"
+          ],
+          "ocr_corrections": [],
+          "protected_entities": 3
+        },
+        "processing_time_ms": 1.81
+      },
+      "enhancement": {
+        "case_id": "CASE_0CD406813C",
+        "evidence_id": "EVID_00032",
+        "cleaned_text": "eSewa Dashain Cashback\nर५् छ! वपईनो ममर छनेट पएो छ।\nCongatationst Your rumbx has been seiected.\nCashbxck NPR 15.000 - claim witin 24 hours.\nSend NPR 500 mrvice fxe to Sewa 9s12345678\nCkain hore: https:Fexwa -bonus-caimxyrverify(rt=Dsn202s\nHelplinm +9779812345678",
+        "enhanced_text": "eSewa Dashain Cashback\nर५् छ! वपईनो ममर छनेट पएो छ।\nCongatationst Your rumbx has been seiected.\nCashbxck NPR 15.000 - claim witin 24 hours.\nSend NPR 500 mrvice fxe to Sewa 9s12345678\nCkain hore: https:Fexwa -bonus-caimxyrverify(rt=Dsn202s\nHelplinm +9779812345678",
+        "ui_text": "",
+        "message_text": "eSewa Dashain Cashback\nर५् छ! वपईनो ममर छनेट पएो छ।\nCongatationst Your rumbx has been seiected.\nCashbxck NPR 15.000 - claim witin 24 hours.\nSend NPR 500 mrvice fxe to Sewa 9s12345678\nCkain hore: https:Fexwa -bonus-caimxyrverify(rt=Dsn202s\nHelplinm +9779812345678",
+        "layout": [
+          {
+            "line": 1,
+            "role": "message",
+            "text": "eSewa Dashain Cashback"
+          },
+          {
+            "line": 2,
+            "role": "message",
+            "text": "र५् छ! वपईनो ममर छनेट पएो छ।"
+          },
+          {
+            "line": 3,
+            "role": "message",
+            "text": "Congatationst Your rumbx has been seiected."
+          },
+          {
+            "line": 4,
+            "role": "message",
+            "text": "Cashbxck NPR 15.000 - claim witin 24 hours."
+          },
+          {
+            "line": 5,
+            "role": "message",
+            "text": "Send NPR 500 mrvice fxe to Sewa 9s12345678"
+          },
+          {
+            "line": 6,
+            "role": "message",
+            "text": "Ckain hore: https:Fexwa -bonus-caimxyrverify(rt=Dsn202s"
+          },
+          {
+            "line": 7,
+            "role": "message",
+            "text": "Helplinm +9779812345678"
+          }
+        ],
+        "corrections": [],
+        "correction_statistics": {
+          "total_corrections": 0,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 0,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 7,
+          "lines_high_confidence": 3,
+          "lines_correctable": 4,
+          "document_confidence": 0.8675,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 0.85
+      },
+      "semantic_correction": {
+        "case_id": "CASE_0CD406813C",
+        "evidence_id": "EVID_00032",
+        "enhanced_text": "eSewa Dashain Cashback\nर५् छ! वपईनो ममर छनेट पएो छ।\nCongatationst Your rumbx has been seiected.\nCashbxck NPR 15.000 - claim witin 24 hours.\nSend NPR 500 mrvice fxe to Sewa 9s12345678\nCkain hore: https:Fexwa -bonus-caimxyrverify(rt=Dsn202s\nHelplinm +9779812345678",
+        "semantic_text": "eSewa Dashain Cashback र५् छ! वपईनो ममर छनेट पएो छ।\nCongatationst Your rumbx has been seiected.\nCashbxck NPR 15.000 - claim witin 24 hours.\nSend NPR 500 mrvice fxe to Sewa 9s12345678\nCkain hore: https:Fexwa -bonus-caimxyrverify(rt=Dsn202s\nHelplinm +9779812345678",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {
+          "phones": [
+            {
+              "value": "+9779812345678",
+              "normalized": "+9779812345678"
+            }
+          ],
+          "money": [
+            {
+              "value": "NPR 15.00",
+              "normalized": "NPR 15"
+            },
+            {
+              "value": "NPR 500",
+              "normalized": "NPR 500"
+            }
+          ]
+        },
+        "statistics": {
+          "suspicious_tokens": 0,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 3,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english",
+            "nepali_unicode"
+          ]
+        },
+        "processing_time_ms": 0.98
+      }
+    },
+    {
+      "case_id": "CASE_0CD406813C",
+      "evidence_id": "EVID_00033",
+      "file_name": "https_esewa-bonus-claim.xyz_verify_ref_DSN2026.url",
+      "file_hash": "4a23480101586a51f81577723dcedd0f27a7d5f6c08e32db61363ce95792b2a5",
+      "file_size": "49",
+      "upload_time": "2026-08-21T06:38:44.588Z",
+      "processing_time_ms": 21.2,
+      "pages": [
+        {
+          "page": 1,
+          "confidence": 1.0,
+          "text": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026",
+          "lines": [
+            {
+              "text": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026",
+              "confidence": 1.0,
+              "bbox": []
+            }
+          ],
+          "bounding_boxes": [
+            []
+          ],
+          "preprocessing_steps": [
+            "none(url)"
+          ]
+        }
+      ],
+      "raw_text": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026",
+      "average_confidence": 1.0,
+      "hash_verified": true,
+      "ocr_engine": "paddleocr-v5",
+      "cleaning": {
+        "case_id": "CASE_0CD406813C",
+        "evidence_id": "EVID_00033",
+        "raw_text": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026",
+        "cleaned_text": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026",
+        "language": "english",
+        "line_languages": {
+          "1": "english"
+        },
+        "entities": {
+          "urls": [
+            {
+              "value": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026",
+              "normalized": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026"
+            }
+          ],
+          "domains": [
+            {
+              "value": "esewa-bonus-claim.xyz",
+              "normalized": "esewa-bonus-claim.xyz"
+            }
+          ],
+          "ipv4": [],
+          "ipv6": [],
+          "mac_addresses": [],
+          "ports": [],
+          "cve_ids": [],
+          "emails": [],
+          "phones": [],
+          "dates": [],
+          "times": [],
+          "money": [],
+          "bank_accounts": [],
+          "card_numbers": [],
+          "transaction_ids": [],
+          "esewa_ids": [],
+          "khalti_ids": [],
+          "imepay_ids": [],
+          "otp": [],
+          "eth_wallets": [],
+          "btc_wallets": [],
+          "hashes_md5": [],
+          "hashes_sha1": [],
+          "hashes_sha256": [],
+          "hashes_sha512": [],
+          "social_media_urls": [],
+          "telegram_usernames": [],
+          "whatsapp_numbers": [],
+          "facebook_usernames": [],
+          "instagram_usernames": []
+        },
+        "keywords": {
+          "verify": 1,
+          "reward": 1,
+          "wallet": 1
+        },
+        "risk_signals": {
+          "urgency": 0,
+          "financial": 2,
+          "credential": 1,
+          "threat": 0
+        },
+        "statistics": {
+          "characters": 48,
+          "words": 1,
+          "lines": 1,
+          "average_line_length": 48.0,
+          "languages_detected": [
+            "english"
+          ],
+          "entity_count": 2,
+          "cleaning_operations": [
+            "entities_protected(1)"
+          ],
+          "ocr_corrections": [],
+          "protected_entities": 1
+        },
+        "processing_time_ms": 0.77
+      },
+      "enhancement": {
+        "case_id": "CASE_0CD406813C",
+        "evidence_id": "EVID_00033",
+        "cleaned_text": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026",
+        "enhanced_text": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026",
+        "ui_text": "",
+        "message_text": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026",
+        "layout": [
+          {
+            "line": 1,
+            "role": "message",
+            "text": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026"
+          }
+        ],
+        "corrections": [],
+        "correction_statistics": {
+          "total_corrections": 0,
+          "dictionary_corrections": 0,
+          "unicode_corrections": 0,
+          "english_corrections": 0,
+          "nepali_corrections": 0,
+          "confidence_based": 0,
+          "rule_based": 0,
+          "entity_punctuation_fixes": 0,
+          "character_confusion_corrections": 0,
+          "mixed_script_corrections": 0,
+          "layout_ui_lines": 0,
+          "average_confidence_improvement": 0.0,
+          "lines_analyzed": 1,
+          "lines_high_confidence": 1,
+          "lines_correctable": 0,
+          "document_confidence": 1.0,
+          "nepali_correction_rate": 0.0,
+          "english_correction_rate": 0.0
+        },
+        "processing_time_ms": 0.36
+      },
+      "semantic_correction": {
+        "case_id": "CASE_0CD406813C",
+        "evidence_id": "EVID_00033",
+        "enhanced_text": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026",
+        "semantic_text": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026",
+        "corrections": [],
+        "accepted_corrections": [],
+        "rejected_corrections": [],
+        "confidence": 0.0,
+        "entities": {
+          "urls": [
+            {
+              "value": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026",
+              "normalized": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026"
+            }
+          ],
+          "domains": [
+            {
+              "value": "esewa-bonus-claim.xyz",
+              "normalized": "esewa-bonus-claim.xyz"
+            }
+          ]
+        },
+        "statistics": {
+          "suspicious_tokens": 0,
+          "candidates_evaluated": 0,
+          "accepted_corrections": 0,
+          "rejected_corrections": 0,
+          "average_confidence": 0.0,
+          "protected_entities": 1,
+          "validator": "heuristic",
+          "languages_detected": [
+            "english"
+          ]
+        },
+        "processing_time_ms": 0.4
+      }
+    }
+  ]
+}

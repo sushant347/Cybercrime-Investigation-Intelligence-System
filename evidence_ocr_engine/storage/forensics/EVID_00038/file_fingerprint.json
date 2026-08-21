@@ -1,0 +1,30 @@
+{
+  "report_type": "file_fingerprint",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00038",
+  "case_id": "CASE_4B2A51A300",
+  "generated_at": "2026-08-21T06:43:07.838Z",
+  "report": {
+    "evidence_id": "EVID_00038",
+    "case_id": "CASE_4B2A51A300",
+    "source_file": "EVID_00038__ae26097c__03_khalti_receipt.jpg",
+    "md5": "d2469e02b34eadc7a7645dfbb7adafdc",
+    "sha1": "80e227dcc80c7d0af9c06d1cb7a4a2cc49643eab",
+    "sha256": "1257b4d56141a312458e7cb6d0150962bdd14c1c2a78fe36de7a8b58d0e472d1",
+    "sha512": "237cf79e1c63698004abe5fd44b38e0d272fd9ac6aecec495f41ead7115c51f984bb4a4ac7cb1bd72960af6975584bc9bc18d379580d0be59d7bf23c1e85b4fc",
+    "crc32": "f1559462",
+    "file_size_bytes": 39966,
+    "entropy_bits_per_byte": 7.7317,
+    "high_entropy": true,
+    "magic_number_hex": "ffd8ffe000104a46",
+    "magic_format": "JPEG image",
+    "declared_extension": ".jpg",
+    "mime_type": "image/jpeg",
+    "extension_matches_magic": true,
+    "sha256_matches_acquisition": true,
+    "duplicates": [],
+    "is_duplicate": false,
+    "analysis_time_ms": 3.1
+  }
+}

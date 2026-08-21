@@ -1,0 +1,539 @@
+{
+  "report_type": "timeline_analysis",
+  "report_version": 4,
+  "schema_version": "2.0",
+  "case_id": "CASE_D6A81F224B",
+  "generated_at": "2026-07-25T18:31:35.884Z",
+  "report": {
+    "case_id": "CASE_D6A81F224B",
+    "events": [
+      {
+        "timestamp": "2026-06-14T00:00:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00021",
+        "case_id": "CASE_D6A81F224B",
+        "file_name": "07_bank_transfer_slip.pdf",
+        "description": "Evidence EVID_00021 (07_bank_transfer_slip.pdf); stages: initial_contact, financial_transaction",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00021"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00022",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7837,
+            "confidence": 0.7837
+          },
+          {
+            "linked_to": "EVID_00020",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          }
+        ],
+        "text_preview": "MACHHAPUCHHRE BANK LIMITED\nFund Transfer/ Deposit Voucher\nBranch:\nPokhara Lakeside Branch\nDate:\n2026-06-14\nVoucher No.:\n",
+        "risk_signals": {},
+        "stages": [
+          "initial_contact",
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 25000",
+          "contains bank_accounts entity/entities: 05010198765432, 9847011223",
+          "contains transaction_ids entity/entities: DSN2026, MBL-2026-441829"
+        ]
+      },
+      {
+        "timestamp": "2026-07-25T17:39:24.493000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00020",
+        "case_id": "CASE_D6A81F224B",
+        "file_name": "06_phishing_email_screenshot.jpg",
+        "description": "Evidence EVID_00020 (06_phishing_email_screenshot.jpg); stages: social_engineering, financial_transaction",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00020"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00022",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5563,
+            "confidence": 0.5563
+          },
+          {
+            "linked_to": "EVID_00021",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          }
+        ],
+        "text_preview": "1nbox\nFromt asawa Ofrkclal Support <wugportQojwavortty yc.con>\nTα surka.gurung21oonmrom\nSubfject: UrGent: Your •Srw• Krc",
+        "risk_signals": {},
+        "stages": [
+          "social_engineering",
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 5"
+        ]
+      },
+      {
+        "timestamp": "2026-07-25T17:46:09.276000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00022",
+        "case_id": "CASE_D6A81F224B",
+        "file_name": "08_complaint_letter.pdf",
+        "description": "Evidence EVID_00022 (08_complaint_letter.pdf); stages: initial_contact, social_engineering, financial_transaction, post_attack",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00022"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00021",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7837,
+            "confidence": 0.7837
+          },
+          {
+            "linked_to": "EVID_00020",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5563,
+            "confidence": 0.5563
+          }
+        ],
+        "text_preview": "To,\nThe Chief, Cyber Bureau,\nNepal Police, Bhotahity, Kathmandu.\nSubject: Complaint regarding online fraud impersonating",
+        "risk_signals": {},
+        "stages": [
+          "initial_contact",
+          "social_engineering",
+          "financial_transaction",
+          "post_attack"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 1500, NPR 200, NPR 25000",
+          "contains esewa_ids entity/entities: esewa.cashback99@gmail.com, sunita.gurung21@gmail.com",
+          "contains khalti_ids entity/entities: +9779801122334",
+          "contains bank_accounts entity/entities: 05019012345678",
+          "contains transaction_ids entity/entities: 0119.0625.987456, CASE_2026_0088, KH-2026-0611-77245"
+        ]
+      }
+    ],
+    "attack_stages": [
+      {
+        "stage": "initial_contact",
+        "evidence_ids": [
+          "EVID_00021",
+          "EVID_00022"
+        ],
+        "first_seen": "2026-06-14T00:00:00+00:00",
+        "last_seen": "2026-07-25T17:46:09.276000+00:00",
+        "matched_keywords": [
+          "offer",
+          "prize"
+        ],
+        "explanation": "Stage 'initial_contact' is evidenced by keyword matches (offer, prize) in EVID_00021, EVID_00022."
+      },
+      {
+        "stage": "social_engineering",
+        "evidence_ids": [
+          "EVID_00020",
+          "EVID_00022"
+        ],
+        "first_seen": "2026-07-25T17:39:24.493000+00:00",
+        "last_seen": "2026-07-25T17:46:09.276000+00:00",
+        "matched_keywords": [
+          "suspended",
+          "urgent",
+          "verify"
+        ],
+        "explanation": "Stage 'social_engineering' is evidenced by keyword matches (suspended, urgent, verify) in EVID_00020, EVID_00022."
+      },
+      {
+        "stage": "financial_transaction",
+        "evidence_ids": [
+          "EVID_00021",
+          "EVID_00020",
+          "EVID_00022"
+        ],
+        "first_seen": "2026-06-14T00:00:00+00:00",
+        "last_seen": "2026-07-25T17:46:09.276000+00:00",
+        "matched_keywords": [
+          "account number",
+          "bank",
+          "esewa",
+          "khalti",
+          "npr",
+          "paid",
+          "payment",
+          "rs.",
+          "transfer"
+        ],
+        "explanation": "Stage 'financial_transaction' is evidenced by keyword matches (account number, bank, esewa, khalti, npr) in EVID_00021, EVID_00020, EVID_00022."
+      },
+      {
+        "stage": "post_attack",
+        "evidence_ids": [
+          "EVID_00022"
+        ],
+        "first_seen": "2026-07-25T17:46:09.276000+00:00",
+        "last_seen": "2026-07-25T17:46:09.276000+00:00",
+        "matched_keywords": [
+          "fraud",
+          "police"
+        ],
+        "explanation": "Stage 'post_attack' is evidenced by keyword matches (fraud, police) in EVID_00022."
+      }
+    ],
+    "stage_progression": [
+      "initial_contact",
+      "financial_transaction",
+      "social_engineering",
+      "post_attack"
+    ],
+    "progression_consistent": false,
+    "milestones": [
+      {
+        "timestamp": "2026-06-14T00:00:00+00:00",
+        "event_type": "milestone",
+        "evidence_id": "EVID_00021",
+        "case_id": "CASE_D6A81F224B",
+        "file_name": "07_bank_transfer_slip.pdf",
+        "description": "Investigation start - first reconstructed evidence event",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00021"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00022",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7837,
+            "confidence": 0.7837
+          },
+          {
+            "linked_to": "EVID_00020",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          }
+        ],
+        "text_preview": "MACHHAPUCHHRE BANK LIMITED\nFund Transfer/ Deposit Voucher\nBranch:\nPokhara Lakeside Branch\nDate:\n2026-06-14\nVoucher No.:\n",
+        "risk_signals": {},
+        "stages": [],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-06-14T00:00:00+00:00",
+        "event_type": "milestone",
+        "evidence_id": "EVID_00021",
+        "case_id": "CASE_D6A81F224B",
+        "file_name": "07_bank_transfer_slip.pdf",
+        "description": "First observation of stage 'initial_contact' (EVID_00021)",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00021"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00022",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7837,
+            "confidence": 0.7837
+          },
+          {
+            "linked_to": "EVID_00020",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          }
+        ],
+        "text_preview": "MACHHAPUCHHRE BANK LIMITED\nFund Transfer/ Deposit Voucher\nBranch:\nPokhara Lakeside Branch\nDate:\n2026-06-14\nVoucher No.:\n",
+        "risk_signals": {},
+        "stages": [
+          "initial_contact"
+        ],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-06-14T00:00:00+00:00",
+        "event_type": "milestone",
+        "evidence_id": "EVID_00021",
+        "case_id": "CASE_D6A81F224B",
+        "file_name": "07_bank_transfer_slip.pdf",
+        "description": "First observation of stage 'financial_transaction' (EVID_00021)",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00021"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00022",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7837,
+            "confidence": 0.7837
+          },
+          {
+            "linked_to": "EVID_00020",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          }
+        ],
+        "text_preview": "MACHHAPUCHHRE BANK LIMITED\nFund Transfer/ Deposit Voucher\nBranch:\nPokhara Lakeside Branch\nDate:\n2026-06-14\nVoucher No.:\n",
+        "risk_signals": {},
+        "stages": [
+          "financial_transaction"
+        ],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-07-25T17:39:24.493000+00:00",
+        "event_type": "milestone",
+        "evidence_id": "EVID_00020",
+        "case_id": "CASE_D6A81F224B",
+        "file_name": "06_phishing_email_screenshot.jpg",
+        "description": "First observation of stage 'social_engineering' (EVID_00020)",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00020"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00022",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5563,
+            "confidence": 0.5563
+          },
+          {
+            "linked_to": "EVID_00021",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          }
+        ],
+        "text_preview": "1nbox\nFromt asawa Ofrkclal Support <wugportQojwavortty yc.con>\nTα surka.gurung21oonmrom\nSubfject: UrGent: Your •Srw• Krc",
+        "risk_signals": {},
+        "stages": [
+          "social_engineering"
+        ],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-07-25T17:46:09.276000+00:00",
+        "event_type": "milestone",
+        "evidence_id": "EVID_00022",
+        "case_id": "CASE_D6A81F224B",
+        "file_name": "08_complaint_letter.pdf",
+        "description": "First observation of stage 'post_attack' (EVID_00022)",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00022"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00021",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7837,
+            "confidence": 0.7837
+          },
+          {
+            "linked_to": "EVID_00020",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5563,
+            "confidence": 0.5563
+          }
+        ],
+        "text_preview": "To,\nThe Chief, Cyber Bureau,\nNepal Police, Bhotahity, Kathmandu.\nSubject: Complaint regarding online fraud impersonating",
+        "risk_signals": {},
+        "stages": [
+          "post_attack"
+        ],
+        "critical": false,
+        "critical_reasons": []
+      }
+    ],
+    "critical_events": [
+      {
+        "timestamp": "2026-06-14T00:00:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00021",
+        "case_id": "CASE_D6A81F224B",
+        "file_name": "07_bank_transfer_slip.pdf",
+        "description": "Evidence EVID_00021 (07_bank_transfer_slip.pdf); stages: initial_contact, financial_transaction",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00021"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00022",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7837,
+            "confidence": 0.7837
+          },
+          {
+            "linked_to": "EVID_00020",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          }
+        ],
+        "text_preview": "MACHHAPUCHHRE BANK LIMITED\nFund Transfer/ Deposit Voucher\nBranch:\nPokhara Lakeside Branch\nDate:\n2026-06-14\nVoucher No.:\n",
+        "risk_signals": {},
+        "stages": [
+          "initial_contact",
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 25000",
+          "contains bank_accounts entity/entities: 05010198765432, 9847011223",
+          "contains transaction_ids entity/entities: DSN2026, MBL-2026-441829"
+        ]
+      },
+      {
+        "timestamp": "2026-07-25T17:39:24.493000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00020",
+        "case_id": "CASE_D6A81F224B",
+        "file_name": "06_phishing_email_screenshot.jpg",
+        "description": "Evidence EVID_00020 (06_phishing_email_screenshot.jpg); stages: social_engineering, financial_transaction",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00020"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00022",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5563,
+            "confidence": 0.5563
+          },
+          {
+            "linked_to": "EVID_00021",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2212,
+            "confidence": 0.2212
+          }
+        ],
+        "text_preview": "1nbox\nFromt asawa Ofrkclal Support <wugportQojwavortty yc.con>\nTα surka.gurung21oonmrom\nSubfject: UrGent: Your •Srw• Krc",
+        "risk_signals": {},
+        "stages": [
+          "social_engineering",
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 5"
+        ]
+      },
+      {
+        "timestamp": "2026-07-25T17:46:09.276000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00022",
+        "case_id": "CASE_D6A81F224B",
+        "file_name": "08_complaint_letter.pdf",
+        "description": "Evidence EVID_00022 (08_complaint_letter.pdf); stages: initial_contact, social_engineering, financial_transaction, post_attack",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00022"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00021",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7837,
+            "confidence": 0.7837
+          },
+          {
+            "linked_to": "EVID_00020",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5563,
+            "confidence": 0.5563
+          }
+        ],
+        "text_preview": "To,\nThe Chief, Cyber Bureau,\nNepal Police, Bhotahity, Kathmandu.\nSubject: Complaint regarding online fraud impersonating",
+        "risk_signals": {},
+        "stages": [
+          "initial_contact",
+          "social_engineering",
+          "financial_transaction",
+          "post_attack"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 1500, NPR 200, NPR 25000",
+          "contains esewa_ids entity/entities: esewa.cashback99@gmail.com, sunita.gurung21@gmail.com",
+          "contains khalti_ids entity/entities: +9779801122334",
+          "contains bank_accounts entity/entities: 05019012345678",
+          "contains transaction_ids entity/entities: 0119.0625.987456, CASE_2026_0088, KH-2026-0611-77245"
+        ]
+      }
+    ],
+    "summary": "3 event(s) spanning 1001.8 hour(s); 0 timestamp(s) unresolved. Observed scam progression: initial_contact -> financial_transaction -> social_engineering -> post_attack.",
+    "statistics": {
+      "event_count": 3.0,
+      "resolved_event_count": 3.0,
+      "unresolved_event_count": 0.0,
+      "inferred_event_count": 3.0,
+      "stage_count": 4.0,
+      "critical_event_count": 3.0,
+      "timeline_span_hours": 1001.77
+    },
+    "analysis_time_ms": 0.6
+  }
+}

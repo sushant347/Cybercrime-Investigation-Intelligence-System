@@ -1,0 +1,49 @@
+{
+  "report_type": "quality_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00032",
+  "case_id": "CASE_0CD406813C",
+  "generated_at": "2026-08-21T06:37:48.016Z",
+  "report": {
+    "evidence_id": "EVID_00032",
+    "case_id": "CASE_0CD406813C",
+    "source_file": "01_sms_cashback_offer.jpg",
+    "metrics": {
+      "width": 1000,
+      "height": 318,
+      "megapixels": 0.318,
+      "blur_laplacian_variance": 30.5102893081761,
+      "brightness_mean": 243.21978301886793,
+      "contrast_std": 31.86348061154775,
+      "noise_residual": 0.29373899371069184,
+      "skew_angle_deg": -0.6740341186523438,
+      "compression_quality": 97.76484375,
+      "edge_density": 0.03905974842767296,
+      "text_like_components": 103
+    },
+    "sub_scores": {
+      "blur": 3.2,
+      "brightness": 100.0,
+      "contrast": 45.9,
+      "noise": 100.0,
+      "resolution": 9.1,
+      "skew": 97.1,
+      "compression": 97.8,
+      "readability": 47.4
+    },
+    "overall_score": 50.8,
+    "quality_grade": "FAIR",
+    "expected_ocr_accuracy": 67.8,
+    "readability_score": 47.4,
+    "recommended_operations": [
+      "clahe",
+      "deskew",
+      "edge_enhancement",
+      "super_resolution",
+      "perspective_correction"
+    ],
+    "notes": [],
+    "analysis_time_ms": 10.0
+  }
+}

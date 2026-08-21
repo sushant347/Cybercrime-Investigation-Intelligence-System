@@ -1,0 +1,5 @@
+date,description,amount_npr,channel
+2026-07-14,eSewa load to 9812345678,-500,mobile_banking
+2026-07-15,IBFT to 01903015472901,-12000,mobile_banking
+2026-07-15,Balance inquiry,0,mobile_banking
+2026-07-01,Salary credit,52000,transfer

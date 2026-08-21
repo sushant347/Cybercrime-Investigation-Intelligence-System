@@ -1,0 +1,215 @@
+{
+  "report_type": "entity_statistics",
+  "report_version": 15,
+  "schema_version": "2.0",
+  "case_id": "CASE_1A1BF573F3",
+  "generated_at": "2026-08-21T03:27:53.231Z",
+  "report": {
+    "case_id": "CASE_1A1BF573F3",
+    "entity_statistics": {
+      "bank_accounts": 3,
+      "dates": 8,
+      "domains": 11,
+      "emails": 5,
+      "esewa_ids": 3,
+      "khalti_ids": 3,
+      "money": 9,
+      "phones": 7,
+      "times": 1,
+      "transaction_ids": 10,
+      "urls": 3
+    },
+    "top_entities": {
+      "bank_accounts": [
+        {
+          "value": "05010198765432",
+          "count": 1
+        },
+        {
+          "value": "9847011223",
+          "count": 1
+        },
+        {
+          "value": "05019012345678",
+          "count": 1
+        }
+      ],
+      "dates": [
+        {
+          "value": "11 june 2026",
+          "count": 2
+        },
+        {
+          "value": "2026-06-14",
+          "count": 1
+        },
+        {
+          "value": "10 june 2026",
+          "count": 1
+        },
+        {
+          "value": "14 june 2026",
+          "count": 1
+        },
+        {
+          "value": "15 june 2026",
+          "count": 1
+        },
+        {
+          "value": "2026-01-04",
+          "count": 1
+        },
+        {
+          "value": "2026-01-03",
+          "count": 1
+        }
+      ],
+      "domains": [
+        {
+          "value": "esewa-cashback-offer.xyz",
+          "count": 3
+        },
+        {
+          "value": "gmail.com",
+          "count": 2
+        },
+        {
+          "value": "esewa.cashbacko90gmail.com",
+          "count": 1
+        },
+        {
+          "value": "sunita.gurung216gmail.com",
+          "count": 1
+        },
+        {
+          "value": "kyc.co",
+          "count": 1
+        },
+        {
+          "value": "esewa-verify-kyc.com",
+          "count": 1
+        },
+        {
+          "value": "nabil-verify.example-scam.top",
+          "count": 1
+        },
+        {
+          "value": "nabil-bank-alerts.com",
+          "count": 1
+        }
+      ],
+      "emails": [
+        {
+          "value": "sunita.gurung21@gmail.com",
+          "count": 2
+        },
+        {
+          "value": "esewa.cashback99@gmail.com",
+          "count": 1
+        },
+        {
+          "value": "support@esewa-verify-kyc.com",
+          "count": 1
+        },
+        {
+          "value": "security@nabil-bank-alerts.com",
+          "count": 1
+        }
+      ],
+      "esewa_ids": [
+        {
+          "value": "sunita.gurung21@gmail.com",
+          "count": 2
+        },
+        {
+          "value": "esewa.cashback99@gmail.com",
+          "count": 1
+        }
+      ],
+      "khalti_ids": [
+        {
+          "value": "+9779801122334",
+          "count": 2
+        },
+        {
+          "value": "+9779847011223",
+          "count": 1
+        }
+      ],
+      "money": [
+        {
+          "value": "npr 200",
+          "count": 3
+        },
+        {
+          "value": "npr 5000",
+          "count": 2
+        },
+        {
+          "value": "npr 1500",
+          "count": 2
+        },
+        {
+          "value": "npr 25000",
+          "count": 2
+        }
+      ],
+      "phones": [
+        {
+          "value": "+9779801122334",
+          "count": 3
+        },
+        {
+          "value": "+9779847011223",
+          "count": 3
+        },
+        {
+          "value": "0198765432",
+          "count": 1
+        }
+      ],
+      "times": [
+        {
+          "value": "11:15 am",
+          "count": 1
+        }
+      ],
+      "transaction_ids": [
+        {
+          "value": "dsn2026",
+          "count": 3
+        },
+        {
+          "value": "0119.0625.987456",
+          "count": 2
+        },
+        {
+          "value": "kh-2026-0611-77245",
+          "count": 2
+        },
+        {
+          "value": "mbl-2026-441829",
+          "count": 2
+        },
+        {
+          "value": "case_2026_0088",
+          "count": 1
+        }
+      ],
+      "urls": [
+        {
+          "value": "https://esewa-cashback-offer.xyz/claim?ref=dsn2026",
+          "count": 1
+        },
+        {
+          "value": "https://esewa-cashback-offer.xyz/claim",
+          "count": 1
+        },
+        {
+          "value": "http://nabil-verify.example-scam.top/login",
+          "count": 1
+        }
+      ]
+    }
+  }
+}

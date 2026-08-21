@@ -1,0 +1,39 @@
+{
+  "report_type": "metadata_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00030",
+  "case_id": "CASE_0CD406813C",
+  "generated_at": "2026-08-21T06:37:39.787Z",
+  "report": {
+    "evidence_id": "EVID_00030",
+    "case_id": "CASE_0CD406813C",
+    "source_file": "EVID_00030__88a3fee6__03_esewa_payment_receipt.jpg",
+    "file_type": "image",
+    "filesystem": {
+      "file_size_bytes": 41556,
+      "created": "2026-08-21T06:37:35.841822+00:00",
+      "modified": "2026-08-21T06:37:22.825097+00:00",
+      "accessed": "2026-08-21T06:37:37.839072+00:00"
+    },
+    "image": {
+      "has_exif": false,
+      "camera_make": "",
+      "camera_model": "",
+      "device": "",
+      "software": "",
+      "date_created": "",
+      "date_modified": "",
+      "orientation": "",
+      "gps": null,
+      "all_tags": {}
+    },
+    "pdf": null,
+    "office": null,
+    "consistency_notes": [
+      "Image carries no EXIF metadata (typical for screenshots and messaging-app exports; one less authenticity signal)."
+    ],
+    "extraction_errors": [],
+    "analysis_time_ms": 0.3
+  }
+}

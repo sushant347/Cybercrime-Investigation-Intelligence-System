@@ -1,0 +1,30 @@
+{
+  "report_type": "file_fingerprint",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00030",
+  "case_id": "CASE_0CD406813C",
+  "generated_at": "2026-08-21T06:37:39.786Z",
+  "report": {
+    "evidence_id": "EVID_00030",
+    "case_id": "CASE_0CD406813C",
+    "source_file": "EVID_00030__88a3fee6__03_esewa_payment_receipt.jpg",
+    "md5": "b7a7da3d0b1fcfc505180138095add64",
+    "sha1": "20f9d9df51785f7e48e0efb7c3a7c49a2c782c22",
+    "sha256": "82cca081731e572e0951071a23a00ca1ae6d34c40af85a267239d6972f35a028",
+    "sha512": "8a66f8a5e6b67405064cae3222c5611f74c394b72f8f7d10e22f2d06d4c289fc67f146611dddd630738f770e78ceb50af7b82819a194d70f0564a2eb5280dbba",
+    "crc32": "fd62d1b6",
+    "file_size_bytes": 41556,
+    "entropy_bits_per_byte": 7.7636,
+    "high_entropy": true,
+    "magic_number_hex": "ffd8ffe000104a46",
+    "magic_format": "JPEG image",
+    "declared_extension": ".jpg",
+    "mime_type": "image/jpeg",
+    "extension_matches_magic": true,
+    "sha256_matches_acquisition": true,
+    "duplicates": [],
+    "is_duplicate": false,
+    "analysis_time_ms": 2.3
+  }
+}

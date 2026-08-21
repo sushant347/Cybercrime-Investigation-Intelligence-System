@@ -334,3 +334,112 @@ timestamp,case_id,evidence_id,module,action,level,message,duration_ms
 2026-08-21T04:46:07.803Z,CASE_137B13D47D,EVID_00033,phase1_pipeline,image_load,ERROR,Cannot decode image '/Users/sachyam/Documents/Programming/Active/Cybercrime-Investigation-Intelligence-System/evidence_ocr_engine/storage/originals/EVID_00033__6fde6088__notanimage.jpg': cannot identify image file '/Users/sachyam/Documents/Programming/Active/Cybercrime-Investigation-Intelligence-System/evidence_ocr_engine/storage/originals/EVID_00033__6fde6088__notanimage.jpg',0.0
 2026-08-21T04:46:07.804Z,CASE_137B13D47D,EVID_00033,confidence_scoring,scored,INFO,score=27.5 level=LOW components=3/6,0.0
 2026-08-21T04:46:07.804Z,CASE_137B13D47D,EVID_00033,phase1_pipeline,completed,WARNING,"analyses=['confidence', 'fingerprint', 'metadata'] failures=[""image_load: Cannot decode image '/Users/sachyam/Documents/Programming/Active/Cybercrime-Investigation-Intelligence-System/evidence_ocr_engine/storage/originals/EVID_00033__6fde6088__notanimage.jpg': cannot identify image file '/Users/sachyam/Documents/Programming/Active/Cybercrime-Investigation-Intelligence-System/evidence_ocr_engine/storage/originals/EVID_00033__6fde6088__notanimage.jpg'""]",11.6
+2026-08-21T06:37:34.392Z,CASE_0CD406813C,EVID_00026,phase1_pipeline,started,INFO,file=07_qr_flyer_poor_capture.jpg image=True,0.0
+2026-08-21T06:37:34.414Z,CASE_0CD406813C,EVID_00026,file_integrity,fingerprinted,INFO,sha256=54ecd6f0726dc06d... entropy=7.3232 magic=JPEG image duplicate=False,17.0
+2026-08-21T06:37:34.418Z,CASE_0CD406813C,EVID_00026,metadata_extraction,extracted,INFO,type=image notes=1 errors=0,2.0
+2026-08-21T06:37:34.454Z,CASE_0CD406813C,EVID_00026,quality_assessment,assessed,INFO,score=38.0 grade=POOR expected_ocr=52.6%,24.9
+2026-08-21T06:37:35.187Z,CASE_0CD406813C,EVID_00026,forgery_detection,analyzed,INFO,score=0.1 risk=LOW status=LIKELY_AUTHENTIC,731.0
+2026-08-21T06:37:35.198Z,CASE_0CD406813C,EVID_00026,logo_detection,detected,INFO,brands=none,10.1
+2026-08-21T06:37:35.200Z,CASE_0CD406813C,EVID_00026,confidence_scoring,scored,INFO,score=82.0 level=VERY_HIGH components=5/6,0.0
+2026-08-21T06:37:35.200Z,CASE_0CD406813C,EVID_00026,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'forgery', 'logos', 'metadata', 'quality'] failures=none",808.4
+2026-08-21T06:37:35.581Z,CASE_0CD406813C,EVID_00027,phase1_pipeline,started,INFO,file=06_complaint_letter.pdf image=False,0.0
+2026-08-21T06:37:35.586Z,CASE_0CD406813C,EVID_00027,file_integrity,fingerprinted,INFO,sha256=92af393efbe4f1c6... entropy=7.9514 magic=PDF document duplicate=False,3.8
+2026-08-21T06:37:35.588Z,CASE_0CD406813C,EVID_00027,metadata_extraction,extracted,INFO,type=pdf notes=0 errors=0,1.3
+2026-08-21T06:37:35.589Z,CASE_0CD406813C,EVID_00027,confidence_scoring,scored,INFO,score=100.0 level=VERY_HIGH components=3/6,0.0
+2026-08-21T06:37:35.589Z,CASE_0CD406813C,EVID_00027,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'metadata'] failures=none",8.1
+2026-08-21T06:37:35.626Z,CASE_0CD406813C,EVID_00028,phase1_pipeline,started,INFO,file=05_bank_statement.csv image=False,0.0
+2026-08-21T06:37:35.627Z,CASE_0CD406813C,EVID_00028,file_integrity,fingerprinted,INFO,sha256=4bf76c0070966e39... entropy=4.9774 magic=unknown duplicate=False,0.5
+2026-08-21T06:37:35.627Z,CASE_0CD406813C,EVID_00028,metadata_extraction,extracted,INFO,type=text notes=0 errors=0,0.0
+2026-08-21T06:37:35.628Z,CASE_0CD406813C,EVID_00028,confidence_scoring,scored,INFO,score=100.0 level=VERY_HIGH components=3/6,0.0
+2026-08-21T06:37:35.628Z,CASE_0CD406813C,EVID_00028,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'metadata'] failures=none",3.0
+2026-08-21T06:37:35.822Z,CASE_0CD406813C,EVID_00029,phase1_pipeline,started,INFO,file=04_phishing_email.txt image=False,0.0
+2026-08-21T06:37:35.824Z,CASE_0CD406813C,EVID_00029,file_integrity,fingerprinted,INFO,sha256=e094c54741fc7f91... entropy=5.4699 magic=unknown duplicate=False,0.8
+2026-08-21T06:37:35.826Z,CASE_0CD406813C,EVID_00029,metadata_extraction,extracted,INFO,type=text notes=0 errors=0,0.1
+2026-08-21T06:37:35.829Z,CASE_0CD406813C,EVID_00029,confidence_scoring,scored,INFO,score=100.0 level=VERY_HIGH components=3/6,0.0
+2026-08-21T06:37:35.830Z,CASE_0CD406813C,EVID_00029,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'metadata'] failures=none",8.3
+2026-08-21T06:37:39.783Z,CASE_0CD406813C,EVID_00030,phase1_pipeline,started,INFO,file=03_esewa_payment_receipt.jpg image=True,0.0
+2026-08-21T06:37:39.787Z,CASE_0CD406813C,EVID_00030,file_integrity,fingerprinted,INFO,sha256=82cca081731e572e... entropy=7.7636 magic=JPEG image duplicate=False,2.3
+2026-08-21T06:37:39.788Z,CASE_0CD406813C,EVID_00030,metadata_extraction,extracted,INFO,type=image notes=1 errors=0,0.3
+2026-08-21T06:37:39.799Z,CASE_0CD406813C,EVID_00030,quality_assessment,assessed,INFO,score=76.6 grade=GOOD expected_ocr=89.5%,8.6
+2026-08-21T06:37:39.835Z,CASE_0CD406813C,EVID_00030,forgery_detection,analyzed,INFO,score=19.9 risk=LOW status=LIKELY_AUTHENTIC,35.4
+2026-08-21T06:37:39.848Z,CASE_0CD406813C,EVID_00030,logo_detection,detected,INFO,brands=none,11.5
+2026-08-21T06:37:39.849Z,CASE_0CD406813C,EVID_00030,confidence_scoring,scored,INFO,score=86.7 level=VERY_HIGH components=5/6,0.0
+2026-08-21T06:37:39.849Z,CASE_0CD406813C,EVID_00030,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'forgery', 'logos', 'metadata', 'quality'] failures=none",65.9
+2026-08-21T06:37:43.508Z,CASE_0CD406813C,EVID_00031,phase1_pipeline,started,INFO,file=02_messenger_chat.jpg image=True,0.0
+2026-08-21T06:37:43.512Z,CASE_0CD406813C,EVID_00031,file_integrity,fingerprinted,INFO,sha256=7624533fbd367356... entropy=7.751 magic=JPEG image duplicate=False,2.7
+2026-08-21T06:37:43.513Z,CASE_0CD406813C,EVID_00031,metadata_extraction,extracted,INFO,type=image notes=1 errors=0,0.3
+2026-08-21T06:37:43.529Z,CASE_0CD406813C,EVID_00031,quality_assessment,assessed,INFO,score=79.1 grade=GOOD expected_ocr=91.1%,13.1
+2026-08-21T06:37:43.564Z,CASE_0CD406813C,EVID_00031,forgery_detection,analyzed,INFO,score=21.3 risk=LOW status=LIKELY_AUTHENTIC,33.9
+2026-08-21T06:37:43.578Z,CASE_0CD406813C,EVID_00031,logo_detection,detected,INFO,brands=none,13.1
+2026-08-21T06:37:43.580Z,CASE_0CD406813C,EVID_00031,confidence_scoring,scored,INFO,score=87.0 level=VERY_HIGH components=5/6,0.0
+2026-08-21T06:37:43.580Z,CASE_0CD406813C,EVID_00031,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'forgery', 'logos', 'metadata', 'quality'] failures=none",72.2
+2026-08-21T06:37:48.001Z,CASE_0CD406813C,EVID_00032,phase1_pipeline,started,INFO,file=01_sms_cashback_offer.jpg image=True,0.0
+2026-08-21T06:37:48.004Z,CASE_0CD406813C,EVID_00032,file_integrity,fingerprinted,INFO,sha256=24fbac36402807e4... entropy=7.7574 magic=JPEG image duplicate=False,1.7
+2026-08-21T06:37:48.005Z,CASE_0CD406813C,EVID_00032,metadata_extraction,extracted,INFO,type=image notes=1 errors=0,0.3
+2026-08-21T06:37:48.017Z,CASE_0CD406813C,EVID_00032,quality_assessment,assessed,INFO,score=50.8 grade=FAIR expected_ocr=67.8%,10.0
+2026-08-21T06:37:48.048Z,CASE_0CD406813C,EVID_00032,forgery_detection,analyzed,INFO,score=23.7 risk=LOW status=LIKELY_AUTHENTIC,29.9
+2026-08-21T06:37:48.060Z,CASE_0CD406813C,EVID_00032,logo_detection,detected,INFO,brands=none,11.1
+2026-08-21T06:37:48.061Z,CASE_0CD406813C,EVID_00032,confidence_scoring,scored,INFO,score=79.3 level=HIGH components=5/6,0.0
+2026-08-21T06:37:48.061Z,CASE_0CD406813C,EVID_00032,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'forgery', 'logos', 'metadata', 'quality'] failures=none",60.3
+2026-08-21T06:38:44.653Z,CASE_0CD406813C,EVID_00033,phase1_pipeline,started,INFO,file=https_esewa-bonus-claim.xyz_verify_ref_DSN2026.url image=False,0.0
+2026-08-21T06:38:44.656Z,CASE_0CD406813C,EVID_00033,file_integrity,fingerprinted,INFO,sha256=4a23480101586a51... entropy=4.9308 magic=unknown duplicate=False,1.0
+2026-08-21T06:38:44.657Z,CASE_0CD406813C,EVID_00033,metadata_extraction,extracted,INFO,type=other notes=0 errors=0,0.1
+2026-08-21T06:38:44.659Z,CASE_0CD406813C,EVID_00033,confidence_scoring,scored,INFO,score=100.0 level=VERY_HIGH components=3/6,0.0
+2026-08-21T06:38:44.660Z,CASE_0CD406813C,EVID_00033,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'metadata'] failures=none",6.7
+2026-08-21T06:43:00.929Z,CASE_4B2A51A300,EVID_00034,phase1_pipeline,started,INFO,file=07_fake_support_profile.jpg image=True,0.0
+2026-08-21T06:43:00.949Z,CASE_4B2A51A300,EVID_00034,file_integrity,fingerprinted,INFO,sha256=6d92c801ed6d05fa... entropy=7.7265 magic=JPEG image duplicate=False,10.2
+2026-08-21T06:43:00.959Z,CASE_4B2A51A300,EVID_00034,metadata_extraction,extracted,INFO,type=image notes=1 errors=0,6.5
+2026-08-21T06:43:00.978Z,CASE_4B2A51A300,EVID_00034,quality_assessment,assessed,INFO,score=61.4 grade=FAIR expected_ocr=78.4%,15.6
+2026-08-21T06:43:01.028Z,CASE_4B2A51A300,EVID_00034,forgery_detection,analyzed,INFO,score=26.0 risk=MEDIUM status=INDETERMINATE,47.7
+2026-08-21T06:43:01.048Z,CASE_4B2A51A300,EVID_00034,logo_detection,detected,INFO,brands=none,15.8
+2026-08-21T06:43:01.052Z,CASE_4B2A51A300,EVID_00034,confidence_scoring,scored,INFO,score=81.3 level=VERY_HIGH components=5/6,0.0
+2026-08-21T06:43:01.052Z,CASE_4B2A51A300,EVID_00034,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'forgery', 'logos', 'metadata', 'quality'] failures=none",126.1
+2026-08-21T06:43:01.304Z,CASE_4B2A51A300,EVID_00035,phase1_pipeline,started,INFO,file=06_police_complaint.pdf image=False,0.0
+2026-08-21T06:43:01.309Z,CASE_4B2A51A300,EVID_00035,file_integrity,fingerprinted,INFO,sha256=1faf503b6bb893fe... entropy=7.9525 magic=PDF document duplicate=False,3.9
+2026-08-21T06:43:01.313Z,CASE_4B2A51A300,EVID_00035,metadata_extraction,extracted,INFO,type=pdf notes=0 errors=0,2.7
+2026-08-21T06:43:01.314Z,CASE_4B2A51A300,EVID_00035,confidence_scoring,scored,INFO,score=100.0 level=VERY_HIGH components=3/6,0.0
+2026-08-21T06:43:01.314Z,CASE_4B2A51A300,EVID_00035,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'metadata'] failures=none",10.6
+2026-08-21T06:43:01.358Z,CASE_4B2A51A300,EVID_00036,phase1_pipeline,started,INFO,file=05_transactions.csv image=False,0.0
+2026-08-21T06:43:01.359Z,CASE_4B2A51A300,EVID_00036,file_integrity,fingerprinted,INFO,sha256=6a007523d9087637... entropy=4.9881 magic=unknown duplicate=False,0.6
+2026-08-21T06:43:01.360Z,CASE_4B2A51A300,EVID_00036,metadata_extraction,extracted,INFO,type=text notes=0 errors=0,0.1
+2026-08-21T06:43:01.361Z,CASE_4B2A51A300,EVID_00036,confidence_scoring,scored,INFO,score=100.0 level=VERY_HIGH components=3/6,0.0
+2026-08-21T06:43:01.361Z,CASE_4B2A51A300,EVID_00036,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'metadata'] failures=none",3.4
+2026-08-21T06:43:01.420Z,CASE_4B2A51A300,EVID_00037,phase1_pipeline,started,INFO,file=04_kyc_phishing_email.txt image=False,0.0
+2026-08-21T06:43:01.422Z,CASE_4B2A51A300,EVID_00037,file_integrity,fingerprinted,INFO,sha256=c7e51499cd6ed8d3... entropy=5.4307 magic=unknown duplicate=False,1.2
+2026-08-21T06:43:01.423Z,CASE_4B2A51A300,EVID_00037,metadata_extraction,extracted,INFO,type=text notes=0 errors=0,0.1
+2026-08-21T06:43:01.424Z,CASE_4B2A51A300,EVID_00037,confidence_scoring,scored,INFO,score=100.0 level=VERY_HIGH components=3/6,0.0
+2026-08-21T06:43:01.424Z,CASE_4B2A51A300,EVID_00037,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'metadata'] failures=none",3.9
+2026-08-21T06:43:07.830Z,CASE_4B2A51A300,EVID_00038,phase1_pipeline,started,INFO,file=03_khalti_receipt.jpg image=True,0.0
+2026-08-21T06:43:07.838Z,CASE_4B2A51A300,EVID_00038,file_integrity,fingerprinted,INFO,sha256=1257b4d56141a312... entropy=7.7317 magic=JPEG image duplicate=False,3.1
+2026-08-21T06:43:07.842Z,CASE_4B2A51A300,EVID_00038,metadata_extraction,extracted,INFO,type=image notes=1 errors=0,2.0
+2026-08-21T06:43:07.880Z,CASE_4B2A51A300,EVID_00038,quality_assessment,assessed,INFO,score=75.8 grade=GOOD expected_ocr=89.0%,30.7
+2026-08-21T06:43:07.930Z,CASE_4B2A51A300,EVID_00038,forgery_detection,analyzed,INFO,score=19.7 risk=LOW status=LIKELY_AUTHENTIC,48.5
+2026-08-21T06:43:07.943Z,CASE_4B2A51A300,EVID_00038,logo_detection,detected,INFO,brands=none,11.8
+2026-08-21T06:43:07.944Z,CASE_4B2A51A300,EVID_00038,confidence_scoring,scored,INFO,score=86.5 level=VERY_HIGH components=5/6,0.0
+2026-08-21T06:43:07.944Z,CASE_4B2A51A300,EVID_00038,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'forgery', 'logos', 'metadata', 'quality'] failures=none",114.6
+2026-08-21T06:43:11.474Z,CASE_4B2A51A300,EVID_00039,phase1_pipeline,started,INFO,file=02_whatsapp_chat.jpg image=True,0.0
+2026-08-21T06:43:11.477Z,CASE_4B2A51A300,EVID_00039,file_integrity,fingerprinted,INFO,sha256=4418cd74971cd533... entropy=7.7568 magic=JPEG image duplicate=False,2.6
+2026-08-21T06:43:11.478Z,CASE_4B2A51A300,EVID_00039,metadata_extraction,extracted,INFO,type=image notes=1 errors=0,0.2
+2026-08-21T06:43:11.490Z,CASE_4B2A51A300,EVID_00039,quality_assessment,assessed,INFO,score=78.4 grade=GOOD expected_ocr=90.7%,9.2
+2026-08-21T06:43:11.522Z,CASE_4B2A51A300,EVID_00039,forgery_detection,analyzed,INFO,score=21.9 risk=LOW status=LIKELY_AUTHENTIC,31.4
+2026-08-21T06:43:11.535Z,CASE_4B2A51A300,EVID_00039,logo_detection,detected,INFO,brands=none,11.7
+2026-08-21T06:43:11.536Z,CASE_4B2A51A300,EVID_00039,confidence_scoring,scored,INFO,score=86.6 level=VERY_HIGH components=5/6,0.0
+2026-08-21T06:43:11.536Z,CASE_4B2A51A300,EVID_00039,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'forgery', 'logos', 'metadata', 'quality'] failures=none",62.6
+2026-08-21T06:43:14.939Z,CASE_4B2A51A300,EVID_00040,phase1_pipeline,started,INFO,file=01_khalti_kyc_sms.jpg image=True,0.0
+2026-08-21T06:43:14.941Z,CASE_4B2A51A300,EVID_00040,file_integrity,fingerprinted,INFO,sha256=92e987df1a332874... entropy=7.6421 magic=JPEG image duplicate=False,1.4
+2026-08-21T06:43:14.942Z,CASE_4B2A51A300,EVID_00040,metadata_extraction,extracted,INFO,type=image notes=1 errors=0,0.2
+2026-08-21T06:43:14.952Z,CASE_4B2A51A300,EVID_00040,quality_assessment,assessed,INFO,score=45.2 grade=FAIR expected_ocr=62.2%,8.0
+2026-08-21T06:43:14.980Z,CASE_4B2A51A300,EVID_00040,forgery_detection,analyzed,INFO,score=13.3 risk=LOW status=LIKELY_AUTHENTIC,27.1
+2026-08-21T06:43:14.990Z,CASE_4B2A51A300,EVID_00040,logo_detection,detected,INFO,brands=none,9.3
+2026-08-21T06:43:14.991Z,CASE_4B2A51A300,EVID_00040,confidence_scoring,scored,INFO,score=80.5 level=VERY_HIGH components=5/6,0.0
+2026-08-21T06:43:14.991Z,CASE_4B2A51A300,EVID_00040,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'forgery', 'logos', 'metadata', 'quality'] failures=none",52.8
+2026-08-21T06:43:15.086Z,CASE_4B2A51A300,EVID_00041,phase1_pipeline,started,INFO,file=http_khalti-kyc-verify.top_login.url image=False,0.0
+2026-08-21T06:43:15.088Z,CASE_4B2A51A300,EVID_00041,file_integrity,fingerprinted,INFO,sha256=2576cee0748325bb... entropy=4.229 magic=unknown duplicate=False,0.6
+2026-08-21T06:43:15.089Z,CASE_4B2A51A300,EVID_00041,metadata_extraction,extracted,INFO,type=other notes=0 errors=0,0.0
+2026-08-21T06:43:15.089Z,CASE_4B2A51A300,EVID_00041,confidence_scoring,scored,INFO,score=100.0 level=VERY_HIGH components=3/6,0.0
+2026-08-21T06:43:15.089Z,CASE_4B2A51A300,EVID_00041,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'metadata'] failures=none",3.3
+2026-08-21T06:43:15.144Z,CASE_4B2A51A300,EVID_00042,phase1_pipeline,started,INFO,file=https_esewa-bonus-claim.xyz_verify_ref_KYC2026.url image=False,0.0
+2026-08-21T06:43:15.145Z,CASE_4B2A51A300,EVID_00042,file_integrity,fingerprinted,INFO,sha256=e419582edacddd15... entropy=4.9308 magic=unknown duplicate=False,0.6
+2026-08-21T06:43:15.146Z,CASE_4B2A51A300,EVID_00042,metadata_extraction,extracted,INFO,type=other notes=0 errors=0,0.0
+2026-08-21T06:43:15.146Z,CASE_4B2A51A300,EVID_00042,confidence_scoring,scored,INFO,score=100.0 level=VERY_HIGH components=3/6,0.0
+2026-08-21T06:43:15.147Z,CASE_4B2A51A300,EVID_00042,phase1_pipeline,completed,INFO,"analyses=['confidence', 'fingerprint', 'metadata'] failures=none",3.1

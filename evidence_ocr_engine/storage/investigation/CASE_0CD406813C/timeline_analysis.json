@@ -1,0 +1,1191 @@
+{
+  "report_type": "timeline_analysis",
+  "report_version": 3,
+  "schema_version": "2.0",
+  "case_id": "CASE_0CD406813C",
+  "generated_at": "2026-08-21T06:39:12.053Z",
+  "report": {
+    "case_id": "CASE_0CD406813C",
+    "events": [
+      {
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00027",
+        "case_id": "CASE_0CD406813C",
+        "file_name": "06_complaint_letter.pdf",
+        "description": "Evidence EVID_00027 (06_complaint_letter.pdf); stages: social_engineering, financial_transaction, post_attack",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00027"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00029",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.9704,
+            "confidence": 0.9704
+          },
+          {
+            "linked_to": "EVID_00033",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8281,
+            "confidence": 0.8281
+          },
+          {
+            "linked_to": "EVID_00031",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8175,
+            "confidence": 0.8175
+          },
+          {
+            "linked_to": "EVID_00030",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8011,
+            "confidence": 0.8011
+          },
+          {
+            "linked_to": "EVID_00028",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.6061,
+            "confidence": 0.6061
+          },
+          {
+            "linked_to": "EVID_00032",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          }
+        ],
+        "text_preview": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: अनलाइन ठगी सम्",
+        "risk_signals": {},
+        "stages": [
+          "social_engineering",
+          "financial_transaction",
+          "post_attack"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 12000, NPR 12500, NPR 15000",
+          "contains esewa_ids entity/entities: +9779812345678",
+          "contains bank_accounts entity/entities: 01903015472901",
+          "contains transaction_ids entity/entities: ESW-2026-0714-88231"
+        ]
+      },
+      {
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00028",
+        "case_id": "CASE_0CD406813C",
+        "file_name": "05_bank_statement.csv",
+        "description": "Evidence EVID_00028 (05_bank_statement.csv); stages: financial_transaction",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00028"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00027",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.6061,
+            "confidence": 0.6061
+          },
+          {
+            "linked_to": "EVID_00029",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.6061,
+            "confidence": 0.6061
+          },
+          {
+            "linked_to": "EVID_00031",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.6061,
+            "confidence": 0.6061
+          },
+          {
+            "linked_to": "EVID_00030",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3377,
+            "confidence": 0.3377
+          },
+          {
+            "linked_to": "EVID_00032",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3377,
+            "confidence": 0.3377
+          }
+        ],
+        "text_preview": "date,description,amount_npr,channel\n2026-07-14,eSewa load to 9812345678,-500,mobile_banking\n2026-07-15,IBFT to 019030154",
+        "risk_signals": {},
+        "stages": [
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains esewa_ids entity/entities: +9779812345678"
+        ]
+      },
+      {
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00031",
+        "case_id": "CASE_0CD406813C",
+        "file_name": "02_messenger_chat.jpg",
+        "description": "Evidence EVID_00031 (02_messenger_chat.jpg); stages: financial_transaction",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00031"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00027",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8175,
+            "confidence": 0.8175
+          },
+          {
+            "linked_to": "EVID_00029",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8175,
+            "confidence": 0.8175
+          },
+          {
+            "linked_to": "EVID_00028",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.6061,
+            "confidence": 0.6061
+          },
+          {
+            "linked_to": "EVID_00030",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          },
+          {
+            "linked_to": "EVID_00032",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          }
+        ],
+        "text_preview": "Messenger - Reward Center\nAgent (+9779812345678)\nSir tapai ko cashback process garna\nसेवा शुल्क पठाउनु पर्छ।\neSewa ID: 9",
+        "risk_signals": {},
+        "stages": [
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 500",
+          "contains esewa_ids entity/entities: +9779812345678"
+        ]
+      },
+      {
+        "timestamp": "2026-07-14T09:12:04+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00029",
+        "case_id": "CASE_0CD406813C",
+        "file_name": "04_phishing_email.txt",
+        "description": "Evidence EVID_00029 (04_phishing_email.txt); stages: social_engineering, financial_transaction",
+        "time_source": "content_labeled_date_time",
+        "confidence": "high",
+        "timestamp_inferred": false,
+        "source_evidence_ids": [
+          "EVID_00029"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00027",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.9704,
+            "confidence": 0.9704
+          },
+          {
+            "linked_to": "EVID_00033",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8281,
+            "confidence": 0.8281
+          },
+          {
+            "linked_to": "EVID_00031",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8175,
+            "confidence": 0.8175
+          },
+          {
+            "linked_to": "EVID_00028",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.6061,
+            "confidence": 0.6061
+          },
+          {
+            "linked_to": "EVID_00030",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          },
+          {
+            "linked_to": "EVID_00032",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          }
+        ],
+        "text_preview": "From: eSewa Reward Center <reward.center2026@gmail.com>\nTo: sunita.rai88@gmail.com\nDate: Mon, 14 Jul 2026 09:12:04 +0545",
+        "risk_signals": {},
+        "stages": [
+          "social_engineering",
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 15000, NPR 500",
+          "contains esewa_ids entity/entities: +9779812345678"
+        ]
+      },
+      {
+        "timestamp": "2026-07-14T11:42:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00030",
+        "case_id": "CASE_0CD406813C",
+        "file_name": "03_esewa_payment_receipt.jpg",
+        "description": "Evidence EVID_00030 (03_esewa_payment_receipt.jpg); stages: financial_transaction",
+        "time_source": "content_date_time",
+        "confidence": "high",
+        "timestamp_inferred": false,
+        "source_evidence_ids": [
+          "EVID_00030"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00027",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8011,
+            "confidence": 0.8011
+          },
+          {
+            "linked_to": "EVID_00029",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          },
+          {
+            "linked_to": "EVID_00031",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          },
+          {
+            "linked_to": "EVID_00032",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          },
+          {
+            "linked_to": "EVID_00028",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3377,
+            "confidence": 0.3377
+          }
+        ],
+        "text_preview": "eSewa Payment Successful\nAmount\nRs. 500.00\nTransaction\nESW-2026-0714-88231\nDate & Time 2026-07-14 11:42 AM\nPaid To\n98123",
+        "risk_signals": {},
+        "stages": [
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 500",
+          "contains transaction_ids entity/entities: ESW-2026-0714-88231"
+        ]
+      },
+      {
+        "timestamp": "2026-08-21T06:37:22.707000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00026",
+        "case_id": "CASE_0CD406813C",
+        "file_name": "07_qr_flyer_poor_capture.jpg",
+        "description": "Evidence EVID_00026 (07_qr_flyer_poor_capture.jpg); stages: initial_contact",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00026"
+        ],
+        "correlated_with": [],
+        "text_preview": "DASHAIN CASHBACK OFFER",
+        "risk_signals": {},
+        "stages": [
+          "initial_contact"
+        ],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-08-21T06:37:43.588000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00032",
+        "case_id": "CASE_0CD406813C",
+        "file_name": "01_sms_cashback_offer.jpg",
+        "description": "Evidence EVID_00032 (01_sms_cashback_offer.jpg); stages: social_engineering, financial_transaction",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00032"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00027",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          },
+          {
+            "linked_to": "EVID_00029",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          },
+          {
+            "linked_to": "EVID_00030",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          },
+          {
+            "linked_to": "EVID_00031",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          },
+          {
+            "linked_to": "EVID_00028",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3377,
+            "confidence": 0.3377
+          }
+        ],
+        "text_preview": "eSewa Dashain Cashback\nर५् छ! वपईनो ममर छनेट पएो छ।\nCongatationst Your rumbx has been seiected.\nCashbxck NPR 15.000 - cl",
+        "risk_signals": {},
+        "stages": [
+          "social_engineering",
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 15, NPR 500"
+        ]
+      },
+      {
+        "timestamp": "2026-08-21T06:38:44.588000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00033",
+        "case_id": "CASE_0CD406813C",
+        "file_name": "https_esewa-bonus-claim.xyz_verify_ref_DSN2026.url",
+        "description": "Evidence EVID_00033 (https_esewa-bonus-claim.xyz_verify_ref_DSN2026.url); stages: social_engineering, financial_transaction",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00033"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00027",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8281,
+            "confidence": 0.8281
+          },
+          {
+            "linked_to": "EVID_00029",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8281,
+            "confidence": 0.8281
+          }
+        ],
+        "text_preview": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026",
+        "risk_signals": {},
+        "stages": [
+          "social_engineering",
+          "financial_transaction"
+        ],
+        "critical": false,
+        "critical_reasons": []
+      }
+    ],
+    "attack_stages": [
+      {
+        "stage": "initial_contact",
+        "evidence_ids": [
+          "EVID_00026"
+        ],
+        "first_seen": "",
+        "last_seen": "",
+        "matched_keywords": [
+          "offer"
+        ],
+        "explanation": "Stage 'initial_contact' is evidenced by keyword matches (offer) in EVID_00026."
+      },
+      {
+        "stage": "social_engineering",
+        "evidence_ids": [
+          "EVID_00027",
+          "EVID_00029",
+          "EVID_00032",
+          "EVID_00033"
+        ],
+        "first_seen": "2026-07-14T00:00:00+00:00",
+        "last_seen": "2026-07-14T09:12:04+00:00",
+        "matched_keywords": [
+          "urgent",
+          "verify"
+        ],
+        "explanation": "Stage 'social_engineering' is evidenced by keyword matches (urgent, verify) in EVID_00027, EVID_00029, EVID_00032, EVID_00033."
+      },
+      {
+        "stage": "financial_transaction",
+        "evidence_ids": [
+          "EVID_00027",
+          "EVID_00028",
+          "EVID_00031",
+          "EVID_00029",
+          "EVID_00030",
+          "EVID_00032",
+          "EVID_00033"
+        ],
+        "first_seen": "2026-07-14T00:00:00+00:00",
+        "last_seen": "2026-07-14T11:42:00+00:00",
+        "matched_keywords": [
+          "bank",
+          "esewa",
+          "npr",
+          "paid",
+          "payment",
+          "rs.",
+          "transfer",
+          "wallet"
+        ],
+        "explanation": "Stage 'financial_transaction' is evidenced by keyword matches (bank, esewa, npr, paid, payment) in EVID_00027, EVID_00028, EVID_00031, EVID_00029, EVID_00030, EVID_00032, EVID_00033."
+      },
+      {
+        "stage": "post_attack",
+        "evidence_ids": [
+          "EVID_00027"
+        ],
+        "first_seen": "2026-07-14T00:00:00+00:00",
+        "last_seen": "2026-07-14T00:00:00+00:00",
+        "matched_keywords": [
+          "police"
+        ],
+        "explanation": "Stage 'post_attack' is evidenced by keyword matches (police) in EVID_00027."
+      }
+    ],
+    "stage_progression": [
+      "social_engineering",
+      "financial_transaction",
+      "post_attack"
+    ],
+    "progression_consistent": true,
+    "milestones": [
+      {
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "event_type": "milestone",
+        "evidence_id": "EVID_00027",
+        "case_id": "CASE_0CD406813C",
+        "file_name": "06_complaint_letter.pdf",
+        "description": "First reconstructed incident event",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00027"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00029",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.9704,
+            "confidence": 0.9704
+          },
+          {
+            "linked_to": "EVID_00033",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8281,
+            "confidence": 0.8281
+          },
+          {
+            "linked_to": "EVID_00031",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8175,
+            "confidence": 0.8175
+          },
+          {
+            "linked_to": "EVID_00030",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8011,
+            "confidence": 0.8011
+          },
+          {
+            "linked_to": "EVID_00028",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.6061,
+            "confidence": 0.6061
+          },
+          {
+            "linked_to": "EVID_00032",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          }
+        ],
+        "text_preview": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: अनलाइन ठगी सम्",
+        "risk_signals": {},
+        "stages": [],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "event_type": "milestone",
+        "evidence_id": "EVID_00027",
+        "case_id": "CASE_0CD406813C",
+        "file_name": "06_complaint_letter.pdf",
+        "description": "First observation of stage 'social_engineering' (EVID_00027)",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00027"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00029",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.9704,
+            "confidence": 0.9704
+          },
+          {
+            "linked_to": "EVID_00033",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8281,
+            "confidence": 0.8281
+          },
+          {
+            "linked_to": "EVID_00031",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8175,
+            "confidence": 0.8175
+          },
+          {
+            "linked_to": "EVID_00030",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8011,
+            "confidence": 0.8011
+          },
+          {
+            "linked_to": "EVID_00028",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.6061,
+            "confidence": 0.6061
+          },
+          {
+            "linked_to": "EVID_00032",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          }
+        ],
+        "text_preview": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: अनलाइन ठगी सम्",
+        "risk_signals": {},
+        "stages": [
+          "social_engineering"
+        ],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "event_type": "milestone",
+        "evidence_id": "EVID_00027",
+        "case_id": "CASE_0CD406813C",
+        "file_name": "06_complaint_letter.pdf",
+        "description": "First observation of stage 'financial_transaction' (EVID_00027)",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00027"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00029",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.9704,
+            "confidence": 0.9704
+          },
+          {
+            "linked_to": "EVID_00033",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8281,
+            "confidence": 0.8281
+          },
+          {
+            "linked_to": "EVID_00031",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8175,
+            "confidence": 0.8175
+          },
+          {
+            "linked_to": "EVID_00030",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8011,
+            "confidence": 0.8011
+          },
+          {
+            "linked_to": "EVID_00028",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.6061,
+            "confidence": 0.6061
+          },
+          {
+            "linked_to": "EVID_00032",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          }
+        ],
+        "text_preview": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: अनलाइन ठगी सम्",
+        "risk_signals": {},
+        "stages": [
+          "financial_transaction"
+        ],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "event_type": "milestone",
+        "evidence_id": "EVID_00027",
+        "case_id": "CASE_0CD406813C",
+        "file_name": "06_complaint_letter.pdf",
+        "description": "First observation of stage 'post_attack' (EVID_00027)",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00027"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00029",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.9704,
+            "confidence": 0.9704
+          },
+          {
+            "linked_to": "EVID_00033",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8281,
+            "confidence": 0.8281
+          },
+          {
+            "linked_to": "EVID_00031",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8175,
+            "confidence": 0.8175
+          },
+          {
+            "linked_to": "EVID_00030",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8011,
+            "confidence": 0.8011
+          },
+          {
+            "linked_to": "EVID_00028",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.6061,
+            "confidence": 0.6061
+          },
+          {
+            "linked_to": "EVID_00032",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          }
+        ],
+        "text_preview": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: अनलाइन ठगी सम्",
+        "risk_signals": {},
+        "stages": [
+          "post_attack"
+        ],
+        "critical": false,
+        "critical_reasons": []
+      }
+    ],
+    "critical_events": [
+      {
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00027",
+        "case_id": "CASE_0CD406813C",
+        "file_name": "06_complaint_letter.pdf",
+        "description": "Evidence EVID_00027 (06_complaint_letter.pdf); stages: social_engineering, financial_transaction, post_attack",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00027"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00029",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.9704,
+            "confidence": 0.9704
+          },
+          {
+            "linked_to": "EVID_00033",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8281,
+            "confidence": 0.8281
+          },
+          {
+            "linked_to": "EVID_00031",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8175,
+            "confidence": 0.8175
+          },
+          {
+            "linked_to": "EVID_00030",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8011,
+            "confidence": 0.8011
+          },
+          {
+            "linked_to": "EVID_00028",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.6061,
+            "confidence": 0.6061
+          },
+          {
+            "linked_to": "EVID_00032",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          }
+        ],
+        "text_preview": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: अनलाइन ठगी सम्",
+        "risk_signals": {},
+        "stages": [
+          "social_engineering",
+          "financial_transaction",
+          "post_attack"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 12000, NPR 12500, NPR 15000",
+          "contains esewa_ids entity/entities: +9779812345678",
+          "contains bank_accounts entity/entities: 01903015472901",
+          "contains transaction_ids entity/entities: ESW-2026-0714-88231"
+        ]
+      },
+      {
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00028",
+        "case_id": "CASE_0CD406813C",
+        "file_name": "05_bank_statement.csv",
+        "description": "Evidence EVID_00028 (05_bank_statement.csv); stages: financial_transaction",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00028"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00027",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.6061,
+            "confidence": 0.6061
+          },
+          {
+            "linked_to": "EVID_00029",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.6061,
+            "confidence": 0.6061
+          },
+          {
+            "linked_to": "EVID_00031",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.6061,
+            "confidence": 0.6061
+          },
+          {
+            "linked_to": "EVID_00030",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3377,
+            "confidence": 0.3377
+          },
+          {
+            "linked_to": "EVID_00032",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3377,
+            "confidence": 0.3377
+          }
+        ],
+        "text_preview": "date,description,amount_npr,channel\n2026-07-14,eSewa load to 9812345678,-500,mobile_banking\n2026-07-15,IBFT to 019030154",
+        "risk_signals": {},
+        "stages": [
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains esewa_ids entity/entities: +9779812345678"
+        ]
+      },
+      {
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00031",
+        "case_id": "CASE_0CD406813C",
+        "file_name": "02_messenger_chat.jpg",
+        "description": "Evidence EVID_00031 (02_messenger_chat.jpg); stages: financial_transaction",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00031"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00027",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8175,
+            "confidence": 0.8175
+          },
+          {
+            "linked_to": "EVID_00029",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8175,
+            "confidence": 0.8175
+          },
+          {
+            "linked_to": "EVID_00028",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.6061,
+            "confidence": 0.6061
+          },
+          {
+            "linked_to": "EVID_00030",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          },
+          {
+            "linked_to": "EVID_00032",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          }
+        ],
+        "text_preview": "Messenger - Reward Center\nAgent (+9779812345678)\nSir tapai ko cashback process garna\nसेवा शुल्क पठाउनु पर्छ।\neSewa ID: 9",
+        "risk_signals": {},
+        "stages": [
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 500",
+          "contains esewa_ids entity/entities: +9779812345678"
+        ]
+      },
+      {
+        "timestamp": "2026-07-14T09:12:04+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00029",
+        "case_id": "CASE_0CD406813C",
+        "file_name": "04_phishing_email.txt",
+        "description": "Evidence EVID_00029 (04_phishing_email.txt); stages: social_engineering, financial_transaction",
+        "time_source": "content_labeled_date_time",
+        "confidence": "high",
+        "timestamp_inferred": false,
+        "source_evidence_ids": [
+          "EVID_00029"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00027",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.9704,
+            "confidence": 0.9704
+          },
+          {
+            "linked_to": "EVID_00033",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8281,
+            "confidence": 0.8281
+          },
+          {
+            "linked_to": "EVID_00031",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8175,
+            "confidence": 0.8175
+          },
+          {
+            "linked_to": "EVID_00028",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.6061,
+            "confidence": 0.6061
+          },
+          {
+            "linked_to": "EVID_00030",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          },
+          {
+            "linked_to": "EVID_00032",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          }
+        ],
+        "text_preview": "From: eSewa Reward Center <reward.center2026@gmail.com>\nTo: sunita.rai88@gmail.com\nDate: Mon, 14 Jul 2026 09:12:04 +0545",
+        "risk_signals": {},
+        "stages": [
+          "social_engineering",
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 15000, NPR 500",
+          "contains esewa_ids entity/entities: +9779812345678"
+        ]
+      },
+      {
+        "timestamp": "2026-07-14T11:42:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00030",
+        "case_id": "CASE_0CD406813C",
+        "file_name": "03_esewa_payment_receipt.jpg",
+        "description": "Evidence EVID_00030 (03_esewa_payment_receipt.jpg); stages: financial_transaction",
+        "time_source": "content_date_time",
+        "confidence": "high",
+        "timestamp_inferred": false,
+        "source_evidence_ids": [
+          "EVID_00030"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00027",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8011,
+            "confidence": 0.8011
+          },
+          {
+            "linked_to": "EVID_00029",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          },
+          {
+            "linked_to": "EVID_00031",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          },
+          {
+            "linked_to": "EVID_00032",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          },
+          {
+            "linked_to": "EVID_00028",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3377,
+            "confidence": 0.3377
+          }
+        ],
+        "text_preview": "eSewa Payment Successful\nAmount\nRs. 500.00\nTransaction\nESW-2026-0714-88231\nDate & Time 2026-07-14 11:42 AM\nPaid To\n98123",
+        "risk_signals": {},
+        "stages": [
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 500",
+          "contains transaction_ids entity/entities: ESW-2026-0714-88231"
+        ]
+      },
+      {
+        "timestamp": "2026-08-21T06:37:43.588000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00032",
+        "case_id": "CASE_0CD406813C",
+        "file_name": "01_sms_cashback_offer.jpg",
+        "description": "Evidence EVID_00032 (01_sms_cashback_offer.jpg); stages: social_engineering, financial_transaction",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00032"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00027",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          },
+          {
+            "linked_to": "EVID_00029",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          },
+          {
+            "linked_to": "EVID_00030",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          },
+          {
+            "linked_to": "EVID_00031",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.368,
+            "confidence": 0.368
+          },
+          {
+            "linked_to": "EVID_00028",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3377,
+            "confidence": 0.3377
+          }
+        ],
+        "text_preview": "eSewa Dashain Cashback\nर५् छ! वपईनो ममर छनेट पएो छ।\nCongatationst Your rumbx has been seiected.\nCashbxck NPR 15.000 - cl",
+        "risk_signals": {},
+        "stages": [
+          "social_engineering",
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 15, NPR 500"
+        ]
+      }
+    ],
+    "summary": "8 events; 8 timestamps resolved (2 non-inferred, 6 inferred, including 3 acquisition-time fallbacks); 0 timestamps unresolved. Content/metadata event times span 11.7 hours. Keyword-derived stage order: social_engineering -> financial_transaction -> post_attack. This order is incomplete because one or more detected stages have acquisition time only.",
+    "statistics": {
+      "event_count": 8.0,
+      "resolved_event_count": 8.0,
+      "unresolved_event_count": 0.0,
+      "inferred_event_count": 6.0,
+      "non_inferred_event_count": 2.0,
+      "acquisition_fallback_count": 3.0,
+      "progression_assessable": 0.0,
+      "stage_count": 4.0,
+      "critical_event_count": 6.0,
+      "timeline_span_hours": 918.65,
+      "event_time_span_hours": 11.7,
+      "acquisition_inclusive_span_hours": 918.65
+    },
+    "analysis_time_ms": 1.0
+  }
+}

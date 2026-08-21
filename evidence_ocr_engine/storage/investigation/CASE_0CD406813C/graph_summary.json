@@ -1,0 +1,23 @@
+{
+  "report_type": "graph_summary",
+  "report_version": 3,
+  "schema_version": "2.0",
+  "case_id": "CASE_0CD406813C",
+  "generated_at": "2026-08-21T06:39:12.088Z",
+  "report": {
+    "case_id": "CASE_0CD406813C",
+    "headline": "46 nodes and 101 edges across 1 component",
+    "key_connectors": [
+      "domain:gmail.com",
+      "phone_number:+9779812345678",
+      "money:npr 500"
+    ],
+    "observations": [
+      "NetworkX identified 6 communities and retained 47 key edges for simplified investigation views.",
+      "19 bridge connections can separate otherwise distinct portions of the relationship graph.",
+      "6 threat-intelligence edges link flagged indicators to evidence.",
+      "9 strong behavioural links derived from the weighted correlation engine.",
+      "All entities and evidence form a single connected component - consistent with one coordinated activity."
+    ]
+  }
+}

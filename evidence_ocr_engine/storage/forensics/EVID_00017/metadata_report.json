@@ -1,0 +1,42 @@
+{
+  "report_type": "metadata_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00017",
+  "case_id": "CASE_1A1BF573F3",
+  "generated_at": "2026-08-21T03:25:44.230Z",
+  "report": {
+    "evidence_id": "EVID_00017",
+    "case_id": "CASE_1A1BF573F3",
+    "source_file": "EVID_00017__05312fde__03_qr_code_flyer.png",
+    "file_type": "image",
+    "filesystem": {
+      "file_size_bytes": 0,
+      "created": "",
+      "modified": "",
+      "accessed": ""
+    },
+    "image": {
+      "has_exif": false,
+      "camera_make": "",
+      "camera_model": "",
+      "device": "",
+      "software": "",
+      "date_created": "",
+      "date_modified": "",
+      "orientation": "",
+      "gps": null,
+      "all_tags": {}
+    },
+    "pdf": null,
+    "office": null,
+    "consistency_notes": [
+      "Image carries no EXIF metadata (typical for screenshots and messaging-app exports; one less authenticity signal)."
+    ],
+    "extraction_errors": [
+      "filesystem stat failed: [Errno 2] No such file or directory: '/Users/sachyam/Documents/Programming/Active/Cybercrime-Investigation-Intelligence-System/evidence_ocr_engine/storage/originals/EVID_00017__05312fde__03_qr_code_flyer.png'",
+      "image open failed: [Errno 2] No such file or directory: '/Users/sachyam/Documents/Programming/Active/Cybercrime-Investigation-Intelligence-System/evidence_ocr_engine/storage/originals/EVID_00017__05312fde__03_qr_code_flyer.png'"
+    ],
+    "analysis_time_ms": 0.1
+  }
+}

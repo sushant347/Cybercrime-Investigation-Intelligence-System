@@ -1,0 +1,30 @@
+{
+  "report_type": "file_fingerprint",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00042",
+  "case_id": "CASE_4B2A51A300",
+  "generated_at": "2026-08-21T06:43:15.145Z",
+  "report": {
+    "evidence_id": "EVID_00042",
+    "case_id": "CASE_4B2A51A300",
+    "source_file": "EVID_00042__e5cf6182__https_esewa-bonus-claim.xyz_verify_ref_KYC2026.url",
+    "md5": "a87e4770c23b8d158c839ac253a5af5e",
+    "sha1": "0bac2429bc52dabb86f87fe01e6e246a70040b6e",
+    "sha256": "e419582edacddd1546d5d02c7f831ac5deacb68e5936be289619a9f2f4839f33",
+    "sha512": "254aa7a4a54c0088ccfeb09cfb30b5bdf91578254e80fdbb3e13a50801c3bc9ffe8489f0845a7ab9cb427f73ac498044b707f98415555c6123c716e7dcb1ad37",
+    "crc32": "355b2ebf",
+    "file_size_bytes": 49,
+    "entropy_bits_per_byte": 4.9308,
+    "high_entropy": false,
+    "magic_number_hex": "68747470733a2f2f",
+    "magic_format": "",
+    "declared_extension": ".url",
+    "mime_type": "application/octet-stream",
+    "extension_matches_magic": true,
+    "sha256_matches_acquisition": true,
+    "duplicates": [],
+    "is_duplicate": false,
+    "analysis_time_ms": 0.6
+  }
+}

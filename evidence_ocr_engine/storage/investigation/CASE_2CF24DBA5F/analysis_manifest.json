@@ -1,0 +1,50 @@
+{
+  "report_type": "analysis_manifest",
+  "report_version": 5,
+  "schema_version": "2.0",
+  "case_id": "CASE_2CF24DBA5F",
+  "generated_at": "2026-08-20T18:49:03.192Z",
+  "report": {
+    "status": "completed_with_warnings",
+    "input_quality": "partial",
+    "warnings": [
+      "Original evidence files unavailable for 4 item(s): EVID_00001, EVID_00002, EVID_00003, EVID_00004"
+    ],
+    "evidence_ids": [
+      "EVID_00001",
+      "EVID_00002",
+      "EVID_00003",
+      "EVID_00004"
+    ],
+    "evidence_count": 4,
+    "semantic_validator": "heuristic",
+    "threat_provider": "MLThreatIntelProvider+heuristics",
+    "graph_analytics": "networkx-3.6.1",
+    "runtime": {
+      "python": "3.12.13",
+      "pydantic": "2.13.4",
+      "networkx": "3.6.1"
+    },
+    "correlation_configuration": {
+      "confidence_normaliser": 1.6,
+      "relationship_bands": {
+        "NO_RELATIONSHIP": 0.05,
+        "WEAK": 0.3,
+        "MEDIUM": 0.55,
+        "STRONG": 0.8,
+        "VERY_STRONG": 1.01
+      },
+      "timeline_proximity_weight": 0.0
+    },
+    "timeline_configuration": {
+      "proximity_hours": 48.0,
+      "stage_order": [
+        "initial_contact",
+        "social_engineering",
+        "credential_theft",
+        "financial_transaction",
+        "post_attack"
+      ]
+    }
+  }
+}

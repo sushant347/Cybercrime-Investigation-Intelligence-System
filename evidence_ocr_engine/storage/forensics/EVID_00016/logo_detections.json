@@ -1,0 +1,102 @@
+{
+  "report_type": "logo_detections",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00016",
+  "case_id": "CASE_1A1BF573F3",
+  "generated_at": "2026-08-21T03:27:25.789Z",
+  "report": {
+    "evidence_id": "EVID_00016",
+    "case_id": "CASE_1A1BF573F3",
+    "source_file": "02_messenger_chat.jpg",
+    "brands_checked": [
+      "eSewa",
+      "Khalti",
+      "IME Pay",
+      "Facebook",
+      "Messenger",
+      "WhatsApp",
+      "Telegram",
+      "Gmail",
+      "Outlook",
+      "Google",
+      "Microsoft"
+    ],
+    "detections": [
+      {
+        "brand": "Facebook",
+        "confidence": 0.5204,
+        "bbox": [
+          0.0,
+          0.0,
+          720.0,
+          78.0
+        ],
+        "detection_method": "colour_signature",
+        "detected_at": "2026-08-21T03:27:25.761Z",
+        "detail": "brand-colour region 3.5% of frame"
+      },
+      {
+        "brand": "Messenger",
+        "confidence": 0.5014,
+        "bbox": [
+          0.0,
+          0.0,
+          720.0,
+          77.0
+        ],
+        "detection_method": "colour_signature",
+        "detected_at": "2026-08-21T03:27:25.765Z",
+        "detail": "brand-colour region 2.6% of frame"
+      },
+      {
+        "brand": "Telegram",
+        "confidence": 0.5094,
+        "bbox": [
+          0.0,
+          0.0,
+          720.0,
+          80.0
+        ],
+        "detection_method": "colour_signature",
+        "detected_at": "2026-08-21T03:27:25.773Z",
+        "detail": "brand-colour region 3.0% of frame"
+      },
+      {
+        "brand": "Outlook",
+        "confidence": 0.5214,
+        "bbox": [
+          0.0,
+          0.0,
+          720.0,
+          79.0
+        ],
+        "detection_method": "colour_signature",
+        "detected_at": "2026-08-21T03:27:25.784Z",
+        "detail": "brand-colour region 3.6% of frame"
+      },
+      {
+        "brand": "Google",
+        "confidence": 0.5015,
+        "bbox": [
+          0.0,
+          0.0,
+          720.0,
+          77.0
+        ],
+        "detection_method": "colour_signature",
+        "detected_at": "2026-08-21T03:27:25.789Z",
+        "detail": "brand-colour region 2.6% of frame"
+      }
+    ],
+    "detected_brands": [
+      "Facebook",
+      "Google",
+      "Messenger",
+      "Outlook",
+      "Telegram"
+    ],
+    "template_assets_available": false,
+    "analysis_time_ms": 48.2
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "report_type": "metadata_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00035",
+  "case_id": "CASE_4B2A51A300",
+  "generated_at": "2026-08-21T06:43:01.313Z",
+  "report": {
+    "evidence_id": "EVID_00035",
+    "case_id": "CASE_4B2A51A300",
+    "source_file": "EVID_00035__8b8ce479__06_police_complaint.pdf",
+    "file_type": "pdf",
+    "filesystem": {
+      "file_size_bytes": 79303,
+      "created": "2026-08-21T06:43:01.064404+00:00",
+      "modified": "2026-08-21T06:42:54.767172+00:00",
+      "accessed": "2026-08-21T06:43:01.062083+00:00"
+    },
+    "image": null,
+    "pdf": {
+      "author": "anonymous",
+      "producer": "ReportLab PDF Library - (opensource)",
+      "creator": "anonymous",
+      "title": "untitled",
+      "subject": "unspecified",
+      "creation_date": "D:20260821121416+05'00'",
+      "modification_date": "D:20260821121416+05'00'",
+      "page_count": 1,
+      "encrypted": false
+    },
+    "office": null,
+    "consistency_notes": [],
+    "extraction_errors": [],
+    "analysis_time_ms": 2.7
+  }
+}

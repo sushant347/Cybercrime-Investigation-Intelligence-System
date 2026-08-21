@@ -1,0 +1,39 @@
+{
+  "report_type": "metadata_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00040",
+  "case_id": "CASE_4B2A51A300",
+  "generated_at": "2026-08-21T06:43:14.941Z",
+  "report": {
+    "evidence_id": "EVID_00040",
+    "case_id": "CASE_4B2A51A300",
+    "source_file": "EVID_00040__24b3096a__01_khalti_kyc_sms.jpg",
+    "file_type": "image",
+    "filesystem": {
+      "file_size_bytes": 20162,
+      "created": "2026-08-21T06:43:11.546818+00:00",
+      "modified": "2026-08-21T06:42:54.943052+00:00",
+      "accessed": "2026-08-21T06:43:13.552858+00:00"
+    },
+    "image": {
+      "has_exif": false,
+      "camera_make": "",
+      "camera_model": "",
+      "device": "",
+      "software": "",
+      "date_created": "",
+      "date_modified": "",
+      "orientation": "",
+      "gps": null,
+      "all_tags": {}
+    },
+    "pdf": null,
+    "office": null,
+    "consistency_notes": [
+      "Image carries no EXIF metadata (typical for screenshots and messaging-app exports; one less authenticity signal)."
+    ],
+    "extraction_errors": [],
+    "analysis_time_ms": 0.2
+  }
+}

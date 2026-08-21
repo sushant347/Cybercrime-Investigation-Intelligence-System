@@ -1,0 +1,39 @@
+{
+  "report_type": "metadata_report",
+  "report_version": 2,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00034",
+  "case_id": "CASE_4B2A51A300",
+  "generated_at": "2026-08-21T06:43:00.958Z",
+  "report": {
+    "evidence_id": "EVID_00034",
+    "case_id": "CASE_4B2A51A300",
+    "source_file": "EVID_00034__976440e2__07_fake_support_profile.jpg",
+    "file_type": "image",
+    "filesystem": {
+      "file_size_bytes": 23573,
+      "created": "2026-08-21T06:42:54.754989+00:00",
+      "modified": "2026-08-21T06:42:54.734263+00:00",
+      "accessed": "2026-08-21T06:42:57.611556+00:00"
+    },
+    "image": {
+      "has_exif": false,
+      "camera_make": "",
+      "camera_model": "",
+      "device": "",
+      "software": "",
+      "date_created": "",
+      "date_modified": "",
+      "orientation": "",
+      "gps": null,
+      "all_tags": {}
+    },
+    "pdf": null,
+    "office": null,
+    "consistency_notes": [
+      "Image carries no EXIF metadata (typical for screenshots and messaging-app exports; one less authenticity signal)."
+    ],
+    "extraction_errors": [],
+    "analysis_time_ms": 6.5
+  }
+}

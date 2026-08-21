@@ -1,0 +1,1481 @@
+{
+  "report_type": "timeline_analysis",
+  "report_version": 4,
+  "schema_version": "2.0",
+  "case_id": "CASE_4B2A51A300",
+  "generated_at": "2026-08-21T17:57:22.918Z",
+  "report": {
+    "case_id": "CASE_4B2A51A300",
+    "events": [
+      {
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00035",
+        "case_id": "CASE_4B2A51A300",
+        "file_name": "06_police_complaint.pdf",
+        "description": "Evidence EVID_00035 (06_police_complaint.pdf); stages: social_engineering, credential_theft, financial_transaction, post_attack",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00037",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.9929,
+            "confidence": 0.9929
+          },
+          {
+            "linked_to": "EVID_00034",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8887,
+            "confidence": 0.8887
+          },
+          {
+            "linked_to": "EVID_00041",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8235,
+            "confidence": 0.8235
+          },
+          {
+            "linked_to": "EVID_00042",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8168,
+            "confidence": 0.8168
+          },
+          {
+            "linked_to": "EVID_00038",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7859,
+            "confidence": 0.7859
+          },
+          {
+            "linked_to": "EVID_00039",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7653,
+            "confidence": 0.7653
+          },
+          {
+            "linked_to": "EVID_00036",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5529,
+            "confidence": 0.5529
+          }
+        ],
+        "text_preview": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: खल्ती KYC ठगी ",
+        "risk_signals": {},
+        "stages": [
+          "social_engineering",
+          "credential_theft",
+          "financial_transaction",
+          "post_attack"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 10250, NPR 750, NPR 9500",
+          "contains khalti_ids entity/entities: +9779812345678",
+          "contains bank_accounts entity/entities: 01903015472901",
+          "contains transaction_ids entity/entities: KHL-2026-0802-44190"
+        ]
+      },
+      {
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00036",
+        "case_id": "CASE_4B2A51A300",
+        "file_name": "05_transactions.csv",
+        "description": "Evidence EVID_00036 (05_transactions.csv); stages: financial_transaction",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00036"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00034",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5529,
+            "confidence": 0.5529
+          },
+          {
+            "linked_to": "EVID_00035",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5529,
+            "confidence": 0.5529
+          },
+          {
+            "linked_to": "EVID_00037",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5529,
+            "confidence": 0.5529
+          },
+          {
+            "linked_to": "EVID_00039",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5529,
+            "confidence": 0.5529
+          },
+          {
+            "linked_to": "EVID_00038",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2734,
+            "confidence": 0.2734
+          }
+        ],
+        "text_preview": "date,description,amount_npr,channel\n2026-08-02,Khalti load to 9812345678,-750,wallet\n2026-08-03,IBFT to 01903015472901,-",
+        "risk_signals": {},
+        "stages": [
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains khalti_ids entity/entities: +9779812345678"
+        ]
+      },
+      {
+        "timestamp": "2026-08-02T08:55:31+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00037",
+        "case_id": "CASE_4B2A51A300",
+        "file_name": "04_kyc_phishing_email.txt",
+        "description": "Evidence EVID_00037 (04_kyc_phishing_email.txt); stages: initial_contact, social_engineering, credential_theft, financial_transaction",
+        "time_source": "content_labeled_date_time",
+        "confidence": "high",
+        "timestamp_inferred": false,
+        "source_evidence_ids": [
+          "EVID_00037"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00035",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.9929,
+            "confidence": 0.9929
+          },
+          {
+            "linked_to": "EVID_00034",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8887,
+            "confidence": 0.8887
+          },
+          {
+            "linked_to": "EVID_00041",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8235,
+            "confidence": 0.8235
+          },
+          {
+            "linked_to": "EVID_00042",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8168,
+            "confidence": 0.8168
+          },
+          {
+            "linked_to": "EVID_00039",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7653,
+            "confidence": 0.7653
+          },
+          {
+            "linked_to": "EVID_00036",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5529,
+            "confidence": 0.5529
+          },
+          {
+            "linked_to": "EVID_00038",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3197,
+            "confidence": 0.3197
+          }
+        ],
+        "text_preview": "From: Khalti Verification <reward.center2026@gmail.com>\nTo: bikash.thapa14@gmail.com\nDate: Sat, 02 Aug 2026 08:55:31 +05",
+        "risk_signals": {},
+        "stages": [
+          "initial_contact",
+          "social_engineering",
+          "credential_theft",
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 750",
+          "contains khalti_ids entity/entities: +9779812345678",
+          "contains bank_accounts entity/entities: 01903015472901"
+        ]
+      },
+      {
+        "timestamp": "2026-08-02T15:18:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00038",
+        "case_id": "CASE_4B2A51A300",
+        "file_name": "03_khalti_receipt.jpg",
+        "description": "Evidence EVID_00038 (03_khalti_receipt.jpg); stages: financial_transaction",
+        "time_source": "content_date_time",
+        "confidence": "high",
+        "timestamp_inferred": false,
+        "source_evidence_ids": [
+          "EVID_00038"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00035",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7859,
+            "confidence": 0.7859
+          },
+          {
+            "linked_to": "EVID_00037",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3197,
+            "confidence": 0.3197
+          },
+          {
+            "linked_to": "EVID_00039",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3197,
+            "confidence": 0.3197
+          },
+          {
+            "linked_to": "EVID_00034",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2734,
+            "confidence": 0.2734
+          },
+          {
+            "linked_to": "EVID_00036",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2734,
+            "confidence": 0.2734
+          }
+        ],
+        "text_preview": "Khalti Payment Receipt\nAmount\nRs. 750.00\nTransaction KHL-2026-0802-44190\nDate & Time 2026-08-02 03:18 PM\nSent To\n9812345",
+        "risk_signals": {},
+        "stages": [
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 750",
+          "contains transaction_ids entity/entities: KHL-2026-0802-44190"
+        ]
+      },
+      {
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00034",
+        "case_id": "CASE_4B2A51A300",
+        "file_name": "07_fake_support_profile.jpg",
+        "description": "Evidence EVID_00034 (07_fake_support_profile.jpg); stages: social_engineering, financial_transaction",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00034"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00035",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8887,
+            "confidence": 0.8887
+          },
+          {
+            "linked_to": "EVID_00037",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8887,
+            "confidence": 0.8887
+          },
+          {
+            "linked_to": "EVID_00039",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7494,
+            "confidence": 0.7494
+          },
+          {
+            "linked_to": "EVID_00041",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5559,
+            "confidence": 0.5559
+          },
+          {
+            "linked_to": "EVID_00036",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5529,
+            "confidence": 0.5529
+          },
+          {
+            "linked_to": "EVID_00038",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2734,
+            "confidence": 0.2734
+          }
+        ],
+        "text_preview": "Khalti Official Support\nआधिकारिक सहायता खाता\nPhone\n+9779812345678\nEmail\nreward.center2026@gmail.com\nPortal khalti-kyc-ve",
+        "risk_signals": {},
+        "stages": [
+          "social_engineering",
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains khalti_ids entity/entities: +9779812345678"
+        ]
+      },
+      {
+        "timestamp": "2026-08-21T06:43:07.959000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00039",
+        "case_id": "CASE_4B2A51A300",
+        "file_name": "02_whatsapp_chat.jpg",
+        "description": "Evidence EVID_00039 (02_whatsapp_chat.jpg); stages: initial_contact, financial_transaction",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00039"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00035",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7653,
+            "confidence": 0.7653
+          },
+          {
+            "linked_to": "EVID_00037",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7653,
+            "confidence": 0.7653
+          },
+          {
+            "linked_to": "EVID_00034",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7494,
+            "confidence": 0.7494
+          },
+          {
+            "linked_to": "EVID_00036",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5529,
+            "confidence": 0.5529
+          },
+          {
+            "linked_to": "EVID_00038",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3197,
+            "confidence": 0.3197
+          }
+        ],
+        "text_preview": "WhatsApp - KYc Support\nSupport (+9779812345678)\nNamaste sir, KYC update garna\nप्रमाणीकरण भुल्क तिनुहोस्।\nKhalti ID: 9812",
+        "risk_signals": {},
+        "stages": [
+          "initial_contact",
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 750",
+          "contains khalti_ids entity/entities: +9779812345678"
+        ]
+      },
+      {
+        "timestamp": "2026-08-21T06:43:11.546000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00040",
+        "case_id": "CASE_4B2A51A300",
+        "file_name": "01_khalti_kyc_sms.jpg",
+        "description": "Evidence EVID_00040 (01_khalti_kyc_sms.jpg)",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00040"
+        ],
+        "correlated_with": [],
+        "text_preview": "Khalú KYC Aiert\nहनोमत्र साप्टमलानररेल\nYov Kat xoont w bo twapondrd t 24 han.\nCorrpkta KYc vorcaban immod stely\nVwty. hep",
+        "risk_signals": {},
+        "stages": [],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-08-21T06:43:15.002000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00041",
+        "case_id": "CASE_4B2A51A300",
+        "file_name": "http_khalti-kyc-verify.top_login.url",
+        "description": "Evidence EVID_00041 (http_khalti-kyc-verify.top_login.url); stages: social_engineering, credential_theft, financial_transaction",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00041"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00035",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8235,
+            "confidence": 0.8235
+          },
+          {
+            "linked_to": "EVID_00037",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8235,
+            "confidence": 0.8235
+          },
+          {
+            "linked_to": "EVID_00034",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5559,
+            "confidence": 0.5559
+          }
+        ],
+        "text_preview": "http://khalti-kyc-verify.top/login",
+        "risk_signals": {},
+        "stages": [
+          "social_engineering",
+          "credential_theft",
+          "financial_transaction"
+        ],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-08-21T06:43:15.097000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00042",
+        "case_id": "CASE_4B2A51A300",
+        "file_name": "https_esewa-bonus-claim.xyz_verify_ref_KYC2026.url",
+        "description": "Evidence EVID_00042 (https_esewa-bonus-claim.xyz_verify_ref_KYC2026.url); stages: social_engineering, financial_transaction",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00042"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00035",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8168,
+            "confidence": 0.8168
+          },
+          {
+            "linked_to": "EVID_00037",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8168,
+            "confidence": 0.8168
+          }
+        ],
+        "text_preview": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026",
+        "risk_signals": {},
+        "stages": [
+          "social_engineering",
+          "financial_transaction"
+        ],
+        "critical": false,
+        "critical_reasons": []
+      }
+    ],
+    "attack_stages": [
+      {
+        "stage": "initial_contact",
+        "evidence_ids": [
+          "EVID_00037",
+          "EVID_00039"
+        ],
+        "first_seen": "2026-08-02T08:55:31+00:00",
+        "last_seen": "2026-08-02T08:55:31+00:00",
+        "matched_keywords": [
+          "dear customer",
+          "namaste"
+        ],
+        "explanation": "Stage 'initial_contact' is evidenced by keyword matches (dear customer, namaste) in EVID_00037, EVID_00039."
+      },
+      {
+        "stage": "social_engineering",
+        "evidence_ids": [
+          "EVID_00035",
+          "EVID_00037",
+          "EVID_00034",
+          "EVID_00041",
+          "EVID_00042"
+        ],
+        "first_seen": "2026-08-02T00:00:00+00:00",
+        "last_seen": "2026-08-02T08:55:31+00:00",
+        "matched_keywords": [
+          "suspended",
+          "verify",
+          "warning"
+        ],
+        "explanation": "Stage 'social_engineering' is evidenced by keyword matches (suspended, verify, warning) in EVID_00035, EVID_00037, EVID_00034, EVID_00041, EVID_00042."
+      },
+      {
+        "stage": "credential_theft",
+        "evidence_ids": [
+          "EVID_00035",
+          "EVID_00037",
+          "EVID_00041"
+        ],
+        "first_seen": "2026-08-02T00:00:00+00:00",
+        "last_seen": "2026-08-02T08:55:31+00:00",
+        "matched_keywords": [
+          "login"
+        ],
+        "explanation": "Stage 'credential_theft' is evidenced by keyword matches (login) in EVID_00035, EVID_00037, EVID_00041."
+      },
+      {
+        "stage": "financial_transaction",
+        "evidence_ids": [
+          "EVID_00035",
+          "EVID_00036",
+          "EVID_00037",
+          "EVID_00038",
+          "EVID_00034",
+          "EVID_00039",
+          "EVID_00041",
+          "EVID_00042"
+        ],
+        "first_seen": "2026-08-02T00:00:00+00:00",
+        "last_seen": "2026-08-02T15:18:00+00:00",
+        "matched_keywords": [
+          "bank",
+          "esewa",
+          "khalti",
+          "npr",
+          "paid",
+          "payment",
+          "rs.",
+          "transfer",
+          "wallet"
+        ],
+        "explanation": "Stage 'financial_transaction' is evidenced by keyword matches (bank, esewa, khalti, npr, paid) in EVID_00035, EVID_00036, EVID_00037, EVID_00038, EVID_00034, EVID_00039, EVID_00041, EVID_00042."
+      },
+      {
+        "stage": "post_attack",
+        "evidence_ids": [
+          "EVID_00035"
+        ],
+        "first_seen": "2026-08-02T00:00:00+00:00",
+        "last_seen": "2026-08-02T00:00:00+00:00",
+        "matched_keywords": [
+          "police"
+        ],
+        "explanation": "Stage 'post_attack' is evidenced by keyword matches (police) in EVID_00035."
+      }
+    ],
+    "stage_progression": [
+      "social_engineering",
+      "credential_theft",
+      "financial_transaction",
+      "post_attack",
+      "initial_contact"
+    ],
+    "progression_consistent": false,
+    "milestones": [
+      {
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "event_type": "milestone",
+        "evidence_id": "EVID_00035",
+        "case_id": "CASE_4B2A51A300",
+        "file_name": "06_police_complaint.pdf",
+        "description": "First reconstructed incident event",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00037",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.9929,
+            "confidence": 0.9929
+          },
+          {
+            "linked_to": "EVID_00034",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8887,
+            "confidence": 0.8887
+          },
+          {
+            "linked_to": "EVID_00041",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8235,
+            "confidence": 0.8235
+          },
+          {
+            "linked_to": "EVID_00042",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8168,
+            "confidence": 0.8168
+          },
+          {
+            "linked_to": "EVID_00038",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7859,
+            "confidence": 0.7859
+          },
+          {
+            "linked_to": "EVID_00039",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7653,
+            "confidence": 0.7653
+          },
+          {
+            "linked_to": "EVID_00036",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5529,
+            "confidence": 0.5529
+          }
+        ],
+        "text_preview": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: खल्ती KYC ठगी ",
+        "risk_signals": {},
+        "stages": [],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "event_type": "milestone",
+        "evidence_id": "EVID_00035",
+        "case_id": "CASE_4B2A51A300",
+        "file_name": "06_police_complaint.pdf",
+        "description": "First observation of stage 'social_engineering' (EVID_00035)",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00037",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.9929,
+            "confidence": 0.9929
+          },
+          {
+            "linked_to": "EVID_00034",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8887,
+            "confidence": 0.8887
+          },
+          {
+            "linked_to": "EVID_00041",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8235,
+            "confidence": 0.8235
+          },
+          {
+            "linked_to": "EVID_00042",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8168,
+            "confidence": 0.8168
+          },
+          {
+            "linked_to": "EVID_00038",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7859,
+            "confidence": 0.7859
+          },
+          {
+            "linked_to": "EVID_00039",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7653,
+            "confidence": 0.7653
+          },
+          {
+            "linked_to": "EVID_00036",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5529,
+            "confidence": 0.5529
+          }
+        ],
+        "text_preview": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: खल्ती KYC ठगी ",
+        "risk_signals": {},
+        "stages": [
+          "social_engineering"
+        ],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "event_type": "milestone",
+        "evidence_id": "EVID_00035",
+        "case_id": "CASE_4B2A51A300",
+        "file_name": "06_police_complaint.pdf",
+        "description": "First observation of stage 'credential_theft' (EVID_00035)",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00037",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.9929,
+            "confidence": 0.9929
+          },
+          {
+            "linked_to": "EVID_00034",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8887,
+            "confidence": 0.8887
+          },
+          {
+            "linked_to": "EVID_00041",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8235,
+            "confidence": 0.8235
+          },
+          {
+            "linked_to": "EVID_00042",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8168,
+            "confidence": 0.8168
+          },
+          {
+            "linked_to": "EVID_00038",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7859,
+            "confidence": 0.7859
+          },
+          {
+            "linked_to": "EVID_00039",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7653,
+            "confidence": 0.7653
+          },
+          {
+            "linked_to": "EVID_00036",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5529,
+            "confidence": 0.5529
+          }
+        ],
+        "text_preview": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: खल्ती KYC ठगी ",
+        "risk_signals": {},
+        "stages": [
+          "credential_theft"
+        ],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "event_type": "milestone",
+        "evidence_id": "EVID_00035",
+        "case_id": "CASE_4B2A51A300",
+        "file_name": "06_police_complaint.pdf",
+        "description": "First observation of stage 'financial_transaction' (EVID_00035)",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00037",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.9929,
+            "confidence": 0.9929
+          },
+          {
+            "linked_to": "EVID_00034",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8887,
+            "confidence": 0.8887
+          },
+          {
+            "linked_to": "EVID_00041",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8235,
+            "confidence": 0.8235
+          },
+          {
+            "linked_to": "EVID_00042",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8168,
+            "confidence": 0.8168
+          },
+          {
+            "linked_to": "EVID_00038",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7859,
+            "confidence": 0.7859
+          },
+          {
+            "linked_to": "EVID_00039",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7653,
+            "confidence": 0.7653
+          },
+          {
+            "linked_to": "EVID_00036",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5529,
+            "confidence": 0.5529
+          }
+        ],
+        "text_preview": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: खल्ती KYC ठगी ",
+        "risk_signals": {},
+        "stages": [
+          "financial_transaction"
+        ],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "event_type": "milestone",
+        "evidence_id": "EVID_00035",
+        "case_id": "CASE_4B2A51A300",
+        "file_name": "06_police_complaint.pdf",
+        "description": "First observation of stage 'post_attack' (EVID_00035)",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00037",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.9929,
+            "confidence": 0.9929
+          },
+          {
+            "linked_to": "EVID_00034",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8887,
+            "confidence": 0.8887
+          },
+          {
+            "linked_to": "EVID_00041",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8235,
+            "confidence": 0.8235
+          },
+          {
+            "linked_to": "EVID_00042",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8168,
+            "confidence": 0.8168
+          },
+          {
+            "linked_to": "EVID_00038",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7859,
+            "confidence": 0.7859
+          },
+          {
+            "linked_to": "EVID_00039",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7653,
+            "confidence": 0.7653
+          },
+          {
+            "linked_to": "EVID_00036",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5529,
+            "confidence": 0.5529
+          }
+        ],
+        "text_preview": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: खल्ती KYC ठगी ",
+        "risk_signals": {},
+        "stages": [
+          "post_attack"
+        ],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-08-02T08:55:31+00:00",
+        "event_type": "milestone",
+        "evidence_id": "EVID_00037",
+        "case_id": "CASE_4B2A51A300",
+        "file_name": "04_kyc_phishing_email.txt",
+        "description": "First observation of stage 'initial_contact' (EVID_00037)",
+        "time_source": "content_labeled_date_time",
+        "confidence": "high",
+        "timestamp_inferred": false,
+        "source_evidence_ids": [
+          "EVID_00037"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00035",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.9929,
+            "confidence": 0.9929
+          },
+          {
+            "linked_to": "EVID_00034",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8887,
+            "confidence": 0.8887
+          },
+          {
+            "linked_to": "EVID_00041",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8235,
+            "confidence": 0.8235
+          },
+          {
+            "linked_to": "EVID_00042",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8168,
+            "confidence": 0.8168
+          },
+          {
+            "linked_to": "EVID_00039",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7653,
+            "confidence": 0.7653
+          },
+          {
+            "linked_to": "EVID_00036",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5529,
+            "confidence": 0.5529
+          },
+          {
+            "linked_to": "EVID_00038",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3197,
+            "confidence": 0.3197
+          }
+        ],
+        "text_preview": "From: Khalti Verification <reward.center2026@gmail.com>\nTo: bikash.thapa14@gmail.com\nDate: Sat, 02 Aug 2026 08:55:31 +05",
+        "risk_signals": {},
+        "stages": [
+          "initial_contact"
+        ],
+        "critical": false,
+        "critical_reasons": []
+      }
+    ],
+    "critical_events": [
+      {
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00035",
+        "case_id": "CASE_4B2A51A300",
+        "file_name": "06_police_complaint.pdf",
+        "description": "Evidence EVID_00035 (06_police_complaint.pdf); stages: social_engineering, credential_theft, financial_transaction, post_attack",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00037",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.9929,
+            "confidence": 0.9929
+          },
+          {
+            "linked_to": "EVID_00034",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8887,
+            "confidence": 0.8887
+          },
+          {
+            "linked_to": "EVID_00041",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8235,
+            "confidence": 0.8235
+          },
+          {
+            "linked_to": "EVID_00042",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8168,
+            "confidence": 0.8168
+          },
+          {
+            "linked_to": "EVID_00038",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7859,
+            "confidence": 0.7859
+          },
+          {
+            "linked_to": "EVID_00039",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7653,
+            "confidence": 0.7653
+          },
+          {
+            "linked_to": "EVID_00036",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5529,
+            "confidence": 0.5529
+          }
+        ],
+        "text_preview": "Complaint to Cyber Bureau, Nepal Police\nश्रीमान् प्रमुख ज्यू,\nसाइबर ब्यूरो, नेपाल प्रहरी, काठमाडौं।\nविषय: खल्ती KYC ठगी ",
+        "risk_signals": {},
+        "stages": [
+          "social_engineering",
+          "credential_theft",
+          "financial_transaction",
+          "post_attack"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 10250, NPR 750, NPR 9500",
+          "contains khalti_ids entity/entities: +9779812345678",
+          "contains bank_accounts entity/entities: 01903015472901",
+          "contains transaction_ids entity/entities: KHL-2026-0802-44190"
+        ]
+      },
+      {
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00036",
+        "case_id": "CASE_4B2A51A300",
+        "file_name": "05_transactions.csv",
+        "description": "Evidence EVID_00036 (05_transactions.csv); stages: financial_transaction",
+        "time_source": "content_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00036"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00034",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5529,
+            "confidence": 0.5529
+          },
+          {
+            "linked_to": "EVID_00035",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5529,
+            "confidence": 0.5529
+          },
+          {
+            "linked_to": "EVID_00037",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5529,
+            "confidence": 0.5529
+          },
+          {
+            "linked_to": "EVID_00039",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5529,
+            "confidence": 0.5529
+          },
+          {
+            "linked_to": "EVID_00038",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2734,
+            "confidence": 0.2734
+          }
+        ],
+        "text_preview": "date,description,amount_npr,channel\n2026-08-02,Khalti load to 9812345678,-750,wallet\n2026-08-03,IBFT to 01903015472901,-",
+        "risk_signals": {},
+        "stages": [
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains khalti_ids entity/entities: +9779812345678"
+        ]
+      },
+      {
+        "timestamp": "2026-08-02T08:55:31+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00037",
+        "case_id": "CASE_4B2A51A300",
+        "file_name": "04_kyc_phishing_email.txt",
+        "description": "Evidence EVID_00037 (04_kyc_phishing_email.txt); stages: initial_contact, social_engineering, credential_theft, financial_transaction",
+        "time_source": "content_labeled_date_time",
+        "confidence": "high",
+        "timestamp_inferred": false,
+        "source_evidence_ids": [
+          "EVID_00037"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00035",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.9929,
+            "confidence": 0.9929
+          },
+          {
+            "linked_to": "EVID_00034",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8887,
+            "confidence": 0.8887
+          },
+          {
+            "linked_to": "EVID_00041",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8235,
+            "confidence": 0.8235
+          },
+          {
+            "linked_to": "EVID_00042",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8168,
+            "confidence": 0.8168
+          },
+          {
+            "linked_to": "EVID_00039",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7653,
+            "confidence": 0.7653
+          },
+          {
+            "linked_to": "EVID_00036",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5529,
+            "confidence": 0.5529
+          },
+          {
+            "linked_to": "EVID_00038",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3197,
+            "confidence": 0.3197
+          }
+        ],
+        "text_preview": "From: Khalti Verification <reward.center2026@gmail.com>\nTo: bikash.thapa14@gmail.com\nDate: Sat, 02 Aug 2026 08:55:31 +05",
+        "risk_signals": {},
+        "stages": [
+          "initial_contact",
+          "social_engineering",
+          "credential_theft",
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 750",
+          "contains khalti_ids entity/entities: +9779812345678",
+          "contains bank_accounts entity/entities: 01903015472901"
+        ]
+      },
+      {
+        "timestamp": "2026-08-02T15:18:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00038",
+        "case_id": "CASE_4B2A51A300",
+        "file_name": "03_khalti_receipt.jpg",
+        "description": "Evidence EVID_00038 (03_khalti_receipt.jpg); stages: financial_transaction",
+        "time_source": "content_date_time",
+        "confidence": "high",
+        "timestamp_inferred": false,
+        "source_evidence_ids": [
+          "EVID_00038"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00035",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7859,
+            "confidence": 0.7859
+          },
+          {
+            "linked_to": "EVID_00037",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3197,
+            "confidence": 0.3197
+          },
+          {
+            "linked_to": "EVID_00039",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3197,
+            "confidence": 0.3197
+          },
+          {
+            "linked_to": "EVID_00034",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2734,
+            "confidence": 0.2734
+          },
+          {
+            "linked_to": "EVID_00036",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2734,
+            "confidence": 0.2734
+          }
+        ],
+        "text_preview": "Khalti Payment Receipt\nAmount\nRs. 750.00\nTransaction KHL-2026-0802-44190\nDate & Time 2026-08-02 03:18 PM\nSent To\n9812345",
+        "risk_signals": {},
+        "stages": [
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 750",
+          "contains transaction_ids entity/entities: KHL-2026-0802-44190"
+        ]
+      },
+      {
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00034",
+        "case_id": "CASE_4B2A51A300",
+        "file_name": "07_fake_support_profile.jpg",
+        "description": "Evidence EVID_00034 (07_fake_support_profile.jpg); stages: social_engineering, financial_transaction",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00034"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00035",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8887,
+            "confidence": 0.8887
+          },
+          {
+            "linked_to": "EVID_00037",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.8887,
+            "confidence": 0.8887
+          },
+          {
+            "linked_to": "EVID_00039",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7494,
+            "confidence": 0.7494
+          },
+          {
+            "linked_to": "EVID_00041",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5559,
+            "confidence": 0.5559
+          },
+          {
+            "linked_to": "EVID_00036",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5529,
+            "confidence": 0.5529
+          },
+          {
+            "linked_to": "EVID_00038",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.2734,
+            "confidence": 0.2734
+          }
+        ],
+        "text_preview": "Khalti Official Support\nआधिकारिक सहायता खाता\nPhone\n+9779812345678\nEmail\nreward.center2026@gmail.com\nPortal khalti-kyc-ve",
+        "risk_signals": {},
+        "stages": [
+          "social_engineering",
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains khalti_ids entity/entities: +9779812345678"
+        ]
+      },
+      {
+        "timestamp": "2026-08-21T06:43:07.959000+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00039",
+        "case_id": "CASE_4B2A51A300",
+        "file_name": "02_whatsapp_chat.jpg",
+        "description": "Evidence EVID_00039 (02_whatsapp_chat.jpg); stages: initial_contact, financial_transaction",
+        "time_source": "upload_time_fallback",
+        "confidence": "low",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00039"
+        ],
+        "correlated_with": [
+          {
+            "linked_to": "EVID_00035",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7653,
+            "confidence": 0.7653
+          },
+          {
+            "linked_to": "EVID_00037",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7653,
+            "confidence": 0.7653
+          },
+          {
+            "linked_to": "EVID_00034",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.7494,
+            "confidence": 0.7494
+          },
+          {
+            "linked_to": "EVID_00036",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.5529,
+            "confidence": 0.5529
+          },
+          {
+            "linked_to": "EVID_00038",
+            "type": "behavioral_relationship",
+            "shared_entities": [],
+            "weight": 0.3197,
+            "confidence": 0.3197
+          }
+        ],
+        "text_preview": "WhatsApp - KYc Support\nSupport (+9779812345678)\nNamaste sir, KYC update garna\nप्रमाणीकरण भुल्क तिनुहोस्।\nKhalti ID: 9812",
+        "risk_signals": {},
+        "stages": [
+          "initial_contact",
+          "financial_transaction"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 750",
+          "contains khalti_ids entity/entities: +9779812345678"
+        ]
+      }
+    ],
+    "summary": "9 events; 9 timestamps resolved (2 non-inferred, 7 inferred, including 5 acquisition-time fallbacks); 0 timestamps unresolved. Content/metadata event times span 15.3 hours. Keyword-derived stage order: social_engineering -> credential_theft -> financial_transaction -> post_attack -> initial_contact. This order is incomplete because one or more detected stages have acquisition time only.",
+    "statistics": {
+      "event_count": 9.0,
+      "resolved_event_count": 9.0,
+      "unresolved_event_count": 0.0,
+      "inferred_event_count": 7.0,
+      "non_inferred_event_count": 2.0,
+      "acquisition_fallback_count": 5.0,
+      "progression_assessable": 0.0,
+      "stage_count": 5.0,
+      "critical_event_count": 6.0,
+      "timeline_span_hours": 462.72,
+      "event_time_span_hours": 15.3,
+      "acquisition_inclusive_span_hours": 462.72
+    },
+    "analysis_time_ms": 9.7
+  }
+}

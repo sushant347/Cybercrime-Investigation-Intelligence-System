@@ -1,0 +1,46 @@
+{
+  "report_type": "quality_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00030",
+  "case_id": "CASE_0CD406813C",
+  "generated_at": "2026-08-21T06:37:39.798Z",
+  "report": {
+    "evidence_id": "EVID_00030",
+    "case_id": "CASE_0CD406813C",
+    "source_file": "03_esewa_payment_receipt.jpg",
+    "metrics": {
+      "width": 1000,
+      "height": 318,
+      "megapixels": 0.318,
+      "blur_laplacian_variance": 3271.522503144654,
+      "brightness_mean": 246.45362893081762,
+      "contrast_std": 42.55957512275709,
+      "noise_residual": 1.4060062893081762,
+      "skew_angle_deg": 0.0,
+      "compression_quality": 97.76484375,
+      "edge_density": 0.028257861635220125,
+      "text_like_components": 142
+    },
+    "sub_scores": {
+      "blur": 100.0,
+      "brightness": 79.2,
+      "contrast": 66.5,
+      "noise": 100.0,
+      "resolution": 9.1,
+      "skew": 100.0,
+      "compression": 97.8,
+      "readability": 62.7
+    },
+    "overall_score": 76.6,
+    "quality_grade": "GOOD",
+    "expected_ocr_accuracy": 89.5,
+    "readability_score": 62.7,
+    "recommended_operations": [
+      "super_resolution",
+      "perspective_correction"
+    ],
+    "notes": [],
+    "analysis_time_ms": 8.6
+  }
+}

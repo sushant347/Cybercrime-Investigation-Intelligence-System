@@ -124,3 +124,79 @@ timestamp,case_id,evidence_id,stage,level,message,duration_ms
 2026-08-03T14:01:00.198Z,CASE_1A1BF573F3,EVID_00025,ocr,INFO,page 1: 13 lines via paddleocr-v5,2498.4
 2026-08-03T14:01:00.208Z,CASE_1A1BF573F3,EVID_00025,hashing,INFO,post-processing hash VERIFIED,1.8
 2026-08-03T14:01:00.322Z,CASE_1A1BF573F3,EVID_00025,pipeline,INFO,"completed: 1 page(s), avg confidence 0.97",2747.6
+2026-08-21T06:37:22.709Z,CASE_0CD406813C,EVID_00026,upload,INFO,"acquired '07_qr_flyer_poor_capture.jpg' (10.5 KB), sha256=54ecd6f0726dc06d...",7.6
+2026-08-21T06:37:23.169Z,CASE_0CD406813C,EVID_00026,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, clahe, sharpen",422.9
+2026-08-21T06:37:34.263Z,CASE_0CD406813C,EVID_00026,ocr,INFO,page 1: 1 lines via paddleocr-v5,11093.7
+2026-08-21T06:37:34.278Z,CASE_0CD406813C,EVID_00026,hashing,INFO,post-processing hash VERIFIED,3.2
+2026-08-21T06:37:34.290Z,CASE_0CD406813C,EVID_00026,pipeline,INFO,"completed: 1 page(s), avg confidence 0.98",11587.6
+2026-08-21T06:37:35.209Z,CASE_0CD406813C,EVID_00027,upload,INFO,"acquired '06_complaint_letter.pdf' (77.5 KB), sha256=92af393efbe4f1c6...",3.8
+2026-08-21T06:37:35.546Z,CASE_0CD406813C,EVID_00027,ocr,INFO,page 1: 13 lines from PDF text layer (no OCR needed),0.0
+2026-08-21T06:37:35.549Z,CASE_0CD406813C,EVID_00027,hashing,INFO,post-processing hash VERIFIED,0.3
+2026-08-21T06:37:35.554Z,CASE_0CD406813C,EVID_00027,pipeline,INFO,"completed: 1 page(s), avg confidence 1.00",352.0
+2026-08-21T06:37:35.598Z,CASE_0CD406813C,EVID_00028,upload,INFO,"acquired '05_bank_statement.csv' (237 B), sha256=4bf76c0070966e39...",3.1
+2026-08-21T06:37:35.600Z,CASE_0CD406813C,EVID_00028,ocr,INFO,plain-text evidence: 5 lines read directly,0.0
+2026-08-21T06:37:35.602Z,CASE_0CD406813C,EVID_00028,hashing,INFO,post-processing hash VERIFIED,0.2
+2026-08-21T06:37:35.608Z,CASE_0CD406813C,EVID_00028,pipeline,INFO,"completed: 1 page(s), avg confidence 1.00",15.9
+2026-08-21T06:37:35.718Z,CASE_0CD406813C,EVID_00029,upload,INFO,"acquired '04_phishing_email.txt' (828 B), sha256=e094c54741fc7f91...",10.2
+2026-08-21T06:37:35.739Z,CASE_0CD406813C,EVID_00029,ocr,INFO,plain-text evidence: 21 lines read directly,0.0
+2026-08-21T06:37:35.749Z,CASE_0CD406813C,EVID_00029,hashing,INFO,post-processing hash VERIFIED,0.3
+2026-08-21T06:37:35.767Z,CASE_0CD406813C,EVID_00029,pipeline,INFO,"completed: 1 page(s), avg confidence 1.00",124.6
+2026-08-21T06:37:35.842Z,CASE_0CD406813C,EVID_00030,upload,INFO,"acquired '03_esewa_payment_receipt.jpg' (40.6 KB), sha256=82cca081731e572e...",3.6
+2026-08-21T06:37:35.878Z,CASE_0CD406813C,EVID_00030,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, clahe, border_removal+whitespace_trim, adaptive_threshold",27.4
+2026-08-21T06:37:39.748Z,CASE_0CD406813C,EVID_00030,ocr,INFO,page 1: 12 lines via paddleocr-v5,3867.9
+2026-08-21T06:37:39.751Z,CASE_0CD406813C,EVID_00030,hashing,INFO,post-processing hash VERIFIED,0.2
+2026-08-21T06:37:39.759Z,CASE_0CD406813C,EVID_00030,pipeline,INFO,"completed: 1 page(s), avg confidence 1.00",3923.0
+2026-08-21T06:37:39.863Z,CASE_0CD406813C,EVID_00031,upload,INFO,"acquired '02_messenger_chat.jpg' (47.6 KB), sha256=7624533fbd367356...",4.6
+2026-08-21T06:37:39.878Z,CASE_0CD406813C,EVID_00031,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, clahe, border_removal+whitespace_trim, adaptive_threshold",10.4
+2026-08-21T06:37:43.467Z,CASE_0CD406813C,EVID_00031,ocr,INFO,page 1: 8 lines via paddleocr-v5,3587.8
+2026-08-21T06:37:43.470Z,CASE_0CD406813C,EVID_00031,hashing,INFO,post-processing hash VERIFIED,0.2
+2026-08-21T06:37:43.479Z,CASE_0CD406813C,EVID_00031,pipeline,INFO,"completed: 1 page(s), avg confidence 0.99",3624.5
+2026-08-21T06:37:43.588Z,CASE_0CD406813C,EVID_00032,upload,INFO,"acquired '01_sms_cashback_offer.jpg' (28.9 KB), sha256=24fbac36402807e4...",2.1
+2026-08-21T06:37:43.611Z,CASE_0CD406813C,EVID_00032,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, deskew(-0.67deg), clahe, sharpen, border_removal+whitespace_trim, adaptive_threshold",19.6
+2026-08-21T06:37:47.960Z,CASE_0CD406813C,EVID_00032,ocr,INFO,page 1: 7 lines via paddleocr-v5,4348.4
+2026-08-21T06:37:47.963Z,CASE_0CD406813C,EVID_00032,hashing,INFO,post-processing hash VERIFIED,0.2
+2026-08-21T06:37:47.973Z,CASE_0CD406813C,EVID_00032,pipeline,INFO,"completed: 1 page(s), avg confidence 0.87",4386.4
+2026-08-21T06:38:44.588Z,CASE_0CD406813C,EVID_00033,upload,INFO,"acquired 'https_esewa-bonus-claim.xyz_verify_ref_DSN2026.url' (49 B), sha256=4a23480101586a51...",3.1
+2026-08-21T06:38:44.592Z,CASE_0CD406813C,EVID_00033,ocr,INFO,URL evidence: 1 line(s) read directly (no OCR),0.0
+2026-08-21T06:38:44.596Z,CASE_0CD406813C,EVID_00033,hashing,INFO,post-processing hash VERIFIED,0.5
+2026-08-21T06:38:44.615Z,CASE_0CD406813C,EVID_00033,pipeline,INFO,"completed: 1 page(s), avg confidence 1.00",21.2
+2026-08-21T06:42:54.757Z,CASE_4B2A51A300,EVID_00034,upload,INFO,"acquired '07_fake_support_profile.jpg' (23.0 KB), sha256=6d92c801ed6d05fa...",8.4
+2026-08-21T06:42:54.841Z,CASE_4B2A51A300,EVID_00034,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, clahe",66.8
+2026-08-21T06:43:00.863Z,CASE_4B2A51A300,EVID_00034,ocr,INFO,page 1: 8 lines via paddleocr-v5,6021.2
+2026-08-21T06:43:00.868Z,CASE_4B2A51A300,EVID_00034,hashing,INFO,post-processing hash VERIFIED,0.6
+2026-08-21T06:43:00.890Z,CASE_4B2A51A300,EVID_00034,pipeline,INFO,"completed: 1 page(s), avg confidence 0.99",6129.5
+2026-08-21T06:43:01.065Z,CASE_4B2A51A300,EVID_00035,upload,INFO,"acquired '06_police_complaint.pdf' (77.4 KB), sha256=1faf503b6bb893fe...",6.2
+2026-08-21T06:43:01.266Z,CASE_4B2A51A300,EVID_00035,ocr,INFO,page 1: 13 lines from PDF text layer (no OCR needed),0.0
+2026-08-21T06:43:01.270Z,CASE_4B2A51A300,EVID_00035,hashing,INFO,post-processing hash VERIFIED,0.3
+2026-08-21T06:43:01.276Z,CASE_4B2A51A300,EVID_00035,pipeline,INFO,"completed: 1 page(s), avg confidence 1.00",221.6
+2026-08-21T06:43:01.326Z,CASE_4B2A51A300,EVID_00036,upload,INFO,"acquired '05_transactions.csv' (233 B), sha256=6a007523d9087637...",4.3
+2026-08-21T06:43:01.328Z,CASE_4B2A51A300,EVID_00036,ocr,INFO,plain-text evidence: 5 lines read directly,0.0
+2026-08-21T06:43:01.331Z,CASE_4B2A51A300,EVID_00036,hashing,INFO,post-processing hash VERIFIED,0.2
+2026-08-21T06:43:01.338Z,CASE_4B2A51A300,EVID_00036,pipeline,INFO,"completed: 1 page(s), avg confidence 1.00",20.2
+2026-08-21T06:43:01.371Z,CASE_4B2A51A300,EVID_00037,upload,INFO,"acquired '04_kyc_phishing_email.txt' (781 B), sha256=c7e51499cd6ed8d3...",3.6
+2026-08-21T06:43:01.374Z,CASE_4B2A51A300,EVID_00037,ocr,INFO,plain-text evidence: 21 lines read directly,0.0
+2026-08-21T06:43:01.376Z,CASE_4B2A51A300,EVID_00037,hashing,INFO,post-processing hash VERIFIED,0.1
+2026-08-21T06:43:01.384Z,CASE_4B2A51A300,EVID_00037,pipeline,INFO,"completed: 1 page(s), avg confidence 1.00",18.8
+2026-08-21T06:43:01.434Z,CASE_4B2A51A300,EVID_00038,upload,INFO,"acquired '03_khalti_receipt.jpg' (39.0 KB), sha256=1257b4d56141a312...",4.0
+2026-08-21T06:43:01.451Z,CASE_4B2A51A300,EVID_00038,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, clahe, adaptive_threshold",11.7
+2026-08-21T06:43:07.783Z,CASE_4B2A51A300,EVID_00038,ocr,INFO,page 1: 11 lines via paddleocr-v5,6332.1
+2026-08-21T06:43:07.790Z,CASE_4B2A51A300,EVID_00038,hashing,INFO,post-processing hash VERIFIED,2.6
+2026-08-21T06:43:07.803Z,CASE_4B2A51A300,EVID_00038,pipeline,INFO,"completed: 1 page(s), avg confidence 1.00",6370.3
+2026-08-21T06:43:07.960Z,CASE_4B2A51A300,EVID_00039,upload,INFO,"acquired '02_whatsapp_chat.jpg' (47.0 KB), sha256=4418cd74971cd533...",5.8
+2026-08-21T06:43:07.981Z,CASE_4B2A51A300,EVID_00039,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, clahe, border_removal+whitespace_trim, adaptive_threshold",16.6
+2026-08-21T06:43:11.431Z,CASE_4B2A51A300,EVID_00039,ocr,INFO,page 1: 8 lines via paddleocr-v5,3448.9
+2026-08-21T06:43:11.434Z,CASE_4B2A51A300,EVID_00039,hashing,INFO,post-processing hash VERIFIED,0.2
+2026-08-21T06:43:11.444Z,CASE_4B2A51A300,EVID_00039,pipeline,INFO,"completed: 1 page(s), avg confidence 0.99",3493.6
+2026-08-21T06:43:11.547Z,CASE_4B2A51A300,EVID_00040,upload,INFO,"acquired '01_khalti_kyc_sms.jpg' (19.7 KB), sha256=92e987df1a332874...",4.9
+2026-08-21T06:43:11.561Z,CASE_4B2A51A300,EVID_00040,preprocessing,INFO,"page 1: convert_rgb, exif_orientation, clahe, sharpen, border_removal+whitespace_trim, adaptive_threshold",10.1
+2026-08-21T06:43:14.897Z,CASE_4B2A51A300,EVID_00040,ocr,INFO,page 1: 6 lines via paddleocr-v5,3335.4
+2026-08-21T06:43:14.901Z,CASE_4B2A51A300,EVID_00040,hashing,INFO,post-processing hash VERIFIED,0.2
+2026-08-21T06:43:14.910Z,CASE_4B2A51A300,EVID_00040,pipeline,INFO,"completed: 1 page(s), avg confidence 0.75",3368.5
+2026-08-21T06:43:15.002Z,CASE_4B2A51A300,EVID_00041,upload,INFO,"acquired 'http_khalti-kyc-verify.top_login.url' (35 B), sha256=2576cee0748325bb...",4.3
+2026-08-21T06:43:15.006Z,CASE_4B2A51A300,EVID_00041,ocr,INFO,URL evidence: 1 line(s) read directly (no OCR),0.0
+2026-08-21T06:43:15.009Z,CASE_4B2A51A300,EVID_00041,hashing,INFO,post-processing hash VERIFIED,0.2
+2026-08-21T06:43:15.019Z,CASE_4B2A51A300,EVID_00041,pipeline,INFO,"completed: 1 page(s), avg confidence 1.00",21.0
+2026-08-21T06:43:15.098Z,CASE_4B2A51A300,EVID_00042,upload,INFO,"acquired 'https_esewa-bonus-claim.xyz_verify_ref_KYC2026.url' (49 B), sha256=e419582edacddd15...",1.7
+2026-08-21T06:43:15.101Z,CASE_4B2A51A300,EVID_00042,ocr,INFO,URL evidence: 1 line(s) read directly (no OCR),0.0
+2026-08-21T06:43:15.104Z,CASE_4B2A51A300,EVID_00042,hashing,INFO,post-processing hash VERIFIED,0.2
+2026-08-21T06:43:15.114Z,CASE_4B2A51A300,EVID_00042,pipeline,INFO,"completed: 1 page(s), avg confidence 1.00",18.3

@@ -1,0 +1,56 @@
+{
+  "report_type": "case_statistics",
+  "report_version": 2,
+  "schema_version": "2.0",
+  "case_id": "CASE_665F85EBBC",
+  "generated_at": "2026-08-08T05:54:02.342Z",
+  "report": {
+    "case_id": "CASE_665F85EBBC",
+    "evidence_count": 9,
+    "threat_statistics": {
+      "intel_available": 1.0,
+      "indicators_checked": 9.0,
+      "malicious_indicators": 6.0,
+      "suspicious_indicators": 2.0,
+      "benign_indicators": 1.0,
+      "evidence_with_threats": 4.0,
+      "threat_evidence_ratio": 0.4444
+    },
+    "campaign_statistics": {
+      "campaign_count": 1.0,
+      "largest_campaign_size": 5.0,
+      "clustered_evidence": 5.0,
+      "unclustered_evidence": 4.0,
+      "mean_campaign_confidence": 0.7353
+    },
+    "timeline_statistics": {
+      "event_count": 9.0,
+      "resolved_event_count": 9.0,
+      "unresolved_event_count": 0.0,
+      "inferred_event_count": 9.0,
+      "stage_count": 4.0,
+      "critical_event_count": 7.0,
+      "timeline_span_hours": 1331.25
+    },
+    "evidence_quality_statistics": {
+      "mean_image_quality": 66.38,
+      "mean_evidence_confidence": 89.86,
+      "mean_forgery_score": 17.18,
+      "max_forgery_score": 25.2,
+      "mean_ocr_confidence": 0.92,
+      "hash_verified_count": 9.0
+    },
+    "correlation_statistics": {
+      "pair_count": 36.0,
+      "related_pair_count": 36.0,
+      "mean_confidence": 0.3308,
+      "max_confidence": 0.9388
+    },
+    "metadata_statistics": {
+      "evidence_with_metadata_report": 9.0,
+      "evidence_with_exif": 0.0,
+      "evidence_with_gps": 0.0,
+      "evidence_with_editing_software": 0.0
+    }
+  }
+}

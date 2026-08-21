@@ -1,0 +1,36 @@
+{
+  "report_type": "metadata_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00022",
+  "case_id": "CASE_D6A81F224B",
+  "generated_at": "2026-07-25T17:46:09.500Z",
+  "report": {
+    "evidence_id": "EVID_00022",
+    "case_id": "CASE_D6A81F224B",
+    "source_file": "EVID_00022__30a55f57__08_complaint_letter.pdf",
+    "file_type": "pdf",
+    "filesystem": {
+      "file_size_bytes": 3750,
+      "created": "2026-07-25T17:46:09.276016+00:00",
+      "modified": "2026-07-25T17:34:54.479490+00:00",
+      "accessed": "2026-07-25T17:46:09.270458+00:00"
+    },
+    "image": null,
+    "pdf": {
+      "author": "(anonymous)",
+      "producer": "ReportLab PDF Library - (opensource)",
+      "creator": "(unspecified)",
+      "title": "(anonymous)",
+      "subject": "(unspecified)",
+      "creation_date": "D:20260725120646+00'00'",
+      "modification_date": "D:20260725120646+00'00'",
+      "page_count": 2,
+      "encrypted": false
+    },
+    "office": null,
+    "consistency_notes": [],
+    "extraction_errors": [],
+    "analysis_time_ms": 3.8
+  }
+}

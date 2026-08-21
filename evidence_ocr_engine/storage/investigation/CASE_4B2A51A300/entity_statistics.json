@@ -1,0 +1,128 @@
+{
+  "report_type": "entity_statistics",
+  "report_version": 3,
+  "schema_version": "2.0",
+  "case_id": "CASE_4B2A51A300",
+  "generated_at": "2026-08-21T17:57:23.073Z",
+  "report": {
+    "case_id": "CASE_4B2A51A300",
+    "entity_statistics": {
+      "bank_accounts": 2,
+      "dates": 6,
+      "domains": 11,
+      "emails": 5,
+      "khalti_ids": 5,
+      "money": 6,
+      "phones": 8,
+      "times": 2,
+      "transaction_ids": 2,
+      "urls": 6
+    },
+    "top_entities": {
+      "bank_accounts": [
+        {
+          "value": "01903015472901",
+          "count": 2
+        }
+      ],
+      "dates": [
+        {
+          "value": "2026-08-02",
+          "count": 3
+        },
+        {
+          "value": "2026-08-03",
+          "count": 1
+        },
+        {
+          "value": "2026-07-28",
+          "count": 1
+        },
+        {
+          "value": "02 aug 2026",
+          "count": 1
+        }
+      ],
+      "domains": [
+        {
+          "value": "gmail.com",
+          "count": 4
+        },
+        {
+          "value": "khalti-kyc-verify.top",
+          "count": 4
+        },
+        {
+          "value": "esewa-bonus-claim.xyz",
+          "count": 3
+        }
+      ],
+      "emails": [
+        {
+          "value": "reward.center2026@gmail.com",
+          "count": 4
+        },
+        {
+          "value": "bikash.thapa14@gmail.com",
+          "count": 1
+        }
+      ],
+      "khalti_ids": [
+        {
+          "value": "+9779812345678",
+          "count": 5
+        }
+      ],
+      "money": [
+        {
+          "value": "npr 750",
+          "count": 4
+        },
+        {
+          "value": "npr 9500",
+          "count": 1
+        },
+        {
+          "value": "npr 10250",
+          "count": 1
+        }
+      ],
+      "phones": [
+        {
+          "value": "+9779812345678",
+          "count": 6
+        },
+        {
+          "value": "+9779856770011",
+          "count": 2
+        }
+      ],
+      "times": [
+        {
+          "value": "08:55:31",
+          "count": 1
+        },
+        {
+          "value": "03:18 pm",
+          "count": 1
+        }
+      ],
+      "transaction_ids": [
+        {
+          "value": "khl-2026-0802-44190",
+          "count": 2
+        }
+      ],
+      "urls": [
+        {
+          "value": "http://khalti-kyc-verify.top/login",
+          "count": 3
+        },
+        {
+          "value": "https://esewa-bonus-claim.xyz/verify?ref=kyc2026",
+          "count": 3
+        }
+      ]
+    }
+  }
+}

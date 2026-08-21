@@ -1058,5 +1058,255 @@
     "case_id": "",
     "evidence_id": "",
     "read": false
+  },
+  {
+    "id": 125,
+    "created_at": "2026-08-21T06:37:35.203Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00026 processed",
+    "message": "07_qr_flyer_poor_capture.jpg processed for CASE_0CD406813C.",
+    "case_id": "CASE_0CD406813C",
+    "evidence_id": "EVID_00026",
+    "read": false
+  },
+  {
+    "id": 126,
+    "created_at": "2026-08-21T06:37:35.592Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00027 processed",
+    "message": "06_complaint_letter.pdf processed for CASE_0CD406813C.",
+    "case_id": "CASE_0CD406813C",
+    "evidence_id": "EVID_00027",
+    "read": false
+  },
+  {
+    "id": 127,
+    "created_at": "2026-08-21T06:37:35.631Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00028 processed",
+    "message": "05_bank_statement.csv processed for CASE_0CD406813C.",
+    "case_id": "CASE_0CD406813C",
+    "evidence_id": "EVID_00028",
+    "read": false
+  },
+  {
+    "id": 128,
+    "created_at": "2026-08-21T06:37:35.835Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00029 processed",
+    "message": "04_phishing_email.txt processed for CASE_0CD406813C.",
+    "case_id": "CASE_0CD406813C",
+    "evidence_id": "EVID_00029",
+    "read": false
+  },
+  {
+    "id": 129,
+    "created_at": "2026-08-21T06:37:39.853Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00030 processed",
+    "message": "03_esewa_payment_receipt.jpg processed for CASE_0CD406813C.",
+    "case_id": "CASE_0CD406813C",
+    "evidence_id": "EVID_00030",
+    "read": false
+  },
+  {
+    "id": 130,
+    "created_at": "2026-08-21T06:37:43.585Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00031 processed",
+    "message": "02_messenger_chat.jpg processed for CASE_0CD406813C.",
+    "case_id": "CASE_0CD406813C",
+    "evidence_id": "EVID_00031",
+    "read": false
+  },
+  {
+    "id": 131,
+    "created_at": "2026-08-21T06:38:16.587Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00032 processed",
+    "message": "01_sms_cashback_offer.jpg processed for CASE_0CD406813C.",
+    "case_id": "CASE_0CD406813C",
+    "evidence_id": "EVID_00032",
+    "read": false
+  },
+  {
+    "id": 132,
+    "created_at": "2026-08-21T06:39:02.723Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00033 processed",
+    "message": "https_esewa-bonus-claim.xyz_verify_ref_DSN2026.url processed for CASE_0CD406813C.",
+    "case_id": "CASE_0CD406813C",
+    "evidence_id": "EVID_00033",
+    "read": false
+  },
+  {
+    "id": 133,
+    "created_at": "2026-08-21T06:39:42.468Z",
+    "type": "report_generated",
+    "title": "Investigation analysis completed for CASE_0CD406813C",
+    "message": "All Phase-2 artifacts regenerated.",
+    "case_id": "CASE_0CD406813C",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 134,
+    "created_at": "2026-08-21T06:39:42.470Z",
+    "type": "high_priority",
+    "title": "CASE_0CD406813C flagged HIGH priority",
+    "message": "Engine priority score: 74.0.",
+    "case_id": "CASE_0CD406813C",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 135,
+    "created_at": "2026-08-21T06:43:01.056Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00034 processed",
+    "message": "07_fake_support_profile.jpg processed for CASE_4B2A51A300.",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "EVID_00034",
+    "read": false
+  },
+  {
+    "id": 136,
+    "created_at": "2026-08-21T06:43:01.318Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00035 processed",
+    "message": "06_police_complaint.pdf processed for CASE_4B2A51A300.",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "EVID_00035",
+    "read": false
+  },
+  {
+    "id": 137,
+    "created_at": "2026-08-21T06:43:01.364Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00036 processed",
+    "message": "05_transactions.csv processed for CASE_4B2A51A300.",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "EVID_00036",
+    "read": false
+  },
+  {
+    "id": 138,
+    "created_at": "2026-08-21T06:43:01.427Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00037 processed",
+    "message": "04_kyc_phishing_email.txt processed for CASE_4B2A51A300.",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "EVID_00037",
+    "read": false
+  },
+  {
+    "id": 139,
+    "created_at": "2026-08-21T06:43:07.950Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00038 processed",
+    "message": "03_khalti_receipt.jpg processed for CASE_4B2A51A300.",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "EVID_00038",
+    "read": false
+  },
+  {
+    "id": 140,
+    "created_at": "2026-08-21T06:43:11.539Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00039 processed",
+    "message": "02_whatsapp_chat.jpg processed for CASE_4B2A51A300.",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "EVID_00039",
+    "read": false
+  },
+  {
+    "id": 141,
+    "created_at": "2026-08-21T06:43:14.994Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00040 processed",
+    "message": "01_khalti_kyc_sms.jpg processed for CASE_4B2A51A300.",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "EVID_00040",
+    "read": false
+  },
+  {
+    "id": 142,
+    "created_at": "2026-08-21T06:43:15.093Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00041 processed",
+    "message": "http_khalti-kyc-verify.top_login.url processed for CASE_4B2A51A300.",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "EVID_00041",
+    "read": false
+  },
+  {
+    "id": 143,
+    "created_at": "2026-08-21T06:43:37.867Z",
+    "type": "processing_complete",
+    "title": "Evidence EVID_00042 processed",
+    "message": "https_esewa-bonus-claim.xyz_verify_ref_KYC2026.url processed for CASE_4B2A51A300.",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "EVID_00042",
+    "read": false
+  },
+  {
+    "id": 144,
+    "created_at": "2026-08-21T06:44:03.819Z",
+    "type": "report_generated",
+    "title": "Investigation analysis completed for CASE_4B2A51A300",
+    "message": "All Phase-2 artifacts regenerated.",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 145,
+    "created_at": "2026-08-21T06:44:03.821Z",
+    "type": "high_priority",
+    "title": "CASE_4B2A51A300 flagged CRITICAL priority",
+    "message": "Engine priority score: 78.5.",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 146,
+    "created_at": "2026-08-21T17:29:21.109Z",
+    "type": "report_generated",
+    "title": "Investigation analysis completed for CASE_4B2A51A300",
+    "message": "All Phase-2 artifacts regenerated.",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 147,
+    "created_at": "2026-08-21T17:29:21.112Z",
+    "type": "high_priority",
+    "title": "CASE_4B2A51A300 flagged CRITICAL priority",
+    "message": "Engine priority score: 78.5.",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 148,
+    "created_at": "2026-08-21T17:57:43.239Z",
+    "type": "report_generated",
+    "title": "Investigation analysis completed for CASE_4B2A51A300",
+    "message": "All Phase-2 artifacts regenerated.",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 149,
+    "created_at": "2026-08-21T17:57:43.241Z",
+    "type": "high_priority",
+    "title": "CASE_4B2A51A300 flagged CRITICAL priority",
+    "message": "Engine priority score: 78.5.",
+    "case_id": "CASE_4B2A51A300",
+    "evidence_id": "",
+    "read": false
   }
 ]

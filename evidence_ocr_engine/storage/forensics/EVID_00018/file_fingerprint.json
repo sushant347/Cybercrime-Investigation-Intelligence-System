@@ -1,0 +1,36 @@
+{
+  "report_type": "file_fingerprint",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00018",
+  "case_id": "CASE_1A1BF573F3",
+  "generated_at": "2026-08-21T03:27:25.884Z",
+  "report": {
+    "evidence_id": "EVID_00018",
+    "case_id": "CASE_1A1BF573F3",
+    "source_file": "EVID_00018__47bf36a0__04_esewa_payment_screenshot.jpg",
+    "md5": "ce85e949a68e8f118d090975caeacd78",
+    "sha1": "9db2348e00a8a7d791cff8b8b17a9665c353db98",
+    "sha256": "3a19295ff003a894311ef7efcf80bb94c8feec5a69590c3052f7f8d60ce7217b",
+    "sha512": "c82657d37011cc2df4f36ffcf5e64b49f7628a82fb174de2dbd95f4c78b3e7df1081e30c7134a81cbb6aaa71935f37424e9aef316f393926ca76b5ecf67d8599",
+    "crc32": "86d088a8",
+    "file_size_bytes": 22001,
+    "entropy_bits_per_byte": 7.1983,
+    "high_entropy": false,
+    "magic_number_hex": "ffd8ffe000104a46",
+    "magic_format": "JPEG image",
+    "declared_extension": ".jpg",
+    "mime_type": "image/jpeg",
+    "extension_matches_magic": true,
+    "sha256_matches_acquisition": true,
+    "duplicates": [
+      {
+        "evidence_id": "EVID_00010",
+        "case_id": "CASE_185915593C",
+        "source": "evidence_register"
+      }
+    ],
+    "is_duplicate": true,
+    "analysis_time_ms": 1.3
+  }
+}

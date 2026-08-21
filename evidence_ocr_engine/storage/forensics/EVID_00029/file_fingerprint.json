@@ -1,0 +1,30 @@
+{
+  "report_type": "file_fingerprint",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00029",
+  "case_id": "CASE_0CD406813C",
+  "generated_at": "2026-08-21T06:37:35.823Z",
+  "report": {
+    "evidence_id": "EVID_00029",
+    "case_id": "CASE_0CD406813C",
+    "source_file": "EVID_00029__603b4019__04_phishing_email.txt",
+    "md5": "de0e3e224ae1993dcf9776c7dae14341",
+    "sha1": "b36ac98db5be7d63b88f6759163bd07887503ede",
+    "sha256": "e094c54741fc7f917edb2ed1de466f4b06e7db8a51ef1414d85eb77fa4bda9f8",
+    "sha512": "18c66a40f67f5b1427edee91ddb986aa078a9a8515e910db9c4a9f23249396d7cc940bd7fb728d94edba8fc9f97cf626c1f59913869e0ef49b2a49fcd71db0e2",
+    "crc32": "2206ecfb",
+    "file_size_bytes": 828,
+    "entropy_bits_per_byte": 5.4699,
+    "high_entropy": false,
+    "magic_number_hex": "46726f6d3a206553",
+    "magic_format": "",
+    "declared_extension": ".txt",
+    "mime_type": "text/plain",
+    "extension_matches_magic": true,
+    "sha256_matches_acquisition": true,
+    "duplicates": [],
+    "is_duplicate": false,
+    "analysis_time_ms": 0.8
+  }
+}

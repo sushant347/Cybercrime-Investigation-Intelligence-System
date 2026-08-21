@@ -159,3 +159,45 @@ id,created_at,username,module,action,case_id,detail
 158,2026-08-21T05:16:41.347Z,,admin,delete_case,CASE_09C3784530,deleted; refreshed 3 linked case(s)
 159,2026-08-21T05:16:41.480Z,,admin,delete_case,CASE_137B13D47D,deleted; refreshed 0 linked case(s)
 160,2026-08-21T05:16:41.539Z,,admin,delete_case,CASE_1ABBBF68B9,deleted; refreshed 0 linked case(s)
+161,2026-08-21T06:36:59.936Z,,intake,created,CASE_0CD406813C,Case-A esewa cashback scam
+162,2026-08-21T06:37:22.694Z,,evidence,upload,CASE_0CD406813C,07_qr_flyer_poor_capture.jpg
+163,2026-08-21T06:37:22.751Z,,evidence,upload,CASE_0CD406813C,06_complaint_letter.pdf
+164,2026-08-21T06:37:22.773Z,,evidence,upload,CASE_0CD406813C,05_bank_statement.csv
+165,2026-08-21T06:37:22.802Z,,evidence,upload,CASE_0CD406813C,04_phishing_email.txt
+166,2026-08-21T06:37:22.828Z,,evidence,upload,CASE_0CD406813C,03_esewa_payment_receipt.jpg
+167,2026-08-21T06:37:22.856Z,,evidence,upload,CASE_0CD406813C,02_messenger_chat.jpg
+168,2026-08-21T06:37:22.914Z,,evidence,upload,CASE_0CD406813C,01_sms_cashback_offer.jpg
+169,2026-08-21T06:38:44.580Z,,evidence,submit_url,CASE_0CD406813C,https://esewa-bonus-claim.xyz/verify?ref=DSN2026
+170,2026-08-21T06:39:12.023Z,,investigation,run_analysis,CASE_0CD406813C,
+171,2026-08-21T06:42:14.415Z,,intake,created,CASE_4B2A51A300,Case-B khalti kyc scam
+172,2026-08-21T06:42:54.741Z,,evidence,upload,CASE_4B2A51A300,07_fake_support_profile.jpg
+173,2026-08-21T06:42:54.777Z,,evidence,upload,CASE_4B2A51A300,06_police_complaint.pdf
+174,2026-08-21T06:42:54.803Z,,evidence,upload,CASE_4B2A51A300,05_transactions.csv
+175,2026-08-21T06:42:54.827Z,,evidence,upload,CASE_4B2A51A300,04_kyc_phishing_email.txt
+176,2026-08-21T06:42:54.887Z,,evidence,upload,CASE_4B2A51A300,03_khalti_receipt.jpg
+177,2026-08-21T06:42:54.918Z,,evidence,upload,CASE_4B2A51A300,02_whatsapp_chat.jpg
+178,2026-08-21T06:42:54.948Z,,evidence,upload,CASE_4B2A51A300,01_khalti_kyc_sms.jpg
+179,2026-08-21T06:42:54.986Z,,evidence,submit_url,CASE_4B2A51A300,http://khalti-kyc-verify.top/login
+180,2026-08-21T06:42:55.034Z,,evidence,submit_url,CASE_4B2A51A300,https://esewa-bonus-claim.xyz/verify?ref=KYC2026
+181,2026-08-21T06:43:44.683Z,,investigation,run_analysis,CASE_4B2A51A300,
+182,2026-08-21T11:20:44.872Z,,evidence,download,CASE_4B2A51A300,EVID_00034
+183,2026-08-21T11:21:44.925Z,,evidence,download,CASE_4B2A51A300,EVID_00041
+184,2026-08-21T11:23:35.110Z,,evidence,download,CASE_4B2A51A300,EVID_00034
+185,2026-08-21T11:24:40.104Z,,evidence,download,CASE_4B2A51A300,EVID_00034
+186,2026-08-21T11:25:40.427Z,,admin,login,,
+187,2026-08-21T11:26:15.751Z,,evidence,download,CASE_4B2A51A300,EVID_00034
+188,2026-08-21T11:27:29.603Z,,evidence,download,CASE_4B2A51A300,EVID_00034
+189,2026-08-21T11:27:29.613Z,,evidence,download,CASE_4B2A51A300,EVID_00034
+190,2026-08-21T11:29:10.512Z,,evidence,download,CASE_4B2A51A300,EVID_00034
+191,2026-08-21T11:29:10.520Z,,evidence,download,CASE_4B2A51A300,EVID_00034
+192,2026-08-21T11:30:02.527Z,,evidence,download,CASE_0CD406813C,EVID_00026
+193,2026-08-21T11:30:02.533Z,,evidence,download,CASE_0CD406813C,EVID_00026
+194,2026-08-21T11:31:02.524Z,,evidence,download,CASE_0CD406813C,EVID_00026
+195,2026-08-21T11:31:02.532Z,,evidence,download,CASE_0CD406813C,EVID_00026
+196,2026-08-21T11:57:28.207Z,,admin,login,,
+197,2026-08-21T11:57:35.547Z,,evidence,download,CASE_4B2A51A300,EVID_00034
+198,2026-08-21T17:28:49.398Z,,investigation,run_analysis,CASE_4B2A51A300,
+199,2026-08-21T17:38:06.830Z,,evidence,download,CASE_4B2A51A300,EVID_00034
+200,2026-08-21T17:57:22.724Z,,investigation,run_analysis,CASE_4B2A51A300,
+201,2026-08-21T18:04:27.928Z,,reports,download,CASE_4B2A51A300,investigation_report.pdf
+202,2026-08-21T18:09:05.200Z,,evidence,download,CASE_4B2A51A300,EVID_00034

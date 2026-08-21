@@ -1,0 +1,30 @@
+{
+  "report_type": "file_fingerprint",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00034",
+  "case_id": "CASE_665F85EBBC",
+  "generated_at": "2026-08-08T02:08:00.533Z",
+  "report": {
+    "evidence_id": "EVID_00034",
+    "case_id": "CASE_665F85EBBC",
+    "source_file": "EVID_00034__d47eb34c__https_plasticostermoencogibles.pe_scss_css_scss_.url",
+    "md5": "b1426015cbae9c6db3414bad836bd11c",
+    "sha1": "1a4969f2b57cb10fc6ac274992cc7ee51ddfc4f9",
+    "sha256": "fab44e99bd90f1ffe214d4d2bb6580e4c0d52f5fe930e773d96cf92ee820a2f5",
+    "sha512": "e7dffad3f1610de33dffa3d53d02f6c8b979ca7cfbecf035f3f865eab36bd5bda75098e5e582ee51b43a7fbfccfed9dec600c3ee959eced8c596985b85b90ddd",
+    "crc32": "04d661fe",
+    "file_size_bytes": 51,
+    "entropy_bits_per_byte": 3.7185,
+    "high_entropy": false,
+    "magic_number_hex": "68747470733a2f2f",
+    "magic_format": "",
+    "declared_extension": ".url",
+    "mime_type": "application/octet-stream",
+    "extension_matches_magic": true,
+    "sha256_matches_acquisition": true,
+    "duplicates": [],
+    "is_duplicate": false,
+    "analysis_time_ms": 1.7
+  }
+}

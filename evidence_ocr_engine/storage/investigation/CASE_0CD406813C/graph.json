@@ -1,0 +1,2222 @@
+{
+  "report_type": "graph",
+  "report_version": 3,
+  "schema_version": "2.0",
+  "case_id": "CASE_0CD406813C",
+  "generated_at": "2026-08-21T06:39:12.082Z",
+  "report": {
+    "case_id": "CASE_0CD406813C",
+    "directed": false,
+    "nodes": [
+      {
+        "id": "case:CASE_0CD406813C",
+        "node_type": "case",
+        "label": "CASE_0CD406813C",
+        "properties": {
+          "degree_centrality": "0.244444",
+          "betweenness_centrality": "0.211111",
+          "pagerank": "0.032082",
+          "graph_importance": "0.234865",
+          "community_id": "5",
+          "community_size": "6"
+        }
+      },
+      {
+        "id": "evidence:EVID_00026",
+        "node_type": "evidence",
+        "label": "EVID_00026",
+        "properties": {
+          "file_name": "07_qr_flyer_poor_capture.jpg",
+          "upload_time": "2026-08-21T06:37:22.707Z",
+          "degree_centrality": "0.044444",
+          "betweenness_centrality": "0.044444",
+          "pagerank": "0.010596",
+          "graph_importance": "0.061466",
+          "community_id": "5",
+          "community_size": "6"
+        }
+      },
+      {
+        "id": "evidence:EVID_00027",
+        "node_type": "evidence",
+        "label": "EVID_00027",
+        "properties": {
+          "file_name": "06_complaint_letter.pdf",
+          "upload_time": "2026-08-21T06:37:35.208Z",
+          "degree_centrality": "0.466667",
+          "betweenness_centrality": "0.408533",
+          "pagerank": "0.128801",
+          "graph_importance": "0.686320",
+          "community_id": "4",
+          "community_size": "6"
+        }
+      },
+      {
+        "id": "bank_account:01903015472901",
+        "node_type": "bank_account",
+        "label": "01903015472901",
+        "properties": {
+          "degree_centrality": "0.022222",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.009027",
+          "graph_importance": "0.035981",
+          "community_id": "4",
+          "community_size": "6"
+        }
+      },
+      {
+        "id": "date:2026-07-14",
+        "node_type": "date",
+        "label": "2026-07-14",
+        "properties": {
+          "degree_centrality": "0.088889",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.026939",
+          "graph_importance": "0.111895",
+          "community_id": "3",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "domain:esewa-bonus-claim.xyz",
+        "node_type": "domain",
+        "label": "esewa-bonus-claim.xyz",
+        "properties": {
+          "degree_centrality": "0.066667",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.024517",
+          "graph_importance": "0.098991",
+          "community_id": "2",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "domain:gmail.com",
+        "node_type": "domain",
+        "label": "gmail.com",
+        "properties": {
+          "degree_centrality": "0.177778",
+          "betweenness_centrality": "0.212121",
+          "pagerank": "0.044482",
+          "graph_importance": "0.265208",
+          "community_id": "6",
+          "community_size": "6"
+        }
+      },
+      {
+        "id": "email:reward.center2026@gmail.com",
+        "node_type": "email",
+        "label": "reward.center2026@gmail.com",
+        "properties": {
+          "degree_centrality": "0.066667",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.020795",
+          "graph_importance": "0.085985",
+          "community_id": "3",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "wallet:+9779812345678",
+        "node_type": "wallet",
+        "label": "+9779812345678",
+        "properties": {
+          "degree_centrality": "0.088889",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.026922",
+          "graph_importance": "0.111838",
+          "community_id": "3",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "money:npr 12000",
+        "node_type": "money",
+        "label": "NPR 12000",
+        "properties": {
+          "degree_centrality": "0.022222",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.009027",
+          "graph_importance": "0.035981",
+          "community_id": "4",
+          "community_size": "6"
+        }
+      },
+      {
+        "id": "money:npr 12500",
+        "node_type": "money",
+        "label": "NPR 12500",
+        "properties": {
+          "degree_centrality": "0.022222",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.009027",
+          "graph_importance": "0.035981",
+          "community_id": "4",
+          "community_size": "6"
+        }
+      },
+      {
+        "id": "money:npr 15000",
+        "node_type": "money",
+        "label": "NPR 15000",
+        "properties": {
+          "degree_centrality": "0.044444",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.014911",
+          "graph_importance": "0.060985",
+          "community_id": "4",
+          "community_size": "6"
+        }
+      },
+      {
+        "id": "money:npr 500",
+        "node_type": "money",
+        "label": "NPR 500",
+        "properties": {
+          "degree_centrality": "0.111111",
+          "betweenness_centrality": "0.046537",
+          "pagerank": "0.034579",
+          "graph_importance": "0.159321",
+          "community_id": "1",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "phone_number:+9779812345678",
+        "node_type": "phone_number",
+        "label": "+9779812345678",
+        "properties": {
+          "degree_centrality": "0.133333",
+          "betweenness_centrality": "0.059524",
+          "pagerank": "0.040707",
+          "graph_importance": "0.189720",
+          "community_id": "1",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "phone_number:+9779841002233",
+        "node_type": "phone_number",
+        "label": "+9779841002233",
+        "properties": {
+          "degree_centrality": "0.044444",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.014928",
+          "graph_importance": "0.061042",
+          "community_id": "1",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "transaction:esw-2026-0714-88231",
+        "node_type": "transaction",
+        "label": "ESW-2026-0714-88231",
+        "properties": {
+          "degree_centrality": "0.044444",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.014928",
+          "graph_importance": "0.061042",
+          "community_id": "1",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "url:https://esewa-bonus-claim.xyz/verify?ref=dsn2026",
+        "node_type": "url",
+        "label": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026",
+        "properties": {
+          "degree_centrality": "0.066667",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.024517",
+          "graph_importance": "0.098991",
+          "community_id": "2",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "evidence:EVID_00028",
+        "node_type": "evidence",
+        "label": "EVID_00028",
+        "properties": {
+          "file_name": "05_bank_statement.csv",
+          "upload_time": "2026-08-21T06:37:35.597Z",
+          "degree_centrality": "0.244444",
+          "betweenness_centrality": "0.136051",
+          "pagerank": "0.058599",
+          "graph_importance": "0.301239",
+          "community_id": "3",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "date:2026-07-01",
+        "node_type": "date",
+        "label": "2026-07-01",
+        "properties": {
+          "degree_centrality": "0.022222",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.009389",
+          "graph_importance": "0.037246",
+          "community_id": "3",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "date:2026-07-15",
+        "node_type": "date",
+        "label": "2026-07-15",
+        "properties": {
+          "degree_centrality": "0.022222",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.009389",
+          "graph_importance": "0.037246",
+          "community_id": "3",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "evidence:EVID_00029",
+        "node_type": "evidence",
+        "label": "EVID_00029",
+        "properties": {
+          "file_name": "04_phishing_email.txt",
+          "upload_time": "2026-08-21T06:37:35.716Z",
+          "degree_centrality": "0.400000",
+          "betweenness_centrality": "0.254721",
+          "pagerank": "0.109425",
+          "graph_importance": "0.551455",
+          "community_id": "2",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "date:14 jul 2026",
+        "node_type": "date",
+        "label": "14 Jul 2026",
+        "properties": {
+          "degree_centrality": "0.022222",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.009146",
+          "graph_importance": "0.036397",
+          "community_id": "2",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "email:sunita.rai88@gmail.com",
+        "node_type": "email",
+        "label": "sunita.rai88@gmail.com",
+        "properties": {
+          "degree_centrality": "0.022222",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.009146",
+          "graph_importance": "0.036397",
+          "community_id": "2",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "time:09:12:04",
+        "node_type": "time",
+        "label": "09:12:04",
+        "properties": {
+          "degree_centrality": "0.022222",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.009146",
+          "graph_importance": "0.036397",
+          "community_id": "2",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "evidence:EVID_00030",
+        "node_type": "evidence",
+        "label": "EVID_00030",
+        "properties": {
+          "file_name": "03_esewa_payment_receipt.jpg",
+          "upload_time": "2026-08-21T06:37:35.842Z",
+          "degree_centrality": "0.266667",
+          "betweenness_centrality": "0.105899",
+          "pagerank": "0.063246",
+          "graph_importance": "0.311363",
+          "community_id": "1",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "time:11:42 am",
+        "node_type": "time",
+        "label": "11:42 AM",
+        "properties": {
+          "degree_centrality": "0.022222",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.009162",
+          "graph_importance": "0.036454",
+          "community_id": "1",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "evidence:EVID_00031",
+        "node_type": "evidence",
+        "label": "EVID_00031",
+        "properties": {
+          "file_name": "02_messenger_chat.jpg",
+          "upload_time": "2026-08-21T06:37:39.863Z",
+          "degree_centrality": "0.266667",
+          "betweenness_centrality": "0.103146",
+          "pagerank": "0.064860",
+          "graph_importance": "0.316039",
+          "community_id": "3",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "evidence:EVID_00032",
+        "node_type": "evidence",
+        "label": "EVID_00032",
+        "properties": {
+          "file_name": "01_sms_cashback_offer.jpg",
+          "upload_time": "2026-08-21T06:37:43.588Z",
+          "degree_centrality": "0.111111",
+          "betweenness_centrality": "0.090303",
+          "pagerank": "0.029224",
+          "graph_importance": "0.155929",
+          "community_id": "1",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "money:npr 15",
+        "node_type": "money",
+        "label": "NPR 15",
+        "properties": {
+          "degree_centrality": "0.022222",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.011144",
+          "graph_importance": "0.043380",
+          "community_id": "1",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "evidence:EVID_00033",
+        "node_type": "evidence",
+        "label": "EVID_00033",
+        "properties": {
+          "file_name": "https_esewa-bonus-claim.xyz_verify_ref_DSN2026.url",
+          "upload_time": "2026-08-21T06:38:44.588Z",
+          "degree_centrality": "0.133333",
+          "betweenness_centrality": "0.048822",
+          "pagerank": "0.032142",
+          "graph_importance": "0.156052",
+          "community_id": "2",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_0CD406813C:EVID_00027",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00027 (06_complaint_letter.pdf); stages: social_engineering, financial_transaction, post_attack",
+        "properties": {
+          "timestamp": "2026-07-14T00:00:00+00:00",
+          "time_source": "content_date_only",
+          "timestamp_inferred": "true",
+          "degree_centrality": "0.022222",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.003831",
+          "graph_importance": "0.017828",
+          "community_id": "4",
+          "community_size": "6"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_0CD406813C:EVID_00028",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00028 (05_bank_statement.csv); stages: financial_transaction",
+        "properties": {
+          "timestamp": "2026-07-14T00:00:00+00:00",
+          "time_source": "content_date_only",
+          "timestamp_inferred": "true",
+          "degree_centrality": "0.022222",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.003866",
+          "graph_importance": "0.017953",
+          "community_id": "3",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_0CD406813C:EVID_00031",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00031 (02_messenger_chat.jpg); stages: financial_transaction",
+        "properties": {
+          "timestamp": "2026-07-14T00:00:00+00:00",
+          "time_source": "content_date_only",
+          "timestamp_inferred": "true",
+          "degree_centrality": "0.022222",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.003842",
+          "graph_importance": "0.017868",
+          "community_id": "3",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_0CD406813C:EVID_00029",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00029 (04_phishing_email.txt); stages: social_engineering, financial_transaction",
+        "properties": {
+          "timestamp": "2026-07-14T09:12:04+00:00",
+          "time_source": "content_labeled_date_time",
+          "timestamp_inferred": "false",
+          "degree_centrality": "0.022222",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.004092",
+          "graph_importance": "0.018740",
+          "community_id": "2",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_0CD406813C:EVID_00030",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00030 (03_esewa_payment_receipt.jpg); stages: financial_transaction",
+        "properties": {
+          "timestamp": "2026-07-14T11:42:00+00:00",
+          "time_source": "content_date_time",
+          "timestamp_inferred": "false",
+          "degree_centrality": "0.022222",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.004094",
+          "graph_importance": "0.018748",
+          "community_id": "1",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_0CD406813C:EVID_00026",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00026 (07_qr_flyer_poor_capture.jpg); stages: initial_contact",
+        "properties": {
+          "timestamp": "2026-08-21T06:37:22.707000+00:00",
+          "time_source": "upload_time_fallback",
+          "timestamp_inferred": "true",
+          "degree_centrality": "0.022222",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.006638",
+          "graph_importance": "0.027638",
+          "community_id": "5",
+          "community_size": "6"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_0CD406813C:EVID_00032",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00032 (01_sms_cashback_offer.jpg); stages: social_engineering, financial_transaction",
+        "properties": {
+          "timestamp": "2026-08-21T06:37:43.588000+00:00",
+          "time_source": "upload_time_fallback",
+          "timestamp_inferred": "true",
+          "degree_centrality": "0.022222",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.003706",
+          "graph_importance": "0.017392",
+          "community_id": "1",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_0CD406813C:EVID_00033",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00033 (https_esewa-bonus-claim.xyz_verify_ref_DSN2026.url); stages: social_engineering, financial_transaction",
+        "properties": {
+          "timestamp": "2026-08-21T06:38:44.588000+00:00",
+          "time_source": "upload_time_fallback",
+          "timestamp_inferred": "true",
+          "degree_centrality": "0.022222",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.003623",
+          "graph_importance": "0.017103",
+          "community_id": "2",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "case:CASE_EE8250FB76",
+        "node_type": "case",
+        "label": "CASE_EE8250FB76",
+        "properties": {
+          "degree_centrality": "0.044444",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.008217",
+          "graph_importance": "0.037598",
+          "community_id": "5",
+          "community_size": "6"
+        }
+      },
+      {
+        "id": "evidence:EVID_00005",
+        "node_type": "evidence",
+        "label": "EVID_00005",
+        "properties": {
+          "case_id": "CASE_EE8250FB76",
+          "degree_centrality": "0.044444",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.006030",
+          "graph_importance": "0.029958",
+          "community_id": "6",
+          "community_size": "6"
+        }
+      },
+      {
+        "id": "case:CASE_185915593C",
+        "node_type": "case",
+        "label": "CASE_185915593C",
+        "properties": {
+          "degree_centrality": "0.066667",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.008595",
+          "graph_importance": "0.043363",
+          "community_id": "5",
+          "community_size": "6"
+        }
+      },
+      {
+        "id": "evidence:EVID_00008",
+        "node_type": "evidence",
+        "label": "EVID_00008",
+        "properties": {
+          "case_id": "CASE_185915593C",
+          "degree_centrality": "0.044444",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.006017",
+          "graph_importance": "0.029910",
+          "community_id": "6",
+          "community_size": "6"
+        }
+      },
+      {
+        "id": "evidence:EVID_00014",
+        "node_type": "evidence",
+        "label": "EVID_00014",
+        "properties": {
+          "case_id": "CASE_185915593C",
+          "degree_centrality": "0.044444",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.006017",
+          "graph_importance": "0.029910",
+          "community_id": "6",
+          "community_size": "6"
+        }
+      },
+      {
+        "id": "case:CASE_1A1BF573F3",
+        "node_type": "case",
+        "label": "CASE_1A1BF573F3",
+        "properties": {
+          "degree_centrality": "0.066667",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.008595",
+          "graph_importance": "0.043363",
+          "community_id": "5",
+          "community_size": "6"
+        }
+      },
+      {
+        "id": "evidence:EVID_00016",
+        "node_type": "evidence",
+        "label": "EVID_00016",
+        "properties": {
+          "case_id": "CASE_1A1BF573F3",
+          "degree_centrality": "0.044444",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.006017",
+          "graph_importance": "0.029910",
+          "community_id": "6",
+          "community_size": "6"
+        }
+      },
+      {
+        "id": "evidence:EVID_00022",
+        "node_type": "evidence",
+        "label": "EVID_00022",
+        "properties": {
+          "case_id": "CASE_1A1BF573F3",
+          "degree_centrality": "0.044444",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.006017",
+          "graph_importance": "0.029910",
+          "community_id": "6",
+          "community_size": "6"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "source": "case:CASE_0CD406813C",
+        "target": "evidence:EVID_00026",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00026"
+        ],
+        "timestamp": "2026-08-21T06:37:22.707000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00026 belongs to CASE_0CD406813C",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_0CD406813C",
+        "target": "evidence:EVID_00027",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00027"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00027 belongs to CASE_0CD406813C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "bank_account:01903015472901",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00027"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00027 mentions 01903015472901",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "date:2026-07-14",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00027"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00027 mentions 2026-07-14",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "domain:esewa-bonus-claim.xyz",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00027"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00027 mentions esewa-bonus-claim.xyz",
+        "backbone": false
+      },
+      {
+        "source": "domain:esewa-bonus-claim.xyz",
+        "target": "evidence:EVID_00027",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00027"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "esewa-bonus-claim.xyz is flagged malicious by threat intelligence (ml:xgboost)",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "domain:gmail.com",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00027"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00027 mentions gmail.com",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "email:reward.center2026@gmail.com",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00027"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00027 mentions reward.center2026@gmail.com",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "wallet:+9779812345678",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00027"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00027 mentions +9779812345678",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "money:npr 12000",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00027"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00027 mentions NPR 12000",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "money:npr 12500",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00027"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00027 mentions NPR 12500",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "money:npr 15000",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00027"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00027 mentions NPR 15000",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "money:npr 500",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00027"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00027 mentions NPR 500",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "phone_number:+9779812345678",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00027"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00027 mentions +9779812345678",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "phone_number:+9779841002233",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00027"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00027 mentions +9779841002233",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "transaction:esw-2026-0714-88231",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00027"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00027 mentions ESW-2026-0714-88231",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "url:https://esewa-bonus-claim.xyz/verify?ref=dsn2026",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00027"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00027 mentions https://esewa-bonus-claim.xyz/verify?ref=DSN2026",
+        "backbone": false
+      },
+      {
+        "source": "url:https://esewa-bonus-claim.xyz/verify?ref=dsn2026",
+        "target": "evidence:EVID_00027",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00027"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026 is flagged malicious by threat intelligence (ml:xgboost)",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_0CD406813C",
+        "target": "evidence:EVID_00028",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00028"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00028 belongs to CASE_0CD406813C",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00028",
+        "target": "date:2026-07-01",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00028"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00028 mentions 2026-07-01",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00028",
+        "target": "date:2026-07-14",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00028"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00028 mentions 2026-07-14",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00028",
+        "target": "date:2026-07-15",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00028"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00028 mentions 2026-07-15",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00028",
+        "target": "wallet:+9779812345678",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00028"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00028 mentions +9779812345678",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00028",
+        "target": "phone_number:+9779812345678",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00028"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00028 mentions +9779812345678",
+        "backbone": false
+      },
+      {
+        "source": "case:CASE_0CD406813C",
+        "target": "evidence:EVID_00029",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00029"
+        ],
+        "timestamp": "2026-07-14T09:12:04+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00029 belongs to CASE_0CD406813C",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00029",
+        "target": "date:14 jul 2026",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00029"
+        ],
+        "timestamp": "2026-07-14T09:12:04+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00029 mentions 14 Jul 2026",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00029",
+        "target": "domain:esewa-bonus-claim.xyz",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00029"
+        ],
+        "timestamp": "2026-07-14T09:12:04+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00029 mentions esewa-bonus-claim.xyz",
+        "backbone": false
+      },
+      {
+        "source": "domain:esewa-bonus-claim.xyz",
+        "target": "evidence:EVID_00029",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00029"
+        ],
+        "timestamp": "2026-07-14T09:12:04+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "esewa-bonus-claim.xyz is flagged malicious by threat intelligence (ml:xgboost)",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00029",
+        "target": "domain:gmail.com",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00029"
+        ],
+        "timestamp": "2026-07-14T09:12:04+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00029 mentions gmail.com",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00029",
+        "target": "email:reward.center2026@gmail.com",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00029"
+        ],
+        "timestamp": "2026-07-14T09:12:04+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00029 mentions reward.center2026@gmail.com",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00029",
+        "target": "email:sunita.rai88@gmail.com",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00029"
+        ],
+        "timestamp": "2026-07-14T09:12:04+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00029 mentions sunita.rai88@gmail.com",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00029",
+        "target": "wallet:+9779812345678",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00029"
+        ],
+        "timestamp": "2026-07-14T09:12:04+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00029 mentions +9779812345678",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00029",
+        "target": "money:npr 15000",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00029"
+        ],
+        "timestamp": "2026-07-14T09:12:04+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00029 mentions NPR 15000",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00029",
+        "target": "money:npr 500",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00029"
+        ],
+        "timestamp": "2026-07-14T09:12:04+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00029 mentions NPR 500",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00029",
+        "target": "phone_number:+9779812345678",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00029"
+        ],
+        "timestamp": "2026-07-14T09:12:04+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00029 mentions +9779812345678",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00029",
+        "target": "time:09:12:04",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00029"
+        ],
+        "timestamp": "2026-07-14T09:12:04+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00029 mentions 09:12:04",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00029",
+        "target": "url:https://esewa-bonus-claim.xyz/verify?ref=dsn2026",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00029"
+        ],
+        "timestamp": "2026-07-14T09:12:04+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00029 mentions https://esewa-bonus-claim.xyz/verify?ref=DSN2026",
+        "backbone": false
+      },
+      {
+        "source": "url:https://esewa-bonus-claim.xyz/verify?ref=dsn2026",
+        "target": "evidence:EVID_00029",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00029"
+        ],
+        "timestamp": "2026-07-14T09:12:04+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026 is flagged malicious by threat intelligence (ml:xgboost)",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_0CD406813C",
+        "target": "evidence:EVID_00030",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00030"
+        ],
+        "timestamp": "2026-07-14T11:42:00+00:00",
+        "timestamp_source": "content_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00030 belongs to CASE_0CD406813C",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00030",
+        "target": "date:2026-07-14",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00030"
+        ],
+        "timestamp": "2026-07-14T11:42:00+00:00",
+        "timestamp_source": "content_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00030 mentions 2026-07-14",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00030",
+        "target": "money:npr 500",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00030"
+        ],
+        "timestamp": "2026-07-14T11:42:00+00:00",
+        "timestamp_source": "content_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00030 mentions NPR 500",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00030",
+        "target": "phone_number:+9779812345678",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00030"
+        ],
+        "timestamp": "2026-07-14T11:42:00+00:00",
+        "timestamp_source": "content_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00030 mentions +9779812345678",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00030",
+        "target": "phone_number:+9779841002233",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00030"
+        ],
+        "timestamp": "2026-07-14T11:42:00+00:00",
+        "timestamp_source": "content_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00030 mentions +9779841002233",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00030",
+        "target": "time:11:42 am",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00030"
+        ],
+        "timestamp": "2026-07-14T11:42:00+00:00",
+        "timestamp_source": "content_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00030 mentions 11:42 AM",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00030",
+        "target": "transaction:esw-2026-0714-88231",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00030"
+        ],
+        "timestamp": "2026-07-14T11:42:00+00:00",
+        "timestamp_source": "content_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00030 mentions ESW-2026-0714-88231",
+        "backbone": false
+      },
+      {
+        "source": "case:CASE_0CD406813C",
+        "target": "evidence:EVID_00031",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00031"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00031 belongs to CASE_0CD406813C",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00031",
+        "target": "date:2026-07-14",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00031"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00031 mentions 2026-07-14",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00031",
+        "target": "domain:gmail.com",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00031"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00031 mentions gmail.com",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00031",
+        "target": "email:reward.center2026@gmail.com",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00031"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00031 mentions reward.center2026@gmail.com",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00031",
+        "target": "wallet:+9779812345678",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00031"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00031 mentions +9779812345678",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00031",
+        "target": "money:npr 500",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00031"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00031 mentions NPR 500",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00031",
+        "target": "phone_number:+9779812345678",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00031"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00031 mentions +9779812345678",
+        "backbone": false
+      },
+      {
+        "source": "case:CASE_0CD406813C",
+        "target": "evidence:EVID_00032",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00032"
+        ],
+        "timestamp": "2026-08-21T06:37:43.588000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00032 belongs to CASE_0CD406813C",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00032",
+        "target": "money:npr 15",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00032"
+        ],
+        "timestamp": "2026-08-21T06:37:43.588000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00032 mentions NPR 15",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00032",
+        "target": "money:npr 500",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00032"
+        ],
+        "timestamp": "2026-08-21T06:37:43.588000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00032 mentions NPR 500",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00032",
+        "target": "phone_number:+9779812345678",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00032"
+        ],
+        "timestamp": "2026-08-21T06:37:43.588000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00032 mentions +9779812345678",
+        "backbone": false
+      },
+      {
+        "source": "case:CASE_0CD406813C",
+        "target": "evidence:EVID_00033",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00033"
+        ],
+        "timestamp": "2026-08-21T06:38:44.588000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00033 belongs to CASE_0CD406813C",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00033",
+        "target": "domain:esewa-bonus-claim.xyz",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00033"
+        ],
+        "timestamp": "2026-08-21T06:38:44.588000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00033 mentions esewa-bonus-claim.xyz",
+        "backbone": false
+      },
+      {
+        "source": "domain:esewa-bonus-claim.xyz",
+        "target": "evidence:EVID_00033",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00033"
+        ],
+        "timestamp": "2026-08-21T06:38:44.588000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "esewa-bonus-claim.xyz is flagged malicious by threat intelligence (ml:xgboost)",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00033",
+        "target": "url:https://esewa-bonus-claim.xyz/verify?ref=dsn2026",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00033"
+        ],
+        "timestamp": "2026-08-21T06:38:44.588000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00033 mentions https://esewa-bonus-claim.xyz/verify?ref=DSN2026",
+        "backbone": false
+      },
+      {
+        "source": "url:https://esewa-bonus-claim.xyz/verify?ref=dsn2026",
+        "target": "evidence:EVID_00033",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00033"
+        ],
+        "timestamp": "2026-08-21T06:38:44.588000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "https://esewa-bonus-claim.xyz/verify?ref=DSN2026 is flagged malicious by threat intelligence (ml:xgboost)",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "timeline_event:CASE_0CD406813C:EVID_00027",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 0.7,
+        "source_evidence_ids": [
+          "EVID_00027"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Reconstructed event for EVID_00027",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00028",
+        "target": "timeline_event:CASE_0CD406813C:EVID_00028",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 0.7,
+        "source_evidence_ids": [
+          "EVID_00028"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Reconstructed event for EVID_00028",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00031",
+        "target": "timeline_event:CASE_0CD406813C:EVID_00031",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 0.7,
+        "source_evidence_ids": [
+          "EVID_00031"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Reconstructed event for EVID_00031",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00029",
+        "target": "timeline_event:CASE_0CD406813C:EVID_00029",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00029"
+        ],
+        "timestamp": "2026-07-14T09:12:04+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "Reconstructed event for EVID_00029",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00030",
+        "target": "timeline_event:CASE_0CD406813C:EVID_00030",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00030"
+        ],
+        "timestamp": "2026-07-14T11:42:00+00:00",
+        "timestamp_source": "content_date_time",
+        "timestamp_inferred": false,
+        "explanation": "Reconstructed event for EVID_00030",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00026",
+        "target": "timeline_event:CASE_0CD406813C:EVID_00026",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 0.4,
+        "source_evidence_ids": [
+          "EVID_00026"
+        ],
+        "timestamp": "2026-08-21T06:37:22.707000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Reconstructed event for EVID_00026",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00032",
+        "target": "timeline_event:CASE_0CD406813C:EVID_00032",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 0.4,
+        "source_evidence_ids": [
+          "EVID_00032"
+        ],
+        "timestamp": "2026-08-21T06:37:43.588000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Reconstructed event for EVID_00032",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00033",
+        "target": "timeline_event:CASE_0CD406813C:EVID_00033",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 0.4,
+        "source_evidence_ids": [
+          "EVID_00033"
+        ],
+        "timestamp": "2026-08-21T06:38:44.588000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Reconstructed event for EVID_00033",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_0CD406813C",
+        "target": "case:CASE_EE8250FB76",
+        "edge_type": "cross_case_relationship",
+        "weight": 1.0,
+        "confidence": 0.2163,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00027",
+          "EVID_00029",
+          "EVID_00031"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Shares 1 entity(ies) with CASE_EE8250FB76: domain gmail.com",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_EE8250FB76",
+        "target": "evidence:EVID_00005",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.2163,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00005 belongs to CASE_EE8250FB76",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "domain:gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.2163,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00027",
+          "EVID_00029",
+          "EVID_00031"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "domains 'gmail.com' matches evidence across CASE_0CD406813C and CASE_EE8250FB76",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_0CD406813C",
+        "target": "case:CASE_185915593C",
+        "edge_type": "cross_case_relationship",
+        "weight": 1.0,
+        "confidence": 0.2163,
+        "source_evidence_ids": [
+          "EVID_00008",
+          "EVID_00014",
+          "EVID_00027",
+          "EVID_00029",
+          "EVID_00031"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Shares 1 entity(ies) with CASE_185915593C: domain gmail.com",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_185915593C",
+        "target": "evidence:EVID_00008",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.2163,
+        "source_evidence_ids": [
+          "EVID_00008"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00008 belongs to CASE_185915593C",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00008",
+        "target": "domain:gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.2163,
+        "source_evidence_ids": [
+          "EVID_00008",
+          "EVID_00014",
+          "EVID_00027",
+          "EVID_00029",
+          "EVID_00031"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "domains 'gmail.com' matches evidence across CASE_0CD406813C and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_185915593C",
+        "target": "evidence:EVID_00014",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.2163,
+        "source_evidence_ids": [
+          "EVID_00014"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00014 belongs to CASE_185915593C",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00014",
+        "target": "domain:gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.2163,
+        "source_evidence_ids": [
+          "EVID_00008",
+          "EVID_00014",
+          "EVID_00027",
+          "EVID_00029",
+          "EVID_00031"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "domains 'gmail.com' matches evidence across CASE_0CD406813C and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_0CD406813C",
+        "target": "case:CASE_1A1BF573F3",
+        "edge_type": "cross_case_relationship",
+        "weight": 1.0,
+        "confidence": 0.2163,
+        "source_evidence_ids": [
+          "EVID_00016",
+          "EVID_00022",
+          "EVID_00027",
+          "EVID_00029",
+          "EVID_00031"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Shares 1 entity(ies) with CASE_1A1BF573F3: domain gmail.com",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_1A1BF573F3",
+        "target": "evidence:EVID_00016",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.2163,
+        "source_evidence_ids": [
+          "EVID_00016"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00016 belongs to CASE_1A1BF573F3",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00016",
+        "target": "domain:gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.2163,
+        "source_evidence_ids": [
+          "EVID_00016",
+          "EVID_00022",
+          "EVID_00027",
+          "EVID_00029",
+          "EVID_00031"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "domains 'gmail.com' matches evidence across CASE_0CD406813C and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_1A1BF573F3",
+        "target": "evidence:EVID_00022",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.2163,
+        "source_evidence_ids": [
+          "EVID_00022"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00022 belongs to CASE_1A1BF573F3",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00022",
+        "target": "domain:gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.2163,
+        "source_evidence_ids": [
+          "EVID_00016",
+          "EVID_00022",
+          "EVID_00027",
+          "EVID_00029",
+          "EVID_00031"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "domains 'gmail.com' matches evidence across CASE_0CD406813C and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "evidence:EVID_00028",
+        "edge_type": "temporal_relationship",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00027",
+          "EVID_00028"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Occurred 0.0h apart using reconstructed event time (window 48h)",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "evidence:EVID_00029",
+        "edge_type": "temporal_relationship",
+        "weight": 0.8083,
+        "confidence": 0.8083,
+        "source_evidence_ids": [
+          "EVID_00027",
+          "EVID_00029"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "mixed_content_timestamps",
+        "timestamp_inferred": true,
+        "explanation": "Occurred 9.2h apart using reconstructed event time (window 48h)",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "evidence:EVID_00030",
+        "edge_type": "temporal_relationship",
+        "weight": 0.7562,
+        "confidence": 0.7562,
+        "source_evidence_ids": [
+          "EVID_00027",
+          "EVID_00030"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "mixed_content_timestamps",
+        "timestamp_inferred": true,
+        "explanation": "Occurred 11.7h apart using reconstructed event time (window 48h)",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "evidence:EVID_00031",
+        "edge_type": "temporal_relationship",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00027",
+          "EVID_00031"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Occurred 0.0h apart using reconstructed event time (window 48h)",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00028",
+        "target": "evidence:EVID_00029",
+        "edge_type": "temporal_relationship",
+        "weight": 0.8083,
+        "confidence": 0.8083,
+        "source_evidence_ids": [
+          "EVID_00028",
+          "EVID_00029"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "mixed_content_timestamps",
+        "timestamp_inferred": true,
+        "explanation": "Occurred 9.2h apart using reconstructed event time (window 48h)",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00028",
+        "target": "evidence:EVID_00030",
+        "edge_type": "temporal_relationship",
+        "weight": 0.7562,
+        "confidence": 0.7562,
+        "source_evidence_ids": [
+          "EVID_00028",
+          "EVID_00030"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "mixed_content_timestamps",
+        "timestamp_inferred": true,
+        "explanation": "Occurred 11.7h apart using reconstructed event time (window 48h)",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00028",
+        "target": "evidence:EVID_00031",
+        "edge_type": "temporal_relationship",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00028",
+          "EVID_00031"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Occurred 0.0h apart using reconstructed event time (window 48h)",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00029",
+        "target": "evidence:EVID_00030",
+        "edge_type": "temporal_relationship",
+        "weight": 0.9479,
+        "confidence": 0.9479,
+        "source_evidence_ids": [
+          "EVID_00029",
+          "EVID_00030"
+        ],
+        "timestamp": "2026-07-14T09:12:04+00:00",
+        "timestamp_source": "mixed_content_timestamps",
+        "timestamp_inferred": false,
+        "explanation": "Occurred 2.5h apart using reconstructed event time (window 48h)",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00029",
+        "target": "evidence:EVID_00031",
+        "edge_type": "temporal_relationship",
+        "weight": 0.8083,
+        "confidence": 0.8083,
+        "source_evidence_ids": [
+          "EVID_00029",
+          "EVID_00031"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "mixed_content_timestamps",
+        "timestamp_inferred": true,
+        "explanation": "Occurred 9.2h apart using reconstructed event time (window 48h)",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00030",
+        "target": "evidence:EVID_00031",
+        "edge_type": "temporal_relationship",
+        "weight": 0.7562,
+        "confidence": 0.7562,
+        "source_evidence_ids": [
+          "EVID_00030",
+          "EVID_00031"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "mixed_content_timestamps",
+        "timestamp_inferred": true,
+        "explanation": "Occurred 11.7h apart using reconstructed event time (window 48h)",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "evidence:EVID_00029",
+        "edge_type": "behavioral_relationship",
+        "weight": 0.9704,
+        "confidence": 0.9704,
+        "source_evidence_ids": [
+          "EVID_00027",
+          "EVID_00029"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Module-1 correlation: VERY_STRONG (confidence 0.97) - Both items reference the same phones: +9779812345678; Both items reference the same emails: reward.center2026@gmail.com",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "evidence:EVID_00033",
+        "edge_type": "behavioral_relationship",
+        "weight": 0.8281,
+        "confidence": 0.8281,
+        "source_evidence_ids": [
+          "EVID_00027",
+          "EVID_00033"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Module-1 correlation: VERY_STRONG (confidence 0.83) - Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=dsn2026; Both items reference the same domains: esewa-bonus-claim.xyz",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00029",
+        "target": "evidence:EVID_00033",
+        "edge_type": "behavioral_relationship",
+        "weight": 0.8281,
+        "confidence": 0.8281,
+        "source_evidence_ids": [
+          "EVID_00029",
+          "EVID_00033"
+        ],
+        "timestamp": "2026-07-14T09:12:04+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "Module-1 correlation: VERY_STRONG (confidence 0.83) - Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=dsn2026; Both items reference the same domains: esewa-bonus-claim.xyz",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "evidence:EVID_00031",
+        "edge_type": "behavioral_relationship",
+        "weight": 0.8175,
+        "confidence": 0.8175,
+        "source_evidence_ids": [
+          "EVID_00027",
+          "EVID_00031"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Module-1 correlation: VERY_STRONG (confidence 0.82) - Both items reference the same phones: +9779812345678; Both items reference the same emails: reward.center2026@gmail.com",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00029",
+        "target": "evidence:EVID_00031",
+        "edge_type": "behavioral_relationship",
+        "weight": 0.8175,
+        "confidence": 0.8175,
+        "source_evidence_ids": [
+          "EVID_00029",
+          "EVID_00031"
+        ],
+        "timestamp": "2026-07-14T09:12:04+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "Module-1 correlation: VERY_STRONG (confidence 0.82) - Both items reference the same phones: +9779812345678; Both items reference the same emails: reward.center2026@gmail.com",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "evidence:EVID_00030",
+        "edge_type": "behavioral_relationship",
+        "weight": 0.8011,
+        "confidence": 0.8011,
+        "source_evidence_ids": [
+          "EVID_00027",
+          "EVID_00030"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Module-1 correlation: VERY_STRONG (confidence 0.80) - Both items reference the same phones: +9779841002233, +9779812345678; Both items reference the same transaction ids: esw-2026-0714-88231",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "evidence:EVID_00028",
+        "edge_type": "behavioral_relationship",
+        "weight": 0.6061,
+        "confidence": 0.6061,
+        "source_evidence_ids": [
+          "EVID_00027",
+          "EVID_00028"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Module-1 correlation: STRONG (confidence 0.61) - Both items reference the same phones: +9779812345678; Both items reference the same esewa ids: +9779812345678",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00028",
+        "target": "evidence:EVID_00029",
+        "edge_type": "behavioral_relationship",
+        "weight": 0.6061,
+        "confidence": 0.6061,
+        "source_evidence_ids": [
+          "EVID_00028",
+          "EVID_00029"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Module-1 correlation: STRONG (confidence 0.61) - Both items reference the same phones: +9779812345678; Both items reference the same esewa ids: +9779812345678",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00028",
+        "target": "evidence:EVID_00031",
+        "edge_type": "behavioral_relationship",
+        "weight": 0.6061,
+        "confidence": 0.6061,
+        "source_evidence_ids": [
+          "EVID_00028",
+          "EVID_00031"
+        ],
+        "timestamp": "2026-07-14T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Module-1 correlation: STRONG (confidence 0.61) - Both items reference the same phones: +9779812345678; Both items reference the same esewa ids: +9779812345678",
+        "backbone": false
+      }
+    ]
+  }
+}

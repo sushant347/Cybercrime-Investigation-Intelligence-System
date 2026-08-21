@@ -1,0 +1,39 @@
+{
+  "report_type": "metadata_report",
+  "report_version": 2,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00016",
+  "case_id": "CASE_1A1BF573F3",
+  "generated_at": "2026-08-21T03:27:25.539Z",
+  "report": {
+    "evidence_id": "EVID_00016",
+    "case_id": "CASE_1A1BF573F3",
+    "source_file": "EVID_00016__10b0e203__02_messenger_chat.jpg",
+    "file_type": "image",
+    "filesystem": {
+      "file_size_bytes": 64791,
+      "created": "2026-07-25T17:35:36.664649+00:00",
+      "modified": "2026-07-25T17:34:54.363358+00:00",
+      "accessed": "2026-08-04T11:14:07.911420+00:00"
+    },
+    "image": {
+      "has_exif": false,
+      "camera_make": "",
+      "camera_model": "",
+      "device": "",
+      "software": "",
+      "date_created": "",
+      "date_modified": "",
+      "orientation": "",
+      "gps": null,
+      "all_tags": {}
+    },
+    "pdf": null,
+    "office": null,
+    "consistency_notes": [
+      "Image carries no EXIF metadata (typical for screenshots and messaging-app exports; one less authenticity signal)."
+    ],
+    "extraction_errors": [],
+    "analysis_time_ms": 0.2
+  }
+}

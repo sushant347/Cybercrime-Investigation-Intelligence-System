@@ -1,0 +1,63 @@
+{
+  "report_type": "case_priority",
+  "report_version": 7,
+  "schema_version": "2.0",
+  "case_id": "CASE_EE8250FB76",
+  "generated_at": "2026-08-20T18:49:02.521Z",
+  "report": {
+    "case_id": "CASE_EE8250FB76",
+    "components": [
+      {
+        "name": "evidence_confidence",
+        "score": 75.0,
+        "weight": 0.2,
+        "available": true,
+        "explanation": "mean Phase-1 evidence confidence 75.0"
+      },
+      {
+        "name": "threat_intelligence",
+        "score": 50.0,
+        "weight": 0.2,
+        "available": true,
+        "explanation": "50% of evidence touches flagged indicators"
+      },
+      {
+        "name": "forgery_risk",
+        "score": 0.0,
+        "weight": 0.15,
+        "available": true,
+        "explanation": "max Phase-1 forgery score 0.0"
+      },
+      {
+        "name": "campaign_size",
+        "score": 0.0,
+        "weight": 0.15,
+        "available": true,
+        "explanation": "largest campaign groups 0 items"
+      },
+      {
+        "name": "correlation_strength",
+        "score": 0.0,
+        "weight": 0.15,
+        "available": true,
+        "explanation": "strongest evidence-pair confidence 0.00"
+      },
+      {
+        "name": "timeline_criticality",
+        "score": 33.3,
+        "weight": 0.15,
+        "available": true,
+        "explanation": "1 critical timeline event"
+      }
+    ],
+    "priority_score": 30.0,
+    "priority_level": "MEDIUM",
+    "high_risk_indicators": [
+      "3 threat-flagged indicators present in the evidence",
+      "1 critical event involving OTP/financial entities"
+    ],
+    "investigation_recommendation": "Standard queue: process in normal rotation while monitoring for new linked evidence.",
+    "explanation": "Case priority is 30.0/100 (MEDIUM), computed from 6 available dimensions with renormalised weights. Evidence confidence: 75/100 (weight 0.20) - mean Phase-1 evidence confidence 75.0. Threat intelligence: 50/100 (weight 0.20) - 50% of evidence touches flagged indicators. Timeline criticality: 33/100 (weight 0.15) - 1 critical timeline event. Forgery risk: 0/100 (weight 0.15) - max Phase-1 forgery score 0.0. Campaign size: 0/100 (weight 0.15) - largest campaign groups 0 items. Correlation strength: 0/100 (weight 0.15) - strongest evidence-pair confidence 0.00.",
+    "computed_at": "2026-08-20T18:49:02.521Z"
+  }
+}

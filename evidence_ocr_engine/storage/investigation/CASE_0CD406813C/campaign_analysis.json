@@ -1,0 +1,138 @@
+{
+  "report_type": "campaign_analysis",
+  "report_version": 1,
+  "schema_version": "2.0",
+  "case_id": "CASE_0CD406813C",
+  "generated_at": "2026-08-21T06:39:12.090Z",
+  "report": {
+    "case_id": "CASE_0CD406813C",
+    "campaign_count": 1,
+    "campaigns": [
+      {
+        "campaign_id": "CAMP_CASE_0CD406813C_01",
+        "case_id": "CASE_0CD406813C",
+        "members": [
+          "EVID_00027",
+          "EVID_00028",
+          "EVID_00029",
+          "EVID_00030",
+          "EVID_00031",
+          "EVID_00033"
+        ],
+        "memberships": [
+          {
+            "evidence_id": "EVID_00027",
+            "linked_via": [
+              "EVID_00028",
+              "EVID_00029",
+              "EVID_00030",
+              "EVID_00031",
+              "EVID_00033"
+            ],
+            "link_reasons": [
+              "linked to EVID_00029: Both items reference the same phones: +9779812345678 (confidence 0.97)",
+              "linked to EVID_00033: Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=dsn2026 (confidence 0.83)",
+              "linked to EVID_00031: Both items reference the same phones: +9779812345678 (confidence 0.82)",
+              "linked to EVID_00030: Both items reference the same phones: +9779841002233, +9779812345678 (confidence 0.80)",
+              "linked to EVID_00028: Both items reference the same phones: +9779812345678 (confidence 0.61)"
+            ],
+            "membership_explanation": "EVID_00027 belongs to this campaign through 5 weighted correlation links: linked to EVID_00029: Both items reference the same phones: +9779812345678 (confidence 0.97); linked to EVID_00033: Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=dsn2026 (confidence 0.83); linked to EVID_00031: Both items reference the same phones: +9779812345678 (confidence 0.82); and 2 more."
+          },
+          {
+            "evidence_id": "EVID_00028",
+            "linked_via": [
+              "EVID_00027",
+              "EVID_00029",
+              "EVID_00031"
+            ],
+            "link_reasons": [
+              "linked to EVID_00027: Both items reference the same phones: +9779812345678 (confidence 0.61)",
+              "linked to EVID_00029: Both items reference the same phones: +9779812345678 (confidence 0.61)",
+              "linked to EVID_00031: Both items reference the same phones: +9779812345678 (confidence 0.61)"
+            ],
+            "membership_explanation": "EVID_00028 belongs to this campaign through 3 weighted correlation links: linked to EVID_00027: Both items reference the same phones: +9779812345678 (confidence 0.61); linked to EVID_00029: Both items reference the same phones: +9779812345678 (confidence 0.61); linked to EVID_00031: Both items reference the same phones: +9779812345678 (confidence 0.61)."
+          },
+          {
+            "evidence_id": "EVID_00029",
+            "linked_via": [
+              "EVID_00027",
+              "EVID_00028",
+              "EVID_00031",
+              "EVID_00033"
+            ],
+            "link_reasons": [
+              "linked to EVID_00027: Both items reference the same phones: +9779812345678 (confidence 0.97)",
+              "linked to EVID_00033: Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=dsn2026 (confidence 0.83)",
+              "linked to EVID_00031: Both items reference the same phones: +9779812345678 (confidence 0.82)",
+              "linked to EVID_00028: Both items reference the same phones: +9779812345678 (confidence 0.61)"
+            ],
+            "membership_explanation": "EVID_00029 belongs to this campaign through 4 weighted correlation links: linked to EVID_00027: Both items reference the same phones: +9779812345678 (confidence 0.97); linked to EVID_00033: Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=dsn2026 (confidence 0.83); linked to EVID_00031: Both items reference the same phones: +9779812345678 (confidence 0.82); and 1 more."
+          },
+          {
+            "evidence_id": "EVID_00030",
+            "linked_via": [
+              "EVID_00027"
+            ],
+            "link_reasons": [
+              "linked to EVID_00027: Both items reference the same phones: +9779841002233, +9779812345678 (confidence 0.80)"
+            ],
+            "membership_explanation": "EVID_00030 belongs to this campaign through 1 weighted correlation link: linked to EVID_00027: Both items reference the same phones: +9779841002233, +9779812345678 (confidence 0.80)."
+          },
+          {
+            "evidence_id": "EVID_00031",
+            "linked_via": [
+              "EVID_00027",
+              "EVID_00028",
+              "EVID_00029"
+            ],
+            "link_reasons": [
+              "linked to EVID_00027: Both items reference the same phones: +9779812345678 (confidence 0.82)",
+              "linked to EVID_00029: Both items reference the same phones: +9779812345678 (confidence 0.82)",
+              "linked to EVID_00028: Both items reference the same phones: +9779812345678 (confidence 0.61)"
+            ],
+            "membership_explanation": "EVID_00031 belongs to this campaign through 3 weighted correlation links: linked to EVID_00027: Both items reference the same phones: +9779812345678 (confidence 0.82); linked to EVID_00029: Both items reference the same phones: +9779812345678 (confidence 0.82); linked to EVID_00028: Both items reference the same phones: +9779812345678 (confidence 0.61)."
+          },
+          {
+            "evidence_id": "EVID_00033",
+            "linked_via": [
+              "EVID_00027",
+              "EVID_00029"
+            ],
+            "link_reasons": [
+              "linked to EVID_00027: Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=dsn2026 (confidence 0.83)",
+              "linked to EVID_00029: Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=dsn2026 (confidence 0.83)"
+            ],
+            "membership_explanation": "EVID_00033 belongs to this campaign through 2 weighted correlation links: linked to EVID_00027: Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=dsn2026 (confidence 0.83); linked to EVID_00029: Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=dsn2026 (confidence 0.83)."
+          }
+        ],
+        "campaign_confidence": 0.7646,
+        "signature": [
+          "phones:+9779812345678",
+          "dates:2026-07-14",
+          "esewa_ids:+9779812345678",
+          "money:npr 500",
+          "domains:esewa-bonus-claim.xyz"
+        ],
+        "shared_brands": [],
+        "shared_domains": [
+          "esewa-bonus-claim.xyz",
+          "gmail.com"
+        ],
+        "timeline_start": "2026-08-21T06:37:35.208Z",
+        "timeline_end": "2026-08-21T06:38:44.588Z",
+        "statistics": {
+          "member_count": 6.0,
+          "internal_links": 9.0,
+          "mean_link_confidence": 0.7646,
+          "mean_ocr_confidence": 0.9971
+        },
+        "summary": "Campaign CAMP_CASE_0CD406813C_01 groups 6 evidence items with mean link confidence 0.76. Shared indicators: phones:+9779812345678, dates:2026-07-14, esewa_ids:+9779812345678, money:npr 500, domains:esewa-bonus-claim.xyz. Active 2026-08-21T06:37:35.208Z to 2026-08-21T06:38:44.588Z."
+      }
+    ],
+    "unclustered_evidence": [
+      "EVID_00026",
+      "EVID_00032"
+    ],
+    "analysis_time_ms": 0.5
+  }
+}

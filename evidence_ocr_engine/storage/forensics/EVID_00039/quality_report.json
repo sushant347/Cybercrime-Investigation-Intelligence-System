@@ -1,0 +1,46 @@
+{
+  "report_type": "quality_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00039",
+  "case_id": "CASE_4B2A51A300",
+  "generated_at": "2026-08-21T06:43:11.489Z",
+  "report": {
+    "evidence_id": "EVID_00039",
+    "case_id": "CASE_4B2A51A300",
+    "source_file": "02_whatsapp_chat.jpg",
+    "metrics": {
+      "width": 1000,
+      "height": 352,
+      "megapixels": 0.352,
+      "blur_laplacian_variance": 3680.9730738636363,
+      "brightness_mean": 246.05505113636363,
+      "contrast_std": 43.20575828425929,
+      "noise_residual": 1.794440340909091,
+      "skew_angle_deg": 0.0,
+      "compression_quality": 97.76484375,
+      "edge_density": 0.03134659090909091,
+      "text_like_components": 166
+    },
+    "sub_scores": {
+      "blur": 100.0,
+      "brightness": 84.9,
+      "contrast": 67.7,
+      "noise": 100.0,
+      "resolution": 13.6,
+      "skew": 100.0,
+      "compression": 97.8,
+      "readability": 67.0
+    },
+    "overall_score": 78.4,
+    "quality_grade": "GOOD",
+    "expected_ocr_accuracy": 90.7,
+    "readability_score": 67.0,
+    "recommended_operations": [
+      "super_resolution",
+      "perspective_correction"
+    ],
+    "notes": [],
+    "analysis_time_ms": 9.2
+  }
+}

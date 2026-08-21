@@ -1,0 +1,268 @@
+{
+  "report_type": "cross_case_correlation",
+  "report_version": 4,
+  "schema_version": "2.0",
+  "case_id": "CASE_D6A81F224B",
+  "generated_at": "2026-07-25T18:31:35.881Z",
+  "report": {
+    "case_id": "CASE_D6A81F224B",
+    "related_case_ids": [
+      "CASE_EE8250FB76"
+    ],
+    "link_count": 1,
+    "links": [
+      {
+        "other_case_id": "CASE_EE8250FB76",
+        "match_confidence": 0.9999,
+        "relationship_strength": "VERY_STRONG",
+        "matched_entities": [
+          {
+            "entity_type": "bank_accounts",
+            "value": "05019012345678",
+            "weight": 1.0,
+            "this_evidence_ids": [
+              "EVID_00022"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          },
+          {
+            "entity_type": "domains",
+            "value": "esewa-cashback-offer.xyz",
+            "weight": 0.6,
+            "this_evidence_ids": [
+              "EVID_00022"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          },
+          {
+            "entity_type": "domains",
+            "value": "esewa-verify-kyc.com",
+            "weight": 0.6,
+            "this_evidence_ids": [
+              "EVID_00022"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          },
+          {
+            "entity_type": "domains",
+            "value": "gmail.com",
+            "weight": 0.6,
+            "this_evidence_ids": [
+              "EVID_00022"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          },
+          {
+            "entity_type": "emails",
+            "value": "esewa.cashback99@gmail.com",
+            "weight": 0.85,
+            "this_evidence_ids": [
+              "EVID_00022"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          },
+          {
+            "entity_type": "emails",
+            "value": "sunita.gurung21@gmail.com",
+            "weight": 0.85,
+            "this_evidence_ids": [
+              "EVID_00022"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          },
+          {
+            "entity_type": "emails",
+            "value": "support@esewa-verify-kyc.com",
+            "weight": 0.85,
+            "this_evidence_ids": [
+              "EVID_00022"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          },
+          {
+            "entity_type": "esewa_ids",
+            "value": "esewa.cashback99@gmail.com",
+            "weight": 1.0,
+            "this_evidence_ids": [
+              "EVID_00022"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          },
+          {
+            "entity_type": "esewa_ids",
+            "value": "sunita.gurung21@gmail.com",
+            "weight": 1.0,
+            "this_evidence_ids": [
+              "EVID_00022"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          },
+          {
+            "entity_type": "khalti_ids",
+            "value": "+9779801122334",
+            "weight": 1.0,
+            "this_evidence_ids": [
+              "EVID_00022"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          },
+          {
+            "entity_type": "money",
+            "value": "npr 1500",
+            "weight": 0.2,
+            "this_evidence_ids": [
+              "EVID_00022"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          },
+          {
+            "entity_type": "money",
+            "value": "npr 200",
+            "weight": 0.2,
+            "this_evidence_ids": [
+              "EVID_00022"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          },
+          {
+            "entity_type": "money",
+            "value": "npr 25000",
+            "weight": 0.2,
+            "this_evidence_ids": [
+              "EVID_00021",
+              "EVID_00022"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          },
+          {
+            "entity_type": "money",
+            "value": "npr 5000",
+            "weight": 0.2,
+            "this_evidence_ids": [
+              "EVID_00022"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          },
+          {
+            "entity_type": "phones",
+            "value": "+9779801122334",
+            "weight": 0.9,
+            "this_evidence_ids": [
+              "EVID_00020",
+              "EVID_00022"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          },
+          {
+            "entity_type": "phones",
+            "value": "+9779847011223",
+            "weight": 0.9,
+            "this_evidence_ids": [
+              "EVID_00021",
+              "EVID_00022"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          },
+          {
+            "entity_type": "transaction_ids",
+            "value": "0119.0625.987456",
+            "weight": 0.95,
+            "this_evidence_ids": [
+              "EVID_00022"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          },
+          {
+            "entity_type": "transaction_ids",
+            "value": "case_2026_0088",
+            "weight": 0.95,
+            "this_evidence_ids": [
+              "EVID_00022"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          },
+          {
+            "entity_type": "transaction_ids",
+            "value": "kh-2026-0611-77245",
+            "weight": 0.95,
+            "this_evidence_ids": [
+              "EVID_00022"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          },
+          {
+            "entity_type": "transaction_ids",
+            "value": "mbl-2026-441829",
+            "weight": 0.95,
+            "this_evidence_ids": [
+              "EVID_00021",
+              "EVID_00022"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          },
+          {
+            "entity_type": "urls",
+            "value": "https://esewa-cashback-offer.xyz/claim",
+            "weight": 0.75,
+            "this_evidence_ids": [
+              "EVID_00022"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          }
+        ],
+        "this_evidence_ids": [
+          "EVID_00020",
+          "EVID_00021",
+          "EVID_00022"
+        ],
+        "other_evidence_ids": [
+          "EVID_00005"
+        ],
+        "match_reason": "Shares 21 entity(ies) with CASE_EE8250FB76: bank account 05019012345678, domain esewa-cashback-offer.xyz, domain esewa-verify-kyc.com (+18 more)"
+      }
+    ],
+    "analysis_time_ms": 2.0
+  }
+}

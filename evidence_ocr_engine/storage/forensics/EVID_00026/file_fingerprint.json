@@ -1,0 +1,30 @@
+{
+  "report_type": "file_fingerprint",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00026",
+  "case_id": "CASE_0CD406813C",
+  "generated_at": "2026-08-21T06:37:34.413Z",
+  "report": {
+    "evidence_id": "EVID_00026",
+    "case_id": "CASE_0CD406813C",
+    "source_file": "EVID_00026__6f69bc46__07_qr_flyer_poor_capture.jpg",
+    "md5": "d088572dc030d1ab6fd3e622e0fef607",
+    "sha1": "c8126031b2debc9b65cc1219018dc5ebabae2763",
+    "sha256": "54ecd6f0726dc06df8a4080f5377ce550949435850008b0cb18beeb199da5cdc",
+    "sha512": "32592d49d7b55833b00943513b3bc141942ad6cc8347b42c369161277e55591bb1d45cea40ee85bd63aa7e1cb3dbcd444953df8e088ff6dccc138503a679236c",
+    "crc32": "e8cd08eb",
+    "file_size_bytes": 10725,
+    "entropy_bits_per_byte": 7.3232,
+    "high_entropy": false,
+    "magic_number_hex": "ffd8ffe000104a46",
+    "magic_format": "JPEG image",
+    "declared_extension": ".jpg",
+    "mime_type": "image/jpeg",
+    "extension_matches_magic": true,
+    "sha256_matches_acquisition": true,
+    "duplicates": [],
+    "is_duplicate": false,
+    "analysis_time_ms": 17.0
+  }
+}

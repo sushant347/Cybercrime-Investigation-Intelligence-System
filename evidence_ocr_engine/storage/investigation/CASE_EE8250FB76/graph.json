@@ -1,0 +1,2722 @@
+{
+  "report_type": "graph",
+  "report_version": 13,
+  "schema_version": "2.0",
+  "case_id": "CASE_EE8250FB76",
+  "generated_at": "2026-08-21T05:16:32.232Z",
+  "report": {
+    "case_id": "CASE_EE8250FB76",
+    "directed": false,
+    "nodes": [
+      {
+        "id": "case:CASE_EE8250FB76",
+        "node_type": "case",
+        "label": "CASE_EE8250FB76",
+        "properties": {
+          "degree_centrality": "0.088889",
+          "betweenness_centrality": "0.107071",
+          "pagerank": "0.025128",
+          "graph_importance": "0.167095",
+          "community_id": "5",
+          "community_size": "5"
+        }
+      },
+      {
+        "id": "evidence:EVID_00005",
+        "node_type": "evidence",
+        "label": "EVID_00005",
+        "properties": {
+          "file_name": "08_complaint_letter.pdf",
+          "upload_time": "2026-07-25T16:24:17.560Z",
+          "degree_centrality": "0.600000",
+          "betweenness_centrality": "0.293939",
+          "pagerank": "0.101104",
+          "graph_importance": "0.672879",
+          "community_id": "4",
+          "community_size": "7"
+        }
+      },
+      {
+        "id": "bank_account:05019012345678",
+        "node_type": "bank_account",
+        "label": "05019012345678",
+        "properties": {
+          "degree_centrality": "0.066667",
+          "betweenness_centrality": "0.000074",
+          "pagerank": "0.013464",
+          "graph_importance": "0.073285",
+          "community_id": "2",
+          "community_size": "8"
+        }
+      },
+      {
+        "id": "date:10 june 2026",
+        "node_type": "date",
+        "label": "10 June 2026",
+        "properties": {
+          "degree_centrality": "0.022222",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.006579",
+          "graph_importance": "0.033726",
+          "community_id": "4",
+          "community_size": "7"
+        }
+      },
+      {
+        "id": "date:11 june 2026",
+        "node_type": "date",
+        "label": "11 June 2026",
+        "properties": {
+          "degree_centrality": "0.022222",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.006579",
+          "graph_importance": "0.033726",
+          "community_id": "4",
+          "community_size": "7"
+        }
+      },
+      {
+        "id": "date:14 june 2026",
+        "node_type": "date",
+        "label": "14 June 2026",
+        "properties": {
+          "degree_centrality": "0.022222",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.006579",
+          "graph_importance": "0.033726",
+          "community_id": "4",
+          "community_size": "7"
+        }
+      },
+      {
+        "id": "date:15 june 2026",
+        "node_type": "date",
+        "label": "15 June 2026",
+        "properties": {
+          "degree_centrality": "0.022222",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.006579",
+          "graph_importance": "0.033726",
+          "community_id": "4",
+          "community_size": "7"
+        }
+      },
+      {
+        "id": "domain:esewa-cashback-offer.xyz",
+        "node_type": "domain",
+        "label": "esewa-cashback-offer.xyz",
+        "properties": {
+          "degree_centrality": "0.155556",
+          "betweenness_centrality": "0.080155",
+          "pagerank": "0.031069",
+          "graph_importance": "0.197448",
+          "community_id": "7",
+          "community_size": "4"
+        }
+      },
+      {
+        "id": "domain:esewa-verify-kyc.com",
+        "node_type": "domain",
+        "label": "esewa-verify-kyc.com",
+        "properties": {
+          "degree_centrality": "0.066667",
+          "betweenness_centrality": "0.003104",
+          "pagerank": "0.014049",
+          "graph_importance": "0.076951",
+          "community_id": "4",
+          "community_size": "7"
+        }
+      },
+      {
+        "id": "domain:gmail.com",
+        "node_type": "domain",
+        "label": "gmail.com",
+        "properties": {
+          "degree_centrality": "0.111111",
+          "betweenness_centrality": "0.017143",
+          "pagerank": "0.021402",
+          "graph_importance": "0.123481",
+          "community_id": "1",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "email:esewa.cashback99@gmail.com",
+        "node_type": "email",
+        "label": "esewa.cashback99@gmail.com",
+        "properties": {
+          "degree_centrality": "0.066667",
+          "betweenness_centrality": "0.000074",
+          "pagerank": "0.013464",
+          "graph_importance": "0.073285",
+          "community_id": "2",
+          "community_size": "8"
+        }
+      },
+      {
+        "id": "email:sunita.gurung21@gmail.com",
+        "node_type": "email",
+        "label": "sunita.gurung21@gmail.com",
+        "properties": {
+          "degree_centrality": "0.111111",
+          "betweenness_centrality": "0.017143",
+          "pagerank": "0.021402",
+          "graph_importance": "0.123481",
+          "community_id": "1",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "email:support@esewa-verify-kyc.com",
+        "node_type": "email",
+        "label": "support@esewa-verify-kyc.com",
+        "properties": {
+          "degree_centrality": "0.066667",
+          "betweenness_centrality": "0.003104",
+          "pagerank": "0.014049",
+          "graph_importance": "0.076951",
+          "community_id": "2",
+          "community_size": "8"
+        }
+      },
+      {
+        "id": "wallet:esewa.cashback99@gmail.com",
+        "node_type": "wallet",
+        "label": "esewa.cashback99@gmail.com",
+        "properties": {
+          "degree_centrality": "0.066667",
+          "betweenness_centrality": "0.000074",
+          "pagerank": "0.013464",
+          "graph_importance": "0.073285",
+          "community_id": "2",
+          "community_size": "8"
+        }
+      },
+      {
+        "id": "wallet:sunita.gurung21@gmail.com",
+        "node_type": "wallet",
+        "label": "sunita.gurung21@gmail.com",
+        "properties": {
+          "degree_centrality": "0.111111",
+          "betweenness_centrality": "0.017143",
+          "pagerank": "0.021402",
+          "graph_importance": "0.123481",
+          "community_id": "1",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "wallet:+9779801122334",
+        "node_type": "wallet",
+        "label": "+9779801122334",
+        "properties": {
+          "degree_centrality": "0.111111",
+          "betweenness_centrality": "0.006319",
+          "pagerank": "0.020872",
+          "graph_importance": "0.117335",
+          "community_id": "3",
+          "community_size": "8"
+        }
+      },
+      {
+        "id": "money:npr 1500",
+        "node_type": "money",
+        "label": "NPR 1500",
+        "properties": {
+          "degree_centrality": "0.111111",
+          "betweenness_centrality": "0.006319",
+          "pagerank": "0.020872",
+          "graph_importance": "0.117335",
+          "community_id": "3",
+          "community_size": "8"
+        }
+      },
+      {
+        "id": "money:npr 200",
+        "node_type": "money",
+        "label": "NPR 200",
+        "properties": {
+          "degree_centrality": "0.155556",
+          "betweenness_centrality": "0.059200",
+          "pagerank": "0.031095",
+          "graph_importance": "0.190230",
+          "community_id": "1",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "money:npr 25000",
+        "node_type": "money",
+        "label": "NPR 25000",
+        "properties": {
+          "degree_centrality": "0.111111",
+          "betweenness_centrality": "0.022250",
+          "pagerank": "0.021878",
+          "graph_importance": "0.127385",
+          "community_id": "6",
+          "community_size": "5"
+        }
+      },
+      {
+        "id": "money:npr 5000",
+        "node_type": "money",
+        "label": "NPR 5000",
+        "properties": {
+          "degree_centrality": "0.111111",
+          "betweenness_centrality": "0.024626",
+          "pagerank": "0.023074",
+          "graph_importance": "0.133542",
+          "community_id": "7",
+          "community_size": "4"
+        }
+      },
+      {
+        "id": "phone_number:+9779801122334",
+        "node_type": "phone_number",
+        "label": "+9779801122334",
+        "properties": {
+          "degree_centrality": "0.155556",
+          "betweenness_centrality": "0.085200",
+          "pagerank": "0.033652",
+          "graph_importance": "0.210712",
+          "community_id": "3",
+          "community_size": "8"
+        }
+      },
+      {
+        "id": "phone_number:+9779847011223",
+        "node_type": "phone_number",
+        "label": "+9779847011223",
+        "properties": {
+          "degree_centrality": "0.155556",
+          "betweenness_centrality": "0.037437",
+          "pagerank": "0.029287",
+          "graph_importance": "0.174565",
+          "community_id": "6",
+          "community_size": "5"
+        }
+      },
+      {
+        "id": "transaction:0119.0625.987456",
+        "node_type": "transaction",
+        "label": "0119.0625.987456",
+        "properties": {
+          "degree_centrality": "0.111111",
+          "betweenness_centrality": "0.035352",
+          "pagerank": "0.023156",
+          "graph_importance": "0.137661",
+          "community_id": "1",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "transaction:case_2026_0088",
+        "node_type": "transaction",
+        "label": "CASE_2026_0088",
+        "properties": {
+          "degree_centrality": "0.066667",
+          "betweenness_centrality": "0.000074",
+          "pagerank": "0.013464",
+          "graph_importance": "0.073285",
+          "community_id": "2",
+          "community_size": "8"
+        }
+      },
+      {
+        "id": "transaction:kh-2026-0611-77245",
+        "node_type": "transaction",
+        "label": "KH-2026-0611-77245",
+        "properties": {
+          "degree_centrality": "0.111111",
+          "betweenness_centrality": "0.006319",
+          "pagerank": "0.020872",
+          "graph_importance": "0.117335",
+          "community_id": "3",
+          "community_size": "8"
+        }
+      },
+      {
+        "id": "transaction:mbl-2026-441829",
+        "node_type": "transaction",
+        "label": "MBL-2026-441829",
+        "properties": {
+          "degree_centrality": "0.111111",
+          "betweenness_centrality": "0.022250",
+          "pagerank": "0.021878",
+          "graph_importance": "0.127385",
+          "community_id": "6",
+          "community_size": "5"
+        }
+      },
+      {
+        "id": "url:https://esewa-cashback-offer.xyz/claim",
+        "node_type": "url",
+        "label": "https://esewa-cashback-offer.xyz/claim",
+        "properties": {
+          "degree_centrality": "0.066667",
+          "betweenness_centrality": "0.003104",
+          "pagerank": "0.014049",
+          "graph_importance": "0.076951",
+          "community_id": "2",
+          "community_size": "8"
+        }
+      },
+      {
+        "id": "evidence:EVID_00006",
+        "node_type": "evidence",
+        "label": "EVID_00006",
+        "properties": {
+          "file_name": "07_bank_transfer_slip.pdf",
+          "upload_time": "2026-07-25T16:24:18.091Z",
+          "degree_centrality": "0.044444",
+          "betweenness_centrality": "0.044444",
+          "pagerank": "0.010833",
+          "graph_importance": "0.072662",
+          "community_id": "5",
+          "community_size": "5"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_EE8250FB76:EVID_00005",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00005 (08_complaint_letter.pdf); stages: initial_contact, social_engineering, financial_transaction, post_attack",
+        "properties": {
+          "timestamp": "2026-06-15T00:00:00+00:00",
+          "time_source": "content_labeled_date_only",
+          "timestamp_inferred": "true",
+          "degree_centrality": "0.022222",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.003589",
+          "graph_importance": "0.020418",
+          "community_id": "4",
+          "community_size": "7"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_EE8250FB76:EVID_00006",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00006 (07_bank_transfer_slip.pdf)",
+        "properties": {
+          "timestamp": "2026-07-25T12:06:25+00:00",
+          "time_source": "metadata_pdf_created",
+          "timestamp_inferred": "false",
+          "degree_centrality": "0.022222",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.007977",
+          "graph_importance": "0.039950",
+          "community_id": "5",
+          "community_size": "5"
+        }
+      },
+      {
+        "id": "case:CASE_185915593C",
+        "node_type": "case",
+        "label": "CASE_185915593C",
+        "properties": {
+          "degree_centrality": "0.177778",
+          "betweenness_centrality": "0.024747",
+          "pagerank": "0.015658",
+          "graph_importance": "0.113908",
+          "community_id": "5",
+          "community_size": "5"
+        }
+      },
+      {
+        "id": "evidence:EVID_00014",
+        "node_type": "evidence",
+        "label": "EVID_00014",
+        "properties": {
+          "case_id": "CASE_185915593C",
+          "degree_centrality": "0.488889",
+          "betweenness_centrality": "0.228089",
+          "pagerank": "0.085376",
+          "graph_importance": "0.557607",
+          "community_id": "2",
+          "community_size": "8"
+        }
+      },
+      {
+        "id": "evidence:EVID_00008",
+        "node_type": "evidence",
+        "label": "EVID_00008",
+        "properties": {
+          "case_id": "CASE_185915593C",
+          "degree_centrality": "0.111111",
+          "betweenness_centrality": "0.004754",
+          "pagerank": "0.019053",
+          "graph_importance": "0.108691",
+          "community_id": "1",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "evidence:EVID_00011",
+        "node_type": "evidence",
+        "label": "EVID_00011",
+        "properties": {
+          "case_id": "CASE_185915593C",
+          "degree_centrality": "0.155556",
+          "betweenness_centrality": "0.013873",
+          "pagerank": "0.026498",
+          "graph_importance": "0.153908",
+          "community_id": "3",
+          "community_size": "8"
+        }
+      },
+      {
+        "id": "evidence:EVID_00010",
+        "node_type": "evidence",
+        "label": "EVID_00010",
+        "properties": {
+          "case_id": "CASE_185915593C",
+          "degree_centrality": "0.066667",
+          "betweenness_centrality": "0.001580",
+          "pagerank": "0.011860",
+          "graph_importance": "0.066672",
+          "community_id": "1",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "evidence:EVID_00013",
+        "node_type": "evidence",
+        "label": "EVID_00013",
+        "properties": {
+          "case_id": "CASE_185915593C",
+          "degree_centrality": "0.088889",
+          "betweenness_centrality": "0.002682",
+          "pagerank": "0.015245",
+          "graph_importance": "0.086571",
+          "community_id": "6",
+          "community_size": "5"
+        }
+      },
+      {
+        "id": "evidence:EVID_00009",
+        "node_type": "evidence",
+        "label": "EVID_00009",
+        "properties": {
+          "case_id": "CASE_185915593C",
+          "degree_centrality": "0.066667",
+          "betweenness_centrality": "0.001500",
+          "pagerank": "0.011759",
+          "graph_importance": "0.066198",
+          "community_id": "7",
+          "community_size": "4"
+        }
+      },
+      {
+        "id": "evidence:EVID_00012",
+        "node_type": "evidence",
+        "label": "EVID_00012",
+        "properties": {
+          "case_id": "CASE_185915593C",
+          "degree_centrality": "0.044444",
+          "betweenness_centrality": "0.000552",
+          "pagerank": "0.008119",
+          "graph_importance": "0.045218",
+          "community_id": "3",
+          "community_size": "8"
+        }
+      },
+      {
+        "id": "case:CASE_1A1BF573F3",
+        "node_type": "case",
+        "label": "CASE_1A1BF573F3",
+        "properties": {
+          "degree_centrality": "0.177778",
+          "betweenness_centrality": "0.024747",
+          "pagerank": "0.015658",
+          "graph_importance": "0.113908",
+          "community_id": "5",
+          "community_size": "5"
+        }
+      },
+      {
+        "id": "evidence:EVID_00022",
+        "node_type": "evidence",
+        "label": "EVID_00022",
+        "properties": {
+          "case_id": "CASE_1A1BF573F3",
+          "degree_centrality": "0.488889",
+          "betweenness_centrality": "0.228089",
+          "pagerank": "0.085376",
+          "graph_importance": "0.557607",
+          "community_id": "2",
+          "community_size": "8"
+        }
+      },
+      {
+        "id": "evidence:EVID_00016",
+        "node_type": "evidence",
+        "label": "EVID_00016",
+        "properties": {
+          "case_id": "CASE_1A1BF573F3",
+          "degree_centrality": "0.111111",
+          "betweenness_centrality": "0.004754",
+          "pagerank": "0.019053",
+          "graph_importance": "0.108691",
+          "community_id": "1",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "evidence:EVID_00019",
+        "node_type": "evidence",
+        "label": "EVID_00019",
+        "properties": {
+          "case_id": "CASE_1A1BF573F3",
+          "degree_centrality": "0.155556",
+          "betweenness_centrality": "0.013873",
+          "pagerank": "0.026498",
+          "graph_importance": "0.153908",
+          "community_id": "3",
+          "community_size": "8"
+        }
+      },
+      {
+        "id": "evidence:EVID_00018",
+        "node_type": "evidence",
+        "label": "EVID_00018",
+        "properties": {
+          "case_id": "CASE_1A1BF573F3",
+          "degree_centrality": "0.066667",
+          "betweenness_centrality": "0.001580",
+          "pagerank": "0.011860",
+          "graph_importance": "0.066672",
+          "community_id": "1",
+          "community_size": "9"
+        }
+      },
+      {
+        "id": "evidence:EVID_00021",
+        "node_type": "evidence",
+        "label": "EVID_00021",
+        "properties": {
+          "case_id": "CASE_1A1BF573F3",
+          "degree_centrality": "0.088889",
+          "betweenness_centrality": "0.002682",
+          "pagerank": "0.015245",
+          "graph_importance": "0.086571",
+          "community_id": "6",
+          "community_size": "5"
+        }
+      },
+      {
+        "id": "evidence:EVID_00017",
+        "node_type": "evidence",
+        "label": "EVID_00017",
+        "properties": {
+          "case_id": "CASE_1A1BF573F3",
+          "degree_centrality": "0.066667",
+          "betweenness_centrality": "0.001500",
+          "pagerank": "0.011759",
+          "graph_importance": "0.066198",
+          "community_id": "7",
+          "community_size": "4"
+        }
+      },
+      {
+        "id": "evidence:EVID_00020",
+        "node_type": "evidence",
+        "label": "EVID_00020",
+        "properties": {
+          "case_id": "CASE_1A1BF573F3",
+          "degree_centrality": "0.044444",
+          "betweenness_centrality": "0.000552",
+          "pagerank": "0.008119",
+          "graph_importance": "0.045218",
+          "community_id": "3",
+          "community_size": "8"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "source": "case:CASE_EE8250FB76",
+        "target": "evidence:EVID_00005",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 belongs to CASE_EE8250FB76",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "bank_account:05019012345678",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 mentions 05019012345678",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "date:10 june 2026",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 mentions 10 June 2026",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "date:11 june 2026",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 mentions 11 June 2026",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "date:14 june 2026",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 mentions 14 June 2026",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "date:15 june 2026",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 mentions 15 June 2026",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "domain:esewa-cashback-offer.xyz",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 mentions esewa-cashback-offer.xyz",
+        "backbone": false
+      },
+      {
+        "source": "domain:esewa-cashback-offer.xyz",
+        "target": "evidence:EVID_00005",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "esewa-cashback-offer.xyz is flagged malicious by threat intelligence (ml:xgboost)",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "domain:esewa-verify-kyc.com",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 mentions esewa-verify-kyc.com",
+        "backbone": false
+      },
+      {
+        "source": "domain:esewa-verify-kyc.com",
+        "target": "evidence:EVID_00005",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "esewa-verify-kyc.com is flagged malicious by threat intelligence (ml:xgboost)",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "domain:gmail.com",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 mentions gmail.com",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "email:esewa.cashback99@gmail.com",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 mentions esewa.cashback99@gmail.com",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "email:sunita.gurung21@gmail.com",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 mentions sunita.gurung21@gmail.com",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "email:support@esewa-verify-kyc.com",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 mentions support@esewa-verify-kyc.com",
+        "backbone": false
+      },
+      {
+        "source": "email:support@esewa-verify-kyc.com",
+        "target": "evidence:EVID_00005",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "support@esewa-verify-kyc.com is flagged malicious by threat intelligence (heuristics)",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "wallet:esewa.cashback99@gmail.com",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 mentions esewa.cashback99@gmail.com",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "wallet:sunita.gurung21@gmail.com",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 mentions sunita.gurung21@gmail.com",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "wallet:+9779801122334",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 mentions +9779801122334",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "money:npr 1500",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 mentions NPR 1500",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "money:npr 200",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 mentions NPR 200",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "money:npr 25000",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 mentions NPR 25000",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "money:npr 5000",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 mentions NPR 5000",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "phone_number:+9779801122334",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 mentions +9779801122334",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "phone_number:+9779847011223",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 mentions +9779847011223",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "transaction:0119.0625.987456",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 mentions 0119.0625.987456",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "transaction:case_2026_0088",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 mentions CASE_2026_0088",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "transaction:kh-2026-0611-77245",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 mentions KH-2026-0611-77245",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "transaction:mbl-2026-441829",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 mentions MBL-2026-441829",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "url:https://esewa-cashback-offer.xyz/claim",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00005 mentions https://esewa-cashback-offer.xyz/claim",
+        "backbone": false
+      },
+      {
+        "source": "url:https://esewa-cashback-offer.xyz/claim",
+        "target": "evidence:EVID_00005",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "https://esewa-cashback-offer.xyz/claim is flagged malicious by threat intelligence (ml:xgboost)",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_EE8250FB76",
+        "target": "evidence:EVID_00006",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00006"
+        ],
+        "timestamp": "2026-07-25T12:06:25+00:00",
+        "timestamp_source": "metadata_pdf_created",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00006 belongs to CASE_EE8250FB76",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "timeline_event:CASE_EE8250FB76:EVID_00005",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 0.7,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Reconstructed event for EVID_00005",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00006",
+        "target": "timeline_event:CASE_EE8250FB76:EVID_00006",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 0.7,
+        "source_evidence_ids": [
+          "EVID_00006"
+        ],
+        "timestamp": "2026-07-25T12:06:25+00:00",
+        "timestamp_source": "metadata_pdf_created",
+        "timestamp_inferred": false,
+        "explanation": "Reconstructed event for EVID_00006",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_EE8250FB76",
+        "target": "case:CASE_185915593C",
+        "edge_type": "cross_case_relationship",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00008",
+          "EVID_00009",
+          "EVID_00010",
+          "EVID_00011",
+          "EVID_00012",
+          "EVID_00013",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Shares 21 entity(ies) with CASE_185915593C: bank account 05019012345678, domain esewa-verify-kyc.com, email esewa.cashback99@gmail.com (+18 more). 17 of these are distinctive; the other 4 are common across the corpus and were discounted",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_185915593C",
+        "target": "evidence:EVID_00014",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00014"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00014 belongs to CASE_185915593C",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00014",
+        "target": "bank_account:05019012345678",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "bank_accounts '05019012345678' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00014",
+        "target": "domain:esewa-verify-kyc.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "domains 'esewa-verify-kyc.com' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00014",
+        "target": "email:esewa.cashback99@gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "emails 'esewa.cashback99@gmail.com' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00014",
+        "target": "email:support@esewa-verify-kyc.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "emails 'support@esewa-verify-kyc.com' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00014",
+        "target": "wallet:esewa.cashback99@gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "esewa_ids 'esewa.cashback99@gmail.com' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00014",
+        "target": "transaction:case_2026_0088",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "transaction_ids 'case_2026_0088' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00014",
+        "target": "url:https://esewa-cashback-offer.xyz/claim",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "urls 'https://esewa-cashback-offer.xyz/claim' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_185915593C",
+        "target": "evidence:EVID_00008",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00008"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00008 belongs to CASE_185915593C",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00008",
+        "target": "email:sunita.gurung21@gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00008",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "emails 'sunita.gurung21@gmail.com' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00014",
+        "target": "email:sunita.gurung21@gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00008",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "emails 'sunita.gurung21@gmail.com' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00008",
+        "target": "wallet:sunita.gurung21@gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00008",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "esewa_ids 'sunita.gurung21@gmail.com' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00014",
+        "target": "wallet:sunita.gurung21@gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00008",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "esewa_ids 'sunita.gurung21@gmail.com' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_185915593C",
+        "target": "evidence:EVID_00011",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00011"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00011 belongs to CASE_185915593C",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00011",
+        "target": "wallet:+9779801122334",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00011",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "khalti_ids '+9779801122334' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00014",
+        "target": "wallet:+9779801122334",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00011",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "khalti_ids '+9779801122334' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_185915593C",
+        "target": "evidence:EVID_00010",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00010"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00010 belongs to CASE_185915593C",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00010",
+        "target": "transaction:0119.0625.987456",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00010",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "transaction_ids '0119.0625.987456' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00014",
+        "target": "transaction:0119.0625.987456",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00010",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "transaction_ids '0119.0625.987456' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00011",
+        "target": "transaction:kh-2026-0611-77245",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00011",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "transaction_ids 'kh-2026-0611-77245' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00014",
+        "target": "transaction:kh-2026-0611-77245",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00011",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "transaction_ids 'kh-2026-0611-77245' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_185915593C",
+        "target": "evidence:EVID_00013",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00013"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00013 belongs to CASE_185915593C",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00013",
+        "target": "transaction:mbl-2026-441829",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00013",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "transaction_ids 'mbl-2026-441829' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00014",
+        "target": "transaction:mbl-2026-441829",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00013",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "transaction_ids 'mbl-2026-441829' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00008",
+        "target": "domain:gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00008",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "domains 'gmail.com' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00014",
+        "target": "domain:gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00008",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "domains 'gmail.com' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_185915593C",
+        "target": "evidence:EVID_00009",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00009"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00009 belongs to CASE_185915593C",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00009",
+        "target": "domain:esewa-cashback-offer.xyz",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00009",
+          "EVID_00011",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "domains 'esewa-cashback-offer.xyz' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00011",
+        "target": "domain:esewa-cashback-offer.xyz",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00009",
+          "EVID_00011",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "domains 'esewa-cashback-offer.xyz' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00014",
+        "target": "domain:esewa-cashback-offer.xyz",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00009",
+          "EVID_00011",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "domains 'esewa-cashback-offer.xyz' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00011",
+        "target": "phone_number:+9779801122334",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00011",
+          "EVID_00012",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "phones '+9779801122334' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_185915593C",
+        "target": "evidence:EVID_00012",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00012"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00012 belongs to CASE_185915593C",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00012",
+        "target": "phone_number:+9779801122334",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00011",
+          "EVID_00012",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "phones '+9779801122334' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00014",
+        "target": "phone_number:+9779801122334",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00011",
+          "EVID_00012",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "phones '+9779801122334' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00011",
+        "target": "phone_number:+9779847011223",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00011",
+          "EVID_00013",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "phones '+9779847011223' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00013",
+        "target": "phone_number:+9779847011223",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00011",
+          "EVID_00013",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "phones '+9779847011223' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00014",
+        "target": "phone_number:+9779847011223",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00011",
+          "EVID_00013",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "phones '+9779847011223' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00011",
+        "target": "money:npr 1500",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00011",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "money 'npr 1500' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00014",
+        "target": "money:npr 1500",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00011",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "money 'npr 1500' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00013",
+        "target": "money:npr 25000",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00013",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "money 'npr 25000' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00014",
+        "target": "money:npr 25000",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00013",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "money 'npr 25000' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00008",
+        "target": "money:npr 200",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00008",
+          "EVID_00010",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "money 'npr 200' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00010",
+        "target": "money:npr 200",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00008",
+          "EVID_00010",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "money 'npr 200' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00014",
+        "target": "money:npr 200",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00008",
+          "EVID_00010",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "money 'npr 200' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00009",
+        "target": "money:npr 5000",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00009",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "money 'npr 5000' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00014",
+        "target": "money:npr 5000",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00009",
+          "EVID_00014"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "money 'npr 5000' matches evidence across CASE_EE8250FB76 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_EE8250FB76",
+        "target": "case:CASE_1A1BF573F3",
+        "edge_type": "cross_case_relationship",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00016",
+          "EVID_00017",
+          "EVID_00018",
+          "EVID_00019",
+          "EVID_00020",
+          "EVID_00021",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Shares 21 entity(ies) with CASE_1A1BF573F3: bank account 05019012345678, domain esewa-verify-kyc.com, email esewa.cashback99@gmail.com (+18 more). 17 of these are distinctive; the other 4 are common across the corpus and were discounted",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_1A1BF573F3",
+        "target": "evidence:EVID_00022",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00022"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00022 belongs to CASE_1A1BF573F3",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00022",
+        "target": "bank_account:05019012345678",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "bank_accounts '05019012345678' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00022",
+        "target": "domain:esewa-verify-kyc.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "domains 'esewa-verify-kyc.com' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00022",
+        "target": "email:esewa.cashback99@gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "emails 'esewa.cashback99@gmail.com' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00022",
+        "target": "email:support@esewa-verify-kyc.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "emails 'support@esewa-verify-kyc.com' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00022",
+        "target": "wallet:esewa.cashback99@gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "esewa_ids 'esewa.cashback99@gmail.com' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00022",
+        "target": "transaction:case_2026_0088",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "transaction_ids 'case_2026_0088' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00022",
+        "target": "url:https://esewa-cashback-offer.xyz/claim",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "urls 'https://esewa-cashback-offer.xyz/claim' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_1A1BF573F3",
+        "target": "evidence:EVID_00016",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00016"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00016 belongs to CASE_1A1BF573F3",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00016",
+        "target": "email:sunita.gurung21@gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00016",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "emails 'sunita.gurung21@gmail.com' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00022",
+        "target": "email:sunita.gurung21@gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00016",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "emails 'sunita.gurung21@gmail.com' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00016",
+        "target": "wallet:sunita.gurung21@gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00016",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "esewa_ids 'sunita.gurung21@gmail.com' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00022",
+        "target": "wallet:sunita.gurung21@gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00016",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "esewa_ids 'sunita.gurung21@gmail.com' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_1A1BF573F3",
+        "target": "evidence:EVID_00019",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00019"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00019 belongs to CASE_1A1BF573F3",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00019",
+        "target": "wallet:+9779801122334",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00019",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "khalti_ids '+9779801122334' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00022",
+        "target": "wallet:+9779801122334",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00019",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "khalti_ids '+9779801122334' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_1A1BF573F3",
+        "target": "evidence:EVID_00018",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00018"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00018 belongs to CASE_1A1BF573F3",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00018",
+        "target": "transaction:0119.0625.987456",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00018",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "transaction_ids '0119.0625.987456' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00022",
+        "target": "transaction:0119.0625.987456",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00018",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "transaction_ids '0119.0625.987456' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00019",
+        "target": "transaction:kh-2026-0611-77245",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00019",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "transaction_ids 'kh-2026-0611-77245' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00022",
+        "target": "transaction:kh-2026-0611-77245",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00019",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "transaction_ids 'kh-2026-0611-77245' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_1A1BF573F3",
+        "target": "evidence:EVID_00021",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00021"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00021 belongs to CASE_1A1BF573F3",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00021",
+        "target": "transaction:mbl-2026-441829",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00021",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "transaction_ids 'mbl-2026-441829' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00022",
+        "target": "transaction:mbl-2026-441829",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00021",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "transaction_ids 'mbl-2026-441829' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00016",
+        "target": "domain:gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00016",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "domains 'gmail.com' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00022",
+        "target": "domain:gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00016",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "domains 'gmail.com' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_1A1BF573F3",
+        "target": "evidence:EVID_00017",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00017"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00017 belongs to CASE_1A1BF573F3",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00017",
+        "target": "domain:esewa-cashback-offer.xyz",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00017",
+          "EVID_00019",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "domains 'esewa-cashback-offer.xyz' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00019",
+        "target": "domain:esewa-cashback-offer.xyz",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00017",
+          "EVID_00019",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "domains 'esewa-cashback-offer.xyz' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00022",
+        "target": "domain:esewa-cashback-offer.xyz",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00017",
+          "EVID_00019",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "domains 'esewa-cashback-offer.xyz' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00019",
+        "target": "phone_number:+9779801122334",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00019",
+          "EVID_00020",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "phones '+9779801122334' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_1A1BF573F3",
+        "target": "evidence:EVID_00020",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00020"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00020 belongs to CASE_1A1BF573F3",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00020",
+        "target": "phone_number:+9779801122334",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00019",
+          "EVID_00020",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "phones '+9779801122334' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00022",
+        "target": "phone_number:+9779801122334",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00019",
+          "EVID_00020",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "phones '+9779801122334' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00019",
+        "target": "phone_number:+9779847011223",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00019",
+          "EVID_00021",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "phones '+9779847011223' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00021",
+        "target": "phone_number:+9779847011223",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00019",
+          "EVID_00021",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "phones '+9779847011223' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00022",
+        "target": "phone_number:+9779847011223",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00019",
+          "EVID_00021",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "phones '+9779847011223' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00019",
+        "target": "money:npr 1500",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00019",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "money 'npr 1500' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00022",
+        "target": "money:npr 1500",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00019",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "money 'npr 1500' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00021",
+        "target": "money:npr 25000",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00021",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "money 'npr 25000' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00022",
+        "target": "money:npr 25000",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00021",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "money 'npr 25000' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00016",
+        "target": "money:npr 200",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00016",
+          "EVID_00018",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "money 'npr 200' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00018",
+        "target": "money:npr 200",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00016",
+          "EVID_00018",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "money 'npr 200' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00022",
+        "target": "money:npr 200",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00016",
+          "EVID_00018",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "money 'npr 200' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00017",
+        "target": "money:npr 5000",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00017",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "money 'npr 5000' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00022",
+        "target": "money:npr 5000",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.9992,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00017",
+          "EVID_00022"
+        ],
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "timestamp_source": "content_labeled_date_only",
+        "timestamp_inferred": true,
+        "explanation": "money 'npr 5000' matches evidence across CASE_EE8250FB76 and CASE_1A1BF573F3",
+        "backbone": true
+      }
+    ]
+  }
+}

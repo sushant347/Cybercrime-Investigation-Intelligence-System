@@ -1,0 +1,30 @@
+{
+  "report_type": "file_fingerprint",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00032",
+  "case_id": "CASE_0CD406813C",
+  "generated_at": "2026-08-21T06:37:48.003Z",
+  "report": {
+    "evidence_id": "EVID_00032",
+    "case_id": "CASE_0CD406813C",
+    "source_file": "EVID_00032__f646f851__01_sms_cashback_offer.jpg",
+    "md5": "c8c6eefbbeb31ca5554753c0ee7c7f4b",
+    "sha1": "72aacf13a7d8665b310e11f28e75250abff8f40f",
+    "sha256": "24fbac36402807e454b2f69df2a9b2a6c5379acd13b062ed1a98f54b0205947e",
+    "sha512": "e45480b33a4c9c7c5d67fb7271a50298e3d695296b684087a125c3366b7930b8358e219703485477c0de9df082a5fbd9ad841efb2b82689870652ccea7d1f320",
+    "crc32": "52ec75a4",
+    "file_size_bytes": 29601,
+    "entropy_bits_per_byte": 7.7574,
+    "high_entropy": true,
+    "magic_number_hex": "ffd8ffe000104a46",
+    "magic_format": "JPEG image",
+    "declared_extension": ".jpg",
+    "mime_type": "image/jpeg",
+    "extension_matches_magic": true,
+    "sha256_matches_acquisition": true,
+    "duplicates": [],
+    "is_duplicate": false,
+    "analysis_time_ms": 1.7
+  }
+}

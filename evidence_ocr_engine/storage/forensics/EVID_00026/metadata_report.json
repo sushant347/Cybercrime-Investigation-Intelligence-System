@@ -1,0 +1,39 @@
+{
+  "report_type": "metadata_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00026",
+  "case_id": "CASE_0CD406813C",
+  "generated_at": "2026-08-21T06:37:34.418Z",
+  "report": {
+    "evidence_id": "EVID_00026",
+    "case_id": "CASE_0CD406813C",
+    "source_file": "EVID_00026__6f69bc46__07_qr_flyer_poor_capture.jpg",
+    "file_type": "image",
+    "filesystem": {
+      "file_size_bytes": 10725,
+      "created": "2026-08-21T06:37:22.706693+00:00",
+      "modified": "2026-08-21T06:37:22.687387+00:00",
+      "accessed": "2026-08-21T06:37:25.210745+00:00"
+    },
+    "image": {
+      "has_exif": false,
+      "camera_make": "",
+      "camera_model": "",
+      "device": "",
+      "software": "",
+      "date_created": "",
+      "date_modified": "",
+      "orientation": "",
+      "gps": null,
+      "all_tags": {}
+    },
+    "pdf": null,
+    "office": null,
+    "consistency_notes": [
+      "Image carries no EXIF metadata (typical for screenshots and messaging-app exports; one less authenticity signal)."
+    ],
+    "extraction_errors": [],
+    "analysis_time_ms": 2.0
+  }
+}

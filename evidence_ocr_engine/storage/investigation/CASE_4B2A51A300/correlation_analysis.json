@@ -1,0 +1,2248 @@
+{
+  "report_type": "correlation_analysis",
+  "report_version": 4,
+  "schema_version": "2.0",
+  "case_id": "CASE_4B2A51A300",
+  "generated_at": "2026-08-21T17:57:22.896Z",
+  "report": {
+    "case_id": "CASE_4B2A51A300",
+    "evidence_ids": [
+      "EVID_00034",
+      "EVID_00035",
+      "EVID_00036",
+      "EVID_00037",
+      "EVID_00038",
+      "EVID_00039",
+      "EVID_00040",
+      "EVID_00041",
+      "EVID_00042"
+    ],
+    "pair_count": 36,
+    "related_pair_count": 20,
+    "pairs": [
+      {
+        "evidence_a": "EVID_00035",
+        "evidence_b": "EVID_00037",
+        "correlation_weight": 7.9118,
+        "correlation_confidence": 0.9929,
+        "relationship_strength": "VERY_STRONG",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "emails",
+            "weight": 0.85,
+            "matches": 1,
+            "contribution": 0.591,
+            "supporting_evidence": [
+              "reward.center2026@gmail.com"
+            ],
+            "reason": "Both items reference the same emails: reward.center2026@gmail.com",
+            "value_details": [
+              {
+                "value": "reward.center2026@gmail.com",
+                "specificity": 0.6953,
+                "document_frequency": 7,
+                "corpus_size": 34,
+                "reason": "'reward.center2026@gmail.com' is moderately common (seen in 7 of 34 evidence items in the corpus); specificity 0.70"
+              }
+            ],
+            "effective_matches": 0.6953
+          },
+          {
+            "factor": "khalti_ids",
+            "weight": 1.0,
+            "matches": 1,
+            "contribution": 0.7769,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same khalti ids: +9779812345678",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.7769,
+                "document_frequency": 5,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is moderately common (seen in 5 of 34 evidence items in the corpus); specificity 0.78"
+              }
+            ],
+            "effective_matches": 0.7769
+          },
+          {
+            "factor": "bank_accounts",
+            "weight": 1.0,
+            "matches": 1,
+            "contribution": 0.9016,
+            "supporting_evidence": [
+              "01903015472901"
+            ],
+            "reason": "Both items reference the same bank accounts: 01903015472901",
+            "value_details": [
+              {
+                "value": "01903015472901",
+                "specificity": 0.9016,
+                "document_frequency": 3,
+                "corpus_size": 34,
+                "reason": "'01903015472901' is distinctive (seen in 3 of 34 evidence items in the corpus); specificity 0.90"
+              }
+            ],
+            "effective_matches": 0.9016
+          },
+          {
+            "factor": "urls",
+            "weight": 0.75,
+            "matches": 2,
+            "contribution": 1.3524,
+            "supporting_evidence": [
+              "http://khalti-kyc-verify.top/login",
+              "https://esewa-bonus-claim.xyz/verify?ref=kyc2026"
+            ],
+            "reason": "Both items reference the same urls: http://khalti-kyc-verify.top/login, https://esewa-bonus-claim.xyz/verify?ref=kyc2026",
+            "value_details": [
+              {
+                "value": "http://khalti-kyc-verify.top/login",
+                "specificity": 0.9016,
+                "document_frequency": 3,
+                "corpus_size": 34,
+                "reason": "'http://khalti-kyc-verify.top/login' is distinctive (seen in 3 of 34 evidence items in the corpus); specificity 0.90"
+              },
+              {
+                "value": "https://esewa-bonus-claim.xyz/verify?ref=kyc2026",
+                "specificity": 0.9016,
+                "document_frequency": 3,
+                "corpus_size": 34,
+                "reason": "'https://esewa-bonus-claim.xyz/verify?ref=kyc2026' is distinctive (seen in 3 of 34 evidence items in the corpus); specificity 0.90"
+              }
+            ],
+            "effective_matches": 1.8032
+          },
+          {
+            "factor": "domains",
+            "weight": 0.6,
+            "matches": 3,
+            "contribution": 1.2736,
+            "supporting_evidence": [
+              "khalti-kyc-verify.top",
+              "esewa-bonus-claim.xyz",
+              "gmail.com"
+            ],
+            "reason": "Both items reference the same domains: khalti-kyc-verify.top, esewa-bonus-claim.xyz, gmail.com - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "khalti-kyc-verify.top",
+                "specificity": 0.8314,
+                "document_frequency": 4,
+                "corpus_size": 34,
+                "reason": "'khalti-kyc-verify.top' is moderately common (seen in 4 of 34 evidence items in the corpus); specificity 0.83"
+              },
+              {
+                "value": "esewa-bonus-claim.xyz",
+                "specificity": 0.7326,
+                "document_frequency": 6,
+                "corpus_size": 34,
+                "reason": "'esewa-bonus-claim.xyz' is moderately common (seen in 6 of 34 evidence items in the corpus); specificity 0.73"
+              },
+              {
+                "value": "gmail.com",
+                "specificity": 0.5586,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'gmail.com' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.56"
+              }
+            ],
+            "effective_matches": 2.1226
+          },
+          {
+            "factor": "money",
+            "weight": 0.2,
+            "matches": 1,
+            "contribution": 0.1054,
+            "supporting_evidence": [
+              "npr 750"
+            ],
+            "reason": "Both items reference the same money: npr 750",
+            "value_details": [
+              {
+                "value": "npr 750",
+                "specificity": 0.5271,
+                "document_frequency": 4,
+                "corpus_size": 34,
+                "reason": "'npr 750' is moderately common (seen in 4 of 34 evidence items in the corpus); specificity 0.53"
+              }
+            ],
+            "effective_matches": 0.5271
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          },
+          {
+            "factor": "threat_intelligence",
+            "weight": 0.8,
+            "matches": 3,
+            "contribution": 2.4,
+            "supporting_evidence": [
+              "esewa-bonus-claim.xyz",
+              "http://khalti-kyc-verify.top/login",
+              "https://esewa-bonus-claim.xyz/verify?ref=kyc2026",
+              "khalti-kyc-verify.top"
+            ],
+            "reason": "Threat intelligence flags the same malicious indicators in both items: esewa-bonus-claim.xyz, http://khalti-kyc-verify.top/login, https://esewa-bonus-claim.xyz/verify?ref=kyc2026",
+            "value_details": [],
+            "effective_matches": 3.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same emails: reward.center2026@gmail.com",
+          "Both items reference the same khalti ids: +9779812345678",
+          "Both items reference the same bank accounts: 01903015472901",
+          "Both items reference the same urls: http://khalti-kyc-verify.top/login, https://esewa-bonus-claim.xyz/verify?ref=kyc2026",
+          "Both items reference the same domains: khalti-kyc-verify.top, esewa-bonus-claim.xyz, gmail.com - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same money: npr 750",
+          "Acquired 0.0 hours apart (within the 48h proximity window)",
+          "Threat intelligence flags the same malicious indicators in both items: esewa-bonus-claim.xyz, http://khalti-kyc-verify.top/login, https://esewa-bonus-claim.xyz/verify?ref=kyc2026"
+        ],
+        "explanation": "EVID_00035 (06_police_complaint.pdf) and EVID_00037 (04_kyc_phishing_email.txt) show a very strong relationship (confidence 0.99) based on 9 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Both items reference the same emails: reward.center2026@gmail.com [weight 0.59]. Both items reference the same khalti ids: +9779812345678 [weight 0.78]. Both items reference the same bank accounts: 01903015472901 [weight 0.90]. Both items reference the same urls: http://khalti-kyc-verify.top/login, https://esewa-bonus-claim.xyz/verify?ref=kyc2026 [weight 1.35]. Both items reference the same domains: khalti-kyc-verify.top, esewa-bonus-claim.xyz, gmail.com - but 1 of these are common across the corpus and were discounted [weight 1.27]. Both items reference the same money: npr 750 [weight 0.11]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]. Threat intelligence flags the same malicious indicators in both items: esewa-bonus-claim.xyz, http://khalti-kyc-verify.top/login, https://esewa-bonus-claim.xyz/verify?ref=kyc2026 [weight 2.40]."
+      },
+      {
+        "evidence_a": "EVID_00034",
+        "evidence_b": "EVID_00035",
+        "correlation_weight": 3.5128,
+        "correlation_confidence": 0.8887,
+        "relationship_strength": "VERY_STRONG",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "emails",
+            "weight": 0.85,
+            "matches": 1,
+            "contribution": 0.591,
+            "supporting_evidence": [
+              "reward.center2026@gmail.com"
+            ],
+            "reason": "Both items reference the same emails: reward.center2026@gmail.com",
+            "value_details": [
+              {
+                "value": "reward.center2026@gmail.com",
+                "specificity": 0.6953,
+                "document_frequency": 7,
+                "corpus_size": 34,
+                "reason": "'reward.center2026@gmail.com' is moderately common (seen in 7 of 34 evidence items in the corpus); specificity 0.70"
+              }
+            ],
+            "effective_matches": 0.6953
+          },
+          {
+            "factor": "khalti_ids",
+            "weight": 1.0,
+            "matches": 1,
+            "contribution": 0.7769,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same khalti ids: +9779812345678",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.7769,
+                "document_frequency": 5,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is moderately common (seen in 5 of 34 evidence items in the corpus); specificity 0.78"
+              }
+            ],
+            "effective_matches": 0.7769
+          },
+          {
+            "factor": "domains",
+            "weight": 0.6,
+            "matches": 2,
+            "contribution": 0.834,
+            "supporting_evidence": [
+              "khalti-kyc-verify.top",
+              "gmail.com"
+            ],
+            "reason": "Both items reference the same domains: khalti-kyc-verify.top, gmail.com - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "khalti-kyc-verify.top",
+                "specificity": 0.8314,
+                "document_frequency": 4,
+                "corpus_size": 34,
+                "reason": "'khalti-kyc-verify.top' is moderately common (seen in 4 of 34 evidence items in the corpus); specificity 0.83"
+              },
+              {
+                "value": "gmail.com",
+                "specificity": 0.5586,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'gmail.com' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.56"
+              }
+            ],
+            "effective_matches": 1.39
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          },
+          {
+            "factor": "threat_intelligence",
+            "weight": 0.8,
+            "matches": 1,
+            "contribution": 0.8,
+            "supporting_evidence": [
+              "khalti-kyc-verify.top"
+            ],
+            "reason": "Threat intelligence flags the same malicious indicator in both items: khalti-kyc-verify.top",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same emails: reward.center2026@gmail.com",
+          "Both items reference the same khalti ids: +9779812345678",
+          "Both items reference the same domains: khalti-kyc-verify.top, gmail.com - but 1 of these are common across the corpus and were discounted",
+          "Acquired 0.0 hours apart (within the 48h proximity window)",
+          "Threat intelligence flags the same malicious indicator in both items: khalti-kyc-verify.top"
+        ],
+        "explanation": "EVID_00034 (07_fake_support_profile.jpg) and EVID_00035 (06_police_complaint.pdf) show a very strong relationship (confidence 0.89) based on 6 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Both items reference the same emails: reward.center2026@gmail.com [weight 0.59]. Both items reference the same khalti ids: +9779812345678 [weight 0.78]. Both items reference the same domains: khalti-kyc-verify.top, gmail.com - but 1 of these are common across the corpus and were discounted [weight 0.83]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]. Threat intelligence flags the same malicious indicator in both items: khalti-kyc-verify.top [weight 0.80]."
+      },
+      {
+        "evidence_a": "EVID_00034",
+        "evidence_b": "EVID_00037",
+        "correlation_weight": 3.5128,
+        "correlation_confidence": 0.8887,
+        "relationship_strength": "VERY_STRONG",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "emails",
+            "weight": 0.85,
+            "matches": 1,
+            "contribution": 0.591,
+            "supporting_evidence": [
+              "reward.center2026@gmail.com"
+            ],
+            "reason": "Both items reference the same emails: reward.center2026@gmail.com",
+            "value_details": [
+              {
+                "value": "reward.center2026@gmail.com",
+                "specificity": 0.6953,
+                "document_frequency": 7,
+                "corpus_size": 34,
+                "reason": "'reward.center2026@gmail.com' is moderately common (seen in 7 of 34 evidence items in the corpus); specificity 0.70"
+              }
+            ],
+            "effective_matches": 0.6953
+          },
+          {
+            "factor": "khalti_ids",
+            "weight": 1.0,
+            "matches": 1,
+            "contribution": 0.7769,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same khalti ids: +9779812345678",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.7769,
+                "document_frequency": 5,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is moderately common (seen in 5 of 34 evidence items in the corpus); specificity 0.78"
+              }
+            ],
+            "effective_matches": 0.7769
+          },
+          {
+            "factor": "domains",
+            "weight": 0.6,
+            "matches": 2,
+            "contribution": 0.834,
+            "supporting_evidence": [
+              "khalti-kyc-verify.top",
+              "gmail.com"
+            ],
+            "reason": "Both items reference the same domains: khalti-kyc-verify.top, gmail.com - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "khalti-kyc-verify.top",
+                "specificity": 0.8314,
+                "document_frequency": 4,
+                "corpus_size": 34,
+                "reason": "'khalti-kyc-verify.top' is moderately common (seen in 4 of 34 evidence items in the corpus); specificity 0.83"
+              },
+              {
+                "value": "gmail.com",
+                "specificity": 0.5586,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'gmail.com' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.56"
+              }
+            ],
+            "effective_matches": 1.39
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          },
+          {
+            "factor": "threat_intelligence",
+            "weight": 0.8,
+            "matches": 1,
+            "contribution": 0.8,
+            "supporting_evidence": [
+              "khalti-kyc-verify.top"
+            ],
+            "reason": "Threat intelligence flags the same malicious indicator in both items: khalti-kyc-verify.top",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same emails: reward.center2026@gmail.com",
+          "Both items reference the same khalti ids: +9779812345678",
+          "Both items reference the same domains: khalti-kyc-verify.top, gmail.com - but 1 of these are common across the corpus and were discounted",
+          "Acquired 0.0 hours apart (within the 48h proximity window)",
+          "Threat intelligence flags the same malicious indicator in both items: khalti-kyc-verify.top"
+        ],
+        "explanation": "EVID_00034 (07_fake_support_profile.jpg) and EVID_00037 (04_kyc_phishing_email.txt) show a very strong relationship (confidence 0.89) based on 6 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Both items reference the same emails: reward.center2026@gmail.com [weight 0.59]. Both items reference the same khalti ids: +9779812345678 [weight 0.78]. Both items reference the same domains: khalti-kyc-verify.top, gmail.com - but 1 of these are common across the corpus and were discounted [weight 0.83]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]. Threat intelligence flags the same malicious indicator in both items: khalti-kyc-verify.top [weight 0.80]."
+      },
+      {
+        "evidence_a": "EVID_00035",
+        "evidence_b": "EVID_00041",
+        "correlation_weight": 2.775,
+        "correlation_confidence": 0.8235,
+        "relationship_strength": "VERY_STRONG",
+        "factors": [
+          {
+            "factor": "urls",
+            "weight": 0.75,
+            "matches": 1,
+            "contribution": 0.6762,
+            "supporting_evidence": [
+              "http://khalti-kyc-verify.top/login"
+            ],
+            "reason": "Both items reference the same urls: http://khalti-kyc-verify.top/login",
+            "value_details": [
+              {
+                "value": "http://khalti-kyc-verify.top/login",
+                "specificity": 0.9016,
+                "document_frequency": 3,
+                "corpus_size": 34,
+                "reason": "'http://khalti-kyc-verify.top/login' is distinctive (seen in 3 of 34 evidence items in the corpus); specificity 0.90"
+              }
+            ],
+            "effective_matches": 0.9016
+          },
+          {
+            "factor": "domains",
+            "weight": 0.6,
+            "matches": 1,
+            "contribution": 0.4988,
+            "supporting_evidence": [
+              "khalti-kyc-verify.top"
+            ],
+            "reason": "Both items reference the same domains: khalti-kyc-verify.top",
+            "value_details": [
+              {
+                "value": "khalti-kyc-verify.top",
+                "specificity": 0.8314,
+                "document_frequency": 4,
+                "corpus_size": 34,
+                "reason": "'khalti-kyc-verify.top' is moderately common (seen in 4 of 34 evidence items in the corpus); specificity 0.83"
+              }
+            ],
+            "effective_matches": 0.8314
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          },
+          {
+            "factor": "threat_intelligence",
+            "weight": 0.8,
+            "matches": 2,
+            "contribution": 1.6,
+            "supporting_evidence": [
+              "http://khalti-kyc-verify.top/login",
+              "khalti-kyc-verify.top"
+            ],
+            "reason": "Threat intelligence flags the same malicious indicators in both items: http://khalti-kyc-verify.top/login, khalti-kyc-verify.top",
+            "value_details": [],
+            "effective_matches": 2.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same urls: http://khalti-kyc-verify.top/login",
+          "Both items reference the same domains: khalti-kyc-verify.top",
+          "Acquired 0.0 hours apart (within the 48h proximity window)",
+          "Threat intelligence flags the same malicious indicators in both items: http://khalti-kyc-verify.top/login, khalti-kyc-verify.top"
+        ],
+        "explanation": "EVID_00035 (06_police_complaint.pdf) and EVID_00041 (http_khalti-kyc-verify.top_login.url) show a very strong relationship (confidence 0.82) based on 4 independent factors. Both items reference the same urls: http://khalti-kyc-verify.top/login [weight 0.68]. Both items reference the same domains: khalti-kyc-verify.top [weight 0.50]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]. Threat intelligence flags the same malicious indicators in both items: http://khalti-kyc-verify.top/login, khalti-kyc-verify.top [weight 1.60]."
+      },
+      {
+        "evidence_a": "EVID_00037",
+        "evidence_b": "EVID_00041",
+        "correlation_weight": 2.775,
+        "correlation_confidence": 0.8235,
+        "relationship_strength": "VERY_STRONG",
+        "factors": [
+          {
+            "factor": "urls",
+            "weight": 0.75,
+            "matches": 1,
+            "contribution": 0.6762,
+            "supporting_evidence": [
+              "http://khalti-kyc-verify.top/login"
+            ],
+            "reason": "Both items reference the same urls: http://khalti-kyc-verify.top/login",
+            "value_details": [
+              {
+                "value": "http://khalti-kyc-verify.top/login",
+                "specificity": 0.9016,
+                "document_frequency": 3,
+                "corpus_size": 34,
+                "reason": "'http://khalti-kyc-verify.top/login' is distinctive (seen in 3 of 34 evidence items in the corpus); specificity 0.90"
+              }
+            ],
+            "effective_matches": 0.9016
+          },
+          {
+            "factor": "domains",
+            "weight": 0.6,
+            "matches": 1,
+            "contribution": 0.4988,
+            "supporting_evidence": [
+              "khalti-kyc-verify.top"
+            ],
+            "reason": "Both items reference the same domains: khalti-kyc-verify.top",
+            "value_details": [
+              {
+                "value": "khalti-kyc-verify.top",
+                "specificity": 0.8314,
+                "document_frequency": 4,
+                "corpus_size": 34,
+                "reason": "'khalti-kyc-verify.top' is moderately common (seen in 4 of 34 evidence items in the corpus); specificity 0.83"
+              }
+            ],
+            "effective_matches": 0.8314
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          },
+          {
+            "factor": "threat_intelligence",
+            "weight": 0.8,
+            "matches": 2,
+            "contribution": 1.6,
+            "supporting_evidence": [
+              "http://khalti-kyc-verify.top/login",
+              "khalti-kyc-verify.top"
+            ],
+            "reason": "Threat intelligence flags the same malicious indicators in both items: http://khalti-kyc-verify.top/login, khalti-kyc-verify.top",
+            "value_details": [],
+            "effective_matches": 2.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same urls: http://khalti-kyc-verify.top/login",
+          "Both items reference the same domains: khalti-kyc-verify.top",
+          "Acquired 0.0 hours apart (within the 48h proximity window)",
+          "Threat intelligence flags the same malicious indicators in both items: http://khalti-kyc-verify.top/login, khalti-kyc-verify.top"
+        ],
+        "explanation": "EVID_00037 (04_kyc_phishing_email.txt) and EVID_00041 (http_khalti-kyc-verify.top_login.url) show a very strong relationship (confidence 0.82) based on 4 independent factors. Both items reference the same urls: http://khalti-kyc-verify.top/login [weight 0.68]. Both items reference the same domains: khalti-kyc-verify.top [weight 0.50]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]. Threat intelligence flags the same malicious indicators in both items: http://khalti-kyc-verify.top/login, khalti-kyc-verify.top [weight 1.60]."
+      },
+      {
+        "evidence_a": "EVID_00035",
+        "evidence_b": "EVID_00042",
+        "correlation_weight": 2.7158,
+        "correlation_confidence": 0.8168,
+        "relationship_strength": "VERY_STRONG",
+        "factors": [
+          {
+            "factor": "urls",
+            "weight": 0.75,
+            "matches": 1,
+            "contribution": 0.6762,
+            "supporting_evidence": [
+              "https://esewa-bonus-claim.xyz/verify?ref=kyc2026"
+            ],
+            "reason": "Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=kyc2026",
+            "value_details": [
+              {
+                "value": "https://esewa-bonus-claim.xyz/verify?ref=kyc2026",
+                "specificity": 0.9016,
+                "document_frequency": 3,
+                "corpus_size": 34,
+                "reason": "'https://esewa-bonus-claim.xyz/verify?ref=kyc2026' is distinctive (seen in 3 of 34 evidence items in the corpus); specificity 0.90"
+              }
+            ],
+            "effective_matches": 0.9016
+          },
+          {
+            "factor": "domains",
+            "weight": 0.6,
+            "matches": 1,
+            "contribution": 0.4396,
+            "supporting_evidence": [
+              "esewa-bonus-claim.xyz"
+            ],
+            "reason": "Both items reference the same domains: esewa-bonus-claim.xyz",
+            "value_details": [
+              {
+                "value": "esewa-bonus-claim.xyz",
+                "specificity": 0.7326,
+                "document_frequency": 6,
+                "corpus_size": 34,
+                "reason": "'esewa-bonus-claim.xyz' is moderately common (seen in 6 of 34 evidence items in the corpus); specificity 0.73"
+              }
+            ],
+            "effective_matches": 0.7326
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          },
+          {
+            "factor": "threat_intelligence",
+            "weight": 0.8,
+            "matches": 2,
+            "contribution": 1.6,
+            "supporting_evidence": [
+              "esewa-bonus-claim.xyz",
+              "https://esewa-bonus-claim.xyz/verify?ref=kyc2026"
+            ],
+            "reason": "Threat intelligence flags the same malicious indicators in both items: esewa-bonus-claim.xyz, https://esewa-bonus-claim.xyz/verify?ref=kyc2026",
+            "value_details": [],
+            "effective_matches": 2.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=kyc2026",
+          "Both items reference the same domains: esewa-bonus-claim.xyz",
+          "Acquired 0.0 hours apart (within the 48h proximity window)",
+          "Threat intelligence flags the same malicious indicators in both items: esewa-bonus-claim.xyz, https://esewa-bonus-claim.xyz/verify?ref=kyc2026"
+        ],
+        "explanation": "EVID_00035 (06_police_complaint.pdf) and EVID_00042 (https_esewa-bonus-claim.xyz_verify_ref_KYC2026.url) show a very strong relationship (confidence 0.82) based on 4 independent factors. Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=kyc2026 [weight 0.68]. Both items reference the same domains: esewa-bonus-claim.xyz [weight 0.44]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]. Threat intelligence flags the same malicious indicators in both items: esewa-bonus-claim.xyz, https://esewa-bonus-claim.xyz/verify?ref=kyc2026 [weight 1.60]."
+      },
+      {
+        "evidence_a": "EVID_00037",
+        "evidence_b": "EVID_00042",
+        "correlation_weight": 2.7158,
+        "correlation_confidence": 0.8168,
+        "relationship_strength": "VERY_STRONG",
+        "factors": [
+          {
+            "factor": "urls",
+            "weight": 0.75,
+            "matches": 1,
+            "contribution": 0.6762,
+            "supporting_evidence": [
+              "https://esewa-bonus-claim.xyz/verify?ref=kyc2026"
+            ],
+            "reason": "Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=kyc2026",
+            "value_details": [
+              {
+                "value": "https://esewa-bonus-claim.xyz/verify?ref=kyc2026",
+                "specificity": 0.9016,
+                "document_frequency": 3,
+                "corpus_size": 34,
+                "reason": "'https://esewa-bonus-claim.xyz/verify?ref=kyc2026' is distinctive (seen in 3 of 34 evidence items in the corpus); specificity 0.90"
+              }
+            ],
+            "effective_matches": 0.9016
+          },
+          {
+            "factor": "domains",
+            "weight": 0.6,
+            "matches": 1,
+            "contribution": 0.4396,
+            "supporting_evidence": [
+              "esewa-bonus-claim.xyz"
+            ],
+            "reason": "Both items reference the same domains: esewa-bonus-claim.xyz",
+            "value_details": [
+              {
+                "value": "esewa-bonus-claim.xyz",
+                "specificity": 0.7326,
+                "document_frequency": 6,
+                "corpus_size": 34,
+                "reason": "'esewa-bonus-claim.xyz' is moderately common (seen in 6 of 34 evidence items in the corpus); specificity 0.73"
+              }
+            ],
+            "effective_matches": 0.7326
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          },
+          {
+            "factor": "threat_intelligence",
+            "weight": 0.8,
+            "matches": 2,
+            "contribution": 1.6,
+            "supporting_evidence": [
+              "esewa-bonus-claim.xyz",
+              "https://esewa-bonus-claim.xyz/verify?ref=kyc2026"
+            ],
+            "reason": "Threat intelligence flags the same malicious indicators in both items: esewa-bonus-claim.xyz, https://esewa-bonus-claim.xyz/verify?ref=kyc2026",
+            "value_details": [],
+            "effective_matches": 2.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=kyc2026",
+          "Both items reference the same domains: esewa-bonus-claim.xyz",
+          "Acquired 0.0 hours apart (within the 48h proximity window)",
+          "Threat intelligence flags the same malicious indicators in both items: esewa-bonus-claim.xyz, https://esewa-bonus-claim.xyz/verify?ref=kyc2026"
+        ],
+        "explanation": "EVID_00037 (04_kyc_phishing_email.txt) and EVID_00042 (https_esewa-bonus-claim.xyz_verify_ref_KYC2026.url) show a very strong relationship (confidence 0.82) based on 4 independent factors. Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=kyc2026 [weight 0.68]. Both items reference the same domains: esewa-bonus-claim.xyz [weight 0.44]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]. Threat intelligence flags the same malicious indicators in both items: esewa-bonus-claim.xyz, https://esewa-bonus-claim.xyz/verify?ref=kyc2026 [weight 1.60]."
+      },
+      {
+        "evidence_a": "EVID_00035",
+        "evidence_b": "EVID_00038",
+        "correlation_weight": 2.4663,
+        "correlation_confidence": 0.7859,
+        "relationship_strength": "STRONG",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 2,
+            "contribution": 1.4109,
+            "supporting_evidence": [
+              "+9779856770011",
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779856770011, +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779856770011",
+                "specificity": 1.0,
+                "document_frequency": 2,
+                "corpus_size": 34,
+                "reason": "'+9779856770011' is distinctive (seen in 2 of 34 evidence items in the corpus); specificity 1.00"
+              },
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 1.5677
+          },
+          {
+            "factor": "transaction_ids",
+            "weight": 0.95,
+            "matches": 1,
+            "contribution": 0.95,
+            "supporting_evidence": [
+              "khl-2026-0802-44190"
+            ],
+            "reason": "Both items reference the same transaction ids: khl-2026-0802-44190",
+            "value_details": [
+              {
+                "value": "khl-2026-0802-44190",
+                "specificity": 1.0,
+                "document_frequency": 2,
+                "corpus_size": 34,
+                "reason": "'khl-2026-0802-44190' is distinctive (seen in 2 of 34 evidence items in the corpus); specificity 1.00"
+              }
+            ],
+            "effective_matches": 1.0
+          },
+          {
+            "factor": "money",
+            "weight": 0.2,
+            "matches": 1,
+            "contribution": 0.1054,
+            "supporting_evidence": [
+              "npr 750"
+            ],
+            "reason": "Both items reference the same money: npr 750",
+            "value_details": [
+              {
+                "value": "npr 750",
+                "specificity": 0.5271,
+                "document_frequency": 4,
+                "corpus_size": 34,
+                "reason": "'npr 750' is moderately common (seen in 4 of 34 evidence items in the corpus); specificity 0.53"
+              }
+            ],
+            "effective_matches": 0.5271
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779856770011, +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same transaction ids: khl-2026-0802-44190",
+          "Both items reference the same money: npr 750",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00035 (06_police_complaint.pdf) and EVID_00038 (03_khalti_receipt.jpg) show a strong relationship (confidence 0.79) based on 4 independent factors. Both items reference the same phones: +9779856770011, +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 1.41]. Both items reference the same transaction ids: khl-2026-0802-44190 [weight 0.95]. Both items reference the same money: npr 750 [weight 0.11]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00035",
+        "evidence_b": "EVID_00039",
+        "correlation_weight": 2.3194,
+        "correlation_confidence": 0.7653,
+        "relationship_strength": "STRONG",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "emails",
+            "weight": 0.85,
+            "matches": 1,
+            "contribution": 0.591,
+            "supporting_evidence": [
+              "reward.center2026@gmail.com"
+            ],
+            "reason": "Both items reference the same emails: reward.center2026@gmail.com",
+            "value_details": [
+              {
+                "value": "reward.center2026@gmail.com",
+                "specificity": 0.6953,
+                "document_frequency": 7,
+                "corpus_size": 34,
+                "reason": "'reward.center2026@gmail.com' is moderately common (seen in 7 of 34 evidence items in the corpus); specificity 0.70"
+              }
+            ],
+            "effective_matches": 0.6953
+          },
+          {
+            "factor": "khalti_ids",
+            "weight": 1.0,
+            "matches": 1,
+            "contribution": 0.7769,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same khalti ids: +9779812345678",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.7769,
+                "document_frequency": 5,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is moderately common (seen in 5 of 34 evidence items in the corpus); specificity 0.78"
+              }
+            ],
+            "effective_matches": 0.7769
+          },
+          {
+            "factor": "domains",
+            "weight": 0.6,
+            "matches": 1,
+            "contribution": 0.3352,
+            "supporting_evidence": [
+              "gmail.com"
+            ],
+            "reason": "Both items reference the same domains: gmail.com - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "gmail.com",
+                "specificity": 0.5586,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'gmail.com' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.56"
+              }
+            ],
+            "effective_matches": 0.5586
+          },
+          {
+            "factor": "money",
+            "weight": 0.2,
+            "matches": 1,
+            "contribution": 0.1054,
+            "supporting_evidence": [
+              "npr 750"
+            ],
+            "reason": "Both items reference the same money: npr 750",
+            "value_details": [
+              {
+                "value": "npr 750",
+                "specificity": 0.5271,
+                "document_frequency": 4,
+                "corpus_size": 34,
+                "reason": "'npr 750' is moderately common (seen in 4 of 34 evidence items in the corpus); specificity 0.53"
+              }
+            ],
+            "effective_matches": 0.5271
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same emails: reward.center2026@gmail.com",
+          "Both items reference the same khalti ids: +9779812345678",
+          "Both items reference the same domains: gmail.com - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same money: npr 750",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00035 (06_police_complaint.pdf) and EVID_00039 (02_whatsapp_chat.jpg) show a strong relationship (confidence 0.77) based on 6 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Both items reference the same emails: reward.center2026@gmail.com [weight 0.59]. Both items reference the same khalti ids: +9779812345678 [weight 0.78]. Both items reference the same domains: gmail.com - but 1 of these are common across the corpus and were discounted [weight 0.34]. Both items reference the same money: npr 750 [weight 0.11]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00037",
+        "evidence_b": "EVID_00039",
+        "correlation_weight": 2.3194,
+        "correlation_confidence": 0.7653,
+        "relationship_strength": "STRONG",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "emails",
+            "weight": 0.85,
+            "matches": 1,
+            "contribution": 0.591,
+            "supporting_evidence": [
+              "reward.center2026@gmail.com"
+            ],
+            "reason": "Both items reference the same emails: reward.center2026@gmail.com",
+            "value_details": [
+              {
+                "value": "reward.center2026@gmail.com",
+                "specificity": 0.6953,
+                "document_frequency": 7,
+                "corpus_size": 34,
+                "reason": "'reward.center2026@gmail.com' is moderately common (seen in 7 of 34 evidence items in the corpus); specificity 0.70"
+              }
+            ],
+            "effective_matches": 0.6953
+          },
+          {
+            "factor": "khalti_ids",
+            "weight": 1.0,
+            "matches": 1,
+            "contribution": 0.7769,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same khalti ids: +9779812345678",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.7769,
+                "document_frequency": 5,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is moderately common (seen in 5 of 34 evidence items in the corpus); specificity 0.78"
+              }
+            ],
+            "effective_matches": 0.7769
+          },
+          {
+            "factor": "domains",
+            "weight": 0.6,
+            "matches": 1,
+            "contribution": 0.3352,
+            "supporting_evidence": [
+              "gmail.com"
+            ],
+            "reason": "Both items reference the same domains: gmail.com - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "gmail.com",
+                "specificity": 0.5586,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'gmail.com' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.56"
+              }
+            ],
+            "effective_matches": 0.5586
+          },
+          {
+            "factor": "money",
+            "weight": 0.2,
+            "matches": 1,
+            "contribution": 0.1054,
+            "supporting_evidence": [
+              "npr 750"
+            ],
+            "reason": "Both items reference the same money: npr 750",
+            "value_details": [
+              {
+                "value": "npr 750",
+                "specificity": 0.5271,
+                "document_frequency": 4,
+                "corpus_size": 34,
+                "reason": "'npr 750' is moderately common (seen in 4 of 34 evidence items in the corpus); specificity 0.53"
+              }
+            ],
+            "effective_matches": 0.5271
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same emails: reward.center2026@gmail.com",
+          "Both items reference the same khalti ids: +9779812345678",
+          "Both items reference the same domains: gmail.com - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same money: npr 750",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00037 (04_kyc_phishing_email.txt) and EVID_00039 (02_whatsapp_chat.jpg) show a strong relationship (confidence 0.77) based on 6 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Both items reference the same emails: reward.center2026@gmail.com [weight 0.59]. Both items reference the same khalti ids: +9779812345678 [weight 0.78]. Both items reference the same domains: gmail.com - but 1 of these are common across the corpus and were discounted [weight 0.34]. Both items reference the same money: npr 750 [weight 0.11]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00034",
+        "evidence_b": "EVID_00039",
+        "correlation_weight": 2.214,
+        "correlation_confidence": 0.7494,
+        "relationship_strength": "STRONG",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "emails",
+            "weight": 0.85,
+            "matches": 1,
+            "contribution": 0.591,
+            "supporting_evidence": [
+              "reward.center2026@gmail.com"
+            ],
+            "reason": "Both items reference the same emails: reward.center2026@gmail.com",
+            "value_details": [
+              {
+                "value": "reward.center2026@gmail.com",
+                "specificity": 0.6953,
+                "document_frequency": 7,
+                "corpus_size": 34,
+                "reason": "'reward.center2026@gmail.com' is moderately common (seen in 7 of 34 evidence items in the corpus); specificity 0.70"
+              }
+            ],
+            "effective_matches": 0.6953
+          },
+          {
+            "factor": "khalti_ids",
+            "weight": 1.0,
+            "matches": 1,
+            "contribution": 0.7769,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same khalti ids: +9779812345678",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.7769,
+                "document_frequency": 5,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is moderately common (seen in 5 of 34 evidence items in the corpus); specificity 0.78"
+              }
+            ],
+            "effective_matches": 0.7769
+          },
+          {
+            "factor": "domains",
+            "weight": 0.6,
+            "matches": 1,
+            "contribution": 0.3352,
+            "supporting_evidence": [
+              "gmail.com"
+            ],
+            "reason": "Both items reference the same domains: gmail.com - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "gmail.com",
+                "specificity": 0.5586,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'gmail.com' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.56"
+              }
+            ],
+            "effective_matches": 0.5586
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same emails: reward.center2026@gmail.com",
+          "Both items reference the same khalti ids: +9779812345678",
+          "Both items reference the same domains: gmail.com - but 1 of these are common across the corpus and were discounted",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00034 (07_fake_support_profile.jpg) and EVID_00039 (02_whatsapp_chat.jpg) show a strong relationship (confidence 0.75) based on 5 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Both items reference the same emails: reward.center2026@gmail.com [weight 0.59]. Both items reference the same khalti ids: +9779812345678 [weight 0.78]. Both items reference the same domains: gmail.com - but 1 of these are common across the corpus and were discounted [weight 0.34]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00034",
+        "evidence_b": "EVID_00041",
+        "correlation_weight": 1.2988,
+        "correlation_confidence": 0.5559,
+        "relationship_strength": "STRONG",
+        "factors": [
+          {
+            "factor": "domains",
+            "weight": 0.6,
+            "matches": 1,
+            "contribution": 0.4988,
+            "supporting_evidence": [
+              "khalti-kyc-verify.top"
+            ],
+            "reason": "Both items reference the same domains: khalti-kyc-verify.top",
+            "value_details": [
+              {
+                "value": "khalti-kyc-verify.top",
+                "specificity": 0.8314,
+                "document_frequency": 4,
+                "corpus_size": 34,
+                "reason": "'khalti-kyc-verify.top' is moderately common (seen in 4 of 34 evidence items in the corpus); specificity 0.83"
+              }
+            ],
+            "effective_matches": 0.8314
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          },
+          {
+            "factor": "threat_intelligence",
+            "weight": 0.8,
+            "matches": 1,
+            "contribution": 0.8,
+            "supporting_evidence": [
+              "khalti-kyc-verify.top"
+            ],
+            "reason": "Threat intelligence flags the same malicious indicator in both items: khalti-kyc-verify.top",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same domains: khalti-kyc-verify.top",
+          "Acquired 0.0 hours apart (within the 48h proximity window)",
+          "Threat intelligence flags the same malicious indicator in both items: khalti-kyc-verify.top"
+        ],
+        "explanation": "EVID_00034 (07_fake_support_profile.jpg) and EVID_00041 (http_khalti-kyc-verify.top_login.url) show a strong relationship (confidence 0.56) based on 3 independent factors. Both items reference the same domains: khalti-kyc-verify.top [weight 0.50]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]. Threat intelligence flags the same malicious indicator in both items: khalti-kyc-verify.top [weight 0.80]."
+      },
+      {
+        "evidence_a": "EVID_00034",
+        "evidence_b": "EVID_00036",
+        "correlation_weight": 1.2878,
+        "correlation_confidence": 0.5529,
+        "relationship_strength": "STRONG",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "khalti_ids",
+            "weight": 1.0,
+            "matches": 1,
+            "contribution": 0.7769,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same khalti ids: +9779812345678",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.7769,
+                "document_frequency": 5,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is moderately common (seen in 5 of 34 evidence items in the corpus); specificity 0.78"
+              }
+            ],
+            "effective_matches": 0.7769
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same khalti ids: +9779812345678",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00034 (07_fake_support_profile.jpg) and EVID_00036 (05_transactions.csv) show a strong relationship (confidence 0.55) based on 3 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Both items reference the same khalti ids: +9779812345678 [weight 0.78]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00035",
+        "evidence_b": "EVID_00036",
+        "correlation_weight": 1.2878,
+        "correlation_confidence": 0.5529,
+        "relationship_strength": "STRONG",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "khalti_ids",
+            "weight": 1.0,
+            "matches": 1,
+            "contribution": 0.7769,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same khalti ids: +9779812345678",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.7769,
+                "document_frequency": 5,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is moderately common (seen in 5 of 34 evidence items in the corpus); specificity 0.78"
+              }
+            ],
+            "effective_matches": 0.7769
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same khalti ids: +9779812345678",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00035 (06_police_complaint.pdf) and EVID_00036 (05_transactions.csv) show a strong relationship (confidence 0.55) based on 3 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Both items reference the same khalti ids: +9779812345678 [weight 0.78]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00036",
+        "evidence_b": "EVID_00037",
+        "correlation_weight": 1.2878,
+        "correlation_confidence": 0.5529,
+        "relationship_strength": "STRONG",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "khalti_ids",
+            "weight": 1.0,
+            "matches": 1,
+            "contribution": 0.7769,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same khalti ids: +9779812345678",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.7769,
+                "document_frequency": 5,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is moderately common (seen in 5 of 34 evidence items in the corpus); specificity 0.78"
+              }
+            ],
+            "effective_matches": 0.7769
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same khalti ids: +9779812345678",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00036 (05_transactions.csv) and EVID_00037 (04_kyc_phishing_email.txt) show a strong relationship (confidence 0.55) based on 3 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Both items reference the same khalti ids: +9779812345678 [weight 0.78]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00036",
+        "evidence_b": "EVID_00039",
+        "correlation_weight": 1.2878,
+        "correlation_confidence": 0.5529,
+        "relationship_strength": "STRONG",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "khalti_ids",
+            "weight": 1.0,
+            "matches": 1,
+            "contribution": 0.7769,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same khalti ids: +9779812345678",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.7769,
+                "document_frequency": 5,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is moderately common (seen in 5 of 34 evidence items in the corpus); specificity 0.78"
+              }
+            ],
+            "effective_matches": 0.7769
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same khalti ids: +9779812345678",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00036 (05_transactions.csv) and EVID_00039 (02_whatsapp_chat.jpg) show a strong relationship (confidence 0.55) based on 3 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Both items reference the same khalti ids: +9779812345678 [weight 0.78]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00037",
+        "evidence_b": "EVID_00038",
+        "correlation_weight": 0.6163,
+        "correlation_confidence": 0.3197,
+        "relationship_strength": "MEDIUM",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "money",
+            "weight": 0.2,
+            "matches": 1,
+            "contribution": 0.1054,
+            "supporting_evidence": [
+              "npr 750"
+            ],
+            "reason": "Both items reference the same money: npr 750",
+            "value_details": [
+              {
+                "value": "npr 750",
+                "specificity": 0.5271,
+                "document_frequency": 4,
+                "corpus_size": 34,
+                "reason": "'npr 750' is moderately common (seen in 4 of 34 evidence items in the corpus); specificity 0.53"
+              }
+            ],
+            "effective_matches": 0.5271
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same money: npr 750",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00037 (04_kyc_phishing_email.txt) and EVID_00038 (03_khalti_receipt.jpg) show a medium relationship (confidence 0.32) based on 3 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Both items reference the same money: npr 750 [weight 0.11]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00038",
+        "evidence_b": "EVID_00039",
+        "correlation_weight": 0.6163,
+        "correlation_confidence": 0.3197,
+        "relationship_strength": "MEDIUM",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "money",
+            "weight": 0.2,
+            "matches": 1,
+            "contribution": 0.1054,
+            "supporting_evidence": [
+              "npr 750"
+            ],
+            "reason": "Both items reference the same money: npr 750",
+            "value_details": [
+              {
+                "value": "npr 750",
+                "specificity": 0.5271,
+                "document_frequency": 4,
+                "corpus_size": 34,
+                "reason": "'npr 750' is moderately common (seen in 4 of 34 evidence items in the corpus); specificity 0.53"
+              }
+            ],
+            "effective_matches": 0.5271
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Both items reference the same money: npr 750",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00038 (03_khalti_receipt.jpg) and EVID_00039 (02_whatsapp_chat.jpg) show a medium relationship (confidence 0.32) based on 3 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Both items reference the same money: npr 750 [weight 0.11]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00034",
+        "evidence_b": "EVID_00038",
+        "correlation_weight": 0.5109,
+        "correlation_confidence": 0.2734,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00034 (07_fake_support_profile.jpg) and EVID_00038 (03_khalti_receipt.jpg) show a weak relationship (confidence 0.27) based on 2 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00036",
+        "evidence_b": "EVID_00038",
+        "correlation_weight": 0.5109,
+        "correlation_confidence": 0.2734,
+        "relationship_strength": "WEAK",
+        "factors": [
+          {
+            "factor": "phones",
+            "weight": 0.9,
+            "matches": 1,
+            "contribution": 0.5109,
+            "supporting_evidence": [
+              "+9779812345678"
+            ],
+            "reason": "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+            "value_details": [
+              {
+                "value": "+9779812345678",
+                "specificity": 0.5677,
+                "document_frequency": 12,
+                "corpus_size": 34,
+                "reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57"
+              }
+            ],
+            "effective_matches": 0.5677
+          },
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted",
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00036 (05_transactions.csv) and EVID_00038 (03_khalti_receipt.jpg) show a weak relationship (confidence 0.27) based on 2 independent factors. Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted [weight 0.51]. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00034",
+        "evidence_b": "EVID_00040",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00034 (07_fake_support_profile.jpg) and EVID_00040 (01_khalti_kyc_sms.jpg) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00034",
+        "evidence_b": "EVID_00042",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00034 (07_fake_support_profile.jpg) and EVID_00042 (https_esewa-bonus-claim.xyz_verify_ref_KYC2026.url) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00035",
+        "evidence_b": "EVID_00040",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00035 (06_police_complaint.pdf) and EVID_00040 (01_khalti_kyc_sms.jpg) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00036",
+        "evidence_b": "EVID_00040",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00036 (05_transactions.csv) and EVID_00040 (01_khalti_kyc_sms.jpg) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00036",
+        "evidence_b": "EVID_00041",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00036 (05_transactions.csv) and EVID_00041 (http_khalti-kyc-verify.top_login.url) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00036",
+        "evidence_b": "EVID_00042",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00036 (05_transactions.csv) and EVID_00042 (https_esewa-bonus-claim.xyz_verify_ref_KYC2026.url) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00037",
+        "evidence_b": "EVID_00040",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00037 (04_kyc_phishing_email.txt) and EVID_00040 (01_khalti_kyc_sms.jpg) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00038",
+        "evidence_b": "EVID_00040",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00038 (03_khalti_receipt.jpg) and EVID_00040 (01_khalti_kyc_sms.jpg) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00038",
+        "evidence_b": "EVID_00041",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00038 (03_khalti_receipt.jpg) and EVID_00041 (http_khalti-kyc-verify.top_login.url) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00038",
+        "evidence_b": "EVID_00042",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00038 (03_khalti_receipt.jpg) and EVID_00042 (https_esewa-bonus-claim.xyz_verify_ref_KYC2026.url) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00039",
+        "evidence_b": "EVID_00040",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00039 (02_whatsapp_chat.jpg) and EVID_00040 (01_khalti_kyc_sms.jpg) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00039",
+        "evidence_b": "EVID_00041",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00039 (02_whatsapp_chat.jpg) and EVID_00041 (http_khalti-kyc-verify.top_login.url) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00039",
+        "evidence_b": "EVID_00042",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00039 (02_whatsapp_chat.jpg) and EVID_00042 (https_esewa-bonus-claim.xyz_verify_ref_KYC2026.url) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00040",
+        "evidence_b": "EVID_00041",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00040 (01_khalti_kyc_sms.jpg) and EVID_00041 (http_khalti-kyc-verify.top_login.url) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00040",
+        "evidence_b": "EVID_00042",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00040 (01_khalti_kyc_sms.jpg) and EVID_00042 (https_esewa-bonus-claim.xyz_verify_ref_KYC2026.url) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      },
+      {
+        "evidence_a": "EVID_00041",
+        "evidence_b": "EVID_00042",
+        "correlation_weight": 0.0,
+        "correlation_confidence": 0.0,
+        "relationship_strength": "NO_RELATIONSHIP",
+        "factors": [
+          {
+            "factor": "timeline_proximity",
+            "weight": 0.0,
+            "matches": 1,
+            "contribution": 0.0,
+            "supporting_evidence": [
+              "0.0h apart"
+            ],
+            "reason": "Acquired 0.0 hours apart (within the 48h proximity window)",
+            "value_details": [],
+            "effective_matches": 1.0
+          }
+        ],
+        "correlation_reasons": [
+          "Acquired 0.0 hours apart (within the 48h proximity window)"
+        ],
+        "explanation": "EVID_00041 (http_khalti-kyc-verify.top_login.url) and EVID_00042 (https_esewa-bonus-claim.xyz_verify_ref_KYC2026.url) show a no relationship relationship (confidence 0.00) based on 1 independent factor. Acquired 0.0 hours apart (within the 48h proximity window) [weight 0.00]."
+      }
+    ],
+    "strength_distribution": {
+      "VERY_STRONG": 7,
+      "STRONG": 9,
+      "MEDIUM": 2,
+      "WEAK": 2,
+      "NO_RELATIONSHIP": 16
+    },
+    "strongest_pair": "EVID_00035|EVID_00037",
+    "analysis_time_ms": 27.7
+  }
+}

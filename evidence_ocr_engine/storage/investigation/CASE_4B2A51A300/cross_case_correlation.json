@@ -1,0 +1,247 @@
+{
+  "report_type": "cross_case_correlation",
+  "report_version": 1,
+  "schema_version": "2.0",
+  "case_id": "CASE_4B2A51A300",
+  "generated_at": "2026-08-21T06:43:18.341Z",
+  "report": {
+    "case_id": "CASE_4B2A51A300",
+    "related_case_ids": [
+      "CASE_0CD406813C",
+      "CASE_EE8250FB76",
+      "CASE_185915593C",
+      "CASE_1A1BF573F3"
+    ],
+    "link_count": 4,
+    "links": [
+      {
+        "other_case_id": "CASE_0CD406813C",
+        "match_confidence": 0.8238,
+        "relationship_strength": "VERY_STRONG",
+        "matched_entities": [
+          {
+            "entity_type": "bank_accounts",
+            "value": "01903015472901",
+            "weight": 1.0,
+            "specificity": 0.9016,
+            "document_frequency": 3,
+            "specificity_reason": "'01903015472901' is distinctive (seen in 3 of 34 evidence items in the corpus); specificity 0.90",
+            "this_evidence_ids": [
+              "EVID_00035",
+              "EVID_00037"
+            ],
+            "other_evidence_ids": [
+              "EVID_00027"
+            ]
+          },
+          {
+            "entity_type": "domains",
+            "value": "esewa-bonus-claim.xyz",
+            "weight": 0.6,
+            "specificity": 0.7326,
+            "document_frequency": 6,
+            "specificity_reason": "'esewa-bonus-claim.xyz' is moderately common (seen in 6 of 34 evidence items in the corpus); specificity 0.73",
+            "this_evidence_ids": [
+              "EVID_00035",
+              "EVID_00037",
+              "EVID_00042"
+            ],
+            "other_evidence_ids": [
+              "EVID_00027",
+              "EVID_00029",
+              "EVID_00033"
+            ]
+          },
+          {
+            "entity_type": "emails",
+            "value": "reward.center2026@gmail.com",
+            "weight": 0.85,
+            "specificity": 0.6953,
+            "document_frequency": 7,
+            "specificity_reason": "'reward.center2026@gmail.com' is moderately common (seen in 7 of 34 evidence items in the corpus); specificity 0.70",
+            "this_evidence_ids": [
+              "EVID_00034",
+              "EVID_00035",
+              "EVID_00037",
+              "EVID_00039"
+            ],
+            "other_evidence_ids": [
+              "EVID_00027",
+              "EVID_00029",
+              "EVID_00031"
+            ]
+          },
+          {
+            "entity_type": "phones",
+            "value": "+9779812345678",
+            "weight": 0.9,
+            "specificity": 0.5677,
+            "document_frequency": 12,
+            "specificity_reason": "'+9779812345678' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.57",
+            "this_evidence_ids": [
+              "EVID_00034",
+              "EVID_00035",
+              "EVID_00036",
+              "EVID_00037",
+              "EVID_00038",
+              "EVID_00039"
+            ],
+            "other_evidence_ids": [
+              "EVID_00027",
+              "EVID_00028",
+              "EVID_00029",
+              "EVID_00030",
+              "EVID_00031",
+              "EVID_00032"
+            ]
+          },
+          {
+            "entity_type": "domains",
+            "value": "gmail.com",
+            "weight": 0.6,
+            "specificity": 0.5586,
+            "document_frequency": 12,
+            "specificity_reason": "'gmail.com' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.56",
+            "this_evidence_ids": [
+              "EVID_00034",
+              "EVID_00035",
+              "EVID_00037",
+              "EVID_00039"
+            ],
+            "other_evidence_ids": [
+              "EVID_00027",
+              "EVID_00029",
+              "EVID_00031"
+            ]
+          }
+        ],
+        "this_evidence_ids": [
+          "EVID_00034",
+          "EVID_00035",
+          "EVID_00036",
+          "EVID_00037",
+          "EVID_00038",
+          "EVID_00039",
+          "EVID_00042"
+        ],
+        "other_evidence_ids": [
+          "EVID_00027",
+          "EVID_00028",
+          "EVID_00029",
+          "EVID_00030",
+          "EVID_00031",
+          "EVID_00032",
+          "EVID_00033"
+        ],
+        "match_reason": "Shares 5 entity(ies) with CASE_0CD406813C: bank account 01903015472901, domain esewa-bonus-claim.xyz, email reward.center2026@gmail.com (+2 more)"
+      },
+      {
+        "other_case_id": "CASE_EE8250FB76",
+        "match_confidence": 0.189,
+        "relationship_strength": "WEAK",
+        "matched_entities": [
+          {
+            "entity_type": "domains",
+            "value": "gmail.com",
+            "weight": 0.6,
+            "specificity": 0.5586,
+            "document_frequency": 12,
+            "specificity_reason": "'gmail.com' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.56",
+            "this_evidence_ids": [
+              "EVID_00034",
+              "EVID_00035",
+              "EVID_00037",
+              "EVID_00039"
+            ],
+            "other_evidence_ids": [
+              "EVID_00005"
+            ]
+          }
+        ],
+        "this_evidence_ids": [
+          "EVID_00034",
+          "EVID_00035",
+          "EVID_00037",
+          "EVID_00039"
+        ],
+        "other_evidence_ids": [
+          "EVID_00005"
+        ],
+        "match_reason": "Shares 1 entity(ies) with CASE_EE8250FB76: domain gmail.com"
+      },
+      {
+        "other_case_id": "CASE_185915593C",
+        "match_confidence": 0.189,
+        "relationship_strength": "WEAK",
+        "matched_entities": [
+          {
+            "entity_type": "domains",
+            "value": "gmail.com",
+            "weight": 0.6,
+            "specificity": 0.5586,
+            "document_frequency": 12,
+            "specificity_reason": "'gmail.com' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.56",
+            "this_evidence_ids": [
+              "EVID_00034",
+              "EVID_00035",
+              "EVID_00037",
+              "EVID_00039"
+            ],
+            "other_evidence_ids": [
+              "EVID_00008",
+              "EVID_00014"
+            ]
+          }
+        ],
+        "this_evidence_ids": [
+          "EVID_00034",
+          "EVID_00035",
+          "EVID_00037",
+          "EVID_00039"
+        ],
+        "other_evidence_ids": [
+          "EVID_00008",
+          "EVID_00014"
+        ],
+        "match_reason": "Shares 1 entity(ies) with CASE_185915593C: domain gmail.com"
+      },
+      {
+        "other_case_id": "CASE_1A1BF573F3",
+        "match_confidence": 0.189,
+        "relationship_strength": "WEAK",
+        "matched_entities": [
+          {
+            "entity_type": "domains",
+            "value": "gmail.com",
+            "weight": 0.6,
+            "specificity": 0.5586,
+            "document_frequency": 12,
+            "specificity_reason": "'gmail.com' is common - heavily discounted (seen in 12 of 34 evidence items in the corpus); specificity 0.56",
+            "this_evidence_ids": [
+              "EVID_00034",
+              "EVID_00035",
+              "EVID_00037",
+              "EVID_00039"
+            ],
+            "other_evidence_ids": [
+              "EVID_00016",
+              "EVID_00022"
+            ]
+          }
+        ],
+        "this_evidence_ids": [
+          "EVID_00034",
+          "EVID_00035",
+          "EVID_00037",
+          "EVID_00039"
+        ],
+        "other_evidence_ids": [
+          "EVID_00016",
+          "EVID_00022"
+        ],
+        "match_reason": "Shares 1 entity(ies) with CASE_1A1BF573F3: domain gmail.com"
+      }
+    ],
+    "analysis_time_ms": 0.4
+  }
+}

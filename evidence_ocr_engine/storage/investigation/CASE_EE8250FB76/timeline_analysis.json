@@ -1,0 +1,290 @@
+{
+  "report_type": "timeline_analysis",
+  "report_version": 13,
+  "schema_version": "2.0",
+  "case_id": "CASE_EE8250FB76",
+  "generated_at": "2026-08-21T05:16:32.060Z",
+  "report": {
+    "case_id": "CASE_EE8250FB76",
+    "events": [
+      {
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00005",
+        "case_id": "CASE_EE8250FB76",
+        "file_name": "08_complaint_letter.pdf",
+        "description": "Evidence EVID_00005 (08_complaint_letter.pdf); stages: initial_contact, social_engineering, financial_transaction, post_attack",
+        "time_source": "content_labeled_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "correlated_with": [],
+        "text_preview": "To,\nThe Chief, Cyber Bureau,\nNepal Police, Bhotahity, Kathmandu.\nSubject: Complaint regarding online fraud impersonating",
+        "risk_signals": {},
+        "stages": [
+          "initial_contact",
+          "social_engineering",
+          "financial_transaction",
+          "post_attack"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 1500, NPR 200, NPR 25000",
+          "contains esewa_ids entity/entities: esewa.cashback99@gmail.com, sunita.gurung21@gmail.com",
+          "contains khalti_ids entity/entities: +9779801122334",
+          "contains bank_accounts entity/entities: 05019012345678",
+          "contains transaction_ids entity/entities: 0119.0625.987456, CASE_2026_0088, KH-2026-0611-77245"
+        ]
+      },
+      {
+        "timestamp": "2026-07-25T12:06:25+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00006",
+        "case_id": "CASE_EE8250FB76",
+        "file_name": "07_bank_transfer_slip.pdf",
+        "description": "Evidence EVID_00006 (07_bank_transfer_slip.pdf)",
+        "time_source": "metadata_pdf_created",
+        "confidence": "medium",
+        "timestamp_inferred": false,
+        "source_evidence_ids": [
+          "EVID_00006"
+        ],
+        "correlated_with": [],
+        "text_preview": "",
+        "risk_signals": {},
+        "stages": [],
+        "critical": false,
+        "critical_reasons": []
+      }
+    ],
+    "attack_stages": [
+      {
+        "stage": "initial_contact",
+        "evidence_ids": [
+          "EVID_00005"
+        ],
+        "first_seen": "2026-06-15T00:00:00+00:00",
+        "last_seen": "2026-06-15T00:00:00+00:00",
+        "matched_keywords": [
+          "offer",
+          "prize"
+        ],
+        "explanation": "Stage 'initial_contact' is evidenced by keyword matches (offer, prize) in EVID_00005."
+      },
+      {
+        "stage": "social_engineering",
+        "evidence_ids": [
+          "EVID_00005"
+        ],
+        "first_seen": "2026-06-15T00:00:00+00:00",
+        "last_seen": "2026-06-15T00:00:00+00:00",
+        "matched_keywords": [
+          "suspended",
+          "verify"
+        ],
+        "explanation": "Stage 'social_engineering' is evidenced by keyword matches (suspended, verify) in EVID_00005."
+      },
+      {
+        "stage": "financial_transaction",
+        "evidence_ids": [
+          "EVID_00005"
+        ],
+        "first_seen": "2026-06-15T00:00:00+00:00",
+        "last_seen": "2026-06-15T00:00:00+00:00",
+        "matched_keywords": [
+          "account number",
+          "bank",
+          "esewa",
+          "khalti",
+          "npr",
+          "paid",
+          "payment",
+          "rs.",
+          "transfer"
+        ],
+        "explanation": "Stage 'financial_transaction' is evidenced by keyword matches (account number, bank, esewa, khalti, npr) in EVID_00005."
+      },
+      {
+        "stage": "post_attack",
+        "evidence_ids": [
+          "EVID_00005"
+        ],
+        "first_seen": "2026-06-15T00:00:00+00:00",
+        "last_seen": "2026-06-15T00:00:00+00:00",
+        "matched_keywords": [
+          "fraud",
+          "police"
+        ],
+        "explanation": "Stage 'post_attack' is evidenced by keyword matches (fraud, police) in EVID_00005."
+      }
+    ],
+    "stage_progression": [
+      "initial_contact",
+      "social_engineering",
+      "financial_transaction",
+      "post_attack"
+    ],
+    "progression_consistent": true,
+    "milestones": [
+      {
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "event_type": "milestone",
+        "evidence_id": "EVID_00005",
+        "case_id": "CASE_EE8250FB76",
+        "file_name": "08_complaint_letter.pdf",
+        "description": "First reconstructed incident event",
+        "time_source": "content_labeled_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "correlated_with": [],
+        "text_preview": "To,\nThe Chief, Cyber Bureau,\nNepal Police, Bhotahity, Kathmandu.\nSubject: Complaint regarding online fraud impersonating",
+        "risk_signals": {},
+        "stages": [],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "event_type": "milestone",
+        "evidence_id": "EVID_00005",
+        "case_id": "CASE_EE8250FB76",
+        "file_name": "08_complaint_letter.pdf",
+        "description": "First observation of stage 'initial_contact' (EVID_00005)",
+        "time_source": "content_labeled_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "correlated_with": [],
+        "text_preview": "To,\nThe Chief, Cyber Bureau,\nNepal Police, Bhotahity, Kathmandu.\nSubject: Complaint regarding online fraud impersonating",
+        "risk_signals": {},
+        "stages": [
+          "initial_contact"
+        ],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "event_type": "milestone",
+        "evidence_id": "EVID_00005",
+        "case_id": "CASE_EE8250FB76",
+        "file_name": "08_complaint_letter.pdf",
+        "description": "First observation of stage 'social_engineering' (EVID_00005)",
+        "time_source": "content_labeled_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "correlated_with": [],
+        "text_preview": "To,\nThe Chief, Cyber Bureau,\nNepal Police, Bhotahity, Kathmandu.\nSubject: Complaint regarding online fraud impersonating",
+        "risk_signals": {},
+        "stages": [
+          "social_engineering"
+        ],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "event_type": "milestone",
+        "evidence_id": "EVID_00005",
+        "case_id": "CASE_EE8250FB76",
+        "file_name": "08_complaint_letter.pdf",
+        "description": "First observation of stage 'financial_transaction' (EVID_00005)",
+        "time_source": "content_labeled_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "correlated_with": [],
+        "text_preview": "To,\nThe Chief, Cyber Bureau,\nNepal Police, Bhotahity, Kathmandu.\nSubject: Complaint regarding online fraud impersonating",
+        "risk_signals": {},
+        "stages": [
+          "financial_transaction"
+        ],
+        "critical": false,
+        "critical_reasons": []
+      },
+      {
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "event_type": "milestone",
+        "evidence_id": "EVID_00005",
+        "case_id": "CASE_EE8250FB76",
+        "file_name": "08_complaint_letter.pdf",
+        "description": "First observation of stage 'post_attack' (EVID_00005)",
+        "time_source": "content_labeled_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "correlated_with": [],
+        "text_preview": "To,\nThe Chief, Cyber Bureau,\nNepal Police, Bhotahity, Kathmandu.\nSubject: Complaint regarding online fraud impersonating",
+        "risk_signals": {},
+        "stages": [
+          "post_attack"
+        ],
+        "critical": false,
+        "critical_reasons": []
+      }
+    ],
+    "critical_events": [
+      {
+        "timestamp": "2026-06-15T00:00:00+00:00",
+        "event_type": "evidence_event",
+        "evidence_id": "EVID_00005",
+        "case_id": "CASE_EE8250FB76",
+        "file_name": "08_complaint_letter.pdf",
+        "description": "Evidence EVID_00005 (08_complaint_letter.pdf); stages: initial_contact, social_engineering, financial_transaction, post_attack",
+        "time_source": "content_labeled_date_only",
+        "confidence": "medium",
+        "timestamp_inferred": true,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "correlated_with": [],
+        "text_preview": "To,\nThe Chief, Cyber Bureau,\nNepal Police, Bhotahity, Kathmandu.\nSubject: Complaint regarding online fraud impersonating",
+        "risk_signals": {},
+        "stages": [
+          "initial_contact",
+          "social_engineering",
+          "financial_transaction",
+          "post_attack"
+        ],
+        "critical": true,
+        "critical_reasons": [
+          "contains money entity/entities: NPR 1500, NPR 200, NPR 25000",
+          "contains esewa_ids entity/entities: esewa.cashback99@gmail.com, sunita.gurung21@gmail.com",
+          "contains khalti_ids entity/entities: +9779801122334",
+          "contains bank_accounts entity/entities: 05019012345678",
+          "contains transaction_ids entity/entities: 0119.0625.987456, CASE_2026_0088, KH-2026-0611-77245"
+        ]
+      }
+    ],
+    "summary": "2 events; 2 timestamps resolved (1 non-inferred, 1 inferred, including 0 acquisition-time fallbacks); 0 timestamps unresolved. Content/metadata event times span 972.1 hours. Keyword-derived stage order: initial_contact -> social_engineering -> financial_transaction -> post_attack.",
+    "statistics": {
+      "event_count": 2.0,
+      "resolved_event_count": 2.0,
+      "unresolved_event_count": 0.0,
+      "inferred_event_count": 1.0,
+      "non_inferred_event_count": 1.0,
+      "acquisition_fallback_count": 0.0,
+      "progression_assessable": 1.0,
+      "stage_count": 4.0,
+      "critical_event_count": 1.0,
+      "timeline_span_hours": 972.11,
+      "event_time_span_hours": 972.11,
+      "acquisition_inclusive_span_hours": 972.11
+    },
+    "analysis_time_ms": 3.0
+  }
+}

@@ -1,0 +1,384 @@
+{
+  "report_type": "suspect_assessment",
+  "report_version": 1,
+  "schema_version": "2.0",
+  "case_id": "CASE_0CD406813C",
+  "generated_at": "2026-08-21T06:39:12.092Z",
+  "report": {
+    "case_id": "CASE_0CD406813C",
+    "suspect_count": 6,
+    "suspects": [
+      {
+        "suspect_id": "SUSPECT_CASE_0CD406813C_04",
+        "identity_type": "esewa_ids",
+        "identity_value": "+9779812345678",
+        "aliases": [
+          "emails:reward.center2026@gmail.com",
+          "phones:+9779812345678"
+        ],
+        "evidence_ids": [
+          "EVID_00027",
+          "EVID_00028",
+          "EVID_00029",
+          "EVID_00031"
+        ],
+        "evidence_count": 4,
+        "components": [
+          {
+            "name": "identity_strength",
+            "score": 100.0,
+            "weight": 0.25,
+            "explanation": "'+9779812345678' is a esewa_id - identity weight 100/100 for this anchor type"
+          },
+          {
+            "name": "evidence_count",
+            "score": 100.0,
+            "weight": 0.2,
+            "explanation": "appears in 4 of 8 evidence items"
+          },
+          {
+            "name": "evidence_confidence",
+            "score": 96.8,
+            "weight": 0.15,
+            "explanation": "mean Phase-1 evidence confidence of its evidence set is 97/100"
+          },
+          {
+            "name": "threat_intelligence",
+            "score": 100.0,
+            "weight": 0.15,
+            "explanation": "co-occurs with threat-flagged indicator 'https://esewa-bonus-claim.xyz/verify?ref=dsn2026' in EVID_00027"
+          },
+          {
+            "name": "correlation_strength",
+            "score": 73.7,
+            "weight": 0.15,
+            "explanation": "its 4 evidence items are inter-linked with mean correlation confidence 0.74 (strongest: VERY_STRONG)"
+          },
+          {
+            "name": "timeline_span",
+            "score": 0.0,
+            "weight": 0.1,
+            "explanation": "activity spans 0.0 days across its evidence set"
+          }
+        ],
+        "confidence_score": 85.6,
+        "confidence_level": "VERY_HIGH",
+        "relationship_strength": "VERY_STRONG",
+        "risk_level": "CRITICAL",
+        "threat_flagged": true,
+        "first_seen": "2026-08-21T06:37:35.208Z",
+        "last_seen": "2026-08-21T06:37:39.863Z",
+        "explanation": "Suspect anchor '+9779812345678' (esewa_ids) scores 85.6/100 (VERY_HIGH, risk CRITICAL) across 4 evidence items: EVID_00027, EVID_00028, EVID_00029, EVID_00031. Identity strength: 100/100 (weight 0.25) - '+9779812345678' is a esewa_id - identity weight 100/100 for this anchor type. Evidence count: 100/100 (weight 0.20) - appears in 4 of 8 evidence items. Evidence confidence: 97/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 97/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-bonus-claim.xyz/verify?ref=dsn2026' in EVID_00027. Correlation strength: 74/100 (weight 0.15) - its 4 evidence items are inter-linked with mean correlation confidence 0.74 (strongest: VERY_STRONG). Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: emails:reward.center2026@gmail.com, phones:+9779812345678."
+      },
+      {
+        "suspect_id": "SUSPECT_CASE_0CD406813C_05",
+        "identity_type": "phones",
+        "identity_value": "+9779812345678",
+        "aliases": [
+          "emails:reward.center2026@gmail.com",
+          "esewa_ids:+9779812345678",
+          "phones:+9779841002233"
+        ],
+        "evidence_ids": [
+          "EVID_00027",
+          "EVID_00028",
+          "EVID_00029",
+          "EVID_00030",
+          "EVID_00031",
+          "EVID_00032"
+        ],
+        "evidence_count": 6,
+        "components": [
+          {
+            "name": "identity_strength",
+            "score": 85.0,
+            "weight": 0.25,
+            "explanation": "'+9779812345678' is a phone - identity weight 85/100 for this anchor type"
+          },
+          {
+            "name": "evidence_count",
+            "score": 100.0,
+            "weight": 0.2,
+            "explanation": "appears in 6 of 8 evidence items"
+          },
+          {
+            "name": "evidence_confidence",
+            "score": 92.2,
+            "weight": 0.15,
+            "explanation": "mean Phase-1 evidence confidence of its evidence set is 92/100"
+          },
+          {
+            "name": "threat_intelligence",
+            "score": 100.0,
+            "weight": 0.15,
+            "explanation": "co-occurs with threat-flagged indicator 'https://esewa-bonus-claim.xyz/verify?ref=dsn2026' in EVID_00027"
+          },
+          {
+            "name": "correlation_strength",
+            "score": 54.1,
+            "weight": 0.15,
+            "explanation": "its 6 evidence items are inter-linked with mean correlation confidence 0.54 (strongest: VERY_STRONG)"
+          },
+          {
+            "name": "timeline_span",
+            "score": 0.0,
+            "weight": 0.1,
+            "explanation": "activity spans 0.0 days across its evidence set"
+          }
+        ],
+        "confidence_score": 78.2,
+        "confidence_level": "HIGH",
+        "relationship_strength": "VERY_STRONG",
+        "risk_level": "HIGH",
+        "threat_flagged": true,
+        "first_seen": "2026-08-21T06:37:35.208Z",
+        "last_seen": "2026-08-21T06:37:43.588Z",
+        "explanation": "Suspect anchor '+9779812345678' (phones) scores 78.2/100 (HIGH, risk HIGH) across 6 evidence items: EVID_00027, EVID_00028, EVID_00029, EVID_00030, EVID_00031, EVID_00032. Identity strength: 85/100 (weight 0.25) - '+9779812345678' is a phone - identity weight 85/100 for this anchor type. Evidence count: 100/100 (weight 0.20) - appears in 6 of 8 evidence items. Evidence confidence: 92/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 92/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-bonus-claim.xyz/verify?ref=dsn2026' in EVID_00027. Correlation strength: 54/100 (weight 0.15) - its 6 evidence items are inter-linked with mean correlation confidence 0.54 (strongest: VERY_STRONG). Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: emails:reward.center2026@gmail.com, esewa_ids:+9779812345678, phones:+9779841002233."
+      },
+      {
+        "suspect_id": "SUSPECT_CASE_0CD406813C_02",
+        "identity_type": "emails",
+        "identity_value": "reward.center2026@gmail.com",
+        "aliases": [
+          "esewa_ids:+9779812345678",
+          "phones:+9779812345678"
+        ],
+        "evidence_ids": [
+          "EVID_00027",
+          "EVID_00029",
+          "EVID_00031"
+        ],
+        "evidence_count": 3,
+        "components": [
+          {
+            "name": "identity_strength",
+            "score": 75.0,
+            "weight": 0.25,
+            "explanation": "'reward.center2026@gmail.com' is a email - identity weight 75/100 for this anchor type"
+          },
+          {
+            "name": "evidence_count",
+            "score": 75.0,
+            "weight": 0.2,
+            "explanation": "appears in 3 of 8 evidence items"
+          },
+          {
+            "name": "evidence_confidence",
+            "score": 95.7,
+            "weight": 0.15,
+            "explanation": "mean Phase-1 evidence confidence of its evidence set is 96/100"
+          },
+          {
+            "name": "threat_intelligence",
+            "score": 100.0,
+            "weight": 0.15,
+            "explanation": "co-occurs with threat-flagged indicator 'https://esewa-bonus-claim.xyz/verify?ref=dsn2026' in EVID_00027"
+          },
+          {
+            "name": "correlation_strength",
+            "score": 86.8,
+            "weight": 0.15,
+            "explanation": "its 3 evidence items are inter-linked with mean correlation confidence 0.87 (strongest: VERY_STRONG)"
+          },
+          {
+            "name": "timeline_span",
+            "score": 0.0,
+            "weight": 0.1,
+            "explanation": "activity spans 0.0 days across its evidence set"
+          }
+        ],
+        "confidence_score": 76.1,
+        "confidence_level": "HIGH",
+        "relationship_strength": "VERY_STRONG",
+        "risk_level": "HIGH",
+        "threat_flagged": true,
+        "first_seen": "2026-08-21T06:37:35.208Z",
+        "last_seen": "2026-08-21T06:37:39.863Z",
+        "explanation": "Suspect anchor 'reward.center2026@gmail.com' (emails) scores 76.1/100 (HIGH, risk HIGH) across 3 evidence items: EVID_00027, EVID_00029, EVID_00031. Identity strength: 75/100 (weight 0.25) - 'reward.center2026@gmail.com' is a email - identity weight 75/100 for this anchor type. Evidence count: 75/100 (weight 0.20) - appears in 3 of 8 evidence items. Evidence confidence: 96/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 96/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-bonus-claim.xyz/verify?ref=dsn2026' in EVID_00027. Correlation strength: 87/100 (weight 0.15) - its 3 evidence items are inter-linked with mean correlation confidence 0.87 (strongest: VERY_STRONG). Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: esewa_ids:+9779812345678, phones:+9779812345678."
+      },
+      {
+        "suspect_id": "SUSPECT_CASE_0CD406813C_06",
+        "identity_type": "phones",
+        "identity_value": "+9779841002233",
+        "aliases": [
+          "phones:+9779812345678"
+        ],
+        "evidence_ids": [
+          "EVID_00027",
+          "EVID_00030"
+        ],
+        "evidence_count": 2,
+        "components": [
+          {
+            "name": "identity_strength",
+            "score": 85.0,
+            "weight": 0.25,
+            "explanation": "'+9779841002233' is a phone - identity weight 85/100 for this anchor type"
+          },
+          {
+            "name": "evidence_count",
+            "score": 50.0,
+            "weight": 0.2,
+            "explanation": "appears in 2 of 8 evidence items"
+          },
+          {
+            "name": "evidence_confidence",
+            "score": 93.3,
+            "weight": 0.15,
+            "explanation": "mean Phase-1 evidence confidence of its evidence set is 93/100"
+          },
+          {
+            "name": "threat_intelligence",
+            "score": 100.0,
+            "weight": 0.15,
+            "explanation": "co-occurs with threat-flagged indicator 'https://esewa-bonus-claim.xyz/verify?ref=dsn2026' in EVID_00027"
+          },
+          {
+            "name": "correlation_strength",
+            "score": 80.1,
+            "weight": 0.15,
+            "explanation": "its 2 evidence items are inter-linked with mean correlation confidence 0.80 (strongest: VERY_STRONG)"
+          },
+          {
+            "name": "timeline_span",
+            "score": 0.0,
+            "weight": 0.1,
+            "explanation": "activity spans 0.0 days across its evidence set"
+          }
+        ],
+        "confidence_score": 72.3,
+        "confidence_level": "HIGH",
+        "relationship_strength": "VERY_STRONG",
+        "risk_level": "HIGH",
+        "threat_flagged": true,
+        "first_seen": "2026-08-21T06:37:35.208Z",
+        "last_seen": "2026-08-21T06:37:35.842Z",
+        "explanation": "Suspect anchor '+9779841002233' (phones) scores 72.3/100 (HIGH, risk HIGH) across 2 evidence items: EVID_00027, EVID_00030. Identity strength: 85/100 (weight 0.25) - '+9779841002233' is a phone - identity weight 85/100 for this anchor type. Evidence count: 50/100 (weight 0.20) - appears in 2 of 8 evidence items. Evidence confidence: 93/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 93/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-bonus-claim.xyz/verify?ref=dsn2026' in EVID_00027. Correlation strength: 80/100 (weight 0.15) - its 2 evidence items are inter-linked with mean correlation confidence 0.80 (strongest: VERY_STRONG). Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: phones:+9779812345678."
+      },
+      {
+        "suspect_id": "SUSPECT_CASE_0CD406813C_01",
+        "identity_type": "bank_accounts",
+        "identity_value": "01903015472901",
+        "aliases": [
+          "emails:reward.center2026@gmail.com",
+          "esewa_ids:+9779812345678",
+          "phones:+9779812345678",
+          "phones:+9779841002233"
+        ],
+        "evidence_ids": [
+          "EVID_00027"
+        ],
+        "evidence_count": 1,
+        "components": [
+          {
+            "name": "identity_strength",
+            "score": 100.0,
+            "weight": 0.25,
+            "explanation": "'01903015472901' is a bank_account - identity weight 100/100 for this anchor type"
+          },
+          {
+            "name": "evidence_count",
+            "score": 25.0,
+            "weight": 0.2,
+            "explanation": "appears in 1 of 8 evidence items"
+          },
+          {
+            "name": "evidence_confidence",
+            "score": 100.0,
+            "weight": 0.15,
+            "explanation": "mean Phase-1 evidence confidence of its evidence set is 100/100"
+          },
+          {
+            "name": "threat_intelligence",
+            "score": 100.0,
+            "weight": 0.15,
+            "explanation": "co-occurs with threat-flagged indicator 'https://esewa-bonus-claim.xyz/verify?ref=dsn2026' in EVID_00027"
+          },
+          {
+            "name": "correlation_strength",
+            "score": 50.0,
+            "weight": 0.15,
+            "explanation": "fewer than two evidence items (or no correlation input); neutral 50"
+          },
+          {
+            "name": "timeline_span",
+            "score": 0.0,
+            "weight": 0.1,
+            "explanation": "activity spans 0.0 days across its evidence set"
+          }
+        ],
+        "confidence_score": 67.5,
+        "confidence_level": "HIGH",
+        "relationship_strength": "N/A",
+        "risk_level": "HIGH",
+        "threat_flagged": true,
+        "first_seen": "2026-08-21T06:37:35.208Z",
+        "last_seen": "2026-08-21T06:37:35.208Z",
+        "explanation": "Suspect anchor '01903015472901' (bank_accounts) scores 67.5/100 (HIGH, risk HIGH) across 1 evidence item: EVID_00027. Identity strength: 100/100 (weight 0.25) - '01903015472901' is a bank_account - identity weight 100/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 8 evidence items. Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-bonus-claim.xyz/verify?ref=dsn2026' in EVID_00027. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: emails:reward.center2026@gmail.com, esewa_ids:+9779812345678, phones:+9779812345678, phones:+9779841002233."
+      },
+      {
+        "suspect_id": "SUSPECT_CASE_0CD406813C_03",
+        "identity_type": "emails",
+        "identity_value": "sunita.rai88@gmail.com",
+        "aliases": [
+          "emails:reward.center2026@gmail.com",
+          "esewa_ids:+9779812345678",
+          "phones:+9779812345678"
+        ],
+        "evidence_ids": [
+          "EVID_00029"
+        ],
+        "evidence_count": 1,
+        "components": [
+          {
+            "name": "identity_strength",
+            "score": 75.0,
+            "weight": 0.25,
+            "explanation": "'sunita.rai88@gmail.com' is a email - identity weight 75/100 for this anchor type"
+          },
+          {
+            "name": "evidence_count",
+            "score": 25.0,
+            "weight": 0.2,
+            "explanation": "appears in 1 of 8 evidence items"
+          },
+          {
+            "name": "evidence_confidence",
+            "score": 100.0,
+            "weight": 0.15,
+            "explanation": "mean Phase-1 evidence confidence of its evidence set is 100/100"
+          },
+          {
+            "name": "threat_intelligence",
+            "score": 100.0,
+            "weight": 0.15,
+            "explanation": "co-occurs with threat-flagged indicator 'https://esewa-bonus-claim.xyz/verify?ref=dsn2026' in EVID_00029"
+          },
+          {
+            "name": "correlation_strength",
+            "score": 50.0,
+            "weight": 0.15,
+            "explanation": "fewer than two evidence items (or no correlation input); neutral 50"
+          },
+          {
+            "name": "timeline_span",
+            "score": 0.0,
+            "weight": 0.1,
+            "explanation": "activity spans 0.0 days across its evidence set"
+          }
+        ],
+        "confidence_score": 61.2,
+        "confidence_level": "HIGH",
+        "relationship_strength": "N/A",
+        "risk_level": "HIGH",
+        "threat_flagged": true,
+        "first_seen": "2026-08-21T06:37:35.716Z",
+        "last_seen": "2026-08-21T06:37:35.716Z",
+        "explanation": "Suspect anchor 'sunita.rai88@gmail.com' (emails) scores 61.2/100 (HIGH, risk HIGH) across 1 evidence item: EVID_00029. Identity strength: 75/100 (weight 0.25) - 'sunita.rai88@gmail.com' is a email - identity weight 75/100 for this anchor type. Evidence count: 25/100 (weight 0.20) - appears in 1 of 8 evidence items. Evidence confidence: 100/100 (weight 0.15) - mean Phase-1 evidence confidence of its evidence set is 100/100. Threat intelligence: 100/100 (weight 0.15) - co-occurs with threat-flagged indicator 'https://esewa-bonus-claim.xyz/verify?ref=dsn2026' in EVID_00029. Correlation strength: 50/100 (weight 0.15) - fewer than two evidence items (or no correlation input); neutral 50. Timeline span: 0/100 (weight 0.10) - activity spans 0.0 days across its evidence set. Co-occurring identity entities: emails:reward.center2026@gmail.com, esewa_ids:+9779812345678, phones:+9779812345678."
+      }
+    ],
+    "top_suspect": "SUSPECT_CASE_0CD406813C_04",
+    "analysis_time_ms": 0.8,
+    "methodology": "Deterministic weighted scoring over identity anchors (no machine learning); every component carries its own explanation."
+  }
+}

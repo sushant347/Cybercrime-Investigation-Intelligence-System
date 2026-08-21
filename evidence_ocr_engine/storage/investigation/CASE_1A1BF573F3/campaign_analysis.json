@@ -1,0 +1,117 @@
+{
+  "report_type": "campaign_analysis",
+  "report_version": 15,
+  "schema_version": "2.0",
+  "case_id": "CASE_1A1BF573F3",
+  "generated_at": "2026-08-21T03:27:53.212Z",
+  "report": {
+    "case_id": "CASE_1A1BF573F3",
+    "campaign_count": 1,
+    "campaigns": [
+      {
+        "campaign_id": "CAMP_CASE_1A1BF573F3_01",
+        "case_id": "CASE_1A1BF573F3",
+        "members": [
+          "EVID_00016",
+          "EVID_00017",
+          "EVID_00019",
+          "EVID_00021",
+          "EVID_00022"
+        ],
+        "memberships": [
+          {
+            "evidence_id": "EVID_00016",
+            "linked_via": [
+              "EVID_00022"
+            ],
+            "link_reasons": [
+              "linked to EVID_00022: Both items reference the same emails: sunita.gurung21@gmail.com (confidence 0.71)"
+            ],
+            "membership_explanation": "EVID_00016 belongs to this campaign through 1 weighted correlation link: linked to EVID_00022: Both items reference the same emails: sunita.gurung21@gmail.com (confidence 0.71)."
+          },
+          {
+            "evidence_id": "EVID_00017",
+            "linked_via": [
+              "EVID_00019"
+            ],
+            "link_reasons": [
+              "linked to EVID_00019: Both items reference the same transaction ids: dsn2026 (confidence 0.70)"
+            ],
+            "membership_explanation": "EVID_00017 belongs to this campaign through 1 weighted correlation link: linked to EVID_00019: Both items reference the same transaction ids: dsn2026 (confidence 0.70)."
+          },
+          {
+            "evidence_id": "EVID_00019",
+            "linked_via": [
+              "EVID_00017",
+              "EVID_00021",
+              "EVID_00022"
+            ],
+            "link_reasons": [
+              "linked to EVID_00022: Both items reference the same phones: +9779801122334, +9779847011223 (confidence 0.92)",
+              "linked to EVID_00017: Both items reference the same transaction ids: dsn2026 (confidence 0.70)",
+              "linked to EVID_00021: Both items reference the same phones: +9779847011223 (confidence 0.57)"
+            ],
+            "membership_explanation": "EVID_00019 belongs to this campaign through 3 weighted correlation links: linked to EVID_00022: Both items reference the same phones: +9779801122334, +9779847011223 (confidence 0.92); linked to EVID_00017: Both items reference the same transaction ids: dsn2026 (confidence 0.70); linked to EVID_00021: Both items reference the same phones: +9779847011223 (confidence 0.57)."
+          },
+          {
+            "evidence_id": "EVID_00021",
+            "linked_via": [
+              "EVID_00019",
+              "EVID_00022"
+            ],
+            "link_reasons": [
+              "linked to EVID_00022: Both items reference the same phones: +9779847011223 (confidence 0.59)",
+              "linked to EVID_00019: Both items reference the same phones: +9779847011223 (confidence 0.57)"
+            ],
+            "membership_explanation": "EVID_00021 belongs to this campaign through 2 weighted correlation links: linked to EVID_00022: Both items reference the same phones: +9779847011223 (confidence 0.59); linked to EVID_00019: Both items reference the same phones: +9779847011223 (confidence 0.57)."
+          },
+          {
+            "evidence_id": "EVID_00022",
+            "linked_via": [
+              "EVID_00016",
+              "EVID_00019",
+              "EVID_00021"
+            ],
+            "link_reasons": [
+              "linked to EVID_00019: Both items reference the same phones: +9779801122334, +9779847011223 (confidence 0.92)",
+              "linked to EVID_00016: Both items reference the same emails: sunita.gurung21@gmail.com (confidence 0.71)",
+              "linked to EVID_00021: Both items reference the same phones: +9779847011223 (confidence 0.59)"
+            ],
+            "membership_explanation": "EVID_00022 belongs to this campaign through 3 weighted correlation links: linked to EVID_00019: Both items reference the same phones: +9779801122334, +9779847011223 (confidence 0.92); linked to EVID_00016: Both items reference the same emails: sunita.gurung21@gmail.com (confidence 0.71); linked to EVID_00021: Both items reference the same phones: +9779847011223 (confidence 0.59)."
+          }
+        ],
+        "campaign_confidence": 0.6975,
+        "signature": [
+          "domains:esewa-cashback-offer.xyz",
+          "phones:+9779847011223",
+          "transaction_ids:dsn2026",
+          "dates:11 june 2026",
+          "domains:gmail.com"
+        ],
+        "shared_brands": [],
+        "shared_domains": [
+          "esewa-cashback-offer.xyz",
+          "gmail.com"
+        ],
+        "timeline_start": "2026-08-03T14:00:03.497Z",
+        "timeline_end": "2026-08-03T14:00:53.814Z",
+        "statistics": {
+          "member_count": 5.0,
+          "internal_links": 5.0,
+          "mean_link_confidence": 0.6975,
+          "mean_ocr_confidence": 0.9795
+        },
+        "summary": "Campaign CAMP_CASE_1A1BF573F3_01 groups 5 evidence items with mean link confidence 0.70. Shared indicators: domains:esewa-cashback-offer.xyz, phones:+9779847011223, transaction_ids:dsn2026, dates:11 june 2026, domains:gmail.com. Active 2026-08-03T14:00:03.497Z to 2026-08-03T14:00:53.814Z."
+      }
+    ],
+    "unclustered_evidence": [
+      "EVID_00015",
+      "EVID_00018",
+      "EVID_00020",
+      "EVID_00023",
+      "EVID_00024",
+      "EVID_00025"
+    ],
+    "analysis_time_ms": 0.2
+  }
+}

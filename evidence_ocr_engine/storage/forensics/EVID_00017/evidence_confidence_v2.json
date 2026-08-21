@@ -1,0 +1,60 @@
+{
+  "report_type": "evidence_confidence",
+  "report_version": 2,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00017",
+  "case_id": "CASE_1A1BF573F3",
+  "generated_at": "2026-08-21T03:27:25.880Z",
+  "report": {
+    "evidence_id": "EVID_00017",
+    "case_id": "CASE_1A1BF573F3",
+    "components": [
+      {
+        "name": "image_quality",
+        "score": 90.3,
+        "weight": 0.2,
+        "available": true,
+        "explanation": "Module-1 overall image quality 90.3"
+      },
+      {
+        "name": "forgery",
+        "score": 91.4,
+        "weight": 0.2,
+        "available": true,
+        "explanation": "inverted Module-4 forgery score (8.6)"
+      },
+      {
+        "name": "metadata",
+        "score": 80.0,
+        "weight": 0.1,
+        "available": true,
+        "explanation": "1 metadata consistency finding(s), -20 each"
+      },
+      {
+        "name": "hash_verification",
+        "score": 100.0,
+        "weight": 0.2,
+        "available": true,
+        "explanation": "chain-of-custody SHA-256 verified (2 independent check(s))"
+      },
+      {
+        "name": "ocr_confidence",
+        "score": 0.0,
+        "weight": 0.2,
+        "available": false,
+        "explanation": "analysis not available"
+      },
+      {
+        "name": "processing",
+        "score": 100.0,
+        "weight": 0.1,
+        "available": true,
+        "explanation": "all pipeline stages completed"
+      }
+    ],
+    "confidence_score": 92.9,
+    "confidence_level": "VERY_HIGH",
+    "explanation": "Evidence confidence is 92.9/100 (VERY_HIGH), derived from 5 verified dimensions. Strongest signal: hash_verification (100/100). Weakest signal: metadata (80/100).",
+    "computed_at": "2026-08-21T03:27:25.880Z"
+  }
+}

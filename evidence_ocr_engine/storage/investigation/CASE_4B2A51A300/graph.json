@@ -1,0 +1,3137 @@
+{
+  "report_type": "graph",
+  "report_version": 4,
+  "schema_version": "2.0",
+  "case_id": "CASE_4B2A51A300",
+  "generated_at": "2026-08-21T17:57:23.042Z",
+  "report": {
+    "case_id": "CASE_4B2A51A300",
+    "directed": false,
+    "nodes": [
+      {
+        "id": "case:CASE_4B2A51A300",
+        "node_type": "case",
+        "label": "CASE_4B2A51A300",
+        "properties": {
+          "degree_centrality": "0.236364",
+          "betweenness_centrality": "0.202694",
+          "pagerank": "0.031259",
+          "graph_importance": "0.255600",
+          "community_id": "5",
+          "community_size": "7"
+        }
+      },
+      {
+        "id": "evidence:EVID_00034",
+        "node_type": "evidence",
+        "label": "EVID_00034",
+        "properties": {
+          "file_name": "07_fake_support_profile.jpg",
+          "upload_time": "2026-08-21T06:42:54.755Z",
+          "degree_centrality": "0.218182",
+          "betweenness_centrality": "0.060920",
+          "pagerank": "0.043777",
+          "graph_importance": "0.257358",
+          "community_id": "2",
+          "community_size": "14"
+        }
+      },
+      {
+        "id": "domain:gmail.com",
+        "node_type": "domain",
+        "label": "gmail.com",
+        "properties": {
+          "degree_centrality": "0.218182",
+          "betweenness_centrality": "0.184695",
+          "pagerank": "0.047689",
+          "graph_importance": "0.317872",
+          "community_id": "1",
+          "community_size": "15"
+        }
+      },
+      {
+        "id": "domain:khalti-kyc-verify.top",
+        "node_type": "domain",
+        "label": "khalti-kyc-verify.top",
+        "properties": {
+          "degree_centrality": "0.072727",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.021951",
+          "graph_importance": "0.111019",
+          "community_id": "2",
+          "community_size": "14"
+        }
+      },
+      {
+        "id": "email:reward.center2026@gmail.com",
+        "node_type": "email",
+        "label": "reward.center2026@gmail.com",
+        "properties": {
+          "degree_centrality": "0.127273",
+          "betweenness_centrality": "0.009611",
+          "pagerank": "0.031432",
+          "graph_importance": "0.166964",
+          "community_id": "1",
+          "community_size": "15"
+        }
+      },
+      {
+        "id": "wallet:+9779812345678",
+        "node_type": "wallet",
+        "label": "+9779812345678",
+        "properties": {
+          "degree_centrality": "0.090909",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.023238",
+          "graph_importance": "0.120314",
+          "community_id": "2",
+          "community_size": "14"
+        }
+      },
+      {
+        "id": "phone_number:+9779812345678",
+        "node_type": "phone_number",
+        "label": "+9779812345678",
+        "properties": {
+          "degree_centrality": "0.218182",
+          "betweenness_centrality": "0.136166",
+          "pagerank": "0.057745",
+          "graph_importance": "0.345084",
+          "community_id": "1",
+          "community_size": "15"
+        }
+      },
+      {
+        "id": "evidence:EVID_00035",
+        "node_type": "evidence",
+        "label": "EVID_00035",
+        "properties": {
+          "file_name": "06_police_complaint.pdf",
+          "upload_time": "2026-08-21T06:43:01.064Z",
+          "degree_centrality": "0.436364",
+          "betweenness_centrality": "0.378530",
+          "pagerank": "0.102389",
+          "graph_importance": "0.669758",
+          "community_id": "2",
+          "community_size": "14"
+        }
+      },
+      {
+        "id": "bank_account:01903015472901",
+        "node_type": "bank_account",
+        "label": "01903015472901",
+        "properties": {
+          "degree_centrality": "0.054545",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.014648",
+          "graph_importance": "0.075287",
+          "community_id": "1",
+          "community_size": "15"
+        }
+      },
+      {
+        "id": "date:2026-08-02",
+        "node_type": "date",
+        "label": "2026-08-02",
+        "properties": {
+          "degree_centrality": "0.054545",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.015460",
+          "graph_importance": "0.078857",
+          "community_id": "4",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "domain:esewa-bonus-claim.xyz",
+        "node_type": "domain",
+        "label": "esewa-bonus-claim.xyz",
+        "properties": {
+          "degree_centrality": "0.109091",
+          "betweenness_centrality": "0.072896",
+          "pagerank": "0.031452",
+          "graph_importance": "0.185563",
+          "community_id": "3",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "money:npr 10250",
+        "node_type": "money",
+        "label": "NPR 10250",
+        "properties": {
+          "degree_centrality": "0.018182",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.006617",
+          "graph_importance": "0.032720",
+          "community_id": "2",
+          "community_size": "14"
+        }
+      },
+      {
+        "id": "money:npr 750",
+        "node_type": "money",
+        "label": "NPR 750",
+        "properties": {
+          "degree_centrality": "0.072727",
+          "betweenness_centrality": "0.002020",
+          "pagerank": "0.019118",
+          "graph_importance": "0.099277",
+          "community_id": "2",
+          "community_size": "14"
+        }
+      },
+      {
+        "id": "money:npr 9500",
+        "node_type": "money",
+        "label": "NPR 9500",
+        "properties": {
+          "degree_centrality": "0.018182",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.006617",
+          "graph_importance": "0.032720",
+          "community_id": "2",
+          "community_size": "14"
+        }
+      },
+      {
+        "id": "phone_number:+9779856770011",
+        "node_type": "phone_number",
+        "label": "+9779856770011",
+        "properties": {
+          "degree_centrality": "0.036364",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.011006",
+          "graph_importance": "0.055645",
+          "community_id": "4",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "transaction:khl-2026-0802-44190",
+        "node_type": "transaction",
+        "label": "KHL-2026-0802-44190",
+        "properties": {
+          "degree_centrality": "0.036364",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.011006",
+          "graph_importance": "0.055645",
+          "community_id": "4",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "url:http://khalti-kyc-verify.top/login",
+        "node_type": "url",
+        "label": "http://khalti-kyc-verify.top/login",
+        "properties": {
+          "degree_centrality": "0.054545",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.017181",
+          "graph_importance": "0.086417",
+          "community_id": "2",
+          "community_size": "14"
+        }
+      },
+      {
+        "id": "url:https://esewa-bonus-claim.xyz/verify?ref=kyc2026",
+        "node_type": "url",
+        "label": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026",
+        "properties": {
+          "degree_centrality": "0.054545",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.017410",
+          "graph_importance": "0.087424",
+          "community_id": "3",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "evidence:EVID_00036",
+        "node_type": "evidence",
+        "label": "EVID_00036",
+        "properties": {
+          "file_name": "05_transactions.csv",
+          "upload_time": "2026-08-21T06:43:01.325Z",
+          "degree_centrality": "0.218182",
+          "betweenness_centrality": "0.114639",
+          "pagerank": "0.044116",
+          "graph_importance": "0.277648",
+          "community_id": "4",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "date:2026-07-28",
+        "node_type": "date",
+        "label": "2026-07-28",
+        "properties": {
+          "degree_centrality": "0.018182",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.007133",
+          "graph_importance": "0.034984",
+          "community_id": "4",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "date:2026-08-03",
+        "node_type": "date",
+        "label": "2026-08-03",
+        "properties": {
+          "degree_centrality": "0.018182",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.007133",
+          "graph_importance": "0.034984",
+          "community_id": "4",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "evidence:EVID_00037",
+        "node_type": "evidence",
+        "label": "EVID_00037",
+        "properties": {
+          "file_name": "04_kyc_phishing_email.txt",
+          "upload_time": "2026-08-21T06:43:01.370Z",
+          "degree_centrality": "0.400000",
+          "betweenness_centrality": "0.251077",
+          "pagerank": "0.093307",
+          "graph_importance": "0.577960",
+          "community_id": "3",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "date:02 aug 2026",
+        "node_type": "date",
+        "label": "02 Aug 2026",
+        "properties": {
+          "degree_centrality": "0.018182",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.006671",
+          "graph_importance": "0.032954",
+          "community_id": "3",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "email:bikash.thapa14@gmail.com",
+        "node_type": "email",
+        "label": "bikash.thapa14@gmail.com",
+        "properties": {
+          "degree_centrality": "0.018182",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.006671",
+          "graph_importance": "0.032954",
+          "community_id": "3",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "time:08:55:31",
+        "node_type": "time",
+        "label": "08:55:31",
+        "properties": {
+          "degree_centrality": "0.018182",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.006671",
+          "graph_importance": "0.032954",
+          "community_id": "3",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "evidence:EVID_00038",
+        "node_type": "evidence",
+        "label": "EVID_00038",
+        "properties": {
+          "file_name": "03_khalti_receipt.jpg",
+          "upload_time": "2026-08-21T06:43:01.434Z",
+          "degree_centrality": "0.200000",
+          "betweenness_centrality": "0.089436",
+          "pagerank": "0.043077",
+          "graph_importance": "0.260626",
+          "community_id": "4",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "time:03:18 pm",
+        "node_type": "time",
+        "label": "03:18 PM",
+        "properties": {
+          "degree_centrality": "0.018182",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.007067",
+          "graph_importance": "0.034697",
+          "community_id": "4",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "evidence:EVID_00039",
+        "node_type": "evidence",
+        "label": "EVID_00039",
+        "properties": {
+          "file_name": "02_whatsapp_chat.jpg",
+          "upload_time": "2026-08-21T06:43:07.959Z",
+          "degree_centrality": "0.200000",
+          "betweenness_centrality": "0.060673",
+          "pagerank": "0.039503",
+          "graph_importance": "0.234852",
+          "community_id": "2",
+          "community_size": "14"
+        }
+      },
+      {
+        "id": "evidence:EVID_00040",
+        "node_type": "evidence",
+        "label": "EVID_00040",
+        "properties": {
+          "file_name": "01_khalti_kyc_sms.jpg",
+          "upload_time": "2026-08-21T06:43:11.546Z",
+          "degree_centrality": "0.036364",
+          "betweenness_centrality": "0.036364",
+          "pagerank": "0.008179",
+          "graph_importance": "0.055945",
+          "community_id": "5",
+          "community_size": "7"
+        }
+      },
+      {
+        "id": "evidence:EVID_00041",
+        "node_type": "evidence",
+        "label": "EVID_00041",
+        "properties": {
+          "file_name": "http_khalti-kyc-verify.top_login.url",
+          "upload_time": "2026-08-21T06:43:15.002Z",
+          "degree_centrality": "0.127273",
+          "betweenness_centrality": "0.039338",
+          "pagerank": "0.025008",
+          "graph_importance": "0.149132",
+          "community_id": "2",
+          "community_size": "14"
+        }
+      },
+      {
+        "id": "evidence:EVID_00042",
+        "node_type": "evidence",
+        "label": "EVID_00042",
+        "properties": {
+          "file_name": "https_esewa-bonus-claim.xyz_verify_ref_KYC2026.url",
+          "upload_time": "2026-08-21T06:43:15.097Z",
+          "degree_centrality": "0.109091",
+          "betweenness_centrality": "0.044444",
+          "pagerank": "0.022861",
+          "graph_importance": "0.137849",
+          "community_id": "3",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_4B2A51A300:EVID_00035",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00035 (06_police_complaint.pdf); stages: social_engineering, credential_theft, financial_transaction, post_attack",
+        "properties": {
+          "timestamp": "2026-08-02T00:00:00+00:00",
+          "time_source": "content_date_only",
+          "timestamp_inferred": "true",
+          "degree_centrality": "0.018182",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.003068",
+          "graph_importance": "0.017119",
+          "community_id": "2",
+          "community_size": "14"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_4B2A51A300:EVID_00036",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00036 (05_transactions.csv); stages: financial_transaction",
+        "properties": {
+          "timestamp": "2026-08-02T00:00:00+00:00",
+          "time_source": "content_date_only",
+          "timestamp_inferred": "true",
+          "degree_centrality": "0.018182",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.003119",
+          "graph_importance": "0.017343",
+          "community_id": "4",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_4B2A51A300:EVID_00037",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00037 (04_kyc_phishing_email.txt); stages: initial_contact, social_engineering, credential_theft, financial_transaction",
+        "properties": {
+          "timestamp": "2026-08-02T08:55:31+00:00",
+          "time_source": "content_labeled_date_time",
+          "timestamp_inferred": "false",
+          "degree_centrality": "0.018182",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.003242",
+          "graph_importance": "0.017886",
+          "community_id": "3",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_4B2A51A300:EVID_00038",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00038 (03_khalti_receipt.jpg); stages: financial_transaction",
+        "properties": {
+          "timestamp": "2026-08-02T15:18:00+00:00",
+          "time_source": "content_date_time",
+          "timestamp_inferred": "false",
+          "degree_centrality": "0.018182",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.003298",
+          "graph_importance": "0.018132",
+          "community_id": "4",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_4B2A51A300:EVID_00034",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00034 (07_fake_support_profile.jpg); stages: social_engineering, financial_transaction",
+        "properties": {
+          "timestamp": "2026-08-21T06:42:54.755000+00:00",
+          "time_source": "upload_time_fallback",
+          "timestamp_inferred": "true",
+          "degree_centrality": "0.018182",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.002908",
+          "graph_importance": "0.016415",
+          "community_id": "2",
+          "community_size": "14"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_4B2A51A300:EVID_00039",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00039 (02_whatsapp_chat.jpg); stages: initial_contact, financial_transaction",
+        "properties": {
+          "timestamp": "2026-08-21T06:43:07.959000+00:00",
+          "time_source": "upload_time_fallback",
+          "timestamp_inferred": "true",
+          "degree_centrality": "0.018182",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.002911",
+          "graph_importance": "0.016431",
+          "community_id": "2",
+          "community_size": "14"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_4B2A51A300:EVID_00040",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00040 (01_khalti_kyc_sms.jpg)",
+        "properties": {
+          "timestamp": "2026-08-21T06:43:11.546000+00:00",
+          "time_source": "upload_time_fallback",
+          "timestamp_inferred": "true",
+          "degree_centrality": "0.018182",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.005286",
+          "graph_importance": "0.026868",
+          "community_id": "5",
+          "community_size": "7"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_4B2A51A300:EVID_00041",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00041 (http_khalti-kyc-verify.top_login.url); stages: social_engineering, credential_theft, financial_transaction",
+        "properties": {
+          "timestamp": "2026-08-21T06:43:15.002000+00:00",
+          "time_source": "upload_time_fallback",
+          "timestamp_inferred": "true",
+          "degree_centrality": "0.018182",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.002927",
+          "graph_importance": "0.016500",
+          "community_id": "2",
+          "community_size": "14"
+        }
+      },
+      {
+        "id": "timeline_event:CASE_4B2A51A300:EVID_00042",
+        "node_type": "timeline_event",
+        "label": "Evidence EVID_00042 (https_esewa-bonus-claim.xyz_verify_ref_KYC2026.url); stages: social_engineering, financial_transaction",
+        "properties": {
+          "timestamp": "2026-08-21T06:43:15.097000+00:00",
+          "time_source": "upload_time_fallback",
+          "timestamp_inferred": "true",
+          "degree_centrality": "0.018182",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.002938",
+          "graph_importance": "0.016548",
+          "community_id": "3",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "case:CASE_0CD406813C",
+        "node_type": "case",
+        "label": "CASE_0CD406813C",
+        "properties": {
+          "degree_centrality": "0.145455",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.015924",
+          "graph_importance": "0.099076",
+          "community_id": "5",
+          "community_size": "7"
+        }
+      },
+      {
+        "id": "evidence:EVID_00027",
+        "node_type": "evidence",
+        "label": "EVID_00027",
+        "properties": {
+          "case_id": "CASE_0CD406813C",
+          "degree_centrality": "0.109091",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.024138",
+          "graph_importance": "0.127904",
+          "community_id": "1",
+          "community_size": "15"
+        }
+      },
+      {
+        "id": "evidence:EVID_00029",
+        "node_type": "evidence",
+        "label": "EVID_00029",
+        "properties": {
+          "case_id": "CASE_0CD406813C",
+          "degree_centrality": "0.090909",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.020073",
+          "graph_importance": "0.106404",
+          "community_id": "1",
+          "community_size": "15"
+        }
+      },
+      {
+        "id": "evidence:EVID_00033",
+        "node_type": "evidence",
+        "label": "EVID_00033",
+        "properties": {
+          "case_id": "CASE_0CD406813C",
+          "degree_centrality": "0.036364",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.007398",
+          "graph_importance": "0.039789",
+          "community_id": "3",
+          "community_size": "10"
+        }
+      },
+      {
+        "id": "evidence:EVID_00031",
+        "node_type": "evidence",
+        "label": "EVID_00031",
+        "properties": {
+          "case_id": "CASE_0CD406813C",
+          "degree_centrality": "0.072727",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.016048",
+          "graph_importance": "0.085076",
+          "community_id": "1",
+          "community_size": "15"
+        }
+      },
+      {
+        "id": "evidence:EVID_00028",
+        "node_type": "evidence",
+        "label": "EVID_00028",
+        "properties": {
+          "case_id": "CASE_0CD406813C",
+          "degree_centrality": "0.036364",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.007400",
+          "graph_importance": "0.039794",
+          "community_id": "1",
+          "community_size": "15"
+        }
+      },
+      {
+        "id": "evidence:EVID_00030",
+        "node_type": "evidence",
+        "label": "EVID_00030",
+        "properties": {
+          "case_id": "CASE_0CD406813C",
+          "degree_centrality": "0.036364",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.007400",
+          "graph_importance": "0.039794",
+          "community_id": "1",
+          "community_size": "15"
+        }
+      },
+      {
+        "id": "evidence:EVID_00032",
+        "node_type": "evidence",
+        "label": "EVID_00032",
+        "properties": {
+          "case_id": "CASE_0CD406813C",
+          "degree_centrality": "0.036364",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.007400",
+          "graph_importance": "0.039794",
+          "community_id": "1",
+          "community_size": "15"
+        }
+      },
+      {
+        "id": "case:CASE_EE8250FB76",
+        "node_type": "case",
+        "label": "CASE_EE8250FB76",
+        "properties": {
+          "degree_centrality": "0.036364",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.005318",
+          "graph_importance": "0.030646",
+          "community_id": "5",
+          "community_size": "7"
+        }
+      },
+      {
+        "id": "evidence:EVID_00005",
+        "node_type": "evidence",
+        "label": "EVID_00005",
+        "properties": {
+          "case_id": "CASE_EE8250FB76",
+          "degree_centrality": "0.036364",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.004138",
+          "graph_importance": "0.025457",
+          "community_id": "1",
+          "community_size": "15"
+        }
+      },
+      {
+        "id": "case:CASE_185915593C",
+        "node_type": "case",
+        "label": "CASE_185915593C",
+        "properties": {
+          "degree_centrality": "0.054545",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.005578",
+          "graph_importance": "0.035423",
+          "community_id": "5",
+          "community_size": "7"
+        }
+      },
+      {
+        "id": "evidence:EVID_00008",
+        "node_type": "evidence",
+        "label": "EVID_00008",
+        "properties": {
+          "case_id": "CASE_185915593C",
+          "degree_centrality": "0.036364",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.004130",
+          "graph_importance": "0.025422",
+          "community_id": "1",
+          "community_size": "15"
+        }
+      },
+      {
+        "id": "evidence:EVID_00014",
+        "node_type": "evidence",
+        "label": "EVID_00014",
+        "properties": {
+          "case_id": "CASE_185915593C",
+          "degree_centrality": "0.036364",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.004130",
+          "graph_importance": "0.025422",
+          "community_id": "1",
+          "community_size": "15"
+        }
+      },
+      {
+        "id": "case:CASE_1A1BF573F3",
+        "node_type": "case",
+        "label": "CASE_1A1BF573F3",
+        "properties": {
+          "degree_centrality": "0.054545",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.005578",
+          "graph_importance": "0.035423",
+          "community_id": "5",
+          "community_size": "7"
+        }
+      },
+      {
+        "id": "evidence:EVID_00016",
+        "node_type": "evidence",
+        "label": "EVID_00016",
+        "properties": {
+          "case_id": "CASE_1A1BF573F3",
+          "degree_centrality": "0.036364",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.004130",
+          "graph_importance": "0.025422",
+          "community_id": "1",
+          "community_size": "15"
+        }
+      },
+      {
+        "id": "evidence:EVID_00022",
+        "node_type": "evidence",
+        "label": "EVID_00022",
+        "properties": {
+          "case_id": "CASE_1A1BF573F3",
+          "degree_centrality": "0.036364",
+          "betweenness_centrality": "0.000000",
+          "pagerank": "0.004130",
+          "graph_importance": "0.025422",
+          "community_id": "1",
+          "community_size": "15"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "source": "case:CASE_4B2A51A300",
+        "target": "evidence:EVID_00034",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00034"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00034 belongs to CASE_4B2A51A300",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00034",
+        "target": "domain:gmail.com",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00034"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00034 mentions gmail.com",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00034",
+        "target": "domain:khalti-kyc-verify.top",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00034"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00034 mentions khalti-kyc-verify.top",
+        "backbone": false
+      },
+      {
+        "source": "domain:khalti-kyc-verify.top",
+        "target": "evidence:EVID_00034",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00034"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "khalti-kyc-verify.top is flagged malicious by threat intelligence (ml:xgboost)",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00034",
+        "target": "email:reward.center2026@gmail.com",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00034"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00034 mentions reward.center2026@gmail.com",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00034",
+        "target": "wallet:+9779812345678",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00034"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00034 mentions +9779812345678",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00034",
+        "target": "phone_number:+9779812345678",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00034"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00034 mentions +9779812345678",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_4B2A51A300",
+        "target": "evidence:EVID_00035",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00035 belongs to CASE_4B2A51A300",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00035",
+        "target": "bank_account:01903015472901",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00035 mentions 01903015472901",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00035",
+        "target": "date:2026-08-02",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00035 mentions 2026-08-02",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00035",
+        "target": "domain:esewa-bonus-claim.xyz",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00035 mentions esewa-bonus-claim.xyz",
+        "backbone": false
+      },
+      {
+        "source": "domain:esewa-bonus-claim.xyz",
+        "target": "evidence:EVID_00035",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "esewa-bonus-claim.xyz is flagged malicious by threat intelligence (ml:xgboost)",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00035",
+        "target": "domain:gmail.com",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00035 mentions gmail.com",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00035",
+        "target": "domain:khalti-kyc-verify.top",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00035 mentions khalti-kyc-verify.top",
+        "backbone": false
+      },
+      {
+        "source": "domain:khalti-kyc-verify.top",
+        "target": "evidence:EVID_00035",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "khalti-kyc-verify.top is flagged malicious by threat intelligence (ml:xgboost)",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00035",
+        "target": "email:reward.center2026@gmail.com",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00035 mentions reward.center2026@gmail.com",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00035",
+        "target": "wallet:+9779812345678",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00035 mentions +9779812345678",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00035",
+        "target": "money:npr 10250",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00035 mentions NPR 10250",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00035",
+        "target": "money:npr 750",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00035 mentions NPR 750",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00035",
+        "target": "money:npr 9500",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00035 mentions NPR 9500",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00035",
+        "target": "phone_number:+9779812345678",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00035 mentions +9779812345678",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00035",
+        "target": "phone_number:+9779856770011",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00035 mentions +9779856770011",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00035",
+        "target": "transaction:khl-2026-0802-44190",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00035 mentions KHL-2026-0802-44190",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00035",
+        "target": "url:http://khalti-kyc-verify.top/login",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00035 mentions http://khalti-kyc-verify.top/login",
+        "backbone": false
+      },
+      {
+        "source": "url:http://khalti-kyc-verify.top/login",
+        "target": "evidence:EVID_00035",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "http://khalti-kyc-verify.top/login is flagged malicious by threat intelligence (ml:xgboost)",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00035",
+        "target": "url:https://esewa-bonus-claim.xyz/verify?ref=kyc2026",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00035 mentions https://esewa-bonus-claim.xyz/verify?ref=KYC2026",
+        "backbone": false
+      },
+      {
+        "source": "url:https://esewa-bonus-claim.xyz/verify?ref=kyc2026",
+        "target": "evidence:EVID_00035",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026 is flagged malicious by threat intelligence (ml:xgboost)",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_4B2A51A300",
+        "target": "evidence:EVID_00036",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00036"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00036 belongs to CASE_4B2A51A300",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00036",
+        "target": "date:2026-07-28",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00036"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00036 mentions 2026-07-28",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00036",
+        "target": "date:2026-08-02",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00036"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00036 mentions 2026-08-02",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00036",
+        "target": "date:2026-08-03",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00036"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00036 mentions 2026-08-03",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00036",
+        "target": "wallet:+9779812345678",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00036"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00036 mentions +9779812345678",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00036",
+        "target": "phone_number:+9779812345678",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00036"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00036 mentions +9779812345678",
+        "backbone": false
+      },
+      {
+        "source": "case:CASE_4B2A51A300",
+        "target": "evidence:EVID_00037",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00037"
+        ],
+        "timestamp": "2026-08-02T08:55:31+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00037 belongs to CASE_4B2A51A300",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00037",
+        "target": "bank_account:01903015472901",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00037"
+        ],
+        "timestamp": "2026-08-02T08:55:31+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00037 mentions 01903015472901",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00037",
+        "target": "date:02 aug 2026",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00037"
+        ],
+        "timestamp": "2026-08-02T08:55:31+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00037 mentions 02 Aug 2026",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00037",
+        "target": "domain:esewa-bonus-claim.xyz",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00037"
+        ],
+        "timestamp": "2026-08-02T08:55:31+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00037 mentions esewa-bonus-claim.xyz",
+        "backbone": false
+      },
+      {
+        "source": "domain:esewa-bonus-claim.xyz",
+        "target": "evidence:EVID_00037",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00037"
+        ],
+        "timestamp": "2026-08-02T08:55:31+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "esewa-bonus-claim.xyz is flagged malicious by threat intelligence (ml:xgboost)",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00037",
+        "target": "domain:gmail.com",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00037"
+        ],
+        "timestamp": "2026-08-02T08:55:31+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00037 mentions gmail.com",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00037",
+        "target": "domain:khalti-kyc-verify.top",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00037"
+        ],
+        "timestamp": "2026-08-02T08:55:31+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00037 mentions khalti-kyc-verify.top",
+        "backbone": false
+      },
+      {
+        "source": "domain:khalti-kyc-verify.top",
+        "target": "evidence:EVID_00037",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00037"
+        ],
+        "timestamp": "2026-08-02T08:55:31+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "khalti-kyc-verify.top is flagged malicious by threat intelligence (ml:xgboost)",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00037",
+        "target": "email:bikash.thapa14@gmail.com",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00037"
+        ],
+        "timestamp": "2026-08-02T08:55:31+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00037 mentions bikash.thapa14@gmail.com",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00037",
+        "target": "email:reward.center2026@gmail.com",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00037"
+        ],
+        "timestamp": "2026-08-02T08:55:31+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00037 mentions reward.center2026@gmail.com",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00037",
+        "target": "wallet:+9779812345678",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00037"
+        ],
+        "timestamp": "2026-08-02T08:55:31+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00037 mentions +9779812345678",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00037",
+        "target": "money:npr 750",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00037"
+        ],
+        "timestamp": "2026-08-02T08:55:31+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00037 mentions NPR 750",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00037",
+        "target": "phone_number:+9779812345678",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00037"
+        ],
+        "timestamp": "2026-08-02T08:55:31+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00037 mentions +9779812345678",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00037",
+        "target": "time:08:55:31",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00037"
+        ],
+        "timestamp": "2026-08-02T08:55:31+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00037 mentions 08:55:31",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00037",
+        "target": "url:http://khalti-kyc-verify.top/login",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00037"
+        ],
+        "timestamp": "2026-08-02T08:55:31+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00037 mentions http://khalti-kyc-verify.top/login",
+        "backbone": false
+      },
+      {
+        "source": "url:http://khalti-kyc-verify.top/login",
+        "target": "evidence:EVID_00037",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00037"
+        ],
+        "timestamp": "2026-08-02T08:55:31+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "http://khalti-kyc-verify.top/login is flagged malicious by threat intelligence (ml:xgboost)",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00037",
+        "target": "url:https://esewa-bonus-claim.xyz/verify?ref=kyc2026",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00037"
+        ],
+        "timestamp": "2026-08-02T08:55:31+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00037 mentions https://esewa-bonus-claim.xyz/verify?ref=KYC2026",
+        "backbone": false
+      },
+      {
+        "source": "url:https://esewa-bonus-claim.xyz/verify?ref=kyc2026",
+        "target": "evidence:EVID_00037",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00037"
+        ],
+        "timestamp": "2026-08-02T08:55:31+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026 is flagged malicious by threat intelligence (ml:xgboost)",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_4B2A51A300",
+        "target": "evidence:EVID_00038",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00038"
+        ],
+        "timestamp": "2026-08-02T15:18:00+00:00",
+        "timestamp_source": "content_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00038 belongs to CASE_4B2A51A300",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00038",
+        "target": "date:2026-08-02",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00038"
+        ],
+        "timestamp": "2026-08-02T15:18:00+00:00",
+        "timestamp_source": "content_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00038 mentions 2026-08-02",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00038",
+        "target": "money:npr 750",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00038"
+        ],
+        "timestamp": "2026-08-02T15:18:00+00:00",
+        "timestamp_source": "content_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00038 mentions NPR 750",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00038",
+        "target": "phone_number:+9779812345678",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00038"
+        ],
+        "timestamp": "2026-08-02T15:18:00+00:00",
+        "timestamp_source": "content_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00038 mentions +9779812345678",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00038",
+        "target": "phone_number:+9779856770011",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00038"
+        ],
+        "timestamp": "2026-08-02T15:18:00+00:00",
+        "timestamp_source": "content_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00038 mentions +9779856770011",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00038",
+        "target": "time:03:18 pm",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00038"
+        ],
+        "timestamp": "2026-08-02T15:18:00+00:00",
+        "timestamp_source": "content_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00038 mentions 03:18 PM",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00038",
+        "target": "transaction:khl-2026-0802-44190",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00038"
+        ],
+        "timestamp": "2026-08-02T15:18:00+00:00",
+        "timestamp_source": "content_date_time",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00038 mentions KHL-2026-0802-44190",
+        "backbone": false
+      },
+      {
+        "source": "case:CASE_4B2A51A300",
+        "target": "evidence:EVID_00039",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:43:07.959000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00039 belongs to CASE_4B2A51A300",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00039",
+        "target": "domain:gmail.com",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:43:07.959000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00039 mentions gmail.com",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00039",
+        "target": "email:reward.center2026@gmail.com",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:43:07.959000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00039 mentions reward.center2026@gmail.com",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00039",
+        "target": "wallet:+9779812345678",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:43:07.959000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00039 mentions +9779812345678",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00039",
+        "target": "money:npr 750",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:43:07.959000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00039 mentions NPR 750",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00039",
+        "target": "phone_number:+9779812345678",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:43:07.959000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00039 mentions +9779812345678",
+        "backbone": false
+      },
+      {
+        "source": "case:CASE_4B2A51A300",
+        "target": "evidence:EVID_00040",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00040"
+        ],
+        "timestamp": "2026-08-21T06:43:11.546000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00040 belongs to CASE_4B2A51A300",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_4B2A51A300",
+        "target": "evidence:EVID_00041",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00041"
+        ],
+        "timestamp": "2026-08-21T06:43:15.002000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00041 belongs to CASE_4B2A51A300",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00041",
+        "target": "domain:khalti-kyc-verify.top",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00041"
+        ],
+        "timestamp": "2026-08-21T06:43:15.002000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00041 mentions khalti-kyc-verify.top",
+        "backbone": false
+      },
+      {
+        "source": "domain:khalti-kyc-verify.top",
+        "target": "evidence:EVID_00041",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00041"
+        ],
+        "timestamp": "2026-08-21T06:43:15.002000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "khalti-kyc-verify.top is flagged malicious by threat intelligence (ml:xgboost)",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00041",
+        "target": "url:http://khalti-kyc-verify.top/login",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00041"
+        ],
+        "timestamp": "2026-08-21T06:43:15.002000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00041 mentions http://khalti-kyc-verify.top/login",
+        "backbone": false
+      },
+      {
+        "source": "url:http://khalti-kyc-verify.top/login",
+        "target": "evidence:EVID_00041",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00041"
+        ],
+        "timestamp": "2026-08-21T06:43:15.002000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "http://khalti-kyc-verify.top/login is flagged malicious by threat intelligence (ml:xgboost)",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_4B2A51A300",
+        "target": "evidence:EVID_00042",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00042"
+        ],
+        "timestamp": "2026-08-21T06:43:15.097000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00042 belongs to CASE_4B2A51A300",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00042",
+        "target": "domain:esewa-bonus-claim.xyz",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00042"
+        ],
+        "timestamp": "2026-08-21T06:43:15.097000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00042 mentions esewa-bonus-claim.xyz",
+        "backbone": false
+      },
+      {
+        "source": "domain:esewa-bonus-claim.xyz",
+        "target": "evidence:EVID_00042",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00042"
+        ],
+        "timestamp": "2026-08-21T06:43:15.097000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "esewa-bonus-claim.xyz is flagged malicious by threat intelligence (ml:xgboost)",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00042",
+        "target": "url:https://esewa-bonus-claim.xyz/verify?ref=kyc2026",
+        "edge_type": "shared_entity",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00042"
+        ],
+        "timestamp": "2026-08-21T06:43:15.097000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "EVID_00042 mentions https://esewa-bonus-claim.xyz/verify?ref=KYC2026",
+        "backbone": false
+      },
+      {
+        "source": "url:https://esewa-bonus-claim.xyz/verify?ref=kyc2026",
+        "target": "evidence:EVID_00042",
+        "edge_type": "threat_relationship",
+        "weight": 2.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00042"
+        ],
+        "timestamp": "2026-08-21T06:43:15.097000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "https://esewa-bonus-claim.xyz/verify?ref=KYC2026 is flagged malicious by threat intelligence (ml:xgboost)",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00035",
+        "target": "timeline_event:CASE_4B2A51A300:EVID_00035",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 0.7,
+        "source_evidence_ids": [
+          "EVID_00035"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Reconstructed event for EVID_00035",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00036",
+        "target": "timeline_event:CASE_4B2A51A300:EVID_00036",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 0.7,
+        "source_evidence_ids": [
+          "EVID_00036"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Reconstructed event for EVID_00036",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00037",
+        "target": "timeline_event:CASE_4B2A51A300:EVID_00037",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00037"
+        ],
+        "timestamp": "2026-08-02T08:55:31+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "Reconstructed event for EVID_00037",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00038",
+        "target": "timeline_event:CASE_4B2A51A300:EVID_00038",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00038"
+        ],
+        "timestamp": "2026-08-02T15:18:00+00:00",
+        "timestamp_source": "content_date_time",
+        "timestamp_inferred": false,
+        "explanation": "Reconstructed event for EVID_00038",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00034",
+        "target": "timeline_event:CASE_4B2A51A300:EVID_00034",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 0.4,
+        "source_evidence_ids": [
+          "EVID_00034"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Reconstructed event for EVID_00034",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00039",
+        "target": "timeline_event:CASE_4B2A51A300:EVID_00039",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 0.4,
+        "source_evidence_ids": [
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:43:07.959000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Reconstructed event for EVID_00039",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00040",
+        "target": "timeline_event:CASE_4B2A51A300:EVID_00040",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 0.4,
+        "source_evidence_ids": [
+          "EVID_00040"
+        ],
+        "timestamp": "2026-08-21T06:43:11.546000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Reconstructed event for EVID_00040",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00041",
+        "target": "timeline_event:CASE_4B2A51A300:EVID_00041",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 0.4,
+        "source_evidence_ids": [
+          "EVID_00041"
+        ],
+        "timestamp": "2026-08-21T06:43:15.002000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Reconstructed event for EVID_00041",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00042",
+        "target": "timeline_event:CASE_4B2A51A300:EVID_00042",
+        "edge_type": "timeline_event",
+        "weight": 1.0,
+        "confidence": 0.4,
+        "source_evidence_ids": [
+          "EVID_00042"
+        ],
+        "timestamp": "2026-08-21T06:43:15.097000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Reconstructed event for EVID_00042",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_4B2A51A300",
+        "target": "case:CASE_0CD406813C",
+        "edge_type": "cross_case_relationship",
+        "weight": 1.0,
+        "confidence": 0.8238,
+        "source_evidence_ids": [
+          "EVID_00027",
+          "EVID_00028",
+          "EVID_00029",
+          "EVID_00030",
+          "EVID_00031",
+          "EVID_00032",
+          "EVID_00033",
+          "EVID_00034",
+          "EVID_00035",
+          "EVID_00036",
+          "EVID_00037",
+          "EVID_00038",
+          "EVID_00039",
+          "EVID_00042"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Shares 5 entity(ies) with CASE_0CD406813C: bank account 01903015472901, domain esewa-bonus-claim.xyz, email reward.center2026@gmail.com (+2 more)",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_0CD406813C",
+        "target": "evidence:EVID_00027",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.8238,
+        "source_evidence_ids": [
+          "EVID_00027"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00027 belongs to CASE_0CD406813C",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "bank_account:01903015472901",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.8238,
+        "source_evidence_ids": [
+          "EVID_00027",
+          "EVID_00035",
+          "EVID_00037"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "bank_accounts '01903015472901' matches evidence across CASE_4B2A51A300 and CASE_0CD406813C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "domain:esewa-bonus-claim.xyz",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.8238,
+        "source_evidence_ids": [
+          "EVID_00027",
+          "EVID_00029",
+          "EVID_00033",
+          "EVID_00035",
+          "EVID_00037",
+          "EVID_00042"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "domains 'esewa-bonus-claim.xyz' matches evidence across CASE_4B2A51A300 and CASE_0CD406813C",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_0CD406813C",
+        "target": "evidence:EVID_00029",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.8238,
+        "source_evidence_ids": [
+          "EVID_00029"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00029 belongs to CASE_0CD406813C",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00029",
+        "target": "domain:esewa-bonus-claim.xyz",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.8238,
+        "source_evidence_ids": [
+          "EVID_00027",
+          "EVID_00029",
+          "EVID_00033",
+          "EVID_00035",
+          "EVID_00037",
+          "EVID_00042"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "domains 'esewa-bonus-claim.xyz' matches evidence across CASE_4B2A51A300 and CASE_0CD406813C",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_0CD406813C",
+        "target": "evidence:EVID_00033",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.8238,
+        "source_evidence_ids": [
+          "EVID_00033"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00033 belongs to CASE_0CD406813C",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00033",
+        "target": "domain:esewa-bonus-claim.xyz",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.8238,
+        "source_evidence_ids": [
+          "EVID_00027",
+          "EVID_00029",
+          "EVID_00033",
+          "EVID_00035",
+          "EVID_00037",
+          "EVID_00042"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "domains 'esewa-bonus-claim.xyz' matches evidence across CASE_4B2A51A300 and CASE_0CD406813C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "email:reward.center2026@gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.8238,
+        "source_evidence_ids": [
+          "EVID_00027",
+          "EVID_00029",
+          "EVID_00031",
+          "EVID_00034",
+          "EVID_00035",
+          "EVID_00037",
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "emails 'reward.center2026@gmail.com' matches evidence across CASE_4B2A51A300 and CASE_0CD406813C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00029",
+        "target": "email:reward.center2026@gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.8238,
+        "source_evidence_ids": [
+          "EVID_00027",
+          "EVID_00029",
+          "EVID_00031",
+          "EVID_00034",
+          "EVID_00035",
+          "EVID_00037",
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "emails 'reward.center2026@gmail.com' matches evidence across CASE_4B2A51A300 and CASE_0CD406813C",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_0CD406813C",
+        "target": "evidence:EVID_00031",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.8238,
+        "source_evidence_ids": [
+          "EVID_00031"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00031 belongs to CASE_0CD406813C",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00031",
+        "target": "email:reward.center2026@gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.8238,
+        "source_evidence_ids": [
+          "EVID_00027",
+          "EVID_00029",
+          "EVID_00031",
+          "EVID_00034",
+          "EVID_00035",
+          "EVID_00037",
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "emails 'reward.center2026@gmail.com' matches evidence across CASE_4B2A51A300 and CASE_0CD406813C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "phone_number:+9779812345678",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.8238,
+        "source_evidence_ids": [
+          "EVID_00027",
+          "EVID_00028",
+          "EVID_00029",
+          "EVID_00030",
+          "EVID_00031",
+          "EVID_00032",
+          "EVID_00034",
+          "EVID_00035",
+          "EVID_00036",
+          "EVID_00037",
+          "EVID_00038",
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "phones '+9779812345678' matches evidence across CASE_4B2A51A300 and CASE_0CD406813C",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_0CD406813C",
+        "target": "evidence:EVID_00028",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.8238,
+        "source_evidence_ids": [
+          "EVID_00028"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00028 belongs to CASE_0CD406813C",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00028",
+        "target": "phone_number:+9779812345678",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.8238,
+        "source_evidence_ids": [
+          "EVID_00027",
+          "EVID_00028",
+          "EVID_00029",
+          "EVID_00030",
+          "EVID_00031",
+          "EVID_00032",
+          "EVID_00034",
+          "EVID_00035",
+          "EVID_00036",
+          "EVID_00037",
+          "EVID_00038",
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "phones '+9779812345678' matches evidence across CASE_4B2A51A300 and CASE_0CD406813C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00029",
+        "target": "phone_number:+9779812345678",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.8238,
+        "source_evidence_ids": [
+          "EVID_00027",
+          "EVID_00028",
+          "EVID_00029",
+          "EVID_00030",
+          "EVID_00031",
+          "EVID_00032",
+          "EVID_00034",
+          "EVID_00035",
+          "EVID_00036",
+          "EVID_00037",
+          "EVID_00038",
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "phones '+9779812345678' matches evidence across CASE_4B2A51A300 and CASE_0CD406813C",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_0CD406813C",
+        "target": "evidence:EVID_00030",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.8238,
+        "source_evidence_ids": [
+          "EVID_00030"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00030 belongs to CASE_0CD406813C",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00030",
+        "target": "phone_number:+9779812345678",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.8238,
+        "source_evidence_ids": [
+          "EVID_00027",
+          "EVID_00028",
+          "EVID_00029",
+          "EVID_00030",
+          "EVID_00031",
+          "EVID_00032",
+          "EVID_00034",
+          "EVID_00035",
+          "EVID_00036",
+          "EVID_00037",
+          "EVID_00038",
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "phones '+9779812345678' matches evidence across CASE_4B2A51A300 and CASE_0CD406813C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00031",
+        "target": "phone_number:+9779812345678",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.8238,
+        "source_evidence_ids": [
+          "EVID_00027",
+          "EVID_00028",
+          "EVID_00029",
+          "EVID_00030",
+          "EVID_00031",
+          "EVID_00032",
+          "EVID_00034",
+          "EVID_00035",
+          "EVID_00036",
+          "EVID_00037",
+          "EVID_00038",
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "phones '+9779812345678' matches evidence across CASE_4B2A51A300 and CASE_0CD406813C",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_0CD406813C",
+        "target": "evidence:EVID_00032",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.8238,
+        "source_evidence_ids": [
+          "EVID_00032"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00032 belongs to CASE_0CD406813C",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00032",
+        "target": "phone_number:+9779812345678",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.8238,
+        "source_evidence_ids": [
+          "EVID_00027",
+          "EVID_00028",
+          "EVID_00029",
+          "EVID_00030",
+          "EVID_00031",
+          "EVID_00032",
+          "EVID_00034",
+          "EVID_00035",
+          "EVID_00036",
+          "EVID_00037",
+          "EVID_00038",
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "phones '+9779812345678' matches evidence across CASE_4B2A51A300 and CASE_0CD406813C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00027",
+        "target": "domain:gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.8238,
+        "source_evidence_ids": [
+          "EVID_00027",
+          "EVID_00029",
+          "EVID_00031",
+          "EVID_00034",
+          "EVID_00035",
+          "EVID_00037",
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "domains 'gmail.com' matches evidence across CASE_4B2A51A300 and CASE_0CD406813C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00029",
+        "target": "domain:gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.8238,
+        "source_evidence_ids": [
+          "EVID_00027",
+          "EVID_00029",
+          "EVID_00031",
+          "EVID_00034",
+          "EVID_00035",
+          "EVID_00037",
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "domains 'gmail.com' matches evidence across CASE_4B2A51A300 and CASE_0CD406813C",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00031",
+        "target": "domain:gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.8238,
+        "source_evidence_ids": [
+          "EVID_00027",
+          "EVID_00029",
+          "EVID_00031",
+          "EVID_00034",
+          "EVID_00035",
+          "EVID_00037",
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "domains 'gmail.com' matches evidence across CASE_4B2A51A300 and CASE_0CD406813C",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_4B2A51A300",
+        "target": "case:CASE_EE8250FB76",
+        "edge_type": "cross_case_relationship",
+        "weight": 1.0,
+        "confidence": 0.189,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00034",
+          "EVID_00035",
+          "EVID_00037",
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Shares 1 entity(ies) with CASE_EE8250FB76: domain gmail.com",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_EE8250FB76",
+        "target": "evidence:EVID_00005",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.189,
+        "source_evidence_ids": [
+          "EVID_00005"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00005 belongs to CASE_EE8250FB76",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00005",
+        "target": "domain:gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.189,
+        "source_evidence_ids": [
+          "EVID_00005",
+          "EVID_00034",
+          "EVID_00035",
+          "EVID_00037",
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "domains 'gmail.com' matches evidence across CASE_4B2A51A300 and CASE_EE8250FB76",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_4B2A51A300",
+        "target": "case:CASE_185915593C",
+        "edge_type": "cross_case_relationship",
+        "weight": 1.0,
+        "confidence": 0.189,
+        "source_evidence_ids": [
+          "EVID_00008",
+          "EVID_00014",
+          "EVID_00034",
+          "EVID_00035",
+          "EVID_00037",
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Shares 1 entity(ies) with CASE_185915593C: domain gmail.com",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_185915593C",
+        "target": "evidence:EVID_00008",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.189,
+        "source_evidence_ids": [
+          "EVID_00008"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00008 belongs to CASE_185915593C",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00008",
+        "target": "domain:gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.189,
+        "source_evidence_ids": [
+          "EVID_00008",
+          "EVID_00014",
+          "EVID_00034",
+          "EVID_00035",
+          "EVID_00037",
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "domains 'gmail.com' matches evidence across CASE_4B2A51A300 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_185915593C",
+        "target": "evidence:EVID_00014",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.189,
+        "source_evidence_ids": [
+          "EVID_00014"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00014 belongs to CASE_185915593C",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00014",
+        "target": "domain:gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.189,
+        "source_evidence_ids": [
+          "EVID_00008",
+          "EVID_00014",
+          "EVID_00034",
+          "EVID_00035",
+          "EVID_00037",
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "domains 'gmail.com' matches evidence across CASE_4B2A51A300 and CASE_185915593C",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_4B2A51A300",
+        "target": "case:CASE_1A1BF573F3",
+        "edge_type": "cross_case_relationship",
+        "weight": 1.0,
+        "confidence": 0.189,
+        "source_evidence_ids": [
+          "EVID_00016",
+          "EVID_00022",
+          "EVID_00034",
+          "EVID_00035",
+          "EVID_00037",
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Shares 1 entity(ies) with CASE_1A1BF573F3: domain gmail.com",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_1A1BF573F3",
+        "target": "evidence:EVID_00016",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.189,
+        "source_evidence_ids": [
+          "EVID_00016"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00016 belongs to CASE_1A1BF573F3",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00016",
+        "target": "domain:gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.189,
+        "source_evidence_ids": [
+          "EVID_00016",
+          "EVID_00022",
+          "EVID_00034",
+          "EVID_00035",
+          "EVID_00037",
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "domains 'gmail.com' matches evidence across CASE_4B2A51A300 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "case:CASE_1A1BF573F3",
+        "target": "evidence:EVID_00022",
+        "edge_type": "contains",
+        "weight": 1.0,
+        "confidence": 0.189,
+        "source_evidence_ids": [
+          "EVID_00022"
+        ],
+        "timestamp": "",
+        "timestamp_source": "unresolved",
+        "timestamp_inferred": false,
+        "explanation": "EVID_00022 belongs to CASE_1A1BF573F3",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00022",
+        "target": "domain:gmail.com",
+        "edge_type": "cross_case_entity_match",
+        "weight": 1.0,
+        "confidence": 0.189,
+        "source_evidence_ids": [
+          "EVID_00016",
+          "EVID_00022",
+          "EVID_00034",
+          "EVID_00035",
+          "EVID_00037",
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "domains 'gmail.com' matches evidence across CASE_4B2A51A300 and CASE_1A1BF573F3",
+        "backbone": true
+      },
+      {
+        "source": "evidence:EVID_00035",
+        "target": "evidence:EVID_00036",
+        "edge_type": "temporal_relationship",
+        "weight": 1.0,
+        "confidence": 1.0,
+        "source_evidence_ids": [
+          "EVID_00035",
+          "EVID_00036"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Occurred 0.0h apart using reconstructed event time (window 48h)",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00035",
+        "target": "evidence:EVID_00037",
+        "edge_type": "temporal_relationship",
+        "weight": 0.8141,
+        "confidence": 0.8141,
+        "source_evidence_ids": [
+          "EVID_00035",
+          "EVID_00037"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "mixed_content_timestamps",
+        "timestamp_inferred": true,
+        "explanation": "Occurred 8.9h apart using reconstructed event time (window 48h)",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00035",
+        "target": "evidence:EVID_00038",
+        "edge_type": "temporal_relationship",
+        "weight": 0.6812,
+        "confidence": 0.6812,
+        "source_evidence_ids": [
+          "EVID_00035",
+          "EVID_00038"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "mixed_content_timestamps",
+        "timestamp_inferred": true,
+        "explanation": "Occurred 15.3h apart using reconstructed event time (window 48h)",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00036",
+        "target": "evidence:EVID_00037",
+        "edge_type": "temporal_relationship",
+        "weight": 0.8141,
+        "confidence": 0.8141,
+        "source_evidence_ids": [
+          "EVID_00036",
+          "EVID_00037"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "mixed_content_timestamps",
+        "timestamp_inferred": true,
+        "explanation": "Occurred 8.9h apart using reconstructed event time (window 48h)",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00036",
+        "target": "evidence:EVID_00038",
+        "edge_type": "temporal_relationship",
+        "weight": 0.6812,
+        "confidence": 0.6812,
+        "source_evidence_ids": [
+          "EVID_00036",
+          "EVID_00038"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "mixed_content_timestamps",
+        "timestamp_inferred": true,
+        "explanation": "Occurred 15.3h apart using reconstructed event time (window 48h)",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00037",
+        "target": "evidence:EVID_00038",
+        "edge_type": "temporal_relationship",
+        "weight": 0.8672,
+        "confidence": 0.8672,
+        "source_evidence_ids": [
+          "EVID_00037",
+          "EVID_00038"
+        ],
+        "timestamp": "2026-08-02T08:55:31+00:00",
+        "timestamp_source": "mixed_content_timestamps",
+        "timestamp_inferred": false,
+        "explanation": "Occurred 6.4h apart using reconstructed event time (window 48h)",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00035",
+        "target": "evidence:EVID_00037",
+        "edge_type": "behavioral_relationship",
+        "weight": 0.9929,
+        "confidence": 0.9929,
+        "source_evidence_ids": [
+          "EVID_00035",
+          "EVID_00037"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Module-1 correlation: VERY_STRONG (confidence 0.99) - Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted; Both items reference the same emails: reward.center2026@gmail.com",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00034",
+        "target": "evidence:EVID_00035",
+        "edge_type": "behavioral_relationship",
+        "weight": 0.8887,
+        "confidence": 0.8887,
+        "source_evidence_ids": [
+          "EVID_00034",
+          "EVID_00035"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Module-1 correlation: VERY_STRONG (confidence 0.89) - Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted; Both items reference the same emails: reward.center2026@gmail.com",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00034",
+        "target": "evidence:EVID_00037",
+        "edge_type": "behavioral_relationship",
+        "weight": 0.8887,
+        "confidence": 0.8887,
+        "source_evidence_ids": [
+          "EVID_00034",
+          "EVID_00037"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Module-1 correlation: VERY_STRONG (confidence 0.89) - Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted; Both items reference the same emails: reward.center2026@gmail.com",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00035",
+        "target": "evidence:EVID_00041",
+        "edge_type": "behavioral_relationship",
+        "weight": 0.8235,
+        "confidence": 0.8235,
+        "source_evidence_ids": [
+          "EVID_00035",
+          "EVID_00041"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Module-1 correlation: VERY_STRONG (confidence 0.82) - Both items reference the same urls: http://khalti-kyc-verify.top/login; Both items reference the same domains: khalti-kyc-verify.top",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00037",
+        "target": "evidence:EVID_00041",
+        "edge_type": "behavioral_relationship",
+        "weight": 0.8235,
+        "confidence": 0.8235,
+        "source_evidence_ids": [
+          "EVID_00037",
+          "EVID_00041"
+        ],
+        "timestamp": "2026-08-02T08:55:31+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "Module-1 correlation: VERY_STRONG (confidence 0.82) - Both items reference the same urls: http://khalti-kyc-verify.top/login; Both items reference the same domains: khalti-kyc-verify.top",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00035",
+        "target": "evidence:EVID_00042",
+        "edge_type": "behavioral_relationship",
+        "weight": 0.8168,
+        "confidence": 0.8168,
+        "source_evidence_ids": [
+          "EVID_00035",
+          "EVID_00042"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Module-1 correlation: VERY_STRONG (confidence 0.82) - Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=kyc2026; Both items reference the same domains: esewa-bonus-claim.xyz",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00037",
+        "target": "evidence:EVID_00042",
+        "edge_type": "behavioral_relationship",
+        "weight": 0.8168,
+        "confidence": 0.8168,
+        "source_evidence_ids": [
+          "EVID_00037",
+          "EVID_00042"
+        ],
+        "timestamp": "2026-08-02T08:55:31+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "Module-1 correlation: VERY_STRONG (confidence 0.82) - Both items reference the same urls: https://esewa-bonus-claim.xyz/verify?ref=kyc2026; Both items reference the same domains: esewa-bonus-claim.xyz",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00035",
+        "target": "evidence:EVID_00038",
+        "edge_type": "behavioral_relationship",
+        "weight": 0.7859,
+        "confidence": 0.7859,
+        "source_evidence_ids": [
+          "EVID_00035",
+          "EVID_00038"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Module-1 correlation: STRONG (confidence 0.79) - Both items reference the same phones: +9779856770011, +9779812345678 - but 1 of these are common across the corpus and were discounted; Both items reference the same transaction ids: khl-2026-0802-44190",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00035",
+        "target": "evidence:EVID_00039",
+        "edge_type": "behavioral_relationship",
+        "weight": 0.7653,
+        "confidence": 0.7653,
+        "source_evidence_ids": [
+          "EVID_00035",
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Module-1 correlation: STRONG (confidence 0.77) - Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted; Both items reference the same emails: reward.center2026@gmail.com",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00037",
+        "target": "evidence:EVID_00039",
+        "edge_type": "behavioral_relationship",
+        "weight": 0.7653,
+        "confidence": 0.7653,
+        "source_evidence_ids": [
+          "EVID_00037",
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-02T08:55:31+00:00",
+        "timestamp_source": "content_labeled_date_time",
+        "timestamp_inferred": false,
+        "explanation": "Module-1 correlation: STRONG (confidence 0.77) - Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted; Both items reference the same emails: reward.center2026@gmail.com",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00034",
+        "target": "evidence:EVID_00039",
+        "edge_type": "behavioral_relationship",
+        "weight": 0.7494,
+        "confidence": 0.7494,
+        "source_evidence_ids": [
+          "EVID_00034",
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Module-1 correlation: STRONG (confidence 0.75) - Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted; Both items reference the same emails: reward.center2026@gmail.com",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00034",
+        "target": "evidence:EVID_00041",
+        "edge_type": "behavioral_relationship",
+        "weight": 0.5559,
+        "confidence": 0.5559,
+        "source_evidence_ids": [
+          "EVID_00034",
+          "EVID_00041"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Module-1 correlation: STRONG (confidence 0.56) - Both items reference the same domains: khalti-kyc-verify.top; Acquired 0.0 hours apart (within the 48h proximity window)",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00034",
+        "target": "evidence:EVID_00036",
+        "edge_type": "behavioral_relationship",
+        "weight": 0.5529,
+        "confidence": 0.5529,
+        "source_evidence_ids": [
+          "EVID_00034",
+          "EVID_00036"
+        ],
+        "timestamp": "2026-08-21T06:42:54.755000+00:00",
+        "timestamp_source": "upload_time_fallback",
+        "timestamp_inferred": true,
+        "explanation": "Module-1 correlation: STRONG (confidence 0.55) - Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted; Both items reference the same khalti ids: +9779812345678",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00035",
+        "target": "evidence:EVID_00036",
+        "edge_type": "behavioral_relationship",
+        "weight": 0.5529,
+        "confidence": 0.5529,
+        "source_evidence_ids": [
+          "EVID_00035",
+          "EVID_00036"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Module-1 correlation: STRONG (confidence 0.55) - Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted; Both items reference the same khalti ids: +9779812345678",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00036",
+        "target": "evidence:EVID_00037",
+        "edge_type": "behavioral_relationship",
+        "weight": 0.5529,
+        "confidence": 0.5529,
+        "source_evidence_ids": [
+          "EVID_00036",
+          "EVID_00037"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Module-1 correlation: STRONG (confidence 0.55) - Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted; Both items reference the same khalti ids: +9779812345678",
+        "backbone": false
+      },
+      {
+        "source": "evidence:EVID_00036",
+        "target": "evidence:EVID_00039",
+        "edge_type": "behavioral_relationship",
+        "weight": 0.5529,
+        "confidence": 0.5529,
+        "source_evidence_ids": [
+          "EVID_00036",
+          "EVID_00039"
+        ],
+        "timestamp": "2026-08-02T00:00:00+00:00",
+        "timestamp_source": "content_date_only",
+        "timestamp_inferred": true,
+        "explanation": "Module-1 correlation: STRONG (confidence 0.55) - Both items reference the same phones: +9779812345678 - but 1 of these are common across the corpus and were discounted; Both items reference the same khalti ids: +9779812345678",
+        "backbone": false
+      }
+    ]
+  }
+}

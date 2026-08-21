@@ -1,0 +1,23 @@
+{
+  "report_type": "graph_summary",
+  "report_version": 4,
+  "schema_version": "2.0",
+  "case_id": "CASE_D6A81F224B",
+  "generated_at": "2026-07-25T18:31:35.894Z",
+  "report": {
+    "case_id": "CASE_D6A81F224B",
+    "headline": "41 nodes and 72 edges across 1 component(s)",
+    "key_connectors": [
+      "phone_number:+9779801122334",
+      "money:npr 25000",
+      "phone_number:+9779847011223",
+      "transaction:mbl-2026-441829",
+      "domain:esewa-cashback-offer.xyz"
+    ],
+    "observations": [
+      "4 threat-intelligence edge(s) link flagged indicators to evidence.",
+      "2 strong behavioural link(s) derived from the weighted correlation engine.",
+      "All entities and evidence form a single connected component - consistent with one coordinated activity."
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "report_type": "metadata_report",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00036",
+  "case_id": "CASE_4B2A51A300",
+  "generated_at": "2026-08-21T06:43:01.360Z",
+  "report": {
+    "evidence_id": "EVID_00036",
+    "case_id": "CASE_4B2A51A300",
+    "source_file": "EVID_00036__7582b33b__05_transactions.csv",
+    "file_type": "text",
+    "filesystem": {
+      "file_size_bytes": 233,
+      "created": "2026-08-21T06:43:01.325500+00:00",
+      "modified": "2026-08-21T06:42:54.798962+00:00",
+      "accessed": "2026-08-21T06:43:01.325139+00:00"
+    },
+    "image": null,
+    "pdf": null,
+    "office": null,
+    "consistency_notes": [],
+    "extraction_errors": [],
+    "analysis_time_ms": 0.1
+  }
+}

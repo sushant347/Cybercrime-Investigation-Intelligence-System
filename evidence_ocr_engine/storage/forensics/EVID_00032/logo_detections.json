@@ -1,0 +1,30 @@
+{
+  "report_type": "logo_detections",
+  "report_version": 1,
+  "schema_version": "1.0",
+  "evidence_id": "EVID_00032",
+  "case_id": "CASE_0CD406813C",
+  "generated_at": "2026-08-21T06:37:48.059Z",
+  "report": {
+    "evidence_id": "EVID_00032",
+    "case_id": "CASE_0CD406813C",
+    "source_file": "01_sms_cashback_offer.jpg",
+    "brands_checked": [
+      "eSewa",
+      "Khalti",
+      "IME Pay",
+      "Facebook",
+      "Messenger",
+      "WhatsApp",
+      "Telegram",
+      "Gmail",
+      "Outlook",
+      "Google",
+      "Microsoft"
+    ],
+    "detections": [],
+    "detected_brands": [],
+    "template_assets_available": false,
+    "analysis_time_ms": 11.1
+  }
+}

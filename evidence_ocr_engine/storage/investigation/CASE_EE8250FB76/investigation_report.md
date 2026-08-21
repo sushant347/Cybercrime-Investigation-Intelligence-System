@@ -1,6 +1,6 @@
 # Forensic Investigation Report - CASE_EE8250FB76
 
-Generated: 2026-08-21T05:16:32.254Z  
+Generated: 2026-08-21T06:43:45.885Z  
 Produced by: Cybercrime Investigation Intelligence Engine (CIIS), Phase 2  
 Status: Automated analytical draft - investigator review required  
 Basis: every statement below references stored forensic findings; accuracy depends on the source evidence and upstream extraction.
@@ -10,7 +10,7 @@ Basis: every statement below references stored forensic findings; accuracy depen
 | # | Finding |
 | --- | --- |
 | 1 | Case CASE_EE8250FB76 contains 2 evidence items; 1/2 passed the stored SHA-256 integrity check. |
-| 2 | This case was automatically linked to 2 other cases; these are candidate shared-entity associations: CASE_185915593C, CASE_1A1BF573F3 [cross_case_correlation.json]. |
+| 2 | This case was automatically linked to 4 other cases; these are candidate shared-entity associations: CASE_185915593C, CASE_1A1BF573F3, CASE_0CD406813C, CASE_4B2A51A300 [cross_case_correlation.json]. |
 | 3 | The weighted correlation engine found 0 related evidence pairs out of 1 analysed [correlation_analysis.json]. |
 | 4 | The highest-scoring identity lead is '05019012345678' (bank_accounts), supported by 1 evidence item and scored 68/100; this is a lead, not identity attribution [suspect_assessment.json]. |
 | 5 | Chronology contains 2 evidence-derived event times (1 inferred), 0 acquisition-only records and 0 unresolved records [timeline_analysis.json]. |
@@ -96,6 +96,8 @@ These are automated shared-entity associations and require independent corrobora
 | --- | --- | --- | --- | --- |
 | CASE_185915593C | VERY_STRONG | 0.9992 | bank_accounts:05019012345678, domains:esewa-verify-kyc.com, emails:esewa.cashback99@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, +16 more | Shares 21 entity(ies) with CASE_185915593C: bank account 05019012345678, domain esewa-verify-kyc.com, email esewa.cashback99@gmail.com (+18 more). 17 of these are distinctive;… |
 | CASE_1A1BF573F3 | VERY_STRONG | 0.9992 | bank_accounts:05019012345678, domains:esewa-verify-kyc.com, emails:esewa.cashback99@gmail.com, emails:support@esewa-verify-kyc.com, esewa_ids:esewa.cashback99@gmail.com, +16 more | Shares 21 entity(ies) with CASE_1A1BF573F3: bank account 05019012345678, domain esewa-verify-kyc.com, email esewa.cashback99@gmail.com (+18 more). 17 of these are distinctive;… |
+| CASE_0CD406813C | WEAK | 0.189 | domains:gmail.com | Shares 1 entity(ies) with CASE_0CD406813C: domain gmail.com |
+| CASE_4B2A51A300 | WEAK | 0.189 | domains:gmail.com | Shares 1 entity(ies) with CASE_4B2A51A300: domain gmail.com |
 
 ## Campaign Analysis
 
@@ -141,53 +143,87 @@ Clusters are candidate groupings produced by configured thresholds; they do not 
   - **indicator**: https://esewa-cashback-offer.xyz/claim
   - **evidence id**: EVID_00005
   - **verdict**: malicious
-  - **risk score**: 100
-  - **confidence**: 1.0
-  - **risk level**: malicious
-  - **source**: heuristics
-  - **model version**: 
+  - **risk score**: 81
+  - **confidence**: 0.81
+  - **risk level**: Critical
+  - **source**: ml:xgboost
+  - **model version**: 4.0.0
   - **domain**: esewa-cashback-offer.xyz
-  - **brand impersonated**: esewa
+  - **trust score**: 35
   - **official domain**: False
+  - **ssl status**: UNKNOWN
+  - **spf present**: False
+  - **dmarc present**: False
   - **reasons**:
-    - hostname contains the brand 'esewa' but is not an official esewa domain
-    - registered under '.xyz', a TLD with a high abuse rate
-    - reward/prize wording in the link: cashback, claim, offer
+    - The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.
+    - AI model classified this URL as phishing with 100% confidence.
+    - The top-level domain is frequently associated with phishing and spam campaigns (risk score: 0.7).
+    - SSL status could not be verified.
+    - The URL contains suspicious keyword(s) associated with phishing.
+    - The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure.
   - **threat signals**:
-    - hostname contains the brand 'esewa' but is not an official esewa domain
-    - registered under '.xyz', a TLD with a high abuse rate
-    - reward/prize wording in the link: cashback, claim, offer
+    - ✗ Missing SPF record (facilitates email spoofing)
+    - ✗ Missing DMARC record (facilitates email spoofing)
+    - ✗ High-abuse top-level domain
+    - ✗ Phishing-associated keyword(s) in URL
   - **indicator**: esewa-verify-kyc.com
   - **evidence id**: EVID_00005
   - **verdict**: malicious
-  - **risk score**: 75
-  - **confidence**: 0.75
-  - **risk level**: malicious
-  - **source**: heuristics
-  - **model version**: 
+  - **risk score**: 79
+  - **confidence**: 0.79
+  - **risk level**: High
+  - **source**: ml:xgboost
+  - **model version**: 4.0.0
   - **domain**: esewa-verify-kyc.com
-  - **brand impersonated**: esewa
+  - **trust score**: 50
   - **official domain**: False
+  - **ssl status**: UNKNOWN
+  - **spf present**: False
+  - **dmarc present**: False
   - **reasons**:
-    - hostname contains the brand 'esewa' but is not an official esewa domain
-    - credential/verification wording in the link: kyc, verify
+    - The hybrid decision engine confirmed this URL is phishing based on agreement between the ML model and threat indicators.
+    - AI model classified this URL as phishing with 100% confidence.
+    - SSL status could not be verified.
+    - The URL does not use HTTPS, meaning data is transmitted without encryption.
+    - The URL contains suspicious keyword(s) associated with phishing.
+    - The domain is missing SPF and DMARC email-authentication record(s), which legitimate organisations typically configure.
   - **threat signals**:
-    - hostname contains the brand 'esewa' but is not an official esewa domain
-    - credential/verification wording in the link: kyc, verify
+    - ✗ Plain HTTP protocol used (unencrypted connections)
+    - ✗ Missing SPF record (facilitates email spoofing)
+    - ✗ Missing DMARC record (facilitates email spoofing)
+    - ✗ Phishing-associated keyword(s) in URL
   - **indicator**: gmail.com
   - **evidence id**: EVID_00005
   - **verdict**: benign
-  - **risk score**: 0
-  - **confidence**: 0.0
-  - **risk level**: benign
-  - **source**: heuristics
-  - **model version**: 
+  - **risk score**: 20
+  - **confidence**: 0.8
+  - **risk level**: Low
+  - **source**: ml:xgboost
+  - **model version**: 4.0.0
   - **domain**: gmail.com
+  - **trust score**: 100
+  - **brand impersonated**: google
   - **official domain**: True
+  - **ssl status**: VALID
+  - **domain age days**: 11331
+  - **registrar**: MarkMonitor, Inc.
+  - **spf present**: True
+  - **dmarc present**: True
+  - **ssl days left**: 68
+  - **hosting**: Google LLC, United States
+  - **ip address**: 192.178.177.18
   - **reasons**:
-    - gmail.com is an official gmail domain
+    - The hybrid decision engine confirmed this URL is legitimate based on trusted signals and ML model agreement.
+    - The URL does not use HTTPS, meaning data is transmitted without encryption.
+  - **threat signals**:
+    - ✗ Plain HTTP protocol used (unencrypted connections)
   - **trust signals**:
-    - gmail.com is an official gmail domain
+    - ✓ Official registered domain of trusted brand: google
+    - ✓ Valid SSL certificate
+    - ✓ HTTPS Strict-Transport-Security (HSTS) active
+    - ✓ Established domain age (31.0 years old)
+    - ✓ Registered with trusted registrar (MarkMonitor, Inc.)
+    - ✓ SPF email authentication configured
 
 ## Evidence Quality Summary
 
@@ -310,7 +346,7 @@ The findings engage 4 provisions of the Electronic Transactions Act, 2063 (2008)
 | --- | --- |
 | Conduct | An offence under the Act involving a computer, computer system or network located in Nepal may be prosecuted even where the act was committed by a person residing outside Nepal. |
 | Penalty | as for the underlying offence |
-| Evidence-based match | this case shares identifiers with 2 other cases (CASE_185915593C and CASE_1A1BF573F3). Where any part of the conduct occurred outside Nepal, the Act still applies to systems located in Nepal. |
+| Evidence-based match | this case shares identifiers with 4 other cases (CASE_185915593C, CASE_1A1BF573F3 and CASE_0CD406813C). Where any part of the conduct occurred outside Nepal, the Act still applies to systems located in Nepal. |
 | Supporting evidence | none |
 
 ### Section 56 — Confiscation
@@ -391,14 +427,14 @@ The current evidence model does not automatically assess these provisions:
 
 ## Report Provenance & Integrity
 
-- **report id**: RPT-EE8250FB76-4B01F031
-- **generated at**: 2026-08-21T05:16:32.242Z
+- **report id**: RPT-EE8250FB76-3EFDB9E1
+- **generated at**: 2026-08-21T06:43:45.883Z
 - **generator**: CIIS Phase-2 reporting module (template-over-data; no free-text generation)
 - **evidence set digest**: 0f6afe626b2e5e1c4bb70b2efae2d8aea52ca3d8d38b481532cc8e4ff88c3ff6
 - **evidence set digest note**: SHA-256 over the sorted SHA-256 digests of every evidence item; any change to the evidence set changes this value.
 - **source artifact hashes**:
   - **correlation analysis.json**: d34b31a1da97fdca386fbef1c3d7da4be90f0daa38e0bf1905f629e144372a84
-  - **cross case correlation.json**: 0c7a00a65ce4deb7b8e61b2243418786c24a32bef8967779f5131518a1f6d362
+  - **cross case correlation.json**: cf3c2168cf2f7884079d143faa5fcae2f9e55cdc3f0c15cb5cfb4249fdeb308c
   - **campaign analysis.json**: 4d68039cf59b85ef881acee8678cfbeb732645f13db2d724f133f8cfbeed3b84
   - **suspect assessment.json**: d03ab32cfc5cc5b6dd4bc139e7d57fb3e8c1e6ee953230f5da41e5682a6936c1
   - **timeline analysis.json**: 9483a58a4f75ee307dc85e7ba6de21264a252a10d9cc8f7098730ebe61226c1e
