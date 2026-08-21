@@ -69,10 +69,24 @@ def _normalise_runtime_path(value: str, platform: str | None = None) -> str:
     return raw
 
 
+def _venv_interpreter(value: str) -> Path:
+    """Absolute path to a virtualenv interpreter, symlink intact.
+
+    A virtualenv's ``bin/python`` is a symlink to the base interpreter, and it
+    is the *link* that makes Python treat the venv as its prefix. Calling
+    ``resolve()`` here followed that link all the way out to the Homebrew
+    interpreter, so the RAG subprocess started outside its own environment and
+    died on ``ModuleNotFoundError: No module named 'chromadb'`` — reported to
+    the investigator as "the standalone RAG engine did not complete". The
+    parent directory is resolved so ``..`` and symlinked directories are still
+    normalised; only the interpreter's own name is left alone.
+    """
+    candidate = Path(_normalise_runtime_path(value)).expanduser()
+    return candidate.parent.resolve() / candidate.name
+
+
 _rag_python = os.environ.get("CIIS_RAG_PYTHON", "").strip()
-RAG_PYTHON = (
-    Path(_normalise_runtime_path(_rag_python)).resolve() if _rag_python else None
-)
+RAG_PYTHON = _venv_interpreter(_rag_python) if _rag_python else None
 RAG_ENABLED = os.environ.get("CIIS_RAG_ENABLED", "1") == "1"
 RAG_STORAGE_DIR = Path(
     os.environ.get(

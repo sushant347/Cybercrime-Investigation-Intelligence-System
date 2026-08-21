@@ -25,10 +25,14 @@ def test_unauthenticated_artifact_and_analyze_are_permitted(api, case):
     # artifact availability index
     idx = api.get(f"/api/cases/{case_id}/artifacts/")
     assert idx.status_code not in _DENIED
-    # triggering analysis
+    # triggering analysis. 400 belongs in this list: the fixture case carries
+    # no evidence, and the endpoint now rejects that with a validation error
+    # rather than letting the pipeline fail deep inside. The security property
+    # under test is the assertion above - the request is never 401/403 - and a
+    # validation rejection is not an authorisation one.
     run = api.post(f"/api/cases/{case_id}/analyze/")
     assert run.status_code not in _DENIED
-    assert run.status_code in (200, 202, 404), run.content
+    assert run.status_code in (200, 202, 400, 404), run.content
 
 
 def test_no_auth_header_is_actually_set(api):

@@ -121,10 +121,35 @@ def _json_output(value: str) -> dict[str, Any]:
     return payload
 
 
+def _error_payload(stderr: str) -> dict[str, Any] | None:
+    """The engine's JSON error object, picked out of a noisy stderr.
+
+    The RAG environment writes its structured error to stderr, but the
+    libraries beneath it get there first: a Hugging Face rate-limit warning and
+    a model-loading progress bar. Parsing the whole stream as JSON therefore
+    always failed, and every RAG problem reached the investigator as the
+    generic "the standalone RAG engine did not complete" — including
+    "Cannot reach Ollama ... ensure it is running and pull model 'gemma3:1b'",
+    which says exactly what to do. Scan the lines instead and keep the last
+    JSON object, which is the engine's own report.
+    """
+    found: dict[str, Any] | None = None
+    for line in (stderr or "").splitlines():
+        line = line.strip()
+        if not line.startswith("{") or not line.endswith("}"):
+            continue
+        try:
+            candidate = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if isinstance(candidate, dict) and candidate.get("error_type"):
+            found = candidate
+    return found
+
+
 def _failure(stderr: str) -> EngineUnavailable:
-    try:
-        payload = _json_output(stderr)
-    except EngineUnavailable:
+    payload = _error_payload(stderr)
+    if payload is None:
         return EngineUnavailable("The standalone RAG engine did not complete.")
     error_type = str(payload.get("error_type") or "RAGError")
     detail = str(payload.get("detail") or "The RAG request failed.")

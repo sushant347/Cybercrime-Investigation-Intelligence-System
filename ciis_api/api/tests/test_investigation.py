@@ -69,7 +69,7 @@ def test_analysis_with_missing_original_is_partial_but_keeps_artifacts(
     ).status_code == 200
 
 
-def test_phase2_module_failure_is_partial_success(api, case, monkeypatch):
+def test_phase2_module_failure_is_partial_success(api, uploaded_evidence, monkeypatch):
     from api import engine
     from ciis_timeline_report import pipeline as pipeline_module
 
@@ -84,14 +84,15 @@ def test_phase2_module_failure_is_partial_success(api, case, monkeypatch):
     )
     monkeypatch.setattr(engine, "_threat_intel_provider", lambda: None)
 
-    job = _run_analysis(api, case["case_id"])
+    case_id, _ = uploaded_evidence
+    job = _run_analysis(api, case_id)
     status = api.get(f"/api/jobs/{job['id']}/").json()
 
     assert status["status"] == "completed_with_warnings", status
     assert "Phase-2 graph: synthetic failure" in status["detail"]
 
 
-def test_unhandled_analysis_failure_is_failed(api, case, monkeypatch):
+def test_unhandled_analysis_failure_is_failed(api, uploaded_evidence, monkeypatch):
     from api import engine
     from ciis_timeline_report import pipeline as pipeline_module
 
@@ -106,7 +107,8 @@ def test_unhandled_analysis_failure_is_failed(api, case, monkeypatch):
     )
     monkeypatch.setattr(engine, "_threat_intel_provider", lambda: None)
 
-    job = _run_analysis(api, case["case_id"])
+    case_id, _ = uploaded_evidence
+    job = _run_analysis(api, case_id)
     status = api.get(f"/api/jobs/{job['id']}/").json()
 
     assert status["status"] == "failed", status

@@ -26,7 +26,7 @@ import { EmptyState } from "@/components/common/EmptyState";
 import { DetailSkeleton } from "@/components/common/LoadingSkeleton";
 import { SearchField } from "@/components/common/SearchField";
 import { formatDateTime, titleCase } from "@/lib/format";
-import { BRAND, brandTone } from "@/theme/theme";
+import { BRAND, brandTone, lightModeEquivalent } from "@/theme/theme";
 import type { TimelineEvent } from "@/types";
 
 import { TimelineChart } from "./TimelineChart";
@@ -141,8 +141,11 @@ export function TimelineTab({ caseId }: { caseId: string }) {
                             size="small"
                             label={`${i + 1}. ${meta.label}`}
                             sx={{
+                              // Stage colours are BRAND tones mixed for the
+                              // dark surface; as chip text on light they fall
+                              // below a readable ratio.
                               bgcolor: `${meta.color}1f`,
-                              color: meta.color,
+                              color: lightModeEquivalent(meta.color, theme),
                               border: `1px solid ${meta.color}55`,
                             }}
                           />

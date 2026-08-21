@@ -197,6 +197,7 @@ function SharedEntityList({
 }
 
 export function SimpleReportView({ report }: { report: SimpleReport }) {
+  const theme = useTheme();
   const accent = useReportAccent();
   let n = 0;
   const next = () => ++n;
@@ -494,7 +495,15 @@ export function SimpleReportView({ report }: { report: SimpleReport }) {
                   size="small"
                   sx={
                     i === 0
-                      ? { bgcolor: accent, color: "#08130c", fontWeight: 700 }
+                      ? {
+                          bgcolor: accent,
+                          // The accent is a light green on dark and a dark
+                          // green on light, so the text on it has to invert
+                          // with it — a fixed near-black read as 1.3:1 once
+                          // the accent went dark.
+                          color: theme.palette.mode === "dark" ? "#08130c" : "#ffffff",
+                          fontWeight: 700,
+                        }
                       : { bgcolor: "rgba(26,161,121,0.16)", color: accent, fontWeight: 600 }
                   }
                 />
