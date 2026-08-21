@@ -321,14 +321,21 @@ need_setup() {
 reset_db() {
   # The platform database was removed (config.settings has DATABASES = {}):
   # there are no migrations and no seed_demo command any more, and case data
-  # lives in evidence_ocr_engine/storage/ instead. Detect that build rather
-  # than assuming, so this launcher keeps working either way.
-  if [ ! -d "ciis_api/api/migrations" ]; then
+  # lives in evidence_ocr_engine/storage/ instead. Inspect the actual Django
+  # setting rather than the migrations directory: Python may create that
+  # directory solely for __pycache__, which does not mean a database exists.
+  local ppy; ppy="$(venv_py "$ROOT/$PLATFORM_VENV")"
+  local has_database
+  has_database="$(
+    cd ciis_api
+    "$ppy" -c \
+      'from config import settings; print("yes" if settings.DATABASES else "no")'
+  )"
+  if [ "$has_database" != "yes" ]; then
     log "No platform database in this build - nothing to migrate or seed."
     hint "Case data lives in evidence_ocr_engine/storage/ and is managed from the app's admin screen."
     return 0
   fi
-  local ppy; ppy="$(venv_py "$ROOT/$PLATFORM_VENV")"   # absolute, survives the subshell cd
   ( cd ciis_api \
       && "$ppy" manage.py migrate \
       && "$ppy" manage.py seed_demo )
