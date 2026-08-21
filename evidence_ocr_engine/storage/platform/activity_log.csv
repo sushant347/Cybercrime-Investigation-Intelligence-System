@@ -124,3 +124,7 @@ id,created_at,username,module,action,case_id,detail
 123,2026-08-20T18:48:34.404Z,,investigation,run_analysis,CASE_EE8250FB76,
 124,2026-08-20T18:48:34.439Z,,investigation,run_analysis,CASE_185915593C,
 125,2026-08-20T18:48:34.456Z,,investigation,run_analysis,CASE_2CF24DBA5F,
+126,2026-08-21T03:05:17.181Z,,admin,login,,
+127,2026-08-21T03:05:22.371Z,,investigation,run_analysis,CASE_1A1BF573F3,
+128,2026-08-21T03:25:43.744Z,,investigation,run_analysis,CASE_1A1BF573F3,
+129,2026-08-21T03:27:24.942Z,,investigation,run_analysis,CASE_1A1BF573F3,

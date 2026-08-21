@@ -948,5 +948,65 @@
     "case_id": "CASE_2CF24DBA5F",
     "evidence_id": "",
     "read": false
+  },
+  {
+    "id": 100,
+    "created_at": "2026-08-21T03:05:44.968Z",
+    "type": "report_generated",
+    "title": "Investigation analysis completed with warnings for CASE_1A1BF573F3",
+    "message": "Phase-2 artifacts regenerated with 1 warning(s).",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 101,
+    "created_at": "2026-08-21T03:05:44.970Z",
+    "type": "high_priority",
+    "title": "CASE_1A1BF573F3 flagged HIGH priority",
+    "message": "Engine priority score: 74.7.",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 102,
+    "created_at": "2026-08-21T03:26:12.140Z",
+    "type": "report_generated",
+    "title": "Investigation analysis completed with warnings for CASE_1A1BF573F3",
+    "message": "Phase-2 artifacts regenerated with 6 warning(s).",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 103,
+    "created_at": "2026-08-21T03:26:12.141Z",
+    "type": "high_priority",
+    "title": "CASE_1A1BF573F3 flagged HIGH priority",
+    "message": "Engine priority score: 72.6.",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 104,
+    "created_at": "2026-08-21T03:27:53.530Z",
+    "type": "report_generated",
+    "title": "Investigation analysis completed with warnings for CASE_1A1BF573F3",
+    "message": "Phase-2 artifacts regenerated with 1 warning(s).",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "",
+    "read": false
+  },
+  {
+    "id": 105,
+    "created_at": "2026-08-21T03:27:53.532Z",
+    "type": "high_priority",
+    "title": "CASE_1A1BF573F3 flagged HIGH priority",
+    "message": "Engine priority score: 74.5.",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "",
+    "read": false
   }
 ]

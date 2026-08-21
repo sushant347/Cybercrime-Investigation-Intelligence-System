@@ -1417,5 +1417,53 @@
     "stage_label": "",
     "stage_note": "",
     "stages": []
+  },
+  {
+    "id": 63,
+    "created_at": "2026-08-21T03:05:22.366Z",
+    "job_type": "case_analysis",
+    "status": "completed_with_warnings",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "",
+    "detail": "phase2_failures=none; warnings=Original evidence files unavailable for 11 item(s): EVID_00015, EVID_00016, EVID_00017, EVID_00018, EVID_00019, EVID_00020, EVID_00021, EVID_00022, EVID_00023, EVID_00024, EVID_00025; rag_index=unavailable",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-21T03:05:44.966Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": []
+  },
+  {
+    "id": 64,
+    "created_at": "2026-08-21T03:25:43.741Z",
+    "job_type": "case_analysis",
+    "status": "completed_with_warnings",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "",
+    "detail": "phase2_failures=none; warnings=Original evidence files unavailable for 3 item(s): EVID_00023, EVID_00024, EVID_00025; EVID_00015: Phase-1 warnings in image_load, integrity; EVID_00016: Phase-1 warnings in image_load, integrity; EVID_00017: Phase-1 warnings in image_load, integrity; EVID_00018: Phase-1 warnings in image_load, integrity; EVID_00019: Phase-1 warnings in image_load, integrity; rag_index=unavailable",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-21T03:26:12.137Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": []
+  },
+  {
+    "id": 65,
+    "created_at": "2026-08-21T03:27:24.937Z",
+    "job_type": "case_analysis",
+    "status": "completed_with_warnings",
+    "case_id": "CASE_1A1BF573F3",
+    "evidence_id": "",
+    "detail": "phase2_failures=none; forensics backfilled for 5 item(s); warnings=Original evidence files unavailable for 3 item(s): EVID_00023, EVID_00024, EVID_00025; rag_index=unavailable",
+    "error": "",
+    "created_by": "",
+    "finished_at": "2026-08-21T03:27:53.527Z",
+    "stage": "",
+    "stage_label": "",
+    "stage_note": "",
+    "stages": []
   }
 ]
