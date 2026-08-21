@@ -4,9 +4,8 @@ rem  CIIS launcher for Windows.
 rem
 rem  Double-click this file, or run it from cmd.exe / PowerShell:
 rem
-rem      dev.cmd            start everything
-rem      dev.cmd doctor     check what is installed and what is missing
-rem      dev.cmd setup      install dependencies without starting
+rem      dev.cmd            create/repair dependencies and start everything
+rem      dev.cmd setup      prepare dependencies without starting
 rem
 rem  All it does is find Git Bash and hand over to dev.sh, which is the real
 rem  launcher. dev.sh is a bash script, so it cannot run in cmd.exe or

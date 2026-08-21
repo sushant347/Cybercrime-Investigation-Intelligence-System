@@ -7,32 +7,35 @@
 #
 #     ./dev.sh
 #
-# It checks your machine, installs everything, and starts the app. First run
-# downloads ~500 MB of OCR/ML packages and takes 5-15 minutes; every run after
-# that starts in seconds. When it is ready it prints a http://localhost:5173
-# link (and opens it for you).
+# It checks your machine, creates/repairs every Python environment, installs
+# only changed dependency sets, installs the frontend, and starts the app.
+# Environments are invoked directly; you never have to activate one manually.
+# First run downloads several large OCR/RAG/ML packages. Later runs skip every
+# environment whose requirements have not changed.
 #
 # On Windows, run it from **Git Bash** (installed with Git for Windows), not
 # from cmd.exe or PowerShell. If you double-click `dev.cmd` it will find Git
 # Bash and do this for you.
 #
 # WHAT YOU NEED INSTALLED FIRST
-#   - Python 3.12 or newer   https://python.org/downloads
+#   - Python 3.12            https://python.org/downloads
 #       (on Windows, tick "Add python.exe to PATH" in the installer)
 #   - Node.js 20 or newer    https://nodejs.org  (pick the LTS build)
-#   Run `./dev.sh doctor` and it will tell you exactly what is missing.
+#   - macOS: Apple Silicon (arm64); current Paddle wheels do not support Intel
+#   - Ollama                  https://ollama.com (needed for generated answers;
+#                             structured RAG lookup still installs without it)
 #
 # ALL COMMANDS
 #   ./dev.sh            same as `up`
 #   ./dev.sh up         API + web + engines together (Ctrl-C stops everything)
-#   ./dev.sh setup      (re)create both venvs + frontend deps + seed the DB
+#   ./dev.sh setup      prepare all venvs + frontend deps without starting
 #   ./dev.sh api        just the Django REST API      (port: CIIS_API_PORT)
 #   ./dev.sh web        just the Vite dev server      (port: WEB_PORT)
 #   ./dev.sh threat ... run the phishing/threat engine CLI in its own venv
 #   ./dev.sh test       run the frontend + API test suites
 #   ./dev.sh reset-db   wipe the platform DB and re-seed demo users
 #   ./dev.sh doctor     print the detected toolchain + what is / isn't set up
-#   ./dev.sh clean      delete both venvs and node_modules for a fresh start
+#   ./dev.sh clean      delete repo-local venvs and node_modules for a fresh start
 #   ./dev.sh help       this text
 #
 # WHAT "THE FULL PROJECT" IS
@@ -45,6 +48,9 @@
 #                                      reports (owns the pipeline root)
 #   They form a straight chain, each importing only the one before it:
 #       frontend -> API -> OCR -> correlation -> timeline+report
+#   The optional case assistant consumes the resulting files out-of-process:
+#       pipeline artifacts -> API adapter -> standalone RAG CLI
+#   It is never imported into the OCR/correlation/timeline dependency chain.
 #   `up` therefore launches: API (+ those engines) + the React/Vite frontend,
 #   with the full pipeline enabled (CIIS_RUN_FULL_PIPELINE=1).
 #
@@ -59,6 +65,9 @@
 #   CIIS_API_PORT=8001  WEB_PORT=5173 pick ports (a busy port is auto-bumped)
 #   CIIS_NO_BROWSER=1                 don't open a browser window on `up`
 #   CIIS_SKIP_THREAT_VENV=1           skip the heavy ML venv during setup
+#   CIIS_SKIP_RAG_VENV=1              skip the RAG venv during setup
+#   CIIS_RAG_VENV=/short/path         override the managed RAG venv directory
+#   CIIS_RAG_PYTHON=/path/to/python   use an already-managed RAG interpreter
 # =============================================================================
 
 set -euo pipefail
@@ -103,6 +112,22 @@ case "$(uname -s 2>/dev/null || echo unknown)" in
   *)                      OS=unknown ;;
 esac
 
+# Torch wheels contain deeply nested licence files. On Windows, keeping the RAG
+# environment inside an already-long repository path can exceed MAX_PATH. Use
+# the short per-user local cache by default there; POSIX platforms stay local
+# to the repository. CIIS_RAG_VENV always wins.
+if [ -n "${CIIS_RAG_VENV:-}" ]; then
+  RAG_VENV="$CIIS_RAG_VENV"
+elif [ "$OS" = windows ] && [ -n "${LOCALAPPDATA:-}" ]; then
+  if command -v cygpath >/dev/null 2>&1; then
+    RAG_VENV="$(cygpath -u "$LOCALAPPDATA")/CIIS/venvs/rag"
+  else
+    RAG_VENV="$LOCALAPPDATA/CIIS/venvs/rag"
+  fi
+else
+  RAG_VENV=".venv-rag"
+fi
+
 # npm ships as npm.cmd on Windows; `command -v npm` finds the shim in Git Bash
 # but plain `npm` inside a subshell sometimes does not, so resolve it once.
 find_npm() {
@@ -130,19 +155,46 @@ install_hint_node() {
 }
 
 # ------------------------------------------------------------------ toolchains
-# Portable Python discovery. The engines require >=3.12 (macOS system python is
-# 3.9). Honour CIIS_PYTHON, else pick the first interpreter that is >=3.12.
-py_ok() { "$1" -c 'import sys; raise SystemExit(0 if sys.version_info[:2] >= (3,12) else 1)' >/dev/null 2>&1; }
+# Portable Python discovery. PaddleOCR is not yet supported on Python 3.14, so
+# this project deliberately targets 3.12 rather than accepting any newer build.
+py_ok() { "$1" -c 'import sys; raise SystemExit(0 if sys.version_info[:2] == (3,12) else 1)' >/dev/null 2>&1; }
 find_python() {
   if [ -n "${CIIS_PYTHON:-}" ]; then
     py_ok "$CIIS_PYTHON" && { echo "$CIIS_PYTHON"; return; }
     return
   fi
-  for c in python3.14 python3.13 python3.12 python3 python \
+  for c in python3.12 python3 python \
            /opt/homebrew/bin/python3.12 /usr/local/bin/python3.12; do
     if command -v "$c" >/dev/null 2>&1 && py_ok "$c"; then command -v "$c"; return; fi
   done
+  # The Windows Python launcher is commonly available even when python.exe was
+  # not added to PATH. Ask it for the concrete executable so callers can quote
+  # and invoke one path normally.
+  if command -v py >/dev/null 2>&1; then
+    local launched
+    launched="$(py -3.12 -c 'import sys; print(sys.executable)' 2>/dev/null || true)"
+    if [ -n "$launched" ] && command -v cygpath >/dev/null 2>&1; then
+      launched="$(cygpath -u "$launched")"
+    fi
+    if [ -n "$launched" ] && py_ok "$launched"; then echo "$launched"; return; fi
+  fi
   echo ""   # nothing suitable
+}
+
+require_supported_platform() {
+  if [ "$OS" = macos ] && [ "$(uname -m 2>/dev/null || echo unknown)" != arm64 ]; then
+    die "The OCR engine requires PaddlePaddle, whose current macOS wheel supports Apple Silicon (arm64), not Intel Macs."
+  fi
+}
+
+venv_dir() {
+  case "$1" in
+    /*) echo "$1" ;;
+    [A-Za-z]:[\\/]*)
+      if command -v cygpath >/dev/null 2>&1; then cygpath -u "$1"; else echo "$1"; fi
+      ;;
+    *) echo "$ROOT/$1" ;;
+  esac
 }
 
 # venv layout differs by platform: POSIX uses bin/, Windows (Git Bash) Scripts/.
@@ -154,13 +206,30 @@ venv_py() {
   else echo "$v/bin/python"; fi   # default; existence checked by caller
 }
 
+configure_rag_runtime() {
+  local candidate="${CIIS_RAG_PYTHON:-}"
+  if [ -z "$candidate" ]; then
+    candidate="$(venv_py "$(venv_dir "$RAG_VENV")")"
+  fi
+  if [ -x "$candidate" ] && "$candidate" -c \
+      'import importlib.util,sys; sys.exit(0 if importlib.util.find_spec("chromadb") and importlib.util.find_spec("sentence_transformers") else 1)' \
+      >/dev/null 2>&1; then
+    export CIIS_RAG_PYTHON="$candidate"
+    return 0
+  fi
+  # Do not pass a stale/broken explicit interpreter to Django. The API should
+  # advertise the assistant as unavailable while the core pipeline stays live.
+  unset CIIS_RAG_PYTHON
+  return 1
+}
+
 require_python() {
   local p; p="$(find_python)"
   if [ -z "$p" ]; then
     if [ -n "${CIIS_PYTHON:-}" ]; then
-      warn "CIIS_PYTHON=$CIIS_PYTHON is not a working Python 3.12+."
+      warn "CIIS_PYTHON=$CIIS_PYTHON is not a working Python 3.12 interpreter."
     fi
-    printf '%sERROR%s Python 3.12 or newer is required, and none was found.\n' "$C_RED" "$C_OFF" >&2
+    printf '%sERROR%s Python 3.12 is required, and none was found.\n' "$C_RED" "$C_OFF" >&2
     install_hint_python
     exit 1
   fi
@@ -181,8 +250,9 @@ require_node() {
   }
   local major; major="$(node_major)"
   if [ "$major" -lt 20 ] 2>/dev/null; then
-    warn "Node $(node --version 2>/dev/null) detected; this project is built against Node 20+."
+    warn "Node $(node --version 2>/dev/null) detected; Node 20+ is required."
     install_hint_node
+    exit 1
   fi
   echo "$npm_bin"
 }
@@ -235,6 +305,48 @@ sys.exit(1)
 ' "$url" "$timeout" >/dev/null 2>&1
 }
 
+OLLAMA_PID=""
+find_ollama() {
+  if command -v ollama >/dev/null 2>&1; then command -v ollama; return; fi
+  if [ "$OS" = macos ] \
+     && [ -x "/Applications/Ollama.app/Contents/Resources/ollama" ]; then
+    echo "/Applications/Ollama.app/Contents/Resources/ollama"
+    return
+  fi
+  echo ""
+}
+
+prepare_ollama() {
+  [ -z "${CIIS_SKIP_RAG_VENV:-}" ] || return 0
+  local ollama_bin; ollama_bin="$(find_ollama)"
+  if [ -z "$ollama_bin" ]; then
+    warn "Ollama is not installed; open-ended assistant answers will be unavailable."
+    hint "Install it from https://ollama.com and run ./dev.sh again."
+    return 0
+  fi
+
+  if ! wait_for_http "http://127.0.0.1:11434/api/tags" 2; then
+    log "Starting local Ollama service"
+    "$ollama_bin" serve >/dev/null 2>&1 & OLLAMA_PID=$!
+    if ! wait_for_http "http://127.0.0.1:11434/api/tags" 20; then
+      warn "Ollama did not start; deterministic assistant answers remain available."
+      kill "$OLLAMA_PID" 2>/dev/null || true
+      wait "$OLLAMA_PID" 2>/dev/null || true
+      OLLAMA_PID=""
+      return 0
+    fi
+  fi
+
+  local model="${CIIS_RAG_OLLAMA_MODEL:-llama3.2:1b}"
+  if "$ollama_bin" show "$model" >/dev/null 2>&1; then
+    ok "Ollama ready ($model)"
+  else
+    log "Downloading local assistant model: $model"
+    "$ollama_bin" pull "$model" \
+      || warn "Could not download $model; retry later with: ollama pull $model"
+  fi
+}
+
 open_browser() {
   [ -z "${CIIS_NO_BROWSER:-}" ] || return 0
   [ -t 1 ] || return 0
@@ -246,75 +358,138 @@ open_browser() {
 }
 
 # ----------------------------------------------------------------------- setup
+requirements_digest() {
+  local base_python="$1"; shift
+  "$base_python" -c '
+import hashlib, pathlib, sys
+digest = hashlib.sha256(f"python={sys.version_info[:2]}\n".encode())
+for name in sys.argv[1:]:
+    path = pathlib.Path(name)
+    digest.update(str(path.as_posix()).encode())
+    digest.update(b"\0")
+    digest.update(path.read_bytes())
+print(digest.hexdigest())
+' "$@"
+}
+
+ensure_python_env() {
+  local base_python="$1" label="$2" configured_dir="$3" probe="$4"
+  shift 4
+  local directory python stamp expected current
+  directory="$(venv_dir "$configured_dir")"
+  python="$(venv_py "$directory")"
+  stamp="$directory/.ciis-requirements.sha256"
+  expected="$(requirements_digest "$base_python" "$@")"
+  current="$(test -f "$stamp" && tr -d '\r\n' < "$stamp" || true)"
+
+  if [ -x "$python" ] && py_ok "$python" \
+     && "$python" -c "$probe" >/dev/null 2>&1 \
+     && [ "$current" = "$expected" ]; then
+    ok "$label environment ready ($directory)"
+    return 0
+  fi
+
+  if [ ! -x "$python" ] || ! py_ok "$python"; then
+    log "Creating or repairing $label environment: $directory"
+    if [ -d "$directory" ]; then
+      "$base_python" -m venv --clear "$directory" \
+        || die "Could not repair the $label environment at $directory."
+    else
+      "$base_python" -m venv "$directory" \
+        || die "Could not create the $label environment at $directory."
+    fi
+    python="$(venv_py "$directory")"
+  else
+    log "$label requirements changed or the installation is incomplete."
+  fi
+
+  "$python" -m pip install -q --upgrade pip setuptools wheel
+  local install_args=() requirement
+  for requirement in "$@"; do install_args+=( -r "$requirement" ); done
+  "$python" -m pip install "${install_args[@]}" \
+    || die "Installing $label dependencies failed (see the pip output above)."
+  "$python" -c "$probe" >/dev/null 2>&1 \
+    || die "$label dependencies installed, but the environment validation failed."
+  printf '%s\n' "$expected" > "$stamp"
+  ok "$label environment installed ($directory)"
+}
+
+ensure_frontend() {
+  local base_python="$1" npm_bin="$2"
+  local stamp="ciis_frontend/node_modules/.ciis-package-lock.sha256"
+  local expected current
+  expected="$(requirements_digest "$base_python" \
+    ciis_frontend/package.json ciis_frontend/package-lock.json)"
+  current="$(test -f "$stamp" && tr -d '\r\n' < "$stamp" || true)"
+  if [ -d ciis_frontend/node_modules/vite ] && [ "$current" = "$expected" ]; then
+    ok "frontend dependencies ready"
+    return 0
+  fi
+
+  log "Installing frontend dependencies"
+  (
+    cd ciis_frontend
+    "$npm_bin" ci
+  ) || die "Installing frontend dependencies failed. Check the network and that package-lock.json matches package.json."
+  mkdir -p ciis_frontend/node_modules
+  printf '%s\n' "$expected" > "$stamp"
+  ok "frontend dependencies installed"
+}
+
 setup() {
   local PY; PY="$(require_python)"
   local NPM; NPM="$(require_node)"
+  require_supported_platform
   log "Using Python: $PY ($("$PY" --version 2>&1))"
   log "Using npm:    $NPM (node $(node --version 2>/dev/null || echo '?'))"
   echo
-  warn "First-time setup downloads roughly 500 MB and can take 5-15 minutes."
-  hint "It is not stuck - pip is quiet while it resolves large ML wheels."
+  warn "First-time setup downloads several large OCR, RAG and ML packages."
+  hint "Later runs use requirement fingerprints and skip environments that are ready."
   echo
 
-  local steps=4
-  [ -n "${CIIS_SKIP_THREAT_VENV:-}" ] && steps=3
+  log "Checking platform environment: OCR + API + correlation + timeline/report"
+  ensure_python_env "$PY" "platform" "$PLATFORM_VENV" \
+    'import importlib.util,sys; names=("django","rest_framework","paddleocr","paddle","cv2","fitz","networkx","reportlab"); sys.exit(0 if all(importlib.util.find_spec(n) for n in names) else 1)' \
+    evidence_ocr_engine/requirements.txt \
+    evidence_correlation_engine/requirements.txt \
+    timeline_report_engine/requirements.txt \
+    ciis_api/requirements.txt \
+    || die "Preparing the platform environment failed."
 
-  log "[1/$steps] platform venv ($PLATFORM_VENV): OCR + API + correlation/timeline/report"
-  if ! "$PY" -m venv "$PLATFORM_VENV"; then
-    printf '%sERROR%s Could not create a virtualenv.\n' "$C_RED" "$C_OFF" >&2
-    [ "$OS" = linux ] && hint "On Debian/Ubuntu this usually means: sudo apt install python3-venv"
-    exit 1
+  if [ -n "${CIIS_SKIP_RAG_VENV:-}" ]; then
+    warn "Skipping the RAG environment (CIIS_SKIP_RAG_VENV set)."
+    unset CIIS_RAG_PYTHON
+  elif [ -n "${CIIS_RAG_PYTHON:-}" ] && configure_rag_runtime; then
+    ok "external RAG environment ready ($CIIS_RAG_PYTHON)"
+  else
+    unset CIIS_RAG_PYTHON
+    log "Checking standalone RAG environment"
+    ensure_python_env "$PY" "RAG" "$RAG_VENV" \
+      'import importlib.util,sys; names=("chromadb","sentence_transformers","pytest"); sys.exit(0 if all(importlib.util.find_spec(n) for n in names) else 1)' \
+      rag_assistant_engine/requirements.txt \
+      rag_assistant_engine/requirements-dev.txt \
+      || die "Preparing the RAG environment failed."
+    configure_rag_runtime \
+      || die "The managed RAG environment was installed but could not be selected."
   fi
-  local ppy; ppy="$(venv_py "$PLATFORM_VENV")"
-  "$ppy" -m pip install -q --upgrade pip setuptools wheel
-  "$ppy" -m pip install \
-    -r evidence_ocr_engine/requirements.txt \
-    -r ciis_api/requirements.txt \
-    reportlab python-dateutil \
-    || die "Installing the platform dependencies failed (see the pip output above)."
 
   if [ -n "${CIIS_SKIP_THREAT_VENV:-}" ]; then
     warn "Skipping the threat venv (CIIS_SKIP_THREAT_VENV set). './dev.sh threat' will not work."
   else
-    log "[2/$steps] threat venv ($THREAT_VENV): phishing/threat ML stack (separate numpy major)"
-    "$PY" -m venv "$THREAT_VENV"
-    local tpy; tpy="$(venv_py "$THREAT_VENV")"
-    "$tpy" -m pip install -q --upgrade pip setuptools wheel
-    "$tpy" -m pip install -r threat_intelligence_system/requirements.txt \
-      || die "Installing the threat-intelligence dependencies failed (see the pip output above)."
+    log "Checking threat-intelligence environment (separate NumPy major)"
+    ensure_python_env "$PY" "threat intelligence" "$THREAT_VENV" \
+      'import importlib.util,sys; names=("numpy","pandas","sklearn","xgboost","lightgbm","tldextract"); sys.exit(0 if all(importlib.util.find_spec(n) for n in names) else 1)' \
+      threat_intelligence_system/requirements.txt \
+      || die "Preparing the threat-intelligence environment failed."
   fi
 
-  log "[$((steps - 1))/$steps] frontend deps"
-  # `npm ci` wipes node_modules and installs exactly what package-lock.json
-  # pins -- a plain `npm install` on top of a stale/partial node_modules
-  # (e.g. left over from switching branches) can silently produce a broken
-  # dependency tree that only fails later, inside Vite, with a confusing
-  # esbuild "Failed to resolve entry" error.
-  (
-    cd ciis_frontend
-    "$NPM" ci || {
-      warn "npm ci failed (lockfile out of sync?) - falling back to npm install"
-      rm -rf node_modules
-      "$NPM" install
-    }
-  ) || die "Installing the frontend dependencies failed. Check your internet connection and re-run ./dev.sh setup"
+  ensure_frontend "$PY" "$NPM"
 
-  log "[$steps/$steps] database migrate + seed demo users (skipped if no database)"
+  log "Checking platform database"
   reset_db
 
   echo
-  ok "Setup complete. Starting the app is now just: ./dev.sh"
-}
-
-# Decide whether a first-run bootstrap is needed before `up`.
-need_setup() {
-  local ppy; ppy="$(venv_py "$PLATFORM_VENV")"
-  [ -x "$ppy" ] || return 0
-  # A venv directory can exist while the install inside it failed half way,
-  # which used to surface as an unexplained ImportError at runtime.
-  "$ppy" -c 'import django' >/dev/null 2>&1 || return 0
-  [ -d "ciis_frontend/node_modules/vite" ] || return 0
-  return 1
+  ok "All required environments are ready. No manual activation is needed."
 }
 
 # --------------------------------------------------------------------- db / run
@@ -324,7 +499,7 @@ reset_db() {
   # lives in evidence_ocr_engine/storage/ instead. Inspect the actual Django
   # setting rather than the migrations directory: Python may create that
   # directory solely for __pycache__, which does not mean a database exists.
-  local ppy; ppy="$(venv_py "$ROOT/$PLATFORM_VENV")"
+  local ppy; ppy="$(venv_py "$(venv_dir "$PLATFORM_VENV")")"
   local has_database
   has_database="$(
     cd ciis_api
@@ -342,8 +517,9 @@ reset_db() {
 }
 
 api() {
-  local ppy; ppy="$(venv_py "$ROOT/$PLATFORM_VENV")"
+  local ppy; ppy="$(venv_py "$(venv_dir "$PLATFORM_VENV")")"
   [ -x "$ppy" ] || die "Platform venv missing. Run ./dev.sh setup first."
+  configure_rag_runtime || true
   cd ciis_api && exec "$ppy" manage.py runserver "$CIIS_API_PORT"
 }
 
@@ -356,7 +532,7 @@ web() {
 # Run the standalone threat engine in its own venv, e.g.
 #   ./dev.sh threat https://paypal-login-security.xyz/login
 threat() {
-  local tpy; tpy="$(venv_py "$ROOT/$THREAT_VENV")"
+  local tpy; tpy="$(venv_py "$(venv_dir "$THREAT_VENV")")"
   if [ ! -x "$tpy" ]; then
     die "Threat venv missing. Run ./dev.sh setup first (without CIIS_SKIP_THREAT_VENV)."
   fi
@@ -372,7 +548,7 @@ run_tests() {
   else
     warn "Skipping frontend tests - run ./dev.sh setup first."
   fi
-  local ppy; ppy="$(venv_py "$ROOT/$PLATFORM_VENV")"
+  local ppy; ppy="$(venv_py "$(venv_dir "$PLATFORM_VENV")")"
   if [ -x "$ppy" ]; then
     log "API tests (pytest)"
     ( cd ciis_api && "$ppy" -m pytest -q ) || failed=1
@@ -382,6 +558,14 @@ run_tests() {
     ( cd evidence_correlation_engine && "$ppy" -m pytest -q ) || failed=1
     log "timeline & report engine tests (pytest)"
     ( cd timeline_report_engine && "$ppy" -m pytest -q ) || failed=1
+    local rpy=""
+    if configure_rag_runtime; then rpy="$CIIS_RAG_PYTHON"; fi
+    if [ -n "$rpy" ] && [ -x "$rpy" ]; then
+      log "RAG assistant engine tests (pytest; no model download)"
+      ( cd rag_assistant_engine && "$rpy" -m pytest -q ) || failed=1
+    else
+      warn "Skipping RAG tests - managed RAG environment is unavailable."
+    fi
   else
     warn "Skipping Python tests - run ./dev.sh setup first."
   fi
@@ -390,11 +574,12 @@ run_tests() {
 }
 
 up() {
-  if need_setup; then
-    log "First run detected (missing or incomplete venv / node_modules) - bootstrapping..."
-    setup
-    echo
-  fi
+  # Always run the idempotent bootstrap. Ready environments are fingerprinted
+  # and skipped, while missing/broken/changed ones are repaired before launch.
+  setup
+  echo
+  prepare_ollama
+  echo
 
   # A port left busy by a previous run is the single most common reason the
   # app "starts" but shows a blank page, so move rather than collide. The API
@@ -421,7 +606,9 @@ up() {
   cleanup() {
     trap - INT TERM EXIT
     kill "$api_pid" "$web_pid" 2>/dev/null || true
+    if [ -n "$OLLAMA_PID" ]; then kill "$OLLAMA_PID" 2>/dev/null || true; fi
     wait "$api_pid" "$web_pid" 2>/dev/null || true
+    if [ -n "$OLLAMA_PID" ]; then wait "$OLLAMA_PID" 2>/dev/null || true; fi
   }
   trap cleanup INT TERM EXIT
 
@@ -457,8 +644,8 @@ up() {
 doctor() {
   local PY; PY="$(find_python)"
   local NPM; NPM="$(find_npm)"
-  local ppy; ppy="$(venv_py "$PLATFORM_VENV")"
-  local tpy; tpy="$(venv_py "$THREAT_VENV")"
+  local ppy; ppy="$(venv_py "$(venv_dir "$PLATFORM_VENV")")"
+  local tpy; tpy="$(venv_py "$(venv_dir "$THREAT_VENV")")"
   local problems=0
 
   echo "${C_BLD}CIIS doctor${C_OFF}"
@@ -466,9 +653,9 @@ doctor() {
   echo "  platform         : $OS ($(uname -s 2>/dev/null || echo unknown))"
 
   if [ -n "$PY" ]; then
-    ok "python 3.12+     : $PY ($("$PY" --version 2>&1))"
+    ok "python 3.12      : $PY ($("$PY" --version 2>&1))"
   else
-    warn "python 3.12+     : NOT FOUND"; install_hint_python; problems=$((problems + 1))
+    warn "python 3.12      : NOT FOUND"; install_hint_python; problems=$((problems + 1))
   fi
 
   if [ -n "$NPM" ]; then
@@ -494,6 +681,12 @@ doctor() {
   if [ -x "$tpy" ]; then ok "threat venv      : present ($THREAT_VENV)"
   else echo "  threat venv      : missing (optional; only './dev.sh threat' needs it)"; fi
 
+  if configure_rag_runtime; then
+    ok "RAG assistant    : ready ($CIIS_RAG_PYTHON)"
+  else
+    echo "  RAG assistant    : unavailable (optional; set CIIS_RAG_PYTHON to its Python 3.12 executable)"
+  fi
+
   if [ -d ciis_frontend/node_modules/vite ]; then ok "frontend deps    : ready"
   else warn "frontend deps    : MISSING - run ./dev.sh setup"; problems=$((problems + 1)); fi
 
@@ -512,7 +705,7 @@ doctor() {
   # Semantic correction uses xlm-roberta-base when transformers is importable,
   # otherwise a dictionary heuristic. Both are valid; which one ran is recorded
   # on every piece of evidence, so the operator should know which to expect.
-  local ppy_probe; ppy_probe="$(venv_py "$ROOT/$PLATFORM_VENV")"
+  local ppy_probe; ppy_probe="$(venv_py "$(venv_dir "$PLATFORM_VENV")")"
   if [ -x "$ppy_probe" ]; then
     if "$ppy_probe" -c "import importlib.util,sys; sys.exit(0 if importlib.util.find_spec('transformers') else 1)" 2>/dev/null; then
       echo "  semantic validator: xlm-roberta-base (transformers installed)"
@@ -527,8 +720,13 @@ doctor() {
 }
 
 clean() {
-  log "Removing $PLATFORM_VENV, $THREAT_VENV and ciis_frontend/node_modules"
+  log "Removing repo-local environments and ciis_frontend/node_modules"
   rm -rf "$PLATFORM_VENV" "$THREAT_VENV" ciis_frontend/node_modules
+  local rag_directory; rag_directory="$(venv_dir "$RAG_VENV")"
+  case "$rag_directory" in
+    "$ROOT"/*) rm -rf "$rag_directory" ;;
+    *) hint "Retained external RAG environment: $rag_directory" ;;
+  esac
   ok "Clean. The next ./dev.sh will rebuild everything from scratch."
 }
 
@@ -540,16 +738,22 @@ usage() {
        { exit }' "${BASH_SOURCE[0]}"
 }
 
-case "${1:-up}" in
-  setup)         setup ;;
-  api)           api ;;
-  web)           web ;;
-  up)            up ;;
-  threat)        shift; threat "$@" ;;
-  test|tests)    run_tests ;;
-  reset-db)      reset_db ;;
-  doctor)        doctor ;;
-  clean)         clean ;;
-  help|-h|--help) usage ;;
-  *) echo "usage: $0 {up|setup|api|web|threat|test|reset-db|doctor|clean|help}" >&2; exit 1 ;;
-esac
+main() {
+  case "${1:-up}" in
+    setup)          setup ;;
+    api)            api ;;
+    web)            web ;;
+    up)             up ;;
+    threat)         shift; threat "$@" ;;
+    test|tests)     run_tests ;;
+    reset-db)       reset_db ;;
+    doctor)         doctor ;;
+    clean)          clean ;;
+    help|-h|--help) usage ;;
+    *) echo "usage: $0 {up|setup|api|web|threat|test|reset-db|doctor|clean|help}" >&2; return 1 ;;
+  esac
+}
+
+if [ "${BASH_SOURCE[0]}" = "$0" ]; then
+  main "$@"
+fi

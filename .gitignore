@@ -25,6 +25,7 @@ ciis_api/media/
 .venv/
 .venv-platform/
 .venv-threat/
+.venv-rag/
 myvenv/
 venv/
 env/
