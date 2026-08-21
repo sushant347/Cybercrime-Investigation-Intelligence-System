@@ -515,6 +515,38 @@ def _forensics_pipeline():
     )
 
 
+def _original_by_content(
+    originals_root: Path,
+    evidence_id: str,
+    acquisition_hash: str,
+    hash_service: "HashService",
+) -> Optional[Path]:
+    """Find this item's acquired file when the recorded filename has drifted.
+
+    Originals are stored as ``<evidence-id>__<disambiguator>__<name>``, and the
+    disambiguator is not derived from the content — a re-store gives the same
+    bytes a different filename, after which a lookup by recorded name reports
+    the evidence missing while it sits in the directory. Eight items of
+    CASE_1A1BF573F3 were reported as "original evidence files unavailable" with
+    every byte present and hashing correctly.
+
+    Identity is therefore taken from the content, never the name: a candidate
+    is accepted only when its SHA-256 equals the digest recorded at
+    acquisition, which is the same gate a file that had been tampered with
+    would have to pass. Returns ``None`` when nothing matches, leaving the item
+    genuinely missing.
+    """
+    for candidate in sorted(originals_root.glob(f"{evidence_id}__*")):
+        if not candidate.is_file():
+            continue
+        try:
+            if hash_service.sha256_file(candidate).lower() == acquisition_hash:
+                return candidate.resolve()
+        except OSError:
+            continue
+    return None
+
+
 def _run_forensics(evidence_id: str) -> Optional[dict[str, Any]]:
     """Run the Phase-1 forensic chain on one already-acquired item.
 
@@ -919,10 +951,22 @@ def _backfill_forensics(case_id: str) -> dict[str, Any]:
                 f"{evidence_id}: stored original path is outside evidence storage"
             )
             continue
-        if not stored_path.is_file():
-            missing_originals.append(evidence_id)
-            continue
         acquisition_hash = row.get("sha256_before", "").strip().lower()
+        if not stored_path.is_file():
+            # The recorded filename can drift from the file on disk. Recovery
+            # is only possible against a recorded digest; without one the item
+            # is reported unavailable exactly as before.
+            recovered = (
+                _original_by_content(
+                    originals_root, evidence_id, acquisition_hash, hash_service
+                )
+                if acquisition_hash
+                else None
+            )
+            if recovered is None:
+                missing_originals.append(evidence_id)
+                continue
+            stored_path = recovered
         if not acquisition_hash:
             summary["warnings"].append(
                 f"{evidence_id}: acquisition SHA-256 is missing"

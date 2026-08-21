@@ -19,6 +19,7 @@ Use :func:`build_default_pipeline` as the composition root.
 
 from __future__ import annotations
 
+import hashlib
 import time
 from pathlib import Path
 from typing import Any, Dict, List, Optional
@@ -54,6 +55,39 @@ from .confidence.service import ConfidenceScoringService
 
 MODULE = "phase1_pipeline"
 
+
+
+def _resolve_original(
+    originals_dir: Path,
+    evidence_id: str,
+    stored_name: str,
+    acquisition_sha256: str,
+) -> Path:
+    """The acquired file for this item, identified by content when the name fails.
+
+    Originals are stored as ``<evidence-id>__<disambiguator>__<name>`` and the
+    disambiguator is not derived from the content, so re-storing the same bytes
+    produces a different filename. A lookup by recorded name then misses a file
+    that is present and intact, and every module that needs the image fails
+    with it. Identity comes from the digest recorded at acquisition: a
+    candidate is used only when its SHA-256 matches, which is the same gate a
+    tampered file would have to pass. The recorded path is returned unchanged
+    when nothing matches, so a genuinely absent original still reports as one.
+    """
+    named = originals_dir / stored_name
+    if named.is_file() or not acquisition_sha256:
+        return named
+    expected = acquisition_sha256.strip().lower()
+    for candidate in sorted(originals_dir.glob(f"{evidence_id}__*")):
+        if not candidate.is_file():
+            continue
+        try:
+            digest = hashlib.sha256(candidate.read_bytes()).hexdigest()
+        except OSError:
+            continue
+        if digest.lower() == expected:
+            return candidate
+    return named
 
 class ForensicPhase1Pipeline:
     """End-to-end Phase-1 processing for one evidence file."""
@@ -123,9 +157,14 @@ class ForensicPhase1Pipeline:
         if record is None:
             raise EvidenceError(f"Unknown evidence '{evidence_id}'")
         case_id = record.get("case_id", "")
-        stored_path = self._ecfg.originals_dir / record.get("stored_file_name", "")
-        file_name = record.get("original_file_name", stored_path.name)
         acquisition_sha256 = record.get("sha256_before", "")
+        stored_path = _resolve_original(
+            self._ecfg.originals_dir,
+            evidence_id,
+            record.get("stored_file_name", ""),
+            acquisition_sha256,
+        )
+        file_name = record.get("original_file_name", stored_path.name)
         is_image = file_extension(stored_path) in self._ecfg.image_extensions
 
         self._audit.record(case_id, evidence_id, MODULE, "started",
