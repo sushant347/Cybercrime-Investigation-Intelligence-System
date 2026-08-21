@@ -57,6 +57,37 @@ def _empty_dir(path: Path) -> int:
     return removed
 
 
+
+def _derived_evidence_stores(
+    evidence_config: EvidenceConfig,
+    investigation_config: InvestigationConfig,
+) -> List[Path]:
+    """Aggregate CSVs holding one row per evidence item, keyed by case and item.
+
+    Phase 1 appends to these as a side effect of processing, so they are not
+    reachable from the case registry and were missed by every purge here:
+    deleting a case left its keyword frequencies, OCR corrections, file
+    fingerprints and confidence scores behind. Stale fingerprint rows are the
+    dangerous ones — that index exists to spot duplicate evidence, so a row for
+    a file that no longer exists can report a new upload as a duplicate of
+    deleted evidence.
+
+    Audit trails are deliberately absent: ``forensics_audit_log.csv`` and the
+    platform activity log are meant to outlive the thing they describe.
+    """
+    from backend.modules.evidence.forensics.config import ForensicsConfig
+
+    forensics = ForensicsConfig()
+    return [
+        # Written by cleaning_storage / correction_logger, which build these
+        # paths from the storage root rather than a shared config constant.
+        evidence_config.storage_dir / "keyword_statistics.csv",
+        evidence_config.storage_dir / "ocr_corrections.csv",
+        investigation_config.forensics_dir / forensics.fingerprint_csv_name,
+        investigation_config.forensics_dir / forensics.confidence_csv_name,
+    ]
+
+
 def reset_all(
     evidence_config: EvidenceConfig,
     investigation_config: InvestigationConfig,
@@ -81,6 +112,7 @@ def reset_all(
         evidence_config.ocr_results_csv,
         evidence_config.processing_log_csv,
         investigation_config.entities_csv,
+        *_derived_evidence_stores(evidence_config, investigation_config),
     ):
         if _guard(path) and _truncate_csv_to_header(path):
             cleared_csvs.append(path.name)
@@ -323,6 +355,9 @@ def delete_evidence(
         evidence_config.ocr_results_csv,
         evidence_config.processing_log_csv,
         investigation_config.entities_csv,
+        # Keyed by evidence item as well as case, so removing one item has to
+        # clear its rows here or they outlive the evidence they describe.
+        *_derived_evidence_stores(evidence_config, investigation_config),
     ):
         if _guard(path):
             removed_rows[path.name] = _filter_csv_rows(
@@ -417,6 +452,10 @@ def delete_case(
         evidence_config.processing_log_csv,
         investigation_config.entities_csv,
         investigation_config.audit_csv,
+        # Phase-1 side-effect stores. They carry case_id like the rest, so the
+        # same predicate clears them; without this a deleted case kept its
+        # keyword, correction, fingerprint and confidence rows for ever.
+        *_derived_evidence_stores(evidence_config, investigation_config),
     ):
         if _guard(path):
             removed_rows[path.name] = _filter_csv_rows(
