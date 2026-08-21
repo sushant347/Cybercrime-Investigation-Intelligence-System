@@ -17,6 +17,7 @@ continues (Markdown + JSON remain the canonical artifacts).
 from __future__ import annotations
 
 import io
+import re
 from typing import Any, Dict, List, Optional
 
 try:  # reportlab is an optional dependency (installed by dev.sh setup)
@@ -672,23 +673,54 @@ def render_pdf(
     def emit_scope_table(section: Any) -> bool:
         if not isinstance(section, dict) or "methodology" not in section:
             return False
+        story.append(Paragraph(
+            "How this report was produced. Every figure in the sections above "
+            "is read back out of the stored outputs named below - none of it is "
+            "written by hand and none of it is free-text generated, so the same "
+            "evidence re-analysed yields the same report.",
+            styles["body"],
+        ))
+        story.append(Spacer(1, 4))
         story.append(data_table(
             ["Scope", "Recorded basis"],
-            [["Objective", section.get("objective", "not available")],
-             ["Evidence scope", section.get("evidence_scope", "not available")],
-             ["Reproducibility", section.get("reproducibility", "not available")]],
-            widths=[34 * mm, 127 * mm],
+            [["What this run set out to do",
+              section.get("objective", "not available")],
+             ["What it covered",
+              section.get("evidence_scope", "not available")],
+             ["Repeatability",
+              section.get("reproducibility", "not available")]],
+            widths=[40 * mm, 121 * mm],
         ))
+        # Each stage is stored as "Phase 1 - Acquisition & OCR: <what it did>".
+        # Numbering the rows and lifting the phase out of the sentence shows
+        # the pipeline order that the prose only implied.
         methods = []
-        for method in section.get("methodology") or []:
+        for index, method in enumerate(section.get("methodology") or [], start=1):
             stage, separator, detail = str(method).partition(":")
-            methods.append([stage, detail.strip() if separator else method])
+            phased = re.match(r"^Phase\s+(\d+)\s*-\s*(.*)$", stage.strip(), re.I)
+            if phased:
+                stage = f"{phased.group(2).strip()} (Phase {phased.group(1)})"
+            text = (detail.strip() if separator else str(method)).strip()
+            # The engine writes the stage as one sentence, so the half after
+            # the colon starts lowercase. In its own column it reads as a
+            # fragment, so only the first letter is lifted - acronyms such as
+            # "metadata/EXIF" and the wording itself are left alone.
+            if text[:1].islower():
+                text = text[0].upper() + text[1:]
+            methods.append([str(index), stage.strip(), text])
         if methods:
             story.append(Spacer(1, 5))
-            story.append(Paragraph("Processing stages", styles["h3"]))
+            story.append(Paragraph(
+                "Processing stages, in the order they ran", styles["h3"]))
+            story.append(Paragraph(
+                "Each stage reads the previous stage's stored output, so a "
+                "failure anywhere upstream is visible rather than silently "
+                "filled in.", styles["subtitle"]))
+            story.append(Spacer(1, 3))
             story.append(data_table(
-                ["Stage", "Method and stored output"], methods,
-                widths=[48 * mm, 113 * mm],
+                ["#", "Stage", "What it did, and where the output is stored"],
+                methods,
+                widths=[8 * mm, 45 * mm, 108 * mm],
             ))
         return True
 
@@ -898,6 +930,15 @@ def render_pdf(
         return True
 
     def emit_correlation_table(section: Any) -> bool:
+        """Correlated pairs, one block each with its factors itemised.
+
+        The flat table this replaced had to squeeze the whole explanation
+        paragraph into a 79mm column, so it was truncated at 145 characters and
+        the later factors of a strong pair were simply cut off the page. Giving
+        each pair its own factor table prints all of them, and puts the
+        arithmetic - each factor's points, their total, the resulting
+        confidence - where the reader can follow it.
+        """
         if not isinstance(section, dict) or "top_relationships" not in section:
             return False
         story.append(Paragraph(
@@ -907,7 +948,12 @@ def render_pdf(
             styles["caveat"],
         ))
         rows = section.get("top_relationships") or []
-        if rows:
+        if not rows:
+            return True
+
+        structured = [row for row in rows if row.get("factors")]
+        if not structured:
+            # Reports stored before the factors were carried through.
             story.append(Spacer(1, 5))
             story.append(data_table(
                 ["Evidence pair", "Strength", "Confidence", "Computed basis"],
@@ -919,6 +965,58 @@ def render_pdf(
                 ] for row in rows],
                 widths=[35 * mm, 29 * mm, 18 * mm, 79 * mm],
             ))
+            return True
+
+        story.append(Spacer(1, 4))
+        story.append(Paragraph(
+            "How to read these: each factor below is worth points - how "
+            "identifying that kind of match is, multiplied by how rare the "
+            "shared values are across all evidence held. The points add up to "
+            "the pair's total weight, and the confidence is that total on a "
+            "saturating scale, so several independent factors raise confidence "
+            "while no single one reaches certainty alone.",
+            styles["body"],
+        ))
+        story.append(Spacer(1, 4))
+
+        for row in rows:
+            factors = row.get("factors") or []
+            confidence = float(row.get("confidence") or 0)
+            weight = row.get("weight")
+            heading = (
+                f"{esc(row.get('pair', ''))} &ndash; "
+                f"{esc(str(row.get('strength', '')).replace('_', ' ').title())}"
+            )
+            measures = f"Confidence {confidence:.2f}"
+            if weight is not None:
+                measures = (f"Total weight {float(weight):.2f} "
+                            f"&rarr; confidence {confidence:.2f}")
+            if factors:
+                measures += f" &nbsp;|&nbsp; {len(factors)} independent factor(s)"
+
+            block: List[Any] = [
+                Paragraph(heading, styles["h3"]),
+                Paragraph(measures, styles["subtitle"]),
+                Spacer(1, 3),
+            ]
+            if factors:
+                block.append(data_table(
+                    ["Factor", "Points", "What matched"],
+                    [[
+                        str(factor.get("label", "")).title(),
+                        f"{float(factor.get('contribution') or 0):.2f}",
+                        _short(str(factor.get("detail", "")), 150),
+                    ] for factor in factors],
+                    widths=[34 * mm, 16 * mm, 111 * mm],
+                    compact=True,
+                ))
+            else:
+                block.append(Paragraph(
+                    esc(_relationship_basis(row.get("explanation", ""), 400)),
+                    styles["body"]))
+            block.append(Spacer(1, 7))
+            # A pair split across a page break reads as two half-findings.
+            story.append(KeepTogether(block))
         return True
 
     def emit_cross_case_table(section: Any) -> bool:
@@ -1070,10 +1168,13 @@ def render_pdf(
             return False
 
         provisions = section.get("provisions") or []
+        story.append(Paragraph("What this section is", styles["h3"]))
         story.append(Paragraph(
-            f"Automated issue screening identified {len(provisions)} candidate "
-            "statutory provision(s) for investigator and legal review. A listed "
-            "provision is not a finding that every legal element is established.",
+            f"Provisions the automated findings <i>touch</i> - offences whose "
+            f"description matches what the evidence shows. Screening identified "
+            f"{len(provisions)} candidate provision(s): this is a shortlist for "
+            "investigator and legal review, not a charge and not a finding that "
+            "every element of an offence is made out.",
             styles["body"],
         ))
         if section.get("caveat"):
@@ -1107,14 +1208,19 @@ def render_pdf(
                     f"{esc(provision['title'])}", styles["h3"]),
                 Paragraph(esc(provision["citation"]), styles["subtitle"]),
                 Spacer(1, 3),
+                # Three plain questions rather than field names: a reader
+                # should be able to tell what the offence is, what in this
+                # case pointed at it, and what it carries, without decoding
+                # "basis" or "conduct" first.
                 data_table(
-                    ["Field", "Recorded value"],
-                    [["Conduct", provision["conduct"]],
-                     ["Penalty", provision["penalty"]],
-                     ["Automated trigger (not proof)", provision["basis"]],
-                     ["Supporting evidence", ", ".join(
+                    ["What was assessed", "Recorded value"],
+                    [["What the law covers", provision["conduct"]],
+                     ["What in this case pointed here (not proof)",
+                      provision["basis"]],
+                     ["Maximum penalty on conviction", provision["penalty"]],
+                     ["Evidence behind it", ", ".join(
                          provision.get("evidence_ids") or ["none"])]],
-                    widths=[39 * mm, 122 * mm],
+                    widths=[45 * mm, 116 * mm],
                 ),
             ]
             block.append(Spacer(1, 8))
@@ -1126,8 +1232,9 @@ def render_pdf(
             story.append(Paragraph(
                 "Evidentiary and regulatory follow-up", styles["h3"]))
             story.append(Paragraph(
-                "These are preservation or investigative actions, not findings "
-                "that an institution violated a rule.", styles["subtitle"]))
+                "Records to preserve and parties to approach while they still "
+                "hold the data - not findings that any institution broke a "
+                "rule.", styles["subtitle"]))
             story.append(Spacer(1, 5))
             for item in guidance:
                 block = [
@@ -1135,15 +1242,15 @@ def render_pdf(
                     Paragraph(esc(item["citation"]), styles["subtitle"]),
                     Spacer(1, 3),
                     data_table(
-                        ["Field", "Recorded value"],
+                        ["What was assessed", "Recorded value"],
                         [["Status", item.get("status", "investigative_follow_up")],
-                         ["Expectation", item["expectation"]],
-                         ["Why relevant", item["basis"]],
-                         ["Recommended action", item["recommended_action"]],
-                         ["Applicability", item["applicability"]],
-                         ["Supporting evidence", ", ".join(
+                         ["What the rule expects", item["expectation"]],
+                         ["Why it applies here", item["basis"]],
+                         ["What to do about it", item["recommended_action"]],
+                         ["Who it binds", item["applicability"]],
+                         ["Evidence behind it", ", ".join(
                              item.get("evidence_ids") or ["none"])]],
-                        widths=[39 * mm, 122 * mm],
+                        widths=[45 * mm, 116 * mm],
                     ),
                 ]
                 block.append(Spacer(1, 7))

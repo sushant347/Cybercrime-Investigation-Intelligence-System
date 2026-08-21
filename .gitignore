@@ -84,3 +84,7 @@ sample/
 # Quarantine for files git deleted but OneDrive refused to unlink. Safe to
 # delete by hand; kept out of the tree so Django/Vite never import them.
 .stale_trash/
+
+# Per-developer Claude Code permission state. The shared launch.json beside it
+# is tracked; this file is personal and differs on every machine.
+.claude/settings.local.json

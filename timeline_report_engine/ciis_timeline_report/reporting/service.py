@@ -374,7 +374,40 @@ class InvestigationReportService:
         return summary
 
     @staticmethod
-    def _correlation_section(correlation) -> Any:
+    def _factor_rows(pair) -> List[Dict[str, Any]]:
+        """The pair's factors as rows, so renderers need not parse the prose.
+
+        ``explanation`` states every factor in one paragraph that ends each
+        clause with ``[weight 0.66]``. As a table cell that is a wall of text,
+        and the bracketed number is unlabelled - a reader cannot tell that it
+        is this factor's share of the pair's total, nor that the total is what
+        the confidence is computed from. The same factors are already carried
+        structured on the pair, so they are passed through as rows here and laid
+        out by each renderer. Nothing is recomputed: every number below is read
+        straight off the stored factor.
+        """
+        rows: List[Dict[str, Any]] = []
+        for factor in pair.factors:
+            label = factor.factor.replace("_", " ")
+            # The engine builds entity reasons as "Both items reference the
+            # same <label>: <values>". With the label in its own column that
+            # prefix repeats on every row, so the known template is dropped and
+            # anything else is passed through untouched.
+            prefix = f"Both items reference the same {label}: "
+            reason = factor.reason
+            detail = reason[len(prefix):] if reason.startswith(prefix) else reason
+            rows.append({
+                "factor": factor.factor,
+                "label": label,
+                "detail": detail,
+                "contribution": factor.contribution,
+                "type_weight": factor.weight,
+                "matches": factor.matches,
+            })
+        return rows
+
+    @classmethod
+    def _correlation_section(cls, correlation) -> Any:
         if correlation is None:
             return "Correlation analysis not available for this case."
         return {
@@ -387,6 +420,10 @@ class InvestigationReportService:
                     "strength": p.relationship_strength,
                     "confidence": p.correlation_confidence,
                     "explanation": p.explanation,
+                    # Additive: reports stored before these existed still
+                    # render, from ``explanation`` alone.
+                    "weight": p.correlation_weight,
+                    "factors": cls._factor_rows(p),
                 }
                 for p in correlation.pairs[:5]
                 if p.relationship_strength != "NO_RELATIONSHIP"
@@ -1231,6 +1268,24 @@ def _confidence_markdown(section: Any) -> List[str]:
     )
 
 
+def _correlation_basis_cell(row: Dict[str, Any]) -> str:
+    """One pair's factors as a compact cell.
+
+    Falls back to the prose explanation for reports stored before the
+    structured factors were carried through.
+    """
+    factors = row.get("factors") or []
+    if not factors:
+        return _short(row.get("explanation", ""))
+    parts = [
+        f"**{str(factor.get('label', '')).title()}** (+"
+        f"{float(factor.get('contribution') or 0):.2f}): "
+        f"{_short(str(factor.get('detail', '')), 90)}"
+        for factor in factors
+    ]
+    return "<br>".join(parts)
+
+
 def _correlation_markdown(section: Any) -> List[str]:
     if not isinstance(section, dict):
         return _to_markdown(section)
@@ -1239,14 +1294,20 @@ def _correlation_markdown(section: Any) -> List[str]:
         f"{section.get('pair_count', 0)} analysed pairs met a configured "
         "relationship threshold.",
         "",
+        "Each factor below contributes points. The points sum to the pair's "
+        "total weight, and the confidence is that total put through a "
+        "saturating curve - so more corroborating factors raise confidence, "
+        "but no single factor can carry a pair to certainty on its own.",
+        "",
     ]
     out += _markdown_table(
-        ["Evidence pair", "Strength", "Confidence", "Computed basis"],
+        ["Evidence pair", "Strength", "Weight", "Confidence", "Contributing factors"],
         [[
             row.get("pair", ""),
             row.get("strength", ""),
+            (f"{float(row['weight']):.2f}" if row.get("weight") is not None else "-"),
             row.get("confidence", ""),
-            _short(row.get("explanation", "")),
+            _correlation_basis_cell(row),
         ] for row in section.get("top_relationships") or []],
     )
     return out

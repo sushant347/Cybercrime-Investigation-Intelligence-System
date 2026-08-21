@@ -1,0 +1,19 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "ciis-api",
+      "runtimeExecutable": "../.venv-platform/bin/python",
+      "runtimeArgs": ["manage.py", "runserver", "8001"],
+      "cwd": "ciis_api",
+      "port": 8001
+    },
+    {
+      "name": "ciis-web",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "cwd": "ciis_frontend",
+      "port": 5173
+    }
+  ]
+}

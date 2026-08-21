@@ -38,6 +38,23 @@ export interface EvidenceRow {
   entityCount: number;
 }
 
+/**
+ * One weighted reason a pair was linked, as the correlation engine recorded it.
+ *
+ * `contribution` is this factor's share of the pair's total weight — how
+ * identifying the kind of match is, times how rare the shared values are. The
+ * shares sum to `ConnectionRow.weight`, and the confidence is that total on a
+ * saturating scale.
+ */
+export interface ConnectionFactor {
+  factor: string;
+  label: string;
+  detail: string;
+  contribution: number;
+  type_weight: number;
+  matches: number;
+}
+
 export interface ConnectionRow {
   pair: string;
   /** The two evidence ids, split out for diagram rendering. */
@@ -50,6 +67,10 @@ export interface ConnectionRow {
   meaning: string;
   /** Stored correlation-engine explanation, shown without reinterpretation. */
   basis: string;
+  /** Summed factor contributions; null in reports stored before this existed. */
+  weight: number | null;
+  /** Empty for those older reports, which fall back to `basis`. */
+  factors: ConnectionFactor[];
 }
 
 export interface TimelineEventRow {
@@ -127,6 +148,17 @@ export interface SimpleReport {
   modelPredictions: ModelPredictionRow[];
   modelPredictionsNote: string | null;
   methodology: string[];
+  /**
+   * What the run set out to do, what it covered, and what re-running it
+   * reproduces. Stored beside the stage list and printed in the PDF, but
+   * previously dropped on screen — leaving the stages without the statement
+   * of scope that qualifies them.
+   */
+  methodologyScope: {
+    objective: string;
+    evidenceScope: string;
+    reproducibility: string;
+  };
   progression: string[];
   timelineEvents: TimelineEventRow[];
   timelineReliability: string | null;
@@ -197,10 +229,22 @@ function titleCaseStage(stage: string): string {
 }
 
 /** Plain-language gloss for a correlation strength band. */
+/**
+ * One plain sentence per relationship band.
+ *
+ * The engine's bands are NO_RELATIONSHIP / WEAK / MEDIUM / STRONG /
+ * VERY_STRONG. Two of those had no case here — MEDIUM was spelled "MODERATE"
+ * and VERY_STRONG was missing entirely — so the two ends of the scale that
+ * matter most both fell through to the generic default. "MODERATE" is kept as
+ * an alias in case a deployment configures its bands under that name.
+ */
 function strengthMeaning(strength: string): string {
   switch (strength.toUpperCase()) {
+    case "VERY_STRONG":
+      return "Several independent identifiers match — these two items almost certainly belong to the same activity.";
     case "STRONG":
       return "These two items are very likely part of the same activity.";
+    case "MEDIUM":
     case "MODERATE":
       return "These two items share enough in common to be treated as related.";
     case "WEAK":
@@ -225,6 +269,9 @@ export function buildSimpleReport(
       strength: string;
       confidence: number;
       explanation: string;
+      /** Absent in reports stored before the factors were carried through. */
+      weight?: number;
+      factors?: ConnectionFactor[];
     }[];
   }>(sections.correlation_analysis);
   const timeline = structured<{
@@ -256,6 +303,7 @@ export function buildSimpleReport(
   const evidenceRows = Array.isArray(sections.evidence_summary) ? sections.evidence_summary : [];
   const scope = structured<{
     objective: string;
+    evidence_scope: string;
     methodology: string[];
     reproducibility: string;
   }>(sections.scope_and_methodology);
@@ -410,6 +458,8 @@ export function buildSimpleReport(
           typeof rel.confidence === "number" ? rel.confidence : null,
         meaning: strengthMeaning(rel.strength),
         basis: rel.explanation,
+        weight: typeof rel.weight === "number" ? rel.weight : null,
+        factors: rel.factors ?? [],
       };
     }),
     modelPredictions: (predictions?.predictions ?? []).map((p) => ({
@@ -480,6 +530,11 @@ export function buildSimpleReport(
         ? sections.model_predictions
         : null,
     methodology: scope?.methodology ?? [],
+    methodologyScope: {
+      objective: scope?.objective ?? "",
+      evidenceScope: scope?.evidence_scope ?? "",
+      reproducibility: scope?.reproducibility ?? "",
+    },
     progression: (timeline?.stage_progression ?? []).map(titleCaseStage),
     timelineEvents: (timeline?.chronological_events ?? []).map((event) => ({
       timestamp: humanDate(event.timestamp),

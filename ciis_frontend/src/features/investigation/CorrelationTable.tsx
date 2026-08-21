@@ -32,9 +32,10 @@ import type { CorrelationFactor, EvidencePairCorrelation } from "@/types";
  * square of the evidence count, so thirty items produced a page of headers
  * hundreds of rows long with no way to find the strong links among the weak
  * ones. The same pairs are now a sorted, filterable table — strongest first —
- * and every pair still opens to exactly the detail the accordion held: the
- * engine's explanation, its reasons, and the per-factor contribution table.
- * Nothing is summarised away; it is only folded until asked for.
+ * and every pair opens to the factor-by-factor arithmetic behind its score,
+ * closing on the total the confidence is derived from. The engine's own
+ * explanation paragraph is kept verbatim behind a disclosure inside that
+ * panel. Nothing is summarised away; it is only folded until asked for.
  */
 
 type SortKey = "confidence" | "pair";
@@ -52,63 +53,172 @@ function factorSpecificity(factor: CorrelationFactor): number | null {
   return details.reduce((sum, d) => sum + d.specificity, 0) / details.length;
 }
 
-/** The factor breakdown, unchanged from the previous accordion body. */
-function FactorTable({ factors }: { factors: CorrelationFactor[] }) {
+/**
+ * The matched values re-counted by how rare each one is.
+ *
+ * This is the number the contribution is actually built from: contribution =
+ * weight x effective matches, for entity factors *and* for the non-entity ones
+ * (a matching hash or a proximity window has no corpus rarity, so its
+ * effective count is simply the counted matches). Showing the mean specificity
+ * in its place made the row look like bad arithmetic — two domains at mean
+ * specificity 0.65 and weight 0.60 read as 0.39 but contribute 0.77, because
+ * the specificities are summed, not averaged.
+ *
+ * `effective_matches` is optional on artifacts stored before it existed, so it
+ * falls back to the value implied by the contribution.
+ */
+function effectiveMatches(factor: CorrelationFactor): number {
+  if (typeof factor.effective_matches === "number") return factor.effective_matches;
+  return factor.weight > 0 ? factor.contribution / factor.weight : factor.matches;
+}
+
+/**
+ * What a factor actually matched, without the lead-in naming the factor.
+ *
+ * The engine writes each reason as a standalone sentence — "Both items
+ * reference the same phones: +977…" — because it is also concatenated into the
+ * one-paragraph explanation. Beside a column that already says "Phones" that
+ * opening repeats on every row and pushes the values themselves off to the
+ * right, so the two known templates are trimmed and anything else is shown
+ * exactly as the engine wrote it.
+ */
+function factorDetail(factor: CorrelationFactor): string {
+  const label = factor.factor.replace(/_/g, " ");
+  const leadIns = [
+    `Both items reference the same ${label}: `,
+    "Threat intelligence flags the same malicious indicators in both items: ",
+  ];
+  const lead = leadIns.find((candidate) => factor.reason.startsWith(candidate));
+  return lead ? factor.reason.slice(lead.length) : factor.reason;
+}
+
+/**
+ * The factor breakdown: what matched, and what each match was worth.
+ *
+ * Ordered by contribution so the factor that actually carried the pair is the
+ * first thing read, and closed by the total the confidence is derived from —
+ * without it the columns are six numbers that never visibly add up to
+ * anything.
+ */
+function FactorTable({
+  factors,
+  totalWeight,
+}: {
+  factors: CorrelationFactor[];
+  totalWeight: number;
+}) {
   const theme = useTheme();
+  const ordered = [...factors].sort((a, b) => b.contribution - a.contribution);
+
   return (
     <TableContainer sx={{ overflowX: "auto" }}>
       <Table size="small">
         <TableHead>
           <TableRow>
             <TableCell>Factor</TableCell>
+            <TableCell sx={{ minWidth: 240 }}>What matched</TableCell>
             <TableCell align="right">Matches</TableCell>
-            <TableCell align="right">Weight</TableCell>
-            <Tooltip title="How identifying the matched values are. 1.00 means the value appears almost nowhere else in the corpus; a low figure means it is common, so it barely supports a link.">
-              <TableCell align="right">Specificity</TableCell>
+            <Tooltip title="How identifying this kind of match is, before rarity is considered. Configured per entity type — a wallet address counts for more than a round sum of money.">
+              <TableCell align="right">Weight</TableCell>
             </Tooltip>
-            <TableCell align="right">Contribution</TableCell>
-            <TableCell>Reason</TableCell>
+            <Tooltip title="The matches re-counted by how rare each value is across every item held: a value seen almost nowhere else counts close to 1, a corpus-wide one close to 0. Hover a figure for the per-value reasoning.">
+              <TableCell align="right">Effective</TableCell>
+            </Tooltip>
+            <Tooltip title="Weight × effective matches — this factor's share of the total below.">
+              <TableCell align="right">Contribution</TableCell>
+            </Tooltip>
           </TableRow>
         </TableHead>
         <TableBody>
-          {factors.map((factor) => {
+          {ordered.map((factor) => {
             const specificity = factorSpecificity(factor);
             return (
               <TableRow key={factor.factor}>
-                <TableCell sx={{ textTransform: "capitalize", whiteSpace: "nowrap" }}>
+                <TableCell
+                  sx={{
+                    textTransform: "capitalize",
+                    whiteSpace: "nowrap",
+                    fontWeight: 700,
+                    verticalAlign: "top",
+                  }}
+                >
                   {factor.factor.replace(/_/g, " ")}
                 </TableCell>
-                <TableCell align="right">{factor.matches}</TableCell>
-                <TableCell align="right">{factor.weight}</TableCell>
-                <TableCell align="right">
-                  {specificity === null ? (
-                    "—"
-                  ) : (
-                    <Tooltip
-                      title={
+                <TableCell sx={{ verticalAlign: "top", wordBreak: "break-word" }}>
+                  {factorDetail(factor)}
+                </TableCell>
+                <TableCell align="right" sx={{ verticalAlign: "top" }}>
+                  {factor.matches}
+                </TableCell>
+                <TableCell align="right" sx={{ verticalAlign: "top" }}>
+                  {factor.weight.toFixed(2)}
+                </TableCell>
+                <TableCell align="right" sx={{ verticalAlign: "top" }}>
+                  <Tooltip
+                    title={
+                      specificity === null ? (
+                        "Not a value-based factor, so there is no corpus rarity to weigh — the effective count is simply the matches."
+                      ) : (
                         <Stack spacing={0.5}>
+                          <Typography variant="caption" sx={{ fontWeight: 700 }}>
+                            Mean specificity {specificity.toFixed(2)}
+                          </Typography>
                           {(factor.value_details ?? []).map((d) => (
                             <Typography key={d.value} variant="caption">
                               {d.reason}
                             </Typography>
                           ))}
                         </Stack>
+                      )
+                    }
+                  >
+                    <Box
+                      component="span"
+                      sx={
+                        specificity === null
+                          ? undefined
+                          : {
+                              fontWeight: 700,
+                              color: brandTone(specificityTone(specificity), theme),
+                            }
                       }
                     >
-                      <Box
-                        component="span"
-                        sx={{ fontWeight: 700, color: brandTone(specificityTone(specificity), theme) }}
-                      >
-                        {specificity.toFixed(2)}
-                      </Box>
-                    </Tooltip>
-                  )}
+                      {effectiveMatches(factor).toFixed(2)}
+                    </Box>
+                  </Tooltip>
                 </TableCell>
-                <TableCell align="right">{factor.contribution.toFixed(2)}</TableCell>
-                <TableCell sx={{ minWidth: 220 }}>{factor.reason}</TableCell>
+                <TableCell
+                  align="right"
+                  sx={{
+                    verticalAlign: "top",
+                    fontWeight: 700,
+                    fontFamily: '"JetBrains Mono", monospace',
+                  }}
+                >
+                  {factor.contribution.toFixed(2)}
+                </TableCell>
               </TableRow>
             );
           })}
+          <TableRow>
+            <TableCell
+              colSpan={5}
+              align="right"
+              sx={{ fontWeight: 700, borderBottom: 0 }}
+            >
+              Total weight
+            </TableCell>
+            <TableCell
+              align="right"
+              sx={{
+                fontWeight: 700,
+                borderBottom: 0,
+                fontFamily: '"JetBrains Mono", monospace',
+              }}
+            >
+              {totalWeight.toFixed(2)}
+            </TableCell>
+          </TableRow>
         </TableBody>
       </Table>
     </TableContainer>
@@ -118,6 +228,7 @@ function FactorTable({ factors }: { factors: CorrelationFactor[] }) {
 /** A pair row plus its collapsible detail row. */
 function PairRow({ pair }: { pair: EvidencePairCorrelation }) {
   const [open, setOpen] = useState(false);
+  const [showSentence, setShowSentence] = useState(false);
   // The strongest couple of factors, so the row says *why* without expanding.
   const topFactors = [...pair.factors]
     .sort((a, b) => b.contribution - a.contribution)
@@ -183,18 +294,83 @@ function PairRow({ pair }: { pair: EvidencePairCorrelation }) {
       <TableRow>
         <TableCell colSpan={5} sx={{ py: 0, borderBottom: open ? undefined : 0 }}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-            <Stack spacing={1.5} sx={{ py: 2, px: { xs: 0, sm: 2 } }}>
-              <Typography variant="body2">{pair.explanation}</Typography>
-              {pair.correlation_reasons.length > 0 && (
-                <Stack spacing={0.5}>
-                  {pair.correlation_reasons.map((reason, i) => (
-                    <Typography key={i} variant="body2" color="text.secondary">
-                      • {reason}
-                    </Typography>
-                  ))}
+            {/* This panel held the same content three times over: the engine's
+                explanation paragraph, then `correlation_reasons` as bullets —
+                which is literally the list of factor reasons the paragraph is
+                built from — and then those same reasons again in the table's
+                Reason column. The bullets are gone, the reasons live in the
+                table where their numbers are, and the paragraph is kept
+                verbatim behind a disclosure so nothing the engine wrote is
+                lost. */}
+            <Stack spacing={2} sx={{ py: 2, px: { xs: 0, sm: 2 } }}>
+              <Box>
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  alignItems="baseline"
+                  flexWrap="wrap"
+                  useFlexGap
+                >
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                    {pair.factors.length} independent factor
+                    {pair.factors.length === 1 ? "" : "s"}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ fontFamily: '"JetBrains Mono", monospace' }}
+                  >
+                    total weight {pair.correlation_weight.toFixed(2)} → confidence{" "}
+                    {pair.correlation_confidence.toFixed(2)}
+                  </Typography>
                 </Stack>
+                <Typography variant="caption" color="text.secondary">
+                  Each factor contributes its <strong>weight</strong> — how
+                  identifying that kind of match is — times its{" "}
+                  <strong>effective</strong> matches, the match count re-counted
+                  by how rare each value is across every item held. Those
+                  contributions sum to the total weight, and confidence rises
+                  with that total on a saturating curve: several independent
+                  factors push it up, no single one reaches certainty alone.
+                </Typography>
+              </Box>
+
+              {pair.factors.length > 0 && (
+                <FactorTable
+                  factors={pair.factors}
+                  totalWeight={pair.correlation_weight}
+                />
               )}
-              {pair.factors.length > 0 && <FactorTable factors={pair.factors} />}
+
+              <Box>
+                <Typography
+                  component="button"
+                  type="button"
+                  variant="caption"
+                  onClick={() => setShowSentence((v) => !v)}
+                  sx={{
+                    background: "none",
+                    border: 0,
+                    p: 0,
+                    cursor: "pointer",
+                    color: "text.secondary",
+                    textDecoration: "underline",
+                    font: "inherit",
+                  }}
+                >
+                  {showSentence ? "Hide" : "Show"} the engine&rsquo;s full
+                  sentence
+                </Typography>
+                <Collapse in={showSentence} timeout="auto" unmountOnExit>
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ mt: 1 }}
+                  >
+                    {pair.explanation}
+                  </Typography>
+                </Collapse>
+              </Box>
             </Stack>
           </Collapse>
         </TableCell>

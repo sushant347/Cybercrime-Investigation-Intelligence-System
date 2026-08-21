@@ -1,4 +1,7 @@
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Box,
   Chip,
   Link,
@@ -12,11 +15,13 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { Fragment } from "react";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Fragment, useState } from "react";
 import type { ReactNode } from "react";
 
 import { EntityChip, entityTypeLabel } from "@/components/common/EntityChip";
 import { KeyFindings } from "./KeyFindings";
+import type { ReportLegalBasisSection } from "@/types";
 import type { SimpleReport, SummaryRow } from "./reportModel";
 import {
   connectionDiagramSvg,
@@ -122,13 +127,394 @@ function Svg({ markup }: { markup: string }) {
   );
 }
 
-function splitMethod(line: string): { stage: string; method: string } {
+/**
+ * One methodology line, split into the parts it is actually written in.
+ *
+ * The engine stores each stage as `"Phase 1 - Acquisition & OCR: <what it
+ * did>; <where the output is stored>"`. Printed whole it is a dense sentence
+ * whose phase label, stage name and individual steps all run together, so each
+ * is pulled out and laid out in its own place. The text itself is untouched.
+ */
+function splitMethod(line: string): {
+  phase: string;
+  stage: string;
+  steps: string[];
+} {
   const divider = line.indexOf(":");
-  if (divider < 0) return { stage: "Analysis", method: line };
+  const head = divider < 0 ? "Analysis" : line.slice(0, divider);
+  const body = (divider < 0 ? line : line.slice(divider + 1)).trim();
+  const phased = head.match(/^Phase\s+(\d+)\s*-\s*(.*)$/i);
   return {
-    stage: line.slice(0, divider).replace(/^Phase\s+\d+\s*-\s*/i, ""),
-    method: line.slice(divider + 1).trim(),
+    phase: phased ? `Phase ${phased[1]}` : "",
+    stage: (phased ? phased[2] : head).trim(),
+    // The engine writes each stage as one sentence, so the half after the
+    // colon starts lowercase. Standing alone in its own column that reads as
+    // a fragment, so only the first letter is lifted — acronyms such as
+    // "metadata/EXIF" and the wording itself are left alone.
+    steps: body
+      .split(";")
+      .map((step) => step.trim())
+      .filter(Boolean)
+      .map((step) =>
+        /^[a-z]/.test(step) ? step[0].toUpperCase() + step.slice(1) : step,
+      ),
   };
+}
+
+/** A labelled block of engine prose — the unit both provisions and guidance use. */
+function Field({ label, value }: { label: string; value: string }) {
+  return (
+    <Box>
+      <Typography variant="overline" color="text.secondary">
+        {label}
+      </Typography>
+      <Typography variant="body2">{value}</Typography>
+    </Box>
+  );
+}
+
+/** Evidence ids as chips, under a label. */
+function EvidenceChips({ ids }: { ids: string[] }) {
+  if (ids.length === 0) return null;
+  return (
+    <Box sx={{ mt: 1.75 }}>
+      <Typography variant="overline" color="text.secondary">
+        Evidence behind it
+      </Typography>
+      <Stack direction="row" spacing={0.5} flexWrap="wrap" useFlexGap sx={{ mt: 0.5 }}>
+        {ids.map((id) => (
+          <Chip key={id} label={id} size="small" variant="outlined" />
+        ))}
+      </Stack>
+    </Box>
+  );
+}
+
+/**
+ * Statutory basis: a shortlist that stays a list until asked to open.
+ *
+ * Six provisions and two follow-up actions, each carrying four blocks of
+ * statutory prose, ran to several screens — so the section's own shape (how
+ * many provisions, which ones, how much evidence behind each) was only
+ * visible by scrolling past all of it. Every provision is now a row that
+ * states what it is and how much evidence sits behind it, opening to the full
+ * text unchanged. Nothing is dropped or shortened; it is folded.
+ *
+ * The caveat is the exception and is never folded: it is what stops the list
+ * being read as a charging decision, so it stays beside the count it
+ * qualifies.
+ */
+function StatutoryBasis({
+  basis,
+  accent,
+}: {
+  basis: ReportLegalBasisSection;
+  accent: string;
+}) {
+  const provisions = basis.provisions;
+  const guidance = basis.investigative_guidance ?? [];
+  const manual = basis.manual_review_provisions ?? [];
+  const sources = basis.sources ?? [];
+
+  const keys = [
+    ...provisions.map((p) => `p:${p.section}`),
+    ...guidance.map((_, i) => `g:${i}`),
+    ...(manual.length > 0 ? ["manual"] : []),
+  ];
+  // The first provision opens by default: a column of closed bars gives a
+  // reader no sense of what one contains, and the engine orders provisions by
+  // relevance, so the first is the one worth showing.
+  const [open, setOpen] = useState<Record<string, boolean>>(() =>
+    provisions[0] ? { [`p:${provisions[0].section}`]: true } : {},
+  );
+
+  const allOpen = keys.length > 0 && keys.every((k) => open[k]);
+  const toggleAll = () =>
+    setOpen(allOpen ? {} : Object.fromEntries(keys.map((k) => [k, true])));
+  const toggle = (key: string) =>
+    setOpen((prev) => ({ ...prev, [key]: !prev[key] }));
+
+  const panelSx = {
+    border: 1,
+    borderColor: "divider",
+    borderLeft: 3,
+    borderLeftColor: accent,
+    borderRadius: 1,
+    "&:before": { display: "none" },
+  } as const;
+
+  return (
+    <>
+      <Box
+        sx={{
+          p: 2,
+          mb: 2,
+          borderRadius: 1,
+          border: 1,
+          borderColor: "divider",
+          bgcolor: "action.hover",
+        }}
+      >
+        <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
+          What this section is
+        </Typography>
+        <Typography variant="body2" sx={{ mb: 1 }}>
+          Offences whose description matches what the evidence shows — a
+          shortlist for legal review.
+        </Typography>
+        <Typography variant="caption" color="text.secondary" sx={{ lineHeight: 1.6 }}>
+          {basis.caveat}
+        </Typography>
+        <Typography
+          variant="caption"
+          color="text.secondary"
+          sx={{ display: "block", mt: 1.5, fontWeight: 700 }}
+        >
+          {basis.statute} · {basis.jurisdiction}
+        </Typography>
+        {basis.language_note && (
+          <Typography
+            variant="caption"
+            color="text.secondary"
+            sx={{ display: "block", mt: 0.5 }}
+          >
+            {basis.language_note}
+          </Typography>
+        )}
+      </Box>
+
+      <Stack
+        direction="row"
+        alignItems="baseline"
+        justifyContent="space-between"
+        flexWrap="wrap"
+        useFlexGap
+        sx={{ mb: 1 }}
+      >
+        <Typography variant="body2">{basis.summary}</Typography>
+        {keys.length > 0 && (
+          <Typography
+            component="button"
+            type="button"
+            variant="caption"
+            onClick={toggleAll}
+            sx={{
+              background: "none",
+              border: 0,
+              p: 0,
+              cursor: "pointer",
+              color: "text.secondary",
+              textDecoration: "underline",
+              font: "inherit",
+              whiteSpace: "nowrap",
+            }}
+          >
+            {allOpen ? "Collapse all" : "Expand all"}
+          </Typography>
+        )}
+      </Stack>
+
+      <Stack spacing={1}>
+        {provisions.map((provision) => {
+          const key = `p:${provision.section}`;
+          return (
+            <Accordion
+              key={provision.section}
+              disableGutters
+              elevation={0}
+              expanded={!!open[key]}
+              onChange={() => toggle(key)}
+              sx={panelSx}
+            >
+              <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                <Stack
+                  direction="row"
+                  spacing={1.5}
+                  alignItems="center"
+                  sx={{ flex: 1, minWidth: 0, pr: 1 }}
+                >
+                  <Chip
+                    size="small"
+                    label={`s.${provision.section}`}
+                    sx={{ fontWeight: 700, height: 22 }}
+                  />
+                  <Typography variant="subtitle2" sx={{ fontWeight: 700, minWidth: 0 }}>
+                    {provision.title}
+                  </Typography>
+                  <Box sx={{ flex: 1 }} />
+                  <Typography
+                    variant="caption"
+                    color="text.secondary"
+                    sx={{ whiteSpace: "nowrap" }}
+                  >
+                    {provision.evidence_ids.length} item
+                    {provision.evidence_ids.length === 1 ? "" : "s"}
+                  </Typography>
+                </Stack>
+              </AccordionSummary>
+              <AccordionDetails sx={{ pt: 0 }}>
+                <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  sx={{ display: "block", mb: 1.5 }}
+                >
+                  {provision.citation}
+                </Typography>
+                <Stack spacing={1.5}>
+                  <Field label="What the law covers" value={provision.conduct} />
+                  {/* The question an investigator actually opens this for, so
+                      it is the one that carries the accent. */}
+                  <Box sx={{ borderLeft: 2, borderColor: accent, pl: 1.5 }}>
+                    <Field
+                      label="What in this case pointed here"
+                      value={provision.basis}
+                    />
+                  </Box>
+                  <Field
+                    label="Maximum penalty on conviction"
+                    value={provision.penalty}
+                  />
+                </Stack>
+                <EvidenceChips ids={provision.evidence_ids} />
+              </AccordionDetails>
+            </Accordion>
+          );
+        })}
+      </Stack>
+
+      {guidance.length > 0 && (
+        <Box sx={{ mt: 3 }}>
+          <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
+            Evidentiary and regulatory follow-up
+          </Typography>
+          <Typography variant="caption" color="text.secondary">
+            Records to preserve and parties to approach while they still hold
+            the data — not findings that any institution broke a rule.
+          </Typography>
+
+          <Stack spacing={1} sx={{ mt: 1.5 }}>
+            {guidance.map((item, index) => {
+              const key = `g:${index}`;
+              return (
+                <Accordion
+                  key={`${item.source_id}-${item.control_ids.join("-")}`}
+                  disableGutters
+                  elevation={0}
+                  expanded={!!open[key]}
+                  onChange={() => toggle(key)}
+                  sx={{
+                    border: 1,
+                    borderColor: "divider",
+                    borderRadius: 1,
+                    "&:before": { display: "none" },
+                  }}
+                >
+                  <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                    <Stack
+                      direction="row"
+                      spacing={1.5}
+                      alignItems="center"
+                      sx={{ flex: 1, minWidth: 0, pr: 1 }}
+                    >
+                      <Typography variant="subtitle2" sx={{ fontWeight: 700, minWidth: 0 }}>
+                        {item.title}
+                      </Typography>
+                      <Box sx={{ flex: 1 }} />
+                      <Chip
+                        size="small"
+                        label={item.status.replaceAll("_", " ")}
+                        variant="outlined"
+                        sx={{ height: 22 }}
+                      />
+                    </Stack>
+                  </AccordionSummary>
+                  <AccordionDetails sx={{ pt: 0 }}>
+                    <Typography
+                      variant="caption"
+                      color="text.secondary"
+                      sx={{ display: "block", mb: 1.5 }}
+                    >
+                      {item.citation}
+                    </Typography>
+                    <Stack spacing={1.25}>
+                      {[
+                        ["What the rule expects", item.expectation],
+                        ["Why it applies here", item.basis],
+                        ["What to do about it", item.recommended_action],
+                        ["Who it binds", item.applicability],
+                      ]
+                        .filter(([, value]) => value)
+                        .map(([label, value]) => (
+                          <Field key={label} label={label} value={value} />
+                        ))}
+                    </Stack>
+                    <EvidenceChips ids={item.evidence_ids} />
+                  </AccordionDetails>
+                </Accordion>
+              );
+            })}
+          </Stack>
+        </Box>
+      )}
+
+      {manual.length > 0 && (
+        <Accordion
+          disableGutters
+          elevation={0}
+          expanded={!!open.manual}
+          onChange={() => toggle("manual")}
+          sx={{
+            mt: 3,
+            border: 1,
+            borderColor: "divider",
+            borderRadius: 1,
+            "&:before": { display: "none" },
+          }}
+        >
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+              {manual.length} provision{manual.length === 1 ? "" : "s"} requiring
+              manual review
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails sx={{ pt: 0 }}>
+            <Typography variant="caption" color="text.secondary">
+              The current evidence model does not automatically assess these
+              sections.
+            </Typography>
+            <Stack spacing={0.75} sx={{ mt: 1 }}>
+              {manual.map((item) => (
+                <Typography key={item.section} variant="body2">
+                  <strong>
+                    Section {item.section} — {item.title}.
+                  </strong>{" "}
+                  {item.reason}
+                </Typography>
+              ))}
+            </Stack>
+          </AccordionDetails>
+        </Accordion>
+      )}
+
+      {sources.length > 0 && (
+        <Box sx={{ mt: 3 }}>
+          <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+            Primary sources
+          </Typography>
+          <Stack spacing={0.75} sx={{ mt: 0.75 }}>
+            {sources.map((source) => (
+              <Typography key={source.source_id} variant="caption" color="text.secondary">
+                <Link href={source.url} target="_blank" rel="noopener noreferrer">
+                  {source.authority} — {source.title}
+                </Link>{" "}
+                · {source.usage} {source.note}
+              </Typography>
+            ))}
+          </Stack>
+        </Box>
+      )}
+    </>
+  );
 }
 
 /**
@@ -317,32 +703,103 @@ export function SimpleReportView({ report }: { report: SimpleReport }) {
       {report.connections.length > 0 && (
         <Section number={next()} title="How the Evidence Connects">
           <Svg markup={connectionDiagramSvg(report.evidence, report.connections)} />
+
+          {/* The engine states every reason for a pair in one paragraph ending
+              each clause with an unlabelled "[weight 0.66]". Read as a table
+              cell that is a wall of text, and the bracketed number explains
+              nothing on its own. The same reasons arrive structured, so they
+              are laid out as rows and the arithmetic is stated once here. */}
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 2, mb: 1.5 }}>
+            Each reason below is worth <strong>points</strong> — how identifying
+            that kind of match is, multiplied by how rare the shared values are
+            across all evidence held. The points add up to the pair&rsquo;s{" "}
+            <strong>weight</strong>, and the confidence is that weight on a
+            saturating scale: several independent reasons push confidence up,
+            while no single one reaches certainty on its own.
+          </Typography>
+
           <Table size="small" sx={{ mt: 1.5 }}>
             <TableHead>
               <TableRow>
                 <TableCell>Items</TableCell>
                 <TableCell>Strength</TableCell>
                 <TableCell>Confidence</TableCell>
-                <TableCell>What This Means</TableCell>
+                <TableCell>Why They Are Linked</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {report.connections.map((row) => (
                 <TableRow key={row.pair}>
-                  <TableCell sx={{ fontFamily: MONO, whiteSpace: "nowrap" }}>
+                  <TableCell sx={{ fontFamily: MONO, whiteSpace: "nowrap", verticalAlign: "top" }}>
                     {row.pair}
                   </TableCell>
-                  <TableCell>
+                  <TableCell sx={{ verticalAlign: "top" }}>
                     <Chip size="small" label={row.strength} variant="outlined" />
                   </TableCell>
-                  <TableCell>{row.confidence}</TableCell>
-                  <TableCell>
-                    <Typography variant="body2" color="text.secondary">
-                      {row.basis || row.meaning}
+                  <TableCell sx={{ verticalAlign: "top", whiteSpace: "nowrap" }}>
+                    <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                      {row.confidence}
                     </Typography>
-                    {row.basis && (
+                    {row.weight !== null && (
                       <Typography variant="caption" color="text.secondary">
-                        Interpretation: {row.meaning}
+                        from weight {row.weight.toFixed(2)}
+                      </Typography>
+                    )}
+                  </TableCell>
+                  <TableCell sx={{ verticalAlign: "top" }}>
+                    <Typography variant="body2" sx={{ mb: row.factors.length ? 1 : 0 }}>
+                      {row.meaning}
+                    </Typography>
+                    {row.factors.length > 0 ? (
+                      <Stack spacing={0.75}>
+                        {/* Strongest first: the factor that actually carried
+                            the pair should not be buried behind the weakest. */}
+                        {[...row.factors]
+                          .sort((a, b) => b.contribution - a.contribution)
+                          .map((factor) => (
+                            <Stack
+                              key={factor.factor}
+                              direction="row"
+                              spacing={1}
+                              alignItems="baseline"
+                            >
+                              <Typography
+                                variant="caption"
+                                sx={{
+                                  width: 108,
+                                  flexShrink: 0,
+                                  fontWeight: 700,
+                                  textTransform: "capitalize",
+                                }}
+                              >
+                                {factor.label}
+                              </Typography>
+                              <Typography
+                                variant="caption"
+                                sx={{
+                                  width: 42,
+                                  flexShrink: 0,
+                                  fontFamily: MONO,
+                                  fontWeight: 700,
+                                  color: accent,
+                                }}
+                              >
+                                +{factor.contribution.toFixed(2)}
+                              </Typography>
+                              <Typography
+                                variant="caption"
+                                color="text.secondary"
+                                sx={{ minWidth: 0, wordBreak: "break-word" }}
+                              >
+                                {factor.detail}
+                              </Typography>
+                            </Stack>
+                          ))}
+                      </Stack>
+                    ) : (
+                      /* Reports stored before the factors were carried through. */
+                      <Typography variant="caption" color="text.secondary">
+                        {row.basis}
                       </Typography>
                     )}
                   </TableCell>
@@ -563,204 +1020,102 @@ export function SimpleReportView({ report }: { report: SimpleReport }) {
         </Section>
       )}
 
-      {report.methodology.length > 0 && (
+      {(report.methodology.length > 0 ||
+        report.methodologyScope.objective !== "") && (
         <Section number={next()} title="Methodology">
-          <Table size="small">
-            <TableHead>
-              <TableRow><TableCell>Stage</TableCell><TableCell>Method and stored output</TableCell></TableRow>
-            </TableHead>
-            <TableBody>
-              {report.methodology.map((line, i) => {
-                const row = splitMethod(line);
-                return (
-                  <TableRow key={i}>
-                    <TableCell sx={{ fontWeight: 700, width: "28%" }}>{row.stage}</TableCell>
-                    <TableCell>{row.method}</TableCell>
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+            How this report was produced. Every figure in the sections above is
+            read back out of the stored outputs named below — none of it is
+            written by hand and none of it is free-text generated, so the same
+            evidence re-analysed yields the same report.
+          </Typography>
+
+          {/* Objective, coverage and reproducibility are stored beside the
+              stage list and printed in the PDF; on screen the stages used to
+              appear without them, which left the scope of the run unstated. */}
+          {report.methodologyScope.objective !== "" && (
+            <Table size="small" sx={{ mb: 3 }}>
+              <TableBody>
+                {[
+                  ["What this run set out to do", report.methodologyScope.objective],
+                  ["What it covered", report.methodologyScope.evidenceScope],
+                  ["Repeatability", report.methodologyScope.reproducibility],
+                ]
+                  .filter(([, value]) => value !== "")
+                  .map(([label, value]) => (
+                    <TableRow key={label}>
+                      <TableCell
+                        sx={{ width: 190, fontWeight: 700, verticalAlign: "top" }}
+                      >
+                        {label}
+                      </TableCell>
+                      <TableCell>{value}</TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+          )}
+
+          {report.methodology.length > 0 && (
+            <>
+              <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 0.5 }}>
+                Processing stages, in the order they ran
+              </Typography>
+              <Typography variant="caption" color="text.secondary">
+                Each stage reads the previous stage&rsquo;s stored output, so a
+                failure anywhere upstream is visible rather than silently
+                filled in.
+              </Typography>
+              <Table size="small" sx={{ mt: 1.5 }}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell sx={{ width: 40 }}>#</TableCell>
+                    <TableCell sx={{ width: "26%" }}>Stage</TableCell>
+                    <TableCell>What it did, and where the output is stored</TableCell>
                   </TableRow>
-                );
-              })}
-            </TableBody>
-          </Table>
+                </TableHead>
+                <TableBody>
+                  {report.methodology.map((line, i) => {
+                    const row = splitMethod(line);
+                    return (
+                      <TableRow key={i}>
+                        <TableCell
+                          sx={{ fontWeight: 700, color: "text.secondary", verticalAlign: "top" }}
+                        >
+                          {i + 1}
+                        </TableCell>
+                        <TableCell sx={{ verticalAlign: "top" }}>
+                          <Typography variant="body2" sx={{ fontWeight: 700 }}>
+                            {row.stage}
+                          </Typography>
+                          {row.phase !== "" && (
+                            <Typography variant="caption" color="text.secondary">
+                              {row.phase}
+                            </Typography>
+                          )}
+                        </TableCell>
+                        <TableCell sx={{ verticalAlign: "top" }}>
+                          <Stack spacing={0.5}>
+                            {row.steps.map((step, index) => (
+                              <Typography key={index} variant="body2">
+                                {step}
+                              </Typography>
+                            ))}
+                          </Stack>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })}
+                </TableBody>
+              </Table>
+            </>
+          )}
         </Section>
       )}
 
       {report.legalBasis && (
         <Section number={next()} title="Statutory Basis">
-          <Typography variant="body2" sx={{ mb: 2 }}>
-            {report.legalBasis.summary}
-          </Typography>
-
-          <Stack spacing={2}>
-            {report.legalBasis.provisions.map((provision) => (
-              <Box
-                key={provision.section}
-                sx={{
-                  border: 1,
-                  borderColor: "divider",
-                  borderLeft: 3,
-                  borderLeftColor: accent,
-                  borderRadius: 1,
-                  p: 2,
-                }}
-              >
-                <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
-                  Section {provision.section} — {provision.title}
-                </Typography>
-                <Typography variant="caption" color="text.secondary">
-                  {provision.citation}
-                </Typography>
-
-                <Table size="small" sx={{ mt: 1 }}>
-                  <TableBody>
-                    {[
-                      ["Conduct", provision.conduct],
-                      ["Penalty", provision.penalty],
-                      ["Evidence-based match", provision.basis],
-                    ].map(([label, value]) => (
-                      <TableRow key={label}>
-                        <TableCell sx={{ width: 150, fontWeight: 700, verticalAlign: "top" }}>
-                          {label}
-                        </TableCell>
-                        <TableCell>{value}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-
-                {provision.evidence_ids.length > 0 && (
-                  <Stack
-                    direction="row"
-                    spacing={0.5}
-                    flexWrap="wrap"
-                    useFlexGap
-                    sx={{ mt: 1.5 }}
-                  >
-                    {provision.evidence_ids.map((id) => (
-                      <Chip key={id} label={id} size="small" variant="outlined" />
-                    ))}
-                  </Stack>
-                )}
-              </Box>
-            ))}
-          </Stack>
-
-          {(report.legalBasis.investigative_guidance?.length ?? 0) > 0 && (
-            <Box sx={{ mt: 3 }}>
-              <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                Evidentiary and regulatory follow-up
-              </Typography>
-              <Typography variant="caption" color="text.secondary">
-                Preservation and investigative actions—not findings that an institution
-                violated a rule.
-              </Typography>
-
-              <Stack spacing={1.5} sx={{ mt: 1.5 }}>
-                {report.legalBasis.investigative_guidance?.map((item) => (
-                  <Box
-                    key={`${item.source_id}-${item.control_ids.join("-")}`}
-                    sx={{ border: 1, borderColor: "divider", borderRadius: 1, p: 2 }}
-                  >
-                    <Stack
-                      direction={{ xs: "column", sm: "row" }}
-                      spacing={1}
-                      justifyContent="space-between"
-                    >
-                      <Box>
-                        <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
-                          {item.title}
-                        </Typography>
-                        <Typography variant="caption" color="text.secondary">
-                          {item.citation}
-                        </Typography>
-                      </Box>
-                      <Chip
-                        size="small"
-                        label={item.status.replaceAll("_", " ")}
-                        variant="outlined"
-                      />
-                    </Stack>
-                    <Table size="small" sx={{ mt: 1 }}>
-                      <TableBody>
-                        {[
-                          ["Expectation", item.expectation],
-                          ["Why relevant", item.basis],
-                          ["Action", item.recommended_action],
-                          ["Applicability", item.applicability],
-                        ].map(([label, value]) => (
-                          <TableRow key={label}>
-                            <TableCell sx={{ width: 130, fontWeight: 700, verticalAlign: "top" }}>
-                              {label}
-                            </TableCell>
-                            <TableCell>{value}</TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                    {item.evidence_ids.length > 0 && (
-                      <Stack direction="row" spacing={0.5} flexWrap="wrap" useFlexGap sx={{ mt: 1 }}>
-                        {item.evidence_ids.map((id) => (
-                          <Chip key={id} label={id} size="small" variant="outlined" />
-                        ))}
-                      </Stack>
-                    )}
-                  </Box>
-                ))}
-              </Stack>
-            </Box>
-          )}
-
-          {(report.legalBasis.manual_review_provisions?.length ?? 0) > 0 && (
-            <Box sx={{ mt: 3, p: 2, borderRadius: 1, bgcolor: "action.hover" }}>
-              <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
-                Provisions requiring manual review
-              </Typography>
-              <Typography variant="caption" color="text.secondary">
-                The current evidence model does not automatically assess these sections.
-              </Typography>
-              <Stack spacing={0.75} sx={{ mt: 1 }}>
-                {report.legalBasis.manual_review_provisions?.map((item) => (
-                  <Typography key={item.section} variant="body2">
-                    <strong>Section {item.section} — {item.title}.</strong> {item.reason}
-                  </Typography>
-                ))}
-              </Stack>
-            </Box>
-          )}
-
-          {(report.legalBasis.sources?.length ?? 0) > 0 && (
-            <Box sx={{ mt: 3 }}>
-              <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
-                Primary sources
-              </Typography>
-              <Stack spacing={0.75} sx={{ mt: 0.75 }}>
-                {report.legalBasis.sources?.map((source) => (
-                  <Typography key={source.source_id} variant="caption" color="text.secondary">
-                    <Link href={source.url} target="_blank" rel="noopener noreferrer">
-                      {source.authority} — {source.title}
-                    </Link>{" "}
-                    · {source.usage} {source.note}
-                  </Typography>
-                ))}
-              </Stack>
-            </Box>
-          )}
-
-          {/* Never rendered separately from the provisions above: the caveat is
-              what stops the list being read as a charging decision. */}
-          <Typography
-            variant="caption"
-            component="p"
-            sx={{
-              mt: 2,
-              p: 1.5,
-              borderRadius: 1,
-              bgcolor: "action.hover",
-              color: "text.secondary",
-              lineHeight: 1.6,
-            }}
-          >
-            {report.legalBasis.caveat}
-          </Typography>
+          <StatutoryBasis basis={report.legalBasis} accent={accent} />
         </Section>
       )}
 

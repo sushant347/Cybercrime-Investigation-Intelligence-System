@@ -795,6 +795,8 @@ export interface ReportLegalBasisSection {
   case_id: string;
   statute: string;
   jurisdiction: string;
+  /** Which language text governs. Optional for older stored reports. */
+  language_note?: string;
   provisions: ReportEngagedProvision[];
   /** Present in newly generated reports; optional for older stored versions. */
   manual_review_provisions?: ReportUnassessedProvision[];

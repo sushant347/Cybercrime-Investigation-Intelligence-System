@@ -8,6 +8,7 @@ import {
   CardContent,
   CardHeader,
   Chip,
+  Collapse,
   Divider,
   Stack,
   Table,
@@ -20,103 +21,52 @@ import {
 } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 
 import { investigationApi } from "@/api";
 import { ConfidenceBar } from "@/components/common/ConfidenceBar";
-import { EntityChip, entityTypeLabel } from "@/components/common/EntityChip";
+import { EntityChip } from "@/components/common/EntityChip";
 import { EmptyState } from "@/components/common/EmptyState";
 import { DetailSkeleton } from "@/components/common/LoadingSkeleton";
 import { StatusChip } from "@/components/common/StatusChip";
 import { formatDateTime } from "@/lib/format";
-import type { SuspectProfile } from "@/types";
 import { CorrelationTable } from "./CorrelationTable";
 import { BRAND } from "@/theme/theme";
 
 /**
- * Every suspect anchor in the case, grouped by identifier family.
+ * The engine's own paragraph for a suspect, folded away by default.
  *
- * The assessment below is one accordion per suspect, so the question an
- * investigator actually opens this card to answer — *what kinds of identity is
- * this case built on?* — required expanding every row to find out. This strip
- * answers it before anything is expanded, and flags the threat-intelligence
- * hits in the same glance.
+ * It restates the whole component table in prose, so it is redundant with what
+ * is on screen — but it is the engine's verbatim output and the record of what
+ * the assessment said, so it is kept one click away rather than dropped.
  */
-function CapturedIdentities({ suspects }: { suspects: SuspectProfile[] }) {
-  const byType = new Map<string, SuspectProfile[]>();
-  for (const suspect of suspects) {
-    const bucket = byType.get(suspect.identity_type) ?? [];
-    bucket.push(suspect);
-    byType.set(suspect.identity_type, bucket);
-  }
-  const flaggedCount = suspects.filter((s) => s.threat_flagged).length;
-
+function SuspectSentence({ text }: { text: string }) {
+  const [open, setOpen] = useState(false);
+  if (!text) return null;
   return (
-    <Box
-      sx={{
-        p: 2,
-        mb: 2,
-        borderRadius: 1,
-        border: 1,
-        borderColor: "divider",
-        bgcolor: "action.hover",
-      }}
-    >
-      <Stack
-        direction="row"
-        alignItems="center"
-        spacing={1}
-        flexWrap="wrap"
-        useFlexGap
-        sx={{ mb: 1.5 }}
+    <Box>
+      <Typography
+        component="button"
+        type="button"
+        variant="caption"
+        onClick={() => setOpen((v) => !v)}
+        sx={{
+          background: "none",
+          border: 0,
+          p: 0,
+          cursor: "pointer",
+          color: "text.secondary",
+          textDecoration: "underline",
+          font: "inherit",
+        }}
       >
-        <Typography variant="overline" color="text.secondary">
-          Identities captured
+        {open ? "Hide" : "Show"} the engine&rsquo;s full sentence
+      </Typography>
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+          {text}
         </Typography>
-        <Chip
-          size="small"
-          label={`${suspects.length} total`}
-          sx={{ height: 20, fontWeight: 700 }}
-        />
-        {flaggedCount > 0 && (
-          <StatusChip value="critical" label={`${flaggedCount} threat-flagged`} />
-        )}
-      </Stack>
-
-      <Stack spacing={1.25}>
-        {[...byType.entries()].map(([type, group]) => (
-          <Stack
-            key={type}
-            direction={{ xs: "column", sm: "row" }}
-            spacing={1}
-            alignItems={{ xs: "flex-start", sm: "center" }}
-          >
-            <Typography
-              variant="caption"
-              color="text.secondary"
-              sx={{ minWidth: 120, fontWeight: 600 }}
-            >
-              {entityTypeLabel(type)} ({group.length})
-            </Typography>
-            <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap sx={{ minWidth: 0 }}>
-              {group.map((suspect) => (
-                <EntityChip
-                  key={suspect.suspect_id}
-                  entityType={suspect.identity_type}
-                  value={suspect.identity_value}
-                  size="small"
-                  flagged={suspect.threat_flagged}
-                  title={
-                    `${entityTypeLabel(suspect.identity_type)}: ${suspect.identity_value}` +
-                    ` — ${suspect.confidence_score.toFixed(0)}% confidence` +
-                    ` across ${suspect.evidence_count} evidence item(s)` +
-                    (suspect.threat_flagged ? " · flagged by threat intelligence" : "")
-                  }
-                />
-              ))}
-            </Stack>
-          </Stack>
-        ))}
-      </Stack>
+      </Collapse>
     </Box>
   );
 }
@@ -418,10 +368,9 @@ export function InvestigationTab({ caseId }: { caseId: string }) {
             </Typography>
           ) : (
             <>
-              <CapturedIdentities suspects={susp.suspects} />
               {susp.methodology && (
                 <Typography variant="caption" color="text.secondary" sx={{ display: "block", mb: 2 }}>
-                  Methodology (engine): {susp.methodology}
+                  How these are scored: {susp.methodology}
                 </Typography>
               )}
               {susp.suspects.map((suspect) => (
@@ -448,58 +397,149 @@ export function InvestigationTab({ caseId }: { caseId: string }) {
                     </Stack>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Stack spacing={1.5}>
-                      <Typography variant="body2">{suspect.explanation}</Typography>
-                      <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
+                    {/* The engine's `explanation` is a paragraph that restates
+                        every component — name, score, weight and reasoning —
+                        which the table below already lays out in columns, and
+                        the Explanation column was `noWrap`-truncated so the
+                        one readable copy was the one behind a tooltip. The
+                        table now carries the reasoning in full and closes on
+                        the arithmetic; the paragraph is kept verbatim behind a
+                        disclosure. */}
+                    <Stack spacing={2}>
+                      <Stack
+                        direction="row"
+                        spacing={1}
+                        flexWrap="wrap"
+                        useFlexGap
+                        alignItems="center"
+                      >
                         <Chip
                           size="small"
-                          label={`Relationship: ${suspect.relationship_strength || "—"}`}
+                          label={`Seen in ${suspect.evidence_count} item(s): ${suspect.evidence_ids.join(", ")}`}
                           variant="outlined"
                         />
                         <Chip
                           size="small"
-                          label={`Evidence: ${suspect.evidence_count}`}
+                          label={`Links to its other evidence: ${(suspect.relationship_strength || "—").replace(/_/g, " ")}`}
                           variant="outlined"
                         />
-                        {suspect.aliases.map((alias) => (
-                          <Chip key={alias} size="small" label={`alias: ${alias}`} />
-                        ))}
                       </Stack>
+
                       <Typography variant="caption" color="text.secondary">
                         First seen {formatDateTime(suspect.first_seen)} · last seen{" "}
-                        {formatDateTime(suspect.last_seen)} · appears in:{" "}
-                        {suspect.evidence_ids.join(", ")}
+                        {formatDateTime(suspect.last_seen)}
                       </Typography>
+
+                      {suspect.aliases.length > 0 && (
+                        <Box>
+                          <Typography variant="overline" color="text.secondary">
+                            Appears alongside
+                          </Typography>
+                          <Stack
+                            direction="row"
+                            spacing={0.5}
+                            flexWrap="wrap"
+                            useFlexGap
+                            sx={{ mt: 0.5 }}
+                          >
+                            {suspect.aliases.map((alias) => {
+                              const [type = "", ...rest] = alias.split(":");
+                              const value = rest.join(":");
+                              return value ? (
+                                <EntityChip
+                                  key={alias}
+                                  entityType={type}
+                                  value={value}
+                                  size="small"
+                                />
+                              ) : (
+                                <Chip key={alias} size="small" label={alias} />
+                              );
+                            })}
+                          </Stack>
+                        </Box>
+                      )}
+
                       {suspect.components.length > 0 && (
-                        <Table size="small">
+                        <Box>
+                          <Typography variant="caption" color="text.secondary">
+                            Each component is scored 0&ndash;100 and multiplied by
+                            its weight; the results add up to the{" "}
+                            {suspect.confidence_score.toFixed(1)} confidence above.
+                          </Typography>
+                        <Table size="small" sx={{ mt: 1 }}>
                           <TableHead>
                             <TableRow>
-                              <TableCell>Score component</TableCell>
-                              <TableCell>Score</TableCell>
-                              <TableCell>Weight</TableCell>
-                              <TableCell>Explanation</TableCell>
+                              <TableCell>Component</TableCell>
+                              <TableCell>What the engine found</TableCell>
+                              <TableCell align="right">Score</TableCell>
+                              <TableCell align="right">Weight</TableCell>
+                              <TableCell align="right">Adds</TableCell>
                             </TableRow>
                           </TableHead>
                           <TableBody>
-                            {suspect.components.map((component) => (
+                            {[...suspect.components]
+                              .sort(
+                                (a, b) =>
+                                  b.score * b.weight - a.score * a.weight,
+                              )
+                              .map((component) => (
                               <TableRow key={component.name}>
-                                <TableCell sx={{ textTransform: "capitalize" }}>
+                                <TableCell
+                                  sx={{
+                                    textTransform: "capitalize",
+                                    fontWeight: 700,
+                                    verticalAlign: "top",
+                                  }}
+                                >
                                   {component.name.replace(/_/g, " ")}
                                 </TableCell>
-                                <TableCell>{component.score.toFixed(1)}</TableCell>
-                                <TableCell>{component.weight.toFixed(2)}</TableCell>
-                                <TableCell>
-                                  <Tooltip title={component.explanation}>
-                                    <Typography variant="body2" noWrap sx={{ maxWidth: 360 }}>
-                                      {component.explanation}
-                                    </Typography>
-                                  </Tooltip>
+                                <TableCell sx={{ verticalAlign: "top", wordBreak: "break-word" }}>
+                                  {component.explanation}
+                                </TableCell>
+                                <TableCell align="right" sx={{ verticalAlign: "top" }}>
+                                  {component.score.toFixed(1)}
+                                </TableCell>
+                                <TableCell align="right" sx={{ verticalAlign: "top" }}>
+                                  {component.weight.toFixed(2)}
+                                </TableCell>
+                                <TableCell
+                                  align="right"
+                                  sx={{
+                                    verticalAlign: "top",
+                                    fontWeight: 700,
+                                    fontFamily: '"JetBrains Mono", monospace',
+                                  }}
+                                >
+                                  {(component.score * component.weight).toFixed(1)}
                                 </TableCell>
                               </TableRow>
                             ))}
+                            <TableRow>
+                              <TableCell
+                                colSpan={4}
+                                align="right"
+                                sx={{ fontWeight: 700, borderBottom: 0 }}
+                              >
+                                Confidence score
+                              </TableCell>
+                              <TableCell
+                                align="right"
+                                sx={{
+                                  fontWeight: 700,
+                                  borderBottom: 0,
+                                  fontFamily: '"JetBrains Mono", monospace',
+                                }}
+                              >
+                                {suspect.confidence_score.toFixed(1)}
+                              </TableCell>
+                            </TableRow>
                           </TableBody>
                         </Table>
+                        </Box>
                       )}
+
+                      <SuspectSentence text={suspect.explanation} />
                     </Stack>
                   </AccordionDetails>
                 </Accordion>
