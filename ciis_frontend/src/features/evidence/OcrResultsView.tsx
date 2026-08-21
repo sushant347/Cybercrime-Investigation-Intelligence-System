@@ -21,8 +21,23 @@ import { ConfidenceBar } from "@/components/common/ConfidenceBar";
 import { EmptyState } from "@/components/common/EmptyState";
 import type { EvidenceOcr } from "@/types";
 
-/** Phase-1 OCR output: page text, per-line confidence — displayed verbatim. */
-export function OcrResultsView({ ocr }: { ocr: EvidenceOcr | null }) {
+import { CaptureQuality } from "./CaptureQuality";
+
+/**
+ * Phase-1 OCR output: page text, per-line confidence — displayed verbatim.
+ *
+ * The capture-quality report is shown above the text because it is what the
+ * engine knew *before* reading: the grade predicts the accuracy, and putting
+ * the prediction next to the result is what lets an investigator judge either.
+ */
+export function OcrResultsView({
+  ocr,
+  forensics,
+}: {
+  ocr: EvidenceOcr | null;
+  /** Phase-1 artifacts keyed by report name; may be absent entirely. */
+  forensics?: Record<string, unknown>;
+}) {
   const [pageIndex, setPageIndex] = useState(0);
 
   if (!ocr || ocr.pages.length === 0) {
@@ -37,8 +52,25 @@ export function OcrResultsView({ ocr }: { ocr: EvidenceOcr | null }) {
 
   const page = ocr.pages[Math.min(pageIndex, ocr.pages.length - 1)];
 
+  // The artifact is stored under a "report" envelope; older items may be flat.
+  const stored = (forensics ?? {})["quality_report"] as
+    | { report?: Record<string, unknown> }
+    | Record<string, unknown>
+    | undefined;
+  const quality = (stored as { report?: Record<string, unknown> } | undefined)
+    ?.report ?? (stored as Record<string, unknown> | undefined);
+
   return (
     <Stack spacing={2}>
+      {quality && (
+        <CaptureQuality
+          report={quality}
+          achievedConfidence={
+            typeof page.confidence === "number" ? page.confidence : null
+          }
+          lineCount={page.lines.length}
+        />
+      )}
       {ocr.pages.length > 1 && (
         <Tabs
           value={pageIndex}

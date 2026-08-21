@@ -76,13 +76,32 @@ export function ChartCard({
     },
     itemStyle: { color: theme.palette.text.primary },
     formatter: (value: number) => [value, valueLabel] as [number, string],
+    // Recharts repositions the tooltip instantly as the pointer crosses each
+    // band, so sweeping across a chart made it jump from bar to bar. Easing
+    // the reposition turns that into one continuous movement.
+    animationDuration: 180,
+    animationEasing: "ease-out" as const,
+  };
+
+  /**
+   * Pie slices have no hover cursor of their own, so they dim their siblings
+   * instead. Bars keep Recharts' own band highlight: it is drawn as a path,
+   * which CSS cannot interpolate, and every attempt to animate a replacement
+   * made the highlight trail the pointer and sit visibly off the column it
+   * belonged to. The tooltip easing above is what actually removed the judder.
+   */
+  const smoothHover = {
+    "& .recharts-sector": { transition: "opacity 140ms ease-out" },
+    "& .recharts-pie:hover .recharts-sector": { opacity: 0.55 },
+    "& .recharts-pie .recharts-sector:hover": { opacity: 1 },
+    "& .recharts-tooltip-cursor": { transition: "opacity 120ms ease-out" },
   };
 
   return (
     <Card sx={{ flex: "1 1 420px", minWidth: 0 }}>
       <CardHeader title={title} subheader={subheader} />
       <Divider />
-      <CardContent sx={{ height: 300 }}>
+      <CardContent sx={{ height: 300, ...smoothHover }}>
         {data.length === 0 ? (
           <Typography variant="body2" color="text.secondary">
             No data in this artifact.

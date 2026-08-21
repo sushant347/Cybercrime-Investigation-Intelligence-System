@@ -133,7 +133,7 @@ export default function EvidenceDetailPage() {
         <EvidencePreview caseId={caseId} evidenceId={evidenceId} record={record} />
       )}
 
-      {tab === "ocr" && <OcrResultsView ocr={ocr} />}
+      {tab === "ocr" && <OcrResultsView ocr={ocr} forensics={forensics} />}
 
       {tab === "custody" && (
         <Card>
