@@ -20,7 +20,7 @@ permissions:
 
 jobs:
   backend:
-    name: Engines and API (650 tests)
+    name: Engines, API and RAG (716 tests)
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -56,6 +56,12 @@ jobs:
 
       - name: API
         working-directory: ciis_api
+        run: python -m pytest -q
+
+      # The standalone suite uses in-memory retrieval and a fake generator, so
+      # CI verifies its contracts without downloading Torch/model weights.
+      - name: RAG assistant engine
+        working-directory: rag_assistant_engine
         run: python -m pytest -q
 
       - name: Static analysis
@@ -98,7 +104,7 @@ jobs:
         run: python -m pytest -q
 
   frontend:
-    name: Frontend (84 tests)
+    name: Frontend (87 tests)
     runs-on: ubuntu-latest
     timeout-minutes: 15
     defaults:

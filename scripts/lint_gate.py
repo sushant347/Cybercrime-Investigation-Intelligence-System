@@ -27,6 +27,7 @@ TARGETS = [
     "evidence_correlation_engine/ciis_correlation",
     "timeline_report_engine/ciis_timeline_report",
     "evidence_ocr_engine/backend",
+    "rag_assistant_engine/ciis_rag",
 ]
 
 #: (file basename, exact message) pairs that are deliberate. Matching on the
