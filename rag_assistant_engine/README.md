@@ -30,12 +30,30 @@ Current case JSON + versioned Phase-2 artifacts
 ```
 
 The engine understands the current versioned artifact envelopes, including
-`timeline_analysis.json`, `correlation_analysis.json`, `graph.json`,
-`graph_summary.json`, and `graph_statistics.json`. A stable internal
-`CaseKnowledgeBundle` keeps schema adaptation separate from retrieval logic.
+evidence/OCR text, timeline, correlation, cross-case, graph summaries,
+campaigns, suspects, analytics, priority, the analysis manifest and every
+investigation-report section. Legal assessment chunks retain their supporting
+evidence IDs, while official ETA/NRB source records retain their source URLs.
+A stable internal `CaseKnowledgeBundle` keeps schema adaptation separate from
+retrieval logic.
 
-This directory is not yet connected to the Django API or React frontend. That
-integration is intentionally deferred until standalone evaluation is complete.
+The engine is connected through a narrow integration boundary:
+
+```text
+analysis/upload pipeline -> Django RAG adapter -> this standalone CLI
+                                             -> Chroma + local Ollama
+```
+
+The Django platform invokes this engine with its separate Python executable;
+it never imports Chroma, Torch or sentence-transformers into the PaddleOCR
+environment. Indexing is best-effort and cannot turn a successful evidence or
+analysis job into a failure. Every question synchronizes again before retrieval,
+so newly processed evidence remains visible even if the post-pipeline warm-index
+step was unavailable.
+
+The React case view exposes the assistant as a right-side drawer rather than a
+new analysis tab. This keeps it available while an investigator moves between
+Evidence, Graph, Timeline, Analytics and Reports.
 
 ## Safety and correctness properties
 
@@ -45,14 +63,17 @@ integration is intentionally deferred until standalone evaluation is complete.
   version. New, changed, and removed evidence is synchronized incrementally.
 - Phase-2 evidence/file associations are checked against the canonical case
   record. A stale artifact set is ignored and reported rather than indexed.
+- After a new upload, full-analysis artifacts that predate the current evidence
+  set are withheld until case analysis refreshes them; current evidence,
+  correlation, timeline and graph data remain searchable immediately.
 - Long evidence is chunked with stable overlap and source metadata.
 - Retrieval combines semantic similarity, keyword overlap, exact normalized
   entities, and bounded correlated-evidence expansion.
 - Evidence is passed to Ollama as explicitly untrusted context in a separate
   user message. The system message forbids following evidence-borne instructions.
-- Ollama must return structured JSON. Citations outside retrieved context are
-  discarded, prefix IDs such as `EVID_001`/`EVID_0010` cannot collide, and an
-  uncited factual response is withheld.
+- Ollama is asked for structured JSON. A small model's source-cited plain-text
+  fallback is accepted only after the same citation validation; uncited prose,
+  citations outside retrieved context and prefix-ID collisions are withheld.
 - Ollama defaults to loopback. Remote hosts require an explicit opt-in.
 - Model thinking is disabled by default and answer length is bounded for
   practical CPU latency. Both settings remain configurable for experiments.
@@ -94,8 +115,9 @@ particular, `CIIS_RAG_OLLAMA_THINK=1` enables supported-model reasoning for
 experiments, while `CIIS_RAG_OLLAMA_NUM_PREDICT` bounds answer tokens. The
 larger `gemma3:4b` and `qwen3:8b` models remain selectable through
 `CIIS_RAG_OLLAMA_MODEL`, but CPU-only systems should expect substantially
-higher latency. Explicit evidence-pair questions bypass generation and are
-answered from the stored typed relationships.
+higher latency. Explicit evidence-pair questions, shared-entity relationship
+questions, earliest/latest timeline questions and statutory-basis listings
+bypass generation and are answered from canonical structured artifacts.
 
 The dependency ranges are intentionally separate. After validating the target
 research machine, capture the installed versions in an environment lock for
@@ -144,6 +166,32 @@ python -m rag_assistant_engine.cli ask \
 
 `ask` synchronizes the index first, so a newly uploaded and processed evidence
 item is available without a full index rebuild.
+
+## API/frontend integration
+
+The repository launcher creates the separate environment, installs this
+module's requirements, exports its interpreter to Django and starts the app:
+
+```bash
+./dev.sh
+```
+
+On Windows, `dev.cmd` delegates to Git Bash and uses a short RAG environment
+path automatically. On macOS/Linux, run `./dev.sh` directly. Manual activation
+is needed only when using this engine outside the full repository launcher.
+
+The API endpoints are:
+
+```text
+GET  /api/cases/<CASE_ID>/assistant/status/
+POST /api/cases/<CASE_ID>/assistant/ask/   {"question": "..."}
+```
+
+The status and answer endpoints never enumerate another case. Answers include
+validated cited sources, supporting evidence IDs, retrieved-but-uncited
+sources, deterministic evidence relationships and warnings. The frontend links
+evidence citations back to their evidence pages and official legal citations
+to their primary-source URLs.
 
 ## Tests
 
