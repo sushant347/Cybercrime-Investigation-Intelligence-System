@@ -2,7 +2,13 @@
 
 Part of the **Cybercrime Investigation Intelligence System Using Digital Evidence Correlation** (final-year research project).
 
-This module accepts cybercrime evidence (screenshots, scanned documents, PDFs, chat exports) and converts it into structured, machine-readable information with full forensic integrity guarantees. It performs **evidence acquisition, hashing, image preprocessing, OCR extraction and storage only** — text cleaning, language detection, entity extraction, phishing detection and threat intelligence belong to other modules.
+This module accepts cybercrime evidence (screenshots, scanned documents, PDFs,
+chat exports) and converts it into structured, machine-readable information
+with forensic integrity guarantees. It owns **acquisition, hashing,
+preprocessing, OCR, deterministic cleaning and enhancement, language and entity
+extraction, semantic validation, Phase-1 forensics and canonical storage**.
+Correlation, timeline/report generation and threat intelligence remain separate
+downstream modules.
 
 ## Design decisions
 
@@ -54,7 +60,8 @@ The pipeline flow: **upload → SHA-256 (before) → preprocessing → OCR per p
 
 ## Installation
 
-Requires Python 3.12 (3.10+ works).
+Use Python 3.12 for consistency with the full project. On macOS, PaddlePaddle's
+prebuilt CPU wheel supports Apple Silicon (arm64), not Intel Macs.
 
 ```bash
 cd evidence_ocr_engine

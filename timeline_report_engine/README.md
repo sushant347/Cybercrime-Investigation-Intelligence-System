@@ -36,7 +36,8 @@ ciis_timeline_report/
 ├── graph/              typed graph + NetworkX centrality/community/backbone
 ├── analytics/          case, entity, threat and quality statistics
 ├── prioritization/     weighted case priority (6 dimensions)
-├── reporting/          report as Markdown + JSON + PDF (19 sections)
+├── legal/              source-backed statutory mapping and regulatory follow-up
+├── reporting/          report as Markdown + JSON + PDF (21 sections)
 └── pipeline.py         orchestrator and composition root for the whole run
 ```
 
@@ -44,6 +45,18 @@ ciis_timeline_report/
 takes plain dicts and returns plain dicts, which is what makes it testable in
 isolation and reusable outside the platform. `service.py` is the only thing
 that adapts it to the platform.
+
+## Installation
+
+This module owns NetworkX, Pydantic, PDF rendering and test dependencies in
+`requirements.txt`:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+When copied separately, provide the upstream correlation and OCR engine roots
+through `CIIS_CORRELATION_ROOT` and `CIIS_ENGINE_ROOT`.
 
 ## Why graph, analytics and priority live here
 
@@ -107,7 +120,7 @@ python scripts/report_review.py                  # report-correctness harness
 ## Tests
 
 ```bash
-python -m pytest -q      # 81 tests
+python -m pytest -q      # 94 tests
 ```
 
 Fixtures come from `ciis_correlation.testing`, the same synthetic case the
@@ -128,3 +141,23 @@ analysis_manifest.json   API-run inputs, versions, policy and warnings
 
 PDF rendering needs `reportlab`. Without it the Markdown and JSON reports are
 still produced and the run is logged, never failed.
+
+Readable Markdown and PDF output uses numbered finding/action tables, compact
+scope and evidence tables, timestamp provenance, structured statutory mapping,
+explicit limitations and SHA-256 provenance. The frontend adds a Timeline Flow
+projection without modifying the stored graph artifact.
+
+## Statutory and regulatory sources
+
+The report's statutory basis is deterministic. Automatically engaged offence
+provisions come from the Nepal Law Commission's Electronic Transactions Act,
+while provisions whose essential elements cannot be established from current
+signals are explicitly listed for manual review. ETA sections 4 and 6 add
+electronic-record preservation guidance.
+
+When payment evidence is present, selected controls from the official Nepal
+Rastra Bank Cyber Resilience Guidelines 2023 add conditional follow-up for MFA,
+authentication records, protected forensic logs and timestamp synchronisation.
+These entries are not findings that a bank violated a rule. Applicability to the
+affected institution must be confirmed by the investigator. Every generated
+assessment carries source URLs, local corpus filenames and SHA-256 provenance.

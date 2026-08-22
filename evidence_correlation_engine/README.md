@@ -48,6 +48,18 @@ versioned repository.
 duplicated, so there is exactly one definition of how a case is read, written
 and audited.
 
+## Installation
+
+This module owns its third-party dependencies in `requirements.txt`:
+
+```bash
+python -m pip install -r requirements.txt
+```
+
+When copied outside this repository, also provide `evidence_ocr_engine` or set
+`CIIS_ENGINE_ROOT` to it; the correlation engine intentionally reuses the
+upstream evidence contracts instead of duplicating them.
+
 ## Scoring
 
 Correlation weight is `type weight × value specificity`, summed over shared

@@ -39,7 +39,7 @@ threat_intelligence_system/
 │   ├── scoring/            # Weighted threat scorer
 │   ├── explainability/     # Plain-text reason generator
 │   └── prediction/         # Unified PhishingPredictor facade & PredictionResult
-├── tests/                  # Complete Pytest suite (51 test cases)
+├── tests/                  # Complete Pytest suite (409 collected tests)
 ├── requirements.txt        # Reproducible environment specification
 └── README.md               # User manual
 ```
@@ -133,7 +133,9 @@ Run the full conftest-powered test suite containing unit, integration, mock-netw
 pytest -v
 ```
 
-All 51 test cases execute in less than 5 seconds.
+The current CI suite collects 409 tests across unit, integration, connector,
+training, prediction and graceful-degradation behaviour. Runtime depends on the
+machine and on which optional model libraries are installed.
 
 ---
 
