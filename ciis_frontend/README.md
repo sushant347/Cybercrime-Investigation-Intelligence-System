@@ -3,12 +3,25 @@
 React, TypeScript and Vite interface for case intake, evidence review,
 investigation artifacts, timeline exploration and report downloads.
 
+## Case assistant
+
+Every case page has an **Ask this case** button in the lower-right corner. It
+opens a drawer without replacing the current Evidence, Graph, Timeline,
+Analytics or Reports view. Suggested questions cover findings, evidence links,
+chronology and legal/manual-review sections.
+
+The drawer displays only answers returned by the case-scoped RAG API. Citations
+link to supporting evidence pages or official primary-source URLs, insufficient
+evidence is shown explicitly, and model/provider errors do not affect the rest
+of the case interface. The assistant is lazy-loaded, so its code does not add
+to initial case-opening time.
+
 ## Development
 
 From the repository root, the supported entry point is:
 
 ```bash
-./dev.sh up
+./dev.sh
 ./dev.sh test
 ```
 
@@ -16,7 +29,7 @@ For frontend-only work:
 
 ```bash
 cd ciis_frontend
-npm install
+npm ci
 npm run dev
 npm run typecheck
 npm test
@@ -34,6 +47,7 @@ backend findings or the stored JSON.
 | View | Purpose |
 |---|---|
 | Evidence map | Default overview. One node per evidence item and one aggregated edge per related evidence pair. |
+| Timeline flow | Reconstructed events ordered left-to-right with their source evidence and timestamp provenance. |
 | Entity map | Evidence-to-entity detail, ranked by evidence reach and threat/cross-case significance. |
 | Cross-case | Other cases, matching entities and their source evidence. |
 | Threats | Threat-intelligence relationships and contextual evidence. |
@@ -60,6 +74,12 @@ artifact remains untouched.
 Quick views reset conflicting filters and configure the graph for overview,
 strong leads, cross-case indicators, threat hits, cryptocurrency trails or
 actual-time relationships.
+
+The initial Structure layout keeps evidence roles predictable. Timeline flow
+automatically switches to the chronological layout: green event outlines are
+actual times, amber dashed outlines are inferred, and grey dotted outlines are
+upload-time fallbacks. **Reset view** restores the readable evidence overview,
+clears filters and removes saved viewport state.
 
 ### Performance and state
 
@@ -90,3 +110,12 @@ actual-time relationships.
 NetworkX performs backend analysis and writes graph metrics into the JSON
 artifact. Cytoscape.js does not calculate forensic relationships; it converts
 the stored nodes, edges and metrics into the interactive browser view.
+
+## Readable reports
+
+The Report view favours compact tables over long prose. It includes a case
+summary, numbered findings, chain-of-custody and entity counts, correlation
+bases, chronological events with actual/inferred/fallback status, structured
+methodology, statutory mapping, investigator actions, limitations and artifact
+digests. The engine-generated Markdown and PDF use the same section order and
+the same stored values.
