@@ -22,13 +22,13 @@ class RAGConfig:
 
     storage_dir: Path = _ENGINE_ROOT / "storage"
     embedding_model: str = "paraphrase-multilingual-MiniLM-L12-v2"
-    ollama_model: str = "llama3.2:1b"
+    ollama_model: str = "gemma3:1b"
     ollama_host: str = "http://127.0.0.1:11434"
     ollama_timeout_seconds: int = 300
     ollama_think: bool = False
     ollama_num_predict: int = 256
     ollama_keep_alive: str = "10m"
-    top_k: int = 7
+    top_k: int = 5
     candidate_multiplier: int = 3
     minimum_relevance: float = 0.18
     chunk_size_chars: int = 2400
@@ -45,7 +45,7 @@ class RAGConfig:
                 "CIIS_RAG_EMBEDDING_MODEL",
                 "paraphrase-multilingual-MiniLM-L12-v2",
             ),
-            ollama_model=os.environ.get("CIIS_RAG_OLLAMA_MODEL", "llama3.2:1b"),
+            ollama_model=os.environ.get("CIIS_RAG_OLLAMA_MODEL", "gemma3:1b"),
             ollama_host=os.environ.get(
                 "CIIS_RAG_OLLAMA_HOST", "http://127.0.0.1:11434"
             ).rstrip("/"),
@@ -57,7 +57,7 @@ class RAGConfig:
             ollama_keep_alive=os.environ.get(
                 "CIIS_RAG_OLLAMA_KEEP_ALIVE", "10m"
             ).strip(),
-            top_k=int(os.environ.get("CIIS_RAG_TOP_K", "7")),
+            top_k=int(os.environ.get("CIIS_RAG_TOP_K", "5")),
             candidate_multiplier=int(os.environ.get(
                 "CIIS_RAG_CANDIDATE_MULTIPLIER", "3"
             )),
