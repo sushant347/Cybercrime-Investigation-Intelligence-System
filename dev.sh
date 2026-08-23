@@ -214,6 +214,14 @@ configure_rag_runtime() {
   if [ -x "$candidate" ] && "$candidate" -c \
       'import importlib.util,sys; sys.exit(0 if importlib.util.find_spec("chromadb") and importlib.util.find_spec("sentence_transformers") else 1)' \
       >/dev/null 2>&1; then
+    # Git Bash addresses Windows drives as /c/... while the Django process is
+    # native Windows Python. Passing the MSYS spelling through the environment
+    # makes pathlib resolve it below the current drive (for example E:\c\...),
+    # so the otherwise healthy RAG runtime appears to be missing. Export a
+    # native, slash-safe drive path for the cross-process API boundary.
+    if [ "$OS" = windows ] && command -v cygpath >/dev/null 2>&1; then
+      candidate="$(cygpath -m "$candidate")"
+    fi
     export CIIS_RAG_PYTHON="$candidate"
     return 0
   fi
@@ -337,7 +345,7 @@ prepare_ollama() {
     fi
   fi
 
-  local model="${CIIS_RAG_OLLAMA_MODEL:-llama3.2:1b}"
+  local model="${CIIS_RAG_OLLAMA_MODEL:-gemma3:1b}"
   if "$ollama_bin" show "$model" >/dev/null 2>&1; then
     ok "Ollama ready ($model)"
   else

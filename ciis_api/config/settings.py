@@ -47,8 +47,32 @@ RAG_ASSISTANT_ROOT = Path(
         "CIIS_RAG_ROOT", BASE_DIR.parent / "rag_assistant_engine"
     )
 ).resolve()
+
+
+def _normalise_runtime_path(value: str, platform: str | None = None) -> str:
+    """Translate a Git-Bash drive path before native Windows ``pathlib`` sees it.
+
+    ``dev.sh`` normally performs this conversion at the process boundary. The
+    settings-side guard also covers operators who export ``/c/...`` manually
+    before starting Django.
+    """
+    raw = value.strip()
+    platform = platform or os.name
+    if (
+        platform == "nt"
+        and len(raw) >= 3
+        and raw[0] == "/"
+        and raw[1].isalpha()
+        and raw[2] == "/"
+    ):
+        return f"{raw[1].upper()}:{raw[2:]}"
+    return raw
+
+
 _rag_python = os.environ.get("CIIS_RAG_PYTHON", "").strip()
-RAG_PYTHON = Path(_rag_python).resolve() if _rag_python else None
+RAG_PYTHON = (
+    Path(_normalise_runtime_path(_rag_python)).resolve() if _rag_python else None
+)
 RAG_ENABLED = os.environ.get("CIIS_RAG_ENABLED", "1") == "1"
 RAG_STORAGE_DIR = Path(
     os.environ.get(

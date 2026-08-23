@@ -5,6 +5,19 @@ from __future__ import annotations
 from api.exceptions import EngineUnavailable
 
 
+def test_git_bash_rag_python_path_is_normalised_for_windows():
+    from config.settings import _normalise_runtime_path
+
+    assert _normalise_runtime_path(
+        "/c/Users/investigator/CIIS/venvs/rag/Scripts/python.exe",
+        platform="nt",
+    ) == "C:/Users/investigator/CIIS/venvs/rag/Scripts/python.exe"
+    assert _normalise_runtime_path(
+        "/opt/ciis/.venv-rag/bin/python",
+        platform="posix",
+    ) == "/opt/ciis/.venv-rag/bin/python"
+
+
 def response_payload():
     return {
         "answer": "The timeline starts with EVID_00001. [TIMELINE_EVID_00001]",
@@ -111,6 +124,25 @@ def test_assistant_runtime_failure_is_a_clean_503(api, case, monkeypatch):
         "detail": "Ollama is not available.",
         "code": "engine_unavailable",
     }
+
+
+def test_greeting_bypasses_the_standalone_rag_process(monkeypatch):
+    from api import rag_bridge
+
+    monkeypatch.setattr(
+        rag_bridge,
+        "_run",
+        lambda *_args, **_kwargs: (_ for _ in ()).throw(
+            AssertionError("a greeting must not start the standalone process")
+        ),
+    )
+
+    result = rag_bridge.ask_case("CASE_TEST", "hello")
+
+    assert result["answer"].startswith("Hello.")
+    assert result["insufficient_evidence"] is False
+    assert result["cited_sources"] == []
+    assert result["warnings"] == []
 
 
 def test_unexpected_index_failure_cannot_fail_the_analysis_pipeline(

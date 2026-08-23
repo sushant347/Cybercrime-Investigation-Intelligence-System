@@ -25,6 +25,47 @@ log = logging.getLogger("ciis.rag")
 _run_lock = threading.Lock()
 
 
+def _conversation_reply(question: str) -> str | None:
+    """Handle non-evidentiary courtesies before starting the heavy RAG process.
+
+    This intentionally mirrors the standalone engine's narrow full-query
+    routing. The adapter cannot import that helper because preserving the
+    platform/RAG environment boundary is the reason this subprocess bridge
+    exists.
+    """
+    normalized = " ".join(question.lower().split()).strip(" .,!?:;-")
+    if normalized in {
+        "hello", "hello there", "hi", "hi there", "hey",
+        "good morning", "good afternoon", "good evening",
+    }:
+        return (
+            "Hello. I can help you examine this case's evidence, timeline, "
+            "relationships, report findings, and applicable legal sources. "
+            "Ask a case-specific question or choose one of the suggested prompts."
+        )
+    if normalized in {"help", "what can you do", "how can you help"}:
+        return (
+            "I can summarize stored findings, identify evidence relationships, "
+            "explain timeline events and timestamp confidence, list extracted "
+            "entities, and show source-backed legal or regulatory mappings."
+        )
+    if normalized in {"thanks", "thank you", "thank you very much"}:
+        return "You're welcome. Ask another question whenever you are ready."
+    return None
+
+
+def _conversation_payload(answer: str) -> dict[str, Any]:
+    return {
+        "answer": answer,
+        "insufficient_evidence": False,
+        "cited_sources": [],
+        "retrieved_sources": [],
+        "evidence_breakdown": [],
+        "shared_entity_links": [],
+        "warnings": [],
+    }
+
+
 def availability() -> dict[str, Any]:
     """Return a cheap configuration check without importing or loading models."""
     if not getattr(settings, "RAG_ENABLED", True):
@@ -186,4 +227,7 @@ def sync_case(case_id: str) -> dict[str, Any]:
 
 
 def ask_case(case_id: str, question: str) -> dict[str, Any]:
+    conversation_reply = _conversation_reply(question)
+    if conversation_reply is not None:
+        return _conversation_payload(conversation_reply)
     return _run(case_id, "ask", question=question)
