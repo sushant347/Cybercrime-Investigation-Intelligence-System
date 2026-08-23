@@ -549,8 +549,15 @@ def _attack_stages(events: list[dict], stage_order: Iterable[str],
             ),
         )
         keywords = sorted({keyword for values in hits.values() for keyword in values})
-        timestamps = [by_id[eid]["timestamp"] for eid in evidence_ids
-                      if by_id[eid]["timestamp"]]
+        # Intake time proves when CIIS received an exhibit, not when the
+        # underlying conduct occurred. Keep fallback-bearing evidence attached
+        # to the stage, but never let it stretch the attack-stage duration.
+        timestamps = [
+            by_id[eid]["timestamp"]
+            for eid in evidence_ids
+            if by_id[eid]["timestamp"]
+            and by_id[eid]["time_source"] != "upload_time_fallback"
+        ]
         result.append({
             "stage": stage,
             "evidence_ids": evidence_ids,
@@ -566,15 +573,22 @@ def _attack_stages(events: list[dict], stage_order: Iterable[str],
 
 
 def _milestones(events: list[dict]) -> list[dict]:
-    if not events:
+    # A milestone is part of the reconstructed incident, so acquisition-only
+    # fallbacks cannot create one. They remain in the event list for provenance.
+    event_times = [
+        event for event in events
+        if event.get("timestamp")
+        and event.get("time_source") != "upload_time_fallback"
+    ]
+    if not event_times:
         return []
     milestones = [{
-        **events[0], "event_type": "milestone", "stages": [],
+        **event_times[0], "event_type": "milestone", "stages": [],
         "critical": False, "critical_reasons": [],
-        "description": "Investigation start - first reconstructed evidence event",
+        "description": "First reconstructed incident event",
     }]
     seen = set()
-    for event in events:
+    for event in event_times:
         for stage in event["stages"]:
             if stage in seen:
                 continue
@@ -665,8 +679,15 @@ def build_timeline(
     ordered = resolved + unresolved
 
     attack_stages = _attack_stages(ordered, stage_order, stage_hits)
+    # Stage order is meaningful only across content/metadata event times.
+    # Upload-time fallbacks stay in the evidence list but cannot place a stage
+    # before or after another stage in the incident.
+    event_time_events = [
+        event for event in ordered
+        if event["timestamp"] and event["time_source"] != "upload_time_fallback"
+    ]
     progression = []
-    for event in ordered:
+    for event in event_time_events:
         for stage in event["stages"]:
             if stage not in progression:
                 progression.append(stage)
@@ -714,7 +735,15 @@ def build_timeline(
     if progression:
         summary += " Keyword-derived stage order: " + " -> ".join(progression) + "."
         if not progression_assessable:
-            summary += " This order is provisional because one or more stages use acquisition time."
+            summary += (
+                " This order is incomplete because one or more detected stages "
+                "have acquisition time only."
+            )
+    elif any(event["stages"] for event in ordered):
+        summary += (
+            " Attack stages were detected, but no evidence-derived event times "
+            "were available to order them."
+        )
 
     return {
         "case_id": cases[0].get("case_id", "UNKNOWN_CASE")

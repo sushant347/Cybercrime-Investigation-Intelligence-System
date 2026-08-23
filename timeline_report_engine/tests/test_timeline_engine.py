@@ -186,6 +186,67 @@ class TimelineReconstructionTests(unittest.TestCase):
         self.assertEqual(event["time_source"], "upload_time_fallback")
         self.assertTrue(event["timestamp_inferred"])
 
+    def test_acquisition_fallback_does_not_extend_attack_stage_or_create_milestone(self):
+        result = build_timeline(
+            [{
+                "case_id": "CASE_STAGE_TIME",
+                "evidence": [
+                    {
+                        "evidence_id": "EVID_EVENT",
+                        "file_name": "payment.png",
+                        "upload_time": "2026-08-01T10:00:00Z",
+                        "raw_text": "Paid on 11 June 2026 at 10:42 AM",
+                        "cleaning": {"entities": {
+                            "dates": [{"normalized": "11 June 2026"}],
+                            "times": [{"normalized": "10:42 AM"}],
+                        }},
+                    },
+                    {
+                        "evidence_id": "EVID_ACQUIRED",
+                        "file_name": "message.png",
+                        "upload_time": "2026-08-07T10:00:00Z",
+                        "raw_text": "send money now",
+                        "cleaning": {"entities": {}},
+                    },
+                ],
+            }],
+            stage_keywords={"financial_transaction": ("paid", "send money")},
+            stage_order=("financial_transaction",),
+        )
+
+        stage = result["attack_stages"][0]
+        self.assertEqual(stage["first_seen"], "2026-06-11T10:42:00+00:00")
+        self.assertEqual(stage["last_seen"], "2026-06-11T10:42:00+00:00")
+        self.assertEqual(stage["evidence_ids"], ["EVID_EVENT", "EVID_ACQUIRED"])
+        self.assertTrue(result["milestones"])
+        self.assertTrue(all(
+            item["time_source"] != "upload_time_fallback"
+            for item in result["milestones"]
+        ))
+
+    def test_acquisition_only_stages_are_not_chronologically_ordered(self):
+        result = build_timeline(
+            [{
+                "case_id": "CASE_ACQUISITION_ONLY",
+                "evidence": [{
+                    "evidence_id": "EVID_ONLY",
+                    "upload_time": "2026-08-07T10:00:00Z",
+                    "raw_text": "send money now",
+                    "cleaning": {"entities": {}},
+                }],
+            }],
+            stage_keywords={"financial_transaction": ("send money",)},
+            stage_order=("financial_transaction",),
+        )
+
+        self.assertEqual(result["stage_progression"], [])
+        self.assertEqual(result["attack_stages"][0]["first_seen"], "")
+        self.assertEqual(result["milestones"], [])
+        self.assertIn(
+            "no evidence-derived event times were available",
+            result["summary"],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
