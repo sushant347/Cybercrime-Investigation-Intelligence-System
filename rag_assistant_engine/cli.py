@@ -9,7 +9,7 @@ from dataclasses import asdict, replace
 from pathlib import Path
 
 from .ciis_rag.adapters import load_case_bundle
-from .ciis_rag.assistant import AssistantService
+from .ciis_rag.assistant import AssistantService, answer_without_retrieval
 from .ciis_rag.core.config import RAGConfig
 from .ciis_rag.core.exceptions import RAGError
 from .ciis_rag.generation import OllamaAnswerGenerator
@@ -82,6 +82,11 @@ def build_parser() -> argparse.ArgumentParser:
 def _execute(args: argparse.Namespace) -> int:
     config = _config(args)
     bundle = load_case_bundle(args.case_json, args.artifact_dir)
+    if args.command == "ask":
+        direct_answer = answer_without_retrieval(bundle, args.question)
+        if direct_answer is not None:
+            print(json.dumps(asdict(direct_answer), indent=2))
+            return 0
     _store, indexing, retrieval = _services(config)
 
     if args.command == "build":

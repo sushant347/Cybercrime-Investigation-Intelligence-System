@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from types import SimpleNamespace
 
 from rag_assistant_engine import cli
 from rag_assistant_engine.ciis_rag.core.exceptions import GenerationTimeoutError
@@ -28,3 +29,30 @@ def test_expected_rag_failure_is_reported_without_traceback(monkeypatch, capsys)
         "detail": "too slow",
     }
     assert "Traceback" not in captured.err
+
+
+def test_graph_entity_question_skips_vector_services(bundle, monkeypatch, capsys):
+    monkeypatch.setattr(cli, "load_case_bundle", lambda *_args: bundle)
+    monkeypatch.setattr(
+        cli,
+        "_services",
+        lambda *_args: (_ for _ in ()).throw(
+            AssertionError("deterministic graph query must not initialize Chroma")
+        ),
+    )
+    args = SimpleNamespace(
+        command="ask",
+        question="Which entity has the most relationships?",
+        case_json="case.json",
+        artifact_dir="artifacts",
+        storage_dir=None,
+        model=None,
+        ollama_host=None,
+        top_k=None,
+    )
+
+    assert cli._execute(args) == 0
+
+    response = json.loads(capsys.readouterr().out)
+    assert response["insufficient_evidence"] is False
+    assert "phone numbers: 9800000001" in response["answer"]
