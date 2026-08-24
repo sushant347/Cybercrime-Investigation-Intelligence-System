@@ -2,6 +2,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import TimelineIcon from "@mui/icons-material/Timeline";
 import {
   Box,
+  Button,
   Card,
   CardContent,
   CardHeader,
@@ -17,7 +18,7 @@ import {
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import dayjs from "dayjs";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 
 import { investigationApi } from "@/api";
 import { EmptyState } from "@/components/common/EmptyState";
@@ -28,7 +29,7 @@ import { BRAND } from "@/theme/theme";
 import type { TimelineEvent } from "@/types";
 
 import { TimelineChart } from "./TimelineChart";
-import { eventTitle, isGeneratedDescription } from "./eventText";
+import { isGeneratedDescription } from "./eventText";
 import { stageMeta } from "./stages";
 
 /**
@@ -42,7 +43,7 @@ export function TimelineTab({ caseId }: { caseId: string }) {
   const [dateTo, setDateTo] = useState("");
   const [criticalOnly, setCriticalOnly] = useState(false);
   const [selected, setSelected] = useState<TimelineEvent | null>(null);
-  const listRef = useRef<HTMLDivElement>(null);
+  const [showStageAnalysis, setShowStageAnalysis] = useState(false);
 
   const { data, isPending } = useQuery({
     queryKey: ["artifact", caseId, "timeline"],
@@ -79,17 +80,6 @@ export function TimelineTab({ caseId }: { caseId: string }) {
     [timeline],
   );
 
-  // Selecting a marker in the chart opens that event's row further down the
-  // page, which is off-screen on a long case — bring it into view.
-  useEffect(() => {
-    if (!selected) return;
-    const index = filtered.indexOf(selected);
-    if (index < 0) return;
-    listRef.current
-      ?.querySelector(`[data-event-index="${index}"]`)
-      ?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-  }, [selected, filtered]);
-
   if (isPending) return <DetailSkeleton />;
   if (!timeline) {
     return (
@@ -103,12 +93,21 @@ export function TimelineTab({ caseId }: { caseId: string }) {
 
   return (
     <Stack spacing={2}>
-      {timeline.summary && (
+      {(timeline.summary || timeline.stage_progression.length > 0) && (
         <Card>
+          <CardHeader
+            title="Investigation overview"
+            subheader="What the engine reconstructed before reviewing individual findings"
+          />
+          <Divider />
           <CardContent>
-            <Typography variant="body1">{timeline.summary}</Typography>
+            {timeline.summary && (
+              <Typography variant="body2" color="text.secondary">
+                {timeline.summary}
+              </Typography>
+            )}
             {timeline.stage_progression.length > 0 && (
-              <Box sx={{ mt: 2 }}>
+              <Box sx={{ mt: timeline.summary ? 2 : 0 }}>
                 <Stack direction="row" spacing={1} alignItems="center" sx={{ mb: 1 }}>
                   <Typography variant="caption" color="text.secondary">
                     How the attack progressed
@@ -159,11 +158,29 @@ export function TimelineTab({ caseId }: { caseId: string }) {
       {timeline.attack_stages.length > 0 && (
         <Card>
           <CardHeader
-            title="Attack Stages"
-            subheader="Each stage the engine detected, when it ran, and what it was based on"
+            title="Attack-stage analysis"
+            subheader={`${timeline.attack_stages.length} detected stage${timeline.attack_stages.length === 1 ? "" : "s"} · expand for evidence and keyword basis`}
+            action={
+              <Button
+                size="small"
+                onClick={() => setShowStageAnalysis((open) => !open)}
+                aria-expanded={showStageAnalysis}
+                endIcon={
+                  <ExpandMoreIcon
+                    sx={{
+                      transition: "transform 180ms ease",
+                      transform: showStageAnalysis ? "rotate(180deg)" : "none",
+                    }}
+                  />
+                }
+              >
+                {showStageAnalysis ? "Hide analysis" : "Review analysis"}
+              </Button>
+            }
           />
-          <Divider />
-          <CardContent>
+          <Collapse in={showStageAnalysis} unmountOnExit>
+            <Divider />
+            <CardContent>
             <Box
               sx={{
                 display: "grid",
@@ -172,6 +189,7 @@ export function TimelineTab({ caseId }: { caseId: string }) {
                   xs: "1fr",
                   sm: "repeat(2, minmax(0, 1fr))",
                   lg: "repeat(3, minmax(0, 1fr))",
+                  xl: "repeat(4, minmax(0, 1fr))",
                 },
               }}
             >
@@ -203,7 +221,13 @@ export function TimelineTab({ caseId }: { caseId: string }) {
                       {meta.meaning}
                     </Typography>
                     <Typography variant="caption" color="text.disabled" display="block" sx={{ mt: 0.5 }}>
-                      {formatDateTime(stage.first_seen)} → {formatDateTime(stage.last_seen)}
+                      {stage.first_seen && stage.last_seen ? (
+                        <>
+                          {formatDateTime(stage.first_seen)} - {formatDateTime(stage.last_seen)}
+                        </>
+                      ) : (
+                        "No evidence-derived event time for this stage"
+                      )}
                     </Typography>
                     <Typography variant="body2" sx={{ mt: 1, overflowWrap: "anywhere" }}>
                       {stage.explanation}
@@ -232,11 +256,17 @@ export function TimelineTab({ caseId }: { caseId: string }) {
                 );
               })}
             </Box>
-          </CardContent>
+            </CardContent>
+          </Collapse>
         </Card>
       )}
 
       <Card>
+        <CardHeader
+          title="Incident chronology"
+          subheader="Evidence-derived events in time order; select a finding to inspect its basis and relationships"
+        />
+        <Divider />
         <Stack
           direction={{ xs: "column", md: "row" }}
           spacing={2}
@@ -274,135 +304,21 @@ export function TimelineTab({ caseId }: { caseId: string }) {
         </Stack>
         <Divider />
 
-        {/* Swimlane chart of the filtered events */}
-        <TimelineChart
-          events={filtered}
-          milestoneKeys={milestoneKeys}
-          selected={selected}
-          onSelect={setSelected}
-        />
-        <Divider />
-
-        <Box ref={listRef} sx={{ p: 2 }}>
-          {filtered.length === 0 ? (
-            <Typography variant="body2" color="text.secondary" sx={{ p: 2 }}>
-              No events match the current filters.
-            </Typography>
-          ) : (
-            filtered.map((event, i) => {
-              const isMilestone = milestoneKeys.has(`${event.timestamp}|${event.description}`);
-              const isOpen = selected === event;
-              const dotColor = event.critical
-                ? BRAND.critical
-                : isMilestone
-                  ? BRAND.high
-                  : BRAND.primary;
-              return (
-                <Stack
-                  key={`${event.timestamp}-${i}`}
-                  direction="row"
-                  spacing={2}
-                  data-event-index={i}
-                >
-                  {/* Continuous rail: the line stretches through the expanded
-                      detail too, so the thread of the timeline is never cut. */}
-                  <Stack alignItems="center" sx={{ minWidth: 14 }}>
-                    <Box
-                      sx={{
-                        width: 12,
-                        height: 12,
-                        borderRadius: "50%",
-                        mt: 1.5,
-                        flexShrink: 0,
-                        bgcolor: dotColor,
-                        boxShadow: event.critical ? `0 0 8px ${BRAND.critical}` : undefined,
-                      }}
-                    />
-                    {i < filtered.length - 1 && (
-                      <Box sx={{ flex: 1, width: "2px", bgcolor: "divider", mt: 0.5 }} />
-                    )}
-                  </Stack>
-
-                  <Box sx={{ minWidth: 0, flex: 1, pb: 1 }}>
-                    <Stack
-                      direction="row"
-                      spacing={1}
-                      alignItems="flex-start"
-                      onClick={() => setSelected(isOpen ? null : event)}
-                      role="button"
-                      tabIndex={0}
-                      aria-expanded={isOpen}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                          e.preventDefault();
-                          setSelected(isOpen ? null : event);
-                        }
-                      }}
-                      sx={{
-                        cursor: "pointer",
-                        py: 1.25,
-                        px: 1,
-                        borderRadius: 2,
-                        "&:hover": { bgcolor: "action.hover" },
-                        bgcolor: isOpen ? "action.selected" : undefined,
-                      }}
-                    >
-                      <Box sx={{ minWidth: 0, flex: 1 }}>
-                        <Typography variant="caption" color="text.secondary">
-                          {event.timestamp ? formatDateTime(event.timestamp) : "Timestamp unresolved"} · {titleCase(event.event_type)}
-                          {event.evidence_id ? ` · ${event.evidence_id}` : ""}
-                        </Typography>
-                        <Typography variant="body2" sx={{ overflowWrap: "anywhere" }}>
-                          {eventTitle(event)}
-                        </Typography>
-                        <Stack direction="row" spacing={0.5} sx={{ mt: 0.5 }} flexWrap="wrap" useFlexGap>
-                          {event.critical && (
-                            <Tooltip title={event.critical_reasons.join("; ")}>
-                              <Chip size="small" label="CRITICAL" sx={{ bgcolor: `${BRAND.critical}22`, color: BRAND.critical, fontWeight: 700 }} />
-                            </Tooltip>
-                          )}
-                          <Chip
-                            size="small"
-                            label={`${titleCase(event.time_source ?? "legacy upload time")} · ${event.confidence ?? "unknown"}`}
-                            color={event.timestamp_inferred ? "warning" : "default"}
-                            variant="outlined"
-                          />
-                          {isMilestone && <Chip size="small" label="Milestone" variant="outlined" />}
-                          {event.stages.map((stage, n) => (
-                            <Chip
-                              key={stage}
-                              size="small"
-                              label={stageMeta(stage, n).label}
-                              variant="outlined"
-                              sx={{ borderColor: `${stageMeta(stage, n).color}80` }}
-                            />
-                          ))}
-                        </Stack>
-                      </Box>
-                      <ExpandMoreIcon
-                        fontSize="small"
-                        sx={{
-                          mt: 0.5,
-                          flexShrink: 0,
-                          color: "text.secondary",
-                          transition: "transform 180ms ease",
-                          transform: isOpen ? "rotate(180deg)" : "none",
-                        }}
-                      />
-                    </Stack>
-
-                    {/* Details open downward, underneath the event they belong
-                        to, rather than in a side panel the reader has to look
-                        across to and mentally pair up. */}
-                    <Collapse in={isOpen} unmountOnExit>
-                      <EventDetail event={event} />
-                    </Collapse>
-                  </Box>
-                </Stack>
-              );
-            })
-          )}
-        </Box>
+        {filtered.length === 0 ? (
+          <Typography variant="body2" color="text.secondary" sx={{ p: 3, textAlign: "center" }}>
+            No events match the current filters.
+          </Typography>
+        ) : (
+          <TimelineChart
+            events={filtered}
+            milestoneKeys={milestoneKeys}
+            selected={selected}
+            onSelect={(event) =>
+              setSelected((current) => current === event ? null : event)
+            }
+            renderDetails={(event) => <EventDetail event={event} />}
+          />
+        )}
       </Card>
     </Stack>
   );

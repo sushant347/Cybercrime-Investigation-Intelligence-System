@@ -66,6 +66,7 @@ describe("TimelineTab event details", () => {
     const row = await screen.findByRole("button", { expanded: false });
     // Nothing is shown until the investigator asks for it.
     expect(screen.queryByText("Why this is critical")).not.toBeInTheDocument();
+    expect(screen.getAllByText("Victim asked for an OTP")).toHaveLength(1);
 
     await user.click(row);
 
@@ -114,5 +115,27 @@ describe("TimelineTab event details", () => {
         screen.getByText(/A payment, transfer or wallet transaction took place/),
       ).toBeInTheDocument(),
     );
+  });
+
+  it("keeps detailed stage evidence collapsed until requested", async () => {
+    const stagedReport = report([event({})]);
+    stagedReport.attack_stages = [{
+      stage: "initial_contact",
+      evidence_ids: ["EVID_00001"],
+      first_seen: "2026-01-01T10:00:00Z",
+      last_seen: "2026-01-01T10:00:00Z",
+      matched_keywords: ["offer"],
+      explanation: "Initial contact was evidenced by the stored message.",
+    }];
+    timeline.mockResolvedValue({ report: stagedReport });
+
+    const user = userEvent.setup();
+    renderWithProviders(<TimelineTab caseId="CASE_1" />);
+
+    const toggle = await screen.findByRole("button", { name: /review analysis/i });
+    expect(screen.queryByText("Initial contact was evidenced by the stored message.")).not.toBeInTheDocument();
+
+    await user.click(toggle);
+    expect(await screen.findByText("Initial contact was evidenced by the stored message.")).toBeInTheDocument();
   });
 });
