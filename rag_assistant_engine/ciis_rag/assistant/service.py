@@ -57,6 +57,37 @@ def _substantive_answer(answer: str) -> bool:
     return len(words) >= 3
 
 
+def _conversation_reply(query: str) -> str | None:
+    """Answer non-investigative courtesies without retrieval or generation.
+
+    Greetings and requests for usage guidance contain no case claim that needs
+    evidentiary support. Sending them through RAG both wastes CPU time and
+    incorrectly turns the citation guard into an "insufficient evidence"
+    warning. The deliberately narrow full-query matching prevents a real
+    investigation question that happens to start with "hello" from bypassing
+    evidence retrieval.
+    """
+    normalized = " ".join(query.lower().split()).strip(" .,!?:;-")
+    if normalized in {
+        "hello", "hello there", "hi", "hi there", "hey",
+        "good morning", "good afternoon", "good evening",
+    }:
+        return (
+            "Hello. I can help you examine this case's evidence, timeline, "
+            "relationships, report findings, and applicable legal sources. "
+            "Ask a case-specific question or choose one of the suggested prompts."
+        )
+    if normalized in {"help", "what can you do", "how can you help"}:
+        return (
+            "I can summarize stored findings, identify evidence relationships, "
+            "explain timeline events and timestamp confidence, list extracted "
+            "entities, and show source-backed legal or regulatory mappings."
+        )
+    if normalized in {"thanks", "thank you", "thank you very much"}:
+        return "You're welcome. Ask another question whenever you are ready."
+    return None
+
+
 def _sources(hits: list[RetrievalHit]) -> tuple[SourceReference, ...]:
     grouped: dict[tuple[str, str, str, str, str], dict[str, set[str]]] = {}
     for hit in hits:
@@ -208,6 +239,129 @@ def _requested_relationship_types(query: str) -> set[str]:
     }
 
 
+def _is_top_connected_entity_question(query: str) -> bool:
+    lowered = query.lower()
+    return (
+        "entity" in lowered
+        and any(term in lowered for term in ("highest", "most", "top", "maximum"))
+        and any(term in lowered for term in (
+            "relationship", "relationships", "connected", "connections", "links",
+        ))
+    )
+
+
+def _top_connected_entity(bundle: CaseKnowledgeBundle):
+    """Rank typed entity values by distinct evidence-pair relationships."""
+    known_entities = {
+        f"{mention.entity_type}={mention.normalized}".casefold():
+        f"{mention.entity_type}={mention.normalized}"
+        for evidence in bundle.evidence
+        for mention in evidence.entities
+        if mention.entity_type and mention.normalized
+    }
+    pairs_by_entity: dict[str, set[tuple[str, str]]] = {}
+    evidence_by_entity: dict[str, set[str]] = {}
+    confidence_by_entity: dict[str, float] = {}
+    for relationship in bundle.relationships:
+        pair = tuple(sorted((relationship.evidence_a, relationship.evidence_b)))
+        if len(pair) != 2 or not all(pair):
+            continue
+        for raw_entity in set(relationship.shared_entities):
+            raw_entity = raw_entity.strip()
+            entity = known_entities.get(raw_entity.casefold())
+            # Correlation factors such as timeline_proximity and keyword
+            # similarity can support an edge but are not extracted entities.
+            if entity is None:
+                continue
+            pairs_by_entity.setdefault(entity, set()).add(pair)
+            evidence_by_entity.setdefault(entity, set()).update(pair)
+            confidence_by_entity[entity] = max(
+                confidence_by_entity.get(entity, 0.0), relationship.confidence,
+            )
+    if not pairs_by_entity:
+        return None
+    entity = min(
+        pairs_by_entity,
+        key=lambda item: (
+            -len(pairs_by_entity[item]),
+            -len(evidence_by_entity[item]),
+            -confidence_by_entity[item],
+            item.lower(),
+        ),
+    )
+    return (
+        entity,
+        pairs_by_entity[entity],
+        evidence_by_entity[entity],
+        confidence_by_entity[entity],
+    )
+
+
+def answer_without_retrieval(
+    bundle: CaseKnowledgeBundle,
+    query: str,
+) -> AssistantResponse | None:
+    """Return answers that need canonical artifacts but no vector retrieval."""
+    conversation_reply = _conversation_reply(query)
+    if conversation_reply is not None:
+        return AssistantResponse(
+            answer=conversation_reply,
+            insufficient_evidence=False,
+            cited_sources=(),
+            retrieved_sources=(),
+            evidence_breakdown=(),
+            shared_entity_links=(),
+            warnings=(),
+        )
+    if not _is_top_connected_entity_question(query):
+        return None
+    ranked_entity = _top_connected_entity(bundle)
+    if ranked_entity is None:
+        return AssistantResponse(
+            answer=(
+                "No typed entity is recorded as connecting two or more "
+                "evidence items in this case."
+            ),
+            insufficient_evidence=True,
+            cited_sources=(),
+            retrieved_sources=(),
+            evidence_breakdown=(),
+            shared_entity_links=(),
+            warnings=tuple(bundle.warnings),
+        )
+    entity, relationship_pairs, evidence_ids, highest_confidence = ranked_entity
+    entity_type, separator, value = entity.partition("=")
+    display = f"{entity_type.replace('_', ' ')}: {value}" if separator else entity
+    citations = " ".join(
+        f"[{evidence_id}]" for evidence_id in sorted(evidence_ids)
+    )
+    links = tuple(
+        SharedEvidenceLink(
+            evidence_a=relationship.evidence_a,
+            evidence_b=relationship.evidence_b,
+            relationship_type=relationship.relationship_type,
+            confidence=relationship.confidence,
+            shared_entities=(entity,),
+        )
+        for relationship in bundle.relationships
+        if entity in relationship.shared_entities
+    )
+    return AssistantResponse(
+        answer=(
+            f"The most connected stored entity is {display}. It supports "
+            f"{len(relationship_pairs)} distinct evidence relationship(s) "
+            f"across {len(evidence_ids)} evidence item(s); the highest "
+            f"supporting edge confidence is {highest_confidence:.3f}. {citations}"
+        ),
+        insufficient_evidence=False,
+        cited_sources=_bundle_sources(bundle, evidence_ids, []),
+        retrieved_sources=(),
+        evidence_breakdown=_breakdown(bundle, evidence_ids),
+        shared_entity_links=links,
+        warnings=tuple(bundle.warnings),
+    )
+
+
 def _legal_basis_section(bundle: CaseKnowledgeBundle):
     for section in bundle.artifact_sections:
         if section.source_id != "REPORT_LEGAL_BASIS":
@@ -231,6 +385,40 @@ def _is_legal_basis_question(query: str) -> bool:
     ))
 
 
+def _is_findings_summary_question(query: str) -> bool:
+    """True for a broad case-finding summary, not a request about one exhibit."""
+    lowered = query.lower()
+    finding_terms = ("finding", "findings", "case summary", "summarize the case")
+    summary_terms = ("summarize", "summary", "strongest", "key", "main", "important")
+    return (
+        any(term in lowered for term in finding_terms)
+        and any(term in lowered for term in summary_terms)
+    )
+
+
+def _executive_summary_section(bundle: CaseKnowledgeBundle):
+    """Read the canonical report summary already computed by the pipeline."""
+    for section in bundle.artifact_sections:
+        if section.source_id != "REPORT_EXECUTIVE_SUMMARY":
+            continue
+        _heading, separator, body = section.text.partition("\n")
+        if not separator:
+            return None, ()
+        try:
+            payload = json.loads(body)
+        except json.JSONDecodeError:
+            return None, ()
+        if not isinstance(payload, list):
+            return None, ()
+        findings = tuple(
+            " ".join(str(item).split())
+            for item in payload
+            if str(item).strip()
+        )
+        return section, findings
+    return None, ()
+
+
 class AssistantService:
     def __init__(
         self,
@@ -249,6 +437,9 @@ class AssistantService:
         *,
         sync_before_query: bool = True,
     ) -> AssistantResponse:
+        direct_answer = answer_without_retrieval(bundle, query)
+        if direct_answer is not None:
+            return direct_answer
         if sync_before_query:
             self._indexing.sync(bundle)
         hits = self._retrieval.retrieve(bundle.case_id, query)
@@ -377,6 +568,36 @@ class AssistantService:
                     retrieved_sources=_sources(hits),
                     evidence_breakdown=_breakdown(bundle, {evidence_id}),
                     shared_entity_links=(),
+                    warnings=tuple(bundle.warnings),
+                )
+
+        if not requested_ids and _is_findings_summary_question(query):
+            summary_section, findings = _executive_summary_section(bundle)
+            if summary_section is not None and findings:
+                selected_findings = findings[:5]
+                answer = "Strongest stored findings:\n" + "\n".join(
+                    f"{index}. {finding}"
+                    for index, finding in enumerate(selected_findings, start=1)
+                )
+                answer += f"\n[{summary_section.source_id}]"
+                supporting_ids = set(summary_section.evidence_ids)
+                supporting_ids.update(
+                    match.upper()
+                    for match in re.findall(
+                        r"\bEVID_[A-Z0-9_-]+\b",
+                        " ".join(selected_findings),
+                        re.IGNORECASE,
+                    )
+                )
+                return AssistantResponse(
+                    answer=answer,
+                    insufficient_evidence=False,
+                    cited_sources=_bundle_sources(
+                        bundle, {summary_section.source_id}, hits
+                    ),
+                    retrieved_sources=_sources(hits),
+                    evidence_breakdown=_breakdown(bundle, supporting_ids),
+                    shared_entity_links=_shared_links(bundle, supporting_ids),
                     warnings=tuple(bundle.warnings),
                 )
 

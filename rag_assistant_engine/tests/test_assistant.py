@@ -64,6 +64,29 @@ def test_irrelevant_question_abstains_without_calling_generator(bundle, config):
     assert response.insufficient_evidence is True
 
 
+def test_greeting_bypasses_index_retrieval_and_generation(bundle, config):
+    class MustNotRun:
+        def generate(self, query, hits):
+            raise AssertionError("a greeting must not invoke the model")
+
+    assistant = service(bundle, config, StructuredGeneration("", (), False))
+    assistant._generator = MustNotRun()
+    assistant._indexing.sync = lambda *_args: (_ for _ in ()).throw(
+        AssertionError("a greeting must not synchronize the case index")
+    )
+    assistant._retrieval.retrieve = lambda *_args: (_ for _ in ()).throw(
+        AssertionError("a greeting must not retrieve evidence")
+    )
+
+    response = assistant.ask(bundle, "hello")
+
+    assert response.insufficient_evidence is False
+    assert response.answer.startswith("Hello.")
+    assert response.cited_sources == ()
+    assert response.retrieved_sources == ()
+    assert response.warnings == ()
+
+
 def test_missing_exact_money_amount_abstains_without_model_substitution(bundle, config):
     class MustNotRun:
         def generate(self, query, hits):
@@ -175,6 +198,54 @@ def test_shared_entity_relationship_question_is_answered_without_model(bundle, c
     }
 
 
+def test_most_connected_entity_is_ranked_from_stored_relationships(bundle, config):
+    class MustNotRun:
+        def generate(self, query, hits):
+            raise AssertionError("entity ranking must not depend on generation")
+
+    assistant = service(bundle, config, StructuredGeneration("", (), False))
+    assistant._generator = MustNotRun()
+    response = assistant.ask(
+        bundle,
+        "Tell me about the entity with highest relationship in this case.",
+    )
+
+    assert response.insufficient_evidence is False
+    assert "phone numbers: 9800000001" in response.answer
+    assert "1 distinct evidence relationship" in response.answer
+    assert "highest supporting edge confidence is 0.910" in response.answer
+    assert {source.evidence_id for source in response.cited_sources} == {
+        "EVID_001", "EVID_002",
+    }
+    assert response.shared_entity_links[0].shared_entities == (
+        "phone_numbers=9800000001",
+    )
+
+
+def test_entity_ranking_excludes_non_entity_correlation_factors(bundle, config):
+    enriched = replace(
+        bundle,
+        relationships=bundle.relationships + (
+            type(bundle.relationships[0])(
+                "EVID_001",
+                "EVID_002",
+                "correlation",
+                0.99,
+                ("timeline_proximity=0.0h apart",),
+            ),
+        ),
+    )
+    assistant = service(enriched, config, StructuredGeneration("", (), False))
+
+    response = assistant.ask(
+        enriched,
+        "Which entity has the most relationships?",
+    )
+
+    assert "phone numbers: 9800000001" in response.answer
+    assert "timeline proximity" not in response.answer
+
+
 def test_legal_basis_question_uses_canonical_report_section(bundle, config):
     class MustNotRun:
         def generate(self, query, hits):
@@ -210,6 +281,41 @@ def test_legal_basis_question_uses_canonical_report_section(bundle, config):
     assert "ETA section 45" in response.answer
     assert "Verify intent" in response.answer
     assert response.cited_sources[0].evidence_id == "REPORT_LEGAL_BASIS"
+
+
+def test_strongest_findings_use_canonical_report_summary(bundle, config):
+    class MustNotRun:
+        def generate(self, query, hits):
+            raise AssertionError("stored executive findings must not depend on generation")
+
+    summary = ArtifactSection(
+        source_id="REPORT_EXECUTIVE_SUMMARY",
+        source_kind="report_section",
+        title="Executive Summary",
+        file_name="investigation_report.json",
+        text=(
+            'Section: Executive Summary\n['
+            '"Two evidence items passed their stored integrity checks.",'
+            '"EVID_001 and EVID_002 have a strong recorded relationship.",'
+            '"The phone number is an identity lead, not attribution."'
+            ']'
+        ),
+        evidence_ids=("EVID_001", "EVID_002"),
+    )
+    enriched = replace(bundle, artifact_sections=(summary,))
+    assistant = service(enriched, config, StructuredGeneration("", (), False))
+    assistant._generator = MustNotRun()
+
+    response = assistant.ask(enriched, "Summarize the strongest findings in this case.")
+
+    assert response.insufficient_evidence is False
+    assert "Strongest stored findings" in response.answer
+    assert "strong recorded relationship" in response.answer
+    assert "[REPORT_EXECUTIVE_SUMMARY]" in response.answer
+    assert response.cited_sources[0].evidence_id == "REPORT_EXECUTIVE_SUMMARY"
+    assert {item.evidence_id for item in response.evidence_breakdown} == {
+        "EVID_001", "EVID_002",
+    }
 
 
 def test_citation_only_generated_answer_is_withheld(bundle, config):
