@@ -1,4 +1,4 @@
-"""CIIS API settings.
+"""CIIE API settings.
 
 Thin presentation layer over the forensic engines. The engines are NEVER
 modified - they are imported read-only from the roots below (see

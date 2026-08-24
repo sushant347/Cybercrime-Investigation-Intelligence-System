@@ -1,4 +1,4 @@
-"""Read-only data gateway over all existing CIIS storage.
+"""Read-only data gateway over all existing CIIE storage.
 
 Every Phase-2 module obtains its inputs exclusively through
 :class:`CaseDataRepository`, so the analytical engines are decoupled from the

@@ -1,6 +1,6 @@
 # Semantic Correction Engine
 
-A **new, independent module** of the Cybercrime Investigation Intelligence System. It sits between the rule-based OCR enhancement (Prompt 2.5) and entity extraction, and uses a **pretrained `xlm-roberta-base`** model for **inference only** to validate rule-proposed OCR corrections in multilingual context. The language model **never generates text** — it only decides whether a candidate word fits its surrounding sentence.
+A **new, independent module** of the Cybercrime Investigation Intelligence Engine. It sits between the rule-based OCR enhancement (Prompt 2.5) and entity extraction, and uses a **pretrained `xlm-roberta-base`** model for **inference only** to validate rule-proposed OCR corrections in multilingual context. The language model **never generates text** — it only decides whether a candidate word fits its surrounding sentence.
 
 Nothing in the existing pipeline is modified. The engine produces one new field, `semantic_text`, and appends a `semantic_correction` section to the case JSON. `raw_text`, `cleaned_text` and `enhanced_text` remain byte-for-byte unchanged.
 

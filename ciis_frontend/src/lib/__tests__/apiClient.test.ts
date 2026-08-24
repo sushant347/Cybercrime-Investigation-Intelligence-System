@@ -30,7 +30,7 @@ describe("apiErrorMessage", () => {
 
   it("maps a network error to a reachability message", () => {
     const err = new AxiosError("Network Error", "ERR_NETWORK");
-    expect(apiErrorMessage(err)).toBe("Cannot reach the CIIS API server.");
+    expect(apiErrorMessage(err)).toBe("Cannot reach the CIIE API server.");
   });
 
   it("falls back for unknown/non-axios errors", () => {

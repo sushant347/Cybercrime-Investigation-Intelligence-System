@@ -177,7 +177,7 @@ export function TimelineChart({
           </Box>
 
           {acquisitionOnly.length > 0 && (
-            <Tooltip title="Upload time records when CIIS received an exhibit. It is not proof of when the incident occurred.">
+            <Tooltip title="Upload time records when CIIE received an exhibit. It is not proof of when the incident occurred.">
               <FormControlLabel
                 sx={{ m: 0, alignSelf: { xs: "flex-start", md: "center" } }}
                 control={

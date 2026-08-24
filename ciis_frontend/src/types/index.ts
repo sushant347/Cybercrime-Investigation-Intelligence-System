@@ -1,5 +1,5 @@
 /**
- * Domain types for the CIIS platform.
+ * Domain types for the CIIE platform.
  *
  * Phase-2 artifact types mirror the engine's pydantic models exactly
  * (backend/modules/investigation/<module>/models.py). The frontend NEVER

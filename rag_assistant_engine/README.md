@@ -1,6 +1,6 @@
-# Standalone CIIS RAG Assistant Engine
+# Standalone CIIE RAG Assistant Engine
 
-This engine lets an investigator ask case-scoped questions over canonical CIIS
+This engine lets an investigator ask case-scoped questions over canonical CIIE
 evidence and receive locally generated answers with validated evidence IDs. It
 is deliberately standalone: it does not import Django, React, the OCR engine,
 the correlation engine, or the timeline/report engine.
@@ -11,7 +11,7 @@ the correlation engine, or the timeline/report engine.
 Current case JSON + versioned Phase-2 artifacts
                     |
                     v
-            CIIS artifact adapter
+            CIIE artifact adapter
                     |
                     v
        evidence-preserving document chunks

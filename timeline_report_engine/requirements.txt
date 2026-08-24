@@ -1,7 +1,7 @@
 # Timeline, graph, analytics and report engine
 # Python 3.12
 #
-# Upstream CIIS engine packages are supplied as source modules. These are the
+# Upstream CIIE engine packages are supplied as source modules. These are the
 # third-party dependencies owned directly by this engine.
 
 pydantic>=2.6

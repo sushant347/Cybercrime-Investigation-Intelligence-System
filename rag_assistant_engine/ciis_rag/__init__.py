@@ -1,4 +1,4 @@
-"""Public API for the standalone CIIS RAG engine."""
+"""Public API for the standalone CIIE RAG engine."""
 
 from .assistant.service import AssistantService
 from .core.config import RAGConfig

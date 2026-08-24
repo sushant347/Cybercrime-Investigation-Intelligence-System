@@ -1,7 +1,7 @@
 """
 PredictionResult dataclass -- the canonical output of the Phishing URL Detection Engine.
 
-This is the public interface that other CIIS modules will import and consume.
+This is the public interface that other CIIE modules will import and consume.
 Supports JSON serialization, dictionary conversion, and factory methods.
 """
 

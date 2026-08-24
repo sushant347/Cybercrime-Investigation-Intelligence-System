@@ -1,5 +1,5 @@
 /**
- * Axios instance for the CIIS API.
+ * Axios instance for the CIIE API.
  *
  * There are no user accounts and no JWT: investigators use the engine
  * anonymously. The one privileged surface is the **admin role**, unlocked with
@@ -53,7 +53,7 @@ export function apiErrorMessage(error: unknown): string {
     const data = error.response?.data as { detail?: string } | undefined;
     if (data?.detail) return data.detail;
     if (error.response?.status === 403) return "Admin access required.";
-    if (error.code === "ERR_NETWORK") return "Cannot reach the CIIS API server.";
+    if (error.code === "ERR_NETWORK") return "Cannot reach the CIIE API server.";
   }
   return "Something went wrong. Please try again.";
 }

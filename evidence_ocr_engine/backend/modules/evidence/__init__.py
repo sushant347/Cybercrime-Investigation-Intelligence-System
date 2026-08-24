@@ -1,6 +1,6 @@
 """Module 2 - Digital Evidence Acquisition and OCR Engine.
 
-Public API for other CIIS modules::
+Public API for other CIIE modules::
 
     from backend.modules.evidence import EvidenceConfig, EvidencePipeline, PaddleOCRService
 

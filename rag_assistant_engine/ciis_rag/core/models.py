@@ -48,7 +48,7 @@ class Relationship:
 
 @dataclass(frozen=True)
 class ArtifactSection:
-    """One investigator-facing section derived from a canonical CIIS artifact."""
+    """One investigator-facing section derived from a canonical CIIE artifact."""
 
     source_id: str
     source_kind: str

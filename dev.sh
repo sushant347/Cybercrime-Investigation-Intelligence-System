@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# CIIS local development launcher.
+# CIIE local development launcher.
 # =============================================================================
 #
 # NEW HERE? THIS IS THE ONLY COMMAND YOU NEED
@@ -600,7 +600,7 @@ up() {
   [ "$WEB_PORT" = "$want_web" ]      || warn "Port $want_web was busy - using $WEB_PORT for the web app."
 
   echo
-  log "Starting CIIS:"
+  log "Starting CIIE:"
   echo "     API     http://localhost:$CIIS_API_PORT   (+ OCR/correlation/timeline/report engines)"
   echo "     Web     http://localhost:$WEB_PORT"
   echo "     ${C_DIM}Ctrl-C stops everything.${C_OFF}"
@@ -622,7 +622,7 @@ up() {
 
   if wait_for_http "http://localhost:$WEB_PORT/" 120; then
     echo
-    ok "CIIS is ready -> ${C_BLD}http://localhost:$WEB_PORT${C_OFF}"
+    ok "CIIE is ready -> ${C_BLD}http://localhost:$WEB_PORT${C_OFF}"
     open_browser "http://localhost:$WEB_PORT/"
   else
     warn "The web server has not answered yet; watch the log above for errors."
@@ -656,7 +656,7 @@ doctor() {
   local tpy; tpy="$(venv_py "$(venv_dir "$THREAT_VENV")")"
   local problems=0
 
-  echo "${C_BLD}CIIS doctor${C_OFF}"
+  echo "${C_BLD}CIIE doctor${C_OFF}"
   echo "  repo root        : $ROOT"
   echo "  platform         : $OS ($(uname -s 2>/dev/null || echo unknown))"
 

@@ -1,4 +1,4 @@
-# CIIS Phase 1 — Forensic Evidence Processing Enhancements
+# CIIE Phase 1 — Forensic Evidence Processing Enhancements
 
 Additive package strengthening the evidence pipeline before the investigation,
 dashboard, and AI-assistant phases. **No existing module was modified.**

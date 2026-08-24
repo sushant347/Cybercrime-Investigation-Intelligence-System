@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Django management entrypoint for the CIIS API."""
+"""Django management entrypoint for the CIIE API."""
 import os
 import sys
 

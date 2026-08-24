@@ -1,5 +1,5 @@
 /**
- * CIIS design system - professional law-enforcement forensics look.
+ * CIIE design system - professional law-enforcement forensics look.
  * Dark mode is the default operating environment; light mode is fully
  * supported. All colors flow from these tokens.
  */

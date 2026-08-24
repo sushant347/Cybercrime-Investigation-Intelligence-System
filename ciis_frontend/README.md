@@ -1,4 +1,4 @@
-# CIIS investigator frontend
+# CIIE investigator frontend
 
 React, TypeScript and Vite interface for case intake, evidence review,
 investigation artifacts, timeline exploration and report downloads.

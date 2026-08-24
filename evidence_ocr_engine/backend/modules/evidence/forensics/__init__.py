@@ -1,4 +1,4 @@
-"""CIIS Phase 1 - Forensic Evidence Processing Enhancements.
+"""CIIE Phase 1 - Forensic Evidence Processing Enhancements.
 
 This package is a pure *add-on* to the existing evidence engine. It never
 modifies, replaces or removes any behaviour of the completed modules:

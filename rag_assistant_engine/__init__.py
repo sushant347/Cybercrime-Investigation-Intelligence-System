@@ -1,1 +1,1 @@
-"""Standalone CIIS retrieval-augmented investigation assistant."""
+"""Standalone CIIE retrieval-augmented investigation assistant."""

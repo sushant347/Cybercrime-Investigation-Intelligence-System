@@ -39,7 +39,7 @@ from backend.modules.evidence.csv_storage import CaseRepository  # noqa: E402
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="evidence-engine",
-        description="Digital Evidence Acquisition and OCR Engine (CIIS Module 2)",
+        description="Digital Evidence Acquisition and OCR Engine (CIIE Module 2)",
     )
     sub = parser.add_subparsers(dest="command", required=True)
 

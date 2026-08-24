@@ -1,10 +1,10 @@
 # Threat Intelligence System
 
-The **Threat Intelligence System** is a highly modular, high-performance cybersecurity intelligence component designed for the Cybercrime Investigation Intelligence System (CIIS). 
+The **Threat Intelligence System** is a highly modular, high-performance cybersecurity intelligence component designed for the Cybercrime Investigation Intelligence Engine (CIIE). 
 
 It detects phishing, malicious, and typosquatting URLs by combining **advanced machine learning models (XGBoost, LightGBM, Random Forest, etc.)**, **lexical and structural feature engineering (71 indicators)**, and **real-time threat intelligence (VirusTotal, WHOIS, SSL, DNS, GeoIP)**.
 
-It is built to run entirely as a reusable Python library without external dependencies like FastAPI, Databases, or UIs, making it drop-in ready for other CIIS modules (OCR, timeline, reporting, correlation).
+It is built to run entirely as a reusable Python library without external dependencies like FastAPI, Databases, or UIs, making it drop-in ready for other CIIE modules (OCR, timeline, reporting, correlation).
 
 ---
 

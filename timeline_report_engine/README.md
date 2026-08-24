@@ -1,6 +1,6 @@
 # Timeline & Report Engine
 
-The terminal stage of the CIIS pipeline. Takes the relationships found by the
+The terminal stage of the CIIE pipeline. Takes the relationships found by the
 correlation engine and produces what an investigator actually reads: an attack
 timeline, a relationship graph, case statistics, a priority band, and a
 forensic report.

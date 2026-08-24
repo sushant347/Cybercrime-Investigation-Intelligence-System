@@ -1,4 +1,4 @@
-"""CIIS Module 3 - Evidence Correlation Engine.
+"""CIIE Module 3 - Evidence Correlation Engine.
 
 Relationship intelligence: what connects to what, and how strongly. Everything
 here answers that question and nothing else - turning the answers into

@@ -1,4 +1,4 @@
-# CIIS Phase 1 - Forensic Evidence Processing Enhancements
+# CIIE Phase 1 - Forensic Evidence Processing Enhancements
 # Additive requirements file: the original requirements.txt is unchanged.
 #
 # Core Phase-1 dependencies (already satisfied by requirements.txt):

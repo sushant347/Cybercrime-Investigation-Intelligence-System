@@ -1,4 +1,4 @@
-"""Read current CIIS artifacts without coupling the RAG core to other engines."""
+"""Read current CIIE artifacts without coupling the RAG core to other engines."""
 
 from __future__ import annotations
 
@@ -521,7 +521,7 @@ def bundle_from_documents(
     *,
     source_hashes: Mapping[str, str] | None = None,
 ) -> CaseKnowledgeBundle:
-    """Normalize current or legacy CIIS documents into one stable bundle."""
+    """Normalize current or legacy CIIE documents into one stable bundle."""
     artifacts = artifacts or {}
     case_id = str(case_document.get("case_id") or "").strip()
     if not case_id:

@@ -157,7 +157,7 @@ def build_chunks(bundle: CaseKnowledgeBundle, config: RAGConfig) -> list[Knowled
                 "Supporting evidence IDs: "
                 + (", ".join(section.evidence_ids) or "not explicitly listed"),
                 f"Source URL: {section.source_url or 'not applicable'}",
-                "Canonical CIIS artifact content:",
+                "Canonical CIIE artifact content:",
             ])
             text = f"{header}\n{part}".strip()
             chunk_id = (

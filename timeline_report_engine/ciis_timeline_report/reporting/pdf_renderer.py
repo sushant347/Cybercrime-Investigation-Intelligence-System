@@ -75,9 +75,9 @@ HANDLING = "RESTRICTED - LAW ENFORCEMENT SENSITIVE"
 
 #: The issuing body, printed on the cover and in the running header.
 SYSTEM_NAME = (
-    "Cybercrime Investigation Intelligent Engine using Digital Evidence Correlation"
+    "Cybercrime Investigation Intelligence Engine using Digital Evidence Correlation"
 )
-ISSUING_BODY = "Cybercrime Investigation Intelligent Engine"
+ISSUING_BODY = "Cybercrime Investigation Intelligence Engine"
 
 #: Section rendering order and display titles. Imported from the service so the
 #: PDF, the Markdown and the stored JSON cannot present sections in different
@@ -327,7 +327,7 @@ def render_pdf(
     # ASCII only: this line carries the identifiers a reader copies out of
     # the PDF, and the standard-14 fonts ship no ToUnicode map, so a
     # decorative separator extracts as a replacement char in some tools.
-    footer_text = f"{report_id}  |  CIIS Investigation Report  |  {case_id}"
+    footer_text = f"{report_id}  |  CIIE Investigation Report  |  {case_id}"
 
     class _NumberedCanvas(_BaseCanvas):
         """Two-pass canvas so every footer can say 'Page X of Y'.
@@ -864,7 +864,7 @@ def render_pdf(
             story.append(Paragraph(
                 "Evidence acquisition records - not incident events", styles["h3"]))
             story.append(Paragraph(
-                "These times record when CIIS received an exhibit. They are "
+                "These times record when CIIE received an exhibit. They are "
                 "retained for provenance and excluded from attack duration and "
                 "stage ordering.", styles["subtitle"]))
             story.append(Spacer(1, 3))
@@ -1678,7 +1678,7 @@ def render_pdf(
         buffer, pagesize=A4,
         leftMargin=18 * mm, rightMargin=18 * mm,
         topMargin=20 * mm, bottomMargin=20 * mm,
-        title=f"CIIS Investigation Report {case_id}",
+        title=f"CIIE Investigation Report {case_id}",
         author=ISSUING_BODY,
         subject=f"Digital evidence investigation report {report_id} for case {case_id}",
     )

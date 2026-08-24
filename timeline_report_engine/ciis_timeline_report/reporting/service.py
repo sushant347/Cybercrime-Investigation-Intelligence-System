@@ -623,7 +623,7 @@ class InvestigationReportService:
                 "from stored artifacts while preserving each item's recorded "
                 "integrity status."),
             "evidence_scope": (
-                f"{count_of(len(items), 'evidence item')} acquired through the CIIS "
+                f"{count_of(len(items), 'evidence item')} acquired through the CIIE "
                 "intake pipeline with a recorded SHA-256 digest."),
             "methodology": [
                 "Phase 1 - Acquisition & OCR: PaddleOCR PP-OCRv5 text "
@@ -769,7 +769,7 @@ class InvestigationReportService:
         return {
             "report_id": report_id,
             "generated_at": generated_at,
-            "generator": ("CIIS Phase-2 reporting module "
+            "generator": ("CIIE Phase-2 reporting module "
                           "(template-over-data; no free-text generation)"),
             "evidence_set_digest": evidence_digest,
             "evidence_set_digest_note": (
@@ -1119,7 +1119,7 @@ class InvestigationReportService:
             f"# Forensic Investigation Report - {case_id}",
             "",
             f"Generated: {utc_now_iso()}  ",
-            "Produced by: Cybercrime Investigation Intelligence Engine (CIIS), "
+            "Produced by: Cybercrime Investigation Intelligence Engine (CIIE), "
             "Phase 2  ",
             "Status: Automated analytical draft - investigator review required  ",
             "Basis: every statement below references stored forensic findings; "

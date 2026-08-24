@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""CIIS Phase-1 forensics CLI (additive - the original cli.py is untouched).
+"""CIIE Phase-1 forensics CLI (additive - the original cli.py is untouched).
 
 Usage:
     # Full run: legacy acquisition + OCR, then all Phase-1 analyses
@@ -86,7 +86,7 @@ def cmd_reports(args: argparse.Namespace) -> int:
 
 
 def main(argv=None) -> int:
-    parser = argparse.ArgumentParser(description="CIIS Phase-1 forensics")
+    parser = argparse.ArgumentParser(description="CIIE Phase-1 forensics")
     sub = parser.add_subparsers(dest="command", required=True)
 
     p = sub.add_parser("process", help="acquire + OCR + all Phase-1 analyses")

@@ -1,4 +1,4 @@
-# CIIS — Cybercrime Investigation Intelligence System
+# CIIE — Cybercrime Investigation Intelligence Engine
 
 Turns screenshots, chat exports and receipts of a cybercrime case into an
 evidence-backed investigation report: OCR and entity extraction, threat

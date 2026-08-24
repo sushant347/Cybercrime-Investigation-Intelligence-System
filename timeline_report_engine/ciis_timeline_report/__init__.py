@@ -1,4 +1,4 @@
-"""CIIS Module 4 - Timeline & Report Engine.
+"""CIIE Module 4 - Timeline & Report Engine.
 
 The terminal stage of the investigation pipeline: it turns the relationships
 found by the correlation engine into the artifacts an investigator reads.

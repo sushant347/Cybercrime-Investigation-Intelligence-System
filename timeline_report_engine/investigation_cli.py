@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""CIIS investigation CLI for the correlation engine.
+"""CIIE investigation CLI for the correlation engine.
 
 Usage:
     python investigation_cli.py analyze <CASE_ID>     # run all 8 modules
@@ -82,7 +82,7 @@ def cmd_report(args: argparse.Namespace) -> int:
 
 
 def main(argv=None) -> int:
-    parser = argparse.ArgumentParser(description="CIIS Phase-2 investigation")
+    parser = argparse.ArgumentParser(description="CIIE Phase-2 investigation")
     sub = parser.add_subparsers(dest="command", required=True)
 
     p = sub.add_parser("analyze", help="run all Phase-2 modules for a case")

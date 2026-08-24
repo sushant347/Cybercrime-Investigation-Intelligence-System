@@ -43,7 +43,7 @@ def _services(config: RAGConfig):
 
 
 def _add_case_arguments(parser: argparse.ArgumentParser) -> None:
-    parser.add_argument("--case-json", required=True, help="Current CIIS case JSON")
+    parser.add_argument("--case-json", required=True, help="Current CIIE case JSON")
     parser.add_argument(
         "--artifact-dir", required=True,
         help="Directory containing the case's versioned Phase-2 JSON artifacts",
@@ -55,7 +55,7 @@ def _add_case_arguments(parser: argparse.ArgumentParser) -> None:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Standalone CIIS RAG assistant")
+    parser = argparse.ArgumentParser(description="Standalone CIIE RAG assistant")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     build = subparsers.add_parser("build", help="Synchronize one case's derived index")
@@ -110,7 +110,7 @@ def _execute(args: argparse.Namespace) -> int:
         print(json.dumps(asdict(assistant.ask(bundle, args.question)), indent=2))
         return 0
 
-    print(f"CIIS RAG chat for {bundle.case_id}. Type 'exit' to stop.")
+    print(f"CIIE RAG chat for {bundle.case_id}. Type 'exit' to stop.")
     while True:
         try:
             question = input("You: ").strip()

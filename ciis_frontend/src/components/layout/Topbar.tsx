@@ -41,7 +41,7 @@ export function Topbar() {
           </Box>
           <Box>
             <Typography variant="subtitle1" sx={{ fontWeight: 700, lineHeight: 1.2 }}>
-              CIIS
+              CIIE
             </Typography>
             <Typography
               variant="caption"

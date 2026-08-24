@@ -1,4 +1,4 @@
-# Digital Evidence Acquisition and OCR Engine (CIIS Module 2)
+# Digital Evidence Acquisition and OCR Engine (CIIE Module 2)
 # Python 3.12
 
 # OCR: PaddleOCR 3.x pinned to the PP-OCRv5 pipeline (do NOT use Tesseract).

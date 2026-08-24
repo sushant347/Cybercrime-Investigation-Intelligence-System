@@ -1,6 +1,6 @@
 # Module 2 — Digital Evidence Acquisition and OCR Engine
 
-Part of the **Cybercrime Investigation Intelligence System Using Digital Evidence Correlation** (final-year research project).
+Part of the **Cybercrime Investigation Intelligence Engine Using Digital Evidence Correlation** (final-year research project).
 
 This module accepts cybercrime evidence (screenshots, scanned documents, PDFs,
 chat exports) and converts it into structured, machine-readable information
@@ -88,7 +88,7 @@ python cli.py list-cases
 python cli.py show-case CASE_0001
 ```
 
-As a library (how other CIIS modules consume it):
+As a library (how other CIIE modules consume it):
 
 ```python
 from backend.modules.evidence import EvidenceConfig, EvidencePipeline, PaddleOCRService

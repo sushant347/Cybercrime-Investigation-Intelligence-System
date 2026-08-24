@@ -1,1 +1,1 @@
-"""CIIS backend package."""
+"""CIIE backend package."""

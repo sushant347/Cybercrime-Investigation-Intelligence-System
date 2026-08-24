@@ -40,7 +40,7 @@ class PhishingPredictor:
     prediction, confidence, threat score, intelligence data, and
     human-readable reasons.
 
-    This class is designed to be imported and used by other CIIS modules.
+    This class is designed to be imported and used by other CIIE modules.
 
     Example:
         >>> predictor = PhishingPredictor(model_type="xgboost")

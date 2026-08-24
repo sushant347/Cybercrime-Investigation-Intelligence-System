@@ -1,7 +1,7 @@
 """
 Module 5 - Timeline Reconstruction
 ====================================
-Cybercrime Investigation Intelligence Engine (CIIS)
+Cybercrime Investigation Intelligence Engine (CIIE)
 
 Consumes:
   - Case JSON from the OCR/evidence engine (Module 2)
@@ -549,7 +549,7 @@ def _attack_stages(events: list[dict], stage_order: Iterable[str],
             ),
         )
         keywords = sorted({keyword for values in hits.values() for keyword in values})
-        # Intake time proves when CIIS received an exhibit, not when the
+        # Intake time proves when CIIE received an exhibit, not when the
         # underlying conduct occurred. Keep fallback-bearing evidence attached
         # to the stage, but never let it stretch the attack-stage duration.
         timestamps = [

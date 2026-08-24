@@ -1,12 +1,12 @@
 # Security posture
 
-This document states what CIIS protects, what it does not, and why. It exists
+This document states what CIIE protects, what it does not, and why. It exists
 because the most important fact about this system is easy to miss from the
 code: **the API has no authentication.**
 
 ## The posture, plainly
 
-CIIS is built as a **single-operator forensic workstation**, not a networked
+CIIE is built as a **single-operator forensic workstation**, not a networked
 service. An investigator opens it on their own machine, works a case, and the
 service is bound to localhost.
 
@@ -66,7 +66,7 @@ If this has to be reachable by more than one person, the platform does not
 grow authentication on its own. Put it behind something that has it:
 
 1. **Terminate TLS and authenticate at a reverse proxy** (nginx with client
-   certificates, or an SSO-aware proxy). CIIS never sees an unauthenticated
+   certificates, or an SSO-aware proxy). CIIE never sees an unauthenticated
    request.
 2. **Or keep it on a private network / VPN** and treat network membership as
    the access control.
@@ -76,7 +76,7 @@ grow authentication on its own. Put it behind something that has it:
    originals and the reports are ordinary files; the API is not the only way to
    read them.
 
-Building real accounts into CIIS would be a larger change than it looks: there
+Building real accounts into CIIE would be a larger change than it looks: there
 is no database, platform state is CSV/JSON, and the audit trail records module
 actions rather than user actions. Doing it properly means adding an identity
 store and threading a user through every audit record — worth doing if the tool

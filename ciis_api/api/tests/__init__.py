@@ -1,4 +1,4 @@
-"""Integration tests for the CIIS API layer.
+"""Integration tests for the CIIE API layer.
 
 These tests exercise the API <-> engine seam end to end (intake -> upload ->
 enrichment -> analyze -> report) using a fast in-memory OCR fake and a

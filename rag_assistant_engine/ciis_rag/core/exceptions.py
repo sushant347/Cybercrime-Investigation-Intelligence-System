@@ -6,7 +6,7 @@ class RAGError(RuntimeError):
 
 
 class ArtifactContractError(RAGError):
-    """A CIIS source artifact is malformed or belongs to another case."""
+    """A CIIE source artifact is malformed or belongs to another case."""
 
 
 class IndexUnavailableError(RAGError):

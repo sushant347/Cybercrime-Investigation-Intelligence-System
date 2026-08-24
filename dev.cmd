@@ -1,6 +1,6 @@
 @echo off
 rem ===========================================================================
-rem  CIIS launcher for Windows.
+rem  CIIE launcher for Windows.
 rem
 rem  Double-click this file, or run it from cmd.exe / PowerShell:
 rem
@@ -49,7 +49,7 @@ if not defined BASH (
   echo.
   echo   ERROR: Git Bash was not found on this computer.
   echo.
-  echo   CIIS is started by dev.sh, a bash script. On Windows that needs
+  echo   CIIE is started by dev.sh, a bash script. On Windows that needs
   echo   Git for Windows, which includes Git Bash:
   echo.
   echo       https://git-scm.com/download/win

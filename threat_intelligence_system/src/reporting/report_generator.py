@@ -6,7 +6,7 @@ thereof) into richly-structured, human-readable JSON reports suitable for:
 
 - Single-URL analysis reports.
 - Batch URL analysis summaries with statistics.
-- CIIS integration payloads consumed by downstream modules.
+- CIIE integration payloads consumed by downstream modules.
 
 Report structure (single URL)
 ------------------------------

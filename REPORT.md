@@ -1,6 +1,6 @@
-# CIIS — Technical Report
+# CIIE — Technical Report
 
-Cybercrime Investigation Intelligence System. Every number in this document is
+Cybercrime Investigation Intelligence Engine. Every number in this document is
 read from the source; the file path is given so each claim can be checked.
 
 ---
@@ -13,7 +13,7 @@ and when, notice that two receipts share a wallet address, spot that three cases
 are the same offender, and write a report that survives scrutiny. That is hours
 of manual work per case and it does not scale.
 
-CIIS automates the mechanical parts — extraction, correlation, chronology,
+CIIE automates the mechanical parts — extraction, correlation, chronology,
 reporting — and shows its working for every conclusion. It does **not** decide
 guilt, and it is designed so that it cannot appear to.
 
@@ -494,7 +494,7 @@ the verdict; it does not invert it.
 
 ## 4A. The transformer — XLM-RoBERTa in semantic correction
 
-There are two neural components in CIIS. §4 covered the phishing classifier.
+There are two neural components in CIIE. §4 covered the phishing classifier.
 This one sits much earlier, in the OCR engine, and is the more interesting of
 the two because of *where* it is allowed to act.
 
