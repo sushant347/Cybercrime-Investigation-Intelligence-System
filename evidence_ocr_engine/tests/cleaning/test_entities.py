@@ -233,3 +233,32 @@ def test_host_port_is_still_a_port(extractor: EntityExtractor) -> None:
 def test_ocr_zero_runs_are_not_phone_numbers(extractor: EntityExtractor) -> None:
     entities = extractor.extract("00000001 00 00000 2 0000000 और 9847011223")
     assert _normalized(entities, "phones") == ["+9779847011223"]
+
+
+def test_cve_id_is_not_also_a_transaction_code(extractor: EntityExtractor) -> None:
+    """A vulnerability id has the shape of the structural transaction code.
+
+    ``CVE-2024-3400`` matches ``[A-Z]{2,5}-\\d{2,4}(-\\d{2,6}){1,3}`` exactly, so
+    it was filed as both. Transaction ids correlate at 0.95 and cve_ids not at
+    all, so two reports mentioning the same vulnerability linked as though they
+    shared a receipt number.
+    """
+    entities = extractor.extract(
+        "Exploited CVE-2024-3400 on the gateway; voucher ESW-2026-0714-88231."
+    )
+    assert _normalized(entities, "cve_ids") == ["CVE-2024-3400"]
+    # The genuine code in the same sentence is untouched.
+    assert _normalized(entities, "transaction_ids") == ["ESW-2026-0714-88231"]
+
+
+def test_time_value_carries_no_trailing_space(extractor: EntityExtractor) -> None:
+    """The TIME pattern ends in an optional ``\\s?(?:AM|PM)?``.
+
+    With no meridiem present the space before it stayed in the value, so the
+    same clock time written twice in one document de-duplicated as two
+    entities - "14:22 " and "14:22".
+    """
+    entities = extractor.extract("Call at 14:22 or 14:22, ended 09:15.")
+    assert _values(entities, "times") == ["14:22", "09:15"]
+    # A meridiem is part of the time and is kept.
+    assert _values(extractor.extract("Paid 9:30 PM sharp"), "times") == ["9:30 PM"]

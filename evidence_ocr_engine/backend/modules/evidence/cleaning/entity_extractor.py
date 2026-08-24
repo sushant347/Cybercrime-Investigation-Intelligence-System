@@ -111,10 +111,23 @@ class EntityExtractor:
             normalize=lambda v: re.sub(r"[\s-]", "", v),
             validate=self._valid_card,
         )
-        results["transaction_ids"] = self._group_matches(
-            text, rx.TRANSACTION_ID, "transaction_ids",
-            normalize=str.upper, validate=self._valid_transaction_id,
-        )
+        # A CVE id has the exact shape of the structural transaction-code
+        # alternative ("AA-2024-1234"), so "CVE-2024-3400" was recorded as both
+        # a vulnerability id and a payment reference. Transaction ids carry a
+        # 0.95 correlation weight while cve_ids are not correlated at all, so
+        # two documents that merely mentioned the same vulnerability correlated
+        # as though they shared a receipt number. The same longest-/most-
+        # specific-match-wins rule the hash and wallet types use applies here:
+        # whatever was already identified as a CVE is not also a payment code.
+        cve_values = {entity.normalized for entity in results["cve_ids"]}
+        results["transaction_ids"] = [
+            entity
+            for entity in self._group_matches(
+                text, rx.TRANSACTION_ID, "transaction_ids",
+                normalize=str.upper, validate=self._valid_transaction_id,
+            )
+            if entity.normalized not in cve_values
+        ]
         results["esewa_ids"] = self._group_matches(
             text, rx.ESEWA_ID, "esewa_ids", normalize=self._normalize_wallet_id
         )
@@ -193,7 +206,13 @@ class EntityExtractor:
         seen: Set[str] = set()
         entities: List[ExtractedEntity] = []
         for match in pattern.finditer(text):
-            value = match.group(0).rstrip(_TRAILING_PUNCT)
+            # `.strip()` on both ends, not just trailing punctuation: the TIME
+            # pattern ends in an optional `\s?(?:AM|PM)?`, so a time with no
+            # meridiem kept the space before it ("14:22 "). That space survived
+            # into the stored value and defeated de-duplication - the same
+            # clock time written twice in one document was recorded as two
+            # entities, one with the space and one without.
+            value = self._trim(match.group(0))
             if not value or (validate and not validate(value)):
                 continue
             normalized = normalize(value) if normalize else value
@@ -218,7 +237,7 @@ class EntityExtractor:
             value = next((g for g in match.groups() if g), None)
             if value is None:
                 continue
-            value = value.strip().rstrip(_TRAILING_PUNCT)
+            value = self._trim(value)
             if not value or (validate and not validate(value)):
                 continue
             normalized = normalize(value) if normalize else value
@@ -227,6 +246,16 @@ class EntityExtractor:
             seen.add(normalized)
             entities.append(ExtractedEntity(entity_type, value, normalized))
         return entities
+
+    @staticmethod
+    def _trim(value: str) -> str:
+        """Strip surrounding whitespace and trailing sentence punctuation.
+
+        Applied twice around the punctuation strip so "14:22 ." and "14:22 ."
+        both reduce to "14:22" - a value is the evidence, and a stray space or
+        full stop that belonged to the sentence is not part of it.
+        """
+        return value.strip().rstrip(_TRAILING_PUNCT).strip()
 
     # ------------------------------------------------------------- validation
 
