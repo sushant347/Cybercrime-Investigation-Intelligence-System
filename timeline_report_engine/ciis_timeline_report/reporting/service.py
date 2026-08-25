@@ -307,16 +307,39 @@ class InvestigationReportService:
         if timeline is not None:
             inferred = int(timeline.statistics.get("inferred_event_count", 0))
             fallback = int(timeline.statistics.get("acquisition_fallback_count", 0))
+            unresolved = int(timeline.statistics.get("unresolved_event_count", 0))
+            event_times = max(0, len(timeline.events) - fallback - unresolved)
+            inferred_event_times = max(0, inferred - fallback)
             lines.append(
-                f"The timeline contains {count_of(len(timeline.events), 'event')}: "
-                f"{inferred} inferred timestamp(s), including {fallback} "
-                "acquisition-time fallback(s) [timeline_analysis.json]."
+                f"Chronology contains {count_of(event_times, 'evidence-derived event time')} "
+                f"({inferred_event_times} inferred), {count_of(fallback, 'acquisition-only record')} "
+                f"and {count_of(unresolved, 'unresolved record')} "
+                "[timeline_analysis.json]."
             )
         if timeline is not None and timeline.stage_progression:
+            assessable = bool(timeline.statistics.get(
+                "progression_assessable", False
+            ))
+            if assessable:
+                lines.append(
+                    "Evidence-timed stage order: "
+                    + " -> ".join(timeline.stage_progression)
+                    + " [timeline_analysis.json]."
+                )
+            else:
+                lines.append(
+                    "Evidence-timed stage order is incomplete because one or "
+                    "more detected stages has acquisition time only "
+                    "[timeline_analysis.json]."
+                )
+        elif (
+            timeline is not None
+            and timeline.attack_stages
+            and not bool(timeline.statistics.get("progression_assessable", False))
+        ):
             lines.append(
-                "Keyword-derived stage order: "
-                + " -> ".join(timeline.stage_progression)
-                + " [timeline_analysis.json]."
+                "Attack stages were detected, but no evidence-derived event "
+                "times were available to order them [timeline_analysis.json]."
             )
         return lines
 
@@ -442,6 +465,36 @@ class InvestigationReportService:
                 "All events have non-inferred content or metadata timestamps; "
                 "their accuracy still depends on the source exhibit and clock."
             )
+        chronological_events = [
+            {
+                "timestamp": event.timestamp or "unresolved",
+                "evidence_id": event.evidence_id,
+                "file_name": event.file_name,
+                "event_type": event.event_type,
+                "description": event.description,
+                "timestamp_source": event.time_source,
+                "timestamp_confidence": event.confidence,
+                "timestamp_inferred": event.timestamp_inferred,
+                "stages": event.stages,
+                "critical": event.critical,
+                "critical_reasons": event.critical_reasons,
+            }
+            for event in timeline.events
+        ]
+        event_time_events = [
+            event for event in chronological_events
+            if event["timestamp"] != "unresolved"
+            and event["timestamp_source"] != "upload_time_fallback"
+        ]
+        acquisition_records = [
+            event for event in chronological_events
+            if event["timestamp_source"] == "upload_time_fallback"
+        ]
+        unresolved_records = [
+            event for event in chronological_events
+            if event["timestamp"] == "unresolved"
+        ]
+
         return {
             "summary": timeline.summary,
             "timestamp_quality": {
@@ -459,20 +512,13 @@ class InvestigationReportService:
             "progression_assessable": bool(timeline.statistics.get(
                 "progression_assessable", not fallback and not unresolved
             )),
-            "chronological_events": [
-                {
-                    "timestamp": event.timestamp or "unresolved",
-                    "evidence_id": event.evidence_id,
-                    "file_name": event.file_name,
-                    "timestamp_source": event.time_source,
-                    "timestamp_confidence": event.confidence,
-                    "timestamp_inferred": event.timestamp_inferred,
-                    "stages": event.stages,
-                    "critical": event.critical,
-                    "critical_reasons": event.critical_reasons,
-                }
-                for event in timeline.events
-            ],
+            # The complete compatibility view remains available to API clients,
+            # while formal renderers can keep incident chronology separate from
+            # intake provenance and unresolved records.
+            "chronological_events": chronological_events,
+            "event_time_events": event_time_events,
+            "acquisition_records": acquisition_records,
+            "unresolved_records": unresolved_records,
             "milestones": [
                 {
                     "timestamp": m.timestamp or "unresolved",
@@ -566,8 +612,9 @@ class InvestigationReportService:
             ],
             "reproducibility": (
                 "Re-running the analysis against the same stored evidence "
-                "recomputes the canonical artifacts; the provenance section "
-                "ties this report to their exact stored digests."),
+                "recomputes the canonical artifacts; report control records "
+                "the evidence-set digest and the stored JSON companion retains "
+                "the complete source-artifact hash register."),
         }
 
     def _model_predictions(self, items) -> Any:
@@ -866,22 +913,17 @@ class InvestigationReportService:
 
     #: Where each payment rail's records actually live - so a recommendation
     #: names the institution to serve, not just "the provider".
-    #: Written for a reader who is not a forensic specialist: the person who
-    #: holds the records, and what to ask them for, in ordinary words. Terms an
-    #: investigator will meet on the official request form ("KYC") are kept in
-    #: brackets after the plain wording rather than used on their own.
+    #: Each entry names the institution that holds the relevant records and the
+    #: record class to request. KYC is retained because it appears on provider
+    #: request forms; it is paired with a plain-language description.
     _RAIL_AUTHORITIES = {
-        "esewa_ids": ("eSewa", "who owns these wallets (KYC) and their payment "
-                               "history"),
-        "khalti_ids": ("Khalti", "who owns these wallets (KYC) and their "
-                                 "payment history"),
-        "imepay_ids": ("IME Pay", "who owns these wallets (KYC) and their "
-                                  "payment history"),
-        "bank_accounts": ("the bank", "who owns these accounts and their "
-                                      "statements"),
-        "card_numbers": ("the card issuer", "who owns these cards"),
-        "eth_wallets": ("a crypto-tracing specialist", "where the coins went"),
-        "btc_wallets": ("a crypto-tracing specialist", "where the coins went"),
+        "esewa_ids": ("eSewa", "subscriber/KYC ownership and transaction history"),
+        "khalti_ids": ("Khalti", "subscriber/KYC ownership and transaction history"),
+        "imepay_ids": ("IME Pay", "subscriber/KYC ownership and transaction history"),
+        "bank_accounts": ("the relevant bank", "account-holder identity and statements"),
+        "card_numbers": ("the card issuer", "cardholder and transaction records"),
+        "eth_wallets": ("a crypto-tracing specialist", "transaction tracing"),
+        "btc_wallets": ("a crypto-tracing specialist", "transaction tracing"),
     }
 
     #: How a brand name is written in a report ("esewa" is a matcher key).
@@ -904,15 +946,7 @@ class InvestigationReportService:
     @classmethod
     def _recommendations(cls, campaigns, suspects, timeline, priority,
                          analytics=None) -> List[str]:
-        """One short, plain-English action per line - nothing else.
-
-        Written for the person handling the complaint, who is not a forensic
-        specialist: ordinary words ("get the fake website shut down", "ask the
-        bank who owns this account"), never the engine's vocabulary
-        ("registrar", "indicator", "anchor", "subscriber records"). Where a
-        term will appear on the official request form - KYC, OTP - it is given
-        once in brackets after the plain wording, so the reader can match it up
-        without having to know it first.
+        """One concise, operationally formal action per line.
 
         Each line is a single sentence naming what to do and to which
         identifier, capped at ~150 characters. No rationale and no repetition:
@@ -931,9 +965,8 @@ class InvestigationReportService:
             shown = ", ".join(hosts[:2])
             more = f" (+{len(hosts) - 2} more)" if len(hosts) > 2 else ""
             actions.append(
-                f"Get the fake {plural('website', len(hosts))} shut down: "
-                f"{shown}{more}. Ask the hosting company to save its records "
-                "first."
+                "Issue preservation requests to the relevant hosting providers, "
+                f"then seek suspension of the suspected domains: {shown}{more}."
             )
         brands = sorted({i.brand_impersonated for i in flagged
                          if i.brand_impersonated})
@@ -941,8 +974,8 @@ class InvestigationReportService:
             named = ", ".join(cls._BRAND_NAMES.get(b, b.title())
                               for b in brands[:3])
             actions.append(
-                f"Tell {named} their name is being used in this scam, so they "
-                "can warn other customers."
+                f"Notify {named} of suspected brand impersonation and request "
+                "preservation of any related abuse records."
             )
 
         # -- 2. Follow the money -------------------------------------------
@@ -954,7 +987,9 @@ class InvestigationReportService:
                 rail, ("the operating institution", "account records"))
             ids = ", ".join(v.value for v in values[:2])
             extra = f" (+{len(values) - 2} more)" if len(values) > 2 else ""
-            actions.append(f"Ask {authority} {records}: {ids}{extra}.")
+            actions.append(
+                f"Request {records} from {authority} for: {ids}{extra}."
+            )
         transaction_ids = (getattr(analytics, "top_entities", None) or {}
                            ).get("transaction_ids") or []
         if transaction_ids:
@@ -985,11 +1020,13 @@ class InvestigationReportService:
         # -- 4. Victim care & handling ----------------------------------------
         if (getattr(analytics, "entity_statistics", None) or {}).get("otp"):
             actions.append(
-                "A one-time password (OTP) was given to the scammer. Tell the "
-                "victim to change their passwords now and ask their bank or "
-                "wallet to watch the account."
+                "Advise the complainant to reset affected credentials and ask "
+                "the relevant bank or wallet provider to monitor the account."
             )
-        critical = len(getattr(timeline, "critical_events", None) or [])
+        critical = len([
+            event for event in (getattr(timeline, "critical_events", None) or [])
+            if event.time_source != "upload_time_fallback"
+        ])
         if critical:
             actions.append(
                 f"Review the {count_of(critical, 'flagged event')} with the source "
@@ -1001,11 +1038,11 @@ class InvestigationReportService:
             level = str(priority.get("priority_level", "")).lower()
             score = priority.get("priority_score")
             urgency = {
-                "critical": "Act on this case first",
-                "high": "Give this case early attention",
-                "medium": "Handle this case in the normal queue",
-                "low": "Low urgency - handle after the others",
-            }.get(level, "Handle this case in the normal queue")
+                "critical": "Assign immediate queue priority",
+                "high": "Assign high queue priority",
+                "medium": "Assign standard queue priority",
+                "low": "Assign low queue priority",
+            }.get(level, "Assign standard queue priority")
             scored = f" (rated {float(score):.0f} out of 100)" \
                 if isinstance(score, (int, float)) else ""
             actions.append(f"{urgency}{scored}.")
@@ -1017,7 +1054,7 @@ class InvestigationReportService:
         for text in actions:
             cleaned = " ".join(text.split())
             if len(cleaned) > cls._MAX_ACTION_CHARS:
-                cleaned = cleaned[: cls._MAX_ACTION_CHARS - 1].rsplit(" ", 1)[0] + "…"
+                cleaned = cleaned[: cls._MAX_ACTION_CHARS - 3].rsplit(" ", 1)[0] + "..."
             if cleaned and cleaned not in deduped:
                 deduped.append(cleaned)
         return deduped or [
