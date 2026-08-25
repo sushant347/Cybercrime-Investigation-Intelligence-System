@@ -14,6 +14,10 @@ from ciis_timeline_report.graph.service import GraphService
 from ciis_timeline_report.pipeline import InvestigationPipeline
 from ciis_timeline_report.prioritization.service import PrioritizationService
 from ciis_timeline_report.reporting.service import InvestigationReportService
+from ciis_timeline_report.reporting.pdf_renderer import (
+    BODY_FONT,
+    PDF_SECTION_TITLES,
+)
 from ciis_correlation.core.repository import InvestigationReportRepository
 from ciis_correlation.suspects.service import SuspectService
 from ciis_timeline_report.timeline.service import TimelineService
@@ -79,6 +83,21 @@ def test_report_marks_missing_inputs_explicitly(icfg, data, repo, audit):
     assert "not available" in markdown  # no invented correlation/campaign data
 
 
+def test_pdf_uses_investigator_brief_structure_without_appendix_dump():
+    assert BODY_FONT == "Times-Roman"
+    assert PDF_SECTION_TITLES == (
+        "Executive Brief",
+        "Evidence Register and Integrity",
+        "Reconstructed Incident Chronology",
+        "Analytical Findings",
+        "Statutory and Regulatory Screening",
+        "Investigator Action Plan",
+        "Methodology, Limitations and Conclusion",
+        "Report Control and Review Certification",
+    )
+    assert all("appendix" not in title.lower() for title in PDF_SECTION_TITLES)
+
+
 def test_report_exposes_timestamp_provenance_and_avoids_attribution(pipeline):
     pipeline_result = pipeline.analyze_case(CASE)
     result = pipeline_result["report"]
@@ -90,6 +109,19 @@ def test_report_exposes_timestamp_provenance_and_avoids_attribution(pipeline):
         {"timestamp", "evidence_id", "timestamp_source",
          "timestamp_confidence", "timestamp_inferred"} <= set(event)
         for event in timeline["chronological_events"]
+    )
+    assert all(
+        event["timestamp_source"] != "upload_time_fallback"
+        for event in timeline["event_time_events"]
+    )
+    assert all(
+        event["timestamp_source"] == "upload_time_fallback"
+        for event in timeline["acquisition_records"]
+    )
+    assert len(timeline["chronological_events"]) == (
+        len(timeline["event_time_events"])
+        + len(timeline["acquisition_records"])
+        + len(timeline["unresolved_records"])
     )
     assert "reliability_note" in timeline["timestamp_quality"]
     assert sections["limitations"]
@@ -110,6 +142,13 @@ def test_report_exposes_timestamp_provenance_and_avoids_attribution(pipeline):
     assert sections["investigation_statistics"]["timeline_statistics"] == (
         pipeline_result["timeline"].statistics
     )
+    if not timeline["progression_assessable"]:
+        executive = " ".join(sections["executive_summary"])
+        assert (
+            "stage order is incomplete" in executive
+            or "no evidence-derived event times were available" in executive
+        )
+        assert "Keyword-derived stage order:" not in executive
 
 
 def test_report_separates_offences_from_source_backed_follow_up(pipeline):
