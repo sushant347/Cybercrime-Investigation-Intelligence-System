@@ -115,7 +115,25 @@ the stored nodes, edges and metrics into the interactive browser view.
 
 The Report view favours compact tables over long prose. It includes a case
 summary, numbered findings, chain-of-custody and entity counts, correlation
-bases, chronological events with actual/inferred/fallback status, structured
-methodology, statutory mapping, investigator actions, limitations and artifact
-digests. The engine-generated Markdown and PDF use the same section order and
-the same stored values.
+bases, chronological events with actual/inferred provenance, separate evidence
+acquisition records, structured methodology, statutory screening, investigator
+actions, limitations and artifact digests. JSON and Markdown retain the full
+21-section data contract; the formal PDF groups the same stored values into an
+eight-part investigator brief.
+
+The Timeline tab plots evidence-derived incident times by default. Upload-time
+fallbacks remain in the evidence list and can be added with **Include
+acquisition timestamps**, but the combined view warns that intake time is not
+proof of when an incident occurred. Acquisition-only evidence cannot stretch
+the attack duration or establish attack-stage order.
+
+The main visualization is an event-first **Incident story**, not a stage
+swimlane. Each event appears once on a chronological spine, simultaneous events
+share one moment card, and stage membership is shown with compact chips.
+Recorded, inferred, acquisition and critical status travel with the finding
+they qualify. Large cases initially show eight moments and expand on demand;
+equal card spacing represents sequence while exact timestamps state elapsed
+time. Selecting a finding expands its full evidence basis inside that same
+card; there is no second event list below the chronology. Detailed attack-stage
+evidence is collapsed by default so the tab reads from overview, to filters, to
+the authoritative chronological sequence.
