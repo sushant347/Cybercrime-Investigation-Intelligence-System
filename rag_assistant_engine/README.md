@@ -97,7 +97,7 @@ conflict with OCR or threat-intelligence environments.
 python -m venv .venv-rag
 source .venv-rag/bin/activate
 python -m pip install -r rag_assistant_engine/requirements.txt
-ollama pull llama3.2:1b
+ollama pull gemma3:1b
 ```
 
 On Windows, use a short environment path when the repository path is already
@@ -110,14 +110,24 @@ source /e/rag312/Scripts/activate
 python -m pip install -r rag_assistant_engine/requirements.txt
 ```
 
-Generation defaults can be changed through `.env.example` variables. In
-particular, `CIIS_RAG_OLLAMA_THINK=1` enables supported-model reasoning for
-experiments, while `CIIS_RAG_OLLAMA_NUM_PREDICT` bounds answer tokens. The
-larger `gemma3:4b` and `qwen3:8b` models remain selectable through
+Generation defaults can be changed through `.env.example` variables. The
+default `gemma3:1b` model is small enough for CPU-oriented research use and is
+selected for responsive, reliable question answering with structured output.
+`CIIS_RAG_OLLAMA_THINK=1` enables supported-model reasoning for experiments,
+while `CIIS_RAG_OLLAMA_NUM_PREDICT` bounds answer tokens. The larger
+`gemma3:4b` and `qwen3:8b` models remain selectable through
 `CIIS_RAG_OLLAMA_MODEL`, but CPU-only systems should expect substantially
-higher latency. Explicit evidence-pair questions, shared-entity relationship
+higher latency. Greetings, help requests, explicit evidence-pair questions,
+most-connected-entity rankings, shared-entity relationship
 questions, earliest/latest timeline questions and statutory-basis listings
-bypass generation and are answered from canonical structured artifacts.
+bypass generation and are answered from canonical structured artifacts. The
+generation fallback sends at most five ranked chunks and caps each prompt
+excerpt at 1,400 characters, keeping CPU prompt processing bounded while the
+complete stored chunks remain available in the derived index.
+suggested **strongest findings** question also reads the report's canonical
+executive-summary section directly, so a small model cannot replace its source
+IDs with filenames or prompt text and cause an otherwise available summary to
+be withheld.
 
 The dependency ranges are intentionally separate. After validating the target
 research machine, capture the installed versions in an environment lock for
