@@ -37,7 +37,7 @@ ciis_timeline_report/
 ├── analytics/          case, entity, threat and quality statistics
 ├── prioritization/     weighted case priority (6 dimensions)
 ├── legal/              source-backed statutory mapping and regulatory follow-up
-├── reporting/          report as Markdown + JSON + PDF (21 sections)
+├── reporting/          21-section JSON/Markdown + investigator-brief PDF
 └── pipeline.py         orchestrator and composition root for the whole run
 ```
 
@@ -74,6 +74,13 @@ timestamp may borrow its year from acquisition time and is explicitly marked
 `upload_time_fallback`. Only reconstructed content/metadata event times may
 create evidence-to-evidence temporal edges, so uploading *n* files together no
 longer produces *n(n-1)/2* false chronology links.
+
+Acquisition fallbacks remain in the stored timeline as provenance, but they do
+not set attack-stage dates, create incident milestones, or determine stage
+order. The frontend therefore plots **Incident chronology** by default and
+lists upload-only records below it. An explicit switch can add acquisition
+timestamps to a combined diagnostic view, where they are labelled as intake
+times rather than incident events.
 
 Graph nodes cover cases, evidence, normalized entities, and timeline events.
 Every edge carries its relationship type, confidence, source evidence IDs,
@@ -120,7 +127,7 @@ python scripts/report_review.py                  # report-correctness harness
 ## Tests
 
 ```bash
-python -m pytest -q      # 94 tests
+python -m pytest -q
 ```
 
 Fixtures come from `ciis_correlation.testing`, the same synthetic case the
@@ -142,10 +149,21 @@ analysis_manifest.json   API-run inputs, versions, policy and warnings
 PDF rendering needs `reportlab`. Without it the Markdown and JSON reports are
 still produced and the run is logged, never failed.
 
-Readable Markdown and PDF output uses numbered finding/action tables, compact
-scope and evidence tables, timestamp provenance, structured statutory mapping,
-explicit limitations and SHA-256 provenance. The frontend adds a Timeline Flow
-projection without modifying the stored graph artifact.
+The JSON and Markdown outputs preserve the complete 21-section machine-readable
+contract. The PDF groups that material into eight investigator-facing parts:
+Executive Brief; Evidence Register and Integrity; Reconstructed Incident
+Chronology; Analytical Findings; Statutory and Regulatory Screening;
+Investigator Action Plan; Methodology, Limitations and Conclusion; and
+Report Control and Review Certification. The PDF uses a formal Times-family
+serif face. Tables separate incident times from acquisition records, compact
+paired summaries replace vertical metric dumps, and metadata is reduced to
+coverage plus recorded exceptions. Legal matches are labelled as screening
+candidates and operational actions use formal request language. The PDF has no
+raw technical appendix: its evidence register records verification outcomes
+and its report-control page carries the evidence-set digest, while the complete
+item/source hash registers remain in the stored JSON companion.
+The frontend adds a Timeline Flow projection without modifying the stored graph
+artifact.
 
 ## Statutory and regulatory sources
 
