@@ -7,6 +7,13 @@ import pytest
 
 
 ENGINE_ROOT = Path(__file__).resolve().parents[1]
+PROJECT_ROOT = ENGINE_ROOT.parent
+if str(PROJECT_ROOT) not in sys.path:
+    # GitHub Actions runs pytest with rag_assistant_engine as its working
+    # directory. Add the repository parent as well so package-level imports
+    # such as ``from rag_assistant_engine import cli`` work there and when the
+    # suite is launched from the repository root.
+    sys.path.insert(0, str(PROJECT_ROOT))
 if str(ENGINE_ROOT) not in sys.path:
     sys.path.insert(0, str(ENGINE_ROOT))
 
