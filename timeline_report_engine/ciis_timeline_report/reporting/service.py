@@ -30,7 +30,7 @@ from ciis_correlation.core.repository import InvestigationReportRepository
 from ciis_correlation.suspects.models import SuspectAssessment
 from ..timeline.models import TimelineAnalysis
 from . import pdf_renderer
-from ciis_correlation.core.text import count_of, plural
+from ciis_correlation.core.text import count_of
 
 MODULE = "reporting"
 
